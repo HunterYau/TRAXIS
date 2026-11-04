@@ -20,7 +20,7 @@ from traxis.acquisition import action_catalog
 from traxis.bank import BankMetadata, WaveformBank
 from traxis.cad_mesh import cad_mesh
 from traxis.config import positive
-from traxis.fem import assemble, simulate, surface_patch, tone_burst
+from traxis.fem import assemble, simulate, surface_patch_with_report, tone_burst
 from traxis.geometry import depth_map_mm, estimate_mesh, structured_mesh
 from traxis.resources import ResourceGuard
 from traxis.scenarios import Scenario
@@ -128,10 +128,16 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
         raise ValueError("sample-aligned internal steps exceed the configured pilot limit")
     sensors = acquisition.sensors(scenario.plate)
     systems = {"intact": healthy, "current": damaged}
-    patches = {kind: np.stack([surface_patch(system, tuple(xy), acquisition.patch_radius_m) for xy in sensors])
-               for kind, system in systems.items()}
+    patches, patch_reports = {}, {}
+    for kind, system in systems.items():
+        integrated = [surface_patch_with_report(system, tuple(xy), acquisition.patch_radius_m) for xy in sensors]
+        patches[kind] = np.stack([vector for vector, _report in integrated])
+        patch_reports[kind] = [report for _vector, report in integrated]
+        if any(report["full_disk_area_relative_error"] > 1e-8 or report["centroid_error_m"] > 1e-8 * acquisition.patch_radius_m
+               for report in patch_reports[kind]):
+            raise ArithmeticError("circular source/probe footprint integration failed its area/centroid check")
     source = {p.name: sha256_file(p) for p in [Path(__file__), Path(__file__).with_name("fem.py"),
-              Path(__file__).with_name("geometry.py"), Path(__file__).with_name("cad_mesh.py")]}
+              Path(__file__).with_name("geometry.py"), Path(__file__).with_name("cad_mesh.py"), Path(__file__).with_name("patches.py")]}
     cache_dir = Path(cache_dir) if cache_dir else None
     waveforms = np.empty((len(actions), acquisition.samples), dtype=np.float32)
     baselines = np.empty_like(waveforms)
@@ -183,6 +189,7 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
                             {"scenario": asdict(scenario), "scenario_fingerprint": scenario.fingerprint,
                              "forward": asdict(settings), "intact_mesh": healthy_mesh, "current_mesh": damaged_mesh,
                              "dt_internal_s": dt, "substeps_per_output": substeps, "internal_steps": steps,
+                             "mechanical_patches": patch_reports,
                              "source_sha256": source, "source": "unit-total-force normal mechanical disk patch",
                              "baseline": "matched intact plate with same material/coupling; not a separate physical control",
                              "approximations": ["no PZT/adhesive/electrical domains", "scalar coupling/drift gains only",
@@ -193,6 +200,7 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
               "records": len(actions), "samples": acquisition.samples, "forward_solves": solves, "cache_hits": hits,
               "groups": group_records, "intact_mesh": healthy_mesh, "current_mesh": damaged_mesh,
               "dt_internal_s": dt, "substeps_per_output": substeps, "internal_steps": steps,
+              "mechanical_patches": patch_reports,
               "wall_seconds": time.perf_counter() - started, "ready_for_training_data": False,
               "validation_status": bank.metadata.validation_status}
     if guard:

@@ -270,3 +270,23 @@ final physical evaluation was run. Research-quality data, finite-plate/PZT
 validation, useful calibration and converged model/policy comparisons remain
 open.
 
+## Circular mechanical footprint integration
+
+The local FEM now integrates each top-face P1 shape function over its actual
+disk intersection, replacing centroid-based inclusion. This keeps source/probe
+area and first-moment center fixed under remeshing while preserving mechanical
+reciprocity. The method and its limits are documented in mechanical-patches.md.
+
+All 138 tests pass with no skips. Exact full/half/quarter-disk moments, vertex
+permutations, SI scaling, affine fields and independent adaptive slice integrals
+cover the new geometry integration. The independent quadrature needed explicit
+circle/edge breakpoints to resolve a thin cap; no tolerance was relaxed.
+All 19 existing mechanical numerical gates also pass.
+
+The CAD-to-bank pilot completed in 2.07 seconds with sampled RSS 124.6 MiB,
+system RAM 79.8%, GPU usage 1,666/8,192 MiB and GPU temperature 47 C. Its full
+patch-area error was at most 2.3e-16 relative and centroid error below 1e-17 m.
+CPU temperature was unavailable. See docs/evidence/circular-patch-debug.json.
+The banks still declare `ready_for_training_data=false`: exact footprints do
+not establish resolved bending waves, PZT coupling or physical agreement.
+

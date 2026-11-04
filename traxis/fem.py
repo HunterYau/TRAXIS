@@ -5,7 +5,6 @@ surfaces follow from the weak form; there are no clamped nodes by default.
 """
 
 from dataclasses import dataclass
-from collections import Counter
 from typing import Callable
 import math
 
@@ -14,6 +13,7 @@ from scipy import sparse
 
 from traxis.config import Material, positive
 from traxis.geometry import TetMesh
+from traxis.patches import disk_triangle_shape_integrals
 from traxis.resources import ResourceGuard
 
 
@@ -103,11 +103,16 @@ def assemble(mesh: TetMesh, material: Material = Material(),
 
 def surface_patch(system: ElasticSystem, center_xy_m: tuple[float, float], radius_m: float,
                   direction=(0.0, 0.0, 1.0)) -> np.ndarray:
-    """Unit-total-force top-surface patch / matching area-averaged probe.
+    """Unit-total-force circular load / matching area-averaged displacement."""
+    return surface_patch_with_report(system, center_xy_m, radius_m, direction)[0]
 
-    Triangle-centroid inclusion approximates a circular footprint. The same
-    weights for transmit/receive give a work-conjugate reciprocal mechanical
-    pair. This observable is displacement in m, not PZT output voltage.
+
+def surface_patch_with_report(system: ElasticSystem, center_xy_m: tuple[float, float], radius_m: float,
+                              direction=(0.0, 0.0, 1.0)) -> tuple[np.ndarray, dict]:
+    """Integrate P1 functions on the disk/top-face intersections analytically.
+
+    Transmit/receive weights are work-conjugate, preserving mechanical
+    reciprocity. This is displacement, not bonded-PZT voltage or strain.
     """
     positive("patch radius", radius_m)
     center = np.asarray(center_xy_m, dtype=float)
@@ -119,25 +124,33 @@ def surface_patch(system: ElasticSystem, center_xy_m: tuple[float, float], radiu
     direction = direction / np.linalg.norm(direction)
     mesh = system.mesh
     top_z = mesh.plate.thickness_m
-    top_nodes = set(np.flatnonzero(np.isclose(mesh.points_m[:, 2], top_z, rtol=0, atol=top_z * 1e-10)))
-    faces = Counter()
-    for tet in mesh.tetrahedra:
-        for face in ((0, 1, 2), (0, 1, 3), (0, 2, 3), (1, 2, 3)):
-            ids = tuple(sorted(int(tet[j]) for j in face))
-            if all(i in top_nodes for i in ids):
-                faces[ids] += 1
+    top_nodes = np.isclose(mesh.points_m[:, 2], top_z, rtol=0, atol=top_z * 1e-10)
+    all_faces = mesh.tetrahedra[:, np.array([[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]])].reshape(-1, 3)
+    faces = np.sort(all_faces[top_nodes[all_faces].all(axis=1)], axis=1)
+    faces, multiplicities = np.unique(faces, axis=0, return_counts=True)
+    faces = faces[multiplicities == 1]
+    xy = mesh.points_m[faces, :2]
+    lower, upper = xy.min(axis=1) - center, xy.max(axis=1) - center
+    nearest = np.maximum(np.maximum(lower, -upper), 0)
+    faces = faces[(nearest**2).sum(axis=1) <= radius_m**2]
     weights = np.zeros(len(mesh.points_m))
-    for ids, multiplicity in faces.items():
-        if multiplicity != 1:
-            continue
-        xyz = mesh.points_m[list(ids)]
-        if np.linalg.norm(xyz[:, :2].mean(axis=0) - center) <= radius_m:
-            area = np.linalg.norm(np.cross(xyz[1] - xyz[0], xyz[2] - xyz[0])) / 2
-            weights[list(ids)] += area / 3
-    if weights.sum() == 0:
-        raise ValueError("patch contains no surface triangles; refine mesh or enlarge footprint")
-    weights /= weights.sum()
-    return (weights[:, None] * direction).ravel()
+    covered = 0
+    for ids in faces:
+        integrals = disk_triangle_shape_integrals(mesh.points_m[ids, :2], center, radius_m)
+        weights[ids] += integrals
+        covered += int(integrals.sum() > 0)
+    area = float(weights.sum())
+    if area <= 0:
+        raise ValueError("patch has no positive-area intersection with the top surface")
+    centroid = weights @ mesh.points_m[:, :2] / area
+    weights /= area
+    report = {"integration": "analytic_disk_P1_shape_integrals", "requested_center_xy_m": center.tolist(),
+              "radius_m": radius_m, "direction": direction.tolist(), "area_m2": area,
+              "centroid_xy_m": centroid.tolist(), "centroid_error_m": float(np.linalg.norm(centroid - center)),
+              "full_disk_area_relative_error": abs(area / (math.pi * radius_m**2) - 1),
+              "support_nodes": int(np.count_nonzero(weights)), "covered_surface_triangles": covered,
+              "edge_clipped": bool(np.any(center < radius_m) or np.any(center > [mesh.plate.width_m - radius_m, mesh.plate.height_m - radius_m]))}
+    return (weights[:, None] * direction).ravel(), report
 
 
 def tone_burst(t_s: float, frequency_hz: float, cycles: int = 5) -> float:

@@ -118,6 +118,12 @@ meters. There are no PZT, adhesive, electrodes, voltage readout or damping
 domains. Coupling/drift is represented only by linear scalar gains. This is
 an inspectable mechanical pilot, not a calibrated bonded-PZT forward model.
 
+Circular patch loads/probes now use analytic P1 shape-function integrals over
+disk/triangle intersections, with reported area and first-moment checks. This
+keeps the intended aperture and force center fixed under remeshing. Historical
+centroid-selected patch banks retain their original source hashes; see
+mechanical-patches.md for the derivation, independent checks and limits.
+
 One transmitter/frequency solve records all receiving patches simultaneously.
 A paired intact and defective solve use the same material, source and coupling
 before explicit current gain drift/noise. This matched synthetic baseline is
