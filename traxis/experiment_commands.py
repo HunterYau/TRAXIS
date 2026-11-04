@@ -113,7 +113,7 @@ def add_experiment_commands(sub):
     freeze = sub.add_parser("freeze-evaluation", help="record model/data fingerprints, policies, thresholds and budgets before testing")
     freeze.add_argument("--dataset", type=Path, required=True)
     freeze.add_argument("--models", type=Path, nargs="+", required=True)
-    freeze.add_argument("--split", choices=("validation", "test", "physical_holdout"), required=True)
+    freeze.add_argument("--split", choices=("validation", "test", "physical_holdout", "uncertainty_calibration"), required=True)
     freeze.add_argument("--budgets", type=int, nargs="+", required=True)
     freeze.add_argument("--initial-actions", type=int, nargs="*", default=[])
     freeze.add_argument("--threshold-mm", type=float, default=0.1)
@@ -125,6 +125,7 @@ def add_experiment_commands(sub):
     evaluate = sub.add_parser("evaluate", help="replay a frozen evaluation plan")
     evaluate.add_argument("--dataset", type=Path, required=True)
     evaluate.add_argument("--plan", type=Path, required=True)
+    evaluate.add_argument("--calibration-plan", type=Path)
     evaluate.add_argument("--output", type=Path, required=True)
     for command in (index, train, policy, calibrate, freeze, evaluate):
         command.add_argument("--max-seconds", type=float, default=60)
@@ -159,6 +160,6 @@ def run_experiment_command(args, guard) -> dict:
         return {"output": str(args.output), "plan_fingerprint": plan["fingerprint"]}
     if args.command == "evaluate":
         from traxis.evaluation import run_frozen_evaluation
-        report = run_frozen_evaluation(args.plan, dataset, args.output, guard)
+        report = run_frozen_evaluation(args.plan, dataset, args.output, guard, calibration_plan_path=args.calibration_plan)
         return {"passed": report["passed"], "episodes": len(report["episodes"]), "debug_only": report["debug_only"]}
     raise ValueError("unknown experiment command")

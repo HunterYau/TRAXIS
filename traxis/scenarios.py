@@ -89,7 +89,7 @@ class Scenario:
     nuisance: NuisanceSettings
 
     def __post_init__(self):
-        if not self.specimen_id or not self.parent_specimen_id or self.split not in ("train", "validation", "test"):
+        if not self.specimen_id or not self.parent_specimen_id or self.split not in ("train", "validation", "test", "uncertainty_calibration"):
             raise ValueError("scenario needs specimen/parent IDs and a simulation split")
         if any(type(seed) is not int or seed < 0 for seed in (self.geometry_seed, self.nuisance_seed)):
             raise ValueError("scenario seeds must be nonnegative integers")
@@ -122,6 +122,7 @@ class SamplingSettings:
     count: int = 1000
     seed: int = 2026
     intact_fraction: float = 0.1
+    uncertainty_calibration_fraction: float = 0.0
     diameters_m: tuple[float, ...] = (0.02, 0.03, 0.04)
     depths_m: tuple[float, ...] = (0.00075, 0.0015, 0.002)
     edge_clearance_m: float = 0.03
@@ -148,6 +149,8 @@ class SamplingSettings:
             raise ValueError("sampling seed must be a nonnegative integer")
         if not math.isfinite(self.intact_fraction) or not 0 <= self.intact_fraction <= 1:
             raise ValueError("intact fraction must lie in [0,1]")
+        if not math.isfinite(self.uncertainty_calibration_fraction) or not 0 <= self.uncertainty_calibration_fraction < .7:
+            raise ValueError("uncertainty calibration fraction must lie in [0,0.7)")
         for value in (self.edge_clearance_m, self.sensor_clearance_m):
             if not math.isfinite(value) or value < 0:
                 raise ValueError("geometric clearances must be finite and nonnegative")
@@ -206,7 +209,12 @@ def sample_scenarios(settings: SamplingSettings = SamplingSettings(), plate: Pla
         geometry_hash = canonical_hash({"plate": asdict(plate), "recesses": [asdict(r) for r in recesses]})[:10]
         parent = f"sim-{settings.seed}-{index:06d}-{geometry_hash}"
         nuisance = _sample_nuisance(settings, acquisition, nuisance_seed)
-        result.append(Scenario(parent + "-v0", parent, specimen_split(parent, settings.seed), geometry_seed,
+        split = specimen_split(parent, settings.seed)
+        if split == "train" and settings.uncertainty_calibration_fraction:
+            draw = int(canonical_hash(["uncertainty-calibration", settings.seed, parent])[:16], 16) / 2**64
+            if draw < settings.uncertainty_calibration_fraction / .7:
+                split = "uncertainty_calibration"
+        result.append(Scenario(parent + "-v0", parent, split, geometry_seed,
                                nuisance_seed, plate, recesses, acquisition, nuisance))
     return tuple(result)
 

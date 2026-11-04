@@ -1,0 +1,179 @@
+﻿{
+    "kind":  "reserved_parent_calibration_software_evidence",
+    "tests_passed":  121,
+    "regression_exit_code":  0,
+    "regression_log_sha256":  "2372f50d5c00b6be9a461d42c4e8fb94b62d9341759ffd621e8ac1ec5daa1452",
+    "documented_cli_commands_checked":  [
+                                            "freeze-calibration",
+                                            "fit-calibration",
+                                            "assess-calibration",
+                                            "verify-calibration",
+                                            "plan-scenarios"
+                                        ],
+    "study_recipes":  {
+                          "count":  1000,
+                          "parent_split_counts":  {
+                                                      "train":  603,
+                                                      "validation":  156,
+                                                      "uncertainty_calibration":  92,
+                                                      "test":  149
+                                                  },
+                          "fingerprint":  "3ccc923d7b2c03a8e99face554c3fcf59735e62a0c1029660f35abf8ca0e8641",
+                          "ready_for_training_data":  false
+                      },
+    "pilot":  {
+                  "kind":  "uncertainty_calibration_software_pilot",
+                  "debug_only":  true,
+                  "passed":  true,
+                  "training_updates":  0,
+                  "note":  "Analytic fixtures and existing debug models; declared fixture parents do not establish independent physical specimens, statistical calibration quality or generalization.",
+                  "source_sha256":  {
+                                        "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                                        "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                                        "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                                        "adaptive.py":  "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+                                        "bank.py":  "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+                                        "cad_mesh.py":  "c1286150c665ee66a05efdfbbe54b3f14f5141edf4c3110b8ad13642b25b48d0",
+                                        "calibration_verification.py":  "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+                                        "cli.py":  "d30dfede00981e96a6e36ae1443315dcd1d012af713436500fa7615cab11bc06",
+                                        "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                                        "das_baseline.py":  "04680ee56653605418d761da20f12491a0630ae36705501a3fa339cefbb5b672",
+                                        "dataset.py":  "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+                                        "diagnostic_data.py":  "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+                                        "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                                        "evaluation.py":  "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+                                        "evaluation_artifacts.py":  "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+                                        "experiment_commands.py":  "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+                                        "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                                        "forward.py":  "eec483d07c1ca9d86f7604282127733b9d0a14d55db892eab1fe5f5ed81065b4",
+                                        "forward_verification.py":  "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+                                        "generation_commands.py":  "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+                                        "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                                        "imaging.py":  "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+                                        "importers.py":  "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+                                        "metrics.py":  "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+                                        "model_verification.py":  "bd7f7ffd95a47ec63728c5cf1d03c0a4940a93c7098af915ae23847f08704f91",
+                                        "models.py":  "291c0c0dac0dd46e1db605c94129f9970d4b8cf5130c27a648252492fca1b2df",
+                                        "policies.py":  "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+                                        "policy_training.py":  "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+                                        "policy_verification.py":  "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+                                        "reconstruction.py":  "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+                                        "reporting.py":  "5911b015d854ea3418adbfb3e9d65e7a8988ef87dd5cfde68bf0b952745861bb",
+                                        "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                                        "scenarios.py":  "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+                                        "solver_requests.py":  "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+                                        "storage.py":  "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+                                        "training.py":  "fb33698e23c0ad660ee87e5045eacb7703edca3e94ffaced814fbd92a735b0d4",
+                                        "uncertainty.py":  "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+                                        "uncertainty_commands.py":  "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+                                        "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                                        "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+                                        "workflow_verification.py":  "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+                                    },
+                  "calibration_episodes":  18,
+                  "heldout_episodes":  4,
+                  "calibration_parents":  9,
+                  "order_statistic_rank":  9,
+                  "finite_quantile":  true,
+                  "quantile":  29.053335189819336,
+                  "std_floor_mm":  0.05,
+                  "nominal_coverage":  0.9,
+                  "heldout_fixture_parents":  2,
+                  "empirical_parent_simultaneous_coverage":  0.5,
+                  "empirical_coverage_meets_nominal":  false,
+                  "mean_interval_width_mm":  2.9904341509745413,
+                  "calibration_sha256":  "ef2ba89c649ad3f6611c83a8d33d675654f2140141e26343b4093233ba85394b",
+                  "assessment_sha256":  "dc271b99e5db31e41bff86a777c164e9af5b65c3f789e5e915ea6b08d31df6a5",
+                  "wall_seconds":  19.87973049998982,
+                  "resources":  {
+                                    "limits":  {
+                                                   "max_seconds":  60,
+                                                   "max_rss_mib":  1024,
+                                                   "max_system_memory_percent":  92,
+                                                   "min_available_mib":  768,
+                                                   "max_gpu_memory_percent":  90,
+                                                   "max_gpu_temperature_c":  80,
+                                                   "max_cpu_temperature_c":  90
+                                               },
+                                    "sampled_max_rss_mib":  352.60546875,
+                                    "sampled_max_system_memory_percent":  81.4,
+                                    "gpu_samples":  [
+                                                        {
+                                                            "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                                            "total_mib":  8192.0,
+                                                            "used_mib":  1669.0,
+                                                            "temperature_c":  48.0
+                                                        },
+                                                        {
+                                                            "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                                            "total_mib":  8192.0,
+                                                            "used_mib":  1669.0,
+                                                            "temperature_c":  47.0
+                                                        }
+                                                    ],
+                                    "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                                }
+              },
+    "calibration":  {
+                        "fingerprint":  "23c449a7e29e5b79560f761a4d5721edd56fb693a781e4cdb3d3b1205b295008",
+                        "calibration_source_hash":  "7d215b207833b07b2050d48e99fa744925c8edab69ebae8936ccbdc2364fa2eb",
+                        "scope":  "all reference cells, recorded budgets and listed policies for one new parent",
+                        "assumptions":  [
+                                            "exchangeable independent calibration/new parents from the same distribution",
+                                            "fixed model/selector/settings chosen without calibration labels",
+                                            "one scan per parent and unchanged finite inspection protocol"
+                                        ],
+                        "parent_scores":  {
+                                              "calibration-fixture-parent-0":  29.0392804145813,
+                                              "calibration-fixture-parent-1":  28.898571729660034,
+                                              "calibration-fixture-parent-2":  28.89479637145996,
+                                              "calibration-fixture-parent-3":  29.046465158462524,
+                                              "calibration-fixture-parent-4":  28.886488676071167,
+                                              "calibration-fixture-parent-5":  28.880990743637085,
+                                              "calibration-fixture-parent-6":  29.053335189819336,
+                                              "calibration-fixture-parent-7":  28.87425661087036,
+                                              "calibration-fixture-parent-8":  28.871179819107056
+                                          },
+                        "protocol":  {
+                                         "models":  [
+                                                        {
+                                                            "sha256":  "daba7d2d5e6d5776de200f5662cc597575d053d37165c77de69dab4f94e6dbdd",
+                                                            "kind":  "neural"
+                                                        },
+                                                        {
+                                                            "sha256":  "1b112e57b03f83990c502c1a18ee436b7957fa59b363ddb06897d020ffdcae5c",
+                                                            "kind":  "neural"
+                                                        }
+                                                    ],
+                                         "ensemble":  true,
+                                         "initial_actions":  [
+
+                                                             ],
+                                         "budgets":  [
+                                                         2,
+                                                         4
+                                                     ],
+                                         "threshold_mm":  0.1,
+                                         "policies":  [
+                                                          {
+                                                              "kind":  "fixed"
+                                                          },
+                                                          {
+                                                              "kind":  "random",
+                                                              "seed":  17
+                                                          }
+                                                      ],
+                                         "inference_source_hash":  "93f14119d7147aa344b8eead2718f5744db258be75dd30598fce15d74202719d"
+                                     }
+                    },
+    "heldout":  {
+                    "fingerprint":  "dc6e3798893bb2a7b7c87bedc6164d492e278591680363c755bc0be6555e0538",
+                    "parent_simultaneous_coverage":  {
+                                                         "debug-parent-3":  false,
+                                                         "debug-parent-4":  true
+                                                     },
+                    "empirical_coverage_meets_nominal":  false,
+                    "note":  "Empirical coverage on held-out parents, not proof of exchangeability or physical validity; no settings may be tuned on these outcomes."
+                },
+    "conclusion":  "Software workflow passes. Intervals are nearly the full 3 mm physical range and only one of two held-out fixture parents is jointly covered. This does not establish useful uncertainty, exchangeability or physical validity; settings were not retuned against those outcomes."
+}

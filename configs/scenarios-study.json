@@ -1,5 +1,5 @@
 {
-  "sampling": {"count": 1000, "seed": 2026, "intact_fraction": 0.1,
+  "sampling": {"count": 1000, "seed": 2026, "intact_fraction": 0.1, "uncertainty_calibration_fraction": 0.1,
                "diameters_m": [0.02, 0.03, 0.04], "depths_m": [0.00075, 0.0015, 0.002]},
   "plate": {"width_m": 0.5, "height_m": 0.5, "thickness_m": 0.003},
   "acquisition": {"sensor_count": 8, "inset_m": 0.02, "patch_radius_m": 0.005,

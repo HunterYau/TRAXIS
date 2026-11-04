@@ -11,6 +11,7 @@ from traxis.resources import ResourceGuard, ResourceLimits, snapshot
 def main() -> None:
     from traxis.experiment_commands import add_experiment_commands
     from traxis.generation_commands import add_generation_commands
+    from traxis.uncertainty_commands import add_uncertainty_commands
     parser = argparse.ArgumentParser(description="Bounded guided-wave tomography experiments")
     sub = parser.add_subparsers(dest="command", required=True)
     preflight = sub.add_parser("preflight", help="inspect resources and mesh cost without solving")
@@ -40,6 +41,12 @@ def main() -> None:
     adaptive.add_argument("--output", type=Path, default=Path("outputs/policy-verification"))
     adaptive.add_argument("--max-seconds", type=float, default=60)
     adaptive.add_argument("--max-rss-mib", type=float, default=1024)
+    calibration = sub.add_parser("verify-calibration", help="bounded reserved-parent interval pilot; no training")
+    calibration.add_argument("--dataset", type=Path, required=True)
+    calibration.add_argument("--reconstructors", type=Path, nargs="+", required=True)
+    calibration.add_argument("--output", type=Path, default=Path("outputs/calibration-verification"))
+    calibration.add_argument("--max-seconds", type=float, default=60)
+    calibration.add_argument("--max-rss-mib", type=float, default=1024)
     forward = sub.add_parser("verify-forward", help="bounded CAD-to-elastic-bank checks; no training")
     forward.add_argument("--output", type=Path, default=Path("outputs/forward-verification"))
     forward.add_argument("--max-seconds", type=float, default=60)
@@ -55,8 +62,16 @@ def main() -> None:
     report.add_argument("--max-rss-mib", type=float, default=1024)
     add_experiment_commands(sub)
     add_generation_commands(sub)
+    add_uncertainty_commands(sub)
     args = parser.parse_args()
-    if args.command == "report":
+    if args.command in ("freeze-calibration", "fit-calibration", "assess-calibration"):
+        from traxis.uncertainty_commands import run_uncertainty_command
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            print(json.dumps(run_uncertainty_command(args, guard), indent=2, allow_nan=False))
+        except Exception as exc:
+            parser.exit(1, f"Calibration stopped: {type(exc).__name__}: {exc}\n")
+    elif args.command == "report":
         from traxis.reporting import create_report
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
@@ -119,6 +134,19 @@ def main() -> None:
                           "wall_seconds": report["wall_seconds"], "report": str(args.output / "forward-report.json")}, indent=2))
         if not report["passed"]:
             parser.exit(1, "Forward pilot failed; inspect its report.\n")
+    elif args.command == "verify-calibration":
+        from traxis.calibration_verification import verify_calibration
+        from traxis.dataset import BankDataset
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            result = verify_calibration(BankDataset.load(args.dataset), args.reconstructors, args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Calibration pilot stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": result["passed"], "training_updates": 0, "wall_seconds": result["wall_seconds"],
+                          "report": str(args.output / "calibration-report.json")}, indent=2))
+        if not result["passed"]:
+            parser.exit(1, "Calibration pilot failed; inspect its report.\n")
     elif args.command == "verify-policy":
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         guard.check(force=True)

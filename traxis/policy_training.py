@@ -127,9 +127,9 @@ class PolicyTrainingSession:
             raise ValueError("uncertainty-aware RL requires an independently seeded reconstruction ensemble")
         inherited_fit = set().union(*(set(p["fit_parents"]) for p in self.reconstruction_provenances))
         inherited_validation = set().union(*(set(p["validation_parents"]) for p in self.reconstruction_provenances))
-        final_parents = {e.parent_specimen_id for e in dataset.entries if e.split in ("test", "physical_holdout")}
+        final_parents = {e.parent_specimen_id for e in dataset.entries if e.split in ("test", "physical_holdout", "uncertainty_calibration")}
         if final_parents & (inherited_fit | inherited_validation):
-            raise ValueError("reconstructor was exposed to a final policy-evaluation parent")
+            raise ValueError("reconstructor was exposed to a reserved policy-evaluation/calibration parent")
         if inherited_fit & {e.parent_specimen_id for e in self.validation_entries}:
             raise ValueError("RL validation parent was already used to fit the reconstructor")
         self.inherited_fit, self.inherited_validation = inherited_fit, inherited_validation

@@ -280,9 +280,9 @@ class TrainingSession:
         if not {"fit_parents", "validation_parents"} <= provenance.keys():
             raise ValueError("initial model lacks training/validation parent provenance")
         lineage = {key: provenance[key] for key in ("fit_parents", "validation_parents")}
-        final_parents = {e.parent_specimen_id for e in dataset.select("physical_holdout")}
+        final_parents = {e.parent_specimen_id for e in dataset.entries if e.split in ("physical_holdout", "uncertainty_calibration")}
         if final_parents & (set(lineage["fit_parents"]) | set(lineage["validation_parents"])):
-            raise ValueError("a final physical holdout was already used by the initial model")
+            raise ValueError("a final holdout/calibration parent was already used by the initial model")
         session = cls(dataset, model.config, config, das_settings, guard=guard, initial_model=model,
                       frozen_scale=scale, prior_lineage=lineage)
         session.parent_checkpoint_sha256 = sha256_file(model_path)

@@ -17,6 +17,10 @@ plate or complete simulated defect scenario. All variants/repeated scans of
 one parent must share one split. `validate_specimen_splits` checks this across
 a proposed dataset. Simulation uses train/validation/test. Physical specimens
 use calibration/adaptation/physical_holdout; final holdouts cannot be adapted.
+Both domains can additionally reserve `uncertainty_calibration` parents for
+post-hoc prediction intervals. This is separate from model-selection validation
+and the physical intact-control role. Such parents never enter model/policy
+fitting or selection; see uncertainty-calibration.md.
 The fingerprinted dataset manifest and training/evaluation entrypoints enforce
 these roles. A metadata field alone does not prove that
 an external source was physically validated.

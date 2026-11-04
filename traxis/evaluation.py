@@ -107,6 +107,9 @@ def replay_episode(bank: WaveformBank, reconstructor: "Reconstructor", policy, b
                          "parent_specimen_id": bank.metadata.parent_specimen_id, "split": bank.metadata.split,
                          "domain": bank.metadata.domain, "plate": asdict(bank.plate),
                          "sensors_xy_m": bank.sensors_xy_m.tolist(), "catalog_size": total,
+                         "observable": bank.metadata.observable, "reference_shape": list(bank.depth_mm.shape),
+                         "acquisition_signature": canonical_hash({"plate": asdict(bank.plate), "sensors": bank.sensors_xy_m.tolist(),
+                                                                   "actions": [asdict(a) for a in bank.actions], "time_s": bank.time_s.tolist()}),
                          "data_validation_status": bank.metadata.validation_status,
                          "initial_actions": list(initial_actions), "threshold_mm": threshold_mm,
                          "rows": rows, "wall_seconds": time.perf_counter() - started,
@@ -118,7 +121,7 @@ def freeze_evaluation_plan(path: Path, dataset: BankDataset, model_paths: list[P
                             budgets: tuple[int, ...], initial_actions: tuple[int, ...] = (),
                             threshold_mm: float = 0.1, policy_specs: tuple[dict, ...] = ({"kind": "fixed"},),
                             ensemble: bool = False) -> dict:
-    if split not in ("validation", "test", "physical_holdout") or not dataset.select(split):
+    if split not in ("validation", "test", "physical_holdout", "uncertainty_calibration") or not dataset.select(split):
         raise ValueError("choose a nonempty evaluation split")
     positive("defect threshold", threshold_mm)
     if not model_paths or not policy_specs or not budgets or any(type(n) is not int or n < 0 for n in budgets):
@@ -247,7 +250,7 @@ def summarize_episodes(episodes: list[dict]) -> list[dict]:
 
 
 def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
-                           guard: ResourceGuard | None = None) -> dict:
+                           guard: ResourceGuard | None = None, *, calibration_plan_path: Path | None = None) -> dict:
     import torch
     from traxis.das_baseline import DASDepthCalibration
     from traxis.imaging import DASSettings
@@ -256,6 +259,17 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
     from traxis.reconstruction import EnsembleReconstructor, NeuralReconstructor
     from traxis.adaptive import ActorCriticPolicy, UncertaintyPathPolicy
     plan = json.loads(Path(plan_path).read_text(encoding="utf-8-sig"))
+    calibration_plan_fingerprint = None
+    if plan["split"] == "uncertainty_calibration":
+        from traxis.uncertainty import _read_fingerprinted
+        if calibration_plan_path is None:
+            raise ValueError("freeze interval settings before replay and supply the calibration plan")
+        declared = _read_fingerprinted(calibration_plan_path, "frozen_uncertainty_calibration_plan")
+        if declared["evaluation_plan_fingerprint"] != plan["fingerprint"]:
+            raise ValueError("calibration settings were frozen for a different replay plan")
+        calibration_plan_fingerprint = declared["fingerprint"]
+    elif calibration_plan_path is not None:
+        raise ValueError("calibration settings apply only to reserved calibration replay")
     output = Path(output)
     if output.exists() and any(output.iterdir()):
         raise FileExistsError("evaluation run needs a new or empty output directory")
@@ -301,14 +315,17 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
     report = {"schema_version": 2, "kind": "frozen_offline_replay", "passed": False, "plan_fingerprint": plan["fingerprint"],
               "dataset_fingerprint": dataset.fingerprint,
               "plan": plan, "predictors": {f"model-{i}": d for i, d in enumerate(descriptors)},
+              "calibration_plan_fingerprint": calibration_plan_fingerprint,
               "runtime": {"python": platform.python_version(), "platform": platform.platform(),
                           "processor": platform.processor(), "torch": str(torch.__version__),
                           "torch_cpu_threads": torch.get_num_threads(), "numpy": np.__version__},
               "debug_only": any(p.get("mode") != "research" for p in provenances)
               or any(p.provenance.get("mode") != "research" for p in learned_policies.values())
-              or any(e.validation_status == "plumbing_only" for e in dataset.select(plan["split"])),
+              or any(e.validation_status == "plumbing_only" or e.observable == "arbitrary" for e in dataset.select(plan["split"])),
               "episodes": episodes}
     try:
+        if calibration_plan_fingerprint and declared["mode"] == "research" and report["debug_only"]:
+            raise ValueError("research calibration rejects debug models or plumbing-only data")
         for entry in dataset.select(plan["split"]):
             bank = dataset.read(entry)
             for model_index, predictor in enumerate(predictors):

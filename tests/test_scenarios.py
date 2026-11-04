@@ -30,6 +30,22 @@ class ScenarioTests(unittest.TestCase):
         self.assertNotEqual(changed.specimen_id, base.specimen_id)
         self.assertNotEqual(changed.nuisance, base.nuisance)
 
+    def test_calibration_reservation_only_reassigns_training_parents(self):
+        settings = SamplingSettings(count=100)
+        original = sample_scenarios(settings)
+        reserved = sample_scenarios(replace(settings, uncertainty_calibration_fraction=.2))
+        selected = [s for s in reserved if s.split == "uncertainty_calibration"]
+        self.assertTrue(selected)
+        for a, b in zip(original, reserved):
+            self.assertEqual(a.parent_specimen_id, b.parent_specimen_id)
+            self.assertEqual(a.recesses, b.recesses)
+            self.assertEqual(a.nuisance, b.nuisance)
+            if b.split == "uncertainty_calibration":
+                self.assertEqual(a.split, "train")
+            else:
+                self.assertEqual(a.split, b.split)
+        self.assertEqual(nuisance_variant(selected[0], settings, 15).split, "uncertainty_calibration")
+
     def test_plan_roundtrip_fingerprint_and_split_checks(self):
         with tempfile.TemporaryDirectory() as directory:
             scenarios = sample_scenarios(SamplingSettings(count=20))

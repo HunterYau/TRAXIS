@@ -114,3 +114,9 @@ error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.
 Figures retain physical units and debug status; reporting performs no training.
 
+The [reserved-parent calibration workflow](docs/uncertainty-calibration.md)
+fits and assesses post-hoc prediction intervals for a frozen ensemble and
+inspection protocol. It requires separate calibration plates and matching
+distribution assumptions; the current debug models do not produce useful
+research uncertainty estimates.
+

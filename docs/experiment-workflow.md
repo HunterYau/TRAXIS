@@ -124,7 +124,7 @@ with synthetic role fixtures; no actual physical adaptation has been run.
 
 ## Remaining work
 
-Converged adaptive-policy studies, uncertainty calibration,
+Converged adaptive-policy studies, useful independent uncertainty calibration,
 automatic ablation/ensemble orchestration, research-quality scenario/response
 generation and intact physical validation remain open. Passing
 these workflow tests does not select a scientifically superior model.
@@ -132,6 +132,10 @@ these workflow tests does not select a scientifically superior model.
 Scientific plotting and compute/parameter tables are implemented through
 `report`; see scientific-reporting.md. New schema-2 evaluations bind geometry,
 predictor details, runtime and saved-map checksums into the result fingerprint.
+
+Reserved-parent interval fitting/assessment is implemented; see
+uncertainty-calibration.md for the separate role, predeclared settings and
+coverage assumptions. The debug fixture pilot did not yield useful uncertainty.
 
 Adaptive RL training/recovery and frozen RL/uncertainty-path comparisons are
 implemented; see adaptive-sensing.md. The fixed-budget RL objective and the

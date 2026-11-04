@@ -75,6 +75,13 @@ parents represent separate material/noise realizations, not repeated physical
 measurements claimed as independent plates. Physical scans use the explicit
 parent-role workflow instead.
 
+For uncertainty calibration, the study config reserves an expected 10% of all
+parents from the training allocation, with validation/final-test identities
+unchanged. The sampler's default reservation is zero; it is an explicit study
+setting. Reserved parents receive `uncertainty_calibration`, retain that role
+under variants, and cannot be used for model or policy selection. See
+uncertainty-calibration.md for the single-scan protocol and assumptions.
+
 Plan files are fingerprinted and declare themselves unsolved. A recipe does
 not certify mesh convergence, PZT voltage fidelity or physical agreement.
 

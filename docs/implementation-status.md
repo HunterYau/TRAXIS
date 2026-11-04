@@ -21,7 +21,7 @@ validation rather than inventing those outcomes.
 | A: waveform CNN, attention, spatial decoder | Implemented with geometry/sampling/amplitude context, partial masks and empty-state handling; forward/backward and serialization checked. Research training pending |
 | B: DAS plus residual U-Net | Implemented with residual encoder, spatial skip connections and waveform-context fusion; forward/backward and serialization checked. Research training pending |
 | C: DAS-only | Residual-envelope imaging plus training-only scalar depth calibration implemented/tested; calibrated physical accuracy remains unverified |
-| Ensemble uncertainty and calibration | Distinct-member inference and error/coverage diagnostics implemented; independent-seed frozen evaluation supported. Confidence calibration pending |
+| Ensemble uncertainty and calibration | Frozen independent-member inference and reserved-parent split-conformal interval workflow implemented/tested; useful coverage/precision and exchangeability remain unverified |
 | Random, diagonal/edge fixed, RL adaptive | Random/fixed, masked reward-to-go actor/value RL, and a separate uncertainty-path comparator implemented/tested. No converged RL or physical performance claim |
 | Equal-budget replay and fair architecture comparisons | Frozen plan/actual checkpoint lineage checks, matched initial actions/budgets, repeated random policies, dense references and parent-level summaries implemented/tested; research results pending |
 | 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
@@ -123,7 +123,7 @@ three held-out fixture parents. See experiment-workflow.md for commands and
 remaining limits. No full research training cycle or real physical run occurred.
 
 Still pending: randomized research-quality scenario/response generation and
-physics approval, converged adaptive-policy experiments, uncertainty calibration, automatic matched
+physics approval, converged adaptive-policy experiments, useful independent uncertainty calibration, automatic matched
 ablation/ensemble orchestration, physical measurements, and a final
 acceptance audit.
 
@@ -198,4 +198,33 @@ was unavailable. Replay processes stayed below 341 MiB sampled RSS. These
 are software fixtures and single timing observations, not research results.
 The compact record is docs/evidence/reporting-debug.json. Calibrated confidence,
 matched research ablation orchestration and physical validation remain open.
+
+## Reserved-parent calibration checks
+
+Separate `uncertainty_calibration` parents are excluded from model/policy
+fitting and selection. Interval settings bind to a frozen replay plan before
+calibration acquisition/reconstruction. The post-hoc score takes each parent's
+worst normalized depth error over reference cells, saved budgets and policies.
+The corrected order statistic, physical clipping, zero-spread floor, small-n
+full-range result, changed-protocol rejection and parent reuse protections are
+tested. See uncertainty-calibration.md for the exact scope and assumptions.
+
+All 121 tests and dependency checks pass. A monitored pilot performed zero
+training updates, 18 reserved-fixture and four held-out replay episodes in
+19.88 seconds. Sampled RSS reached 352.6 MiB, system RAM 81.4%, GPU memory
+1,669/8,192 MiB and GPU temperature 48 C. It used CPU inference; CPU temperature
+was unavailable. The dedicated freeze/fit/assess CLI sequence was also checked
+on the saved replay without further inference. Evidence is committed in
+docs/evidence/calibration-debug.json.
+
+The pilot does **not** establish usable calibration: intervals averaged
+2.990 mm in 3 mm stock, with one of two held-out fixture parents jointly
+covered versus a nominal 90% target. The workflow's software `passed` flag is
+separate from `empirical_coverage_meets_nominal=false`. Settings were not tuned
+to improve those final outcomes. Independent exchangeable calibration data,
+research-quality models and useful coverage/precision remain unverified.
+
+The revised study configuration plans 603 train, 156 validation, 92 uncertainty
+calibration and 149 final-test parents for seed 2026. These are still 1,000
+unsolved recipes, not a generated or approved training dataset.
 

@@ -46,7 +46,8 @@ class BankMetadata:
                 raise ValueError(f"{name} must be a nonempty string")
         if self.domain not in ("simulation", "physical"):
             raise ValueError("domain must be simulation or physical")
-        permitted = ("train", "validation", "test") if self.domain == "simulation" else ("calibration", "adaptation", "physical_holdout")
+        permitted = (("train", "validation", "test", "uncertainty_calibration") if self.domain == "simulation"
+                     else ("calibration", "adaptation", "physical_holdout", "uncertainty_calibration"))
         if self.split not in permitted:
             raise ValueError("split is not permitted for this domain")
         if self.observable not in ("displacement_m", "velocity_m_s", "voltage_v", "arbitrary"):
