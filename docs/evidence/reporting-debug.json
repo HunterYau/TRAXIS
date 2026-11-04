@@ -1,0 +1,351 @@
+﻿{
+    "kind":  "scientific_reporting_software_pilot",
+    "debug_only":  true,
+    "tests_passed":  110,
+    "further_training_updates_in_replay_and_reporting":  0,
+    "note":  "Existing debug checkpoints and analytic fixtures; rendering and software checks only, no architecture superiority or physical accuracy claim.",
+    "evaluations":  [
+                        {
+                            "name":  "comparison",
+                            "passed":  true,
+                            "debug_only":  true,
+                            "episodes":  18,
+                            "independent_parents":  2,
+                            "plan_fingerprint":  "77ee8c7e7ed1550a5026148d13d5dc56931934d0f89ffe50be57e7ec7cba9761",
+                            "inference_source_hash":  "5613375e4ea2c827561cfb1c280f039f4401738c8b618eb11f551eed489ce799",
+                            "runtime":  {
+                                            "python":  "3.12.10",
+                                            "platform":  "Windows-11-10.0.26300-SP0",
+                                            "processor":  "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+                                            "torch":  "2.15.0+cpu",
+                                            "torch_cpu_threads":  1,
+                                            "numpy":  "2.5.4"
+                                        },
+                            "predictors":  {
+                                               "model-0":  {
+                                                               "kind":  "neural",
+                                                               "neural_parameters":  27385,
+                                                               "config":  {
+                                                                              "architecture":  "direct",
+                                                                              "output_size":  128,
+                                                                              "width":  8,
+                                                                              "embedding":  32,
+                                                                              "heads":  4,
+                                                                              "extra_decoder_blocks":  0,
+                                                                              "max_depth_mm":  3.0
+                                                                          },
+                                                               "device":  "cpu",
+                                                               "artifact_sha256":  "daba7d2d5e6d5776de200f5662cc597575d053d37165c77de69dab4f94e6dbdd",
+                                                               "artifact_bytes":  131997,
+                                                               "seed":  101,
+                                                               "mode":  "debug"
+                                                           },
+                                               "model-1":  {
+                                                               "kind":  "neural",
+                                                               "neural_parameters":  45217,
+                                                               "config":  {
+                                                                              "architecture":  "das_unet",
+                                                                              "output_size":  128,
+                                                                              "width":  8,
+                                                                              "embedding":  32,
+                                                                              "heads":  4,
+                                                                              "extra_decoder_blocks":  0,
+                                                                              "max_depth_mm":  3.0
+                                                                          },
+                                                               "device":  "cpu",
+                                                               "artifact_sha256":  "82cc9449a5efddb8ebdfc1ba3aabb6194cb3f7af59accebdd66b98668d6ad6e0",
+                                                               "artifact_bytes":  207411,
+                                                               "seed":  101,
+                                                               "mode":  "debug"
+                                                           },
+                                               "model-2":  {
+                                                               "kind":  "das",
+                                                               "neural_parameters":  0,
+                                                               "calibrated_scalar_parameters":  1,
+                                                               "config":  {
+                                                                              "group_velocity_m_s":  {
+                                                                                                         "100000.0":  2500.0
+                                                                                                     },
+                                                                              "time_offset_s":  2.5E-05,
+                                                                              "shape":  [
+                                                                                            128,
+                                                                                            128
+                                                                                        ]
+                                                                          },
+                                                               "device":  "cpu",
+                                                               "artifact_sha256":  "38c0c3b976ac059e8f72e7d8dcd5ddb283d9de2c47ea3683d80093f35e37db2a",
+                                                               "artifact_bytes":  695,
+                                                               "seed":  37,
+                                                               "mode":  "debug"
+                                                           }
+                                           },
+                            "resources":  {
+                                              "limits":  {
+                                                             "max_seconds":  60,
+                                                             "max_rss_mib":  1024,
+                                                             "max_system_memory_percent":  92,
+                                                             "min_available_mib":  768,
+                                                             "max_gpu_memory_percent":  90,
+                                                             "max_gpu_temperature_c":  80,
+                                                             "max_cpu_temperature_c":  90
+                                                         },
+                                              "sampled_max_rss_mib":  327.95703125,
+                                              "sampled_max_system_memory_percent":  80.5,
+                                              "gpu_samples":  [
+                                                                  {
+                                                                      "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                                                      "total_mib":  8192.0,
+                                                                      "used_mib":  1666.0,
+                                                                      "temperature_c":  47.0
+                                                                  }
+                                                              ],
+                                              "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                                          }
+                        },
+                        {
+                            "name":  "ensemble",
+                            "passed":  true,
+                            "debug_only":  true,
+                            "episodes":  6,
+                            "independent_parents":  2,
+                            "plan_fingerprint":  "6a8cc3068c8e1b81c320f3f7677c50ecfee8fbcb5073b1d0e85451c5ebbfe802",
+                            "inference_source_hash":  "5613375e4ea2c827561cfb1c280f039f4401738c8b618eb11f551eed489ce799",
+                            "runtime":  {
+                                            "python":  "3.12.10",
+                                            "platform":  "Windows-11-10.0.26300-SP0",
+                                            "processor":  "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+                                            "torch":  "2.15.0+cpu",
+                                            "torch_cpu_threads":  1,
+                                            "numpy":  "2.5.4"
+                                        },
+                            "predictors":  {
+                                               "model-0":  {
+                                                               "kind":  "ensemble",
+                                                               "members":  [
+                                                                               {
+                                                                                   "kind":  "neural",
+                                                                                   "neural_parameters":  27385,
+                                                                                   "config":  {
+                                                                                                  "architecture":  "direct",
+                                                                                                  "output_size":  128,
+                                                                                                  "width":  8,
+                                                                                                  "embedding":  32,
+                                                                                                  "heads":  4,
+                                                                                                  "extra_decoder_blocks":  0,
+                                                                                                  "max_depth_mm":  3.0
+                                                                                              },
+                                                                                   "device":  "cpu",
+                                                                                   "artifact_sha256":  "daba7d2d5e6d5776de200f5662cc597575d053d37165c77de69dab4f94e6dbdd",
+                                                                                   "artifact_bytes":  131997,
+                                                                                   "seed":  101,
+                                                                                   "mode":  "debug"
+                                                                               },
+                                                                               {
+                                                                                   "kind":  "neural",
+                                                                                   "neural_parameters":  27385,
+                                                                                   "config":  {
+                                                                                                  "architecture":  "direct",
+                                                                                                  "output_size":  128,
+                                                                                                  "width":  8,
+                                                                                                  "embedding":  32,
+                                                                                                  "heads":  4,
+                                                                                                  "extra_decoder_blocks":  0,
+                                                                                                  "max_depth_mm":  3.0
+                                                                                              },
+                                                                                   "device":  "cpu",
+                                                                                   "artifact_sha256":  "1b112e57b03f83990c502c1a18ee436b7957fa59b363ddb06897d020ffdcae5c",
+                                                                                   "artifact_bytes":  131997,
+                                                                                   "seed":  202,
+                                                                                   "mode":  "debug"
+                                                                               }
+                                                                           ],
+                                                               "neural_parameters":  54770,
+                                                               "device":  "cpu",
+                                                               "config":  {
+                                                                              "architecture":  "direct",
+                                                                              "output_size":  128,
+                                                                              "width":  8,
+                                                                              "embedding":  32,
+                                                                              "heads":  4,
+                                                                              "extra_decoder_blocks":  0,
+                                                                              "max_depth_mm":  3.0
+                                                                          }
+                                                           }
+                                           },
+                            "resources":  {
+                                              "limits":  {
+                                                             "max_seconds":  60,
+                                                             "max_rss_mib":  1024,
+                                                             "max_system_memory_percent":  92,
+                                                             "min_available_mib":  768,
+                                                             "max_gpu_memory_percent":  90,
+                                                             "max_gpu_temperature_c":  80,
+                                                             "max_cpu_temperature_c":  90
+                                                         },
+                                              "sampled_max_rss_mib":  340.1796875,
+                                              "sampled_max_system_memory_percent":  80.8,
+                                              "gpu_samples":  [
+                                                                  {
+                                                                      "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                                                      "total_mib":  8192.0,
+                                                                      "used_mib":  1666.0,
+                                                                      "temperature_c":  47.0
+                                                                  }
+                                                              ],
+                                              "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                                          }
+                        }
+                    ],
+    "report":  {
+                   "kind":  "scientific_replay_report",
+                   "passed":  true,
+                   "debug_only":  true,
+                   "files":  [
+                                 "error-versus-records.png",
+                                 "error-versus-records.svg",
+                                 "run-0-case-00009-records-2-maps.png",
+                                 "run-0-case-00009-records-2-maps.svg",
+                                 "run-0-case-00009-records-2-surfaces.png",
+                                 "run-0-case-00009-records-2-surfaces.svg",
+                                 "run-0-case-00009-records-28-maps.png",
+                                 "run-0-case-00009-records-28-maps.svg",
+                                 "run-0-case-00009-records-28-surfaces.png",
+                                 "run-0-case-00009-records-28-surfaces.svg",
+                                 "run-1-case-00003-records-2-maps.png",
+                                 "run-1-case-00003-records-2-maps.svg",
+                                 "run-1-case-00003-records-2-surfaces.png",
+                                 "run-1-case-00003-records-2-surfaces.svg",
+                                 "run-1-case-00003-records-28-maps.png",
+                                 "run-1-case-00003-records-28-maps.svg",
+                                 "run-1-case-00003-records-28-surfaces.png",
+                                 "run-1-case-00003-records-28-surfaces.svg",
+                                 "summary.csv",
+                                 "per-parent.csv",
+                                 "computation.csv",
+                                 "index.html"
+                             ],
+                   "selected_cases":  [
+                                          {
+                                              "run":  "ABC",
+                                              "case":  9,
+                                              "records":  2,
+                                              "domain":  "simulation",
+                                              "split":  "test",
+                                              "data_validation_status":  "plumbing_only",
+                                              "native_prediction_shape":  [
+                                                                              128,
+                                                                              128
+                                                                          ],
+                                              "nominal_thickness_mm":  3.0
+                                          },
+                                          {
+                                              "run":  "ABC",
+                                              "case":  9,
+                                              "records":  28,
+                                              "domain":  "simulation",
+                                              "split":  "test",
+                                              "data_validation_status":  "plumbing_only",
+                                              "native_prediction_shape":  [
+                                                                              128,
+                                                                              128
+                                                                          ],
+                                              "nominal_thickness_mm":  3.0
+                                          },
+                                          {
+                                              "run":  "ensemble-A",
+                                              "case":  3,
+                                              "records":  2,
+                                              "domain":  "simulation",
+                                              "split":  "test",
+                                              "data_validation_status":  "plumbing_only",
+                                              "native_prediction_shape":  [
+                                                                              128,
+                                                                              128
+                                                                          ],
+                                              "nominal_thickness_mm":  3.0
+                                          },
+                                          {
+                                              "run":  "ensemble-A",
+                                              "case":  3,
+                                              "records":  28,
+                                              "domain":  "simulation",
+                                              "split":  "test",
+                                              "data_validation_status":  "plumbing_only",
+                                              "native_prediction_shape":  [
+                                                                              128,
+                                                                              128
+                                                                          ],
+                                              "nominal_thickness_mm":  3.0
+                                          }
+                                      ],
+                   "source_sha256":  "c5afe2fc8a525b5fce140faee8220171cd5a5e718cfadf7a10222b8a147b444d",
+                   "matplotlib_version":  "3.11.2",
+                   "sources":  [
+                                   {
+                                       "label":  "ABC",
+                                       "evaluation_sha256":  "027ff2da975c943292632aeafcfd7192348b10880928cb22b15221ee2294895d",
+                                       "plan_fingerprint":  "77ee8c7e7ed1550a5026148d13d5dc56931934d0f89ffe50be57e7ec7cba9761"
+                                   },
+                                   {
+                                       "label":  "ensemble-A",
+                                       "evaluation_sha256":  "1ef184d9d0a3625316bf75eb9c842ee4905f9068f319e18f2c440fd3b3cf3ea6",
+                                       "plan_fingerprint":  "6a8cc3068c8e1b81c320f3f7677c50ecfee8fbcb5073b1d0e85451c5ebbfe802"
+                                   }
+                               ],
+                   "note":  "Offline replay only. Spread is uncalibrated. Cases use explicit file order, not ranking by error.",
+                   "file_sha256":  {
+                                       "error-versus-records.png":  "f3fda333d38ed417d82c3dcee9371fb20984d571a0ac6371f33ad61c3f3e32a8",
+                                       "error-versus-records.svg":  "9a1ccffcaaaddf8379100a3ac150ac8a7f51091b8e6a44f966df3d9950b80249",
+                                       "run-0-case-00009-records-2-maps.png":  "da3cb9f1472195e6ded0b44e90e740d013a4be8fc4dcc47007ef75ddaefd4574",
+                                       "run-0-case-00009-records-2-maps.svg":  "7872307dbcde2127f999d4063c38a1871ae8d0162668109e8b97bdee9dda94e4",
+                                       "run-0-case-00009-records-2-surfaces.png":  "1f6d6a28ade3affce415fe768f63a2fda6b8c0385a0b6d9b94ab376b1794a003",
+                                       "run-0-case-00009-records-2-surfaces.svg":  "9624ca3c11135e2691c9383488a6f2f79ef3c2c9e74125286d47b7b1f134d4f8",
+                                       "run-0-case-00009-records-28-maps.png":  "d36da35c48e7284bfe4b5127d434b444c99054ff4509b5680d025e030d838dbe",
+                                       "run-0-case-00009-records-28-maps.svg":  "26131819226bf38d86e7b20c88509f1a2b51bdd346bc8be42d84f679efd6094e",
+                                       "run-0-case-00009-records-28-surfaces.png":  "91e89fd638bd3f10ac565bf92a8eb2c173cb45df3643f2e1de98f6b9ce573950",
+                                       "run-0-case-00009-records-28-surfaces.svg":  "543ccdd621d313847a2c2a0c9343f25144de852637fe26ba5c65a5e21ce00778",
+                                       "run-1-case-00003-records-2-maps.png":  "1ef3935642997a5ecdbec7a1b5270997ecda523c490516ddb7de938e82d37681",
+                                       "run-1-case-00003-records-2-maps.svg":  "ee0fd6f92a1b3e8552eb23f3286e3ceacb7ecc48bb53d5d207c4747b92f58e81",
+                                       "run-1-case-00003-records-2-surfaces.png":  "d25b99d4f831ad34a167fc3c309fecd2846a6fadc7f3ae3d3e933a903386d893",
+                                       "run-1-case-00003-records-2-surfaces.svg":  "27acb830cdd6f7c8958813507d93d7e04056a1cf0bcc682fb4bfa8175e6c6ee5",
+                                       "run-1-case-00003-records-28-maps.png":  "654ce3b4ba44a087be2c87918c054f57a4818bc109257ee57f79861fb0419989",
+                                       "run-1-case-00003-records-28-maps.svg":  "715fabb99f6a25aae24c7e83372f857ccc0128da13b9bea37964d5f404d78ffe",
+                                       "run-1-case-00003-records-28-surfaces.png":  "61c226950dc3e5ba9593cff98195cf241eaeb007e68d19aa1d69cbe82739d9d4",
+                                       "run-1-case-00003-records-28-surfaces.svg":  "c2091414ebdc40ec257025cfefb54270956f860b28b8823ad25e01821d2fdd27",
+                                       "summary.csv":  "6060eeca31bb99fa09e9833fa47a212db34d905d6888adbdac5d155141bd0d60",
+                                       "per-parent.csv":  "b2afe08fadbf91e366add8efc046d6ee430085a970c2d9eb7218fe9f8214a036",
+                                       "computation.csv":  "31e7b78c323d0708800d218c577ffdb34fe6969b5dc1d7a750e2ee7a9658813a",
+                                       "index.html":  "59ff5a6feb32b949f812861e6f0308952efd54d27d5c6cd7d2a684fbb5f1dfbb"
+                                   },
+                   "wall_seconds":  12.173263200034853,
+                   "resources":  {
+                                     "limits":  {
+                                                    "max_seconds":  60,
+                                                    "max_rss_mib":  1024,
+                                                    "max_system_memory_percent":  92,
+                                                    "min_available_mib":  768,
+                                                    "max_gpu_memory_percent":  90,
+                                                    "max_gpu_temperature_c":  80,
+                                                    "max_cpu_temperature_c":  90
+                                                },
+                                     "sampled_max_rss_mib":  178.01171875,
+                                     "sampled_max_system_memory_percent":  80.5,
+                                     "gpu_samples":  [
+                                                         {
+                                                             "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                                             "total_mib":  8192.0,
+                                                             "used_mib":  1666.0,
+                                                             "temperature_c":  47.0
+                                                         }
+                                                     ],
+                                     "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                                 }
+               },
+    "visual_review":  [
+                          "curve legend/footer separated",
+                          "physical x/y and depth units",
+                          "shared depth/error scales",
+                          "uncalibrated ensemble spread label",
+                          "2.5D display averaging and vertical exaggeration label"
+                      ]
+}

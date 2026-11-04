@@ -1,9 +1,11 @@
 """Equal-record-budget replay; labels remain on the evaluator side."""
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
+import platform
 import time
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -11,9 +13,11 @@ from traxis.bank import ReplayEnvironment, WaveformBank
 from traxis.config import positive
 from traxis.dataset import BankDataset
 from traxis.metrics import depth_metrics, resample_cell_map, uncertainty_diagnostics
-from traxis.reconstruction import Reconstructor
 from traxis.resources import ResourceGuard
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
+
+if TYPE_CHECKING:
+    from traxis.reconstruction import Reconstructor
 
 
 def _inference_source_hash():
@@ -34,10 +38,11 @@ class ReplayResult:
             raise FileExistsError("evaluation output directory must be new or empty")
         directory.mkdir(parents=True, exist_ok=True)
         atomic_write(directory / "maps.npz", lambda stream: np.savez_compressed(stream, **self.maps))
+        self.report["maps_sha256"] = sha256_file(directory / "maps.npz")
         write_json(directory / "metrics.json", self.report)
 
 
-def replay_episode(bank: WaveformBank, reconstructor: Reconstructor, policy, budgets: tuple[int, ...],
+def replay_episode(bank: WaveformBank, reconstructor: "Reconstructor", policy, budgets: tuple[int, ...],
                     *, initial_actions: tuple[int, ...] = (), threshold_mm: float = 0.1,
                     guard: ResourceGuard | None = None) -> ReplayResult:
     """Dense reconstruction is a reference prediction, never defect ground truth.
@@ -67,11 +72,14 @@ def replay_episode(bank: WaveformBank, reconstructor: Reconstructor, policy, bud
         observation = env.state()
         tick = time.perf_counter()
         reconstruction = reconstructor.predict(observation)
-        reconstruction_seconds += time.perf_counter() - tick
+        inference_seconds = time.perf_counter() - tick
+        reconstruction_seconds += inference_seconds
         if observation.count in requested:
             metrics = depth_metrics(reconstruction.depth_mm, bank.depth_mm, bank.plate, threshold_mm)
             row = {"records": observation.count, "action_indices": selected.copy(), "metrics": metrics,
                    "reconstruction_seconds_cumulative": reconstruction_seconds,
+                   "inference_seconds": inference_seconds,
+                   "inference_calls_cumulative": observation.count - len(initial_actions) + 1,
                    "selector_seconds_cumulative": selection_seconds,
                    "unique_excitation_requests": len({(bank.actions[i].transmitter, bank.actions[i].frequency_hz) for i in selected})}
             maps[f"depth_{observation.count}_mm"] = reconstruction.depth_mm.copy()
@@ -97,6 +105,8 @@ def replay_episode(bank: WaveformBank, reconstructor: Reconstructor, policy, bud
         row["within_10_percent_of_dense"] = error <= 1.1 * dense_error if dense_error > 1e-8 else None
     return ReplayResult({"kind": "offline_waveform_replay", "specimen_id": bank.metadata.specimen_id,
                          "parent_specimen_id": bank.metadata.parent_specimen_id, "split": bank.metadata.split,
+                         "domain": bank.metadata.domain, "plate": asdict(bank.plate),
+                         "sensors_xy_m": bank.sensors_xy_m.tolist(), "catalog_size": total,
                          "data_validation_status": bank.metadata.validation_status,
                          "initial_actions": list(initial_actions), "threshold_mm": threshold_mm,
                          "rows": rows, "wall_seconds": time.perf_counter() - started,
@@ -193,18 +203,28 @@ def validate_selector_provenance(plan: dict, dataset: BankDataset, provenance: d
         raise ValueError("evaluation initial observations differ from the RL training protocol")
 
 
+def policy_group(spec: dict) -> str:
+    """Pool random repeats, while preserving distinct learned policy artifacts."""
+    if spec["kind"] == "rl":
+        return "rl-" + spec["sha256"][:12]
+    if spec["kind"] == "uncertainty_path":
+        return "uncertainty_path-" + str(spec.get("path_samples", 16))
+    return spec["kind"]
+
+
 def summarize_episodes(episodes: list[dict]) -> list[dict]:
     """Average repeated scans/seeds within parents before across-plate summaries."""
     grouped = {}
     names = ("mae_mm", "rmse_mm", "defect_region_mae_mm", "dice", "iou", "centroid_error_mm",
-             "false_positive_area_mm2", "loss_volume_error_mm3")
+             "false_positive_area_mm2", "loss_volume_error_mm3", "intact_region_mae_mm",
+             "absolute_excess_mae_mm", "relative_mae_to_dense")
     for episode in episodes:
         for row in episode["rows"]:
-            key = (episode["predictor"], episode["policy"]["kind"], row["records"])
+            key = (episode["predictor"], policy_group(episode["policy"]), row["records"])
             parent = grouped.setdefault(key, {}).setdefault(episode["parent_specimen_id"], {})
             scan = parent.setdefault(episode["specimen_id"], {name: [] for name in names})
             for name in names:
-                value = row["metrics"][name]
+                value = row.get(name) if name in ("absolute_excess_mae_mm", "relative_mae_to_dense") else row["metrics"].get(name)
                 if value is not None:
                     scan[name].append(value)
     summaries = []
@@ -228,6 +248,7 @@ def summarize_episodes(episodes: list[dict]) -> list[dict]:
 
 def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
                            guard: ResourceGuard | None = None) -> dict:
+    import torch
     from traxis.das_baseline import DASDepthCalibration
     from traxis.imaging import DASSettings
     from traxis.models import load_model
@@ -239,7 +260,7 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
     if output.exists() and any(output.iterdir()):
         raise FileExistsError("evaluation run needs a new or empty output directory")
     output.mkdir(parents=True, exist_ok=True)
-    predictors, provenances = [], []
+    predictors, provenances, descriptors = [], [], []
     # Load the actual bound artifacts; callers cannot substitute provenance.
     for artifact in plan["models"]:
         if guard:
@@ -249,10 +270,17 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
         if artifact["kind"] == "das":
             predictor = DASDepthCalibration.load(Path(artifact["path"]))
             provenance = predictor.provenance
+            descriptor = {"kind": "das", "neural_parameters": 0, "calibrated_scalar_parameters": 1,
+                          "config": json.loads(json.dumps(asdict(predictor.settings))), "device": "cpu"}
         else:
             model, scale, provenance = load_model(Path(artifact["path"]))
             das = DASSettings.from_dict(provenance["das_settings"]) if provenance.get("das_settings") else None
             predictor = NeuralReconstructor(model, scale, das, guard=guard)
+            descriptor = {"kind": "neural", "neural_parameters": sum(p.numel() for p in model.parameters()),
+                          "config": asdict(model.config), "device": "cpu"}
+        descriptor.update({"artifact_sha256": artifact["sha256"], "artifact_bytes": Path(artifact["path"]).stat().st_size,
+                           "seed": provenance.get("seed"), "mode": provenance.get("mode")})
+        descriptors.append(descriptor)
         predictors.append(predictor)
         provenances.append(provenance)
     validate_evaluation_plan(plan, dataset, provenances)
@@ -260,6 +288,9 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
         if any(a["kind"] != "neural" for a in plan["models"]) or len({p.get("seed") for p in provenances}) != len(provenances):
             raise ValueError("ensembles require neural models with distinct recorded initialization seeds")
         predictors = [EnsembleReconstructor(predictors)]
+        descriptors = [{"kind": "ensemble", "members": descriptors,
+                        "neural_parameters": sum(d["neural_parameters"] for d in descriptors),
+                        "device": "cpu", "config": descriptors[0]["config"]}]
     learned_policies = {}
     for i, spec in enumerate(plan["policy_specs"]):
         if spec["kind"] == "rl":
@@ -267,8 +298,12 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
             validate_selector_provenance(plan, dataset, policy.provenance)
             learned_policies[i] = policy
     episodes = []
-    report = {"kind": "frozen_offline_replay", "passed": False, "plan_fingerprint": plan["fingerprint"],
+    report = {"schema_version": 2, "kind": "frozen_offline_replay", "passed": False, "plan_fingerprint": plan["fingerprint"],
               "dataset_fingerprint": dataset.fingerprint,
+              "plan": plan, "predictors": {f"model-{i}": d for i, d in enumerate(descriptors)},
+              "runtime": {"python": platform.python_version(), "platform": platform.platform(),
+                          "processor": platform.processor(), "torch": str(torch.__version__),
+                          "torch_cpu_threads": torch.get_num_threads(), "numpy": np.__version__},
               "debug_only": any(p.get("mode") != "research" for p in provenances)
               or any(p.provenance.get("mode") != "research" for p in learned_policies.values())
               or any(e.validation_status == "plumbing_only" for e in dataset.select(plan["split"])),
@@ -298,5 +333,6 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
         raise
     finally:
         report["resources"] = guard.report() if guard else None
+        report["fingerprint"] = canonical_hash(report)
         write_json(output / "evaluation.json", report)
     return report

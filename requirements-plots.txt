@@ -1,0 +1,2 @@
+# Optional headless scientific figures; installed only in the project venv.
+matplotlib==3.11.2

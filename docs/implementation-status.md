@@ -26,7 +26,7 @@ validation rather than inventing those outcomes.
 | Equal-budget replay and fair architecture comparisons | Frozen plan/actual checkpoint lineage checks, matched initial actions/budgets, repeated random policies, dense references and parent-level summaries implemented/tested; research results pending |
 | 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
 | Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
-| Curves, 2D and 2.5D plots, parameter counts/cost | Pending |
+| Curves, 2D and 2.5D plots, parameter counts/cost | Headless PNG/SVG figures, physical-unit maps/surfaces and parent/compute tables implemented; research results pending |
 | Simulation-only versus physical adaptation | Source-model lineage, frozen unit scale and two-adaptation/three-holdout role workflow tested with fixtures; measured physical adaptation/evaluation pending |
 | Resource bounds and telemetry | CPU-only short pilot completed; cooperative time/RSS/system RAM/GPU guards tested. CPU temperature unavailable on this Windows host |
 | Frequent commits on a project branch | research/elastic-tomography; planning commit followed by tested implementation increments |
@@ -124,7 +124,7 @@ remaining limits. No full research training cycle or real physical run occurred.
 
 Still pending: randomized research-quality scenario/response generation and
 physics approval, converged adaptive-policy experiments, uncertainty calibration, automatic matched
-ablation/ensemble orchestration and plots, physical measurements, and a final
+ablation/ensemble orchestration, physical measurements, and a final
 acceptance audit.
 
 The runnable cache-to-replay pilot completed 18 matched three-method episodes
@@ -178,4 +178,24 @@ to 0.422% on the finest CAD benchmark mesh; this measures geometry only.
 Seven intact and fourteen defective transmitter/frequency solves generated
 the small banks; replay recovery used fourteen cached groups and zero new
 solves. The 1,000 study specimens are unsolved recipes, not a generated dataset.
+
+## Scientific reporting checks
+
+Completed schema-2 evaluations now bind geometry, predictor configurations,
+parameter counts, platform/thread settings and saved-map hashes. The headless
+reporter checks selected maps against their saved metrics and produces
+physical-unit PNG/SVG curves, loss/error/spread maps, 2.5D surfaces and
+parent/compute CSV tables. Distinct learned-policy artifacts stay separate
+in summaries; only random seeds pool as repeats. See scientific-reporting.md.
+
+Current suite: 110 tests pass, including changed-artifact/protocol rejection,
+map/metric disagreement and plotting without importing PyTorch. Dependency
+checks pass. Existing debug checkpoints produced 18 matched A/B/C and six
+ensemble replay episodes with no further training. Nine figure pairs were
+rendered and inspected; the final render took 12.17 seconds with sampled RSS
+178.0 MiB, system RAM 80.5%, GPU usage 1,666/8,192 MiB at 47 C. CPU temperature
+was unavailable. Replay processes stayed below 341 MiB sampled RSS. These
+are software fixtures and single timing observations, not research results.
+The compact record is docs/evidence/reporting-debug.json. Calibrated confidence,
+matched research ablation orchestration and physical validation remain open.
 

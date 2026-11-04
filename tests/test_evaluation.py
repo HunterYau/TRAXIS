@@ -100,3 +100,13 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(summary["per_parent"]["p1"]["mae_mm"], 3)
         self.assertEqual(summary["metrics"]["mae_mm"]["mean"], 5.5)
         self.assertEqual(summary["metrics"]["mae_mm"]["independent_parents"], 2)
+
+    def test_distinct_rl_artifacts_are_not_pooled_as_repeated_random_seeds(self):
+        episodes = []
+        for digest, value in (("a" * 64, 1), ("b" * 64, 3)):
+            episodes.append({"predictor": "A", "policy": {"kind": "rl", "sha256": digest},
+                             "parent_specimen_id": "p1", "specimen_id": "scan1",
+                             "rows": [{"records": 4, "metrics": {"mae_mm": value}}]})
+        summaries = summarize_episodes(episodes)
+        self.assertEqual(len(summaries), 2)
+        self.assertEqual([r["metrics"]["mae_mm"]["mean"] for r in summaries], [1, 3])

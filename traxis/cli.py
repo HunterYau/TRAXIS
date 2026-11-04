@@ -44,10 +44,31 @@ def main() -> None:
     forward.add_argument("--output", type=Path, default=Path("outputs/forward-verification"))
     forward.add_argument("--max-seconds", type=float, default=60)
     forward.add_argument("--max-rss-mib", type=float, default=512)
+    report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
+    report.add_argument("--evaluations", type=Path, nargs="+", required=True)
+    report.add_argument("--labels", nargs="+")
+    report.add_argument("--case-count", type=int, default=1)
+    report.add_argument("--cases", nargs="+", help="explicit run:episode indices, overriding --case-count")
+    report.add_argument("--case-records", type=int, nargs="+")
+    report.add_argument("--output", type=Path, required=True)
+    report.add_argument("--max-seconds", type=float, default=60)
+    report.add_argument("--max-rss-mib", type=float, default=1024)
     add_experiment_commands(sub)
     add_generation_commands(sub)
     args = parser.parse_args()
-    if args.command in ("plan-scenarios", "export-solver-request", "generate-bank"):
+    if args.command == "report":
+        from traxis.reporting import create_report
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            cases = tuple(tuple(int(n) for n in value.split(":")) for value in args.cases) if args.cases else None
+            result = create_report(args.evaluations, args.output, labels=args.labels, case_count=args.case_count,
+                                   case_records=tuple(args.case_records) if args.case_records is not None else None, cases=cases, guard=guard)
+        except Exception as exc:
+            parser.exit(1, f"Report stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": result["passed"], "debug_only": result["debug_only"],
+                          "figures": len([p for p in result["files"] if p.endswith(".png")]),
+                          "index": str(args.output / "index.html")}, indent=2))
+    elif args.command in ("plan-scenarios", "export-solver-request", "generate-bank"):
         from traxis.generation_commands import run_generation_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:

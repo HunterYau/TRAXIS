@@ -126,8 +126,12 @@ with synthetic role fixtures; no actual physical adaptation has been run.
 
 Converged adaptive-policy studies, uncertainty calibration,
 automatic ablation/ensemble orchestration, research-quality scenario/response
-generation, plotting, and intact physical validation remain open. Passing
+generation and intact physical validation remain open. Passing
 these workflow tests does not select a scientifically superior model.
+
+Scientific plotting and compute/parameter tables are implemented through
+`report`; see scientific-reporting.md. New schema-2 evaluations bind geometry,
+predictor details, runtime and saved-map checksums into the result fingerprint.
 
 Adaptive RL training/recovery and frozen RL/uncertainty-path comparisons are
 implemented; see adaptive-sensing.md. The fixed-budget RL objective and the

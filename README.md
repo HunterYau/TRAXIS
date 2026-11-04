@@ -109,3 +109,8 @@ as pilot-only until forward-physics and physical validation pass.
 one reference task with anchored geometry labels and sample times.
 `verify-forward` runs a short CAD-to-elastic-bank pilot without model training.
 
+The [scientific reporting command](docs/scientific-reporting.md) exports
+error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
+parameter counts and compute tables from completed frozen replay results.
+Figures retain physical units and debug status; reporting performs no training.
+
