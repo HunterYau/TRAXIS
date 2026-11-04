@@ -1,0 +1,13 @@
+.venv/
+.idea/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+outputs/
+data/
+checkpoints/
+*.mph
+*.mphbin
+*.log
+
