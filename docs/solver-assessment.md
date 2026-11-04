@@ -4,6 +4,12 @@ Assessment date: 2026-11-03. This is an engineering recommendation based on
 documented capabilities, not a measured head-to-head solver benchmark.
 No commercial solver has been installed, licensed, or run for this project.
 
+A read-only check of the standard 32/64-bit Windows uninstall registries on
+this PC found no COMSOL, Ansys, Abaqus or OnScale entries. This does not rule
+out portable installations, a school license, or a remote machine. Reference
+solver access remains unconfirmed; the software workflow can proceed while
+that is resolved.
+
 ## Recommendation
 
 Use COMSOL Multiphysics as the reference if the necessary modules and license

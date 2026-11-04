@@ -126,3 +126,11 @@ physics approval, adaptive RL, uncertainty calibration, automatic matched
 ablation/ensemble orchestration and plots, physical measurements, and a final
 acceptance audit.
 
+The runnable cache-to-replay pilot completed 18 matched three-method episodes
+and four ensemble episodes in 16.56 seconds under resource monitoring. It
+performed four total debug updates and explicitly labels its fixture metrics
+as non-research results. Two additional tests exercise the actual CLI paths
+for indexing, training/resume, scalar calibration, freezing and evaluation.
+Current suite: 77 tests. See docs/evidence/workflow-debug.json and the
+end-to-end section in experiment-workflow.md for recorded conditions.
+

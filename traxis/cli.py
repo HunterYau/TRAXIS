@@ -29,6 +29,10 @@ def main() -> None:
     models.add_argument("--output", type=Path, default=Path("outputs/model-verification"))
     models.add_argument("--max-seconds", type=float, default=60)
     models.add_argument("--max-rss-mib", type=float, default=1024)
+    workflow = sub.add_parser("verify-workflow", help="short cache-to-replay software pilot; no full training")
+    workflow.add_argument("--output", type=Path, default=Path("outputs/workflow-verification"))
+    workflow.add_argument("--max-seconds", type=float, default=60)
+    workflow.add_argument("--max-rss-mib", type=float, default=1024)
     add_experiment_commands(sub)
     args = parser.parse_args()
     if args.command in ("index-data", "train", "calibrate-das", "freeze-evaluation", "evaluate"):
@@ -63,6 +67,19 @@ def main() -> None:
         print(json.dumps({"output": str(args.output), "specimen_id": bank.metadata.specimen_id,
                           "records": len(bank.actions), "samples": len(bank.time_s),
                           "validation_status": bank.metadata.validation_status}, indent=2))
+    elif args.command == "verify-workflow":
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            from traxis.workflow_verification import verify_workflow
+            report = verify_workflow(args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Workflow checks stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": report["passed"], "comparison_episodes": report["comparison_episodes"],
+                          "ensemble_episodes": report["ensemble_episodes"], "wall_seconds": report["wall_seconds"],
+                          "report": str(args.output / "workflow-report.json")}, indent=2))
+        if not report["passed"]:
+            parser.exit(1, "Workflow pilot failed; inspect the report.\n")
     elif args.command == "verify-models":
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         guard.check(force=True)

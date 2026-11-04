@@ -1,0 +1,402 @@
+﻿{
+    "kind":  "software_workflow_pilot",
+    "debug_only":  true,
+    "passed":  true,
+    "note":  "Analytic point-scattering fixtures; no physical accuracy, policy superiority or training convergence claim.",
+    "source_sha256":  {
+                          "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                          "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                          "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                          "bank.py":  "2ed2388d513345da7838df15a484827459b7b6e653da133e97a04c711168d5b7",
+                          "cli.py":  "72b6e260e5a85d6c006ce30c5673fc3f21238ca5b03171161ca4ca2648c32318",
+                          "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                          "das_baseline.py":  "04680ee56653605418d761da20f12491a0630ae36705501a3fa339cefbb5b672",
+                          "dataset.py":  "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+                          "diagnostic_data.py":  "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+                          "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                          "evaluation.py":  "f051ec5506708c83ed6d1387575fe27ebc1289e7d3c873082b44336bea78359b",
+                          "experiment_commands.py":  "abd9c564533569296fc7851a20e96a8805eba19ffbe24668d6698a29087a51a3",
+                          "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                          "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                          "imaging.py":  "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+                          "importers.py":  "73c83e80db72b46e5b779ba06d48271b482dc15231664c10f6a28ba478c8db76",
+                          "metrics.py":  "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+                          "model_verification.py":  "bd7f7ffd95a47ec63728c5cf1d03c0a4940a93c7098af915ae23847f08704f91",
+                          "models.py":  "8b0e72a4929449923cee0619795b12d7caa67db0a5e0fc82b5eca34ead761f75",
+                          "policies.py":  "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+                          "reconstruction.py":  "aff0f176618bc9aa3fbe2e266db681f7fbba20551bc9fd1e4284217d0f971e16",
+                          "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                          "storage.py":  "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+                          "training.py":  "a364bf23be671b8d356377c354ae2924e0d74e2460425acb1cfeada9775f9e39",
+                          "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                          "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+                          "workflow_verification.py":  "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+                      },
+    "dataset_fingerprint":  "3863b829a33410a906a6da7fe56f2add07840e3f3962457dc54c5ba68eda90b8",
+    "training_runs":  [
+                          {
+                              "config":  {
+                                             "architecture":  "direct",
+                                             "output_size":  128,
+                                             "width":  8,
+                                             "embedding":  32,
+                                             "heads":  4,
+                                             "extra_decoder_blocks":  0,
+                                             "max_depth_mm":  3.0
+                                         },
+                              "training":  {
+                                               "mode":  "debug",
+                                               "phase":  "pretrain",
+                                               "max_steps":  2,
+                                               "seed":  101,
+                                               "subset_seed":  37,
+                                               "learning_rate":  0.001,
+                                               "min_records":  2,
+                                               "max_records":  4,
+                                               "damaged_weight":  10.0,
+                                               "gradient_clip":  1.0,
+                                               "validation_interval":  1,
+                                               "validation_records":  4,
+                                               "patience":  10,
+                                               "device":  "cpu"
+                                           },
+                              "updates":  2,
+                              "history":  [
+                                              {
+                                                  "step":  1,
+                                                  "specimen_id":  "debug-scan-0",
+                                                  "records":  4,
+                                                  "action_indices":  [
+                                                                         1,
+                                                                         7,
+                                                                         15,
+                                                                         17
+                                                                     ],
+                                                  "loss_mm2":  1.504603385925293,
+                                                  "gradient_norm_before_clip":  115.99652099609375
+                                              },
+                                              {
+                                                  "step":  2,
+                                                  "specimen_id":  "debug-scan-0",
+                                                  "records":  4,
+                                                  "action_indices":  [
+                                                                         6,
+                                                                         11,
+                                                                         24,
+                                                                         26
+                                                                     ],
+                                                  "loss_mm2":  0.759220540523529,
+                                                  "gradient_norm_before_clip":  24.7015380859375
+                                              }
+                                          ],
+                              "validation_history":  [
+                                                         {
+                                                             "step":  1,
+                                                             "loss_mm2":  0.8018391132354736
+                                                         },
+                                                         {
+                                                             "step":  2,
+                                                             "loss_mm2":  0.448015034198761
+                                                         }
+                                                     ],
+                              "parameters":  27385,
+                              "checkpoint_sha256":  "daba7d2d5e6d5776de200f5662cc597575d053d37165c77de69dab4f94e6dbdd"
+                          },
+                          {
+                              "config":  {
+                                             "architecture":  "direct",
+                                             "output_size":  128,
+                                             "width":  8,
+                                             "embedding":  32,
+                                             "heads":  4,
+                                             "extra_decoder_blocks":  0,
+                                             "max_depth_mm":  3.0
+                                         },
+                              "training":  {
+                                               "mode":  "debug",
+                                               "phase":  "pretrain",
+                                               "max_steps":  1,
+                                               "seed":  202,
+                                               "subset_seed":  37,
+                                               "learning_rate":  0.001,
+                                               "min_records":  2,
+                                               "max_records":  4,
+                                               "damaged_weight":  10.0,
+                                               "gradient_clip":  1.0,
+                                               "validation_interval":  1,
+                                               "validation_records":  4,
+                                               "patience":  10,
+                                               "device":  "cpu"
+                                           },
+                              "updates":  1,
+                              "history":  [
+                                              {
+                                                  "step":  1,
+                                                  "specimen_id":  "debug-scan-0",
+                                                  "records":  4,
+                                                  "action_indices":  [
+                                                                         1,
+                                                                         7,
+                                                                         15,
+                                                                         17
+                                                                     ],
+                                                  "loss_mm2":  2.719590902328491,
+                                                  "gradient_norm_before_clip":  33.6626091003418
+                                              }
+                                          ],
+                              "validation_history":  [
+                                                         {
+                                                             "step":  1,
+                                                             "loss_mm2":  1.4053837060928345
+                                                         }
+                                                     ],
+                              "parameters":  27385,
+                              "checkpoint_sha256":  "1b112e57b03f83990c502c1a18ee436b7957fa59b363ddb06897d020ffdcae5c"
+                          },
+                          {
+                              "config":  {
+                                             "architecture":  "das_unet",
+                                             "output_size":  128,
+                                             "width":  8,
+                                             "embedding":  32,
+                                             "heads":  4,
+                                             "extra_decoder_blocks":  0,
+                                             "max_depth_mm":  3.0
+                                         },
+                              "training":  {
+                                               "mode":  "debug",
+                                               "phase":  "pretrain",
+                                               "max_steps":  1,
+                                               "seed":  101,
+                                               "subset_seed":  37,
+                                               "learning_rate":  0.001,
+                                               "min_records":  2,
+                                               "max_records":  4,
+                                               "damaged_weight":  10.0,
+                                               "gradient_clip":  1.0,
+                                               "validation_interval":  1,
+                                               "validation_records":  4,
+                                               "patience":  10,
+                                               "device":  "cpu"
+                                           },
+                              "updates":  1,
+                              "history":  [
+                                              {
+                                                  "step":  1,
+                                                  "specimen_id":  "debug-scan-0",
+                                                  "records":  4,
+                                                  "action_indices":  [
+                                                                         1,
+                                                                         7,
+                                                                         15,
+                                                                         17
+                                                                     ],
+                                                  "loss_mm2":  1.3243989944458008,
+                                                  "gradient_norm_before_clip":  10.290088653564453
+                                              }
+                                          ],
+                              "validation_history":  [
+                                                         {
+                                                             "step":  1,
+                                                             "loss_mm2":  0.9623135924339294
+                                                         }
+                                                     ],
+                              "parameters":  45217,
+                              "checkpoint_sha256":  "82cc9449a5efddb8ebdfc1ba3aabb6194cb3f7af59accebdd66b98668d6ad6e0"
+                          }
+                      ],
+    "comparison_episodes":  18,
+    "ensemble_episodes":  4,
+    "matched_actions":  true,
+    "wall_seconds":  16.557819199981168,
+    "ensemble_uncertainty":  [
+                                 {
+                                     "specimen_id":  "debug-scan-3",
+                                     "policy":  {
+                                                    "kind":  "fixed"
+                                                },
+                                     "rows":  [
+                                                  {
+                                                      "records":  2,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.37809461940906797,
+                                                                          "spread_error_correlation":  -0.9051055483840418,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.60699462890625,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  4,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.37796710501410724,
+                                                                          "spread_error_correlation":  -0.9047210404313092,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.60272216796875,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  28,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.3798643317813305,
+                                                                          "spread_error_correlation":  -0.9063190931369878,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.60235595703125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  }
+                                              ]
+                                 },
+                                 {
+                                     "specimen_id":  "debug-scan-3",
+                                     "policy":  {
+                                                    "kind":  "random",
+                                                    "seed":  13
+                                                },
+                                     "rows":  [
+                                                  {
+                                                      "records":  2,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.38159496514882096,
+                                                                          "spread_error_correlation":  -0.9038042937848737,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.60302734375,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  4,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.3817962142294842,
+                                                                          "spread_error_correlation":  -0.9024529559447544,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.6031494140625,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  28,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.3798643317813305,
+                                                                          "spread_error_correlation":  -0.9063190931369878,
+                                                                          "coverage_1sigma":  0.0,
+                                                                          "coverage_1_96sigma":  0.60235595703125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  }
+                                              ]
+                                 },
+                                 {
+                                     "specimen_id":  "debug-scan-4",
+                                     "policy":  {
+                                                    "kind":  "fixed"
+                                                },
+                                     "rows":  [
+                                                  {
+                                                      "records":  2,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.42079986413298154,
+                                                                          "spread_error_correlation":  -0.9316636483841914,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.63836669921875,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  4,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.4224677346511775,
+                                                                          "spread_error_correlation":  -0.9353869669371138,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.642578125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  28,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.4194255420633826,
+                                                                          "spread_error_correlation":  -0.9321441634694351,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.6329345703125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  }
+                                              ]
+                                 },
+                                 {
+                                     "specimen_id":  "debug-scan-4",
+                                     "policy":  {
+                                                    "kind":  "random",
+                                                    "seed":  13
+                                                },
+                                     "rows":  [
+                                                  {
+                                                      "records":  2,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.4223327453335915,
+                                                                          "spread_error_correlation":  -0.9312891413719142,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.6376953125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  4,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.42398473337503306,
+                                                                          "spread_error_correlation":  -0.9322329520154907,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.64263916015625,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  },
+                                                  {
+                                                      "records":  28,
+                                                      "uncertainty":  {
+                                                                          "mean_spread_mm":  0.4194255420633826,
+                                                                          "spread_error_correlation":  -0.9321441634694351,
+                                                                          "coverage_1sigma":  0.000244140625,
+                                                                          "coverage_1_96sigma":  0.6329345703125,
+                                                                          "zero_spread_fraction":  0.0,
+                                                                          "note":  "Ensemble spread is not calibrated confidence; Gaussian coverage is diagnostic only."
+                                                                      }
+                                                  }
+                                              ]
+                                 }
+                             ],
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  1024,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  384.16796875,
+                      "sampled_max_system_memory_percent":  76.5,
+                      "initial_gpu":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1669.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  }
+}

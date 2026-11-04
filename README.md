@@ -83,3 +83,13 @@ physical adaptation roles and frozen equal-budget replay. Start with the
 debug configurations under `configs/`; these perform a few updates and do
 not provide a research training schedule or validated physical parameters.
 
+For a monitored cache-to-replay software pilot using analytic fixtures:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis verify-workflow
+```
+
+It performs four total debug updates and checks all three reconstruction
+methods under matched fixed/random record budgets, plus ensemble inference.
+The generated results remain explicitly debug-only.
+

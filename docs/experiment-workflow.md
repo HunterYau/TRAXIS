@@ -128,3 +128,26 @@ Adaptive RL and uncertainty-guided policies, uncertainty calibration,
 automatic ablation/ensemble orchestration, research-quality scenario/response
 generation, plotting, and intact physical validation remain open. Passing
 these workflow tests does not select a scientifically superior model.
+
+## End-to-end software pilot
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis verify-workflow --output outputs/workflow-verification
+```
+
+Use a new/empty directory for each pilot. This command creates five clearly
+labeled analytic fixture banks, indexes their parent roles, runs four total
+debug updates across three small neural instances, exercises checkpoint resume,
+and fits the DAS scalar conversion on training fixtures. It then runs 18
+matched A/B/C fixed/random episodes plus four two-member ensemble episodes.
+The test cases include an intact and a damaged fixture; neither is a real
+plate or a validated elastic simulation. All methods receive the same acquired
+records at matched budgets. Different debug update counts exercise recovery;
+they do not constitute a fair comparison of trained architecture quality.
+
+The first pilot completed in 16.56 seconds, with sampled process RSS at most
+384.2 MiB, system RAM at most 76.5%, GPU usage 1,669/8,192 MiB and GPU temperature
+47 C. The computation used CPU only; CPU temperature was unavailable. The
+full report/maps remain under outputs; compact evidence is committed in
+`docs/evidence/workflow-debug.json`. Both the aggregate and per-case results
+are labeled debug-only. No full training cycle or physical adaptation ran.
