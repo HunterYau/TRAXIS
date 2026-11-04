@@ -96,4 +96,7 @@ The generated results remain explicitly debug-only.
 Adaptive policies include a masked RL actor/value selector and a distinct
 uncertainty-path heuristic. [Adaptive sensing details](docs/adaptive-sensing.md)
 describe their public inputs, reward, provenance checks and current limits.
+The `train-policy` and `verify-policy` commands support bounded policy updates
+and a monitored fixture pilot; the latter requires the existing debug dataset
+and reconstruction ensemble described in that document.
 

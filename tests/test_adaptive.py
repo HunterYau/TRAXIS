@@ -74,7 +74,9 @@ class AdaptiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "policy.pt"
             policy.save(path)
+            rng_before = torch.get_rng_state().clone()
             loaded = ActorCriticPolicy.load(path)
+            torch.testing.assert_close(torch.get_rng_state(), rng_before, rtol=0, atol=0)
             self.assertEqual(loaded.choose(state, self.reconstruction()), policy.choose(state, self.reconstruction()))
 
     def test_heuristic_changes_with_uncertainty_location_and_masks_selected(self):

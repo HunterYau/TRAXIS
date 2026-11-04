@@ -94,3 +94,48 @@ weights, analytic policy-gradient derivatives, nontrivial defect-region reward,
 exact optimizer/action/weight recovery, validation interruption, matched replay
 and provenance rejection. These checks verify implementation behavior and
 do not establish that RL beats random/fixed sensing.
+
+## Commands and software pilot
+
+After creating the software fixtures/ensemble with `verify-workflow`, a small
+policy run can use the example configuration:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis train-policy --dataset outputs/workflow-verification/dataset.json --reconstructors outputs/workflow-verification/direct-101.pt outputs/workflow-verification/direct-202.pt --config configs/debug-policy.json --episodes 1 --output outputs/policy-debug
+.\.venv\Scripts\python.exe -m traxis train-policy --dataset outputs/workflow-verification/dataset.json --resume outputs/policy-debug/latest-policy.pt --episodes 1 --output outputs/policy-debug
+```
+
+This configuration permits two total episodes of three chosen records each.
+`--episodes` is the current chunk, not a new total budget after each resume.
+The default uses one CPU thread. No reconstruction weights are updated.
+
+For selector comparisons, `freeze-evaluation` accepts `--rl-policies <policy.pt>`
+and `--uncertainty-path` in addition to fixed/repeated random policies. Supply
+the same two reconstruction artifacts and `--ensemble`. Both reconstruction
+and selector hashes/lineage, initial observations and inference-source hashes
+are checked before replay. A plan frozen under older inference code must be
+run at that revision or replaced by an explicitly new plan.
+
+The end-to-end adaptive pilot is:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis verify-policy --dataset outputs/workflow-verification/dataset.json --reconstructors outputs/workflow-verification/direct-101.pt outputs/workflow-verification/direct-202.pt --output outputs/policy-verification
+```
+
+Use a new/empty output directory. The pilot accepts only small, arbitrary-unit,
+plumbing-only simulation fixtures, not research/physical holdouts. It performs
+two RL debug updates with checkpoint recovery, then compares fixed, three
+random seeds, uncertainty-path and greedy RL on both fixture test cases.
+Budgets are 1/2/3 records plus the 28-record dense reference. All policies must
+avoid repeats and converge to the same full-scan prediction. The dense budget
+lies beyond this debug training horizon; this is a code-path check, not a
+long-horizon generalization result. Confidence calibration remains open.
+
+The final monitored pilot completed in 12.45 seconds. Its 17,530-parameter
+selector received two debug updates; all 12 replay episodes passed mask,
+budget and common-dense-prediction checks. Sampled process RSS stayed at most
+388.6 MiB and system RAM at most 77.8%. GPU samples reported 1,664/8,192 MiB
+used and 47 C; all computation was on CPU. CPU temperature was unavailable.
+Compact evidence is in `docs/evidence/adaptive-debug.json`, with full reports
+and maps under `outputs/policy-verification-final`. The current suite has
+90 passing tests; there is still no research-quality RL performance result.

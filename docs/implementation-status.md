@@ -145,3 +145,11 @@ Current suite: 89 tests. See adaptive-sensing.md for the objective, fixed-horizo
 limit and distinction between RL and the path heuristic. Research-quality
 policy training and physical efficiency remain unverified.
 
+Policy CLI commands now support bounded training/resume, frozen selector
+artifacts and the uncertainty-path comparator. Frozen plans also bind runtime
+inference source files. A monitored two-update pilot completed 12 fixture
+replay episodes across all four policy categories, with no repeats and common
+dense predictions; the final resource/evidence record is in
+docs/evidence/adaptive-debug.json. Current suite: 90 tests. These checks still
+do not establish policy convergence, calibrated uncertainty or physical accuracy.
+

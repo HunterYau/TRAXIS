@@ -40,6 +40,7 @@ class RLTrainConfig:
     gradient_clip: float = 1.
     validation_interval: int = 1
     patience: int = 10
+    cpu_threads: int = 1
 
     def __post_init__(self):
         if self.mode not in ("debug", "research"):
@@ -49,6 +50,8 @@ class RLTrainConfig:
                 raise ValueError(f"{name} must be a positive integer")
         if self.mode == "debug" and (self.max_episodes > 4 or self.horizon > 8):
             raise ValueError("debug RL is limited to four episodes of at most eight acquisitions")
+        if type(self.cpu_threads) is not int or not 1 <= self.cpu_threads <= 8:
+            raise ValueError("policy CPU threads must be an integer in [1,8]")
         if type(self.seed) is not int or self.seed < 0:
             raise ValueError("seed must be a nonnegative integer")
         if not math.isfinite(self.gamma) or not 0 < self.gamma <= 1:
@@ -111,6 +114,7 @@ class PolicyTrainingSession:
     def __init__(self, dataset: BankDataset, reconstruction_paths: list[Path],
                   policy_config: PolicyConfig, config: RLTrainConfig, guard: ResourceGuard | None = None):
         self.dataset, self.policy_config, self.config, self.guard = dataset, policy_config, config, guard
+        torch.set_num_threads(config.cpu_threads)
         self.fit_entries, self.validation_entries = dataset.select("train"), dataset.select("validation")
         if not self.fit_entries:
             raise ValueError("RL fitting requires simulation training specimens")

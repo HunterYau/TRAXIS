@@ -52,6 +52,40 @@ def train_command(args, guard):
             "model": report["selected_model"], "mode": session.config.mode}
 
 
+def train_policy_command(args, guard):
+    from traxis.adaptive import PolicyConfig
+    from traxis.policy_training import PolicyTrainingSession, RLTrainConfig
+    dataset = BankDataset.load(args.dataset)
+    args.output.mkdir(parents=True, exist_ok=True)
+    if args.resume:
+        if args.config or args.reconstructors:
+            raise ValueError("policy resume restores recorded configuration and reconstruction artifacts")
+        session = PolicyTrainingSession.resume(args.resume, dataset, guard)
+    else:
+        if args.config is None or not args.reconstructors:
+            raise ValueError("new policy runs require a config and reconstruction artifacts")
+        if any(args.output.iterdir()):
+            raise FileExistsError("new policy runs need a new or empty output directory")
+        settings = read_settings(args.config)
+        session = PolicyTrainingSession(dataset, args.reconstructors, PolicyConfig(**settings["policy"]),
+                                         RLTrainConfig(**settings["training"]), guard)
+    report = {"kind": "bounded_policy_training", "passed": False}
+    try:
+        session.run(args.episodes, args.output / "latest-policy.pt")
+        selected = args.output / f"selected-episode-{session.episode_count}.pt"
+        session.export_policy(selected)
+        report.update({"passed": True, "selected_policy": str(selected)})
+    except Exception as exc:
+        report["error"] = f"{type(exc).__name__}: {exc}"
+        raise
+    finally:
+        report.update({"provenance": session.provenance(), "history": session.history,
+                       "validation_history": session.validation_history, "resources": guard.report()})
+        write_json(args.output / "policy-training.json", report, overwrite=bool(args.resume))
+    return {"passed": report["passed"], "episodes_total": session.episode_count,
+            "policy": report["selected_policy"], "mode": session.config.mode}
+
+
 def add_experiment_commands(sub):
     index = sub.add_parser("index-data", help="index and fingerprint waveform banks without loading all specimens together")
     index.add_argument("--banks-dir", type=Path, required=True)
@@ -63,6 +97,13 @@ def add_experiment_commands(sub):
     train.add_argument("--steps", type=int, default=2)
     train.add_argument("--resume", type=Path)
     train.add_argument("--adapt-from", type=Path)
+    policy = sub.add_parser("train-policy", help="bounded on-policy adaptive sensing with a frozen reconstructor")
+    policy.add_argument("--dataset", type=Path, required=True)
+    policy.add_argument("--config", type=Path)
+    policy.add_argument("--reconstructors", type=Path, nargs="+")
+    policy.add_argument("--output", type=Path, required=True)
+    policy.add_argument("--episodes", type=int, default=1)
+    policy.add_argument("--resume", type=Path)
     calibrate = sub.add_parser("calibrate-das", help="fit scalar DAS-to-depth conversion on training specimens only")
     calibrate.add_argument("--dataset", type=Path, required=True)
     calibrate.add_argument("--settings", type=Path, required=True)
@@ -78,12 +119,14 @@ def add_experiment_commands(sub):
     freeze.add_argument("--threshold-mm", type=float, default=0.1)
     freeze.add_argument("--random-seeds", type=int, nargs="*", default=[17, 29, 43])
     freeze.add_argument("--ensemble", action="store_true")
+    freeze.add_argument("--uncertainty-path", action="store_true")
+    freeze.add_argument("--rl-policies", type=Path, nargs="*", default=[])
     freeze.add_argument("--output", type=Path, required=True)
     evaluate = sub.add_parser("evaluate", help="replay a frozen evaluation plan")
     evaluate.add_argument("--dataset", type=Path, required=True)
     evaluate.add_argument("--plan", type=Path, required=True)
     evaluate.add_argument("--output", type=Path, required=True)
-    for command in (index, train, calibrate, freeze, evaluate):
+    for command in (index, train, policy, calibrate, freeze, evaluate):
         command.add_argument("--max-seconds", type=float, default=60)
         command.add_argument("--max-rss-mib", type=float, default=1024)
 
@@ -95,6 +138,8 @@ def run_experiment_command(args, guard) -> dict:
         return {"specimens": len(dataset.entries), "dataset_fingerprint": dataset.fingerprint}
     if args.command == "train":
         return train_command(args, guard)
+    if args.command == "train-policy":
+        return train_policy_command(args, guard)
     dataset = BankDataset.load(args.dataset)
     if args.command == "calibrate-das":
         from traxis.das_baseline import fit_das_baseline
@@ -105,6 +150,9 @@ def run_experiment_command(args, guard) -> dict:
     if args.command == "freeze-evaluation":
         from traxis.evaluation import freeze_evaluation_plan
         specs = ({"kind": "fixed"},) + tuple({"kind": "random", "seed": seed} for seed in args.random_seeds)
+        if args.uncertainty_path:
+            specs += ({"kind": "uncertainty_path"},)
+        specs += tuple({"kind": "rl", "path": str(path)} for path in args.rl_policies)
         plan = freeze_evaluation_plan(args.output, dataset, args.models, split=args.split, budgets=tuple(args.budgets),
                                       initial_actions=tuple(args.initial_actions), threshold_mm=args.threshold_mm,
                                       policy_specs=specs, ensemble=args.ensemble)

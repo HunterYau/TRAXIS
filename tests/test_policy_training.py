@@ -1,5 +1,8 @@
 from dataclasses import replace
+import contextlib
+import io
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -13,7 +16,7 @@ HAS_TORCH = importlib.util.find_spec("torch") is not None
 if HAS_TORCH:
     import torch
     from traxis.adaptive import ActorCriticPolicy, PolicyConfig
-    from traxis.evaluation import freeze_evaluation_plan, run_frozen_evaluation, validate_selector_provenance
+    from traxis.evaluation import freeze_evaluation_plan, run_frozen_evaluation, validate_evaluation_plan, validate_selector_provenance
     from traxis.models import ModelConfig
     from traxis.policy_training import PolicyTrainingSession, RLTrainConfig
     from traxis.resources import ResourceLimitError
@@ -124,3 +127,33 @@ class PolicyTrainingTests(unittest.TestCase):
                 validate_selector_provenance({**plan, "models": plan["models"][:1]}, self.dataset, provenance)
             with self.assertRaisesRegex(ValueError, "initial"):
                 validate_selector_provenance({**plan, "initial_actions": [0]}, self.dataset, provenance)
+            policy_path.write_bytes(policy_path.read_bytes() + b"changed-selector")
+            with self.assertRaisesRegex(ValueError, "selector changed"):
+                validate_evaluation_plan(plan, self.dataset, session.reconstruction_provenances)
+
+    def test_policy_commands_train_resume_and_freeze_bound_artifacts(self):
+        from traxis.cli import main
+        def invoke(args):
+            captured = io.StringIO()
+            with patch("sys.argv", ["traxis", *map(str, args)]), contextlib.redirect_stdout(captured):
+                main()
+            return json.loads(captured.getvalue())
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = root / "policy-config.json"
+            config.write_text(json.dumps({"policy": {"width": 4, "embedding": 16},
+                                           "training": {"max_episodes": 2, "horizon": 1}}))
+            out = root / "run"
+            first = invoke(["train-policy", "--dataset", self.root / "dataset.json", "--config", config,
+                            "--reconstructors", *self.paths, "--episodes", 1, "--output", out])
+            self.assertEqual(first["episodes_total"], 1)
+            resumed = invoke(["train-policy", "--dataset", self.root / "dataset.json", "--resume", out / "latest-policy.pt",
+                              "--episodes", 1, "--output", out])
+            self.assertEqual(resumed["episodes_total"], 2)
+            plan_path = root / "plan.json"
+            invoke(["freeze-evaluation", "--dataset", self.root / "dataset.json", "--models", *self.paths,
+                    "--split", "test", "--budgets", 1, 2, "--ensemble", "--uncertainty-path", "--rl-policies", resumed["policy"],
+                    "--output", plan_path])
+            plan = json.loads(plan_path.read_text())
+            self.assertTrue(any(spec["kind"] == "rl" and "sha256" in spec for spec in plan["policy_specs"]))
+            self.assertIn("inference_source_hash", plan)

@@ -33,9 +33,15 @@ def main() -> None:
     workflow.add_argument("--output", type=Path, default=Path("outputs/workflow-verification"))
     workflow.add_argument("--max-seconds", type=float, default=60)
     workflow.add_argument("--max-rss-mib", type=float, default=1024)
+    adaptive = sub.add_parser("verify-policy", help="two-episode adaptive pilot on existing software fixtures")
+    adaptive.add_argument("--dataset", type=Path, required=True)
+    adaptive.add_argument("--reconstructors", type=Path, nargs="+", required=True)
+    adaptive.add_argument("--output", type=Path, default=Path("outputs/policy-verification"))
+    adaptive.add_argument("--max-seconds", type=float, default=60)
+    adaptive.add_argument("--max-rss-mib", type=float, default=1024)
     add_experiment_commands(sub)
     args = parser.parse_args()
-    if args.command in ("index-data", "train", "calibrate-das", "freeze-evaluation", "evaluate"):
+    if args.command in ("index-data", "train", "train-policy", "calibrate-das", "freeze-evaluation", "evaluate"):
         from traxis.experiment_commands import run_experiment_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
@@ -67,6 +73,19 @@ def main() -> None:
         print(json.dumps({"output": str(args.output), "specimen_id": bank.metadata.specimen_id,
                           "records": len(bank.actions), "samples": len(bank.time_s),
                           "validation_status": bank.metadata.validation_status}, indent=2))
+    elif args.command == "verify-policy":
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            from traxis.dataset import BankDataset
+            from traxis.policy_verification import verify_policy
+            report = verify_policy(BankDataset.load(args.dataset), args.reconstructors, args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Adaptive checks stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": report["passed"], "evaluation_episodes": report["evaluation_episodes"],
+                          "wall_seconds": report["wall_seconds"], "report": str(args.output / "adaptive-report.json")}, indent=2))
+        if not report["passed"]:
+            parser.exit(1, "Adaptive pilot failed; inspect the report.\n")
     elif args.command == "verify-workflow":
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         guard.check(force=True)

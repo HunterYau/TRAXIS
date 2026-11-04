@@ -124,10 +124,14 @@ with synthetic role fixtures; no actual physical adaptation has been run.
 
 ## Remaining work
 
-Adaptive RL and uncertainty-guided policies, uncertainty calibration,
+Converged adaptive-policy studies, uncertainty calibration,
 automatic ablation/ensemble orchestration, research-quality scenario/response
 generation, plotting, and intact physical validation remain open. Passing
 these workflow tests does not select a scientifically superior model.
+
+Adaptive RL training/recovery and frozen RL/uncertainty-path comparisons are
+implemented; see adaptive-sensing.md. The fixed-budget RL objective and the
+heuristic's geometric limitations are stated separately there.
 
 ## End-to-end software pilot
 

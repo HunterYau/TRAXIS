@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -61,6 +62,9 @@ class EvaluationTests(unittest.TestCase):
             plan = freeze_evaluation_plan(root / "plan.json", dataset, [artifact], split="test", budgets=(1, 4))
             valid = {"fit_parents": ["parent-0"], "validation_parents": ["parent-1"]}
             validate_evaluation_plan(plan, dataset, [valid])
+            with patch("traxis.evaluation._inference_source_hash", return_value="changed"):
+                with self.assertRaisesRegex(ValueError, "inference source changed"):
+                    validate_evaluation_plan(plan, dataset, [valid])
             with self.assertRaisesRegex(ValueError, "held-out"):
                 validate_evaluation_plan(plan, dataset, [{**valid, "fit_parents": ["parent-2"]}])
             artifact.write_bytes(b"changed")

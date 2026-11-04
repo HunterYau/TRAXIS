@@ -16,6 +16,13 @@ from traxis.resources import ResourceGuard
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
 
 
+def _inference_source_hash():
+    root = Path(__file__).parent
+    return canonical_hash({name: sha256_file(root / name) for name in
+                           ("evaluation.py", "reconstruction.py", "models.py", "adaptive.py", "policies.py",
+                            "imaging.py", "das_baseline.py", "metrics.py", "bank.py", "dataset.py", "config.py", "acquisition.py")})
+
+
 @dataclass(frozen=True)
 class ReplayResult:
     report: dict
@@ -131,7 +138,11 @@ def freeze_evaluation_plan(path: Path, dataset: BankDataset, model_paths: list[P
     plan = {"schema_version": 1, "dataset_fingerprint": dataset.fingerprint, "split": split,
             "models": models, "policy_specs": normalized_policies, "budgets": list(budgets),
             "initial_actions": list(initial_actions), "threshold_mm": threshold_mm,
-            "selection_frozen": True, "ensemble": ensemble}
+            "selection_frozen": True, "ensemble": ensemble, "inference_source_hash": _inference_source_hash()}
+    for spec in normalized_policies:
+        if spec["kind"] == "rl":
+            from traxis.adaptive import ActorCriticPolicy
+            validate_selector_provenance(plan, dataset, ActorCriticPolicy.load(Path(spec["path"])).provenance)
     plan["fingerprint"] = canonical_hash(plan)
     write_json(path, plan)
     return plan
@@ -141,6 +152,8 @@ def validate_evaluation_plan(plan: dict, dataset: BankDataset, provenances: list
     body = {k: v for k, v in plan.items() if k != "fingerprint"}
     if canonical_hash(body) != plan["fingerprint"] or plan["dataset_fingerprint"] != dataset.fingerprint:
         raise ValueError("frozen evaluation plan or dataset changed")
+    if plan.get("inference_source_hash") != _inference_source_hash():
+        raise ValueError("inference source changed; use the recorded revision or freeze a new evaluation plan")
     if not plan["selection_frozen"]:
         raise ValueError("evaluation settings must be frozen")
     for artifact in plan["models"]:

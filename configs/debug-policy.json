@@ -1,0 +1,5 @@
+{
+  "policy": {"width": 8, "embedding": 32, "map_size": 16, "path_samples": 16, "require_uncertainty": true},
+  "training": {"mode": "debug", "max_episodes": 2, "horizon": 3, "seed": 2026, "cpu_threads": 1,
+               "gamma": 0.95, "record_cost": 0.001, "value_weight": 0.5, "entropy_weight": 0.01}
+}
