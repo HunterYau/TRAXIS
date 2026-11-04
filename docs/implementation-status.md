@@ -290,3 +290,28 @@ CPU temperature was unavailable. See docs/evidence/circular-patch-debug.json.
 The banks still declare `ready_for_training_data=false`: exact footprints do
 not establish resolved bending waves, PZT coupling or physical agreement.
 
+## Finite-plate mesh and time refinement
+
+The new check-waveforms command freezes three mesh sizes, three geometric
+time-step refinements and error thresholds before solving. The spatial cases
+share one fine time grid; the temporal cases share the finest mesh. Checked
+float64 raw probes prevent bank rounding or fitted alignment from hiding
+differences. Recovery reuses verified transmitter/frequency groups in a fresh
+attempt directory. Plotting verifies report/plan/trace integrity and exports
+physical-unit PNG/SVG overlays and differences. See waveform-validation.md.
+
+All 144 tests pass. The completed 35-solve intact mechanical pilot took 43.08
+seconds, with sampled RSS 122.9 MiB, system RAM 61.6%, GPU usage 921/8,192 MiB
+and GPU temperature 44 C. CPU temperature was unavailable; propagation used
+CPU. An earlier Delaunay run hit its time guard because of a measured sliver;
+quality-only probes led to HXT/Netgen before the final waveform comparisons.
+
+The temporal screen passed: the final pair differed at most 0.0209%, with
+observed order 2.00025. The spatial screen **failed**: the final mesh pair
+differed at most 145.70%. Some elements still span the full thickness, and
+the shortest screened fundamental wavelength is only 2.94 maximum edges.
+Tolerances and traces were not adjusted to manufacture a pass. The compact
+record is docs/evidence/waveform-refinement-debug.json; the readable trace
+plots were inspected. No training was performed. Spatially resolved research
+data, independent elastic reference and PZT/physical validation remain open.
+

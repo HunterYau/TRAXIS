@@ -143,9 +143,12 @@ being overwritten. Pilot limits screen solve count, matrix memory, bank bytes,
 internal steps and geometry. A fine full-plate request fails the local resource
 screen; it is not launched just because a recipe contains 500 mm geometry.
 
-Required next checks remain frequency-band/through-thickness resolution,
-finite-plate mesh/time convergence, sensor/source fidelity, reflections,
-supports and intact physical agreement. The independent Rayleigh-Lamb tests
-already show that low-order bending resolution can be expensive; a cleaner
-CAD mesh does not remove that limitation. COMSOL remains the preferred
-reference if the required license is available.
+The first independent finite-plate mesh/time sweep passed the temporal
+discrepancy screen but failed the spatial screen: the finest mesh pair changed
+some traces by 146%. See [waveform-validation.md](waveform-validation.md) for
+the predeclared protocol, bounded commands, source/probe treatment and evidence.
+HXT/Netgen meshing removes one measured sliver bottleneck, but does not repair
+the unresolved low-order bending waves. Required checks still include spatial
+and through-thickness convergence, source/receiver fidelity, reflections,
+supports and intact physical agreement. COMSOL remains the preferred reference
+if the required license is available.

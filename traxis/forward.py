@@ -31,6 +31,8 @@ from traxis.storage import atomic_write, canonical_hash, sha256_file
 class ForwardSettings:
     mesh_backend: str = "cad"
     mesh_size_m: float = 0.003
+    mesh_optimization: str = "default"
+    mesh_algorithm: int = 1
     cells: tuple[int, int, int] = (8, 8, 4)
     max_assembly_mib: float = 256
     max_volume_error: float = 0.05
@@ -38,12 +40,18 @@ class ForwardSettings:
     max_forward_solves: int = 32
     max_bank_mib: float = 64
     stability_fraction: float = 0.8
+    time_step_refinement: int = 1
+    fixed_substeps_per_output: int | None = None
     label_size: int = 512
 
     def __post_init__(self):
         object.__setattr__(self, "cells", tuple(self.cells))
         if self.mesh_backend not in ("cad", "structured"):
             raise ValueError("choose cad or structured pilot meshing")
+        if self.mesh_optimization not in ("default", "Netgen"):
+            raise ValueError("mesh optimization must be default or Netgen")
+        if type(self.mesh_algorithm) is not int or self.mesh_algorithm not in (1, 4, 10):
+            raise ValueError("choose Gmsh Delaunay (1), Frontal (4) or HXT (10)")
         estimate_mesh(self.cells)
         for key in ("mesh_size_m", "max_assembly_mib", "max_bank_mib", "max_volume_error"):
             positive(key, getattr(self, key))
@@ -53,6 +61,11 @@ class ForwardSettings:
             raise ValueError("internal step limit must be in [1,50000]")
         if type(self.max_forward_solves) is not int or not 1 <= self.max_forward_solves <= 128:
             raise ValueError("forward solve limit must be in [1,128]")
+        if type(self.time_step_refinement) is not int or not 1 <= self.time_step_refinement <= 16:
+            raise ValueError("time-step refinement must be an integer in [1,16]")
+        if self.fixed_substeps_per_output is not None and (type(self.fixed_substeps_per_output) is not int
+                or not 1 <= self.fixed_substeps_per_output <= 50000 or self.time_step_refinement != 1):
+            raise ValueError("fixed substeps must lie in [1,50000]; choose fixed substeps or a refinement factor")
         if self.label_size not in (128, 256, 512):
             raise ValueError("label size must be 128, 256 or 512")
 
@@ -61,7 +74,8 @@ def _system(scenario: Scenario, settings: ForwardSettings, recesses, guard):
     if settings.mesh_backend == "cad":
         mesh, report = cad_mesh(scenario.plate, recesses, settings.mesh_size_m,
                                 max_assembly_mib=settings.max_assembly_mib,
-                                seed=scenario.geometry_seed, guard=guard)
+                                seed=scenario.geometry_seed, optimization=settings.mesh_optimization,
+                                algorithm=settings.mesh_algorithm, guard=guard)
     else:
         mesh = structured_mesh(scenario.plate, settings.cells, recesses,
                                 max_assembly_bytes=int(settings.max_assembly_mib * 1024**2))
@@ -73,6 +87,14 @@ def _system(scenario: Scenario, settings: ForwardSettings, recesses, guard):
                    "removed_volume_relative_error": error, "maximum_allowed_volume_error": settings.max_volume_error})
     if error > settings.max_volume_error:
         raise ValueError(f"meshed recess volume error {error:.1%} exceeds {settings.max_volume_error:.1%}")
+    points = mesh.points_m[mesh.tetrahedra]
+    edge_limits = [(float(np.linalg.norm(points[:, i] - points[:, j], axis=1).min()),
+                    float(np.linalg.norm(points[:, i] - points[:, j], axis=1).max()))
+                   for i, j in ((0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3))]
+    report.update({"minimum_edge_m": min(pair[0] for pair in edge_limits),
+                   "maximum_edge_m": max(pair[1] for pair in edge_limits),
+                   "maximum_element_z_span_m": float(np.ptp(points[:, :, 2], axis=1).max()),
+                   "degrees_of_freedom": len(mesh.points_m) * 3})
     return assemble(mesh, scenario.nuisance.material, guard), report
 
 
@@ -102,6 +124,28 @@ def _cached_group(cache: Path | None, key: str, expected_shape, compute):
     return values, False
 
 
+def load_cached_group(cache: Path, key: str, expected_shape) -> np.ndarray:
+    """Read checked float64 solver probes for numerical error studies."""
+    if len(key) != 64 or any(c not in "0123456789abcdef" for c in key):
+        raise ValueError("invalid forward group key")
+    def missing():
+        raise FileNotFoundError("requested forward group was not generated")
+    return _cached_group(Path(cache), key, expected_shape, missing)[0]
+
+
+def minimum_stable_substeps(scenario: Scenario, settings: ForwardSettings,
+                             guard: ResourceGuard | None = None) -> int:
+    """Preflight the mechanical operators without propagating or storing fields."""
+    if scenario.nuisance.support != "free":
+        raise ValueError("local pilot implements traction-free supports only")
+    healthy, _ = _system(scenario, settings, (), guard)
+    bound = healthy.stable_dt_s
+    if scenario.recesses:
+        damaged, _ = _system(scenario, settings, scenario.recesses, guard)
+        bound = min(bound, damaged.stable_dt_s)
+    return int(math.ceil(scenario.acquisition.sample_dt_s / (bound * settings.stability_fraction)))
+
+
 def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = ForwardSettings(),
                             *, cache_dir: Path | None = None, guard: ResourceGuard | None = None) -> tuple[WaveformBank, dict]:
     if scenario.nuisance.support != "free":
@@ -121,7 +165,10 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
     healthy, healthy_mesh = _system(scenario, settings, (), guard)
     damaged, damaged_mesh = _system(scenario, settings, scenario.recesses, guard) if scenario.recesses else (healthy, healthy_mesh)
     stable = min(healthy.stable_dt_s, damaged.stable_dt_s) * settings.stability_fraction
-    substeps = int(math.ceil(acquisition.sample_dt_s / stable))
+    minimum_substeps = int(math.ceil(acquisition.sample_dt_s / stable))
+    substeps = settings.fixed_substeps_per_output or minimum_substeps * settings.time_step_refinement
+    if substeps < minimum_substeps:
+        raise ValueError("requested fixed time step exceeds the conservative stability bound")
     dt = acquisition.sample_dt_s / substeps
     steps = (acquisition.samples - 1) * substeps
     if steps > settings.max_internal_steps:

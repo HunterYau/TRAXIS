@@ -80,6 +80,15 @@ limit. Diagnostic discrete energy is checked after forcing stops. Spatial
 convergence, dispersion, source/receiver fidelity and intact physical
 agreement remain separate requirements even when algebraic tests pass.
 
+A bounded intact-plate sweep on 2026-11-04 confirmed this distinction. With
+identical source/probe footprints and a common fine time step, the final mesh
+refinement changed some raw traces by 146%. Independent temporal refinements
+on the finest mesh showed order 2.00025 and a maximum final change of 0.0209%.
+HXT/Netgen improved a sliver-driven stability bottleneck but did not establish
+spatial accuracy. See [waveform-validation.md](waveform-validation.md). These
+local banks must not be used as research training data; no commercial/physical
+reference comparison has yet been completed.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

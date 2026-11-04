@@ -1,0 +1,13 @@
+{
+  "mesh_sizes_m": [0.003, 0.002, 0.0015],
+  "time_refinements": [1, 2, 4],
+  "spatial_relative_l2_tolerance": 0.05,
+  "temporal_relative_l2_tolerance": 0.01,
+  "reference_rms_floor": 1e-18,
+  "max_total_solves": 64,
+  "max_raw_trace_mib": 16,
+  "forward": {
+    "mesh_backend": "cad", "mesh_algorithm": 10, "mesh_optimization": "Netgen", "max_internal_steps": 50000,
+    "max_assembly_mib": 256, "max_forward_solves": 32
+  }
+}

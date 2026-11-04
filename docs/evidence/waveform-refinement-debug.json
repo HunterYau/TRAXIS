@@ -1,0 +1,580 @@
+{
+  "kind": "finite_plate_waveform_refinement_debug",
+  "date": "2026-11-04",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "interpretation": "Temporal discrepancy screen passed on the finest mesh; spatial discrepancy screen failed. No independent elastic/PZT/physical validation or continuum error bound.",
+  "scenario": {
+    "specimen_id": "sim-2026-000000-7e2b3b9a22-v0",
+    "parent_specimen_id": "sim-2026-000000-7e2b3b9a22",
+    "split": "train",
+    "geometry_seed": 3339473683144027492,
+    "nuisance_seed": 12896123018795801922,
+    "plate": {
+      "width_m": 0.04,
+      "height_m": 0.04,
+      "thickness_m": 0.003
+    },
+    "recesses": [],
+    "acquisition": {
+      "sensor_count": 8,
+      "inset_m": 0.006,
+      "patch_radius_m": 0.003,
+      "frequencies_hz": [
+        100000.0
+      ],
+      "reciprocal": true,
+      "sample_dt_s": 5e-07,
+      "samples": 128,
+      "cycles": 2
+    },
+    "nuisance": {
+      "material": {
+        "young_pa": 68900000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700.0
+      },
+      "peak_force_n": 1.0,
+      "sensor_gains": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "current_gain_drift": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "relative_noise_std": 0.0,
+      "absolute_noise_std_m": 0.0,
+      "support": "free"
+    }
+  },
+  "predeclared_settings": {
+    "mesh_sizes_m": [
+      0.003,
+      0.002,
+      0.0015
+    ],
+    "time_refinements": [
+      1,
+      2,
+      4
+    ],
+    "spatial_relative_l2_tolerance": 0.05,
+    "temporal_relative_l2_tolerance": 0.01,
+    "reference_rms_floor": 1e-18,
+    "max_total_solves": 64,
+    "max_raw_trace_mib": 16,
+    "forward": {
+      "mesh_backend": "cad",
+      "mesh_size_m": 0.003,
+      "mesh_optimization": "Netgen",
+      "mesh_algorithm": 10,
+      "cells": [
+        8,
+        8,
+        4
+      ],
+      "max_assembly_mib": 256,
+      "max_volume_error": 0.05,
+      "max_internal_steps": 50000,
+      "max_forward_solves": 32,
+      "max_bank_mib": 64,
+      "stability_fraction": 0.8,
+      "time_step_refinement": 1,
+      "fixed_substeps_per_output": null,
+      "label_size": 512
+    }
+  },
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "f4fe9a04281075b81f23d92e596dcb7895b72be0c19cbda2456b920b73686900",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "70662e573c897c156a2f7a39a73aed9abeb95bfd245dfd426507c3da80b6dad3",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+    "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "plan_fingerprint": "cb5ae62f3ede81580246f1f70555dc883f773bafa576d6e19c3dde0d1ca0af33",
+  "report_fingerprint": "5bb2a81bb6001ae4a3d1b821c352ccfb11e6023e44ffe4fe1ed4f74ff7645f80",
+  "completed": true,
+  "spatial_screen_passed": false,
+  "temporal_screen_passed": true,
+  "discretization_screen_passed": false,
+  "minimum_substeps_by_mesh": [
+    6,
+    8,
+    10
+  ],
+  "common_base_substeps": 10,
+  "cases": [
+    {
+      "directory": "case-00",
+      "mesh_size_m": 0.003,
+      "relative_time_refinement": 4,
+      "dt_internal_s": 1.25e-08,
+      "internal_steps": 5080,
+      "mesh": {
+        "backend": "gmsh_opencascade",
+        "gmsh_version": "4.15.2",
+        "size_m": 0.003,
+        "mesh_seed": 3339473683144027492,
+        "threads": 1,
+        "nodes": 640,
+        "tetrahedra": 1928,
+        "optimization": "Netgen",
+        "quality_measure": "minSICN",
+        "algorithm_3d": 10,
+        "minimum_quality_before_optimization": 0.6059993660122269,
+        "minimum_quality": 0.5286528654543753,
+        "quality_percentile_5": 0.6708653709063827,
+        "cad_retained_volume_m3": 4.800000000000001e-06,
+        "tet_retained_volume_m3": 4.8e-06,
+        "retained_volume_relative_error": 2.220446049250313e-16,
+        "requested_removed_volume_m3": 0.0,
+        "meshed_removed_volume_m3": 8.470329472543003e-22,
+        "removed_volume_relative_error": 0.0,
+        "screened_tetrahedra": 4587,
+        "screened_assembly_mib": 25.1971435546875,
+        "ready_for_training_data": false,
+        "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+        "maximum_allowed_volume_error": 0.05,
+        "minimum_edge_m": 0.0010999004067096846,
+        "maximum_edge_m": 0.004494109478129234,
+        "maximum_element_z_span_m": 0.003,
+        "degrees_of_freedom": 1920
+      },
+      "forward_solves": 7,
+      "cache_hits": 0,
+      "bank_sha256": "8db1ffa587f9992af3dcb8a9722c6ddf19b465e128b617d0148fb6e426ba53b3",
+      "float64_traces_sha256": "1f16201327193c6026a65c8e2a7a44864d9448a3e73e40175c2fcadd2bc8096a"
+    },
+    {
+      "directory": "case-01",
+      "mesh_size_m": 0.002,
+      "relative_time_refinement": 4,
+      "dt_internal_s": 1.25e-08,
+      "internal_steps": 5080,
+      "mesh": {
+        "backend": "gmsh_opencascade",
+        "gmsh_version": "4.15.2",
+        "size_m": 0.002,
+        "mesh_seed": 3339473683144027492,
+        "threads": 1,
+        "nodes": 1224,
+        "tetrahedra": 3735,
+        "optimization": "Netgen",
+        "quality_measure": "minSICN",
+        "algorithm_3d": 10,
+        "minimum_quality_before_optimization": 0.3717077241959156,
+        "minimum_quality": 0.3699677658137674,
+        "quality_percentile_5": 0.6171703477428983,
+        "cad_retained_volume_m3": 4.800000000000001e-06,
+        "tet_retained_volume_m3": 4.8e-06,
+        "retained_volume_relative_error": 2.220446049250313e-16,
+        "requested_removed_volume_m3": 0.0,
+        "meshed_removed_volume_m3": 8.470329472543003e-22,
+        "removed_volume_relative_error": 0.0,
+        "screened_tetrahedra": 12720,
+        "screened_assembly_mib": 69.873046875,
+        "ready_for_training_data": false,
+        "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+        "maximum_allowed_volume_error": 0.05,
+        "minimum_edge_m": 0.0007195047652985622,
+        "maximum_edge_m": 0.0040731534072235235,
+        "maximum_element_z_span_m": 0.003,
+        "degrees_of_freedom": 3672
+      },
+      "forward_solves": 7,
+      "cache_hits": 0,
+      "bank_sha256": "a3bc86767ec3d4a8713147c6800046c8bf5d62586dec5cd928b008ca1260b92a",
+      "float64_traces_sha256": "3b6533aa1b6b4834d8a18f385f970e82282e76c863156269b8972503fe68162f"
+    },
+    {
+      "directory": "case-02",
+      "mesh_size_m": 0.0015,
+      "relative_time_refinement": 4,
+      "dt_internal_s": 1.25e-08,
+      "internal_steps": 5080,
+      "mesh": {
+        "backend": "gmsh_opencascade",
+        "gmsh_version": "4.15.2",
+        "size_m": 0.0015,
+        "mesh_seed": 3339473683144027492,
+        "threads": 1,
+        "nodes": 2486,
+        "tetrahedra": 8543,
+        "optimization": "Netgen",
+        "quality_measure": "minSICN",
+        "algorithm_3d": 10,
+        "minimum_quality_before_optimization": 0.35768054181802816,
+        "minimum_quality": 0.43365428978387366,
+        "quality_percentile_5": 0.686659579904125,
+        "cad_retained_volume_m3": 4.800000000000001e-06,
+        "tet_retained_volume_m3": 4.8e-06,
+        "retained_volume_relative_error": 2.220446049250313e-16,
+        "requested_removed_volume_m3": 0.0,
+        "meshed_removed_volume_m3": 8.470329472543003e-22,
+        "removed_volume_relative_error": 0.0,
+        "screened_tetrahedra": 26880,
+        "screened_assembly_mib": 147.65625,
+        "ready_for_training_data": false,
+        "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+        "maximum_allowed_volume_error": 0.05,
+        "minimum_edge_m": 0.0005633991124850081,
+        "maximum_edge_m": 0.0033822837913193393,
+        "maximum_element_z_span_m": 0.003,
+        "degrees_of_freedom": 7458
+      },
+      "forward_solves": 7,
+      "cache_hits": 0,
+      "bank_sha256": "169e751610a2d671ea7ddf5559468be19b78b1058348e1ac2b102ab6b0577977",
+      "float64_traces_sha256": "33afab457532fe30c0774081bb213dac1881d2d46085cae9c6f398c2ca575976"
+    },
+    {
+      "directory": "case-03",
+      "mesh_size_m": 0.0015,
+      "relative_time_refinement": 1,
+      "dt_internal_s": 5e-08,
+      "internal_steps": 1270,
+      "mesh": {
+        "backend": "gmsh_opencascade",
+        "gmsh_version": "4.15.2",
+        "size_m": 0.0015,
+        "mesh_seed": 3339473683144027492,
+        "threads": 1,
+        "nodes": 2486,
+        "tetrahedra": 8543,
+        "optimization": "Netgen",
+        "quality_measure": "minSICN",
+        "algorithm_3d": 10,
+        "minimum_quality_before_optimization": 0.35768054181802816,
+        "minimum_quality": 0.43365428978387366,
+        "quality_percentile_5": 0.686659579904125,
+        "cad_retained_volume_m3": 4.800000000000001e-06,
+        "tet_retained_volume_m3": 4.8e-06,
+        "retained_volume_relative_error": 2.220446049250313e-16,
+        "requested_removed_volume_m3": 0.0,
+        "meshed_removed_volume_m3": 8.470329472543003e-22,
+        "removed_volume_relative_error": 0.0,
+        "screened_tetrahedra": 26880,
+        "screened_assembly_mib": 147.65625,
+        "ready_for_training_data": false,
+        "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+        "maximum_allowed_volume_error": 0.05,
+        "minimum_edge_m": 0.0005633991124850081,
+        "maximum_edge_m": 0.0033822837913193393,
+        "maximum_element_z_span_m": 0.003,
+        "degrees_of_freedom": 7458
+      },
+      "forward_solves": 7,
+      "cache_hits": 0,
+      "bank_sha256": "5afe9942935609cd7749bf5b7315ecf1eeacaf7a9571e9b0f5e773510a951c80",
+      "float64_traces_sha256": "1b10b0e336cfeac3c366215595a46534dd4a5c2dc77a165b0c87223e6d14065d"
+    },
+    {
+      "directory": "case-04",
+      "mesh_size_m": 0.0015,
+      "relative_time_refinement": 2,
+      "dt_internal_s": 2.5e-08,
+      "internal_steps": 2540,
+      "mesh": {
+        "backend": "gmsh_opencascade",
+        "gmsh_version": "4.15.2",
+        "size_m": 0.0015,
+        "mesh_seed": 3339473683144027492,
+        "threads": 1,
+        "nodes": 2486,
+        "tetrahedra": 8543,
+        "optimization": "Netgen",
+        "quality_measure": "minSICN",
+        "algorithm_3d": 10,
+        "minimum_quality_before_optimization": 0.35768054181802816,
+        "minimum_quality": 0.43365428978387366,
+        "quality_percentile_5": 0.686659579904125,
+        "cad_retained_volume_m3": 4.800000000000001e-06,
+        "tet_retained_volume_m3": 4.8e-06,
+        "retained_volume_relative_error": 2.220446049250313e-16,
+        "requested_removed_volume_m3": 0.0,
+        "meshed_removed_volume_m3": 8.470329472543003e-22,
+        "removed_volume_relative_error": 0.0,
+        "screened_tetrahedra": 26880,
+        "screened_assembly_mib": 147.65625,
+        "ready_for_training_data": false,
+        "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+        "maximum_allowed_volume_error": 0.05,
+        "minimum_edge_m": 0.0005633991124850081,
+        "maximum_edge_m": 0.0033822837913193393,
+        "maximum_element_z_span_m": 0.003,
+        "degrees_of_freedom": 7458
+      },
+      "forward_solves": 7,
+      "cache_hits": 0,
+      "bank_sha256": "bdce75014fb38798ab13e2aa0476e850ba64d91aeed2c41f12a7954ffd6ec292",
+      "float64_traces_sha256": "758e8d37cb9d03c8128c8969be3262db9034a3fbdd2f2544f67d829d1dc2bab6"
+    }
+  ],
+  "spatial_comparisons": [
+    {
+      "records": 28,
+      "defined_records": 28,
+      "maximum_relative_l2": 0.3275971988465018,
+      "global_difference_norm": 1.5435427558977248e-08,
+      "all_records_resolved": true,
+      "note": "Raw finite-plate displacements include reflections and rigid motion. Agreement is not independent wave/PZT/physical validation."
+    },
+    {
+      "records": 28,
+      "defined_records": 28,
+      "maximum_relative_l2": 1.4569605401445909,
+      "global_difference_norm": 8.553858168003354e-08,
+      "all_records_resolved": true,
+      "note": "Raw finite-plate displacements include reflections and rigid motion. Agreement is not independent wave/PZT/physical validation."
+    }
+  ],
+  "temporal_comparisons": [
+    {
+      "records": 28,
+      "defined_records": 28,
+      "maximum_relative_l2": 0.0008350668219420541,
+      "global_difference_norm": 5.2372927137212254e-11,
+      "all_records_resolved": true,
+      "note": "Raw finite-plate displacements include reflections and rigid motion. Agreement is not independent wave/PZT/physical validation."
+    },
+    {
+      "records": 28,
+      "defined_records": 28,
+      "maximum_relative_l2": 0.00020873966288279436,
+      "global_difference_norm": 1.3090929041639028e-11,
+      "all_records_resolved": true,
+      "note": "Raw finite-plate displacements include reflections and rigid motion. Agreement is not independent wave/PZT/physical validation."
+    }
+  ],
+  "temporal_change_ratio": 4.000703614741692,
+  "observed_temporal_order": 2.000253753057239,
+  "band_resolution": {
+    "rows": [
+      {
+        "mode": "A0",
+        "frequency_hz": 100000.0,
+        "thickness_m": 0.003,
+        "wavenumber_rad_m": 408.27613887673914,
+        "phase_m_s": 1538.9548173121414,
+        "group_m_s": 2582.2122787779135,
+        "wavelength_m": 0.015389548173121416,
+        "wavelength_to_maximum_edge_ratio": 4.550046395461796
+      },
+      {
+        "mode": "S0",
+        "frequency_hz": 100000.0,
+        "thickness_m": 0.003,
+        "wavenumber_rad_m": 117.56201598127842,
+        "phase_m_s": 5344.5709098593325,
+        "group_m_s": 5330.8535500770295,
+        "wavelength_m": 0.05344570909859333,
+        "wavelength_to_maximum_edge_ratio": 15.801663135353161
+      },
+      {
+        "mode": "A0",
+        "frequency_hz": 200000.0,
+        "thickness_m": 0.003,
+        "wavenumber_rad_m": 631.7574952316891,
+        "phase_m_s": 1989.1130234633172,
+        "group_m_s": 2973.240644745126,
+        "wavelength_m": 0.009945565117316587,
+        "wavelength_to_maximum_edge_ratio": 2.940488063964936
+      },
+      {
+        "mode": "S0",
+        "frequency_hz": 200000.0,
+        "thickness_m": 0.003,
+        "wavenumber_rad_m": 236.07001224941675,
+        "phase_m_s": 5323.1541332248225,
+        "group_m_s": 5264.51029783832,
+        "wavelength_m": 0.02661577066612411,
+        "wavelength_to_maximum_edge_ratio": 7.869171337554145
+      }
+    ],
+    "minimum_wavelength_to_edge_ratio": 2.940488063964936,
+    "stock_thickness_to_maximum_z_span": 1.0,
+    "note": "Carrier and first-main-lobe upper zeros only; tails/higher modes and finite-plate arrivals are not validated. A geometric ratio is not proof of bending accuracy."
+  },
+  "wall_seconds": 43.07937349996064,
+  "resources": {
+    "limits": {
+      "max_seconds": 60,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "samples": 209,
+    "peak_sampled_process_rss_mib": 122.85546875,
+    "peak_system_memory_percent": 61.6,
+    "minimum_available_mib": 6231.91796875,
+    "peak_observed_gpu_used_mib": 921.0,
+    "gpu_total_mib": 8192.0,
+    "peak_observed_gpu_temperature_c": 45.0,
+    "cpu_temperatures_c": null,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "regression": {
+    "successful": true,
+    "exit_code": 0,
+    "tests_run": 144,
+    "resource_stop": null,
+    "wall_seconds": 58.57019590004347,
+    "memory_scope": "monitor plus test launcher and all observed recursive descendant processes",
+    "max_observed_test_tree_processes": 5,
+    "measurement_errors": [],
+    "resources": {
+      "limits": {
+        "max_seconds": 120,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 112,
+      "peak_sampled_process_rss_mib": 735.21875,
+      "peak_system_memory_percent": 64.6,
+      "minimum_available_mib": 5750.375,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 46.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "regression_monitor_correction": "The first successful 144-test receipt did not reliably include interpreter descendants behind the Windows venv launcher. A second successful run counted the launcher and all observed descendants; its resource summary is used here.",
+  "initial_delaunay_attempt": {
+    "completed": false,
+    "error": "ResourceLimitError: wall-time limit reached",
+    "minimum_substeps_by_mesh": [
+      4,
+      80,
+      8
+    ],
+    "common_base_substeps": 80,
+    "wall_seconds": 59.80835589999333,
+    "completed_cases": 1,
+    "resources": {
+      "limits": {
+        "max_seconds": 60,
+        "max_rss_mib": 512,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 261,
+      "peak_sampled_process_rss_mib": 117.3828125,
+      "peak_system_memory_percent": 61.8,
+      "minimum_available_mib": 6196.9609375,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 41.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "quality_only_preflights": {
+    "purpose": "Compare mesh quality and stability without inspecting waveform errors; same geometry seed and 2 mm mesh.",
+    "rows": [
+      {
+        "algorithm": 1,
+        "optimization": "Netgen",
+        "minimum_quality": 0.00023302,
+        "minimum_substeps": 75
+      },
+      {
+        "algorithm": 4,
+        "optimization": "Netgen",
+        "minimum_quality": 0.00023302,
+        "minimum_substeps": 78
+      },
+      {
+        "algorithm": 10,
+        "optimization": "Netgen",
+        "minimum_quality": 0.3699678,
+        "minimum_substeps": 8
+      }
+    ],
+    "selection": "HXT plus Netgen consistently on all final meshes. Tolerances, pulse and observation window unchanged."
+  },
+  "figures": {
+    "records": [
+      0,
+      12
+    ],
+    "file_sha256": {
+      "waveform-refinement.png": "d2ac22ce8c17edf31a1193c86040ddc65b70da5995b04088195b975d8fc3f539",
+      "waveform-refinement.svg": "d1f974ee27f1760a7bfaba2579296cb90e0f40bfb05810063b74946b0c98aa3c"
+    },
+    "visual_review": "PNG inspected: readable legends, physical-unit axes, no clipped text; raw traces and spatial/time differences shown without normalization or alignment."
+  },
+  "full_artifact_sha256": {
+    "outputs/waveform-refinement-hxt/refinement-plan.json": "29c4d4716e82628316011f8cebeae8ab6fcb20601a682f0d0597ff52a57f8277",
+    "outputs/waveform-refinement-hxt/waveform-report.json": "05c61563ef63adddc30547f71293f486db6956bf035d5c624fb7d5cdd07da594",
+    "outputs/waveform-refinement-hxt/regression-tree-result.json": "d8f46213868d152c6795337e36ff456428d213bcd55008d7730e5300941cf7d7",
+    "outputs/waveform-refinement-hxt/regression-tree.log": "f0d06c76e6c9e1dd5a3c08cc58a4ca58b1c6096c6c83bd507f7ed553ad501570",
+    "outputs/waveform-refinement/waveform-report.json": "bc1b39eade549ca10ec8d3470495830fb1e7df9b81e2fbf3321e6d355fcb057f",
+    "outputs/waveform-refinement-hxt-figures/figures.json": "5a58e116f1a4f29fe2afe6fa0a537a61a66620619f605782cc97f946bcb9a3b1"
+  }
+}

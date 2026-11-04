@@ -16,13 +16,18 @@ from traxis.resources import ResourceGuard
 
 def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
               *, max_assembly_mib: float = 256, max_tetrahedra: int = 40000,
-              seed: int = 2026, guard: ResourceGuard | None = None) -> tuple[TetMesh, dict]:
+              seed: int = 2026, optimization: str = "default", algorithm: int = 1,
+              guard: ResourceGuard | None = None) -> tuple[TetMesh, dict]:
     positive("CAD mesh size", size_m)
     positive("assembly limit", max_assembly_mib)
     if type(max_tetrahedra) is not int or max_tetrahedra < 1:
         raise ValueError("tetrahedron limit must be positive")
     if type(seed) is not int or seed < 0:
         raise ValueError("mesh seed must be nonnegative")
+    if optimization not in ("default", "Netgen"):
+        raise ValueError("mesh optimization must be default or Netgen")
+    if type(algorithm) is not int or algorithm not in (1, 4, 10):
+        raise ValueError("choose Gmsh Delaunay (1), Frontal (4) or HXT (10) tetrahedra")
     for r in recesses:
         r.validate(plate)
     volume = plate.width_m * plate.height_m * plate.thickness_m
@@ -44,7 +49,7 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
         for dim in (1, 2, 3):
             gmsh.option.setNumber(f"Mesh.MaxNumThreads{dim}D", 1)
         gmsh.option.setNumber("Mesh.ElementOrder", 1)
-        gmsh.option.setNumber("Mesh.Algorithm3D", 1)
+        gmsh.option.setNumber("Mesh.Algorithm3D", algorithm)
         gmsh.option.setNumber("Mesh.MeshSizeMax", size_m)
         gmsh.option.setNumber("Mesh.MeshSizeMin", size_m / 2)
         gmsh.option.setNumber("Mesh.RandomSeed", seed % (2**31 - 1))
@@ -68,9 +73,20 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
         if guard:
             guard.check()
         gmsh.model.mesh.generate(3)
+        initial_types, initial_ids, _ = gmsh.model.mesh.getElements(3)
+        if len(initial_types) != 1 or int(initial_types[0]) != 4:
+            raise ValueError("local elasticity backend requires linear four-node tetrahedra")
+        before_quality = np.asarray(gmsh.model.mesh.getElementQualities(initial_ids[0], "minSICN"))
+        if optimization == "Netgen":
+            if guard:
+                guard.check()
+            gmsh.model.mesh.optimize("Netgen")
         types, _element_ids, connectivity = gmsh.model.mesh.getElements(3)
         if len(types) != 1 or int(types[0]) != 4:
             raise ValueError("local elasticity backend requires linear four-node tetrahedra")
+        qualities = np.asarray(gmsh.model.mesh.getElementQualities(_element_ids[0], "minSICN"))
+        if not np.isfinite(qualities).all() or qualities.min() <= 0:
+            raise ValueError("CAD mesh has nonpositive/invalid scaled inverse-condition quality")
         tags, coordinates, _ = gmsh.model.mesh.getNodes()
         count = len(connectivity[0]) // 4
         if count > max_tetrahedra or count * 144 * 40 > max_assembly_mib * 1024**2:
@@ -93,6 +109,10 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
         mesh = TetMesh(xyz, tets, plate, removed, requested)
         report = {"backend": "gmsh_opencascade", "gmsh_version": gmsh.__version__, "size_m": size_m,
                   "mesh_seed": seed, "threads": 1, "nodes": len(xyz), "tetrahedra": len(tets),
+                  "optimization": optimization, "quality_measure": "minSICN",
+                  "algorithm_3d": algorithm,
+                  "minimum_quality_before_optimization": float(before_quality.min()),
+                  "minimum_quality": float(qualities.min()), "quality_percentile_5": float(np.percentile(qualities, 5)),
                   "cad_retained_volume_m3": cad_volume, "tet_retained_volume_m3": mesh_volume,
                   "retained_volume_relative_error": abs(mesh_volume / cad_volume - 1),
                   "requested_removed_volume_m3": requested, "meshed_removed_volume_m3": removed,

@@ -109,6 +109,11 @@ as pilot-only until forward-physics and physical validation pass.
 one reference task with anchored geometry labels and sample times.
 `verify-forward` runs a short CAD-to-elastic-bank pilot without model training.
 
+[Finite-plate waveform refinement](docs/waveform-validation.md) measures mesh
+and time-step errors independently and exports checked trace plots. The first
+completed sweep passed its temporal screen but failed its spatial screen;
+local mechanical banks remain unsuitable for research training.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.

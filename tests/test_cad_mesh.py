@@ -12,6 +12,18 @@ HAS_GMSH = importlib.util.find_spec("gmsh") is not None
 
 @unittest.skipUnless(HAS_GMSH, "install optional Gmsh for CAD mesh checks")
 class CADMeshTests(unittest.TestCase):
+    def test_hxt_controls_the_observed_thin_plate_sliver_stability_case(self):
+        from traxis.forward import ForwardSettings, minimum_stable_substeps
+        from traxis.scenarios import AcquisitionSettings, SamplingSettings, sample_scenarios
+        scenario = sample_scenarios(SamplingSettings(count=1, intact_fraction=1), Plate(.04, .04, .003),
+                                    AcquisitionSettings(inset_m=.006, patch_radius_m=.003,
+                                                        frequencies_hz=(100000.,), samples=128, cycles=2))[0]
+        _, report = cad_mesh(scenario.plate, (), .002, seed=scenario.geometry_seed, algorithm=10, optimization="Netgen")
+        self.assertEqual(report["algorithm_3d"], 10)
+        self.assertGreater(report["minimum_quality"], .1)
+        steps = minimum_stable_substeps(scenario, ForwardSettings(mesh_size_m=.002, mesh_algorithm=10, mesh_optimization="Netgen"))
+        self.assertLessEqual(steps, 16)
+
     def test_intact_mass_and_partial_recess_geometry(self):
         plate = Plate(0.02, 0.02, 0.003)
         mesh, report = cad_mesh(plate, (), 0.002)

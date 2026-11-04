@@ -13,6 +13,7 @@ def main() -> None:
     from traxis.generation_commands import add_generation_commands
     from traxis.uncertainty_commands import add_uncertainty_commands
     from traxis.study_commands import add_study_commands
+    from traxis.waveform_commands import add_waveform_commands
     parser = argparse.ArgumentParser(description="Bounded guided-wave tomography experiments")
     sub = parser.add_subparsers(dest="command", required=True)
     preflight = sub.add_parser("preflight", help="inspect resources and mesh cost without solving")
@@ -71,8 +72,19 @@ def main() -> None:
     add_generation_commands(sub)
     add_uncertainty_commands(sub)
     add_study_commands(sub)
+    add_waveform_commands(sub)
     args = parser.parse_args()
-    if args.command in ("plan-study", "advance-study", "freeze-study"):
+    if args.command in ("check-waveforms", "plot-waveforms"):
+        from traxis.waveform_commands import run_waveform_command
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = run_waveform_command(args, guard)
+            print(json.dumps(result, indent=2, allow_nan=False))
+        except Exception as exc:
+            parser.exit(1, f"Waveform check stopped: {type(exc).__name__}: {exc}\n")
+        if args.command == "check-waveforms" and not result["discretization_screen_passed"]:
+            parser.exit(2, "Mesh/time discrepancy screen failed; banks remain pilot-only.\n")
+    elif args.command in ("plan-study", "advance-study", "freeze-study"):
         from traxis.study_commands import run_study_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
