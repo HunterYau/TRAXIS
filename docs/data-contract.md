@@ -17,8 +17,8 @@ plate or complete simulated defect scenario. All variants/repeated scans of
 one parent must share one split. `validate_specimen_splits` checks this across
 a proposed dataset. Simulation uses train/validation/test. Physical specimens
 use calibration/adaptation/physical_holdout; final holdouts cannot be adapted.
-The project still needs a reviewed dataset manifest and enforcement in the
-training/evaluation entrypoints. A metadata field alone does not prove that
+The fingerprinted dataset manifest and training/evaluation entrypoints enforce
+these roles. A metadata field alone does not prove that
 an external source was physically validated.
 
 `ReplayEnvironment.state()` and `.reveal(index)` return only geometry, action

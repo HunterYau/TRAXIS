@@ -1,0 +1,5 @@
+{
+  "group_velocity_m_s": {"100000.0": 2500.0},
+  "time_offset_s": 0.000025,
+  "shape": [128, 128]
+}

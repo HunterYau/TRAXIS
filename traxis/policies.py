@@ -9,7 +9,7 @@ class RandomPolicy:
     def __init__(self, seed: int):
         self.rng = np.random.default_rng(seed)
 
-    def choose(self, observation: Observation) -> int:
+    def choose(self, observation: Observation, reconstruction=None) -> int:
         available = np.flatnonzero(~observation.observed)
         if not len(available):
             raise ValueError("all records have been acquired")
@@ -24,7 +24,7 @@ class FixedPolicy:
     longest chords. Tie breaks are stable catalog indices.
     """
 
-    def choose(self, observation: Observation) -> int:
+    def choose(self, observation: Observation, reconstruction=None) -> int:
         frequencies = sorted({a.frequency_hz for a in observation.actions})
         ranking = []
         for i, a in enumerate(observation.actions):

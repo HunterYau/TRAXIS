@@ -16,6 +16,7 @@ from torch.nn import functional as F
 
 from traxis.bank import Observation, WaveformBank, validate_specimen_splits
 from traxis.config import positive
+from traxis.storage import atomic_write
 
 
 @dataclass(frozen=True)
@@ -50,24 +51,27 @@ class ObservationBatch:
     observed: torch.Tensor  # (batch, records), bool
 
 
-def observation_batch(observations: list[Observation], scale: SignalScale) -> ObservationBatch:
+def observation_batch(observations: list[Observation], scale: SignalScale, *, compact: bool = False) -> ObservationBatch:
     if not observations:
         raise ValueError("cannot form an empty batch")
     lengths = {len(o.time_s) for o in observations}
     if len(lengths) != 1:
         raise ValueError("batch traces must use a common sample count; resample explicitly upstream")
-    max_records = max(len(o.actions) for o in observations)
+    max_records = max(max(1, o.count) if compact else len(o.actions) for o in observations)
     signals = np.zeros((len(observations), max_records, 2, next(iter(lengths))), dtype=np.float32)
     context = np.zeros((len(observations), max_records, 12), dtype=np.float32)
     mask = np.zeros((len(observations), max_records), dtype=bool)
     for i, o in enumerate(observations):
         if o.observable != scale.observable:
             raise ValueError("observation and training scale have different physical units")
-        n = len(o.actions)
-        signals[i, :n, 0] = np.where(o.observed[:, None], o.waveforms, 0) / scale.rms
-        signals[i, :n, 1] = np.where(o.observed[:, None], o.waveforms - o.baseline, 0) / scale.rms
-        mask[i, :n] = o.observed
-        for j, a in enumerate(o.actions):
+        indices = np.flatnonzero(o.observed) if compact else np.arange(len(o.actions))
+        n = len(indices)
+        selected = o.observed[indices]
+        signals[i, :n, 0] = np.where(selected[:, None], o.waveforms[indices], 0) / scale.rms
+        signals[i, :n, 1] = np.where(selected[:, None], o.waveforms[indices] - o.baseline[indices], 0) / scale.rms
+        mask[i, :n] = selected
+        for j, index in enumerate(indices):
+            a = o.actions[index]
             tx, rx = o.sensors_xy_m[[a.transmitter, a.receiver]] / [o.plate.width_m, o.plate.height_m]
             context[i, j] = [*tx, *rx, a.transmitter / (len(o.sensors_xy_m) - 1),
                              a.receiver / (len(o.sensors_xy_m) - 1), a.frequency_hz / 1e6,
@@ -232,12 +236,9 @@ def save_model(path: Path, model: nn.Module, scale: SignalScale, provenance: dic
     if not isinstance(model, (DirectReconstructor, DASUNetReconstructor)):
         raise ValueError("unsupported reconstruction model")
     json.dumps(provenance, allow_nan=False)
-    path = Path(path)
-    if path.exists():
-        raise FileExistsError(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"schema_version": 1, "config": asdict(model.config), "scale": asdict(scale),
-                "state_dict": model.state_dict(), "provenance": provenance}, path)
+    state = {"schema_version": 1, "config": asdict(model.config), "scale": asdict(scale),
+             "state_dict": model.state_dict(), "provenance": provenance}
+    atomic_write(path, lambda stream: torch.save(state, stream))
 
 
 def load_model(path: Path) -> tuple[nn.Module, SignalScale, dict]:

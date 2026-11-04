@@ -22,6 +22,11 @@ class DASSettings:
     time_offset_s: float = 0.0
     shape: tuple[int, int] = (128, 128)
 
+    @classmethod
+    def from_dict(cls, value: dict):
+        return cls({float(f): float(c) for f, c in value["group_velocity_m_s"].items()},
+                   float(value.get("time_offset_s", 0)), tuple(value.get("shape", (128, 128))))
+
     def __post_init__(self):
         if not self.group_velocity_m_s:
             raise ValueError("provide a group velocity for every excitation frequency")

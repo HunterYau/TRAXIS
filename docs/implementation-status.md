@@ -16,17 +16,17 @@ validation rather than inventing those outcomes.
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb reference and 3D FEM Bloch dispersion convergence implemented; finite-plate waveform/arrival convergence, resolved recess geometry and physical traces still needed |
 | Randomized specimens and exact depth labels | Analytic circular geometry, area-averaged depth labels, 8/12 sensor layouts and stable parent-specimen splits implemented/tested; dataset generator pending |
 | Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, per-array integrity, bounded loading, explicit scalar CSV external-solver/DAQ import and source hashes implemented/tested; full physical/FEA dataset pending |
-| Specimen-level splits and hidden observations | Parent/scan split validator and masked replay implemented/tested; training/evaluation entrypoint enforcement pending |
+| Specimen-level splits and hidden observations | Fingerprinted lazy dataset, role-aware subset training/adaptation and checkpoint-bound held-out evaluation enforce parent separation; masked replay tested |
 | A: waveform CNN, attention, spatial decoder | Implemented with geometry/sampling/amplitude context, partial masks and empty-state handling; forward/backward and serialization checked. Research training pending |
 | B: DAS plus residual U-Net | Implemented with residual encoder, spatial skip connections and waveform-context fusion; forward/backward and serialization checked. Research training pending |
-| C: DAS-only | Residual-envelope bistatic DAS implemented; analytic point-scattering fixture localizes correctly. Calibrated depth conversion remains needed before reporting depth MAE |
-| Ensemble uncertainty and calibration | Pending; independent members and error/coverage checks needed |
+| C: DAS-only | Residual-envelope imaging plus training-only scalar depth calibration implemented/tested; calibrated physical accuracy remains unverified |
+| Ensemble uncertainty and calibration | Distinct-member inference and error/coverage diagnostics implemented; independent-seed frozen evaluation supported. Confidence calibration pending |
 | Random, diagonal/edge fixed, RL adaptive | Random and fixed baselines tested for order/reproducibility/no repeats; RL pending |
-| Equal-budget replay and fair architecture comparisons | Pending; identical cases/splits/subsets, repeated random seeds, dense reference |
+| Equal-budget replay and fair architecture comparisons | Frozen plan/actual checkpoint lineage checks, matched initial actions/budgets, repeated random policies, dense references and parent-level summaries implemented/tested; research results pending |
 | 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
 | Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
 | Curves, 2D and 2.5D plots, parameter counts/cost | Pending |
-| Simulation-only versus physical adaptation | Pending; import and adaptation workflow needed; two adaptation / three final damaged plates |
+| Simulation-only versus physical adaptation | Source-model lineage, frozen unit scale and two-adaptation/three-holdout role workflow tested with fixtures; measured physical adaptation/evaluation pending |
 | Resource bounds and telemetry | CPU-only short pilot completed; cooperative time/RSS/system RAM/GPU guards tested. CPU temperature unavailable on this Windows host |
 | Frequent commits on a project branch | research/elastic-tomography; planning commit followed by tested implementation increments |
 
@@ -114,8 +114,15 @@ fixture loss. These results do not compare generalization or establish an
 accurate thickness inversion. See reconstruction-models.md and the compact
 debug evidence for configuration counts, timings and resource samples.
 
-Still pending: randomized scenario generation, research-quality waveform
-banks and physics approval, subset-training/checkpoint/ensemble workflows,
-quantitative DAS calibration, adaptive RL, matched evaluation and plots,
-physical import/adaptation enforcement, and a final acceptance audit.
+The subset-training, exact checkpoint recovery, DAS scalar calibration,
+ensemble adapters and frozen replay workflow now have implementation coverage.
+Current suite: 75 tests. Exact Adam/subset/weight recovery and interruption
+during validation are checked; physical role tests use two adaptation and
+three held-out fixture parents. See experiment-workflow.md for commands and
+remaining limits. No full research training cycle or real physical run occurred.
+
+Still pending: randomized research-quality scenario/response generation and
+physics approval, adaptive RL, uncertainty calibration, automatic matched
+ablation/ensemble orchestration and plots, physical measurements, and a final
+acceptance audit.
 

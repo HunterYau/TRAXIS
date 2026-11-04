@@ -1,0 +1,5 @@
+{
+  "model": {"architecture": "das_unet", "output_size": 128, "width": 16, "embedding": 64},
+  "training": {"mode": "debug", "phase": "pretrain", "max_steps": 4, "min_records": 0, "max_records": 8},
+  "das": {"group_velocity_m_s": {"100000.0": 2500.0}, "time_offset_s": 0.000025, "shape": [128, 128]}
+}

@@ -75,3 +75,11 @@ This runs exactly eight single-step CPU debug configurations, with resource
 limits. The optional model tests are skipped if PyTorch is absent; running
 the core suite alone does not validate the neural candidates.
 
+## Experiment runner
+
+The [experiment workflow](docs/experiment-workflow.md) covers dataset indexing,
+bounded subset training/resume, training-only DAS depth calibration, ensembles,
+physical adaptation roles and frozen equal-budget replay. Start with the
+debug configurations under `configs/`; these perform a few updates and do
+not provide a research training schedule or validated physical parameters.
+

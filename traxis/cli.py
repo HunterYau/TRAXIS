@@ -9,6 +9,7 @@ from traxis.resources import ResourceGuard, ResourceLimits, snapshot
 
 
 def main() -> None:
+    from traxis.experiment_commands import add_experiment_commands
     parser = argparse.ArgumentParser(description="Bounded guided-wave tomography experiments")
     sub = parser.add_subparsers(dest="command", required=True)
     preflight = sub.add_parser("preflight", help="inspect resources and mesh cost without solving")
@@ -28,8 +29,16 @@ def main() -> None:
     models.add_argument("--output", type=Path, default=Path("outputs/model-verification"))
     models.add_argument("--max-seconds", type=float, default=60)
     models.add_argument("--max-rss-mib", type=float, default=1024)
+    add_experiment_commands(sub)
     args = parser.parse_args()
-    if args.command == "preflight":
+    if args.command in ("index-data", "train", "calibrate-das", "freeze-evaluation", "evaluate"):
+        from traxis.experiment_commands import run_experiment_command
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            print(json.dumps(run_experiment_command(args, guard), indent=2, allow_nan=False))
+        except Exception as exc:
+            parser.exit(1, f"Experiment stopped: {type(exc).__name__}: {exc}\n")
+    elif args.command == "preflight":
         frequencies = (50000., 75000., 100000., 125000., 150000.)
         print(json.dumps({"hardware": snapshot(), "mesh_estimate": asdict(estimate_mesh(tuple(args.cells))),
                           "reciprocal_scan_counts": {str(n): len(action_catalog(n, frequencies)) for n in (8, 12)},
