@@ -55,3 +55,9 @@ by the mesh's P1 basis; even an exact load integral cannot compensate for a
 coarse bending field. Forward caches now include the patch integrator's source
 hash. Historical banks retain their original hashes/provenance and are not
 silently regenerated or promoted to research-ready data.
+
+The separate [quadratic aperture implementation](quadratic-apertures.md)
+extends the boundary integrals to second moments for P2 native references.
+Its vertex weights may be negative and are preserved. The local bank backend
+described here remains P1; the P2 implementation has its own geometry and
+native source/probe checks and does not establish continuum accuracy.

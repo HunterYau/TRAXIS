@@ -1,0 +1,315 @@
+{
+  "kind": "quadratic_mechanical_aperture_verification",
+  "completed": true,
+  "passed": true,
+  "plan_fingerprint": "dc36ddbe2e3fa393ed37975e4ef830719aa92fd4b4fdbef3b229df88e5e8d14c",
+  "patches": [
+    {
+      "integration": "analytic_disk_P2_shape_integrals",
+      "requested_center_xy_m": [
+        0.0103,
+        0.0091
+      ],
+      "radius_m": 0.0032,
+      "direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "area_m2": 3.2169908772759474e-05,
+      "centroid_xy_m": [
+        0.010300000000000002,
+        0.0091
+      ],
+      "centroid_error_m": 1.1957753447784091e-18,
+      "centered_second_moments_m2": [
+        2.5599999999999937e-06,
+        -2.6469779601696886e-21,
+        2.560000000000003e-06
+      ],
+      "full_disk_second_moment_error_m2": 6.3527471044072525e-21,
+      "full_disk_area_relative_error": 2.220446049250313e-16,
+      "support_nodes": 9,
+      "negative_shape_coefficients": 3,
+      "minimum_normalized_shape_coefficient": -0.079048798617409,
+      "covered_surface_triangles": 2,
+      "edge_clipped": false
+    },
+    {
+      "integration": "analytic_disk_P2_shape_integrals",
+      "requested_center_xy_m": [
+        0.0301,
+        0.0207
+      ],
+      "radius_m": 0.0032,
+      "direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "area_m2": 3.2169908772759474e-05,
+      "centroid_xy_m": [
+        0.0301,
+        0.0207
+      ],
+      "centroid_error_m": 1.5332934166833741e-18,
+      "centered_second_moments_m2": [
+        2.560000000000001e-06,
+        -2.117582368135751e-21,
+        2.560000000000001e-06
+      ],
+      "full_disk_second_moment_error_m2": 2.117582368135751e-21,
+      "full_disk_area_relative_error": 2.220446049250313e-16,
+      "support_nodes": 9,
+      "negative_shape_coefficients": 4,
+      "minimum_normalized_shape_coefficient": -0.07942169736727747,
+      "covered_surface_triangles": 2,
+      "edge_clipped": false
+    }
+  ],
+  "runs": [
+    {
+      "label": "a-to-b",
+      "process": {
+        "exit_code": 0,
+        "wall_seconds": 1.246216400002595,
+        "maximum_observed_external_processes": 2,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "artifact_sha256": {
+        "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+        "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+        "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+        "probe.dat": "a411f099c702535f498eabcf8531bcaf1a7bbd53bbf978605476986efe308433",
+        "probe.dat.names": "4329a780ea50b9e8b5d2a3db5e110de4aaaa55a5d160347cd36ceae080961070",
+        "solver.log": "7da76cde41f593bb4a8a70081f4440845fed9e2a0eefc24359eba67ea635470c",
+        "transient.sif": "0b7692a5a119b324c95ccc2d5404384363cf68aa4f3cfcc373e1b1ed881461aa"
+      }
+    },
+    {
+      "label": "b-to-a",
+      "process": {
+        "exit_code": 0,
+        "wall_seconds": 1.0935633000335656,
+        "maximum_observed_external_processes": 2,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "artifact_sha256": {
+        "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+        "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+        "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+        "probe.dat": "799e724306d5aa5f0024db5c3c6dfed78ea0e6baddc11cf4a2e6910b988a15a8",
+        "probe.dat.names": "47516303a090ec5c6290bc2bea3d12b6e1939edb3690241fb6b749b63eb2f80e",
+        "solver.log": "bd4caa59b5e709dfbf6fbeb108cf07ef48dbb64993c47bb816cfdffc1e96c8bd",
+        "transient.sif": "3729c5703ad9969e55d9039fe1d956b9598d7c702eed24eb12d5e313d6708066"
+      }
+    },
+    {
+      "label": "uniform-burst",
+      "process": {
+        "exit_code": 0,
+        "wall_seconds": 1.0446938999812119,
+        "maximum_observed_external_processes": 2,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "artifact_sha256": {
+        "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+        "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+        "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+        "probe.dat": "30da22e3bf3032eca37c29886380dd916af9b690d8ff4e7ff04be1e69ab2bf6a",
+        "probe.dat.names": "7be8343ba753ba82eb786cc9859f1851f2f0fcff42b1566f73aa64637795d42d",
+        "solver.log": "5d19daf3ef116f78c8586ae48fe032a6b58f1a6ef3de9a48472552b9656c05d6",
+        "transient.sif": "bb7d1dbc829b95550b96d633608f59452c41f47dfa4a871252d987b5d7f1498d"
+      }
+    }
+  ],
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Finite-area P2 mechanical load/probe and windowed-source interfaces on a coarse fixed mesh; no continuum, PZT or physical validation.",
+  "relative_reciprocity_error": 5.388794528089947e-13,
+  "relative_source_interface_error": 1.2627196543722898e-12,
+  "reference_rms_m": 1.0283509917292105e-09,
+  "observed_probe_nodes": 17,
+  "nodes": 75,
+  "tetrahedra": 24,
+  "raw_traces_sha256": "b3d565ce1a4ad55194c10acea79de1d1d2c47e2eabd99bde7a020c6bcde2f228",
+  "wall_seconds": 3.7768579000257887,
+  "resources": {
+    "limits": {
+      "max_seconds": 60,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "samples": 26,
+    "peak_sampled_combined_rss_mib": 116.17578125,
+    "peak_system_memory_percent": 62.4,
+    "minimum_available_mib": 6095.31640625,
+    "peak_observed_gpu_used_mib": 921.0,
+    "gpu_total_mib": 8192.0,
+    "peak_observed_gpu_temperature_c": 47.0,
+    "cpu_temperatures_c": null,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "date": "2026-11-04",
+  "original_report_fingerprint": "c66e3f0a6b714939a83f9148350b2d9d8f18a6164836cde50e98bd70eb40d2bc",
+  "plan": {
+    "kind": "predeclared_quadratic_aperture_check",
+    "plate": {
+      "width_m": 0.04,
+      "height_m": 0.03,
+      "thickness_m": 0.003
+    },
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "cells": [
+      2,
+      2,
+      1
+    ],
+    "centers_xy_m": [
+      [
+        0.0103,
+        0.0091
+      ],
+      [
+        0.0301,
+        0.0207
+      ]
+    ],
+    "radius_m": 0.0032,
+    "frequency_hz": 100000.0,
+    "burst_cycles": 2,
+    "sample_dt_s": 5e-07,
+    "samples": 128,
+    "peak_patch_force_n": 1.0,
+    "reference_volume_force_n_m3": 1000000.0,
+    "relative_reciprocity_tolerance": 1e-08,
+    "relative_source_interface_tolerance": 1e-08,
+    "full_disk_area_relative_tolerance": 1e-10,
+    "centroid_tolerance_m": 1e-13,
+    "second_moment_tolerance_m2": 1e-16,
+    "reference_rms_floor_m": 1e-18,
+    "solver_executable_sha256": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+    "grid_executable_sha256": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "b152bc457f6c029b958e940ea27920e1f7af8585b429ef86703f1e0941fb54b9",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_reference.py": "c4cb1b2a3448eacfbbdde3f3040449fb1ac68a7940cb1246ad6554c64e982ba1",
+      "elmer_transient.py": "e1838bcefdd6317d76a63541537423fb5b876f6a0cfd19ccdd87358c2f863dd6",
+      "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+      "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+      "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+      "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+      "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+      "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "scope": "Finite-area P2 mechanical load/probe and windowed-source interfaces on a coarse fixed mesh; no continuum, PZT or physical validation.",
+    "ready_for_training_data": false,
+    "fingerprint": "dc36ddbe2e3fa393ed37975e4ef830719aa92fd4b4fdbef3b229df88e5e8d14c"
+  },
+  "regression": {
+    "exit_code": 0,
+    "wall_seconds": 95.01870829996187,
+    "maximum_observed_external_processes": 7,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "successful": true,
+    "tests_run": 168,
+    "resources": {
+      "limits": {
+        "max_seconds": 150,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 446,
+      "peak_sampled_combined_rss_mib": 783.23828125,
+      "peak_system_memory_percent": 65.8,
+      "minimum_available_mib": 5555.5234375,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 47.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "corrected_targeted_regression": {
+    "successful": true,
+    "tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "wall_seconds": 4.036,
+    "command": "python -m unittest tests.test_quadratic_patches tests.test_patches -v (TRAXIS_ELMER_HOME set)",
+    "receipt_source": "Observed unittest summary: Ran 12 tests in 4.036s, OK, process exit 0.",
+    "coverage_correction": "Each permutation now starts from the original triangle; corrected subset ran after the full 168-test pass. No runtime code changed.",
+    "test_source_sha256": {
+      "tests/test_quadratic_patches.py": "7f86d72c603d587d8e268944b71988eeb327c10b7a4e3c3f2698c34313160bc1",
+      "tests/test_patches.py": "9dd6a337b8789de32dbebf5730a08ee7594284f4aaf626e7255acc5958739572"
+    }
+  },
+  "source_scale_note": "peak_patch_force_n is the nominal scale multiplying an unnormalized Hann-windowed sine, not its measured pulse maximum.",
+  "maximum_absolute_sampled_patch_force_n": 0.8602387002944837,
+  "full_artifact_sha256": {
+    "outputs/quadratic-aperture-reference/aperture-plan.json": "d280a094e4705bde236761a113c92e635085d62c1cf1e72971cf3ae7175714e3",
+    "outputs/quadratic-aperture-reference/aperture-report.json": "16ca94ff14d9a152199dac97305100e85299030c8f83b330ea567ca8eee1bf88",
+    "outputs/quadratic-aperture-reference/regression-result.json": "8248670d034b5e20f1d93a1fda404f5ecd66b6483a8b3e83aece3d363deba349",
+    "outputs/quadratic-aperture-reference/regression.log": "1808157c76ad0e4282f33666b6fba2464ab49e12e6b3986c6c3c03e2952839a7",
+    "outputs/quadratic-aperture-reference/targeted-result.json": "5e11a2466ab19ebd65236483d2a432efef6c1a7a3b8681fba71a5684f957fa25"
+  },
+  "evidence_fingerprint": "1cf71ea4890dde35be3eaa98197bd34e0ec488524f6cb742a2937803712274a6"
+}

@@ -45,7 +45,7 @@ def sinusoidal_displacement(times, acceleration, drive_omega, natural_omega=0.):
 
 
 def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
-                  nodal_force_n=None, volume_force_n_m3=None):
+                  nodal_force_n=None, volume_force_n_m3=None, probe_nodes=None, burst_cycles=None):
     """Bossak alpha=0 is average-acceleration Newmark (gamma=.5, beta=.25).
 
     Stress Bodyforce is force/volume. Displacement i Load is a direct nodal
@@ -55,6 +55,16 @@ def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
     positive('drive angular frequency', drive_omega)
     if type(steps) is not int or not 1 <= steps <= 5000 or type(probe_node) is not int or not 1 <= probe_node <= 128:
         raise ValueError('invalid bounded step count or probe node')
+    selected = (probe_node,) if probe_nodes is None else tuple(probe_nodes)
+    if (not selected or len(selected) > 128 or len(set(selected)) != len(selected)
+            or any(type(node) is not int or not 1 <= node <= 128 for node in selected)):
+        raise ValueError('need 1–128 unique bounded probe node indexes')
+    waveform = f'sin({drive_omega:.17g}*tx)'
+    if burst_cycles is not None:
+        if type(burst_cycles) is not int or not 1 <= burst_cycles <= 20:
+            raise ValueError('burst must have 1–20 cycles')
+        duration = 2 * math.pi * burst_cycles / drive_omega
+        waveform += f'*0.5*(1-cos({drive_omega / burst_cycles:.17g}*tx))*(tx<{duration:.17g})'
     if (nodal_force_n is None) == (volume_force_n_m3 is None):
         raise ValueError('choose exactly one volume or nodal force definition')
     if volume_force_n_m3 is not None:
@@ -62,14 +72,14 @@ def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
             raise ValueError('volume force must be finite')
         forcing = f'''Body Force 1
   Stress Bodyforce 3 = Variable Time
-    Real MATC "{volume_force_n_m3:.17g}*sin({drive_omega:.17g}*tx)"
+    Real MATC "{volume_force_n_m3:.17g}*{waveform}"
 End
 '''
     else:
         force = np.asarray(nodal_force_n, dtype=float)
         if force.ndim != 1 or not 12 <= len(force) <= 384 or len(force) % 3 or not np.isfinite(force).all():
             raise ValueError('need a finite bounded node-major force vector')
-        if probe_node > len(force) // 3:
+        if max(selected) > len(force) // 3:
             raise ValueError('probe node exceeds the nodal force mesh')
         forcing = ''
         for node, components in enumerate(force.reshape(-1, 3), 1):
@@ -78,7 +88,7 @@ End
             forcing += f'Boundary Condition {node}\n  Target Nodes(1) = {node}\n'
             for component, value in enumerate(components, 1):
                 if value != 0:
-                    forcing += f'  Displacement {component} Load = Variable Time\n    Real MATC "{value:.17g}*sin({drive_omega:.17g}*tx)"\n'
+                    forcing += f'  Displacement {component} Load = Variable Time\n    Real MATC "{value:.17g}*{waveform}"\n'
             forcing += 'End\n'
     return f'''Header
   CHECK KEYWORDS Warn
@@ -135,7 +145,7 @@ Solver 2
   Operator 3 = min
   Variable 4 = Displacement 3
   Operator 4 = max
-  Save Points(1) = {probe_node}
+  Save Points({len(selected)}) = {' '.join(str(node) for node in selected)}
 End
 {forcing}'''
 

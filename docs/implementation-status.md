@@ -406,3 +406,30 @@ system RAM 64.8%, GPU memory 921/8,192 MiB and GPU temperature 47 C. Probe
 tests reject wrong times, missing/duplicate named columns, and analytic
 responses agree with an independent adaptive ODE solver at/near resonance.
 
+## Quadratic mechanical source and receiver apertures
+
+Signed P2 circular integrals now preserve area, centroid and second moments.
+Independent slice/Gaussian quadrature, analytic moments and quadratic fields
+check the integration across remeshing and node permutations. Native P2 mesh
+loading checks body/type/counts, straight edge ordering and conforming shared
+midpoints. Curved quadratic geometry is rejected. See quadratic-apertures.md.
+
+The three-run native pilot checks swapped aperture loads/probes and a
+truncated Hann source against independent scalar kinematics. Reciprocal
+traces differ by 5.39e-13 relative L2, and the source interface by 1.27e-12.
+Area errors are 2.22e-16 relative, centroid errors below 1.54e-18 m, and
+second-moment errors below 6.36e-21 m². Negative nodal weights were retained.
+
+The pilot took 3.78 seconds with sampled combined RSS 116.2 MiB, system RAM
+62.4%, GPU memory 921/8,192 MiB and GPU temperature 47 C. CPU temperature was
+unavailable; no training or GPU computation ran. Evidence is in
+docs/evidence/quadratic-aperture-debug.json. All 168 regression tests passed;
+the corrected all-permutation aperture subset also passed 12 tests. Existing
+P1 banks remain pilot-only, and spatially converged finite-plate/PZT/physical
+validation remains open.
+
+The 168-test full run took 95.02 seconds with sampled monitor/test-tree RSS
+783.2 MiB, system RAM 65.8%, GPU memory 921/8,192 MiB and GPU temperature
+47 C. The pilot's nominal 1 N force scale multiplies the unnormalized Hann
+sine; its sampled pulse maximum was 0.8602 N. CPU temperature was unavailable.
+

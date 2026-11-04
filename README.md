@@ -128,6 +128,10 @@ criterion failed and remains recorded.
 force units, named probes and time refinement on fixed P1/P2 systems. Passing
 these checks does not establish finite-plate spatial or PZT accuracy.
 
+[Quadratic apertures](docs/quadratic-apertures.md) preserve circular area,
+centroid and second moments and pass native burst/reciprocity checks. They
+provide a P2 mechanical reference interface; local bank generation remains P1.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.
