@@ -1,0 +1,5 @@
+# Core packages used for the first Windows/Python 3.12 verification.
+# Install requirements.txt for portable version ranges.
+numpy==2.5.4
+psutil==7.2.2
+scipy==1.18.1

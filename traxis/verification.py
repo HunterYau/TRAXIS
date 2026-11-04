@@ -2,6 +2,7 @@
 
 from dataclasses import asdict
 import json
+import hashlib
 from pathlib import Path
 import platform
 import time
@@ -15,6 +16,8 @@ from traxis.config import CircularRecess, Material, Plate
 from traxis.fem import assemble, constitutive, simulate, surface_patch, tone_burst
 from traxis.geometry import structured_mesh
 from traxis.resources import ResourceGuard
+from traxis.dispersion import wavenumber_rad_m
+from traxis.waveguide import lamb_frequencies_hz
 
 
 def run_verification(output: Path, guard: ResourceGuard) -> dict:
@@ -29,6 +32,8 @@ def run_verification(output: Path, guard: ResourceGuard) -> dict:
                               "No bonded PZT/electrical/adhesive model",
                               "No experimental traces or licensed solver comparison",
                               "No learned models or training in this verification"]}
+    report["source_sha256"] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                               for p in sorted(Path(__file__).parent.glob("*.py"))}
     try:
         guard.check(force=True)
         material = Material()
@@ -132,6 +137,26 @@ def run_verification(output: Path, guard: ResourceGuard) -> dict:
         report["temporal_refinement"] = {"error_norms_m": errors, "refinement_factors": [1, 2, 4]}
         for i in (0, 1):
             gate(f"temporal_error_reduction_{i}", errors[i] / errors[i + 1], 3.8, "greater")
+
+        # Periodic unit cells compare the actual tetrahedral wave operator to
+        # an independently solved traction equation, at two plate thicknesses.
+        report["guided_mode_dispersion"] = []
+        for thickness in (0.001, 0.003):
+            for mode, mode_index in (("A0", 0), ("S0", 1)):
+                f = 100000.
+                wavenumber = wavenumber_rad_m(f, thickness, mode, material)
+                levels = []
+                for n in (16, 32, 64, 128):
+                    fem_f = lamb_frequencies_hz(wavenumber, thickness, n, n // 2, material, guard)[mode_index]
+                    levels.append({"elements_per_wavelength": n, "thickness_cells": n // 2,
+                                   "fem_frequency_hz": fem_f, "relative_error": abs(fem_f / f - 1)})
+                entry = {"mode": mode, "thickness_m": thickness, "reference_frequency_hz": f,
+                         "reference_wavenumber_rad_m": wavenumber, "levels": levels}
+                report["guided_mode_dispersion"].append(entry)
+                prefix = f"{mode}_{thickness * 1000:g}mm"
+                gate(f"{prefix}_finest_dispersion_error", levels[-1]["relative_error"], 0.005)
+                reduction = min(a["relative_error"] / b["relative_error"] for a, b in zip(levels, levels[1:]))
+                gate(f"{prefix}_dispersion_error_reduction", reduction, 3, "greater")
         report["passed"] = all(g["passed"] for g in gates.values())
     except Exception as exc:
         report["error"] = f"{type(exc).__name__}: {exc}"

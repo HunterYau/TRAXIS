@@ -30,10 +30,17 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe -m traxis preflight
+.\.venv\Scripts\python.exe -m traxis dispersion --output outputs/dispersion.json
 .\.venv\Scripts\python.exe -m traxis verify --output outputs/verification
 ```
 
 Verification is CPU-only and bounded. There is no automatic training or large
 dataset generation command. Runtime limits, assumptions, and current work are
 tracked in [the implementation checklist](docs/implementation-status.md).
+
+The `dispersion` command computes fundamental A0/S0 phase speed, group speed
+and wavelength using an independent Rayleigh-Lamb traction determinant. Use
+group speed for packet delays and phase wavelength when considering spatial
+resolution. It covers a documented low-frequency range and uses nominal
+material constants; it is not an intact physical-plate validation result.
 

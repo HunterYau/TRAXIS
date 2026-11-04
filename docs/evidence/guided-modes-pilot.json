@@ -1,0 +1,382 @@
+﻿{
+    "kind":  "numerical_verification_not_physical_validation",
+    "passed":  true,
+    "ready_for_training_data":  false,
+    "traxis_version":  "0.1.0",
+    "python":  "3.12.10",
+    "numpy":  "2.5.4",
+    "scipy":  "1.18.1",
+    "gates":  {
+                  "rigid_motion_relative_residual":  {
+                                                         "value":  2.3040534550144041E-18,
+                                                         "threshold":  1E-12,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "affine_energy_relative_error":  {
+                                                       "value":  1.865174681370263E-14,
+                                                       "threshold":  1E-11,
+                                                       "comparison":  "less",
+                                                       "passed":  true
+                                                   },
+                  "intact_mass_relative_error":  {
+                                                     "value":  8.8817841970012523E-16,
+                                                     "threshold":  1E-12,
+                                                     "comparison":  "less",
+                                                     "passed":  true
+                                                 },
+                  "intact_post_drive_energy_drift":  {
+                                                         "value":  1.1725979645110765E-14,
+                                                         "threshold":  1E-08,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "damaged_post_drive_energy_drift":  {
+                                                          "value":  1.3788890335455946E-14,
+                                                          "threshold":  1E-08,
+                                                          "comparison":  "less",
+                                                          "passed":  true
+                                                      },
+                  "mechanical_reciprocity_relative_error":  {
+                                                                "value":  3.2468129959851595E-14,
+                                                                "threshold":  1E-09,
+                                                                "comparison":  "less",
+                                                                "passed":  true
+                                                            },
+                  "defect_response_relative_change":  {
+                                                          "value":  0.3059107344768469,
+                                                          "threshold":  0.01,
+                                                          "comparison":  "greater",
+                                                          "passed":  true
+                                                      },
+                  "spatial_error_reduction_0":  {
+                                                    "value":  3.76161751713202,
+                                                    "threshold":  3.5,
+                                                    "comparison":  "greater",
+                                                    "passed":  true
+                                                },
+                  "spatial_error_reduction_1":  {
+                                                    "value":  3.93884472932011,
+                                                    "threshold":  3.5,
+                                                    "comparison":  "greater",
+                                                    "passed":  true
+                                                },
+                  "temporal_error_reduction_0":  {
+                                                     "value":  4.014069339986217,
+                                                     "threshold":  3.8,
+                                                     "comparison":  "greater",
+                                                     "passed":  true
+                                                 },
+                  "temporal_error_reduction_1":  {
+                                                     "value":  4.0035161565941255,
+                                                     "threshold":  3.8,
+                                                     "comparison":  "greater",
+                                                     "passed":  true
+                                                 },
+                  "A0_1mm_finest_dispersion_error":  {
+                                                         "value":  0.003042853522660538,
+                                                         "threshold":  0.005,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "A0_1mm_dispersion_error_reduction":  {
+                                                            "value":  3.6693035471307827,
+                                                            "threshold":  3,
+                                                            "comparison":  "greater",
+                                                            "passed":  true
+                                                        },
+                  "S0_1mm_finest_dispersion_error":  {
+                                                         "value":  3.85176583295177E-06,
+                                                         "threshold":  0.005,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "S0_1mm_dispersion_error_reduction":  {
+                                                            "value":  4.096004171036353,
+                                                            "threshold":  3,
+                                                            "comparison":  "greater",
+                                                            "passed":  true
+                                                        },
+                  "A0_3mm_finest_dispersion_error":  {
+                                                         "value":  0.0010595829544031155,
+                                                         "threshold":  0.005,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "A0_3mm_dispersion_error_reduction":  {
+                                                            "value":  3.756242158582502,
+                                                            "threshold":  3,
+                                                            "comparison":  "greater",
+                                                            "passed":  true
+                                                        },
+                  "S0_3mm_finest_dispersion_error":  {
+                                                         "value":  2.9793201349326282E-06,
+                                                         "threshold":  0.005,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "S0_3mm_dispersion_error_reduction":  {
+                                                            "value":  4.130036030975823,
+                                                            "threshold":  3,
+                                                            "comparison":  "greater",
+                                                            "passed":  true
+                                                        }
+              },
+    "limitations":  [
+                        "Small smoke plate, not full research geometry",
+                        "No bonded PZT/electrical/adhesive model",
+                        "No experimental traces or licensed solver comparison",
+                        "No learned models or training in this verification"
+                    ],
+    "source_sha256":  {
+                          "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                          "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                          "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                          "cli.py":  "55b7b68484d5728b28fa21d8c64a67d0a45e484d75b093a1be321c55c88c1385",
+                          "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                          "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                          "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                          "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                          "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                          "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                          "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703"
+                      },
+    "settings":  {
+                     "plate":  {
+                                   "width_m":  0.04,
+                                   "height_m":  0.04,
+                                   "thickness_m":  0.003
+                               },
+                     "material":  {
+                                      "young_pa":  68900000000.0,
+                                      "poisson":  0.33,
+                                      "density_kg_m3":  2700.0
+                                  },
+                     "cells":  [
+                                   8,
+                                   8,
+                                   4
+                               ],
+                     "recess":  {
+                                    "x_m":  0.02,
+                                    "y_m":  0.02,
+                                    "radius_m":  0.008,
+                                    "depth_m":  0.0015
+                                },
+                     "observable":  "area-averaged top-surface normal displacement [m]",
+                     "source":  "Hann tone burst, 150 kHz, 2 cycles, 1 N peak scale",
+                     "boundaries":  "all natural traction-free",
+                     "damping":  "none"
+                 },
+    "meshes":  [
+                   {
+                       "nodes":  405,
+                       "tetrahedra":  1536,
+                       "ndof":  1215,
+                       "stable_dt_s":  9.1541523038075352E-08,
+                       "removed_volume_m3":  0.0,
+                       "requested_removed_volume_m3":  0,
+                       "relative_removed_volume_error":  0.0
+                   },
+                   {
+                       "nodes":  395,
+                       "tetrahedra":  1392,
+                       "ndof":  1185,
+                       "stable_dt_s":  9.1541523038075352E-08,
+                       "removed_volume_m3":  4.5000000000000003E-07,
+                       "requested_removed_volume_m3":  3.015928947446201E-07,
+                       "relative_removed_volume_error":  0.4920775914865192
+                   }
+               ],
+    "time_integration":  {
+                             "dt_s":  7.3233218430460292E-08,
+                             "steps":  547,
+                             "duration_s":  4.0058570481461782E-05
+                         },
+    "spatial_refinement":  {
+                               "reference_eigenvalue_s_2":  2518576826796.507,
+                               "levels":  [
+                                              {
+                                                  "cells_per_axis":  2,
+                                                  "rayleigh_quotient_s_2":  2041481481481.4817,
+                                                  "relative_error":  0.1894305308612978
+                                              },
+                                              {
+                                                  "cells_per_axis":  4,
+                                                  "rayleigh_quotient_s_2":  2391744329036.666,
+                                                  "relative_error":  0.050358796448216725
+                                              },
+                                              {
+                                                  "cells_per_axis":  8,
+                                                  "rayleigh_quotient_s_2":  2486376395838.739,
+                                                  "relative_error":  0.012785169233342497
+                                              }
+                                          ],
+                               "scope":  "free nu=0 cube cosine-mode energy; not Lamb-wave convergence"
+                           },
+    "temporal_refinement":  {
+                                "error_norms_m":  [
+                                                      4.357966722717835E-10,
+                                                      1.0856730050240732E-10,
+                                                      2.7117987353089086E-11
+                                                  ],
+                                "refinement_factors":  [
+                                                           1,
+                                                           2,
+                                                           4
+                                                       ]
+                            },
+    "guided_mode_dispersion":  [
+                                   {
+                                       "mode":  "A0",
+                                       "thickness_m":  0.001,
+                                       "reference_frequency_hz":  100000.0,
+                                       "reference_wavenumber_rad_m":  661.2495716974383,
+                                       "levels":  [
+                                                      {
+                                                          "elements_per_wavelength":  16,
+                                                          "thickness_cells":  8,
+                                                          "fem_frequency_hz":  117332.91912892245,
+                                                          "relative_error":  0.17332919128922453
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  32,
+                                                          "thickness_cells":  16,
+                                                          "fem_frequency_hz":  104723.76267220409,
+                                                          "relative_error":  0.047237626722040904
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  64,
+                                                          "thickness_cells":  32,
+                                                          "fem_frequency_hz":  101209.63439005712,
+                                                          "relative_error":  0.012096343900571238
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  128,
+                                                          "thickness_cells":  64,
+                                                          "fem_frequency_hz":  100304.28535226604,
+                                                          "relative_error":  0.003042853522660538
+                                                      }
+                                                  ]
+                                   },
+                                   {
+                                       "mode":  "S0",
+                                       "thickness_m":  0.001,
+                                       "reference_frequency_hz":  100000.0,
+                                       "reference_wavenumber_rad_m":  117.42916274164166,
+                                       "levels":  [
+                                                      {
+                                                          "elements_per_wavelength":  16,
+                                                          "thickness_cells":  8,
+                                                          "fem_frequency_hz":  99963.07825893536,
+                                                          "relative_error":  0.0003692174106463275
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  32,
+                                                          "thickness_cells":  16,
+                                                          "fem_frequency_hz":  99993.0992639638,
+                                                          "relative_error":  6.90073603619723E-05
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  64,
+                                                          "thickness_cells":  32,
+                                                          "fem_frequency_hz":  99998.42231510824,
+                                                          "relative_error":  1.5776848917625763E-05
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  128,
+                                                          "thickness_cells":  64,
+                                                          "fem_frequency_hz":  99999.6148234167,
+                                                          "relative_error":  3.85176583295177E-06
+                                                      }
+                                                  ]
+                                   },
+                                   {
+                                       "mode":  "A0",
+                                       "thickness_m":  0.003,
+                                       "reference_frequency_hz":  100000.0,
+                                       "reference_wavenumber_rad_m":  408.27613887673914,
+                                       "levels":  [
+                                                      {
+                                                          "elements_per_wavelength":  16,
+                                                          "thickness_cells":  8,
+                                                          "fem_frequency_hz":  106237.96552931305,
+                                                          "relative_error":  0.06237965529313039
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  32,
+                                                          "thickness_cells":  16,
+                                                          "fem_frequency_hz":  101660.69312519167,
+                                                          "relative_error":  0.01660693125191659
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  64,
+                                                          "thickness_cells":  32,
+                                                          "fem_frequency_hz":  100422.0694622371,
+                                                          "relative_error":  0.004220694622370846
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  128,
+                                                          "thickness_cells":  64,
+                                                          "fem_frequency_hz":  100105.9582954403,
+                                                          "relative_error":  0.0010595829544031155
+                                                      }
+                                                  ]
+                                   },
+                                   {
+                                       "mode":  "S0",
+                                       "thickness_m":  0.003,
+                                       "reference_frequency_hz":  100000.0,
+                                       "reference_wavenumber_rad_m":  117.56201598127842,
+                                       "levels":  [
+                                                      {
+                                                          "elements_per_wavelength":  16,
+                                                          "thickness_cells":  8,
+                                                          "fem_frequency_hz":  99968.10236995794,
+                                                          "relative_error":  0.00031897630042065916
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  32,
+                                                          "thickness_cells":  16,
+                                                          "fem_frequency_hz":  99994.46051006038,
+                                                          "relative_error":  5.5394899396210562E-05
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  64,
+                                                          "thickness_cells":  32,
+                                                          "fem_frequency_hz":  99998.7695300495,
+                                                          "relative_error":  1.2304699505083505E-05
+                                                      },
+                                                      {
+                                                          "elements_per_wavelength":  128,
+                                                          "thickness_cells":  64,
+                                                          "fem_frequency_hz":  99999.70206798651,
+                                                          "relative_error":  2.9793201349326282E-06
+                                                      }
+                                                  ]
+                                   }
+                               ],
+    "wall_seconds":  0.25,
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  512,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  74.8203125,
+                      "sampled_max_system_memory_percent":  83.7,
+                      "initial_gpu":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1697.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  }
+}
