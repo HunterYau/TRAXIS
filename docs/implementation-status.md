@@ -21,7 +21,7 @@ validation rather than inventing those outcomes.
 | B: DAS plus residual U-Net | Implemented with residual encoder, spatial skip connections and waveform-context fusion; forward/backward and serialization checked. Research training pending |
 | C: DAS-only | Residual-envelope imaging plus training-only scalar depth calibration implemented/tested; calibrated physical accuracy remains unverified |
 | Ensemble uncertainty and calibration | Distinct-member inference and error/coverage diagnostics implemented; independent-seed frozen evaluation supported. Confidence calibration pending |
-| Random, diagonal/edge fixed, RL adaptive | Random and fixed baselines tested for order/reproducibility/no repeats; RL pending |
+| Random, diagonal/edge fixed, RL adaptive | Random/fixed, masked reward-to-go actor/value RL, and a separate uncertainty-path comparator implemented/tested. No converged RL or physical performance claim |
 | Equal-budget replay and fair architecture comparisons | Frozen plan/actual checkpoint lineage checks, matched initial actions/budgets, repeated random policies, dense references and parent-level summaries implemented/tested; research results pending |
 | 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
 | Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
@@ -122,7 +122,7 @@ three held-out fixture parents. See experiment-workflow.md for commands and
 remaining limits. No full research training cycle or real physical run occurred.
 
 Still pending: randomized research-quality scenario/response generation and
-physics approval, adaptive RL, uncertainty calibration, automatic matched
+physics approval, converged adaptive-policy experiments, uncertainty calibration, automatic matched
 ablation/ensemble orchestration and plots, physical measurements, and a final
 acceptance audit.
 
@@ -133,4 +133,15 @@ as non-research results. Two additional tests exercise the actual CLI paths
 for indexing, training/resume, scalar calibration, freezing and evaluation.
 Current suite: 77 tests. See docs/evidence/workflow-debug.json and the
 end-to-end section in experiment-workflow.md for recorded conditions.
+
+## Adaptive selector checks
+
+The RL policy learns from selected-record reconstruction improvements, with
+labels restricted to the training/validation reward calculator. Reconstructor
+weights remain frozen. Action masks, actor gradients, value-baseline detach,
+exact policy checkpoint recovery, validation interruption, uncertainty-driven
+heuristic changes and selector/model/holdout bindings pass regression checks.
+Current suite: 89 tests. See adaptive-sensing.md for the objective, fixed-horizon
+limit and distinction between RL and the path heuristic. Research-quality
+policy training and physical efficiency remain unverified.
 

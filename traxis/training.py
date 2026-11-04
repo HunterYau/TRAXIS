@@ -289,7 +289,8 @@ class TrainingSession:
         return session
 
     def export_model(self, path: Path, *, best_validation: bool = True):
-        model = build_model(self.model_config)
+        with torch.random.fork_rng(devices=[]):
+            model = build_model(self.model_config)
         if best_validation and self.validation_entries:
             if self.best_weights is None:
                 raise ValueError("validate the model before exporting a selected checkpoint")

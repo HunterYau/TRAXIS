@@ -106,17 +106,30 @@ def freeze_evaluation_plan(path: Path, dataset: BankDataset, model_paths: list[P
     positive("defect threshold", threshold_mm)
     if not model_paths or not policy_specs or not budgets or any(type(n) is not int or n < 0 for n in budgets):
         raise ValueError("evaluation plan needs models, policies and nonnegative budgets")
+    normalized_policies = []
     for policy in policy_specs:
-        if policy.get("kind") not in ("fixed", "random"):
+        if policy.get("kind") not in ("fixed", "random", "uncertainty_path", "rl"):
             raise ValueError("unknown policy in evaluation plan")
         if policy["kind"] == "random" and (type(policy.get("seed")) is not int or policy["seed"] < 0):
             raise ValueError("random policies require an explicit nonnegative seed")
+        if policy["kind"] == "rl":
+            artifact = Path(policy["path"]).resolve()
+            normalized_policies.append({"kind": "rl", "path": str(artifact), "sha256": sha256_file(artifact)})
+        elif policy["kind"] == "uncertainty_path":
+            if not ensemble:
+                raise ValueError("uncertainty-path evaluation requires reconstruction ensemble spread")
+            samples = policy.get("path_samples", 16)
+            if type(samples) is not int or not 4 <= samples <= 128:
+                raise ValueError("path samples must be an integer in [4,128]")
+            normalized_policies.append({"kind": "uncertainty_path", "path_samples": samples})
+        else:
+            normalized_policies.append(dict(policy))
     models = [{"path": str(Path(p).resolve()), "sha256": sha256_file(p),
                "kind": "das" if Path(p).suffix.lower() == ".json" else "neural"} for p in model_paths]
     if len({m["sha256"] for m in models}) != len(models):
         raise ValueError("model artifacts must be distinct")
     plan = {"schema_version": 1, "dataset_fingerprint": dataset.fingerprint, "split": split,
-            "models": models, "policy_specs": list(policy_specs), "budgets": list(budgets),
+            "models": models, "policy_specs": normalized_policies, "budgets": list(budgets),
             "initial_actions": list(initial_actions), "threshold_mm": threshold_mm,
             "selection_frozen": True, "ensemble": ensemble}
     plan["fingerprint"] = canonical_hash(plan)
@@ -133,6 +146,9 @@ def validate_evaluation_plan(plan: dict, dataset: BankDataset, provenances: list
     for artifact in plan["models"]:
         if sha256_file(Path(artifact["path"])) != artifact["sha256"]:
             raise ValueError("model changed after evaluation settings were frozen")
+    for spec in plan["policy_specs"]:
+        if spec["kind"] == "rl" and sha256_file(Path(spec["path"])) != spec["sha256"]:
+            raise ValueError("selector changed after evaluation settings were frozen")
     held_out = {e.parent_specimen_id for e in dataset.select(plan["split"])}
     if len(provenances) != len(plan["models"]):
         raise ValueError("missing model training provenance")
@@ -144,6 +160,24 @@ def validate_evaluation_plan(plan: dict, dataset: BankDataset, provenances: list
             used |= set(provenance["validation_parents"])
         if held_out & used:
             raise ValueError("held-out parent was used for fitting or model selection")
+
+
+def validate_selector_provenance(plan: dict, dataset: BankDataset, provenance: dict):
+    """Selectors inherit reconstruction exposure as well as their own fit roles."""
+    if not {"fit_parents", "validation_parents", "reconstruction_artifacts", "training"} <= provenance.keys():
+        raise ValueError("selector lacks training or reconstruction provenance")
+    used = set(provenance["fit_parents"])
+    if plan["split"] != "validation":
+        used |= set(provenance["validation_parents"])
+    held_out = {e.parent_specimen_id for e in dataset.select(plan["split"])}
+    if used & held_out:
+        raise ValueError("held-out parent was used to fit or select the sensing policy")
+    bound = {a["sha256"] for a in provenance["reconstruction_artifacts"]}
+    actual = {a["sha256"] for a in plan["models"]}
+    if bound != actual or (len(actual) > 1 and not plan["ensemble"]):
+        raise ValueError("RL policy is bound to a different reconstruction model/ensemble")
+    if list(provenance["training"]["initial_actions"]) != list(plan["initial_actions"]):
+        raise ValueError("evaluation initial observations differ from the RL training protocol")
 
 
 def summarize_episodes(episodes: list[dict]) -> list[dict]:
@@ -186,6 +220,7 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
     from traxis.models import load_model
     from traxis.policies import FixedPolicy, RandomPolicy
     from traxis.reconstruction import EnsembleReconstructor, NeuralReconstructor
+    from traxis.adaptive import ActorCriticPolicy, UncertaintyPathPolicy
     plan = json.loads(Path(plan_path).read_text(encoding="utf-8-sig"))
     output = Path(output)
     if output.exists() and any(output.iterdir()):
@@ -212,10 +247,17 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
         if any(a["kind"] != "neural" for a in plan["models"]) or len({p.get("seed") for p in provenances}) != len(provenances):
             raise ValueError("ensembles require neural models with distinct recorded initialization seeds")
         predictors = [EnsembleReconstructor(predictors)]
+    learned_policies = {}
+    for i, spec in enumerate(plan["policy_specs"]):
+        if spec["kind"] == "rl":
+            policy = ActorCriticPolicy.load(Path(spec["path"]))
+            validate_selector_provenance(plan, dataset, policy.provenance)
+            learned_policies[i] = policy
     episodes = []
     report = {"kind": "frozen_offline_replay", "passed": False, "plan_fingerprint": plan["fingerprint"],
               "dataset_fingerprint": dataset.fingerprint,
               "debug_only": any(p.get("mode") != "research" for p in provenances)
+              or any(p.provenance.get("mode") != "research" for p in learned_policies.values())
               or any(e.validation_status == "plumbing_only" for e in dataset.select(plan["split"])),
               "episodes": episodes}
     try:
@@ -223,7 +265,14 @@ def run_frozen_evaluation(plan_path: Path, dataset: BankDataset, output: Path,
             bank = dataset.read(entry)
             for model_index, predictor in enumerate(predictors):
                 for policy_index, spec in enumerate(plan["policy_specs"]):
-                    policy = FixedPolicy() if spec["kind"] == "fixed" else RandomPolicy(spec["seed"])
+                    if spec["kind"] == "fixed":
+                        policy = FixedPolicy()
+                    elif spec["kind"] == "random":
+                        policy = RandomPolicy(spec["seed"])
+                    elif spec["kind"] == "uncertainty_path":
+                        policy = UncertaintyPathPolicy(spec["path_samples"])
+                    else:
+                        policy = learned_policies[policy_index]
                     result = replay_episode(bank, predictor, policy, tuple(plan["budgets"]),
                                             initial_actions=tuple(plan["initial_actions"]), threshold_mm=plan["threshold_mm"], guard=guard)
                     result.report.update({"predictor": f"model-{model_index}", "policy": spec})

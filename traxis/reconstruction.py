@@ -1,6 +1,7 @@
 """Adapters from public observations to quantitative reconstruction outputs."""
 
 from dataclasses import dataclass, replace
+from pathlib import Path
 from typing import Protocol
 
 import numpy as np
@@ -11,6 +12,7 @@ from traxis.imaging import DASSettings, delay_and_sum
 from traxis.metrics import ensemble_statistics
 from traxis.models import SignalScale, observation_batch
 from traxis.resources import ResourceGuard
+from traxis.storage import sha256_file
 
 
 @dataclass(frozen=True)
@@ -71,3 +73,39 @@ class EnsembleReconstructor:
         maps = np.stack([m.predict(observation).depth_mm for m in self.members])
         mean, spread = ensemble_statistics(maps)
         return Reconstruction(mean, spread)
+
+
+def load_reconstruction_bundle(paths: list[Path], guard: ResourceGuard | None = None):
+    """Load one baseline/model or independently seeded, matching neural members."""
+    from traxis.das_baseline import DASDepthCalibration
+    from traxis.models import load_model
+    if not paths:
+        raise ValueError("provide at least one reconstruction artifact")
+    predictors, provenances, artifacts = [], [], []
+    for path in paths:
+        if guard:
+            guard.check()
+        path = Path(path).resolve()
+        kind = "das" if path.suffix.lower() == ".json" else "neural"
+        if kind == "das":
+            predictor = DASDepthCalibration.load(path)
+            provenance = predictor.provenance
+        else:
+            model, scale, provenance = load_model(path)
+            model.requires_grad_(False)
+            settings = DASSettings.from_dict(provenance["das_settings"]) if provenance.get("das_settings") else None
+            predictor = NeuralReconstructor(model, scale, settings, guard=guard)
+        if not {"fit_parents", "validation_parents"} <= provenance.keys():
+            raise ValueError("reconstruction artifact lacks training/validation lineage")
+        predictors.append(predictor)
+        provenances.append(provenance)
+        artifacts.append({"path": str(path), "sha256": sha256_file(path), "kind": kind})
+    if len({a["sha256"] for a in artifacts}) != len(artifacts):
+        raise ValueError("reconstruction artifacts must be distinct")
+    if len(predictors) > 1:
+        if any(a["kind"] != "neural" for a in artifacts) or len({p.get("seed") for p in provenances}) != len(paths):
+            raise ValueError("uncertainty ensemble requires neural members with distinct recorded seeds")
+        predictor = EnsembleReconstructor(predictors)
+    else:
+        predictor = predictors[0]
+    return predictor, provenances, artifacts

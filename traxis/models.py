@@ -51,6 +51,19 @@ class ObservationBatch:
     observed: torch.Tensor  # (batch, records), bool
 
 
+def action_context(observation: Observation) -> np.ndarray:
+    """Public candidate geometry/settings, without any unacquired signal."""
+    o = observation
+    context = np.empty((len(o.actions), 12), dtype=np.float32)
+    for j, a in enumerate(o.actions):
+        tx, rx = o.sensors_xy_m[[a.transmitter, a.receiver]] / [o.plate.width_m, o.plate.height_m]
+        context[j] = [*tx, *rx, a.transmitter / (len(o.sensors_xy_m) - 1),
+                      a.receiver / (len(o.sensors_xy_m) - 1), a.frequency_hz / 1e6,
+                      (o.time_s[1] - o.time_s[0]) * 1e6, o.time_s[0] * 1000,
+                      o.plate.width_m, o.plate.height_m, o.plate.thickness_m * 1000]
+    return context
+
+
 def observation_batch(observations: list[Observation], scale: SignalScale, *, compact: bool = False) -> ObservationBatch:
     if not observations:
         raise ValueError("cannot form an empty batch")
@@ -70,13 +83,7 @@ def observation_batch(observations: list[Observation], scale: SignalScale, *, co
         signals[i, :n, 0] = np.where(selected[:, None], o.waveforms[indices], 0) / scale.rms
         signals[i, :n, 1] = np.where(selected[:, None], o.waveforms[indices] - o.baseline[indices], 0) / scale.rms
         mask[i, :n] = selected
-        for j, index in enumerate(indices):
-            a = o.actions[index]
-            tx, rx = o.sensors_xy_m[[a.transmitter, a.receiver]] / [o.plate.width_m, o.plate.height_m]
-            context[i, j] = [*tx, *rx, a.transmitter / (len(o.sensors_xy_m) - 1),
-                             a.receiver / (len(o.sensors_xy_m) - 1), a.frequency_hz / 1e6,
-                             (o.time_s[1] - o.time_s[0]) * 1e6, o.time_s[0] * 1000,
-                             o.plate.width_m, o.plate.height_m, o.plate.thickness_m * 1000]
+        context[i, :n] = action_context(o)[indices]
     return ObservationBatch(torch.from_numpy(signals), torch.from_numpy(context), torch.from_numpy(mask))
 
 
@@ -245,7 +252,8 @@ def load_model(path: Path) -> tuple[nn.Module, SignalScale, dict]:
     state = torch.load(path, map_location="cpu", weights_only=True)
     if state["schema_version"] != 1:
         raise ValueError("unsupported model checkpoint schema")
-    model = build_model(ModelConfig(**state["config"]))
+    with torch.random.fork_rng(devices=[]):
+        model = build_model(ModelConfig(**state["config"]))
     model.load_state_dict(state["state_dict"], strict=True)
     model.eval()
     return model, SignalScale(**state["scale"]), state["provenance"]

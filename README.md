@@ -93,3 +93,7 @@ It performs four total debug updates and checks all three reconstruction
 methods under matched fixed/random record budgets, plus ensemble inference.
 The generated results remain explicitly debug-only.
 
+Adaptive policies include a masked RL actor/value selector and a distinct
+uncertainty-path heuristic. [Adaptive sensing details](docs/adaptive-sensing.md)
+describe their public inputs, reward, provenance checks and current limits.
+
