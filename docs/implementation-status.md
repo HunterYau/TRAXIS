@@ -15,16 +15,16 @@ validation rather than inventing those outcomes.
 | PZT electromechanics, supports, noise/coupling variation | Reference-solver pilot and measured calibration needed |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb reference and 3D FEM Bloch dispersion convergence implemented; finite-plate waveform/arrival convergence, resolved recess geometry and physical traces still needed |
 | Randomized specimens and exact depth labels | Analytic circular geometry, area-averaged depth labels, 8/12 sensor layouts and stable parent-specimen splits implemented/tested; dataset generator pending |
-| Waveform bank indexed by specimen, TX, RX, frequency/settings | Pending; strict metadata, integrity checks and external solver import needed |
-| Specimen-level splits and hidden observations | Pending; no ground truth or unrevealed traces in selector state |
+| Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, per-array integrity, bounded loading, explicit scalar CSV external-solver/DAQ import and source hashes implemented/tested; full physical/FEA dataset pending |
+| Specimen-level splits and hidden observations | Parent/scan split validator and masked replay implemented/tested; training/evaluation entrypoint enforcement pending |
 | A: waveform CNN, attention, spatial decoder | Pending; partial masks/context, backward and serialization checks needed |
 | B: DAS plus residual U-Net | Pending; baseline-subtracted imaging and raw observation context needed |
-| C: DAS-only | Pending; calibrated depth conversion needed before reporting depth MAE |
+| C: DAS-only | Residual-envelope bistatic DAS implemented; analytic point-scattering fixture localizes correctly. Calibrated depth conversion remains needed before reporting depth MAE |
 | Ensemble uncertainty and calibration | Pending; independent members and error/coverage checks needed |
-| Random, diagonal/edge fixed, RL adaptive | Pending; RL remains distinct from uncertainty heuristic |
+| Random, diagonal/edge fixed, RL adaptive | Random and fixed baselines tested for order/reproducibility/no repeats; RL pending |
 | Equal-budget replay and fair architecture comparisons | Pending; identical cases/splits/subsets, repeated random seeds, dense reference |
 | 128/256 outputs, extra decoder stage | Pending; isolated ablation matrix and common 512 reference |
-| Quantitative and regional metrics | Pending; intact cases and false-positive/volume/depth/localization handling |
+| Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
 | Curves, 2D and 2.5D plots, parameter counts/cost | Pending |
 | Simulation-only versus physical adaptation | Pending; import and adaptation workflow needed; two adaptation / three final damaged plates |
 | Resource bounds and telemetry | CPU-only short pilot completed; cooperative time/RSS/system RAM/GPU guards tested. CPU temperature unavailable on this Windows host |

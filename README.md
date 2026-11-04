@@ -44,3 +44,17 @@ group speed for packet delays and phase wavelength when considering spatial
 resolution. It covers a documented low-frequency range and uses nominal
 material constants; it is not an intact physical-plate validation result.
 
+## Waveform data
+
+The [data contract](docs/data-contract.md) describes versioned waveform banks,
+specimen-level split checks and partial-observation replay. Import explicitly
+mapped, aligned current/control scalar traces with:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis import-traces --manifest bundle/manifest.json --output data/scan.npz
+```
+
+DAS returns a localization intensity in signal units. It must be calibrated
+before it can serve as a quantitative depth baseline. Analytic point-scattering
+test fixtures are software checks, not an elastic simulation dataset.
+

@@ -21,6 +21,9 @@ def main() -> None:
     verify.add_argument("--output", type=Path, default=Path("outputs/verification"))
     verify.add_argument("--max-seconds", type=float, default=60)
     verify.add_argument("--max-rss-mib", type=float, default=512)
+    importer = sub.add_parser("import-traces", help="import mapped scalar CSV probe exports")
+    importer.add_argument("--manifest", type=Path, required=True)
+    importer.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.command == "preflight":
         frequencies = (50000., 75000., 100000., 125000., 150000.)
@@ -38,6 +41,15 @@ def main() -> None:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(serialized, encoding="utf-8")
         print(serialized)
+    elif args.command == "import-traces":
+        from traxis.importers import import_trace_bundle
+        guard = ResourceGuard()
+        guard.check(force=True)
+        bank = import_trace_bundle(args.manifest, guard)
+        bank.save(args.output)
+        print(json.dumps({"output": str(args.output), "specimen_id": bank.metadata.specimen_id,
+                          "records": len(bank.actions), "samples": len(bank.time_s),
+                          "validation_status": bank.metadata.validation_status}, indent=2))
     elif args.command == "verify":
         from traxis.verification import run_verification
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
