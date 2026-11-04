@@ -59,6 +59,7 @@ def run_job(path: Path, output: Path, guard):
         after = result.energy_j[result.energy_time_s > job['cycles'] / job['frequency_hz']]
         report.update({'completed': True, 'stiffness_nonzeros': stiffness.nnz, 'mass_nonzeros': mass.nnz,
             'lu_factor_nonzeros': result.factor_nonzeros, 'maximum_relative_linear_residual': result.maximum_relative_residual,
+            'factorization': 'SuperLU symmetric mode; MMD_AT_PLUS_A; diagonal pivot threshold 0; reported storage nnz',
             'postburst_relative_energy_range': float(np.ptp(after) / abs(after.mean())) if len(after) > 1 and after.mean() else None,
             'traces_sha256': sha256_file(output / 'traces.npz')})
     except Exception as exc:

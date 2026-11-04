@@ -63,13 +63,16 @@ def implicit_simulate(stiffness, mass, steps: int, dt_s: float, probes, *, force
     # The direct factorization is kept for every internal step. Callers run
     # larger systems in a monitored worker so native allocations can be stopped.
     matrix = (mass + .25 * dt_s**2 * stiffness).tocsc()
-    factor = splu(matrix, permc_spec='MMD_AT_PLUS_A')
+    # Physical M and M+beta*dt^2*K are positive definite. Prefer diagonal
+    # pivots with a symmetric ordering to avoid unnecessary off-diagonal fill.
+    options = {'permc_spec': 'MMD_AT_PLUS_A', 'diag_pivot_thresh': 0., 'options': {'SymmetricMode': True}}
+    factor = splu(matrix, **options)
     if guard:
         guard.check(force=True)
     load = vector(force(0.) if force else None)
     residual = load - stiffness @ displacement
     if np.any(residual):
-        acceleration = splu(mass.tocsc(), permc_spec='MMD_AT_PLUS_A').solve(residual)
+        acceleration = splu(mass.tocsc(), **options).solve(residual)
     else:
         acceleration = np.zeros(ndof)
     samples = np.empty((steps // output_stride + 1, len(probes)))
@@ -99,6 +102,8 @@ def implicit_simulate(stiffness, mass, steps: int, dt_s: float, probes, *, force
         raise ArithmeticError('implicit simulation produced invalid states/probes')
     if guard:
         guard.check(force=True)
+    # .L/.U materialize extra sparse copies. The native storage count avoids
+    # a large allocation solely for diagnostics; it can include supernode fill.
     return ImplicitResult(np.arange(steps // output_stride + 1) * dt_s * output_stride, samples,
                            np.arange(steps + 1) * dt_s, energy, displacement, velocity,
-                           maximum_residual, factor.L.nnz + factor.U.nnz)
+                           maximum_residual, factor.nnz)

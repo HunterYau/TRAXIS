@@ -44,6 +44,14 @@ interpolation. Symmetry and positive mass diagonal are checked on import;
 positive-definite mass and positive-semidefinite stiffness rely on validated
 physical assembly, rather than being inferred from that diagonal check.
 
+The factorization now uses SuperLU symmetric mode, `MMD_AT_PLUS_A` ordering
+and a zero diagonal pivot threshold for the positive-definite mass/effective
+systems. These controls follow the [SuperLU guidance](https://portal.nersc.gov/project/sparse/superlu/faq.html).
+Diagnostics use the factor object's stored `nnz` count, avoiding extra
+materialized L/U matrices. Reported storage counts can include supernode fill
+and are not interchangeable with the earlier explicit-factor nonzero counts.
+The change passed the independent ODE, energy and native-transient comparisons.
+
 ## Independent checks and the native cache limitation
 
 A coupled two-coordinate consistent-mass system with nonzero initial state

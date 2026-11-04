@@ -10,6 +10,7 @@ from unittest.mock import patch
 import numpy as np
 from scipy import sparse
 from scipy.integrate import solve_ivp
+from scipy.sparse.linalg import splu
 
 from tests.test_elmer_reference import matrix_export
 from tests.test_forward import local_scenario
@@ -25,6 +26,25 @@ from traxis.resources import ResourceGuard, ResourceLimits
 
 
 class ImplicitDynamicsTests(unittest.TestCase):
+    def test_factor_diagnostics_do_not_materialize_extra_factor_copies(self):
+        class StoredFactor:
+            def __init__(self, matrix, **kwargs):
+                self.actual = splu(matrix, **kwargs)
+                self.nnz = self.actual.nnz
+            def solve(self, rhs):
+                return self.actual.solve(rhs)
+            @property
+            def L(self):
+                raise AssertionError('diagnostics must not materialize L')
+            @property
+            def U(self):
+                raise AssertionError('diagnostics must not materialize U')
+        with patch('traxis.implicit_fem.splu', side_effect=StoredFactor):
+            result = implicit_simulate([[4., -4.], [-4., 4.]], [[2., .3], [.3, 1.]], 100, .01, np.eye(2),
+                                       initial_displacement=[.1, -.05])
+        self.assertGreater(result.factor_nonzeros, 0)
+        self.assertLess(np.ptp(result.energy_j) / result.energy_j.mean(), 1e-12)
+
     def test_coupled_consistent_mass_matches_independent_ode_at_second_order(self):
         mass = np.array([[2., .4], [.4, 3.]])
         stiffness = np.array([[20., -3.], [-3., 30.]])
