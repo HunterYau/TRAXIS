@@ -23,8 +23,8 @@ validation rather than inventing those outcomes.
 | C: DAS-only | Residual-envelope imaging plus training-only scalar depth calibration implemented/tested; calibrated physical accuracy remains unverified |
 | Ensemble uncertainty and calibration | Frozen independent-member inference and reserved-parent split-conformal interval workflow implemented/tested; useful coverage/precision and exchangeability remain unverified |
 | Random, diagonal/edge fixed, RL adaptive | Random/fixed, masked reward-to-go actor/value RL, and a separate uncertainty-path comparator implemented/tested. No converged RL or physical performance claim |
-| Equal-budget replay and fair architecture comparisons | Frozen plan/actual checkpoint lineage checks, matched initial actions/budgets, repeated random policies, dense references and parent-level summaries implemented/tested; research results pending |
-| 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
+| Equal-budget replay and fair architecture comparisons | Matched factorial study planning/advances, actual training-draw checks, frozen pair/ensemble plans, equal-budget replay and parent summaries implemented/tested; research results pending |
+| 128/256 outputs, extra decoder stage | Eight configurations/two paired trials pass bounded study training/validation on the common 512 reference; converged matched ablations pending |
 | Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
 | Curves, 2D and 2.5D plots, parameter counts/cost | Headless PNG/SVG figures, physical-unit maps/surfaces and parent/compute tables implemented; research results pending |
 | Simulation-only versus physical adaptation | Source-model lineage, frozen unit scale and two-adaptation/three-holdout role workflow tested with fixtures; measured physical adaptation/evaluation pending |
@@ -123,8 +123,8 @@ three held-out fixture parents. See experiment-workflow.md for commands and
 remaining limits. No full research training cycle or real physical run occurred.
 
 Still pending: randomized research-quality scenario/response generation and
-physics approval, converged adaptive-policy experiments, useful independent uncertainty calibration, automatic matched
-ablation/ensemble orchestration, physical measurements, and a final
+physics approval, converged adaptive-policy experiments, useful independent uncertainty calibration,
+matched research ablation results, physical measurements, and a final
 acceptance audit.
 
 The runnable cache-to-replay pilot completed 18 matched three-method episodes
@@ -197,7 +197,7 @@ rendered and inspected; the final render took 12.17 seconds with sampled RSS
 was unavailable. Replay processes stayed below 341 MiB sampled RSS. These
 are software fixtures and single timing observations, not research results.
 The compact record is docs/evidence/reporting-debug.json. Calibrated confidence,
-matched research ablation orchestration and physical validation remain open.
+matched research ablation results and physical validation remain open.
 
 ## Reserved-parent calibration checks
 
@@ -242,4 +242,31 @@ extra-block configuration at the default widths, pass on the shared 512 grid.
 Sampled process RSS reached 427.1 MiB, system RAM 79.6%, GPU usage
 1,668/8,192 MiB at 47 C; CPU temperature was unavailable. Evidence is in
 docs/evidence/common-grid-debug.json. No full training cycle was run.
+
+## Matched study orchestration
+
+The factorial planner and bounded job runner share training/validation parents,
+a training-only signal scale, the common reference loss and paired
+initialization/subset seeds. Actual draw hash prefixes must match within each
+trial. Fixed update budgets, unique run identities, exact recovery, final
+validation with zero new updates, completed-artifact checks and a cross-process
+execution lock have regression coverage. Planning requires intact and damaged
+training parents and does not read reserved or final-test labels.
+See matched-studies.md for commands and scope.
+
+All 133 tests and dependency checks pass. The final monitored pilot trained
+16 neural instances for exactly one update each, fitted four scalar DAS
+baselines and froze 24 single-factor pair comparisons plus eight ensemble
+plans. It replayed one predeclared pair per factor and one ensemble on
+validation fixtures (16 episodes), checking equal acquired actions. Remaining
+plans were not executed. These runs verify software behavior, not trained
+architecture quality or physical accuracy.
+
+The pilot completed in 19.34 seconds with sampled RSS of 448.2 MiB, system RAM
+81.8%, GPU usage 1,670/8,192 MiB and GPU temperature 48 C. Training/inference
+used CPU only; CPU temperature was unavailable. The compact record is
+docs/evidence/matched-study-debug.json. No full research training cycle or
+final physical evaluation was run. Research-quality data, finite-plate/PZT
+validation, useful calibration and converged model/policy comparisons remain
+open.
 

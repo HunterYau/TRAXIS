@@ -1,0 +1,543 @@
+﻿{
+    "kind":  "matched_study_software_pilot",
+    "passed":  true,
+    "debug_only":  true,
+    "source_sha256":  {
+                          "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                          "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                          "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                          "adaptive.py":  "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+                          "bank.py":  "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+                          "cad_mesh.py":  "c1286150c665ee66a05efdfbbe54b3f14f5141edf4c3110b8ad13642b25b48d0",
+                          "calibration_verification.py":  "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+                          "cli.py":  "a07d4db7383bee574c44f159a667298c3673c79521e8f4f2fe82ade4f6583779",
+                          "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                          "das_baseline.py":  "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+                          "dataset.py":  "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+                          "diagnostic_data.py":  "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+                          "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                          "evaluation.py":  "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+                          "evaluation_artifacts.py":  "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+                          "experiment_commands.py":  "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+                          "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                          "forward.py":  "eec483d07c1ca9d86f7604282127733b9d0a14d55db892eab1fe5f5ed81065b4",
+                          "forward_verification.py":  "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+                          "generation_commands.py":  "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+                          "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                          "imaging.py":  "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+                          "importers.py":  "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+                          "metrics.py":  "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+                          "model_verification.py":  "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+                          "models.py":  "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+                          "policies.py":  "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+                          "policy_training.py":  "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+                          "policy_verification.py":  "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+                          "reconstruction.py":  "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+                          "reporting.py":  "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+                          "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                          "scenarios.py":  "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+                          "solver_requests.py":  "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+                          "storage.py":  "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+                          "studies.py":  "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+                          "study_commands.py":  "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+                          "study_verification.py":  "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+                          "training.py":  "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+                          "uncertainty.py":  "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+                          "uncertainty_commands.py":  "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+                          "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                          "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+                          "workflow_verification.py":  "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+                      },
+    "configuration_sha256":  "8ba33fb79a7aa4e52f56dac9c79648214b6ded91166cc48431316b19aa2d2222",
+    "note":  "One update per member on analytic fixtures. No research training, architectural superiority, policy convergence or physical accuracy claim. Only predeclared representatives of the controlled comparisons are replayed.",
+    "study_fingerprint":  "efa0410f515ffa92bbc3cfc14f3621a7f7d767fe1b0c02b8b14100691264c575",
+    "neural_jobs":  16,
+    "new_updates":  16,
+    "baseline_fits":  4,
+    "controlled_pairs":  24,
+    "ensemble_plans":  8,
+    "predictors":  [
+                       {
+                           "predictor":  "model-0",
+                           "job_id":  "A-r128-extra0-seed101",
+                           "artifact_sha256":  "1d7cf901fb9709da97e479cb992d584188cf743709297b3782703a5c1cb92f37",
+                           "parameters":  27385,
+                           "compute_wall_seconds":  1.8581819999963045,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.8077474236488342
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  1.5072557926177979,
+                                                    "gradient_norm_before_clip":  115.56692504882812
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-1",
+                           "job_id":  "A-r128-extra0-seed202",
+                           "artifact_sha256":  "3cc6d855731160223a434663bd3ce073a469e8f9cf6fd71716025f2160feb153",
+                           "parameters":  27385,
+                           "compute_wall_seconds":  0.1899573999689892,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  1.4282234907150269
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  2.6672394275665283,
+                                                    "gradient_norm_before_clip":  36.86161804199219
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-2",
+                           "job_id":  "A-r128-extra1-seed101",
+                           "artifact_sha256":  "210790ac655b21925e4dc3c903a634511996278ec7512620cda88ff9ff6a288c",
+                           "parameters":  28585,
+                           "compute_wall_seconds":  0.17812729999423027,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  3.2903130054473877
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  6.286352157592773,
+                                                    "gradient_norm_before_clip":  116.43009185791016
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-3",
+                           "job_id":  "A-r128-extra1-seed202",
+                           "artifact_sha256":  "027636abbb90617de4fee7bc8d5856c8cd19a6b140ccab30931143d324926203",
+                           "parameters":  28585,
+                           "compute_wall_seconds":  0.19183119997614995,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.6972716450691223
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  1.5001407861709595,
+                                                    "gradient_norm_before_clip":  18.93073081970215
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-4",
+                           "job_id":  "A-r256-extra0-seed101",
+                           "artifact_sha256":  "36968014c2d1c55ad63609b3ec311ddcb9a69a75b2a59ce84ae2ed1645be5ef0",
+                           "parameters":  28585,
+                           "compute_wall_seconds":  0.24034459999529645,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  3.2720155715942383
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  6.2805705070495605,
+                                                    "gradient_norm_before_clip":  116.41576385498047
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-5",
+                           "job_id":  "A-r256-extra0-seed202",
+                           "artifact_sha256":  "493ffc25e55fd636e3542f19ebf62bfc24d07b0b4f659471546b9dd966863f9d",
+                           "parameters":  28585,
+                           "compute_wall_seconds":  0.19905529997777194,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.6954328417778015
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  1.499199628829956,
+                                                    "gradient_norm_before_clip":  18.931629180908203
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-6",
+                           "job_id":  "A-r256-extra1-seed101",
+                           "artifact_sha256":  "704caffa57361b0ee579d2548ec55e2fcdf4db4533ef47b736ca5c751fcc5e6c",
+                           "parameters":  29785,
+                           "compute_wall_seconds":  0.23676230001728982,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  4.717660427093506
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  5.268162250518799,
+                                                    "gradient_norm_before_clip":  70.32685852050781
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-7",
+                           "job_id":  "A-r256-extra1-seed202",
+                           "artifact_sha256":  "fd169ee68ea732c127972bff9fad19cdefd9672c6fc847d73daebb19ee513548",
+                           "parameters":  29785,
+                           "compute_wall_seconds":  0.31411460001254454,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.6417616605758667
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  1.0036611557006836,
+                                                    "gradient_norm_before_clip":  15.603826522827148
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-8",
+                           "job_id":  "B-r128-extra0-seed101",
+                           "artifact_sha256":  "6d48554708b2f4b54a7ea602c4cc437736a817c2cecdec6a14a76adec2a7d466",
+                           "parameters":  45217,
+                           "compute_wall_seconds":  0.19583159999456257,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.9722349643707275
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  1.336229920387268,
+                                                    "gradient_norm_before_clip":  10.291329383850098
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-9",
+                           "job_id":  "B-r128-extra0-seed202",
+                           "artifact_sha256":  "64f38b7b48bbeb4ebe95fffecf88bbe368e2a98907ba1d382aec72d00613dcd3",
+                           "parameters":  45217,
+                           "compute_wall_seconds":  0.21786990005057305,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  3.1105196475982666
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  3.9411516189575195,
+                                                    "gradient_norm_before_clip":  101.16056060791016
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-10",
+                           "job_id":  "B-r128-extra1-seed101",
+                           "artifact_sha256":  "ca3796e64ac35f1460d9288efaf39358aab9d538fb6226c09c9fdf866caf15ba",
+                           "parameters":  46417,
+                           "compute_wall_seconds":  0.24653740000212565,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  2.0626490116119385
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  2.64387583732605,
+                                                    "gradient_norm_before_clip":  20.22820472717285
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-11",
+                           "job_id":  "B-r128-extra1-seed202",
+                           "artifact_sha256":  "4b18be3e7a306250cb0418445bd71705ef4d6220c291f2aa96be174a274795f7",
+                           "parameters":  46417,
+                           "compute_wall_seconds":  0.21193619997939095,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  1.2910856008529663
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  0.8622586131095886,
+                                                    "gradient_norm_before_clip":  18.423898696899414
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-12",
+                           "job_id":  "B-r256-extra0-seed101",
+                           "artifact_sha256":  "6f9a51b70acace1954beadd4ba3a9e3dfd40de3313ba392d796f3d509f3c0674",
+                           "parameters":  45217,
+                           "compute_wall_seconds":  0.38144299999112263,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  0.9835994839668274
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  1.3486489057540894,
+                                                    "gradient_norm_before_clip":  9.945769309997559
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-13",
+                           "job_id":  "B-r256-extra0-seed202",
+                           "artifact_sha256":  "c3e3f5238fe3f549aeb9534048cf418cb9bd26d0acebc304343ec2fbda337872",
+                           "parameters":  45217,
+                           "compute_wall_seconds":  0.3931118000182323,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  3.050605058670044
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  3.9969406127929688,
+                                                    "gradient_norm_before_clip":  108.08341217041016
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-14",
+                           "job_id":  "B-r256-extra1-seed101",
+                           "artifact_sha256":  "b4f5dfc13f16b1059335401a519801deed387f2b5f9f9e9e43ee4d8bd84abb7a",
+                           "parameters":  46417,
+                           "compute_wall_seconds":  0.43027499999152496,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  2.060042142868042
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-0",
+                                                    "records":  4,
+                                                    "loss_mm2":  2.653857469558716,
+                                                    "gradient_norm_before_clip":  20.018484115600586
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-15",
+                           "job_id":  "B-r256-extra1-seed202",
+                           "artifact_sha256":  "e6a1387eee55b70de5d8bcce538eff8c45b60d6005de18a7aadd17ad80fd0caf",
+                           "parameters":  46417,
+                           "compute_wall_seconds":  0.49988860002486035,
+                           "validation_history":  [
+                                                      {
+                                                          "step":  1,
+                                                          "loss_mm2":  1.1730138063430786
+                                                      }
+                                                  ],
+                           "loss_history":  [
+                                                {
+                                                    "step":  1,
+                                                    "specimen_id":  "debug-scan-1",
+                                                    "records":  2,
+                                                    "loss_mm2":  0.8352058529853821,
+                                                    "gradient_norm_before_clip":  25.69493293762207
+                                                }
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-16",
+                           "job_id":  "C-r128-seed101",
+                           "artifact_sha256":  "ec10cb3963cc7722edd429b06b371f910d061c6fe10c107b1ed631e1032e9efd",
+                           "parameters":  1,
+                           "compute_wall_seconds":  0.06625490001169965,
+                           "validation_history":  [
+
+                                                  ],
+                           "loss_history":  [
+
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-17",
+                           "job_id":  "C-r128-seed202",
+                           "artifact_sha256":  "bd806e62227aa4cd11874400bcb89f23be30491b0b6e5b59e3c0288318ac7e13",
+                           "parameters":  1,
+                           "compute_wall_seconds":  0.06251090002479032,
+                           "validation_history":  [
+
+                                                  ],
+                           "loss_history":  [
+
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-18",
+                           "job_id":  "C-r256-seed101",
+                           "artifact_sha256":  "22987a1fc7c947314e002db7605a8b66eabf251d10944d765b8ee10e494335be",
+                           "parameters":  1,
+                           "compute_wall_seconds":  0.06965329998638481,
+                           "validation_history":  [
+
+                                                  ],
+                           "loss_history":  [
+
+                                            ]
+                       },
+                       {
+                           "predictor":  "model-19",
+                           "job_id":  "C-r256-seed202",
+                           "artifact_sha256":  "caa10570a88c511e088f0c06dec26af4b1285bdb63539051620d16191b919d6b",
+                           "parameters":  1,
+                           "compute_wall_seconds":  0.06770830001914874,
+                           "validation_history":  [
+
+                                                  ],
+                           "loss_history":  [
+
+                                            ]
+                       }
+                   ],
+    "replays":  [
+                    {
+                        "factor":  "architecture",
+                        "plan":  "controlled-pair-002.json",
+                        "predictors":  {
+                                           "model-0":  "A-r128-extra0-seed101",
+                                           "model-1":  "B-r128-extra0-seed101",
+                                           "model-2":  "C-r128-seed101"
+                                       },
+                        "episodes":  6,
+                        "matched_actions":  true,
+                        "passed":  true
+                    },
+                    {
+                        "factor":  "output_size",
+                        "plan":  "controlled-pair-001.json",
+                        "predictors":  {
+                                           "model-0":  "A-r128-extra0-seed101",
+                                           "model-1":  "A-r256-extra0-seed101"
+                                       },
+                        "episodes":  4,
+                        "matched_actions":  true,
+                        "passed":  true
+                    },
+                    {
+                        "factor":  "extra_decoder_blocks",
+                        "plan":  "controlled-pair-000.json",
+                        "predictors":  {
+                                           "model-0":  "A-r128-extra0-seed101",
+                                           "model-1":  "A-r128-extra1-seed101"
+                                       },
+                        "episodes":  4,
+                        "matched_actions":  true,
+                        "passed":  true
+                    },
+                    {
+                        "factor":  "independent_ensemble",
+                        "episodes":  2,
+                        "passed":  true
+                    }
+                ],
+    "replay_episodes":  16,
+    "wall_seconds":  19.337333899980877,
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  1024,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  448.234375,
+                      "sampled_max_system_memory_percent":  81.8,
+                      "gpu_samples":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1670.0,
+                                              "temperature_c":  48.0
+                                          },
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1670.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  },
+    "tests_passed":  133,
+    "cli_commands_checked":  [
+                                 "plan-study",
+                                 "advance-study",
+                                 "freeze-study",
+                                 "verify-study"
+                             ]
+}

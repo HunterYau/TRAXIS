@@ -139,6 +139,25 @@ class TrainingTests(unittest.TestCase):
             for key, value in resumed.model.state_dict().items():
                 torch.testing.assert_close(value, original.model.state_dict()[key], rtol=0, atol=0)
 
+    def test_zero_step_resume_completes_final_validation_without_optimizer_update(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dataset = fixture_dataset(root)
+            config, model = TrainConfig(max_steps=1), ModelConfig(width=4, embedding=16)
+            reference = TrainingSession(dataset, model, config)
+            reference.run(1)
+            stopped = TrainingSession(dataset, model, config)
+            with patch.object(stopped, "validate", side_effect=ResourceLimitError("final validation")):
+                with self.assertRaises(ResourceLimitError):
+                    stopped.run(1, root / "latest.pt")
+            resumed = TrainingSession.resume(root / "latest.pt", dataset)
+            self.assertEqual(resumed.run(0, root / "latest.pt"), [])
+            self.assertEqual(resumed.step_count, 1)
+            self.assertEqual(resumed.validation_history, reference.validation_history)
+            self.assertFalse(TrainingSession.resume(root / "latest.pt", dataset).pending_validation)
+            for key, value in resumed.model.state_dict().items():
+                torch.testing.assert_close(value, reference.model.state_dict()[key], rtol=0, atol=0)
+
     def test_two_plate_adaptation_excludes_three_final_plates_and_resumes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

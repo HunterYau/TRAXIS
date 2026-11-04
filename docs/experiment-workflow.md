@@ -132,7 +132,7 @@ with synthetic role fixtures; no actual physical adaptation has been run.
 ## Remaining work
 
 Converged adaptive-policy studies, useful independent uncertainty calibration,
-automatic ablation/ensemble orchestration, research-quality scenario/response
+matched research ablation results, research-quality scenario/response
 generation and intact physical validation remain open. Passing
 these workflow tests does not select a scientifically superior model.
 
@@ -143,6 +143,11 @@ predictor details, runtime and saved-map checksums into the result fingerprint.
 Reserved-parent interval fitting/assessment is implemented; see
 uncertainty-calibration.md for the separate role, predeclared settings and
 coverage assumptions. The debug fixture pilot did not yield useful uncertainty.
+
+Matched ablation/ensemble orchestration is implemented through `plan-study`,
+`advance-study` and `freeze-study`; see matched-studies.md. Paired training draws,
+shared reference-grid objectives and fixed update budgets isolate architecture,
+resolution and decoder-depth factors. The short pilot remains a software check.
 
 Adaptive RL training/recovery and frozen RL/uncertainty-path comparisons are
 implemented; see adaptive-sensing.md. The fixed-budget RL objective and the

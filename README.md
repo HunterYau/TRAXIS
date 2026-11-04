@@ -120,3 +120,8 @@ inspection protocol. It requires separate calibration plates and matching
 distribution assumptions; the current debug models do not produce useful
 research uncertainty estimates.
 
+[Matched studies](docs/matched-studies.md) plan architecture/resolution/decoder
+ablations with paired seeds, bounded job advances, checkpoint ownership and
+exact observation-exposure checks. Freezing writes isolated comparison and
+ensemble plans without launching their evaluation.
+

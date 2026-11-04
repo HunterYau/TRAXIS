@@ -33,6 +33,7 @@ class TrainConfig:
     validation_records: int = 4
     patience: int = 10
     device: str = "cpu"
+    run_id: str | None = None
 
     def __post_init__(self):
         if self.mode not in ("debug", "research") or self.phase not in ("pretrain", "adaptation"):
@@ -51,6 +52,8 @@ class TrainConfig:
             positive(name, getattr(self, name))
         if self.device not in ("cpu", "cuda"):
             raise ValueError("device must be cpu or cuda")
+        if self.run_id is not None and (not isinstance(self.run_id, str) or not 1 <= len(self.run_id) <= 128):
+            raise ValueError("run ID must be a nonempty string of at most 128 characters")
 
 
 def _source_hash() -> str:
@@ -200,12 +203,15 @@ class TrainingSession:
         return score
 
     def run(self, additional_steps: int, checkpoint: Path | None = None) -> list[dict]:
-        if type(additional_steps) is not int or additional_steps < 1 or self.step_count + additional_steps > self.config.max_steps:
+        if type(additional_steps) is not int or additional_steps < 0 or self.step_count + additional_steps > self.config.max_steps:
             raise ValueError("requested updates exceed the configured total budget")
         if checkpoint and Path(checkpoint).exists() and Path(checkpoint).resolve() not in self._owned_checkpoints:
             raise FileExistsError("refusing to replace a checkpoint from another session; resume it explicitly")
         if self.pending_validation:
             self.validate()
+            if checkpoint:
+                self.save_checkpoint(checkpoint, overwrite=Path(checkpoint).exists())
+                self._owned_checkpoints.add(Path(checkpoint).resolve())
         rows = []
         for _ in range(additional_steps):
             if self.bad_validations >= self.config.patience:
@@ -224,6 +230,7 @@ class TrainingSession:
 
     def provenance(self) -> dict:
         return {"mode": self.config.mode, "phase": self.config.phase, "seed": self.config.seed,
+                "run_id": self.config.run_id,
                 "subset_seed": self.config.subset_seed, "dataset_fingerprint": self.dataset.fingerprint,
                 "fit_parents": sorted({e.parent_specimen_id for e in self.fit_entries} | set(self.prior_lineage["fit_parents"])),
                 "validation_parents": sorted({e.parent_specimen_id for e in self.validation_entries} | set(self.prior_lineage["validation_parents"])),

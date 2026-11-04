@@ -1,0 +1,19 @@
+{
+  "matrix": {
+    "architectures": ["direct", "das_unet"],
+    "output_sizes": [128, 256],
+    "extra_decoder_blocks": [0, 1],
+    "seeds": [101, 202],
+    "subset_seeds": [37, 53]
+  },
+  "model": {"width": 8, "embedding": 32, "heads": 4, "max_depth_mm": 3.0},
+  "training": {
+    "mode": "debug", "phase": "pretrain", "max_steps": 1,
+    "min_records": 2, "max_records": 4, "validation_records": 4,
+    "learning_rate": 0.001, "damaged_weight": 10.0,
+    "validation_interval": 1, "device": "cpu"
+  },
+  "das": {"group_velocity_m_s": {"100000": 2500.0}, "time_offset_s": 0.000025},
+  "baseline": {"budgets": [2, 4]},
+  "cpu_threads": 1
+}

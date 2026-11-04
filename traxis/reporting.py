@@ -74,7 +74,8 @@ def _save_figure(figure, output: Path, stem: str, guard):
 
 def _predictor_label(descriptor: dict) -> str:
     if descriptor["kind"] == "das":
-        return "DAS (calibrated)"
+        shape = descriptor["config"]["shape"]
+        return f"C (DAS), {shape[0]}×{shape[1]} px, subset seed {descriptor.get('seed')}"
     config = descriptor["config"]
     name = "A" if config["architecture"] == "direct" else "B"
     label = f"{name}, {config['output_size']} px, extra {config['extra_decoder_blocks']}"

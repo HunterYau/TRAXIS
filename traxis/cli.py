@@ -12,6 +12,7 @@ def main() -> None:
     from traxis.experiment_commands import add_experiment_commands
     from traxis.generation_commands import add_generation_commands
     from traxis.uncertainty_commands import add_uncertainty_commands
+    from traxis.study_commands import add_study_commands
     parser = argparse.ArgumentParser(description="Bounded guided-wave tomography experiments")
     sub = parser.add_subparsers(dest="command", required=True)
     preflight = sub.add_parser("preflight", help="inspect resources and mesh cost without solving")
@@ -47,6 +48,12 @@ def main() -> None:
     calibration.add_argument("--output", type=Path, default=Path("outputs/calibration-verification"))
     calibration.add_argument("--max-seconds", type=float, default=60)
     calibration.add_argument("--max-rss-mib", type=float, default=1024)
+    study = sub.add_parser("verify-study", help="one-update matched architecture pilot on existing software fixtures")
+    study.add_argument("--dataset", type=Path, required=True)
+    study.add_argument("--config", type=Path, default=Path("configs/study-debug.json"))
+    study.add_argument("--output", type=Path, default=Path("outputs/study-verification"))
+    study.add_argument("--max-seconds", type=float, default=60)
+    study.add_argument("--max-rss-mib", type=float, default=1024)
     forward = sub.add_parser("verify-forward", help="bounded CAD-to-elastic-bank checks; no training")
     forward.add_argument("--output", type=Path, default=Path("outputs/forward-verification"))
     forward.add_argument("--max-seconds", type=float, default=60)
@@ -63,8 +70,16 @@ def main() -> None:
     add_experiment_commands(sub)
     add_generation_commands(sub)
     add_uncertainty_commands(sub)
+    add_study_commands(sub)
     args = parser.parse_args()
-    if args.command in ("freeze-calibration", "fit-calibration", "assess-calibration"):
+    if args.command in ("plan-study", "advance-study", "freeze-study"):
+        from traxis.study_commands import run_study_command
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            print(json.dumps(run_study_command(args, guard), indent=2, allow_nan=False))
+        except Exception as exc:
+            parser.exit(1, f"Study stopped: {type(exc).__name__}: {exc}\n")
+    elif args.command in ("freeze-calibration", "fit-calibration", "assess-calibration"):
         from traxis.uncertainty_commands import run_uncertainty_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
@@ -134,6 +149,19 @@ def main() -> None:
                           "wall_seconds": report["wall_seconds"], "report": str(args.output / "forward-report.json")}, indent=2))
         if not report["passed"]:
             parser.exit(1, "Forward pilot failed; inspect its report.\n")
+    elif args.command == "verify-study":
+        from traxis.study_verification import verify_study
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            result = verify_study(args.dataset, args.config, args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Study pilot stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": result["passed"], "new_updates": result["new_updates"],
+                          "replay_episodes": result["replay_episodes"], "wall_seconds": result["wall_seconds"],
+                          "report": str(args.output / "study-report.json")}, indent=2))
+        if not result["passed"]:
+            parser.exit(1, "Study pilot failed; inspect its report.\n")
     elif args.command == "verify-calibration":
         from traxis.calibration_verification import verify_calibration
         from traxis.dataset import BankDataset
