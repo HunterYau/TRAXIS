@@ -433,3 +433,24 @@ The 168-test full run took 95.02 seconds with sampled monitor/test-tree RSS
 47 C. The pilot's nominal 1 N force scale multiplies the unnormalized Hann
 sine; its sampled pulse maximum was 0.8602 N. CPU temperature was unavailable.
 
+## Bounded quadratic finite-plate references
+
+The reference-waveforms command now assembles independent Elmer P2 stiffness
+and consistent mass once and integrates them in an isolated sparse worker.
+Native-transient comparisons, independent coupled adaptive ODE tests,
+energy conservation, permutation/archive checks and checked group recovery
+cover the new path. No PZT domains or training-data acceptance are implied.
+See elmer-waveforms.md and docs/evidence/elmer-waveform-debug.json.
+
+The native 75-node comparison differs by 1.74e-12 relative L2. The final-source
+40 x 40 x 3 mm intact control used 3,777 P2 nodes, 1,928 tetrahedra and seven
+receivers, taking 9.69 seconds at 302.2 MiB sampled combined RSS. Its maximum
+linear residual is 5.98e-16 and postburst energy range 9.46e-15 relative.
+These algebraic checks leave finite-plate spatial/time convergence open.
+
+All 177 regression tests passed in 104.72 seconds with optional native checks
+enabled. Sampled combined RSS peaked at 783.5 MiB, system RAM at 66.2%, GPU
+memory at 921/8,192 MiB and GPU temperature at 47 C. CPU temperature was
+unavailable. No training ran. Source snapshots and input/kernel/runtime
+hashes bind the pilot; all solver/source changes remain inside this project.
+

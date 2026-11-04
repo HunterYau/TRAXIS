@@ -45,7 +45,8 @@ def sinusoidal_displacement(times, acceleration, drive_omega, natural_omega=0.):
 
 
 def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
-                  nodal_force_n=None, volume_force_n_m3=None, probe_nodes=None, burst_cycles=None):
+                  nodal_force_n=None, volume_force_n_m3=None, probe_nodes=None, burst_cycles=None,
+                  max_nodes=128, output_stride=1, reuse_factorization=False):
     """Bossak alpha=0 is average-acceleration Newmark (gamma=.5, beta=.25).
 
     Stress Bodyforce is force/volume. Displacement i Load is a direct nodal
@@ -53,12 +54,24 @@ def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
     """
     positive('time step', dt_s)
     positive('drive angular frequency', drive_omega)
-    if type(steps) is not int or not 1 <= steps <= 5000 or type(probe_node) is not int or not 1 <= probe_node <= 128:
+    if (type(max_nodes) is not int or not 4 <= max_nodes <= 20000 or type(output_stride) is not int
+            or not 1 <= output_stride <= 64 or type(reuse_factorization) is not bool):
+        raise ValueError('invalid mesh, output stride or reuse bounds')
+    if (type(steps) is not int or not 1 <= steps <= 5000 or steps % output_stride
+            or type(probe_node) is not int or not 1 <= probe_node <= max_nodes):
         raise ValueError('invalid bounded step count or probe node')
     selected = (probe_node,) if probe_nodes is None else tuple(probe_nodes)
-    if (not selected or len(selected) > 128 or len(set(selected)) != len(selected)
-            or any(type(node) is not int or not 1 <= node <= 128 for node in selected)):
-        raise ValueError('need 1–128 unique bounded probe node indexes')
+    if (not selected or len(selected) > 512 or len(set(selected)) != len(selected)
+            or any(type(node) is not int or not 1 <= node <= max_nodes for node in selected)):
+        raise ValueError('need 1–512 unique bounded probe node indexes')
+    if (4 + 6 * len(selected)) * (steps // output_stride) * 24 > 8 * 1024**2:
+        raise MemoryError('estimated scalar probe output exceeds the 8 MiB reader bound')
+    # Explicit types also cover implemented flags missing from a release's
+    # keyword dictionary; implicit parsing can consume the following section.
+    reuse = ('  Linear System Refactorize = Logical False\n'
+             '  Linear System Free Factorization = Logical False\n') if reuse_factorization else ''
+    sampling = (f'  Exec Intervals(1) = Integer {output_stride}\n  Exec Intervals Offset(1) = Integer {output_stride - 1}\n'
+                if output_stride != 1 else '')
     waveform = f'sin({drive_omega:.17g}*tx)'
     if burst_cycles is not None:
         if type(burst_cycles) is not int or not 1 <= burst_cycles <= 20:
@@ -77,7 +90,7 @@ End
 '''
     else:
         force = np.asarray(nodal_force_n, dtype=float)
-        if force.ndim != 1 or not 12 <= len(force) <= 384 or len(force) % 3 or not np.isfinite(force).all():
+        if force.ndim != 1 or not 12 <= len(force) <= 3 * max_nodes or len(force) % 3 or not np.isfinite(force).all():
             raise ValueError('need a finite bounded node-major force vector')
         if max(selected) > len(force) // 3:
             raise ValueError('probe node exceeds the nodal force mesh')
@@ -130,11 +143,11 @@ Solver 1
   Displace Mesh = False
   Linear System Solver = Direct
   Linear System Direct Method = umfpack
-  Nonlinear System Max Iterations = 1
+{reuse}  Nonlinear System Max Iterations = 1
 End
 Solver 2
   Exec Solver = After Timestep
-  Equation = SaveScalars
+{sampling}  Equation = SaveScalars
   Procedure = "SaveData" "SaveScalars"
   Filename = "probe.dat"
   Variable 1 = Time

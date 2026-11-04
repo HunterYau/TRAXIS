@@ -132,6 +132,11 @@ these checks does not establish finite-plate spatial or PZT accuracy.
 centroid and second moments and pass native burst/reciprocity checks. They
 provide a P2 mechanical reference interface; local bank generation remains P1.
 
+[Bounded P2 waveform references](docs/elmer-waveforms.md) combine independent
+Elmer sparse operators with checked implicit time integration. A small finite
+plate ran under the resource guard; spatial/time and PZT acceptance remain
+open, and these traces are not approved research training data.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.

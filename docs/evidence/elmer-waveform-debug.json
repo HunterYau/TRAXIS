@@ -1,0 +1,361 @@
+{
+  "kind": "bounded_elmer_p2_mechanical_waveform_debug",
+  "date": "2026-11-04",
+  "completed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Working mechanical reference path and discrete integration checks; finite-plate/recess mesh/time and PZT/physical acceptance still required.",
+  "native_package": "26.1 portable nogui nompi Windows AMD64",
+  "actual_solver_banner": "Version: 9.0 (Rev: Release, Compiled: 2026-01-20)",
+  "plan": {
+    "fingerprint": "741f50a5165f533070036aaa5b39fdff667395633fb2b4d05f4a95c9c1b8104d",
+    "scenario": {
+      "specimen_id": "sim-2026-000000-7e2b3b9a22-v0",
+      "parent_specimen_id": "sim-2026-000000-7e2b3b9a22",
+      "split": "train",
+      "geometry_seed": 3339473683144027492,
+      "nuisance_seed": 12896123018795801922,
+      "plate": {
+        "width_m": 0.04,
+        "height_m": 0.04,
+        "thickness_m": 0.003
+      },
+      "recesses": [],
+      "acquisition": {
+        "sensor_count": 8,
+        "inset_m": 0.006,
+        "patch_radius_m": 0.003,
+        "frequencies_hz": [
+          100000.0
+        ],
+        "reciprocal": true,
+        "sample_dt_s": 5e-07,
+        "samples": 128,
+        "cycles": 2
+      },
+      "nuisance": {
+        "material": {
+          "young_pa": 68900000000.0,
+          "poisson": 0.33,
+          "density_kg_m3": 2700.0
+        },
+        "peak_force_n": 1.0,
+        "sensor_gains": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "current_gain_drift": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "relative_noise_std": 0.0,
+        "absolute_noise_std_m": 0.0,
+        "support": "free"
+      }
+    },
+    "settings": {
+      "mesh_size_m": 0.003,
+      "substeps_per_output": 4,
+      "mesh_algorithm": 10,
+      "mesh_optimization": "Netgen",
+      "max_cad_assembly_mib": 256,
+      "max_matrix_screen_mib": 256,
+      "max_quadratic_nodes": 20000,
+      "max_tetrahedra": 40000,
+      "max_internal_steps": 5000,
+      "max_volume_error": 0.05,
+      "max_operator_entries": 4000000,
+      "max_operator_file_mib": 256
+    },
+    "actions": [
+      {
+        "transmitter": 0,
+        "receiver": 1,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 2,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 3,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 4,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 5,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 6,
+        "frequency_hz": 100000.0
+      },
+      {
+        "transmitter": 0,
+        "receiver": 7,
+        "frequency_hz": 100000.0
+      }
+    ],
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "5f0118ca7e74b09815fe6a5326152db26207752ee63c2852c0beb6e42535dbb4",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+      "elmer_reference.py": "ea43b899557678868ad568230e46f20a8d7e0bef4f2e4af1e5ec2056589d4828",
+      "elmer_transient.py": "f78cd9304b244794643a7dfa4277f6269ce60f1564229c6ce3fb2e1e81417ed4",
+      "elmer_waveforms.py": "a8a8171028362a5f212a531960ad9035dd35a8bc8e43cbe75fb978cc6375c3e3",
+      "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "implicit_fem.py": "591bafc54ae22357786131412b436dcf38981f976c1d4f10c220b9cf1ab4ef7f",
+      "implicit_worker.py": "7337d57dc44d2a62b5aad159e8aa5ab1e564fc3698080de1a9e0cdaceb68a33e",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+      "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+      "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+      "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+      "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+      "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "source_snapshot_sha256": "71a4fe432a5e4a53821344be898291e1e76c0c5ffbe3334cefce2f93f61478f3",
+    "kernel_sha256": {
+      "solver_executable": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+      "grid_executable": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+      "libelmersolver.dll": "0193f9d84c2fc69d0bbb011fe2c3710f6554f1efc0ed65c9e8cb80280c533f32",
+      "StressSolve.dll": "5fe05cfe8d2ff62d5b4cc7afbe37bbd699bda8e605dbb4f24d188b08122e0148"
+    },
+    "runtime": {
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    }
+  },
+  "finite_plate": {
+    "completed": true,
+    "forward_solves": 1,
+    "cache_hit": false,
+    "quadratic_nodes": 3777,
+    "tetrahedra": 1928,
+    "dt_internal_s": 1.25e-07,
+    "internal_steps": 508,
+    "wall_seconds": 9.687584900006186,
+    "computation": {
+      "operator_run": {
+        "exit_code": 0,
+        "wall_seconds": 2.545882000005804,
+        "maximum_observed_external_processes": 2,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 6.444921099988278,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "worker_report_sha256": "0c515f2ae58cd6eb034758a6bf78b1c2b437a41dd6886b626a7c8bec6b80d767",
+      "maximum_relative_linear_residual": 5.978269470693746e-16,
+      "postburst_relative_energy_range": 9.462272951440155e-15,
+      "stiffness_nonzeros": 785251,
+      "mass_nonzeros": 261837,
+      "lu_factor_nonzeros": 3932800
+    },
+    "trace_sha256": "d6f5795bf99a6ce59f9bf2a104e6800f18faac5d12e10231461d69a5e2aec3f6"
+  },
+  "resources": {
+    "limits": {
+      "max_seconds": 60.0,
+      "max_rss_mib": 512.0,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "sampled_combined_process_rss_mib": 302.1953125,
+    "sampled_system_memory_percent": 63.7,
+    "minimum_available_mib": 5900.08984375,
+    "gpu_used_mib": 921.0,
+    "gpu_total_mib": 8192.0,
+    "gpu_temperature_c": 47.0,
+    "cpu_temperature_c": null,
+    "note": "Sampled process tree including monitor; CPU temperature unavailable; no GPU computation."
+  },
+  "native_integration_comparison": {
+    "passed": true,
+    "relative_l2_to_native_elmer": 1.7355652328963398e-12,
+    "maximum_relative_linear_residual": 1.2161648203667909e-15,
+    "postburst_relative_energy_range": 9.664898410117588e-14,
+    "lu_factor_nonzeros": 17280,
+    "stiffness_nonzeros": 11959,
+    "mass_nonzeros": 3987,
+    "ready_for_training_data": false,
+    "nodes": 75,
+    "tetrahedra": 24,
+    "dt_s": 1.25e-07,
+    "steps": 508,
+    "saved_stride": 4,
+    "matched_mesh_sha256": {
+      "mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+      "mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+      "mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+      "mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "native_bulk_cache_isolation": [
+    {
+      "exit_code": 3,
+      "wall_seconds": 0.2116698000463657,
+      "maximum_observed_external_processes": 2,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+      "case": "reuse-only"
+    },
+    {
+      "exit_code": 0,
+      "wall_seconds": 2.5280808999668807,
+      "maximum_observed_external_processes": 2,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+      "case": "sampling-only",
+      "times_match": true
+    },
+    {
+      "exit_code": 0,
+      "wall_seconds": 2.9802086999989115,
+      "maximum_observed_external_processes": 2,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+      "case": "factor-only",
+      "times_match": true
+    }
+  ],
+  "bulk_cache_source_inference": "StressSolve AddGlobalTime A2 is omitted from SAVE: consistent with second-call crash, not confirmed by a patched binary.",
+  "regression": {
+    "successful": true,
+    "tests_run": 177,
+    "wall_seconds": 104.72006860002875,
+    "exit_code": 0,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "resources": {
+      "limits": {
+        "max_seconds": 150,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_combined_process_rss_mib": 783.4765625,
+      "sampled_system_memory_percent": 66.2,
+      "minimum_available_mib": 5485.7265625,
+      "gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "gpu_temperature_c": 47.0,
+      "cpu_temperature_c": null,
+      "note": "Sampled process tree including monitor; CPU temperature unavailable; no GPU computation."
+    }
+  },
+  "artifact_sha256": {
+    "outputs/elmer-assessment/StressSolve.F90": "13631f3e0d98721a4af4c6730f940c125031280151640390648b3d4fe62e13e6",
+    "outputs/elmer-p2-waveform-verification/control-h3/case-plan.json": "5f702ba547cb267772008f9b3ef3294be233c4f87e0c1dc84992aaab1801671a",
+    "outputs/elmer-p2-waveform-verification/control-h3/implicit/traces.npz": "f239cea111419b15c3e50ac0c87a1e6eee2038aec2f8aa43ce8953e04051c130",
+    "outputs/elmer-p2-waveform-verification/control-h3/implicit/worker-report.json": "0c515f2ae58cd6eb034758a6bf78b1c2b437a41dd6886b626a7c8bec6b80d767",
+    "outputs/elmer-p2-waveform-verification/control-h3/loads-probes.npz": "3bc6a6af2d54a08386b5ff8a80aa3e5f78a2887c2ecd73eb32ccf71b0f1b74bc",
+    "outputs/elmer-p2-waveform-verification/control-h3/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-p2-waveform-verification/control-h3/mesh/mesh.elements": "22e6dca6e2483243e610013273e9e2d1370b17eaa467f44da2901eec5d98b462",
+    "outputs/elmer-p2-waveform-verification/control-h3/mesh/mesh.header": "11c8c2fb55e92ffc8c6eb6193e65924572ddcdec8102d58baf74b8c9f36bec5e",
+    "outputs/elmer-p2-waveform-verification/control-h3/mesh/mesh.nodes": "c1f22dbb1a4bc7f079afc17c9c06208b58358b040af9c59f23b8988e54c19679",
+    "outputs/elmer-p2-waveform-verification/control-h3/operator.log": "025d5bb6e1dbf20ccb31bbccb6807d75de351b61a2b47ce981a45df3507945c3",
+    "outputs/elmer-p2-waveform-verification/control-h3/operator.sif": "e5d392ccdd4411a657ed8e2e2673d2b27bd6697b7f89bb342c753d2b273ea980",
+    "outputs/elmer-p2-waveform-verification/control-h3/operator_a.dat": "68dafa34252baae90ab7ed4fa4e97a870d26aa9a8eb0c44516794ff1e9db98d4",
+    "outputs/elmer-p2-waveform-verification/control-h3/operator_perm.dat": "c605ffaa8c1eee753c69efb749dc192c7929731e9c5809358dafa716dfceebd6",
+    "outputs/elmer-p2-waveform-verification/control-h3/operator_sizes.dat": "eaea2cf5daf406c8a8f7d2189cbb06966fac3b7c397caaa165763fe0257af346",
+    "outputs/elmer-p2-waveform-verification/control-h3/solver-traces.npz": "d6f5795bf99a6ce59f9bf2a104e6800f18faac5d12e10231461d69a5e2aec3f6",
+    "outputs/elmer-p2-waveform-verification/control-h3/source-snapshot.zip": "71a4fe432a5e4a53821344be898291e1e76c0c5ffbe3334cefce2f93f61478f3",
+    "outputs/elmer-p2-waveform-verification/control-h3/waveform-case.json": "573b89a964e583efeb0c214d5b3a58bf4f6d7b71febe7b3f54df2311f72434ff",
+    "outputs/elmer-p2-waveform-verification/control-h3/worker-job.json": "9af16724b17d83b5be53d570c9f51f0d7f57cbb37d3548b0931d4a12f49abcb3",
+    "outputs/elmer-p2-waveform-verification/control-h3/worker.log": "ad34298a9f54f0142e6a592204bd4f20bdd3e76363c52988ecc4b464c6b5f66f",
+    "outputs/elmer-p2-waveform-verification/control-waveforms.png": "4d150daa27a08c5372d2fb33038e37ff537c488e556c2c7717e89c85a35c2a45",
+    "outputs/elmer-p2-waveform-verification/control-waveforms.svg": "a6c4b7895cc41b72926fd215809d06dca4bb8cd1f63a8836340c7efac92f18e9",
+    "outputs/elmer-p2-waveform-verification/regression-result.json": "70961b46b7ab51473a121ce177cb75662dcd314a6c41143bc19edfe8ae3de511",
+    "outputs/elmer-p2-waveform-verification/regression.log": "26c5f87858107b10323c62f3c3a930d4bd2600178bd330e9bbad260c84b4e313",
+    "outputs/elmer-reuse-isolation/factor-only/solver.log": "b74b110a5ef00fc997514889e16836a632920e5a5b8bf8e29f1f49f1919ecf3b",
+    "outputs/elmer-reuse-isolation/factor-only/transient.sif": "92f10dc874d352913f9ef2f4d05419ab93514d15a319d588408933d40f689440",
+    "outputs/elmer-reuse-isolation/report.json": "8b1863872933c6961ba558ab3fb43004ad07be54bc0f50d9cb6786bedba280d0",
+    "outputs/elmer-reuse-isolation/reuse-only/solver.log": "015189d25fda4124832f40ded45e1bb92636a5a28dc86ffb8324470d9ad59bfb",
+    "outputs/elmer-reuse-isolation/reuse-only/transient.sif": "ab3e923d1ee32c25e0115fb45d1e6e8cda03eef96ad4670f13d2bb1aab5d4394",
+    "outputs/elmer-reuse-isolation/sampling-only/solver.log": "218cd0d46903456936e236f5df188bfca7150d387027b78d1c26d37f879e037a",
+    "outputs/elmer-reuse-isolation/sampling-only/transient.sif": "24d7eff5cb9841fd126d06c7026a08638562d951762ea206f1511ebb61353e6e",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/probe.dat": "f44487c2790e1c2d0d2e6c9451ec62f94ffda904e53153fafec3ef0bd85fd140",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/probe.dat.names": "b38024247c17b1f3aa44749a4e7c6f87de630fb0209d3e4b725629857f963d26",
+    "outputs/elmer-reuse-sampling-probe-fixed/full-dense/transient.sif": "d8a924c6ce7c8dc2274e03d4550dd261cb41498b11b447e97a591bb3e5e7690b",
+    "outputs/elmer-transient-reference/p2/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-transient-reference/p2/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/elmer-transient-reference/p2/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/elmer-transient-reference/p2/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/elmer-transient-reference/p2/operator_a.dat": "3df7e438e07bdedeea6cf5f8d0b54e2afbb4fab56c89baced1c4afb3079281e4",
+    "outputs/implicit-native-comparison/comparison.json": "28887252c8aa6accaa190eab9e7f4e67e5429ef96e85f2c9370a73a4c1fd001a",
+    "outputs/implicit-native-comparison/operators.npz": "ef59050853e9992742d60f7e0b432f822a1a626df054e9e108786000196c4a7d",
+    "outputs/implicit-native-comparison/traces.npz": "f987eda35e0e64c0146a45e33883795112c5883b09ee14ff3eebfab586195312"
+  },
+  "fingerprint": "27139d5b24e0768699fdfc76760a1739e715500e54b064b90b542450db37c2ad"
+}

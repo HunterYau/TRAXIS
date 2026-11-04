@@ -23,15 +23,18 @@ from traxis.resources import ResourceGuard, ResourceLimitError
 from traxis.storage import canonical_hash, sha256_file, write_json
 
 
-def write_elmer_mesh(mesh: TetMesh, directory: Path) -> None:
-    """Write a small linear-tet mesh with free natural boundaries, in meters."""
+def write_elmer_mesh(mesh: TetMesh, directory: Path, *, max_nodes=128, max_tetrahedra=512) -> None:
+    """Write bounded linear tets with free natural boundaries, in meters."""
+    if (type(max_nodes) is not int or not 4 <= max_nodes <= 20000
+            or type(max_tetrahedra) is not int or not 1 <= max_tetrahedra <= 40000):
+        raise ValueError('invalid native mesh export bounds')
     points, tets = np.asarray(mesh.points_m), np.asarray(mesh.tetrahedra)
-    if (points.ndim != 2 or points.shape[1] != 3 or not 4 <= len(points) <= 128
+    if (points.ndim != 2 or points.shape[1] != 3 or not 4 <= len(points) <= max_nodes
             or not np.isfinite(points).all() or tets.ndim != 2 or tets.shape[1] != 4
-            or tets.dtype.kind not in 'iu' or not 1 <= len(tets) <= 512
+            or tets.dtype.kind not in 'iu' or not 1 <= len(tets) <= max_tetrahedra
             or tets.min() < 0 or tets.max() >= len(points)
             or len(np.unique(tets)) != len(points)):
-        raise ValueError("reference mesh must contain 4–128 used nodes and 1–512 linear tetrahedra")
+        raise ValueError("reference mesh exceeds declared bounds or has invalid/unused nodes")
     tets = tets.copy()
     edges = points[tets[:, 1:]] - points[tets[:, :1]]
     determinant = np.linalg.det(edges)

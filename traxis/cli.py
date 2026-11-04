@@ -86,6 +86,18 @@ def main() -> None:
     aperture.add_argument("--output", type=Path, required=True)
     aperture.add_argument("--max-seconds", type=float, default=60)
     aperture.add_argument("--max-rss-mib", type=float, default=512)
+    p2 = sub.add_parser("reference-waveforms", help="one bounded P2 transmitter/frequency reference; no research data promotion")
+    p2.add_argument("--plan", type=Path, required=True)
+    p2.add_argument("--index", type=int, default=0)
+    p2.add_argument("--settings", type=Path, required=True)
+    p2.add_argument("--elmer-home", type=Path, required=True)
+    p2.add_argument("--transmitter", type=int, default=0)
+    p2.add_argument("--frequency-khz", type=float)
+    p2.add_argument("--state", choices=['intact', 'current'], default='intact')
+    p2.add_argument("--cache-dir", type=Path)
+    p2.add_argument("--output", type=Path, required=True)
+    p2.add_argument("--max-seconds", type=float, default=60)
+    p2.add_argument("--max-rss-mib", type=float, default=512)
     report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
     report.add_argument("--evaluations", type=Path, nargs="+", required=True)
     report.add_argument("--labels", nargs="+")
@@ -101,7 +113,23 @@ def main() -> None:
     add_study_commands(sub)
     add_waveform_commands(sub)
     args = parser.parse_args()
-    if args.command == "verify-quadratic-patches":
+    if args.command == "reference-waveforms":
+        from traxis.elmer_waveforms import ElmerWaveSettings, run_elmer_waveform_case
+        from traxis.scenarios import load_scenario_plan
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            scenarios = load_scenario_plan(args.plan)
+            if not 0 <= args.index < len(scenarios) or args.settings.stat().st_size > 1024**2:
+                raise ValueError('invalid scenario index or oversized settings')
+            settings = ElmerWaveSettings(**json.loads(args.settings.read_text(encoding='utf-8-sig')))
+            _, result = run_elmer_waveform_case(scenarios[args.index], settings, args.elmer_home, args.output, guard,
+                transmitter=args.transmitter, frequency_hz=args.frequency_khz * 1000 if args.frequency_khz is not None else None,
+                state=args.state, cache_dir=args.cache_dir)
+            print(json.dumps({k: result[k] for k in ('completed', 'ready_for_training_data', 'forward_solves', 'cache_hit',
+                                                     'quadratic_nodes', 'dt_internal_s', 'wall_seconds')}, indent=2))
+        except Exception as exc:
+            parser.exit(1, f'P2 waveform reference stopped: {type(exc).__name__}: {exc}\n')
+    elif args.command == "verify-quadratic-patches":
         from traxis.quadratic_patch_verification import verify_quadratic_patches
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:

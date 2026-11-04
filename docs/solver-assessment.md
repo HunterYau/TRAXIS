@@ -112,6 +112,14 @@ mode. Both P1/P2 systems show second-order time convergence. This verifies
 the chosen load/probe/integration interface, with spatial convergence and
 transducer coupling still required before accepting reference waveforms.
 
+The [bounded P2 waveform path](elmer-waveforms.md) now exports independent
+Elmer operators once and integrates them in a monitored sparse worker.
+The small native-transient comparison agrees to 1.74e-12 relative L2, and
+a 3,777-node finite plate runs in 9.69 seconds at 302.2 MiB sampled combined
+RSS. Native bulk-matrix reuse crashed in isolated tests on this release;
+the worker avoids that path. This is a practical mechanical reference
+candidate, pending finite-plate/recess refinement and physical PZT validation.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

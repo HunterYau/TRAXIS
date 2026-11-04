@@ -1,0 +1,7 @@
+{
+  "mesh_size_m": 0.003,
+  "substeps_per_output": 4,
+  "max_quadratic_nodes": 20000,
+  "max_matrix_screen_mib": 256,
+  "max_internal_steps": 5000
+}
