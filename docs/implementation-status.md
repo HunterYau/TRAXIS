@@ -10,10 +10,10 @@ validation rather than inventing those outcomes.
 
 | Requirement | Current state / acceptance evidence needed |
 | --- | --- |
-| Solver recommendation | Documented in solver-assessment.md; licensed solver pilot not run |
+| Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly and P2 dispersion trials run. Finite-plate/PZT reference benchmark remains open |
 | 3D elastic propagation and backside loss | Implemented local linear-tet FEM; algebraic/dynamic checks and independent guided-mode dispersion convergence pass. Physical validation remains open |
 | PZT electromechanics, supports, noise/coupling variation | Seeded material, equivalent force/gain/drift/noise variation implemented; PZT/adhesive/electrical/support models and measured calibration still needed |
-| Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb reference and 3D FEM Bloch dispersion convergence implemented; finite-plate waveform/arrival convergence, resolved recess geometry and physical traces still needed |
+| Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. Local finite-plate time screen passed, mesh screen failed; finite-plate/PZT/physical validation still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
 | CAD-conforming geometry and elastic bank generation | Gmsh/OpenCASCADE recess mesh with volume/refinement checks and bounded grouped 3D elastic solves/cache implemented; banks remain plumbing_only pending wave/PZT/physical validation |
 | Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, integrity/bounds, anchored scalar CSV import, actual local elastic pilot generation and checked TX-frequency cache implemented; validated research dataset pending |
@@ -29,7 +29,7 @@ validation rather than inventing those outcomes.
 | Curves, 2D and 2.5D plots, parameter counts/cost | Headless PNG/SVG figures, physical-unit maps/surfaces and parent/compute tables implemented; research results pending |
 | Simulation-only versus physical adaptation | Source-model lineage, frozen unit scale and two-adaptation/three-holdout role workflow tested with fixtures; measured physical adaptation/evaluation pending |
 | Resource bounds and telemetry | CPU-only short pilot completed; cooperative time/RSS/system RAM/GPU guards tested. CPU temperature unavailable on this Windows host |
-| Frequent commits on a project branch | research/elastic-tomography; planning commit followed by tested implementation increments |
+| Frequent commits on project branches | research/elastic-tomography, research/finite-plate-validation and research/elmer-reference; tested implementation and evidence increments committed |
 
 ## Provisional configuration
 
@@ -344,4 +344,36 @@ on identical coarse elements verifies assembly, not continuum wave accuracy.
 The finite-plate spatial screen remains failed. Converged transient reference
 waveforms, actual PZT/adhesive/electrical inputs and intact physical validation
 are still required before research data generation or model comparisons.
+
+## Quadratic independent guided modes
+
+Elmer P2 operators now support a separate infinite-plate dispersion study
+against independent Rayleigh-Lamb traction roots. Correct periodic face
+relations, free interior P2 values, sagittal restriction and conjugate
+Hermitian reduction have checks. Three in-plane refinements hold thickness
+fixed; three thickness refinements hold in-plane spacing fixed. Five shared
+cases per target produce 40 bounded exports over 100/200 kHz and 1/3 mm stock.
+The default plan and tolerances are frozen before assembly. See elmer-waveguide.md.
+
+Every finest-grid frequency error was below 0.0677%, using 243 full / 72
+condensed degrees of freedom. The overall predeclared screen **failed**:
+100 kHz S0 in 1 mm stock had thickness errors increasing from 0.001735% to
+0.001843%. All in-plane and seven other thickness sequences decreased.
+The small nonmonotone component was not reclassified as a pass or hidden by
+a tolerance change. Physical finite-plate/PZT validation remains open.
+
+The study took 21.58 seconds with sampled combined RSS 109.9 MiB, system RAM
+61.7%, GPU memory 921/8,192 MiB and GPU temperature 47 C. CPU temperature was
+unavailable; all calculation used CPU and no training ran. Checked PNG/SVG
+refinement figures were visually inspected. Compact evidence is in
+docs/evidence/elmer-waveguide-debug.json. These results justify investigating
+high-order reference waveforms, not promoting existing coarse local banks.
+
+All 156 regression tests pass with real P1/P2 solver checks enabled. The full
+suite took 60.25 seconds with sampled combined RSS 779.7 MiB, system RAM
+64.9%, GPU memory 921/8,192 MiB and GPU temperature 47 C. A separate bounded
+nine-case diagnostic reduced the thin-S0 error to 0.0001242% and 0.000009380%
+at 32/64 in-plane cells and four thickness cells. The corresponding thickness
+sequences decreased, supporting an in-plane dispersion interaction. This
+follow-up preserves the original failed criterion and data-readiness flag.
 

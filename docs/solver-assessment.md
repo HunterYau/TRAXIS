@@ -100,6 +100,12 @@ independent mechanical checks. It does not validate coarse spatial resolution
 or establish a production PZT solver choice; COMSOL remains the preferred
 coupled-wave reference if accessible, pending a measured project benchmark.
 
+An additional [quadratic Elmer dispersion study](elmer-waveguide.md) uses
+independent P2 operators at 100/200 kHz in 1/3 mm stock. Its maximum finest
+analytic frequency error is 0.0677%, but one strict thickness-refinement
+decrease criterion failed. These promising bounded infinite-plate results
+do not establish finite-plate waveform, recess-scattering or PZT accuracy.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

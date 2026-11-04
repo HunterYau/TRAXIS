@@ -64,6 +64,18 @@ def main() -> None:
     elmer.add_argument("--output", type=Path, required=True)
     elmer.add_argument("--max-seconds", type=float, default=60)
     elmer.add_argument("--max-rss-mib", type=float, default=512)
+    elmer_waves = sub.add_parser("verify-elmer-waves", help="independent P2 infinite-plate dispersion refinement; no finite-plate/PZT validation")
+    elmer_waves.add_argument("--elmer-home", type=Path, required=True)
+    elmer_waves.add_argument("--output", type=Path, required=True)
+    elmer_waves.add_argument("--frequencies-khz", type=float, nargs="+", default=[100., 200.])
+    elmer_waves.add_argument("--thicknesses-mm", type=float, nargs="+", default=[1., 3.])
+    elmer_waves.add_argument("--max-seconds", type=float, default=60)
+    elmer_waves.add_argument("--max-rss-mib", type=float, default=512)
+    elmer_plot = sub.add_parser("plot-elmer-waves", help="plot checked P2 dispersion refinements; no new solves")
+    elmer_plot.add_argument("--sweep", type=Path, required=True)
+    elmer_plot.add_argument("--output", type=Path, required=True)
+    elmer_plot.add_argument("--max-seconds", type=float, default=60)
+    elmer_plot.add_argument("--max-rss-mib", type=float, default=512)
     report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
     report.add_argument("--evaluations", type=Path, nargs="+", required=True)
     report.add_argument("--labels", nargs="+")
@@ -79,7 +91,27 @@ def main() -> None:
     add_study_commands(sub)
     add_waveform_commands(sub)
     args = parser.parse_args()
-    if args.command == "verify-elmer":
+    if args.command == "plot-elmer-waves":
+        from traxis.elmer_waveguide import plot_elmer_waves
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = plot_elmer_waves(args.sweep, args.output, guard)
+            print(json.dumps({'files': result['files'], 'ready_for_training_data': False}, indent=2))
+        except Exception as exc:
+            parser.exit(1, f"Guided reference plot stopped: {type(exc).__name__}: {exc}\n")
+    elif args.command == "verify-elmer-waves":
+        from traxis.elmer_waveguide import verify_elmer_waves
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = verify_elmer_waves(args.elmer_home, args.output, guard,
+                                        frequencies_hz=tuple(f * 1000 for f in args.frequencies_khz),
+                                        thicknesses_m=tuple(t / 1000 for t in args.thicknesses_mm))
+            print(json.dumps({k: result[k] for k in ('completed', 'passed', 'ready_for_training_data', 'wall_seconds', 'scope')}, indent=2))
+        except Exception as exc:
+            parser.exit(1, f"Guided reference stopped: {type(exc).__name__}: {exc}\n")
+        if not result['passed']:
+            parser.exit(2, "Guided-mode refinement screen failed; inspect guided-report.json.\n")
+    elif args.command == "verify-elmer":
         from traxis.elmer_reference import verify_elmer
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:

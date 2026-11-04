@@ -1,0 +1,499 @@
+{
+  "kind": "independent_elmer_p2_guided_refinement_debug",
+  "date": "2026-11-04",
+  "completed": true,
+  "strict_refinement_screen_passed": false,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Lossless infinite-plate sagittal A0/S0 dispersion only; no finite-edge, defect, transient, PZT or physical validation.",
+  "plan": {
+    "kind": "predeclared_elmer_p2_guided_refinement",
+    "frequencies_hz": [
+      100000.0,
+      200000.0
+    ],
+    "thicknesses_m": [
+      0.001,
+      0.003
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "in_plane_levels": [
+      4,
+      8,
+      16
+    ],
+    "thickness_levels": [
+      1,
+      2,
+      4
+    ],
+    "maximum_final_relative_frequency_error": 0.005,
+    "required_strict_error_decrease": true,
+    "operator_exports": 40,
+    "solver_executable_sha256": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+    "grid_executable_sha256": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "9e434b088fa0687a6e727e37defd99117c9cf7b25e9d11b6aa189da7815f9c26",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_reference.py": "c4cb1b2a3448eacfbbdde3f3040449fb1ac68a7940cb1246ad6554c64e982ba1",
+      "elmer_waveguide.py": "a4131548c8f3f43f1ba43a9fe2a0f7d3792fcff987b975a47bfd707a1832d15c",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "patches.py": "70662e573c897c156a2f7a39a73aed9abeb95bfd245dfd426507c3da80b6dad3",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+      "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+      "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+      "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+      "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "scope": "Lossless infinite-plate sagittal A0/S0 dispersion only; no finite-edge, defect, transient, PZT or physical validation.",
+    "ready_for_training_data": false,
+    "fingerprint": "5c5b7278b6e35eef2238b361e566b98c6afe80b4b660e27acaabc3ced9e19905"
+  },
+  "report_fingerprint": "07bb9e0a778b7f3ac78900553aaddf41a661e207e151c14097b12f1405fac5db",
+  "wall_seconds": 21.582554000022355,
+  "resources": {
+    "limits": {
+      "max_seconds": 60,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "samples": 281,
+    "peak_sampled_combined_rss_mib": 109.9375,
+    "peak_system_memory_percent": 61.7,
+    "minimum_available_mib": 6219.3984375,
+    "peak_observed_gpu_used_mib": 921.0,
+    "gpu_total_mib": 8192.0,
+    "peak_observed_gpu_temperature_c": 47.0,
+    "cpu_temperatures_c": null,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "targets": [
+    {
+      "frequency_hz": 100000.0,
+      "thickness_m": 0.001,
+      "mode": "A0",
+      "in_plane_relative_errors": [
+        0.055912088335604126,
+        0.005474480568476103,
+        0.0006289155847400973
+      ],
+      "thickness_relative_errors": [
+        0.01053783528310337,
+        0.0018155700875148728,
+        0.0006289155847400973
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 100000.0,
+      "thickness_m": 0.001,
+      "mode": "S0",
+      "in_plane_relative_errors": [
+        0.004524367993364864,
+        0.0002881949328841227,
+        1.843406397994407e-05
+      ],
+      "thickness_relative_errors": [
+        1.7354772389621687e-05,
+        1.8166663287910723e-05,
+        1.843406397994407e-05
+      ],
+      "passed": false
+    },
+    {
+      "frequency_hz": 100000.0,
+      "thickness_m": 0.003,
+      "mode": "A0",
+      "in_plane_relative_errors": [
+        0.026449715671983398,
+        0.0027701321531918843,
+        0.0005258520833046898
+      ],
+      "thickness_relative_errors": [
+        0.0204365018663224,
+        0.002954093927737045,
+        0.0005258520833046898
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 100000.0,
+      "thickness_m": 0.003,
+      "mode": "S0",
+      "in_plane_relative_errors": [
+        0.004544290373865945,
+        0.00030180308323135563,
+        2.177610661635576e-05
+      ],
+      "thickness_relative_errors": [
+        3.9508661945797385e-05,
+        2.334242973223155e-05,
+        2.177610661635576e-05
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 200000.0,
+      "thickness_m": 0.001,
+      "mode": "A0",
+      "in_plane_relative_errors": [
+        0.0354151354664205,
+        0.003452015602304792,
+        0.0005279323136515579
+      ],
+      "thickness_relative_errors": [
+        0.01596511736624251,
+        0.0023227816416535596,
+        0.0005279323136515579
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 200000.0,
+      "thickness_m": 0.001,
+      "mode": "S0",
+      "in_plane_relative_errors": [
+        0.0045291322050737826,
+        0.0002930376284060454,
+        1.981800590744598e-05
+      ],
+      "thickness_relative_errors": [
+        2.271963297073576e-05,
+        1.982949971401915e-05,
+        1.981800590744598e-05
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 200000.0,
+      "thickness_m": 0.003,
+      "mode": "A0",
+      "in_plane_relative_errors": [
+        0.016517836073508763,
+        0.0022099817766023655,
+        0.0006764026780665677
+      ],
+      "thickness_relative_errors": [
+        0.03041290988768286,
+        0.005398253766380368,
+        0.0006764026780665677
+      ],
+      "passed": true
+    },
+    {
+      "frequency_hz": 200000.0,
+      "thickness_m": 0.003,
+      "mode": "S0",
+      "in_plane_relative_errors": [
+        0.004685329709620989,
+        0.0003466131534763939,
+        2.9861673928932575e-05
+      ],
+      "thickness_relative_errors": [
+        0.0002530996518221862,
+        5.178109491055238e-05,
+        2.9861673928932575e-05
+      ],
+      "passed": true
+    }
+  ],
+  "case_dimensions": {
+    "finest_nodes": 81,
+    "finest_full_dofs": 243,
+    "finest_condensed_dofs": 72
+  },
+  "maximum_finest_relative_frequency_error": 0.0006764026780665677,
+  "strict_target_screens_passed": 7,
+  "strict_target_screens": 8,
+  "followup_diagnostic": {
+    "plan": {
+      "kind": "predeclared_followup_diagnostic",
+      "target_hz": 100000.0,
+      "thickness_m": 0.001,
+      "mode": "S0",
+      "in_plane_levels": [
+        16,
+        32,
+        64
+      ],
+      "thickness_levels": [
+        1,
+        2,
+        4
+      ],
+      "operator_exports": 9,
+      "initial_report_sha256": "092fdbb7094dbc1e8cea6673800f3cc5adeedbdb9fd890bb0fa7ceb1f6da04e1",
+      "hypothesis": "Test whether the thin-S0 thickness plateau shrinks with in-plane refinement. Preserve the original strict-screen failure; this diagnostic has no replacement pass criterion.",
+      "ready_for_training_data": false,
+      "fingerprint": "434c25a978e8b31cd7977912f086a53f16693e95437c97205c626d0337089363"
+    },
+    "completed": true,
+    "report_fingerprint": "c9abb5bc361b9152da5c720c881b53e55ce6b2c27e851b1367d54f4aa96e4869",
+    "wall_seconds": 4.579177299980074,
+    "rows": [
+      {
+        "cells_per_wavelength": 16,
+        "thickness_cells": 1,
+        "relative_frequency_error": 1.7354772389621687e-05,
+        "fundamental_frequencies_hz": [
+          3404.3598871277045,
+          100001.73547723897
+        ]
+      },
+      {
+        "cells_per_wavelength": 16,
+        "thickness_cells": 2,
+        "relative_frequency_error": 1.8166663287910723e-05,
+        "fundamental_frequencies_hz": [
+          3399.1903064846465,
+          100001.81666632878
+        ]
+      },
+      {
+        "cells_per_wavelength": 16,
+        "thickness_cells": 4,
+        "relative_frequency_error": 1.843406397994407e-05,
+        "fundamental_frequencies_hz": [
+          3397.8673098700115,
+          100001.843406398
+        ]
+      },
+      {
+        "cells_per_wavelength": 32,
+        "thickness_cells": 1,
+        "relative_frequency_error": 1.4266496863868383e-06,
+        "fundamental_frequencies_hz": [
+          3386.3337464449105,
+          100000.14266496863
+        ]
+      },
+      {
+        "cells_per_wavelength": 32,
+        "thickness_cells": 2,
+        "relative_frequency_error": 1.242795178324485e-06,
+        "fundamental_frequencies_hz": [
+          3384.0995898652113,
+          100000.12427951783
+        ]
+      },
+      {
+        "cells_per_wavelength": 32,
+        "thickness_cells": 4,
+        "relative_frequency_error": 1.2419423542908703e-06,
+        "fundamental_frequencies_hz": [
+          3383.661228276847,
+          100000.12419423544
+        ]
+      },
+      {
+        "cells_per_wavelength": 64,
+        "thickness_cells": 1,
+        "relative_frequency_error": 2.918898311943252e-07,
+        "fundamental_frequencies_hz": [
+          3383.5434142286003,
+          100000.02918898313
+        ]
+      },
+      {
+        "cells_per_wavelength": 64,
+        "thickness_cells": 2,
+        "relative_frequency_error": 1.1300009572501324e-07,
+        "fundamental_frequencies_hz": [
+          3382.225597109737,
+          100000.01130000957
+        ]
+      },
+      {
+        "cells_per_wavelength": 64,
+        "thickness_cells": 4,
+        "relative_frequency_error": 9.380410115333859e-08,
+        "fundamental_frequencies_hz": [
+          3382.040010505664,
+          100000.0093804101
+        ]
+      }
+    ],
+    "orders_by_thickness": {
+      "1": [
+        3.604629414269023,
+        2.289135268275729
+      ],
+      "2": [
+        3.869633006378104,
+        3.4591926494615524
+      ],
+      "4": [
+        3.8917040466414643,
+        3.726803401756042
+      ]
+    },
+    "resources": {
+      "limits": {
+        "max_seconds": 20,
+        "max_rss_mib": 256,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 63,
+      "peak_sampled_combined_rss_mib": 84.0234375,
+      "peak_system_memory_percent": 61.2,
+      "minimum_available_mib": 6296.31640625,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 47.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    },
+    "interpretation": "At fixed z=4, in-plane refinement reduces the S0 plateau; z error sequences decrease at n=32 and n=64. This supports an in-plane dispersion interaction, not a rigorous attribution. The original 40-case criterion remains failed; no replacement pass or data promotion."
+  },
+  "regression": {
+    "exit_code": 0,
+    "wall_seconds": 60.25085959996795,
+    "maximum_observed_external_processes": 5,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "successful": true,
+    "tests_run": 156,
+    "resources": {
+      "limits": {
+        "max_seconds": 120,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 283,
+      "peak_sampled_combined_rss_mib": 779.671875,
+      "peak_system_memory_percent": 64.9,
+      "minimum_available_mib": 5703.62890625,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 47.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "tested_source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "34e73795c9d5bde14d8f43c290d99a1426586d9592627e2d5c267c13da26951e",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_reference.py": "c4cb1b2a3448eacfbbdde3f3040449fb1ac68a7940cb1246ad6554c64e982ba1",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "70662e573c897c156a2f7a39a73aed9abeb95bfd245dfd426507c3da80b6dad3",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+    "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "producer_source_note": "The numerical sweep preceded addition of the plotting helper. The plan retains its original producer source hashes; the regression tests cover the final source with that helper.",
+  "figures": {
+    "files": [
+      "elmer-p2-guided-refinement.png",
+      "elmer-p2-guided-refinement.svg"
+    ],
+    "file_sha256": {
+      "elmer-p2-guided-refinement.png": "5e46d8ffaa374ab5b851172c2cd3291e02ffb0afe885c6e931f0188d6ef4f203",
+      "elmer-p2-guided-refinement.svg": "a02a816487d3c35a064423db453330497c6ab1a39feb7ff4f4a965383f185257"
+    },
+    "visual_review": "PNG inspected: readable log axes, explicit percent errors, visible 0.5% reference, clear legends and failed-screen title; no text clipping."
+  },
+  "full_artifact_sha256": {
+    "outputs/elmer-p2-guided-reference/guided-plan.json": "b86a61633690119efd391f328e6d1ca2664c43a0b25b6add18c5689800ca8913",
+    "outputs/elmer-p2-guided-reference/guided-report.json": "092fdbb7094dbc1e8cea6673800f3cc5adeedbdb9fd890bb0fa7ceb1f6da04e1",
+    "outputs/elmer-p2-guided-reference/regression-result.json": "7c590b04aaf00aa0869f3c8d293195397f14dce1b9fd4a87cb698ca4153b2f2b",
+    "outputs/elmer-p2-guided-reference/regression.log": "d07eccc441dcd63ddd89714adfb61bf466b19730ab5c3c8801b0aade074ffef6",
+    "outputs/elmer-s0-floor-diagnostic/diagnostic-plan.json": "3e6679f7e0a3e5ad53e47fb477335d5b44383b3e94ed27a183fa37d5fc0a4f76",
+    "outputs/elmer-s0-floor-diagnostic/diagnostic-report.json": "fde3f0f8eeb50d8f42d44b6270f62b580010d245543f3b95c343c2ff9dd9ddd4",
+    "outputs/elmer-p2-guided-figures/figures.json": "1edb48ddce7c95f37eb4bc45618858c846cdbae8183cc6f59d5e611057b2731a"
+  },
+  "evidence_fingerprint": "b87adee3d868249ffa379e8089b1f2308b2fc195890b8b5851624c34b61b153a"
+}
