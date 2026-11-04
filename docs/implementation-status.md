@@ -14,7 +14,8 @@ validation rather than inventing those outcomes.
 | 3D elastic propagation and backside loss | Implemented local linear-tet FEM; algebraic/dynamic checks and independent guided-mode dispersion convergence pass. Physical validation remains open |
 | PZT electromechanics, supports, noise/coupling variation | Reference-solver pilot and measured calibration needed |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb reference and 3D FEM Bloch dispersion convergence implemented; finite-plate waveform/arrival convergence, resolved recess geometry and physical traces still needed |
-| Randomized specimens and exact depth labels | Analytic circular geometry, area-averaged depth labels, 8/12 sensor layouts and stable parent-specimen splits implemented/tested; dataset generator pending |
+| Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
+| CAD-conforming geometry and elastic bank generation | Gmsh/OpenCASCADE recess mesh with volume/refinement checks and bounded grouped 3D elastic solves/cache implemented; banks remain plumbing_only pending wave/PZT/physical validation |
 | Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, per-array integrity, bounded loading, explicit scalar CSV external-solver/DAQ import and source hashes implemented/tested; full physical/FEA dataset pending |
 | Specimen-level splits and hidden observations | Fingerprinted lazy dataset, role-aware subset training/adaptation and checkpoint-bound held-out evaluation enforce parent separation; masked replay tested |
 | A: waveform CNN, attention, spatial decoder | Implemented with geometry/sampling/amplitude context, partial masks and empty-state handling; forward/backward and serialization checked. Research training pending |
@@ -152,4 +153,14 @@ replay episodes across all four policy categories, with no repeats and common
 dense predictions; the final resource/evidence record is in
 docs/evidence/adaptive-debug.json. Current suite: 90 tests. These checks still
 do not establish policy convergence, calibrated uncertainty or physical accuracy.
+
+## Scenario and local forward-data implementation
+
+The scenario planner and CAD mesher now feed an actual local elastic waveform
+bank generator. Tests cover deterministic recipes/variants, CAD volume/mass
+and geometric refinement, grouped transmitter solves, sample-aligned stable
+steps, intact residuals, deterministic cached recovery/noise and rejection of
+unsupported supports/unresolved geometry. Current suite: 99 tests with optional
+Gmsh/PyTorch installed. These are pilot/geometry checks; generated banks are
+not promoted to research-ready data. See scenario-generation.md.
 

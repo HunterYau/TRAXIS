@@ -1,0 +1,2 @@
+# Optional CAD-conforming mesh backend. Gmsh is GPL-licensed; used as a package.
+gmsh==4.15.2

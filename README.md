@@ -100,3 +100,8 @@ The `train-policy` and `verify-policy` commands support bounded policy updates
 and a monitored fixture pilot; the latter requires the existing debug dataset
 and reconstruction ensemble described in that document.
 
+Reproducible virtual specimen recipes, optional CAD-conforming recess meshing
+and bounded local elastic waveform banks are described in
+[scenario generation](docs/scenario-generation.md). Their data remains marked
+as pilot-only until forward-physics and physical validation pass.
+
