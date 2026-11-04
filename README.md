@@ -3,9 +3,10 @@
 Research tools for reconstructing backside material loss in aluminum plates
 from a fixed PZT network. The target is depth in millimeters, not a damage class.
 
-This repository is under development. No model has been trained, and no
-simulation has been validated against a physical plate. Do not use a passing
-unit test as evidence of physical accuracy.
+This repository is under development. Neural candidates have received only
+single-step debug updates; no research training cycle has run. No simulation
+has been validated against a physical plate. Passing software checks do not
+establish physical accuracy or a superior model.
 
 ## Solver decision
 
@@ -57,4 +58,20 @@ mapped, aligned current/control scalar traces with:
 DAS returns a localization intensity in signal units. It must be calibrated
 before it can serve as a quantitative depth baseline. Analytic point-scattering
 test fixtures are software checks, not an elastic simulation dataset.
+
+## Reconstruction candidates
+
+Model A combines a waveform CNN, spatial attention and a convolutional map
+decoder. Model B combines DAS with a residual U-Net and waveform context.
+Both support 128/256 outputs and extra decoder blocks. See
+[model details and checks](docs/reconstruction-models.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-learning.txt
+.\.venv\Scripts\python.exe -m traxis verify-models
+```
+
+This runs exactly eight single-step CPU debug configurations, with resource
+limits. The optional model tests are skipped if PyTorch is absent; running
+the core suite alone does not validate the neural candidates.
 

@@ -24,6 +24,10 @@ def main() -> None:
     importer = sub.add_parser("import-traces", help="import mapped scalar CSV probe exports")
     importer.add_argument("--manifest", type=Path, required=True)
     importer.add_argument("--output", type=Path, required=True)
+    models = sub.add_parser("verify-models", help="eight CPU single-step debug checks; no training cycle")
+    models.add_argument("--output", type=Path, default=Path("outputs/model-verification"))
+    models.add_argument("--max-seconds", type=float, default=60)
+    models.add_argument("--max-rss-mib", type=float, default=1024)
     args = parser.parse_args()
     if args.command == "preflight":
         frequencies = (50000., 75000., 100000., 125000., 150000.)
@@ -50,6 +54,18 @@ def main() -> None:
         print(json.dumps({"output": str(args.output), "specimen_id": bank.metadata.specimen_id,
                           "records": len(bank.actions), "samples": len(bank.time_s),
                           "validation_status": bank.metadata.validation_status}, indent=2))
+    elif args.command == "verify-models":
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            from traxis.model_verification import verify_models
+            report = verify_models(args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Model checks stopped: {exc}\n")
+        print(json.dumps({"passed": report["passed"], "configurations": len(report["configurations"]),
+                          "report": str(args.output / "model-report.json")}, indent=2))
+        if not report["passed"]:
+            parser.exit(1, "Model debug checks failed; inspect the report.\n")
     elif args.command == "verify":
         from traxis.verification import run_verification
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))

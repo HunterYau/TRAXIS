@@ -77,7 +77,7 @@ class RevealTests(unittest.TestCase):
         self.assertFalse(state.waveforms[~state.observed].any())
         self.assertEqual(state.count, 1)
         self.assertEqual({f.name for f in fields(Observation)},
-                         {"plate", "sensors_xy_m", "actions", "time_s", "waveforms", "baseline", "observed"})
+                         {"plate", "observable", "sensors_xy_m", "actions", "time_s", "waveforms", "baseline", "observed"})
         with self.assertRaises(ValueError):
             env.reveal(5)
         self.assertEqual(env.reset().count, 0)

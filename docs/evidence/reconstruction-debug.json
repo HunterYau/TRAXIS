@@ -1,0 +1,234 @@
+﻿{
+    "kind":  "single_step_debug_not_architecture_performance_comparison",
+    "passed":  true,
+    "torch_version":  "2.15.0+cpu",
+    "device":  "cpu",
+    "seed":  2026,
+    "data":  "analytic point-scattering fixture; not elastodynamic training data",
+    "updates_per_configuration":  1,
+    "configurations":  [
+                           {
+                               "config":  {
+                                              "architecture":  "direct",
+                                              "output_size":  128,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  0,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  102769,
+                               "loss_before_mm2":  4.687215805053711,
+                               "loss_after_mm2":  1.453988790512085,
+                               "gradient_norm":  159.9657440185547,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.08366740000201389,
+                               "inference_seconds":  0.016440299979876727,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "direct",
+                                              "output_size":  128,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  1,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  107473,
+                               "loss_before_mm2":  3.225870370864868,
+                               "loss_after_mm2":  1.3765501976013184,
+                               "gradient_norm":  94.16490173339844,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.06873780000023544,
+                               "inference_seconds":  0.021558500011451542,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "direct",
+                                              "output_size":  256,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  0,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  107473,
+                               "loss_before_mm2":  3.2178688049316406,
+                               "loss_after_mm2":  1.3966675996780396,
+                               "gradient_norm":  95.28673553466797,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.1446111000259407,
+                               "inference_seconds":  0.045826699992176145,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "direct",
+                                              "output_size":  256,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  1,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  112177,
+                               "loss_before_mm2":  1.6914936304092407,
+                               "loss_after_mm2":  0.7236908078193665,
+                               "gradient_norm":  92.46597290039062,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.207437300006859,
+                               "inference_seconds":  0.06626180000603199,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "das_unet",
+                                              "output_size":  128,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  0,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  177217,
+                               "loss_before_mm2":  1.6580880880355835,
+                               "loss_after_mm2":  1.134981393814087,
+                               "gradient_norm":  33.00985336303711,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.1484760000021197,
+                               "inference_seconds":  0.04096640000352636,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "das_unet",
+                                              "output_size":  128,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  1,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  181921,
+                               "loss_before_mm2":  2.2936532497406006,
+                               "loss_after_mm2":  1.5749139785766602,
+                               "gradient_norm":  50.897090911865234,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.14922089996980503,
+                               "inference_seconds":  0.046176300034858286,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "das_unet",
+                                              "output_size":  256,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  0,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  177217,
+                               "loss_before_mm2":  1.6492334604263306,
+                               "loss_after_mm2":  1.12529718875885,
+                               "gradient_norm":  34.773162841796875,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.49220890004653484,
+                               "inference_seconds":  0.16096949996426702,
+                               "passed":  true
+                           },
+                           {
+                               "config":  {
+                                              "architecture":  "das_unet",
+                                              "output_size":  256,
+                                              "width":  16,
+                                              "embedding":  64,
+                                              "heads":  4,
+                                              "extra_decoder_blocks":  1,
+                                              "max_depth_mm":  3.0
+                                          },
+                               "parameters":  181921,
+                               "loss_before_mm2":  2.243312358856201,
+                               "loss_after_mm2":  1.636401653289795,
+                               "gradient_norm":  53.599056243896484,
+                               "finite_gradients":  true,
+                               "step_seconds":  0.5476703000022098,
+                               "inference_seconds":  0.17940650001401082,
+                               "passed":  true
+                           }
+                       ],
+    "source_sha256":  {
+                          "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                          "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                          "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                          "bank.py":  "2ed2388d513345da7838df15a484827459b7b6e653da133e97a04c711168d5b7",
+                          "cli.py":  "21e3aff02d653d8763a9c24015c9e74214a8c19975c193ec20004dc9b3abfcd9",
+                          "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                          "diagnostic_data.py":  "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+                          "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                          "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                          "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                          "imaging.py":  "1431dc8ad6687f5eb0253c68cf0ac291f0483feee0c76cce84458d536b5ba480",
+                          "importers.py":  "73c83e80db72b46e5b779ba06d48271b482dc15231664c10f6a28ba478c8db76",
+                          "metrics.py":  "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+                          "model_verification.py":  "bd7f7ffd95a47ec63728c5cf1d03c0a4940a93c7098af915ae23847f08704f91",
+                          "models.py":  "06e3a96904226ed965a426e2d936229de76119b16b24a3db5d3cfc2b15fa8940",
+                          "policies.py":  "87cf8d7dfb2f34cc1efc73532a1af259d52eddb224e8d79d484a99d769514be9",
+                          "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                          "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                          "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703"
+                      },
+    "observed_action_indices":  [
+                                    0,
+                                    3,
+                                    12,
+                                    17
+                                ],
+    "signal_scale":  {
+                         "rms":  0.17700529145430183,
+                         "observable":  "arbitrary"
+                     },
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  1024,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  422.9140625,
+                      "sampled_max_system_memory_percent":  77.4,
+                      "gpu_samples":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1712.0,
+                                              "temperature_c":  47.0
+                                          },
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1712.0,
+                                              "temperature_c":  47.0
+                                          },
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1712.0,
+                                              "temperature_c":  47.0
+                                          },
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1712.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  }
+}

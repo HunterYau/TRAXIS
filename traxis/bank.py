@@ -184,6 +184,7 @@ class Observation:
     No specimen ID, defect geometry, label or forward-solver settings enter here.
     """
     plate: Plate
+    observable: str
     sensors_xy_m: np.ndarray
     actions: tuple[Action, ...]
     time_s: np.ndarray
@@ -206,7 +207,7 @@ class ReplayEnvironment:
     def state(self) -> Observation:
         b = self.__bank
         mask = self.__observed
-        return Observation(b.plate, _owned_readonly(b.sensors_xy_m), b.actions, _owned_readonly(b.time_s),
+        return Observation(b.plate, b.metadata.observable, _owned_readonly(b.sensors_xy_m), b.actions, _owned_readonly(b.time_s),
                            _owned_readonly(np.where(mask[:, None], b.waveforms, 0)),
                            _owned_readonly(np.where(mask[:, None], b.baseline, 0)), _owned_readonly(mask))
 

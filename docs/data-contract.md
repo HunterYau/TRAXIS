@@ -23,7 +23,7 @@ an external source was physically validated.
 
 `ReplayEnvironment.state()` and `.reveal(index)` return only geometry, action
 identities, the time grid, acquired waveforms/baselines, and a Boolean observed
-mask. Missing records are zero-filled. Labels, defect parameters, specimen
+mask. Missing records are zero-filled; observable units remain public. Labels, defect parameters, specimen
 identifiers and solver settings are not present. Copies prevent modification
 of a returned state from changing the bank/environment. This is a software
 interface, not protection against Python code inspecting private attributes.

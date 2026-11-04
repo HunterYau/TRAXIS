@@ -1,0 +1,4 @@
+# CPU-only wheels for bounded local model checks. Core packages use requirements.txt.
+# Install this file separately so the core packages keep their normal index.
+--index-url https://download.pytorch.org/whl/cpu
+torch>=2.5,<3

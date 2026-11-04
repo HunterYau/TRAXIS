@@ -17,13 +17,13 @@ validation rather than inventing those outcomes.
 | Randomized specimens and exact depth labels | Analytic circular geometry, area-averaged depth labels, 8/12 sensor layouts and stable parent-specimen splits implemented/tested; dataset generator pending |
 | Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, per-array integrity, bounded loading, explicit scalar CSV external-solver/DAQ import and source hashes implemented/tested; full physical/FEA dataset pending |
 | Specimen-level splits and hidden observations | Parent/scan split validator and masked replay implemented/tested; training/evaluation entrypoint enforcement pending |
-| A: waveform CNN, attention, spatial decoder | Pending; partial masks/context, backward and serialization checks needed |
-| B: DAS plus residual U-Net | Pending; baseline-subtracted imaging and raw observation context needed |
+| A: waveform CNN, attention, spatial decoder | Implemented with geometry/sampling/amplitude context, partial masks and empty-state handling; forward/backward and serialization checked. Research training pending |
+| B: DAS plus residual U-Net | Implemented with residual encoder, spatial skip connections and waveform-context fusion; forward/backward and serialization checked. Research training pending |
 | C: DAS-only | Residual-envelope bistatic DAS implemented; analytic point-scattering fixture localizes correctly. Calibrated depth conversion remains needed before reporting depth MAE |
 | Ensemble uncertainty and calibration | Pending; independent members and error/coverage checks needed |
 | Random, diagonal/edge fixed, RL adaptive | Random and fixed baselines tested for order/reproducibility/no repeats; RL pending |
 | Equal-budget replay and fair architecture comparisons | Pending; identical cases/splits/subsets, repeated random seeds, dense reference |
-| 128/256 outputs, extra decoder stage | Pending; isolated ablation matrix and common 512 reference |
+| 128/256 outputs, extra decoder stage | Eight architecture/size/extra-block combinations pass single-step CPU debug checks against area-averaged 512 reference labels; trained matched ablations pending |
 | Quantitative and regional metrics | Physical-unit and regional errors, overlap, centroid/missed detection, diameter/area/volume and ensemble diagnostics implemented/tested; final threshold/calibration pending |
 | Curves, 2D and 2.5D plots, parameter counts/cost | Pending |
 | Simulation-only versus physical adaptation | Pending; import and adaptation workflow needed; two adaptation / three final damaged plates |
@@ -97,4 +97,25 @@ is a concrete reason to prefer high-order/reference software for full-plate
 datasets. The periodic benchmark is not the finite plate: it verifies mode
 dispersion without edges, a recess or PZT coupling. The finite smoke waveform
 retains all free-edge reflections and remains too coarse for training data.
+
+## Waveform and neural implementation checks
+
+The cache, scalar trace importer, public observation interface, nonlearning
+policies, DAS and physical-unit metrics have regression coverage. External
+CSV import rejects sampling/unit-header mismatches and records source hashes.
+See data-contract.md. The point-scattering fixture is labeled plumbing-only.
+
+Current suite: 58 tests with optional CPU PyTorch installed. Both neural
+architectures pass hidden-NaN masking, permutation invariance, empty-state,
+finite-gradient, unit/scaler, 128/256/extra-block and checkpoint checks.
+`verify-models` separately ran exactly eight single-step debug updates at the
+default model widths; every update had finite gradients and decreased its
+fixture loss. These results do not compare generalization or establish an
+accurate thickness inversion. See reconstruction-models.md and the compact
+debug evidence for configuration counts, timings and resource samples.
+
+Still pending: randomized scenario generation, research-quality waveform
+banks and physics approval, subset-training/checkpoint/ensemble workflows,
+quantitative DAS calibration, adaptive RL, matched evaluation and plots,
+physical import/adaptation enforcement, and a final acceptance audit.
 
