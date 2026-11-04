@@ -106,6 +106,12 @@ analytic frequency error is 0.0677%, but one strict thickness-refinement
 decrease criterion failed. These promising bounded infinite-plate results
 do not establish finite-plate waveform, recess-scattering or PZT accuracy.
 
+The [Elmer transient interface checks](elmer-transient.md) also pass for
+uniform volume/nodal force equivalence and a manufactured discrete elastic
+mode. Both P1/P2 systems show second-order time convergence. This verifies
+the chosen load/probe/integration interface, with spatial convergence and
+transducer coupling still required before accepting reference waveforms.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

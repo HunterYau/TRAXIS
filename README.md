@@ -124,6 +124,10 @@ P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.
 Small analytic errors support further reference work; one strict decrease
 criterion failed and remains recorded.
 
+[Independent transient checks](docs/elmer-transient.md) verify volume/nodal
+force units, named probes and time refinement on fixed P1/P2 systems. Passing
+these checks does not establish finite-plate spatial or PZT accuracy.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.

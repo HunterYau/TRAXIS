@@ -1,0 +1,763 @@
+{
+  "kind": "independent_elmer_transient_checks",
+  "completed": true,
+  "passed": true,
+  "plan_fingerprint": "372f76f62472236430cb1665f8de086f6f3e785d575b67b26b06fd29ac2fb5f9",
+  "orders": [
+    {
+      "element_order": 1,
+      "nodes": 18,
+      "first_elastic_frequency_hz": 48265.304230884365,
+      "mode_eigen_residual": 2.6875992021170126e-13,
+      "negative_uniform_nodal_coefficients": 0,
+      "equivalent_load_relative_l2_errors": [
+        3.876292937198718e-13,
+        3.9058338242861966e-13,
+        6.227748981868545e-13
+      ],
+      "passed": true,
+      "cases": [
+        {
+          "kind": "rigid-volume",
+          "passed": true,
+          "relative_l2_errors": [
+            0.0032600767165511303,
+            0.0008146572641327632,
+            0.0002036417135999673
+          ],
+          "observed_time_orders": [
+            2.000640781173103,
+            2.00016011753318
+          ],
+          "drive_omega_rad_s": 628318.5307179586,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.6321410000091419,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 3.125e-07,
+              "steps": 96,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "5497a091ce9962c6ed50e57e4031bf1ed2dacd44927318bdc5c089cff5adab86",
+                "probe.dat.names": "c30a62bd3998672a5bb949e79d8beac68767b79a52177d4b060f911a7f44155d",
+                "solver.log": "69447c0075a837915c107350ae82df9f9d2bdb51a3203cae3054adc3ff7f0cf4",
+                "transient.sif": "0f8990355b43c7fc8185d3fcded45c2a94b54f9a28555f2b27b6ce888bfc120c"
+              },
+              "relative_l2_error": 0.0032600767165511303,
+              "maximum_rigid_spread_relative_to_reference_rms": 2.8858475407548774e-12
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.3127437000512145,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 1.5625e-07,
+              "steps": 192,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "d4fb3ea060ffee136237e5df3801411937c4a6b7ae3c438b8554b9a25d18d8e1",
+                "probe.dat.names": "c5b4ab701eb5b3f268844e586b4e79eaf641e5a2d0bad03e57150e1caf984caa",
+                "solver.log": "8ac0a65245fd168b6b462728755b915d688b637764272647a81aae62718138ae",
+                "transient.sif": "88a89c80ed2fc66571a5895709012d5f1aa7efaf723f2dee3be185e6e7165893"
+              },
+              "relative_l2_error": 0.0008146572641327632,
+              "maximum_rigid_spread_relative_to_reference_rms": 1.0581547076203447e-11
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 2.368721100036055,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 7.8125e-08,
+              "steps": 384,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "1b5940ff2916cfc1a74ce61cc7ed740effb226040aeabf49a0c0559e6a8e3130",
+                "probe.dat.names": "790bde5202a1bc9a41f3fa8c1c765eb90d99d0b7abc489ec93143dbdc207d2bb",
+                "solver.log": "44cf7f81df7a0a2ca342556ba62e589d80a77921c544eae4fea0304c937a224d",
+                "transient.sif": "132a816ece4d4c3315c1c33da7cf4236399946a31988bf84d1616f125955d7c8"
+              },
+              "relative_l2_error": 0.0002036417135999673,
+              "maximum_rigid_spread_relative_to_reference_rms": 2.308678032603902e-11
+            }
+          ]
+        },
+        {
+          "kind": "rigid-nodal",
+          "passed": true,
+          "relative_l2_errors": [
+            0.0032600767167768985,
+            0.0008146572642885426,
+            0.00020364171387593152
+          ],
+          "observed_time_orders": [
+            2.0006407809971396,
+            2.0001601158539906
+          ],
+          "drive_omega_rad_s": 628318.5307179586,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.8479807000258006,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 3.125e-07,
+              "steps": 96,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "6d61857e6531af7635afbcd1601927bfc6da1038b40df59b986128a97def7b96",
+                "probe.dat.names": "2c510bf08685ecf57f064eb89a2602c7e71c5f5a0a30edb8f4aa4e34929285a0",
+                "solver.log": "8aabddc9d50751c8443b5dddcd8538a795ef51fbfc8a5f3aa0dde8259a0f6f57",
+                "transient.sif": "30dcb57a278e727bb1e91a61af9bde45c07f5af03592ca93580752df53c8d500"
+              },
+              "relative_l2_error": 0.0032600767167768985,
+              "maximum_rigid_spread_relative_to_reference_rms": 1.9240044539388148e-12
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.5292633000062779,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 1.5625e-07,
+              "steps": 192,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "e6d9256cb5366b6c2fd7d2237f9bdf3ff8ad4a5e5c2e337e605ee969f4fabdce",
+                "probe.dat.names": "4db84f4486df8c8bc4f43b51ecbb81e3941cfc3bd17f943dbaeafbe017b32486",
+                "solver.log": "f0aff71a6f8cec0108a105e37cb509832b9d8d34d76bd63f4c3ba19c0c8b42a2",
+                "transient.sif": "70d226843851e03316f6d4c427dbe61c67b6905ecd3506a0cd0f1d60c128f36c"
+              },
+              "relative_l2_error": 0.0008146572642885426,
+              "maximum_rigid_spread_relative_to_reference_rms": 1.3467394616958325e-11
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 2.5599555000080727,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 7.8125e-08,
+              "steps": 384,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "7476412f9509d905ece71d0ac7f6735aeb3f46f59b2e539f2f54c4ca5b2ead29",
+                "probe.dat.names": "7b7aff7d73d8de32e490629d1068ded4b2026181e24ddb08028904b0518a35bc",
+                "solver.log": "0c548685b57f4115de3a5017055309e3244cb1b365dea8eb772d60c2e93d7722",
+                "transient.sif": "67179a910ba5a2cffef1ca7f63a1303f7d3b7f027da8ce5f08dfa40f1342bfde"
+              },
+              "relative_l2_error": 0.00020364171387593152,
+              "maximum_rigid_spread_relative_to_reference_rms": 2.7896314040426023e-11
+            }
+          ]
+        },
+        {
+          "kind": "elastic-mode",
+          "passed": true,
+          "relative_l2_errors": [
+            0.06027197055918077,
+            0.015100351722941534,
+            0.0037769254529640894
+          ],
+          "observed_time_orders": [
+            1.9969050799655974,
+            1.9992979397348756
+          ],
+          "drive_omega_rad_s": 212281.89527303175,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.8370228999992833,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 9.249471821269643e-07,
+              "steps": 96,
+              "probe_node": 13,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 13",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "296df4d4b72ff8f55bf91a16de3b7e166d8748e460592c1f1fe9c474b363c94e",
+                "probe.dat.names": "ad7d22d01fa2ce2ae119ff4508cb1f06c0e2bdf1bba690b2a2d9787116d2356b",
+                "solver.log": "c3b60d7ce4e37de3718aad0c6425fec420a8d4b4afe0a153042867781a5fdbb4",
+                "transient.sif": "907bcff06498a02565927db0c765b1275bec9a297a9a9badb360c0cec920bccc"
+              },
+              "relative_l2_error": 0.06027197055918077,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.4607329000136815,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 4.6247359106348214e-07,
+              "steps": 192,
+              "probe_node": 13,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 13",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "ecbec4367e4587ac79a6fa77e826c67e03ace03c5d04485675b3cfb6024cbcc1",
+                "probe.dat.names": "4210b19fa3a6e024d96ac961dd6d4e6f3b58bf8fccf6490b7a11b0e17638e6e1",
+                "solver.log": "27c360e524d4d125c0cde5847af1683c1c123f2ca97c0ba7196273161cc74986",
+                "transient.sif": "19ec43ffc7f008381b582fc8728b31f7a05e4087aee5ee64476e51bbcb5e59e9"
+              },
+              "relative_l2_error": 0.015100351722941534,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 2.838619399990421,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 2.3123679553174107e-07,
+              "steps": 384,
+              "probe_node": 13,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 13",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+                "mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+                "mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+                "probe.dat": "61d5cf3bbe11cc64b171cf9a999e387d69ff8088b2c465bc1b65fbe4e311d83a",
+                "probe.dat.names": "9075d5c85e4b8ff9008bad072f9823f9a1d649c68c07c93fc3268f99fbf46eb8",
+                "solver.log": "09918a210986fe79e47e6fcd7a90972a4d28e446c0b3fe403f69a74a703e65d3",
+                "transient.sif": "ad78178924c383fbb7579ff07afd74d9119021ea30dba76452c1a13ddb06ceea"
+              },
+              "relative_l2_error": 0.0037769254529640894,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            }
+          ]
+        }
+      ],
+      "operator_artifact_sha256": {
+        "loads.npz": "346c437c3e8d78a82c752a7acd2d5b7b40f542b50cab102594881fc621fe5b55",
+        "operator.log": "efc494028d1176e8034662c69b18bc7f4bf583f8fe9d2c3aeed92c0187f807f9",
+        "operator.sif": "e5d392ccdd4411a657ed8e2e2673d2b27bd6697b7f89bb342c753d2b273ea980",
+        "operator_a.dat": "0aca9f4712af2aac4f028ac100366edc4b4b4e2446b216a5cad4a753d326b0fd",
+        "operator_b.dat": "ac3e514415cf660a445c929a4bc2504818b466a27a8982ec062459b0c1e75626",
+        "operator_perm.dat": "be0807a18ef6aa31114ec803cb8c9ca21b31207f0c5f96825f123b3c459f7584",
+        "operator_sizes.dat": "843eeab494c718c1feabe94cb47777458322d159b5e806f4fdaa952a83d05f3a"
+      }
+    },
+    {
+      "element_order": 2,
+      "nodes": 75,
+      "first_elastic_frequency_hz": 8218.930804315389,
+      "mode_eigen_residual": 2.6850950057513098e-11,
+      "negative_uniform_nodal_coefficients": 18,
+      "equivalent_load_relative_l2_errors": [
+        1.0018520491841844e-12,
+        4.842160383636756e-13,
+        1.0387279791351375e-12
+      ],
+      "passed": true,
+      "cases": [
+        {
+          "kind": "rigid-volume",
+          "passed": true,
+          "relative_l2_errors": [
+            0.0032600767162260114,
+            0.0008146572609719299,
+            0.0002036417159075596
+          ],
+          "observed_time_orders": [
+            2.0006407866268177,
+            2.000160095587504
+          ],
+          "drive_omega_rad_s": 628318.5307179586,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.8373715999769047,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 3.125e-07,
+              "steps": 96,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "7e34596c74bb3359aa874ff51b327aeae1b1cf1d8288d115efe3fcaf021660da",
+                "probe.dat.names": "5c2a5561c53cbca6f2391531c46284d09d6de77065401fcfaef6576fe220814b",
+                "solver.log": "222c5bbc525f19ae775c7c9f8a42277a319c8618bf4c21393a629a56f048fd85",
+                "transient.sif": "0f8990355b43c7fc8185d3fcded45c2a94b54f9a28555f2b27b6ce888bfc120c"
+              },
+              "relative_l2_error": 0.0032600767162260114,
+              "maximum_rigid_spread_relative_to_reference_rms": 4.809851994693692e-12
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.325307300023269,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 1.5625e-07,
+              "steps": 192,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "cc6913362f3a72134e74e5e39a5565041dd8cfdc54e858fe383aea69fb31453d",
+                "probe.dat.names": "5d798d49d393504819f83fdcabffb31f83f728704c6b0ea4ee4ac00d2b09d878",
+                "solver.log": "49a9a818132c207d75e880ed808315882f386f5eb50626a86ca86a05abdba4d5",
+                "transient.sif": "88a89c80ed2fc66571a5895709012d5f1aa7efaf723f2dee3be185e6e7165893"
+              },
+              "relative_l2_error": 0.0008146572609719299,
+              "maximum_rigid_spread_relative_to_reference_rms": 1.3467394616958325e-11
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 2.5657046000123955,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 7.8125e-08,
+              "steps": 384,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "25535a684f06d20775cf5ec4caf3500b082dc8342c8809d7bb96bd5dc9742a77",
+                "probe.dat.names": "b078b9e8dffba52325d394ffdcd30f4d71ca59ae21a899bba475dbf061b7e508",
+                "solver.log": "144b15369ab75eddcbc46ad39dd0898f01d0d327f2fdcea9d71bb9160c10b91a",
+                "transient.sif": "132a816ece4d4c3315c1c33da7cf4236399946a31988bf84d1616f125955d7c8"
+              },
+              "relative_l2_error": 0.0002036417159075596,
+              "maximum_rigid_spread_relative_to_reference_rms": 4.617356065207804e-11
+            }
+          ]
+        },
+        {
+          "kind": "rigid-nodal",
+          "passed": true,
+          "relative_l2_errors": [
+            0.003260076715333848,
+            0.0008146572607075432,
+            0.00020364171530485193
+          ],
+          "observed_time_orders": [
+            2.0006407867002136,
+            2.000160099389164
+          ],
+          "drive_omega_rad_s": 628318.5307179586,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.8371585999848321,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 3.125e-07,
+              "steps": 96,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "380c3a2c798b2ddb0070051e3a8135c002da741f0e02f69e94a56accdbe0ed5a",
+                "probe.dat.names": "ec65e5aa964d17b9462e71611d02d06a286b28a5d9d8bcf2b274709a64efdd08",
+                "solver.log": "b405065e053015669864aed2eab6555dcda96f1b959ba3e5c877a3f80bd7d875",
+                "transient.sif": "3ba123bfaa61e308663d0ee5e561d7a4f151c0fd34f5979d708c1cb914a614c0"
+              },
+              "relative_l2_error": 0.003260076715333848,
+              "maximum_rigid_spread_relative_to_reference_rms": 5.771695081509755e-12
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.4620673999888822,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 1.5625e-07,
+              "steps": 192,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "47e6c10e3941007cd671e7aac3f5f8e1376b649a808c99bc8989748effd0ae4b",
+                "probe.dat.names": "5f744b052324723f527c987b13c43aa8e2899e3d1ebee417116cc9784c99569e",
+                "solver.log": "eb24e4b2b834dcff5c71b43c99794dfc61b3157e228d23a5ae0bacea80ebce5b",
+                "transient.sif": "fab5a7229087226d6b900ae82a677be0dd5e6e47c67e129108cb01b08d5624f4"
+              },
+              "relative_l2_error": 0.0008146572607075432,
+              "maximum_rigid_spread_relative_to_reference_rms": 1.154339016301951e-11
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 3.049406399950385,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 7.8125e-08,
+              "steps": 384,
+              "probe_node": 1,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 1",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "3b14d3809d1a359867818ce39c50f9a5810919e62d1e24ac376b08086170aea2",
+                "probe.dat.names": "467b24a5fa07e562889f229aa8933264fb0650cf736f5c916c61b405e4420819",
+                "solver.log": "c35f5e6319a22bd63040a98933b2c5174131e4ae7305c9156e4b62559a8fd332",
+                "transient.sif": "4bdf6c5faaf7f929428a363365c4a27697e58e78d65bb0a31322cb201c78d2c3"
+              },
+              "relative_l2_error": 0.00020364171530485193,
+              "maximum_rigid_spread_relative_to_reference_rms": 4.9059089912526227e-11
+            }
+          ]
+        },
+        {
+          "kind": "elastic-mode",
+          "passed": true,
+          "relative_l2_errors": [
+            0.06027197059408261,
+            0.015100351761264603,
+            0.0037769254904075466
+          ],
+          "observed_time_orders": [
+            1.9969050771396175,
+            1.9992979290937767
+          ],
+          "drive_omega_rad_s": 36148.745689280106,
+          "cases": [
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 0.840281699958723,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 5.4317110346539476e-06,
+              "steps": 96,
+              "probe_node": 24,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 24",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "9c95790e97996f694ea65428da08ea68d31afc60c4574e5d98d5a3aab48c34a4",
+                "probe.dat.names": "be2f3ee47c8086d193c3ba4a560ea45a96b1642c3097396fea25d9632ca2f41c",
+                "solver.log": "700d5e89d825bfbfd39b7cc9455b0a9f0cf4d51930c7b08ca30d479626ca6c1e",
+                "transient.sif": "f394eaa5d68e6b9b445e8d6a43e75a45ec4c3050f3a0bce36ced3b9ecfc74f50"
+              },
+              "relative_l2_error": 0.06027197059408261,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 1.5208454999956302,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 2.7158555173269738e-06,
+              "steps": 192,
+              "probe_node": 24,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 24",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "b44eaae41d5f19869e10f39bc803213256c65589d4923698d9e8a69267a3878b",
+                "probe.dat.names": "76d22f25d12f5c6b79a19f5664708362149d7c7031683fa93729e0eec0e286f8",
+                "solver.log": "58a081019d987112bbf6cf6b13fe28cfc4b3d80bb7f89657edc248f7d0b0c9f6",
+                "transient.sif": "c9c78e27f5d20ed393172faa777fdc650c9b6841135a107b23bb944aeb3519ed"
+              },
+              "relative_l2_error": 0.015100351761264603,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            },
+            {
+              "process": {
+                "exit_code": 0,
+                "wall_seconds": 2.9713998999795876,
+                "maximum_observed_external_processes": 2,
+                "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+              },
+              "dt_s": 1.3579277586634869e-06,
+              "steps": 384,
+              "probe_node": 24,
+              "probe_component": 3,
+              "probe_column": "value: displacement 3 at node 24",
+              "artifact_sha256": {
+                "mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+                "mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+                "mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+                "probe.dat": "22c2979e6fcea6665a287f8bba8a9a21bd3164c695b95427781d1da5690a016d",
+                "probe.dat.names": "d122b35b557f1fd18a9972db8e5d64bceb00b79c13e3f6721fd6077c02bbb0da",
+                "solver.log": "b86e5a503a6195831ffdd76525793e3f06449857e9f90da3fd65b55c33a9ea6a",
+                "transient.sif": "6f9bb320f08108b9951bf4e771144c512ea6550b49d18eecbc7c6310dae398b2"
+              },
+              "relative_l2_error": 0.0037769254904075466,
+              "maximum_rigid_spread_relative_to_reference_rms": null
+            }
+          ]
+        }
+      ],
+      "operator_artifact_sha256": {
+        "grid.log": "bf6c9a8316cd000fccb7fcdf2ff61b338f1ca0c366d172836fa987cf643b51cb",
+        "loads.npz": "17303b37f4d59f57710425529370f8e3e69bcc0d3662abd5166b8fcc05e70e47",
+        "operator.log": "76e7dbbaf75e6ef5e1a969299157d7437f654f09456c22a4823a28d0ae94bb76",
+        "operator.sif": "e5d392ccdd4411a657ed8e2e2673d2b27bd6697b7f89bb342c753d2b273ea980",
+        "operator_a.dat": "3df7e438e07bdedeea6cf5f8d0b54e2afbb4fab56c89baced1c4afb3079281e4",
+        "operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+        "operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+        "operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21"
+      }
+    }
+  ],
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Force units, scalar probes and temporal convergence of fixed discrete free-body systems; no continuum spatial, finite-plate scattering, PZT or physical validation.",
+  "wall_seconds": 31.237860799999908,
+  "resources": {
+    "limits": {
+      "max_seconds": 60,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "samples": 185,
+    "peak_sampled_combined_rss_mib": 124.26953125,
+    "peak_system_memory_percent": 61.8,
+    "minimum_available_mib": 6197.92578125,
+    "peak_observed_gpu_used_mib": 921.0,
+    "gpu_total_mib": 8192.0,
+    "peak_observed_gpu_temperature_c": 47.0,
+    "cpu_temperatures_c": null,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "date": "2026-11-04",
+  "original_report_fingerprint": "9f8c61930c6d29bae5f09f3826b352527f9596554b30c11f9ac8299f089cb96e",
+  "plan": {
+    "kind": "predeclared_elmer_transient_checks",
+    "plate": {
+      "width_m": 0.04,
+      "height_m": 0.03,
+      "thickness_m": 0.003
+    },
+    "cells": [
+      2,
+      2,
+      1
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "orders": [
+      1,
+      2
+    ],
+    "steps_per_drive_cycle": [
+      32,
+      64,
+      128
+    ],
+    "drive_cycles": 3,
+    "uniform_frequency_hz": 100000.0,
+    "uniform_force_n_m3": 1000000.0,
+    "modal_acceleration_m_s2": 1000.0,
+    "modal_drive_to_natural_frequency_ratio": 0.7,
+    "finest_relative_l2_tolerance": {
+      "rigid-volume": 0.001,
+      "rigid-nodal": 0.001,
+      "elastic-mode": 0.005
+    },
+    "minimum_observed_time_order": 1.7,
+    "maximum_observed_time_order": 2.3,
+    "equivalent_load_relative_l2_tolerance": 1e-08,
+    "rigid_spread_relative_tolerance": 1e-09,
+    "solver_executable_sha256": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+    "grid_executable_sha256": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "680fcbf46cacc5844feb61f768f063064ebf665ce27a95d5803093b2ebb7cf1e",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_reference.py": "c4cb1b2a3448eacfbbdde3f3040449fb1ac68a7940cb1246ad6554c64e982ba1",
+      "elmer_transient.py": "6ec0685a693845d8116b19ae4a9ce93c0626851488628c652bedb1e62f683fb2",
+      "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "patches.py": "70662e573c897c156a2f7a39a73aed9abeb95bfd245dfd426507c3da80b6dad3",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+      "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+      "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+      "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "f6f501e809b309cb8e549193147a79f44375e3dea569d0bb4f1a692c3cb16be8",
+      "waveform_commands.py": "f418bfae81a22b0c7556952cac8606cb6ba57ccac3c863190d0dac1a20545077",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "scope": "Force units, scalar probes and temporal convergence of fixed discrete free-body systems; no continuum spatial, finite-plate scattering, PZT or physical validation.",
+    "ready_for_training_data": false,
+    "fingerprint": "372f76f62472236430cb1665f8de086f6f3e785d575b67b26b06fd29ac2fb5f9"
+  },
+  "regression": {
+    "exit_code": 0,
+    "wall_seconds": 90.94967449997785,
+    "maximum_observed_external_processes": 7,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "successful": true,
+    "tests_run": 161,
+    "resources": {
+      "limits": {
+        "max_seconds": 150,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "samples": 425,
+      "peak_sampled_combined_rss_mib": 781.296875,
+      "peak_system_memory_percent": 64.8,
+      "minimum_available_mib": 5708.1796875,
+      "peak_observed_gpu_used_mib": 921.0,
+      "gpu_total_mib": 8192.0,
+      "peak_observed_gpu_temperature_c": 47.0,
+      "cpu_temperatures_c": null,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "full_artifact_sha256": {
+    "outputs/elmer-transient-reference/transient-plan.json": "11418e86de02037dcffb5c0b95aa9be1f807aef3b9844291816c9304df7a16b5",
+    "outputs/elmer-transient-reference/transient-report.json": "512e47e95656b4c16c3876371c0f765f2769ae18ecb87d77783b97cdd383302e",
+    "outputs/elmer-transient-reference/regression-result.json": "f372a834c0f4f85d3280a065fa4753b9bfec3fd51761052b0eab4fbc8bf606ae",
+    "outputs/elmer-transient-reference/regression.log": "57013a9184f91e70159b342f2e13e42651da6303d3519f157300628853761239"
+  },
+  "interpretation": "Tested force/probe/time interface for fixed coarse discrete P1/P2 systems. No finite-plate continuum, recess, transducer or physical validation; no training-data promotion.",
+  "evidence_fingerprint": "42360daf17a23aa96e908a908004500603591c3fd178729518ba88d16593b99f"
+}

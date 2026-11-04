@@ -377,3 +377,32 @@ at 32/64 in-plane cells and four thickness cells. The corresponding thickness
 sequences decreased, supporting an in-plane dispersion interaction. This
 follow-up preserves the original failed criterion and data-readiness flag.
 
+## Independent transient loads and integration
+
+The verify-elmer-transient command now freezes and checks two tiny free-body
+meshes, uniform volume/nodal load equivalence and a discrete elastic mode at
+three time refinements each. SaveScalars columns are read by checked names
+and requested times. The explicitly chosen Bossak alpha=0 method gives
+second-order average-acceleration Newmark. Analytic zero-start responses are
+checked against an independent adaptive ODE solve, including resonance and
+small-time limits. See elmer-transient.md.
+
+All 18 transient runs passed. Uniform-load finest errors were 0.02036%;
+elastic-mode errors were 0.3777%, with observed time orders 1.9969–2.0007.
+Equivalent volume/nodal traces differed by at most 1.04e-12 relative L2.
+The P2 load has 18 negative nodal coefficients; these were retained and
+verified against the positive uniform physical volume load.
+
+The pilot took 31.24 seconds with sampled combined RSS 124.3 MiB, system RAM
+61.8%, GPU memory 921/8,192 MiB and GPU temperature 47 C. CPU temperature was
+unavailable; no GPU computation or training ran. Evidence is in
+docs/evidence/elmer-transient-debug.json. These are temporal/interface checks
+on fixed coarse systems. Finite-area apertures, spatially converged finite
+plates/recesses and PZT/physical validation remain open.
+
+All 161 regression tests pass with the optional real reference checks enabled.
+The full suite took 90.95 seconds with sampled monitor/test-tree RSS 781.3 MiB,
+system RAM 64.8%, GPU memory 921/8,192 MiB and GPU temperature 47 C. Probe
+tests reject wrong times, missing/duplicate named columns, and analytic
+responses agree with an independent adaptive ODE solver at/near resonance.
+
