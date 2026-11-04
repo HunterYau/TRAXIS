@@ -315,3 +315,33 @@ record is docs/evidence/waveform-refinement-debug.json; the readable trace
 plots were inspected. No training was performed. Spatially resolved research
 data, independent elastic reference and PZT/physical validation remain open.
 
+## Independent Elmer operator reference
+
+A project-local portable Elmer release now provides an independent assembly
+check without a commercial license. The verify-elmer command exports tiny
+free rectangular and affine-skewed 3D P1 meshes, restores checked matrix node
+ordering and compares stiffness, exact consistent mass and row-summed lumped
+mass. Six rigid modes and a positive seventh are checked. Source/module and
+input/output hashes, the actual solver banner and external-process telemetry
+are retained. See elmer-reference.md.
+
+Both real reference cases passed: maximum stiffness error 1.38e-14, consistent
+mass error 3.70e-15 and lumped-mass error 3.04e-15 in relative norm. The two-case
+command took 0.53 seconds with sampled combined RSS 105.0 MiB, system RAM
+61.3%, GPU usage 921/8,192 MiB and GPU temperature 47 C. CPU temperature was
+unavailable; no GPU calculation or training was performed. The distribution
+is named release 26.1, while its executable reports 9.0 compiled 2026-01-20;
+the distinction is recorded. No global installation/settings changed.
+
+All 150 regression tests pass with the optional real solver test enabled.
+The full run took 59.49 seconds with sampled monitor/test-tree RSS 779.1 MiB,
+system RAM 64.8%, GPU memory 921/8,192 MiB and GPU temperature 47 C. Parser
+tests cover nonidentity node ordering and malformed exports; an actual
+sleeping external process verifies termination/reaping on a time guard.
+
+The compact evidence is docs/evidence/elmer-reference-debug.json. Agreement
+on identical coarse elements verifies assembly, not continuum wave accuracy.
+The finite-plate spatial screen remains failed. Converged transient reference
+waveforms, actual PZT/adhesive/electrical inputs and intact physical validation
+are still required before research data generation or model comparisons.
+

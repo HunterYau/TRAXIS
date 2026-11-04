@@ -59,6 +59,11 @@ def main() -> None:
     forward.add_argument("--output", type=Path, default=Path("outputs/forward-verification"))
     forward.add_argument("--max-seconds", type=float, default=60)
     forward.add_argument("--max-rss-mib", type=float, default=512)
+    elmer = sub.add_parser("verify-elmer", help="independent tiny 3D elastic operator checks; no waveform/training validation")
+    elmer.add_argument("--elmer-home", type=Path, required=True, help="existing portable/installed Elmer directory with bin/ElmerSolver")
+    elmer.add_argument("--output", type=Path, required=True)
+    elmer.add_argument("--max-seconds", type=float, default=60)
+    elmer.add_argument("--max-rss-mib", type=float, default=512)
     report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
     report.add_argument("--evaluations", type=Path, nargs="+", required=True)
     report.add_argument("--labels", nargs="+")
@@ -74,7 +79,17 @@ def main() -> None:
     add_study_commands(sub)
     add_waveform_commands(sub)
     args = parser.parse_args()
-    if args.command in ("check-waveforms", "plot-waveforms"):
+    if args.command == "verify-elmer":
+        from traxis.elmer_reference import verify_elmer
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = verify_elmer(args.elmer_home, args.output, guard)
+            print(json.dumps({k: result[k] for k in ('passed', 'ready_for_training_data', 'wall_seconds', 'scope')}, indent=2))
+        except Exception as exc:
+            parser.exit(1, f"Independent reference stopped: {type(exc).__name__}: {exc}\n")
+        if not result['passed']:
+            parser.exit(2, "Independent operator check failed; inspect elmer-report.json.\n")
+    elif args.command in ("check-waveforms", "plot-waveforms"):
         from traxis.waveform_commands import run_waveform_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:

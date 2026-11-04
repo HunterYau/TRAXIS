@@ -114,6 +114,11 @@ and time-step errors independently and exports checked trace plots. The first
 completed sweep passed its temporal screen but failed its spatial screen;
 local mechanical banks remain unsuitable for research training.
 
+An optional [Elmer reference check](docs/elmer-reference.md) compares independent
+3D stiffness/consistent-mass assembly on rectangular and skewed meshes. A
+portable Windows solver trial runs entirely inside the project; matching
+coarse operators does not establish converged finite-plate waveforms.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.

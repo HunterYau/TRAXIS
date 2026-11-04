@@ -1,6 +1,7 @@
 # Forward-solver assessment
 
-Assessment date: 2026-11-03. This is an engineering recommendation based on
+Assessment started 2026-11-03; Elmer reference trial added 2026-11-04.
+This is an engineering recommendation based on
 documented capabilities, not a measured head-to-head solver benchmark.
 No commercial solver has been installed, licensed, or run for this project.
 
@@ -26,6 +27,7 @@ experiment framework rather than a full production multiphysics package.
 | Ansys coupled-field transient piezoelectric analysis | Credible alternative if already available through the school | Solver choice, mesh and performance need a project-specific pilot; do not assume every Ansys product includes the same features |
 | OnScale | Documented time-domain electromechanical transducer modeling | Sources describe capability, not confirmed current account availability or price |
 | Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; optional CAD-conforming mesh; no extra wave-solver license | Low-order elements need fine meshes; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
+| Elmer FEM | Free independent elastic reference; portable Windows release and tiny 3D stiffness/consistent-mass checks actually tested | Full-plate transient/high-order cost, spatial convergence and bonded-PZT voltage workflow remain unverified |
 | Scalar acoustic / straight-ray synthetic data | Useful for plumbing and deliberate mismatch experiments only | Cannot establish quantitative thickness reconstruction for dispersive elastic plate waves |
 
 The Pogo paper reports large speedups in its own benchmark; these are not
@@ -88,6 +90,15 @@ HXT/Netgen improved a sliver-driven stability bottleneck but did not establish
 spatial accuracy. See [waveform-validation.md](waveform-validation.md). These
 local banks must not be used as research training data; no commercial/physical
 reference comparison has yet been completed.
+
+The optional [Elmer reference workflow](elmer-reference.md) now verifies the
+local stiffness and lumped-mass assembly against an independent solver on
+rectangular and skewed 3D tetrahedral meshes, with relative matrix errors
+below 1.4e-14. The portable release runs inside this project without global
+installation. This removes commercial access as a prerequisite for beginning
+independent mechanical checks. It does not validate coarse spatial resolution
+or establish a production PZT solver choice; COMSOL remains the preferred
+coupled-wave reference if accessible, pending a measured project benchmark.
 
 ## Primary sources
 
