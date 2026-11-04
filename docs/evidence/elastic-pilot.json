@@ -1,0 +1,191 @@
+﻿{
+    "kind":  "numerical_verification_not_physical_validation",
+    "passed":  true,
+    "ready_for_training_data":  false,
+    "traxis_version":  "0.1.0",
+    "python":  "3.12.10",
+    "numpy":  "2.5.4",
+    "scipy":  "1.18.1",
+    "gates":  {
+                  "rigid_motion_relative_residual":  {
+                                                         "value":  2.3040534550144041E-18,
+                                                         "threshold":  1E-12,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "affine_energy_relative_error":  {
+                                                       "value":  1.865174681370263E-14,
+                                                       "threshold":  1E-11,
+                                                       "comparison":  "less",
+                                                       "passed":  true
+                                                   },
+                  "intact_mass_relative_error":  {
+                                                     "value":  8.8817841970012523E-16,
+                                                     "threshold":  1E-12,
+                                                     "comparison":  "less",
+                                                     "passed":  true
+                                                 },
+                  "intact_post_drive_energy_drift":  {
+                                                         "value":  1.1725979645110765E-14,
+                                                         "threshold":  1E-08,
+                                                         "comparison":  "less",
+                                                         "passed":  true
+                                                     },
+                  "damaged_post_drive_energy_drift":  {
+                                                          "value":  1.3788890335455946E-14,
+                                                          "threshold":  1E-08,
+                                                          "comparison":  "less",
+                                                          "passed":  true
+                                                      },
+                  "mechanical_reciprocity_relative_error":  {
+                                                                "value":  3.2468129959851595E-14,
+                                                                "threshold":  1E-09,
+                                                                "comparison":  "less",
+                                                                "passed":  true
+                                                            },
+                  "defect_response_relative_change":  {
+                                                          "value":  0.3059107344768469,
+                                                          "threshold":  0.01,
+                                                          "comparison":  "greater",
+                                                          "passed":  true
+                                                      },
+                  "spatial_error_reduction_0":  {
+                                                    "value":  3.76161751713202,
+                                                    "threshold":  3.5,
+                                                    "comparison":  "greater",
+                                                    "passed":  true
+                                                },
+                  "spatial_error_reduction_1":  {
+                                                    "value":  3.93884472932011,
+                                                    "threshold":  3.5,
+                                                    "comparison":  "greater",
+                                                    "passed":  true
+                                                },
+                  "temporal_error_reduction_0":  {
+                                                     "value":  4.014069339986217,
+                                                     "threshold":  3.8,
+                                                     "comparison":  "greater",
+                                                     "passed":  true
+                                                 },
+                  "temporal_error_reduction_1":  {
+                                                     "value":  4.0035161565941255,
+                                                     "threshold":  3.8,
+                                                     "comparison":  "greater",
+                                                     "passed":  true
+                                                 }
+              },
+    "limitations":  [
+                        "Small smoke plate, not full research geometry",
+                        "No bonded PZT/electrical/adhesive model",
+                        "No experimental traces or licensed solver comparison",
+                        "No learned models or training in this verification"
+                    ],
+    "settings":  {
+                     "plate":  {
+                                   "width_m":  0.04,
+                                   "height_m":  0.04,
+                                   "thickness_m":  0.003
+                               },
+                     "material":  {
+                                      "young_pa":  68900000000.0,
+                                      "poisson":  0.33,
+                                      "density_kg_m3":  2700.0
+                                  },
+                     "cells":  [
+                                   8,
+                                   8,
+                                   4
+                               ],
+                     "recess":  {
+                                    "x_m":  0.02,
+                                    "y_m":  0.02,
+                                    "radius_m":  0.008,
+                                    "depth_m":  0.0015
+                                },
+                     "observable":  "area-averaged top-surface normal displacement [m]",
+                     "source":  "Hann tone burst, 150 kHz, 2 cycles, 1 N peak scale",
+                     "boundaries":  "all natural traction-free",
+                     "damping":  "none"
+                 },
+    "meshes":  [
+                   {
+                       "nodes":  405,
+                       "tetrahedra":  1536,
+                       "ndof":  1215,
+                       "stable_dt_s":  9.1541523038075352E-08,
+                       "removed_volume_m3":  0.0,
+                       "requested_removed_volume_m3":  0,
+                       "relative_removed_volume_error":  0.0
+                   },
+                   {
+                       "nodes":  395,
+                       "tetrahedra":  1392,
+                       "ndof":  1185,
+                       "stable_dt_s":  9.1541523038075352E-08,
+                       "removed_volume_m3":  4.5000000000000003E-07,
+                       "requested_removed_volume_m3":  3.015928947446201E-07,
+                       "relative_removed_volume_error":  0.4920775914865192
+                   }
+               ],
+    "time_integration":  {
+                             "dt_s":  7.3233218430460292E-08,
+                             "steps":  547,
+                             "duration_s":  4.0058570481461782E-05
+                         },
+    "spatial_refinement":  {
+                               "reference_eigenvalue_s_2":  2518576826796.507,
+                               "levels":  [
+                                              {
+                                                  "cells_per_axis":  2,
+                                                  "rayleigh_quotient_s_2":  2041481481481.4817,
+                                                  "relative_error":  0.1894305308612978
+                                              },
+                                              {
+                                                  "cells_per_axis":  4,
+                                                  "rayleigh_quotient_s_2":  2391744329036.666,
+                                                  "relative_error":  0.050358796448216725
+                                              },
+                                              {
+                                                  "cells_per_axis":  8,
+                                                  "rayleigh_quotient_s_2":  2486376395838.739,
+                                                  "relative_error":  0.012785169233342497
+                                              }
+                                          ],
+                               "scope":  "free nu=0 cube cosine-mode energy; not Lamb-wave convergence"
+                           },
+    "temporal_refinement":  {
+                                "error_norms_m":  [
+                                                      4.357966722717835E-10,
+                                                      1.0856730050240732E-10,
+                                                      2.7117987353089086E-11
+                                                  ],
+                                "refinement_factors":  [
+                                                           1,
+                                                           2,
+                                                           4
+                                                       ]
+                            },
+    "wall_seconds":  0.20300000003771856,
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  512,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  58.4609375,
+                      "sampled_max_system_memory_percent":  85.6,
+                      "initial_gpu":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1724.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  }
+}
