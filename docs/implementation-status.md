@@ -228,3 +228,18 @@ The revised study configuration plans 603 train, 156 validation, 92 uncertainty
 calibration and 149 final-test parents for seed 2026. These are still 1,000
 unsolved recipes, not a generated or approved training dataset.
 
+## Common-reference training objective
+
+Training, validation and scalar DAS fitting now retain the original reference
+labels and defect weights across output resolutions. Native prediction cells
+are repeated/averaged onto that grid for the loss. Analytic gradient and
+single-cell-defect checks prevent a lower-resolution target from hiding small
+defects. DAS fitting also normalizes each image's weighted objective before
+combining images. Historical native-grid loss values are not comparable.
+
+All 124 tests pass. Eight new single-step checks, one per architecture/size/
+extra-block configuration at the default widths, pass on the shared 512 grid.
+Sampled process RSS reached 427.1 MiB, system RAM 79.6%, GPU usage
+1,668/8,192 MiB at 47 C; CPU temperature was unavailable. Evidence is in
+docs/evidence/common-grid-debug.json. No full training cycle was run.
+

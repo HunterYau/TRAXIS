@@ -45,6 +45,13 @@ The checkpoint preserves a completed update even if the following validation
 is interrupted; pending validation runs before another update after recovery.
 It will not silently overwrite a different session's checkpoint.
 
+Training/validation losses now use the shared bank reference grid rather than
+labels reduced to each decoder size. Prediction cells are repeated or averaged
+on aligned integer grids, retaining the original defect weights. DAS scalar
+fitting uses the same reference labels and normalizes each image's weighted
+objective before combining images. This changes the objective; resume older
+checkpoints at their recorded source revision and do not mix historical losses.
+
 Validation uses fixed subsets of validation parents only. Best weights and
 early-stopping patience depend on those losses, never final test plates.
 Exports record fit/validation parent IDs, selected step, scale, imaging

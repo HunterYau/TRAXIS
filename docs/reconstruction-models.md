@@ -49,6 +49,14 @@ the unit check refuses to treat them as interchangeable.
 
 `reconstruction_loss` weights true damaged pixels by a provisional factor of
 10. This addresses area imbalance but does not establish the best objective.
+Training and validation compare each native prediction with the bank's shared
+reference-cell label (normally 512 x 512). Integer upsampling repeats prediction
+cells and coarsening averages them; reference labels and their damaged masks
+are not reduced to the model output grid. This keeps the target and region
+weights common across the 128/256 decoder ablation. Loss remains differentiable
+with respect to native output cells. Parameter gradients and a one-cell-defect
+example are checked analytically. Older native-label loss values are historical
+debug results and must not be combined with this objective for comparisons.
 The final training/evaluation harness must freeze this choice on training and
 validation splits, train on varied observation subsets, and report regional
 errors alongside whole-plate error.
@@ -80,5 +88,6 @@ was unavailable. No GPU arrays were allocated.
 Checkpoint helpers save state dictionaries, configuration, signal scale and
 plain provenance. Loading uses CPU placement and `weights_only=True`, with
 strict parameter matching. Tests verify identical roundtrip predictions.
-Optimizer/RNG resume state, trained ensembles, experiment selection and
-physical adaptation still belong to the pending training harness.
+Optimizer/RNG resume, ensemble inference, frozen experiment selection and
+physical adaptation roles are implemented in the experiment workflow. Research
+training and measured physical adaptation have not been run.

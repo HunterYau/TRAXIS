@@ -11,7 +11,6 @@ from traxis.bank import ReplayEnvironment
 from traxis.config import positive
 from traxis.dataset import BankDataset
 from traxis.imaging import DASSettings
-from traxis.metrics import resample_cell_map
 from traxis.models import ModelConfig, SignalScale, build_model, load_model, reconstruction_loss, save_model
 from traxis.reconstruction import model_inputs
 from traxis.resources import ResourceGuard
@@ -153,7 +152,7 @@ class TrainingSession:
         observation = subset_state(bank, self.rng, count)
         self.model.train()
         args = model_inputs(observation, self.model, self.scale, self.das_settings, self.config.device, self.guard)
-        truth = torch.from_numpy(resample_cell_map(bank.depth_mm, (self.model_config.output_size,) * 2).astype(np.float32))[None, None].to(self.config.device)
+        truth = torch.from_numpy(bank.depth_mm.copy())[None, None].to(self.config.device)
         self.optimizer.zero_grad(set_to_none=True)
         loss = reconstruction_loss(self.model(*args), truth, self.config.damaged_weight)
         if not torch.isfinite(loss):
@@ -165,6 +164,7 @@ class TrainingSession:
         self.step_count += 1
         row = {"step": self.step_count, "specimen_id": entry.specimen_id, "records": count,
                "action_indices": np.flatnonzero(observation.observed).tolist(),
+               "reference_shape": list(bank.depth_mm.shape),
                "loss_mm2": float(loss.detach()), "gradient_norm_before_clip": float(norm)}
         self.history.append(row)
         self.pending_validation = self.step_count % self.config.validation_interval == 0
@@ -183,7 +183,7 @@ class TrainingSession:
                 bank = self.dataset.read(entry)
                 seed = int(canonical_hash([self.config.subset_seed, entry.specimen_id, "validation"])[:16], 16)
                 observation = subset_state(bank, np.random.default_rng(seed), min(self.config.validation_records, len(bank.actions)))
-                truth = torch.from_numpy(resample_cell_map(bank.depth_mm, (self.model_config.output_size,) * 2).astype(np.float32))[None, None].to(self.config.device)
+                truth = torch.from_numpy(bank.depth_mm.copy())[None, None].to(self.config.device)
                 loss = reconstruction_loss(self.model(*model_inputs(observation, self.model, self.scale,
                                             self.das_settings, self.config.device, self.guard)), truth, self.config.damaged_weight)
                 losses.append(float(loss))
@@ -231,6 +231,7 @@ class TrainingSession:
                 "steps": self.step_count, "best_validation_step": self.best_step,
                 "parent_checkpoint_sha256": self.parent_checkpoint_sha256,
                 "source_hash": _source_hash(), "torch_version": str(torch.__version__),
+                "loss_grid": "bank_reference_cell_averages",
                 "das_settings": asdict(self.das_settings) if self.das_settings else None}
 
     def save_checkpoint(self, path: Path, *, overwrite: bool = False):

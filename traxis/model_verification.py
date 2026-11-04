@@ -13,7 +13,6 @@ import torch
 from traxis.bank import ReplayEnvironment
 from traxis.diagnostic_data import analytic_bank
 from traxis.imaging import DASSettings, delay_and_sum
-from traxis.metrics import resample_cell_map
 from traxis.models import ModelConfig, SignalScale, build_model, observation_batch, reconstruction_loss
 from traxis.resources import ResourceGuard
 
@@ -41,7 +40,7 @@ def verify_models(output: Path, guard: ResourceGuard) -> dict:
         report["signal_scale"] = asdict(scale)
         for architecture in ("direct", "das_unet"):
             for size in (128, 256):
-                truth = torch.from_numpy(resample_cell_map(bank.depth_mm, (size, size)).astype(np.float32))[None, None]
+                truth = torch.from_numpy(bank.depth_mm.copy())[None, None]
                 image = delay_and_sum(state, DASSettings({100000.: 2500.}, 25e-6, (size, size)), guard)
                 das = torch.from_numpy(np.stack([image.intensity / scale.rms, image.coverage]))[None]
                 for extra in (0, 1):
@@ -71,6 +70,7 @@ def verify_models(output: Path, guard: ResourceGuard) -> dict:
                         inference_seconds = time.perf_counter() - started
                         loss_after = float(reconstruction_loss(after, truth))
                     entry = {"config": asdict(config), "parameters": sum(p.numel() for p in model.parameters()),
+                             "loss_reference_shape": list(bank.depth_mm.shape),
                              "loss_before_mm2": loss_before, "loss_after_mm2": loss_after,
                              "gradient_norm": gradient_norm, "finite_gradients": finite_gradients,
                              "step_seconds": step_seconds, "inference_seconds": inference_seconds,

@@ -76,18 +76,21 @@ def fit_das_baseline(dataset: BankDataset, settings: DASSettings, record_budgets
         bank = dataset.read(entry)
         intact_seen |= not bank.depth_mm.any()
         damaged_seen |= bool(bank.depth_mm.any())
-        truth = resample_cell_map(bank.depth_mm, settings.shape)
+        truth = bank.depth_mm
         weights = np.where(truth > 0, damaged_weight, 1.)
+        weight_sum = float(weights.sum())
         for budget in record_budgets:
             if guard:
                 guard.check()
             image = delay_and_sum(subset_state(bank, rng, budget), settings, guard).intensity.astype(float)
-            numerator += float((weights * image * truth).sum())
-            denominator += float((weights * image**2).sum())
+            image = resample_cell_map(image, truth.shape)
+            numerator += float((weights * image * truth).sum() / weight_sum)
+            denominator += float((weights * image**2).sum() / weight_sum)
     if not intact_seen or not damaged_seen or denominator == 0 or numerator <= 0:
         raise ValueError("DAS calibration needs both intact and damaged controls with nonzero damage evidence")
     provenance = {"mode": mode, "dataset_fingerprint": dataset.fingerprint, "seed": seed,
                   "fit_parents": sorted({e.parent_specimen_id for e in entries}), "validation_parents": [],
                   "record_budgets": list(record_budgets), "damaged_weight": damaged_weight,
+                  "loss_grid": "bank_reference_cell_averages", "per_image_weight_normalization": True,
                   "method": "nonnegative through-origin weighted least squares"}
     return DASDepthCalibration(numerator / denominator, entries[0].observable, settings, provenance)

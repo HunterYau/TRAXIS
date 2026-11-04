@@ -16,6 +16,29 @@ if HAS_TORCH:
 
 @unittest.skipUnless(HAS_TORCH, "optional CPU PyTorch is required")
 class DASCalibrationTests(unittest.TestCase):
+    def test_calibration_objective_uses_reference_cells_and_equal_image_weights(self):
+        from dataclasses import replace
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from tests.fixtures import analytic_bank
+        from traxis.dataset import BankDataset
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            truth = np.zeros((512, 512), np.float32)
+            truth[0, 0] = 2
+            damaged = replace(analytic_bank(), depth_mm=truth)
+            intact = analytic_bank(intact=True, specimen_id="intact", parent_specimen_id="intact")
+            damaged.save(root / "damaged.npz")
+            intact.save(root / "intact.npz")
+            dataset = BankDataset.build([root / "damaged.npz", root / "intact.npz"], root / "dataset.json")
+            for size in (128, 256):
+                # An independent constant-feature least-squares example has
+                # an analytic slope, even for a sub-output-cell defect.
+                with patch("traxis.das_baseline.delay_and_sum",
+                           return_value=SimpleNamespace(intensity=np.ones((size, size)))):
+                    fitted = fit_das_baseline(dataset, DASSettings({100000.: 2500.}, shape=(size, size)), (1,))
+                self.assertAlmostEqual(fitted.slope_mm_per_signal_unit, 10 / (512**2 + 9), places=14)
+
     def test_train_only_scalar_calibration_roundtrip_and_intact_control(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

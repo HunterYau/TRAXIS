@@ -228,12 +228,28 @@ def build_model(config: ModelConfig) -> nn.Module:
 
 def reconstruction_loss(prediction_mm: torch.Tensor, truth_mm: torch.Tensor,
                          damaged_weight: float = 10.) -> torch.Tensor:
-    """Balance defect and intact regions instead of hiding defects in plate area."""
+    """Score piecewise-constant predictions on the truth's common cell grid.
+
+    Integer refinement repeats cells; coarsening takes cell averages. Never
+    reduce the reference label to a model's output resolution before scoring:
+    doing so changes both the error target and the damaged-region weights.
+    """
     positive("damaged region weight", damaged_weight)
-    if prediction_mm.shape != truth_mm.shape or truth_mm.ndim != 4 or truth_mm.shape[1] != 1:
-        raise ValueError("prediction and truth must have matching (batch,1,y,x) grids")
+    if (prediction_mm.ndim != 4 or truth_mm.ndim != 4 or prediction_mm.shape[:2] != truth_mm.shape[:2]
+            or truth_mm.shape[1] != 1 or min(truth_mm.shape) < 1 or min(prediction_mm.shape) < 1):
+        raise ValueError("prediction/truth need compatible (batch,1,y,x) cell grids")
     if not torch.isfinite(truth_mm).all() or (truth_mm < 0).any():
         raise ValueError("depth labels must be finite and nonnegative")
+    for axis, target in enumerate(truth_mm.shape[2:], 2):
+        source = prediction_mm.shape[axis]
+        if target >= source and target % source == 0:
+            prediction_mm = prediction_mm.repeat_interleave(target // source, dim=axis)
+        elif source > target and source % target == 0:
+            shape = list(prediction_mm.shape)
+            shape[axis:axis + 1] = [target, source // target]
+            prediction_mm = prediction_mm.reshape(shape).mean(dim=axis + 1)
+        else:
+            raise ValueError("loss grids must be aligned integer refinements")
     weights = torch.where(truth_mm > 0, damaged_weight, 1.)
     return (weights * (prediction_mm - truth_mm).square()).sum() / weights.sum()
 

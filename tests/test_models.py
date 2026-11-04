@@ -87,6 +87,28 @@ class ModelTests(unittest.TestCase):
                 with self.assertRaises(FileExistsError):
                     save_model(path, model, self.scale, {})
 
+    def test_reference_grid_loss_preserves_small_defects_and_exact_gradients(self):
+        # One damaged reference cell must keep its own weight even when four
+        # reference cells share a coarse prediction parameter.
+        prediction = torch.tensor([[[[1., .5], [.25, .75]]]], requires_grad=True)
+        truth = torch.zeros(1, 1, 4, 4)
+        truth[0, 0, 0, 0] = 2.
+        loss = reconstruction_loss(prediction, truth, damaged_weight=10.)
+        expected = (10 * (1 - 2)**2 + 3 * 1**2 + 4 * .5**2 + 4 * .25**2 + 4 * .75**2) / 25
+        self.assertAlmostEqual(float(loss.detach()), expected, places=6)
+        loss.backward()
+        torch.testing.assert_close(prediction.grad, torch.tensor([[[[-14 / 25, 4 / 25], [2 / 25, 6 / 25]]]]))
+        fine = prediction.detach().repeat_interleave(2, 2).repeat_interleave(2, 3)
+        torch.testing.assert_close(loss.detach(), reconstruction_loss(fine, truth))
+
+    def test_loss_cell_coarsening_and_incompatible_grids(self):
+        prediction = torch.arange(16., requires_grad=True).reshape(1, 1, 4, 4)
+        truth = torch.zeros(1, 1, 2, 2)
+        expected = torch.tensor([2.5, 4.5, 10.5, 12.5]).square().mean()
+        torch.testing.assert_close(reconstruction_loss(prediction, truth), expected)
+        with self.assertRaisesRegex(ValueError, "integer"):
+            reconstruction_loss(torch.zeros(1, 1, 3, 3), truth)
+
     def test_scaling_rejects_test_data_and_mismatched_units(self):
         with self.assertRaises(ValueError):
             SignalScale.fit([analytic_bank(split="test")])
