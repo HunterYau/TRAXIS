@@ -10,6 +10,7 @@ from traxis.resources import ResourceGuard, ResourceLimits, snapshot
 
 def main() -> None:
     from traxis.experiment_commands import add_experiment_commands
+    from traxis.generation_commands import add_generation_commands
     parser = argparse.ArgumentParser(description="Bounded guided-wave tomography experiments")
     sub = parser.add_subparsers(dest="command", required=True)
     preflight = sub.add_parser("preflight", help="inspect resources and mesh cost without solving")
@@ -39,9 +40,21 @@ def main() -> None:
     adaptive.add_argument("--output", type=Path, default=Path("outputs/policy-verification"))
     adaptive.add_argument("--max-seconds", type=float, default=60)
     adaptive.add_argument("--max-rss-mib", type=float, default=1024)
+    forward = sub.add_parser("verify-forward", help="bounded CAD-to-elastic-bank checks; no training")
+    forward.add_argument("--output", type=Path, default=Path("outputs/forward-verification"))
+    forward.add_argument("--max-seconds", type=float, default=60)
+    forward.add_argument("--max-rss-mib", type=float, default=512)
     add_experiment_commands(sub)
+    add_generation_commands(sub)
     args = parser.parse_args()
-    if args.command in ("index-data", "train", "train-policy", "calibrate-das", "freeze-evaluation", "evaluate"):
+    if args.command in ("plan-scenarios", "export-solver-request", "generate-bank"):
+        from traxis.generation_commands import run_generation_command
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            print(json.dumps(run_generation_command(args, guard), indent=2, allow_nan=False))
+        except Exception as exc:
+            parser.exit(1, f"Generation stopped: {type(exc).__name__}: {exc}\n")
+    elif args.command in ("index-data", "train", "train-policy", "calibrate-das", "freeze-evaluation", "evaluate"):
         from traxis.experiment_commands import run_experiment_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
@@ -73,6 +86,18 @@ def main() -> None:
         print(json.dumps({"output": str(args.output), "specimen_id": bank.metadata.specimen_id,
                           "records": len(bank.actions), "samples": len(bank.time_s),
                           "validation_status": bank.metadata.validation_status}, indent=2))
+    elif args.command == "verify-forward":
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard.check(force=True)
+        try:
+            from traxis.forward_verification import verify_forward
+            report = verify_forward(args.output, guard)
+        except Exception as exc:
+            parser.exit(1, f"Forward pilot stopped: {type(exc).__name__}: {exc}\n")
+        print(json.dumps({"passed": report["passed"], "ready_for_training_data": False,
+                          "wall_seconds": report["wall_seconds"], "report": str(args.output / "forward-report.json")}, indent=2))
+        if not report["passed"]:
+            parser.exit(1, "Forward pilot failed; inspect its report.\n")
     elif args.command == "verify-policy":
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         guard.check(force=True)

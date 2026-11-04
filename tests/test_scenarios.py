@@ -53,3 +53,8 @@ class ScenarioTests(unittest.TestCase):
                      lambda: AcquisitionSettings(inset_m=0.001).sensors(Plate())):
             with self.assertRaises(ValueError):
                 make()
+
+    def test_all_intact_cohort_does_not_require_unused_recess_choices_to_fit(self):
+        controls = sample_scenarios(SamplingSettings(count=2, intact_fraction=1), Plate(0.02, 0.02, 0.003),
+                                    AcquisitionSettings(inset_m=0.004, patch_radius_m=0.002))
+        self.assertTrue(all(not s.recesses for s in controls))

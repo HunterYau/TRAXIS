@@ -65,6 +65,10 @@ Bundle paths stay within the manifest directory. Source file and manifest
 hashes are added to provenance. Exporting a commercial solver's native binary
 format or connecting to hardware is not implemented by this importer.
 
+Compiled solver requests can also provide expected label/time file hashes and
+an expected sample-time NPY. These anchors are checked during import, catching
+accidentally replaced geometry labels and traces exported on the wrong time grid.
+
 ## Imaging and metrics
 
 The DAS baseline subtracts the intact signal, takes its analytic envelope and

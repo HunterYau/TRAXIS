@@ -4,7 +4,7 @@ Research tools for reconstructing backside material loss in aluminum plates
 from a fixed PZT network. The target is depth in millimeters, not a damage class.
 
 This repository is under development. Neural candidates have received only
-single-step debug updates; no research training cycle has run. No simulation
+brief, bounded debug updates; no research training cycle has run. No simulation
 has been validated against a physical plate. Passing software checks do not
 establish physical accuracy or a superior model.
 
@@ -104,4 +104,8 @@ Reproducible virtual specimen recipes, optional CAD-conforming recess meshing
 and bounded local elastic waveform banks are described in
 [scenario generation](docs/scenario-generation.md). Their data remains marked
 as pilot-only until forward-physics and physical validation pass.
+
+`plan-scenarios` writes unsolved study recipes; `export-solver-request` compiles
+one reference task with anchored geometry labels and sample times.
+`verify-forward` runs a short CAD-to-elastic-bank pilot without model training.
 

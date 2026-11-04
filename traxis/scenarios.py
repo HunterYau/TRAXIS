@@ -179,12 +179,12 @@ def _sample_nuisance(settings: SamplingSettings, acquisition: AcquisitionSetting
 def sample_scenarios(settings: SamplingSettings = SamplingSettings(), plate: Plate = Plate(),
                       acquisition: AcquisitionSettings = AcquisitionSettings()) -> tuple[Scenario, ...]:
     sensor_xy = acquisition.sensors(plate)
-    if max(settings.depths_m) >= plate.thickness_m:
+    intact_count = int(round(settings.count * settings.intact_fraction))
+    if intact_count < settings.count and max(settings.depths_m) >= plate.thickness_m:
         raise ValueError("defect depth choices must leave positive thickness")
-    if max(settings.diameters_m) + 2 * settings.edge_clearance_m >= min(plate.width_m, plate.height_m):
+    if intact_count < settings.count and max(settings.diameters_m) + 2 * settings.edge_clearance_m >= min(plate.width_m, plate.height_m):
         raise ValueError("diameter/edge-clearance choices do not fit plate")
     result = []
-    intact_count = int(round(settings.count * settings.intact_fraction))
     combinations = [(d, depth) for d in settings.diameters_m for depth in settings.depths_m]
     for index in range(settings.count):
         sequence = np.random.SeedSequence([settings.seed, index])
@@ -232,9 +232,12 @@ def save_scenario_plan(path: Path, scenarios: tuple[Scenario, ...]) -> dict:
         raise ValueError("scenario plan must be nonempty")
     body = {"schema_version": 1, "kind": "unsolved_scenario_plan", "ready_for_training_data": False,
             "scenarios": [asdict(s) for s in scenarios], "split_counts": dict(Counter(s.split for s in scenarios)),
+            "parent_count": len(roles), "parent_split_counts": dict(Counter(roles.values())),
             "stratum_counts": [{"split": split, "geometry": label, "count": n} for (split, label), n in sorted(strata.items())],
             "note": "Recipes only. Frequencies, variations, supports and source/coupling assumptions require empirical validation."}
     body["fingerprint"] = canonical_hash(body)
+    if len(json.dumps(body, allow_nan=False).encode()) > 64 * 1024**2:
+        raise MemoryError("scenario plan exceeds 64 MiB; use smaller cohorts")
     write_json(path, body)
     return body
 

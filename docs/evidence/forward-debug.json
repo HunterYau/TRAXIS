@@ -1,0 +1,723 @@
+﻿{
+    "kind":  "cad_to_elastic_bank_pilot",
+    "passed":  true,
+    "ready_for_training_data":  false,
+    "note":  "Geometry/data-pipeline checks only. No coupled PZT, guided-wave convergence or physical agreement claim.",
+    "source_sha256":  {
+                          "__init__.py":  "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+                          "__main__.py":  "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+                          "acquisition.py":  "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+                          "adaptive.py":  "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+                          "bank.py":  "2ed2388d513345da7838df15a484827459b7b6e653da133e97a04c711168d5b7",
+                          "cad_mesh.py":  "c1286150c665ee66a05efdfbbe54b3f14f5141edf4c3110b8ad13642b25b48d0",
+                          "cli.py":  "2102296697fdb005b5f3b9570b785fd894ae655f8b374f6962a0dc88519b6ec2",
+                          "config.py":  "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+                          "das_baseline.py":  "04680ee56653605418d761da20f12491a0630ae36705501a3fa339cefbb5b672",
+                          "dataset.py":  "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+                          "diagnostic_data.py":  "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+                          "dispersion.py":  "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+                          "evaluation.py":  "49e0335c273ed19249a96708b61c66f4a583cc44a8baa2b2338856d38a2051ba",
+                          "experiment_commands.py":  "b7a714eeb6c52dd0b1e1d3d34efb376901a1e9067591da26ab9c0b34e37e8a0c",
+                          "fem.py":  "c68ff9715b204fa41d8d8e008c40cbed8288c326a2b42e1b74a5b8e5f87e9998",
+                          "forward.py":  "eec483d07c1ca9d86f7604282127733b9d0a14d55db892eab1fe5f5ed81065b4",
+                          "forward_verification.py":  "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+                          "generation_commands.py":  "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+                          "geometry.py":  "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+                          "imaging.py":  "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+                          "importers.py":  "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+                          "metrics.py":  "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+                          "model_verification.py":  "bd7f7ffd95a47ec63728c5cf1d03c0a4940a93c7098af915ae23847f08704f91",
+                          "models.py":  "291c0c0dac0dd46e1db605c94129f9970d4b8cf5130c27a648252492fca1b2df",
+                          "policies.py":  "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+                          "policy_training.py":  "281eb6614eefeba0408446ca48ab27b40d2ceb5101d339ab080f4cb2af062578",
+                          "policy_verification.py":  "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+                          "reconstruction.py":  "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+                          "resources.py":  "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+                          "scenarios.py":  "857745831b918b8f4d68e24e81f97a4e67722f0eac2cd9c3e40fc00fbca16b18",
+                          "solver_requests.py":  "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+                          "storage.py":  "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+                          "training.py":  "67de2e29c1920459a1dd5f0674ee1e20e59f53c02ea25dbb29b64ebdfc118eaa",
+                          "verification.py":  "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+                          "waveguide.py":  "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+                          "workflow_verification.py":  "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+                      },
+    "recipes":  {
+                    "parents":  1000,
+                    "split_counts":  {
+                                         "train":  695,
+                                         "validation":  156,
+                                         "test":  149
+                                     },
+                    "stratum_counts":  [
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D20_d0.75",
+                                               "count":  14
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D20_d1.5",
+                                               "count":  21
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D20_d2",
+                                               "count":  10
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D30_d0.75",
+                                               "count":  18
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D30_d1.5",
+                                               "count":  14
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D30_d2",
+                                               "count":  15
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D40_d0.75",
+                                               "count":  16
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D40_d1.5",
+                                               "count":  15
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "D40_d2",
+                                               "count":  14
+                                           },
+                                           {
+                                               "split":  "test",
+                                               "geometry":  "intact",
+                                               "count":  12
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D20_d0.75",
+                                               "count":  72
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D20_d1.5",
+                                               "count":  68
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D20_d2",
+                                               "count":  70
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D30_d0.75",
+                                               "count":  72
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D30_d1.5",
+                                               "count":  68
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D30_d2",
+                                               "count":  63
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D40_d0.75",
+                                               "count":  72
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D40_d1.5",
+                                               "count":  67
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "D40_d2",
+                                               "count":  70
+                                           },
+                                           {
+                                               "split":  "train",
+                                               "geometry":  "intact",
+                                               "count":  73
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D20_d0.75",
+                                               "count":  14
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D20_d1.5",
+                                               "count":  11
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D20_d2",
+                                               "count":  20
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D30_d0.75",
+                                               "count":  10
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D30_d1.5",
+                                               "count":  18
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D30_d2",
+                                               "count":  22
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D40_d0.75",
+                                               "count":  12
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D40_d1.5",
+                                               "count":  18
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "D40_d2",
+                                               "count":  16
+                                           },
+                                           {
+                                               "split":  "validation",
+                                               "geometry":  "intact",
+                                               "count":  15
+                                           }
+                                       ],
+                    "fingerprint":  "3dffe88b251c3680cfbe2674c699469b652709b2aec481ac87a14ec5c28459c9",
+                    "forward_solves":  0
+                },
+    "geometry_refinement":  {
+                                "plate_m":  [
+                                                0.04,
+                                                0.04,
+                                                0.003
+                                            ],
+                                "radius_m":  0.008,
+                                "depth_m":  0.0015,
+                                "structured_volume_relative_error":  0.4920775914865192,
+                                "cad_levels":  [
+                                                   {
+                                                       "backend":  "gmsh_opencascade",
+                                                       "gmsh_version":  "4.15.2",
+                                                       "size_m":  0.003,
+                                                       "mesh_seed":  2026,
+                                                       "threads":  1,
+                                                       "nodes":  619,
+                                                       "tetrahedra":  1741,
+                                                       "cad_retained_volume_m3":  4.4984071052553794E-06,
+                                                       "tet_retained_volume_m3":  4.5018231723974986E-06,
+                                                       "retained_volume_relative_error":  0.000759394839592975,
+                                                       "requested_removed_volume_m3":  3.0159289474462122E-07,
+                                                       "meshed_removed_volume_m3":  2.98176827602502E-07,
+                                                       "removed_volume_relative_error":  0.011326749408376524,
+                                                       "screened_tetrahedra":  4587,
+                                                       "screened_assembly_mib":  25.1971435546875,
+                                                       "ready_for_training_data":  false,
+                                                       "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation."
+                                                   },
+                                                   {
+                                                       "backend":  "gmsh_opencascade",
+                                                       "gmsh_version":  "4.15.2",
+                                                       "size_m":  0.002,
+                                                       "mesh_seed":  2026,
+                                                       "threads":  1,
+                                                       "nodes":  1200,
+                                                       "tetrahedra":  3420,
+                                                       "cad_retained_volume_m3":  4.4984071052553794E-06,
+                                                       "tet_retained_volume_m3":  4.4998716477262775E-06,
+                                                       "retained_volume_relative_error":  0.00032556912627734746,
+                                                       "requested_removed_volume_m3":  3.0159289474462122E-07,
+                                                       "meshed_removed_volume_m3":  3.0012835227372318E-07,
+                                                       "removed_volume_relative_error":  0.004856024450238361,
+                                                       "screened_tetrahedra":  12720,
+                                                       "screened_assembly_mib":  69.873046875,
+                                                       "ready_for_training_data":  false,
+                                                       "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation."
+                                                   },
+                                                   {
+                                                       "backend":  "gmsh_opencascade",
+                                                       "gmsh_version":  "4.15.2",
+                                                       "size_m":  0.0015,
+                                                       "mesh_seed":  2026,
+                                                       "threads":  1,
+                                                       "nodes":  2432,
+                                                       "tetrahedra":  8264,
+                                                       "cad_retained_volume_m3":  4.4984071052553794E-06,
+                                                       "tet_retained_volume_m3":  4.4996799610311004E-06,
+                                                       "retained_volume_relative_error":  0.0002829569992084391,
+                                                       "requested_removed_volume_m3":  3.0159289474462122E-07,
+                                                       "meshed_removed_volume_m3":  3.0032003896890019E-07,
+                                                       "removed_volume_relative_error":  0.004220443511438909,
+                                                       "screened_tetrahedra":  26880,
+                                                       "screened_assembly_mib":  147.65625,
+                                                       "ready_for_training_data":  false,
+                                                       "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation."
+                                                   }
+                                               ]
+                            },
+    "banks":  [
+                  {
+                      "kind":  "local_elastic_bank_pilot",
+                      "scenario_fingerprint":  "15c1f381a862e027d0eaa4b3e777ea6fc6453e70805a9cebc15f8e4e0093262a",
+                      "records":  28,
+                      "samples":  128,
+                      "forward_solves":  7,
+                      "cache_hits":  0,
+                      "groups":  [
+                                     {
+                                         "transmitter":  0,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "30466f8286eb7780fc78d1d0a9d15cda21f5868095647f7075754a4b9fa2870a",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  1,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "3b565998795393155ad82febf1e25e3d18f1c891497341854b655faf370472e6",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  2,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "8b0cb3226d84c8d454dd8c0fe9604052528030d6bdd85dc3b80f071d902003d9",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  3,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "c98fd3ab23dd3276c446e28ac05c64e872abde10405dda0ab3a538cc25188624",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  4,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "a13a09c212f30915bc797007aaea322ac83549d6db69838cd870bd544eef88e0",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  5,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "4fb6171e751a9a26234c7c5539bfb67f41b3524c7f269e5ea56cb65de9550cf1",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  6,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "bc9e394e574081183e66bed3a677160b306dae7757dcbed20536fa432430f7e2",
+                                         "cache_hit":  false
+                                     }
+                                 ],
+                      "intact_mesh":  {
+                                          "backend":  "gmsh_opencascade",
+                                          "gmsh_version":  "4.15.2",
+                                          "size_m":  0.003,
+                                          "mesh_seed":  2026,
+                                          "threads":  1,
+                                          "nodes":  590,
+                                          "tetrahedra":  1646,
+                                          "cad_retained_volume_m3":  4.8000000000000006E-06,
+                                          "tet_retained_volume_m3":  4.8E-06,
+                                          "retained_volume_relative_error":  2.2204460492503131E-16,
+                                          "requested_removed_volume_m3":  0.0,
+                                          "meshed_removed_volume_m3":  8.4703294725430034E-22,
+                                          "removed_volume_relative_error":  0.0,
+                                          "screened_tetrahedra":  4587,
+                                          "screened_assembly_mib":  25.1971435546875,
+                                          "ready_for_training_data":  false,
+                                          "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                          "maximum_allowed_volume_error":  0.05
+                                      },
+                      "current_mesh":  {
+                                           "backend":  "gmsh_opencascade",
+                                           "gmsh_version":  "4.15.2",
+                                           "size_m":  0.003,
+                                           "mesh_seed":  2026,
+                                           "threads":  1,
+                                           "nodes":  590,
+                                           "tetrahedra":  1646,
+                                           "cad_retained_volume_m3":  4.8000000000000006E-06,
+                                           "tet_retained_volume_m3":  4.8E-06,
+                                           "retained_volume_relative_error":  2.2204460492503131E-16,
+                                           "requested_removed_volume_m3":  0.0,
+                                           "meshed_removed_volume_m3":  8.4703294725430034E-22,
+                                           "removed_volume_relative_error":  0.0,
+                                           "screened_tetrahedra":  4587,
+                                           "screened_assembly_mib":  25.1971435546875,
+                                           "ready_for_training_data":  false,
+                                           "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                           "maximum_allowed_volume_error":  0.05
+                                       },
+                      "dt_internal_s":  1.25E-07,
+                      "substeps_per_output":  4,
+                      "internal_steps":  508,
+                      "wall_seconds":  0.41612939996412024,
+                      "ready_for_training_data":  false,
+                      "validation_status":  "plumbing_only"
+                  },
+                  {
+                      "kind":  "local_elastic_bank_pilot",
+                      "scenario_fingerprint":  "b35d702d8212b51d0dedc8bbf225edaf84008f4330b82f83403b010e540fcaa7",
+                      "records":  28,
+                      "samples":  128,
+                      "forward_solves":  14,
+                      "cache_hits":  0,
+                      "groups":  [
+                                     {
+                                         "transmitter":  0,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "7c993803c9d17d12ed19204f94bf49a2586e5da6ecfcd3998e206f46dfa612b2",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  0,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "6d25ffcc45320f84c366105d83ae2c0a53d77c1c4dbd6ac2440f1d289be4588a",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  1,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "b36c6824f225bcc02ddb13da1635c396d7bd289913edc8a42765b4f52643e3c0",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  1,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "b97404b9f850d136243321d470cc1f72226a5e7f13bf3069eaa3cb436a83781e",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  2,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "54f9dacdabdf3a890e2b95e255a03a023641278b301da1f11b051678581381c8",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  2,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "61addc1e7eb6ed001852751044896249d7431cb80c09ebe8988559f60de41f75",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  3,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "820e833718a785fa0a1290781111f35369466bca9687defb30e3d6d484c761aa",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  3,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "bdac6393094c0337b7bd13ed1b5103c3b6a1604f595d5a4a2495dd3f1131bb92",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  4,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "74b403a117939da269b9fe9166ac0271918e60f20e0b07ec1d0ee05d25b9d158",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  4,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "5296cf375b6d2b603434deee0fe3c46931f236566ceff713194254ec94aca572",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  5,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "339c49871d39a22e708abe821d3869fcf42e703ecc80a2844d25ba36fa04ca25",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  5,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "16d43a7b365df5d4e75d2ba8e55e1c3a80c9412da0adb952ae700adb26001726",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  6,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "intact",
+                                         "key":  "944b5b55fc5eb0c826499fdf67ecf1dd997c386d2859bc1011ca0450ffb931a5",
+                                         "cache_hit":  false
+                                     },
+                                     {
+                                         "transmitter":  6,
+                                         "frequency_hz":  100000.0,
+                                         "kind":  "current",
+                                         "key":  "71c44408f7b8e39682fb684acdb780d8b0ddea0be2299e736594a8a86e2c09b4",
+                                         "cache_hit":  false
+                                     }
+                                 ],
+                      "intact_mesh":  {
+                                          "backend":  "gmsh_opencascade",
+                                          "gmsh_version":  "4.15.2",
+                                          "size_m":  0.003,
+                                          "mesh_seed":  2026,
+                                          "threads":  1,
+                                          "nodes":  590,
+                                          "tetrahedra":  1646,
+                                          "cad_retained_volume_m3":  4.8000000000000006E-06,
+                                          "tet_retained_volume_m3":  4.8E-06,
+                                          "retained_volume_relative_error":  2.2204460492503131E-16,
+                                          "requested_removed_volume_m3":  0.0,
+                                          "meshed_removed_volume_m3":  8.4703294725430034E-22,
+                                          "removed_volume_relative_error":  0.0,
+                                          "screened_tetrahedra":  4587,
+                                          "screened_assembly_mib":  25.1971435546875,
+                                          "ready_for_training_data":  false,
+                                          "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                          "maximum_allowed_volume_error":  0.05
+                                      },
+                      "current_mesh":  {
+                                           "backend":  "gmsh_opencascade",
+                                           "gmsh_version":  "4.15.2",
+                                           "size_m":  0.003,
+                                           "mesh_seed":  2026,
+                                           "threads":  1,
+                                           "nodes":  624,
+                                           "tetrahedra":  1749,
+                                           "cad_retained_volume_m3":  4.3287611019615317E-06,
+                                           "tet_retained_volume_m3":  4.3322652600055233E-06,
+                                           "retained_volume_relative_error":  0.0008095059906179092,
+                                           "requested_removed_volume_m3":  4.7123889803846896E-07,
+                                           "meshed_removed_volume_m3":  4.6773473999447735E-07,
+                                           "removed_volume_relative_error":  0.007436054321019903,
+                                           "screened_tetrahedra":  4587,
+                                           "screened_assembly_mib":  25.1971435546875,
+                                           "ready_for_training_data":  false,
+                                           "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                           "maximum_allowed_volume_error":  0.05
+                                       },
+                      "dt_internal_s":  7.1428571428571423E-08,
+                      "substeps_per_output":  7,
+                      "internal_steps":  889,
+                      "wall_seconds":  0.952150699973572,
+                      "ready_for_training_data":  false,
+                      "validation_status":  "plumbing_only"
+                  }
+              ],
+    "cache_recovery":  {
+                           "kind":  "local_elastic_bank_pilot",
+                           "scenario_fingerprint":  "b35d702d8212b51d0dedc8bbf225edaf84008f4330b82f83403b010e540fcaa7",
+                           "records":  28,
+                           "samples":  128,
+                           "forward_solves":  0,
+                           "cache_hits":  14,
+                           "groups":  [
+                                          {
+                                              "transmitter":  0,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "7c993803c9d17d12ed19204f94bf49a2586e5da6ecfcd3998e206f46dfa612b2",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  0,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "6d25ffcc45320f84c366105d83ae2c0a53d77c1c4dbd6ac2440f1d289be4588a",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  1,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "b36c6824f225bcc02ddb13da1635c396d7bd289913edc8a42765b4f52643e3c0",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  1,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "b97404b9f850d136243321d470cc1f72226a5e7f13bf3069eaa3cb436a83781e",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  2,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "54f9dacdabdf3a890e2b95e255a03a023641278b301da1f11b051678581381c8",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  2,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "61addc1e7eb6ed001852751044896249d7431cb80c09ebe8988559f60de41f75",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  3,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "820e833718a785fa0a1290781111f35369466bca9687defb30e3d6d484c761aa",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  3,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "bdac6393094c0337b7bd13ed1b5103c3b6a1604f595d5a4a2495dd3f1131bb92",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  4,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "74b403a117939da269b9fe9166ac0271918e60f20e0b07ec1d0ee05d25b9d158",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  4,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "5296cf375b6d2b603434deee0fe3c46931f236566ceff713194254ec94aca572",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  5,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "339c49871d39a22e708abe821d3869fcf42e703ecc80a2844d25ba36fa04ca25",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  5,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "16d43a7b365df5d4e75d2ba8e55e1c3a80c9412da0adb952ae700adb26001726",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  6,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "intact",
+                                              "key":  "944b5b55fc5eb0c826499fdf67ecf1dd997c386d2859bc1011ca0450ffb931a5",
+                                              "cache_hit":  true
+                                          },
+                                          {
+                                              "transmitter":  6,
+                                              "frequency_hz":  100000.0,
+                                              "kind":  "current",
+                                              "key":  "71c44408f7b8e39682fb684acdb780d8b0ddea0be2299e736594a8a86e2c09b4",
+                                              "cache_hit":  true
+                                          }
+                                      ],
+                           "intact_mesh":  {
+                                               "backend":  "gmsh_opencascade",
+                                               "gmsh_version":  "4.15.2",
+                                               "size_m":  0.003,
+                                               "mesh_seed":  2026,
+                                               "threads":  1,
+                                               "nodes":  590,
+                                               "tetrahedra":  1646,
+                                               "cad_retained_volume_m3":  4.8000000000000006E-06,
+                                               "tet_retained_volume_m3":  4.8E-06,
+                                               "retained_volume_relative_error":  2.2204460492503131E-16,
+                                               "requested_removed_volume_m3":  0.0,
+                                               "meshed_removed_volume_m3":  8.4703294725430034E-22,
+                                               "removed_volume_relative_error":  0.0,
+                                               "screened_tetrahedra":  4587,
+                                               "screened_assembly_mib":  25.1971435546875,
+                                               "ready_for_training_data":  false,
+                                               "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                               "maximum_allowed_volume_error":  0.05
+                                           },
+                           "current_mesh":  {
+                                                "backend":  "gmsh_opencascade",
+                                                "gmsh_version":  "4.15.2",
+                                                "size_m":  0.003,
+                                                "mesh_seed":  2026,
+                                                "threads":  1,
+                                                "nodes":  624,
+                                                "tetrahedra":  1749,
+                                                "cad_retained_volume_m3":  4.3287611019615317E-06,
+                                                "tet_retained_volume_m3":  4.3322652600055233E-06,
+                                                "retained_volume_relative_error":  0.0008095059906179092,
+                                                "requested_removed_volume_m3":  4.7123889803846896E-07,
+                                                "meshed_removed_volume_m3":  4.6773473999447735E-07,
+                                                "removed_volume_relative_error":  0.007436054321019903,
+                                                "screened_tetrahedra":  4587,
+                                                "screened_assembly_mib":  25.1971435546875,
+                                                "ready_for_training_data":  false,
+                                                "note":  "CAD/mesh geometry check only; no PZT or guided-wave convergence validation.",
+                                                "maximum_allowed_volume_error":  0.05
+                                            },
+                           "dt_internal_s":  7.1428571428571423E-08,
+                           "substeps_per_output":  7,
+                           "internal_steps":  889,
+                           "wall_seconds":  0.6691652000299655,
+                           "ready_for_training_data":  false,
+                           "validation_status":  "plumbing_only"
+                       },
+    "dataset_fingerprint":  "1c5ceb50a3fca1719e396d3f3f35fa7500b1b7439ed56fe93c03aaacd34ea173",
+    "reference_request_jobs":  14,
+    "intact_residual_norm_m":  0.0,
+    "defect_relative_response_change":  0.6847598552703857,
+    "wall_seconds":  2.7419770000269637,
+    "resources":  {
+                      "limits":  {
+                                     "max_seconds":  60,
+                                     "max_rss_mib":  512,
+                                     "max_system_memory_percent":  92,
+                                     "min_available_mib":  768,
+                                     "max_gpu_memory_percent":  90,
+                                     "max_gpu_temperature_c":  80,
+                                     "max_cpu_temperature_c":  90
+                                 },
+                      "sampled_max_rss_mib":  120.42578125,
+                      "sampled_max_system_memory_percent":  77.2,
+                      "gpu_samples":  [
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1669.0,
+                                              "temperature_c":  47.0
+                                          },
+                                          {
+                                              "name":  "NVIDIA GeForce RTX 3060 Ti",
+                                              "total_mib":  8192.0,
+                                              "used_mib":  1669.0,
+                                              "temperature_c":  47.0
+                                          }
+                                      ],
+                      "cpu_temperature_note":  "null means no supported sensor; temperature was not verified"
+                  }
+}

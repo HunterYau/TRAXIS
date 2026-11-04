@@ -5,6 +5,46 @@ variation. They are reproducible inputs, not completed simulations. Every
 local waveform bank remains `plumbing_only` and `ready_for_training_data=false`.
 No large synthetic dataset or research training has been run.
 
+## Commands
+
+Write recipes without solving wave physics:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis plan-scenarios --config configs/scenarios-study.json --output outputs/study-recipes.json
+```
+
+Use `--variants 2` to create two nuisance realizations per parent while keeping
+each parent's split. The CLI caps planning at 10,000 total recipe rows; it does
+not allocate one waveform bank per row. `parent_count` and `parent_split_counts`
+distinguish independent virtual parents from nuisance/repeat rows.
+
+Export one selected recipe as an unsolved external reference task:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis export-solver-request --plan outputs/study-recipes.json --index 0 --output outputs/reference-task
+```
+
+This writes `solver-task.json`, a unit-explicit Gmsh/OpenCASCADE GEO script,
+512-grid geometry labels, requested sample times and an importer-compatible
+CSV mapping. It supplies no fake zero traces and launches no commercial solver.
+The exported GEO parses to the correct CAD volume in tests. Gmsh coordinate
+numbers are assigned meters by the recipe; any downstream CAD import must
+set units explicitly. PZT/adhesive/electrical properties required for voltage
+simulation are listed as missing inputs, not fabricated defaults.
+
+For a small local pilot, use the explicitly different 40 mm geometry profile:
+
+```powershell
+.\.venv\Scripts\python.exe -m traxis plan-scenarios --config configs/scenarios-pilot.json --output outputs/pilot-recipes.json
+.\.venv\Scripts\python.exe -m traxis generate-bank --plan outputs/pilot-recipes.json --index 0 --settings configs/forward-pilot.json --cache-dir outputs/elastic-groups --output outputs/intact-bank.npz
+```
+
+The local command generates only one selected specimen. It refuses to overwrite
+an existing bank/report. Pilot output is still unsuitable for research training.
+Reference exports anchor label and requested-time file hashes; trace import
+rejects changed labels or output time grids rather than merely accepting a
+different uniformly sampled record with plausible metadata.
+
 ## Reproducible study recipes
 
 The default sampler describes 1,000 virtual parents on 500 x 500 x 3 mm plates.

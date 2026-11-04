@@ -12,11 +12,11 @@ validation rather than inventing those outcomes.
 | --- | --- |
 | Solver recommendation | Documented in solver-assessment.md; licensed solver pilot not run |
 | 3D elastic propagation and backside loss | Implemented local linear-tet FEM; algebraic/dynamic checks and independent guided-mode dispersion convergence pass. Physical validation remains open |
-| PZT electromechanics, supports, noise/coupling variation | Reference-solver pilot and measured calibration needed |
+| PZT electromechanics, supports, noise/coupling variation | Seeded material, equivalent force/gain/drift/noise variation implemented; PZT/adhesive/electrical/support models and measured calibration still needed |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb reference and 3D FEM Bloch dispersion convergence implemented; finite-plate waveform/arrival convergence, resolved recess geometry and physical traces still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
 | CAD-conforming geometry and elastic bank generation | Gmsh/OpenCASCADE recess mesh with volume/refinement checks and bounded grouped 3D elastic solves/cache implemented; banks remain plumbing_only pending wave/PZT/physical validation |
-| Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, per-array integrity, bounded loading, explicit scalar CSV external-solver/DAQ import and source hashes implemented/tested; full physical/FEA dataset pending |
+| Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, integrity/bounds, anchored scalar CSV import, actual local elastic pilot generation and checked TX-frequency cache implemented; validated research dataset pending |
 | Specimen-level splits and hidden observations | Fingerprinted lazy dataset, role-aware subset training/adaptation and checkpoint-bound held-out evaluation enforce parent separation; masked replay tested |
 | A: waveform CNN, attention, spatial decoder | Implemented with geometry/sampling/amplitude context, partial masks and empty-state handling; forward/backward and serialization checked. Research training pending |
 | B: DAS plus residual U-Net | Implemented with residual encoder, spatial skip connections and waveform-context fusion; forward/backward and serialization checked. Research training pending |
@@ -163,4 +163,19 @@ steps, intact residuals, deterministic cached recovery/noise and rejection of
 unsupported supports/unresolved geometry. Current suite: 99 tests with optional
 Gmsh/PyTorch installed. These are pilot/geometry checks; generated banks are
 not promoted to research-ready data. See scenario-generation.md.
+
+Recipe planning, individual local-bank generation and external reference-task
+export now have CLI coverage. Exports include a tested SI CAD script, label/time
+anchors and mapped scalar-probe jobs; they do not run a licensed solver or
+invent missing PZT material/circuit data. Current suite: 103 tests. A monitored
+CAD-to-bank pilot records the improved geometry and actual elastic solves in
+docs/evidence/forward-debug.json; its readiness flag remains false.
+
+The final pilot completed in 2.74 seconds with sampled process RSS of 120.4 MiB,
+system RAM at 77.2% and GPU telemetry at 1,669/8,192 MiB and 47 C. It used no
+GPU arrays. Recess-volume error fell from 49.2% on the coarse structured mesh
+to 0.422% on the finest CAD benchmark mesh; this measures geometry only.
+Seven intact and fourteen defective transmitter/frequency solves generated
+the small banks; replay recovery used fourteen cached groups and zero new
+solves. The 1,000 study specimens are unsolved recipes, not a generated dataset.
 

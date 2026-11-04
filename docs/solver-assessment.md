@@ -25,7 +25,7 @@ experiment framework rather than a full production multiphysics package.
 | Pogo | Promising alternative for GPU explicit linear elastodynamics and large waveform banks | The original paper establishes the elastic solver; current distribution, maintenance, Windows support, and bonded-PZT workflow have not been verified here |
 | Ansys coupled-field transient piezoelectric analysis | Credible alternative if already available through the school | Solver choice, mesh and performance need a project-specific pilot; do not assume every Ansys product includes the same features |
 | OnScale | Documented time-domain electromechanical transducer modeling | Sources describe capability, not confirmed current account availability or price |
-| Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; no extra solver license | Low-order elements need fine meshes; stair-step recess geometry; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
+| Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; optional CAD-conforming mesh; no extra wave-solver license | Low-order elements need fine meshes; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
 | Scalar acoustic / straight-ray synthetic data | Useful for plumbing and deliberate mismatch experiments only | Cannot establish quantitative thickness reconstruction for dispersive elastic plate waves |
 
 The Pogo paper reports large speedups in its own benchmark; these are not
@@ -69,8 +69,10 @@ predictions for this computer. A GPU is not evidence of sufficient VRAM.
 The local backend solves `M u'' + K u = f` for small-strain isotropic elasticity
 with linear tetrahedra and row-sum lumped mass. Natural boundaries are free
 surfaces. No scalar-wave or bulk-speed approximation substitutes for the
-elastic stiffness. Backside removal excludes complete structured cells;
-the meshed defect is approximate and its volume error must be reported.
+elastic stiffness. The structured backend excludes complete cells; the optional
+Gmsh/OpenCASCADE backend meshes a CAD-subtracted circular recess. Both require
+reported geometric error and independent wave convergence. The CAD pilot reduces
+one recess-volume error from 49.2% to 0.42%; this does not validate PZT waveforms.
 
 Time integration uses velocity Verlet (central differences). A conservative
 bound on the largest eigenvalue of `M^-1/2 K M^-1/2` gives the explicit step

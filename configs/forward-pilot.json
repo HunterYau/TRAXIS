@@ -1,0 +1,4 @@
+{
+  "mesh_backend": "cad", "mesh_size_m": 0.0015, "max_assembly_mib": 256,
+  "max_volume_error": 0.05, "max_internal_steps": 10000, "max_forward_solves": 32
+}
