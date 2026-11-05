@@ -132,6 +132,17 @@ class SparseOperatorTests(unittest.TestCase):
 
 
 class ReferenceGuardsTests(unittest.TestCase):
+    def test_structured_reference_rejects_recesses_and_oversized_grids_before_external_work(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'must-not-exist'
+            with self.assertRaisesRegex(ValueError, 'intact geometry only'):
+                run_elmer_waveform_case(local_scenario(), ElmerWaveSettings(mesh_backend='structured'),
+                                         Path('absent'), output, ResourceGuard(), state='current')
+            with self.assertRaisesRegex(MemoryError, 'structured P2'):
+                run_elmer_waveform_case(local_scenario(intact=True), ElmerWaveSettings(mesh_backend='structured', cells=(100, 100, 10)),
+                                         Path('absent'), output, ResourceGuard())
+            self.assertFalse(output.exists())
+
     def test_reference_noise_and_step_limits_fail_before_external_work(self):
         scenario = local_scenario(intact=True)
         noisy = replace(scenario, nuisance=replace(scenario.nuisance, relative_noise_std=.01))
@@ -193,6 +204,22 @@ class NativeImplicitTests(unittest.TestCase):
 @unittest.skipUnless(os.environ.get('TRAXIS_ELMER_HOME') and importlib.util.find_spec('gmsh'),
                      'Elmer and Gmsh are required for the optional reference pipeline')
 class NativeReferencePipelineTests(unittest.TestCase):
+    def test_structured_intact_grid_uses_exact_box_and_screened_p2_node_count(self):
+        home = Path(os.environ['TRAXIS_ELMER_HOME'])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            settings = ElmerWaveSettings(mesh_backend='structured', cells=(3, 3, 2), substeps_per_output=1)
+            scenario = local_scenario(intact=True)
+            values, report = run_elmer_waveform_case(scenario, settings, home, root / 'case',
+                ResourceGuard(ResourceLimits(max_seconds=30, max_rss_mib=512)))
+            self.assertEqual(report['quadratic_nodes'], 7 * 7 * 5)
+            self.assertEqual(report['tetrahedra'], 6 * 3 * 3 * 2)
+            self.assertEqual(report['linear_mesh']['backend'], 'structured_six_tet')
+            self.assertAlmostEqual(report['linear_mesh']['maximum_element_z_span_m'], .0015)
+            self.assertEqual(values.shape, (7, 64))
+            self.assertGreater(np.linalg.norm(values), 0.)
+            self.assertFalse(report['ready_for_training_data'])
+
     def test_one_transmitter_reference_and_checked_cache_recovery(self):
         home = Path(os.environ['TRAXIS_ELMER_HOME'])
         with tempfile.TemporaryDirectory() as directory:

@@ -43,6 +43,8 @@ class ElmerPlateRefinementSettings:
             raise ValueError('total solve budget must lie in [1,5]')
         if not isinstance(self.reference, ElmerWaveSettings):
             raise ValueError('reference settings must be validated ElmerWaveSettings')
+        if self.reference.mesh_backend != 'cad':
+            raise ValueError('mesh-size/time refinement requires CAD; use directional refinement for structured cells')
 
     @classmethod
     def from_dict(cls, values):
@@ -50,6 +52,52 @@ class ElmerPlateRefinementSettings:
         if 'reference' in values:
             values['reference'] = ElmerWaveSettings(**values['reference'])
         return cls(**values)
+
+
+def reference_source_hashes():
+    return {p.name: sha256_file(p) for p in sorted(Path(__file__).parent.glob('*.py'))}
+
+
+def checked_reference_case(scenario, settings, home, case, guard, plan, cache_dir, kernel=None):
+    """Run and bind one case to a frozen study and its saved comparison arrays."""
+    guard.check(force=True)
+    if reference_source_hashes() != plan['source_sha256']:
+        raise ValueError('reference source changed during the frozen study')
+    action = plan['actions'][0]
+    traces, measured = run_elmer_waveform_case(scenario, settings, home, case, guard,
+        transmitter=action['transmitter'], frequency_hz=action['frequency_hz'], state=plan['state'], cache_dir=cache_dir)
+    case_plan = json.loads((case / 'case-plan.json').read_text(encoding='utf-8'))
+    identity = (case_plan['kernel_sha256'], case_plan['runtime'])
+    kernel = identity if kernel is None else kernel
+    if (canonical_hash({k: v for k, v in case_plan.items() if k != 'fingerprint'}) != case_plan['fingerprint']
+            or identity != kernel or canonical_hash(case_plan['settings']) != canonical_hash(asdict(settings))
+            or case_plan['source_sha256'] != plan['source_sha256'] or case_plan['actions'] != plan['actions']
+            or canonical_hash(case_plan['scenario']) != canonical_hash(plan['scenario'])
+            or case_plan['state'] != plan['state'] or not measured['completed']):
+        raise ValueError('reference case changed the frozen source/kernel/scenario/actions/state')
+    if traces.shape != (len(plan['actions']), scenario.acquisition.samples) or not np.isfinite(traces).all():
+        raise ValueError('reference traces disagree with the frozen actions/samples')
+    trace_path = case / 'solver-traces.npz'
+    if sha256_file(trace_path) != measured['trace_sha256']:
+        raise ValueError('saved reference traces changed')
+    with zipfile.ZipFile(trace_path) as archive:
+        if len(archive.infolist()) != 2 or sum(e.file_size for e in archive.infolist()) > 16 * 1024**2:
+            raise MemoryError('reference trace archive exceeds 16 MiB or has invalid entries')
+    with np.load(trace_path, allow_pickle=False) as saved:
+        expected_times = np.arange(scenario.acquisition.samples) * scenario.acquisition.sample_dt_s
+        if not np.array_equal(saved['displacement_m'], traces) or not np.array_equal(saved['time_s'], expected_times):
+            raise ValueError('saved reference traces/time differ from the compared values')
+    geometry = {p.name: sha256_file(p) for p in sorted((case / 'mesh').iterdir()) if p.is_file()}
+    geometry['loads-probes.npz'] = sha256_file(case / 'loads-probes.npz')
+    row = {'directory': case.name, 'mesh_size_m': settings.mesh_size_m, 'substeps_per_output': settings.substeps_per_output,
+        'mesh_backend': settings.mesh_backend, 'cells': settings.cells,
+        **{k: measured[k] for k in ('dt_internal_s', 'internal_steps', 'quadratic_nodes', 'tetrahedra',
+            'forward_solves', 'cache_hit', 'wall_seconds', 'computation', 'linear_mesh')},
+        'geometry_load_fingerprint': canonical_hash(geometry), 'geometry_load_sha256': geometry,
+        'case_plan_sha256': sha256_file(case / 'case-plan.json'),
+        'case_report_sha256': sha256_file(case / 'waveform-case.json'),
+        'float64_traces_sha256': sha256_file(trace_path)}
+    return traces, row, kernel
 
 
 def run_elmer_plate_refinement(scenario, settings, home, output, guard=None, *,
@@ -73,12 +121,10 @@ def run_elmer_plate_refinement(scenario, settings, home, output, guard=None, *,
         raise FileExistsError('P2 refinement needs a new or empty output directory')
     output.mkdir(parents=True, exist_ok=True)
     guard = guard or ResourceGuard()
-    def sources():
-        return {p.name: sha256_file(p) for p in sorted(Path(__file__).parent.glob('*.py'))}
     definitions = [(h, settings.substeps_per_output[-1]) for h in settings.mesh_sizes_m]
     definitions += [(settings.mesh_sizes_m[-1], n) for n in settings.substeps_per_output[:2]]
     plan = {'kind': 'predeclared_elmer_p2_plate_refinement', 'scenario': asdict(scenario), 'settings': asdict(settings),
-            'actions': [asdict(a) for a in actions], 'state': state, 'source_sha256': sources(),
+            'actions': [asdict(a) for a in actions], 'state': state, 'source_sha256': reference_source_hashes(),
             'requested_forward_solves': 5, 'ready_for_training_data': False,
             'definitions': [{'mesh_size_m': h, 'substeps_per_output': n} for h, n in definitions]}
     plan['fingerprint'] = canonical_hash(plan)
@@ -90,45 +136,12 @@ def run_elmer_plate_refinement(scenario, settings, home, output, guard=None, *,
     kernel = None
     try:
         for index, (size, substeps) in enumerate(definitions):
-            guard.check(force=True)
-            if sources() != plan['source_sha256']:
-                raise ValueError('reference source changed during the frozen study')
             case = output / f'case-{index:02d}'
             case_settings = replace(settings.reference, mesh_size_m=size, substeps_per_output=substeps)
-            traces, measured = run_elmer_waveform_case(scenario, case_settings, home, case, guard,
-                transmitter=transmitter, frequency_hz=frequency, state=state, cache_dir=cache_dir)
-            case_plan = json.loads((case / 'case-plan.json').read_text(encoding='utf-8'))
-            if kernel is None:
-                kernel = (case_plan['kernel_sha256'], case_plan['runtime'])
-            if (canonical_hash({k: v for k, v in case_plan.items() if k != 'fingerprint'}) != case_plan['fingerprint']
-                    or (case_plan['kernel_sha256'], case_plan['runtime']) != kernel
-                    or case_plan['settings'] != asdict(case_settings) or case_plan['source_sha256'] != plan['source_sha256']
-                    or case_plan['actions'] != plan['actions'] or canonical_hash(case_plan['scenario']) != canonical_hash(plan['scenario'])
-                    or case_plan['state'] != state or not measured['completed']):
-                raise ValueError('reference case changed the frozen source/kernel/scenario/actions/state')
-            if traces.shape != (len(actions), scenario.acquisition.samples) or not np.isfinite(traces).all():
-                raise ValueError('reference traces disagree with the frozen actions/samples')
-            trace_path = case / 'solver-traces.npz'
-            if sha256_file(trace_path) != measured['trace_sha256']:
-                raise ValueError('saved reference traces changed')
-            with zipfile.ZipFile(trace_path) as archive:
-                if len(archive.infolist()) != 2 or sum(e.file_size for e in archive.infolist()) > 16 * 1024**2:
-                    raise MemoryError('reference trace archive exceeds 16 MiB or has invalid entries')
-            with np.load(trace_path, allow_pickle=False) as saved:
-                expected_times = np.arange(scenario.acquisition.samples) * scenario.acquisition.sample_dt_s
-                if not np.array_equal(saved['displacement_m'], traces) or not np.array_equal(saved['time_s'], expected_times):
-                    raise ValueError('saved reference traces/time differ from the compared values')
-            geometry = {p.name: sha256_file(p) for p in sorted((case / 'mesh').iterdir()) if p.is_file()}
-            geometry['loads-probes.npz'] = sha256_file(case / 'loads-probes.npz')
-            report['cases'].append({'directory': case.name, 'mesh_size_m': size, 'substeps_per_output': substeps,
-                **{k: measured[k] for k in ('dt_internal_s', 'internal_steps', 'quadratic_nodes', 'tetrahedra',
-                    'forward_solves', 'cache_hit', 'wall_seconds', 'computation', 'linear_mesh')},
-                'geometry_load_fingerprint': canonical_hash(geometry), 'geometry_load_sha256': geometry,
-                'case_plan_sha256': sha256_file(case / 'case-plan.json'),
-                'case_report_sha256': sha256_file(case / 'waveform-case.json'),
-                'float64_traces_sha256': sha256_file(case / 'solver-traces.npz')})
+            traces, row, kernel = checked_reference_case(scenario, case_settings, home, case, guard, plan, cache_dir, kernel)
+            report['cases'].append(row)
             raw.append(traces)
-        if sources() != plan['source_sha256']:
+        if reference_source_hashes() != plan['source_sha256']:
             raise ValueError('reference source changed during the frozen study')
         if len({report['cases'][i]['geometry_load_fingerprint'] for i in (2, 3, 4)}) != 1:
             raise ValueError('temporal comparison changed the spatial mesh or physical apertures')

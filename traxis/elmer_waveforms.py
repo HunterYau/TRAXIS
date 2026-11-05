@@ -22,6 +22,7 @@ from traxis.cad_mesh import cad_mesh
 from traxis.config import positive
 from traxis.elmer_reference import elmer_environment, operator_sif, run_monitored, write_elmer_mesh
 from traxis.forward import _cached_group
+from traxis.geometry import estimate_mesh, structured_mesh
 from traxis.quadratic_patches import TETRAHEDRON_EDGES, load_quadratic_elmer_mesh, quadratic_surface_patch
 from traxis.scenarios import Scenario
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
@@ -41,8 +42,13 @@ class ElmerWaveSettings:
     max_volume_error: float = .05
     max_operator_entries: int = 4000000
     max_operator_file_mib: float = 256
+    mesh_backend: str = 'cad'
+    cells: tuple[int, int, int] = (12, 12, 2)
 
     def __post_init__(self):
+        object.__setattr__(self, 'cells', tuple(self.cells))
+        if self.mesh_backend not in ('cad', 'structured') or len(self.cells) != 3 or any(type(n) is not int or n < 1 for n in self.cells):
+            raise ValueError('choose CAD or structured mesh with three positive integer cell counts')
         for key in ('mesh_size_m', 'max_cad_assembly_mib', 'max_matrix_screen_mib', 'max_volume_error', 'max_operator_file_mib'):
             positive(key, getattr(self, key))
         if self.max_volume_error > 1 or self.max_operator_file_mib > 256 or self.max_matrix_screen_mib > 512:
@@ -55,6 +61,18 @@ class ElmerWaveSettings:
                 raise ValueError(f'{key} must lie in [{low},{high}]')
         if type(self.mesh_algorithm) is not int or self.mesh_algorithm not in (1, 4, 10) or self.mesh_optimization not in ('default', 'Netgen'):
             raise ValueError('invalid CAD meshing algorithm/optimizer')
+
+
+def screen_structured_reference(settings: ElmerWaveSettings):
+    """Count the complete half-grid P2 nodes before allocating a linear mesh."""
+    estimate = estimate_mesh(settings.cells)
+    nodes = math.prod(2 * n + 1 for n in settings.cells)
+    matrix_mib = estimate.tetrahedra_upper * 900 * 32 / 1024**2
+    if (nodes > settings.max_quadratic_nodes or estimate.tetrahedra_upper > settings.max_tetrahedra
+            or estimate.assembly_bytes_upper > settings.max_cad_assembly_mib * 1024**2
+            or matrix_mib > settings.max_matrix_screen_mib):
+        raise MemoryError('structured P2 node/element/assembly screen exceeds the reference limits')
+    return estimate
 
 
 def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, home: Path, output: Path,
@@ -74,6 +92,11 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
     steps = (scenario.acquisition.samples - 1) * settings.substeps_per_output
     if steps > settings.max_internal_steps:
         raise ValueError('reference case exceeds its internal-step limit before meshing')
+    recesses = scenario.recesses if state == 'current' else ()
+    if settings.mesh_backend == 'structured':
+        if recesses:
+            raise ValueError('structured P2 reference supports intact geometry only; use CAD for recesses')
+        screen_structured_reference(settings)
     solver, env = elmer_environment(home)
     grid = solver.with_name('ElmerGrid' + solver.suffix)
     if not grid.is_file():
@@ -106,11 +129,27 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
               'ready_for_training_data': False, 'training_updates': 0}
     started = time.perf_counter()
     try:
-        recesses = scenario.recesses if state == 'current' else ()
-        linear, mesh_report = cad_mesh(scenario.plate, recesses, settings.mesh_size_m,
-            max_assembly_mib=settings.max_cad_assembly_mib, max_tetrahedra=settings.max_tetrahedra,
-            seed=scenario.geometry_seed, optimization=settings.mesh_optimization, algorithm=settings.mesh_algorithm, guard=guard)
+        if settings.mesh_backend == 'cad':
+            linear, mesh_report = cad_mesh(scenario.plate, recesses, settings.mesh_size_m,
+                max_assembly_mib=settings.max_cad_assembly_mib, max_tetrahedra=settings.max_tetrahedra,
+                seed=scenario.geometry_seed, optimization=settings.mesh_optimization, algorithm=settings.mesh_algorithm, guard=guard)
+        else:
+            guard.check(force=True)
+            linear = structured_mesh(scenario.plate, settings.cells,
+                max_assembly_bytes=settings.max_cad_assembly_mib * 1024**2)
+            volume = scenario.plate.width_m * scenario.plate.height_m * scenario.plate.thickness_m
+            mesh_report = {'backend': 'structured_six_tet', 'cells': settings.cells, 'nodes': len(linear.points_m),
+                'tetrahedra': len(linear.tetrahedra), 'cell_widths_m': [length / n for length, n in
+                    zip((scenario.plate.width_m, scenario.plate.height_m, scenario.plate.thickness_m), settings.cells)],
+                'requested_removed_volume_m3': 0., 'meshed_removed_volume_m3': 0.,
+                'exact_box_volume_m3': volume, 'ready_for_training_data': False,
+                'note': 'Exact intact box; six tets per cell with a common body diagonal. No recess voxelization.'}
         corners = linear.points_m[linear.tetrahedra]
+        if settings.mesh_backend == 'structured':
+            measured_volume = float(abs(np.linalg.det(corners[:, 1:] - corners[:, :1])).sum() / 6)
+            mesh_report.update({'tet_retained_volume_m3': measured_volume, 'retained_volume_relative_error': abs(measured_volume / volume - 1)})
+            if mesh_report['retained_volume_relative_error'] > 1e-12:
+                raise ArithmeticError('structured tetrahedra do not preserve the box volume')
         lengths = np.linalg.norm(corners[:, TETRAHEDRON_EDGES[:, 0]] - corners[:, TETRAHEDRON_EDGES[:, 1]], axis=2)
         mesh_report.update({'minimum_edge_m': float(lengths.min()), 'maximum_edge_m': float(lengths.max()),
                             'maximum_element_z_span_m': float(np.ptp(corners[:, :, 2], axis=1).max())})
