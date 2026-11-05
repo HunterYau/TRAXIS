@@ -1,0 +1,6 @@
+# Verified Windows x64 / CPython 3.12 wheels. Core dependencies must be installed.
+# python -m pip install --no-deps --require-hashes -r requirements-highorder-win-lock.txt
+ngsolve==6.2.2606 --hash=sha256:26ec200921ffac8e4227c96acbc95e49ab5f07be238edf4d24794f7568bd8f73
+netgen-mesher==6.2.2606 --hash=sha256:d9aba1b2f5b70288a6487f0185f28f82fb61f360f4ac97ae6555c06c939fec85
+netgen-occt==7.8.1 --hash=sha256:f701705183832cf2497c6c9339886d95dede7be63187f06be89fa146f6463d09
+ngsolve-openblas==0.3.33 --hash=sha256:7f117cc2c92cc13dbba0a7d80cc7a5633e4a2bd6d701ea8143cb0dfe7e1b973f

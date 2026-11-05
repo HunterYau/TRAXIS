@@ -1,0 +1,2 @@
+# Optional high-order mechanical reference. Install the core requirements first.
+ngsolve==6.2.2606

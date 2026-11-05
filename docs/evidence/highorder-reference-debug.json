@@ -1,0 +1,3019 @@
+{
+  "kind": "independent_highorder_and_quadrature_debug",
+  "date": "2026-11-04",
+  "completed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "plan": {
+    "kind": "independent_highorder_assembly_check",
+    "orders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "meshes": [
+      {
+        "name": "rectangular",
+        "plate": {
+          "width_m": 0.04,
+          "height_m": 0.03,
+          "thickness_m": 0.003
+        },
+        "cells": [
+          2,
+          2,
+          1
+        ],
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "material": {
+          "young_pa": 68900000000.0,
+          "poisson": 0.33,
+          "density_kg_m3": 2700.0
+        }
+      },
+      {
+        "name": "affine-skewed",
+        "plate": {
+          "width_m": 0.04,
+          "height_m": 0.03,
+          "thickness_m": 0.003
+        },
+        "cells": [
+          2,
+          2,
+          1
+        ],
+        "transform": [
+          [
+            1.0,
+            0.12,
+            0.04
+          ],
+          [
+            0.05,
+            0.9,
+            0.03
+          ],
+          [
+            0.01,
+            0.02,
+            1.1
+          ]
+        ],
+        "material": {
+          "young_pa": 71000000000.0,
+          "poisson": 0.29,
+          "density_kg_m3": 2800.0
+        }
+      }
+    ],
+    "relative_tolerance": 1e-10,
+    "rigid_tolerance": 1e-10,
+    "ritz_relative_tolerance": 1e-09,
+    "runtime": {
+      "ngsolve": {
+        "version": "6.2.2606",
+        "kernel_sha256": {
+          "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+          "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+          "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+          "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+          "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+          "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+          "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+          "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+        }
+      },
+      "netgen-mesher": {
+        "version": "6.2.2606",
+        "kernel_sha256": {
+          "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+          "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+          "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+          "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+          "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+          "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+          "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+          "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+          "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+          "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+          "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+          "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+        }
+      },
+      "netgen-occt": {
+        "version": "7.8.1",
+        "kernel_sha256": {
+          "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+          "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+          "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+          "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+          "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+          "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+          "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+          "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+          "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+          "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+          "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+          "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+          "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+          "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+          "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+          "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+          "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+          "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+          "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+          "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+          "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+          "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+          "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+          "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+          "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+          "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+          "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+          "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+          "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+          "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+          "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+          "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+          "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+          "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+          "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+          "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+          "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+          "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+          "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+          "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+          "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+          "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+          "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+          "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+          "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+          "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+          "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+        }
+      },
+      "ngsolve-openblas": {
+        "version": "0.3.33",
+        "kernel_sha256": {
+          "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+          "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+        }
+      },
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    },
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "c92dd02140a87f56fd2cdbbb93bd607261e59eb19bca64d5f14dd269091de68d",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "977789f18742dcac4b20e492914230383797be2ed8b88f4bfbbe12c278bc322b",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+      "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+      "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+      "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+      "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+      "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+      "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "highorder.py": "2c530be80c295fecbc9c0e7d42d9229693e4a9896fd4f7767cdcf759bde5047f",
+      "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+      "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+      "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+      "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "928aaa0a56b44e9dc7f4cb86d3afe9f2c584cdca3212e6ef2d46003fe387f4b0",
+      "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+      "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+      "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "534a122d6631f2a7a351305bf6c6f99994885802e253a9467ab64258ecf3ca49",
+      "waveform_commands.py": "a440b5cea97e7e7dfd54fd7f42f1c23814c1b9664ab6e8eeb65765b8d26d7e3d",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "source_snapshot_sha256": "ec7c9ace5277c85076ad82a47cae1facfba5c2c21134e64626241e9336fb3e69",
+    "ready_for_training_data": false,
+    "elmer_kernel_sha256": {
+      "bin/ElmerSolver.exe": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+      "bin/ElmerGrid.exe": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+      "bin/libelmersolver.dll": "0193f9d84c2fc69d0bbb011fe2c3710f6554f1efc0ed65c9e8cb80280c533f32",
+      "share/elmersolver/lib/StressSolve.dll": "5fe05cfe8d2ff62d5b4cc7afbe37bbd699bda8e605dbb4f24d188b08122e0148",
+      "share/elmersolver/lib/elements.def": "fd7797060c26856026a246dc986c3a8e1e0b56e9de0843b99c81f1176609edbd"
+    },
+    "elmer_relative_integration_order": 1,
+    "scope": "Independent discrete operators and exact represented fields on fixed blocks; no finite-plate wave, aperture, PZT or physical acceptance.",
+    "fingerprint": "2377e66248ed91efd69a14ee3f56a41a0abc5a6e533948ce8a324583c3938422"
+  },
+  "result": {
+    "kind": "highorder_reference_verification",
+    "completed": true,
+    "passed": true,
+    "ready_for_training_data": false,
+    "training_updates": 0,
+    "plan_fingerprint": "2377e66248ed91efd69a14ee3f56a41a0abc5a6e533948ce8a324583c3938422",
+    "native_runs": [
+      {
+        "case": "rectangular",
+        "conversion": {
+          "exit_code": 0,
+          "wall_seconds": 0.21341680001933128,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "assembly": {
+          "exit_code": 0,
+          "wall_seconds": 0.2150582000031136,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        }
+      },
+      {
+        "case": "affine-skewed",
+        "conversion": {
+          "exit_code": 0,
+          "wall_seconds": 0.21066600002814084,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "assembly": {
+          "exit_code": 0,
+          "wall_seconds": 0.21323589998064563,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        }
+      }
+    ],
+    "cases": [
+      {
+        "name": "rectangular",
+        "orders": [
+          {
+            "order": 1,
+            "dofs": 54,
+            "topology_screen": {
+              "scalar_dofs": 18,
+              "vector_dofs": 54,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.10546875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 229692061.03494024,
+                  "stiffness_quadratic_form": 229692061.03494114,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 3.9968028886505635e-15
+                },
+                {
+                  "field": "axis-0-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000636,
+                  "expected_stiffness_quadratic_form": 58280075.18796992,
+                  "stiffness_quadratic_form": 58280075.187970534,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.0436096431476471e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 58280075.18796992,
+                  "stiffness_quadratic_form": 58280075.18796703,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 4.96269692007445e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000636,
+                  "expected_stiffness_quadratic_form": 103609022.55639099,
+                  "stiffness_quadratic_form": 103609022.55639139,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 3.774758283725532e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 408341441.8398939,
+                  "stiffness_quadratic_form": 408341441.83989465,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.9984014443252818e-15
+                },
+                {
+                  "field": "axis-1-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 103609022.55639099,
+                  "stiffness_quadratic_form": 103609022.55639094,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 4.440892098500626e-16
+                },
+                {
+                  "field": "axis-2-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000644,
+                  "expected_stiffness_quadratic_form": 10360902255.639095,
+                  "stiffness_quadratic_form": 10360902255.639103,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 6.661338147750939e-16
+                },
+                {
+                  "field": "axis-2-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000644,
+                  "expected_stiffness_quadratic_form": 10360902255.639095,
+                  "stiffness_quadratic_form": 10360902255.639101,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 4.440892098500626e-16
+                },
+                {
+                  "field": "axis-2-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000065,
+                  "expected_stiffness_quadratic_form": 40834144183.98937,
+                  "stiffness_quadratic_form": 40834144183.98941,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 8.881784197001252e-16
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.00972,
+                  "mass_quadratic_form": 0.009720000000000192,
+                  "expected_stiffness_quadratic_form": 48813181667.40379,
+                  "stiffness_quadratic_form": 48813181667.403824,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 6.661338147750939e-16
+                }
+              ],
+              "maximum_mass_relative_error": 1.9984014443252818e-14,
+              "maximum_stiffness_relative_error": 4.96269692007445e-14,
+              "maximum_rigid_relative_force": 6.690624129610314e-17
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -6.925022982811344e-17,
+              -4.857446697140306e-17,
+              -2.022965221015686e-17,
+              2.0010247750001492e-17,
+              3.438690004087612e-17,
+              6.184665159548146e-17
+            ],
+            "seventh_eigenvalue_over_largest": 0.0009824361283671302,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              48265.30423088239,
+              62833.80000611563,
+              65002.728080461246,
+              67279.7065325826,
+              70117.55476846015,
+              83088.93796822663
+            ],
+            "ritz_nonincrease_passed": true,
+            "p1_independent_comparison": {
+              "passed": true,
+              "nodes": 18,
+              "tetrahedra": 24,
+              "dofs": 54,
+              "material": {
+                "young_pa": 68900000000.0,
+                "poisson": 0.33,
+                "density_kg_m3": 2700.0
+              },
+              "stiffness_relative_frobenius": 5.164891451428979e-16,
+              "consistent_mass_relative_frobenius": 2.0551391009438592e-14,
+              "row_summed_mass_relative_l2": 2.0187978446912726e-14,
+              "symmetry_relative_frobenius": [
+                1.3713998202276571e-17,
+                4.816659834942974e-33
+              ],
+              "smallest_six_eigenvalues_over_largest": [
+                -1.0115603168174365e-16,
+                -1.2774799080156814e-17,
+                6.51304877560295e-18,
+                5.164360170343136e-17,
+                8.690263462435372e-17,
+                1.3314636190091324e-16
+              ],
+              "seventh_eigenvalue_over_largest": 0.0009824361283671662,
+              "six_rigid_modes": true,
+              "relative_matrix_tolerance": 1e-10,
+              "relative_rigid_eigenvalue_tolerance": 1e-10
+            },
+            "passed": true,
+            "operators_sha256": "d69ff431a8929e64baf3b827f61ae513d051834e49b9090bffa7d3259d4dbb7f"
+          },
+          {
+            "order": 2,
+            "dofs": 225,
+            "topology_screen": {
+              "scalar_dofs": 75,
+              "vector_dofs": 225,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.6591796875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 306256081.3799203,
+                  "stiffness_quadratic_form": 306256081.3799268,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.1316282072803006e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999527,
+                  "expected_stiffness_quadratic_form": 77706766.91729324,
+                  "stiffness_quadratic_form": 77706766.91729486,
+                  "mass_relative_error": 2.4313884239290928e-14,
+                  "stiffness_relative_error": 2.0872192862952943e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 77706766.91729324,
+                  "stiffness_quadratic_form": 77706766.91729492,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.1760371282653068e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 138145363.40852132,
+                  "stiffness_quadratic_form": 138145363.4085243,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1538326677728037e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 544455255.7865251,
+                  "stiffness_quadratic_form": 544455255.7865368,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1538326677728037e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 138145363.40852132,
+                  "stiffness_quadratic_form": 138145363.40852392,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 1.887379141862766e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999534,
+                  "expected_stiffness_quadratic_form": 13814536340.852127,
+                  "stiffness_quadratic_form": 13814536340.85241,
+                  "mass_relative_error": 2.398081733190338e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999534,
+                  "expected_stiffness_quadratic_form": 13814536340.852127,
+                  "stiffness_quadratic_form": 13814536340.85241,
+                  "mass_relative_error": 2.398081733190338e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 54445525578.6525,
+                  "stiffness_quadratic_form": 54445525578.6536,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.0058319999999999995,
+                  "mass_quadratic_form": 0.005831999999999859,
+                  "expected_stiffness_quadratic_form": 62637240896.358536,
+                  "stiffness_quadratic_form": 62637240896.35981,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                }
+              ],
+              "maximum_mass_relative_error": 2.4313884239290928e-14,
+              "maximum_stiffness_relative_error": 2.1760371282653068e-14,
+              "maximum_rigid_relative_force": 1.6946066800026933e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.9152576095812174e-17,
+              -3.81039674739424e-17,
+              -2.5745687443120838e-17,
+              -2.0014541431588877e-17,
+              1.0152219107506458e-17,
+              1.915633225279272e-17
+            ],
+            "seventh_eigenvalue_over_largest": 6.815333477521101e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8209.187179336219,
+              10903.968683820913,
+              20547.58489220287,
+              24710.611744049384,
+              31271.294407846268,
+              36154.908286503945
+            ],
+            "ritz_nonincrease_passed": true,
+            "p2_elmer_basis_comparison": {
+              "stiffness_relative_frobenius": 1.9040150061433835e-14,
+              "mass_relative_frobenius": 2.4134852342153108e-14,
+              "basis_condition_number": 38.26520425147521,
+              "basis_rank": 225,
+              "dimension": 225,
+              "elmer_exact_mass_relative_error": 1.4440542875396833e-15,
+              "ngsolve_exact_mass_relative_error": 2.4722547308513276e-14
+            },
+            "passed": true,
+            "operators_sha256": "e36737c961d4680e63fb09c80b86562edcca0c884a11f92de031ef8953e9645e"
+          },
+          {
+            "order": 3,
+            "dofs": 588,
+            "topology_screen": {
+              "scalar_dofs": 196,
+              "vector_dofs": 588,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 2.63671875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714129,
+                  "expected_stiffness_quadratic_form": 413445709.8628925,
+                  "stiffness_quadratic_form": 413445709.86288357,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 2.1649348980190553e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714129,
+                  "expected_stiffness_quadratic_form": 104904135.33834586,
+                  "stiffness_quadratic_form": 104904135.33834372,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 2.0317081350640365e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714124,
+                  "expected_stiffness_quadratic_form": 104904135.33834586,
+                  "stiffness_quadratic_form": 104904135.33834243,
+                  "mass_relative_error": 1.1546319456101628e-14,
+                  "stiffness_relative_error": 3.26405569239796e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.001388571428571416,
+                  "expected_stiffness_quadratic_form": 186496240.60150376,
+                  "stiffness_quadratic_form": 186496240.6015015,
+                  "mass_relative_error": 8.881784197001252e-15,
+                  "stiffness_relative_error": 1.2101430968414206e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714163,
+                  "expected_stiffness_quadratic_form": 735014595.3118088,
+                  "stiffness_quadratic_form": 735014595.3117999,
+                  "mass_relative_error": 8.770761894538737e-15,
+                  "stiffness_relative_error": 1.2212453270876722e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714159,
+                  "expected_stiffness_quadratic_form": 186496240.60150376,
+                  "stiffness_quadratic_form": 186496240.60150084,
+                  "mass_relative_error": 9.103828801926284e-15,
+                  "stiffness_relative_error": 1.5654144647214707e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714116,
+                  "expected_stiffness_quadratic_form": 18649624060.150375,
+                  "stiffness_quadratic_form": 18649624060.150032,
+                  "mass_relative_error": 1.2212453270876722e-14,
+                  "stiffness_relative_error": 1.84297022087776e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714118,
+                  "expected_stiffness_quadratic_form": 18649624060.150375,
+                  "stiffness_quadratic_form": 18649624060.150032,
+                  "mass_relative_error": 1.199040866595169e-14,
+                  "stiffness_relative_error": 1.84297022087776e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714116,
+                  "expected_stiffness_quadratic_form": 73501459531.18088,
+                  "stiffness_quadratic_form": 73501459531.17955,
+                  "mass_relative_error": 1.2212453270876722e-14,
+                  "stiffness_relative_error": 1.8096635301390052e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.004165714285714286,
+                  "mass_quadratic_form": 0.0041657142857142405,
+                  "expected_stiffness_quadratic_form": 81990923816.89517,
+                  "stiffness_quadratic_form": 81990923816.89372,
+                  "mass_relative_error": 1.0880185641326534e-14,
+                  "stiffness_relative_error": 1.765254609153999e-14
+                }
+              ],
+              "maximum_mass_relative_error": 1.2212453270876722e-14,
+              "maximum_stiffness_relative_error": 3.26405569239796e-14,
+              "maximum_rigid_relative_force": 8.607395132810606e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -3.163283959726715e-17,
+              -2.1559002656005872e-17,
+              -1.972130576443862e-18,
+              1.0745201280314299e-18,
+              7.804921369056388e-18,
+              2.1785927910867453e-17
+            ],
+            "seventh_eigenvalue_over_largest": 2.453081020856149e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              7875.57495852469,
+              9559.612850219384,
+              17653.277030408473,
+              19000.25852245544,
+              22877.771248459292,
+              29930.907896353503
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "96058e954b9241e8ddb40ea4dff1ee9c67a2cc31abae1f4c1e0551ffdb0a4cde"
+          },
+          {
+            "order": 4,
+            "dofs": 1215,
+            "topology_screen": {
+              "scalar_dofs": 405,
+              "vector_dofs": 1215,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 8.074951171875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999595,
+                  "expected_stiffness_quadratic_form": 525010425.22272056,
+                  "stiffness_quadratic_form": 525010425.2226952,
+                  "mass_relative_error": 3.752553823233029e-14,
+                  "stiffness_relative_error": 4.8405723873656825e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999595,
+                  "expected_stiffness_quadratic_form": 133211600.42964554,
+                  "stiffness_quadratic_form": 133211600.42963904,
+                  "mass_relative_error": 3.752553823233029e-14,
+                  "stiffness_relative_error": 4.873879078104437e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999597,
+                  "expected_stiffness_quadratic_form": 133211600.42964554,
+                  "stiffness_quadratic_form": 133211600.42963974,
+                  "mass_relative_error": 3.730349362740526e-14,
+                  "stiffness_relative_error": 4.3520742565306136e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999664,
+                  "expected_stiffness_quadratic_form": 236820622.98603654,
+                  "stiffness_quadratic_form": 236820622.98603135,
+                  "mass_relative_error": 3.108624468950438e-14,
+                  "stiffness_relative_error": 2.1871393585115584e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999666,
+                  "expected_stiffness_quadratic_form": 933351867.0626146,
+                  "stiffness_quadratic_form": 933351867.0625969,
+                  "mass_relative_error": 3.097522238704187e-14,
+                  "stiffness_relative_error": 1.887379141862766e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999664,
+                  "expected_stiffness_quadratic_form": 236820622.98603654,
+                  "stiffness_quadratic_form": 236820622.98603395,
+                  "mass_relative_error": 3.108624468950438e-14,
+                  "stiffness_relative_error": 1.099120794378905e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999545,
+                  "expected_stiffness_quadratic_form": 23682062298.603645,
+                  "stiffness_quadratic_form": 23682062298.60286,
+                  "mass_relative_error": 4.218847493575595e-14,
+                  "stiffness_relative_error": 3.319566843629218e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999543,
+                  "expected_stiffness_quadratic_form": 23682062298.603645,
+                  "stiffness_quadratic_form": 23682062298.60286,
+                  "mass_relative_error": 4.241051954068098e-14,
+                  "stiffness_relative_error": 3.319566843629218e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999547,
+                  "expected_stiffness_quadratic_form": 93335186706.26143,
+                  "stiffness_quadratic_form": 93335186706.25839,
+                  "mass_relative_error": 4.196643033083092e-14,
+                  "stiffness_relative_error": 3.2529534621517087e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003239999999999881,
+                  "expected_stiffness_quadratic_form": 102134552979.08635,
+                  "stiffness_quadratic_form": 102134552979.08307,
+                  "mass_relative_error": 3.6637359812630166e-14,
+                  "stiffness_relative_error": 3.2085445411667024e-14
+                }
+              ],
+              "maximum_mass_relative_error": 4.241051954068098e-14,
+              "maximum_stiffness_relative_error": 4.873879078104437e-14,
+              "maximum_rigid_relative_force": 8.339443833456808e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -2.2117737532845934e-17,
+              -1.1679505568604316e-17,
+              -4.652399984710591e-19,
+              1.926697491285602e-18,
+              6.613594444828338e-18,
+              3.2320995756537336e-17
+            ],
+            "seventh_eigenvalue_over_largest": 1.1183432722533323e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              7767.824405626,
+              9535.750945061855,
+              17604.19686189348,
+              18154.201126371463,
+              22067.738923855366,
+              27202.17825268082
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "de505ff8607246422a2b9241e58e891683cfe0941424453a557b38f589397e28"
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "affine-skewed",
+        "orders": [
+          {
+            "order": 1,
+            "dofs": 54,
+            "topology_screen": {
+              "scalar_dofs": 18,
+              "vector_dofs": 54,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.10546875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 209726984.45163402,
+                  "stiffness_quadratic_form": 209726984.45163444,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.9984014443252818e-15
+                },
+                {
+                  "field": "axis-0-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 65425311.08755986,
+                  "stiffness_quadratic_form": 65425311.0875597,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.4424906541753444e-15
+                },
+                {
+                  "field": "axis-0-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 62999971.90581116,
+                  "stiffness_quadratic_form": 62999971.90581019,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.532107773982716e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000067,
+                  "expected_stiffness_quadratic_form": 136686634.4508096,
+                  "stiffness_quadratic_form": 136686634.4508102,
+                  "mass_relative_error": 2.020605904817785e-14,
+                  "stiffness_relative_error": 4.440892098500626e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000673,
+                  "expected_stiffness_quadratic_form": 458425211.73606515,
+                  "stiffness_quadratic_form": 458425211.73606527,
+                  "mass_relative_error": 2.020605904817785e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-1-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000677,
+                  "expected_stiffness_quadratic_form": 136097619.27672634,
+                  "stiffness_quadratic_form": 136097619.27672532,
+                  "mass_relative_error": 2.042810365310288e-14,
+                  "stiffness_relative_error": 7.438494264988549e-15
+                },
+                {
+                  "field": "axis-2-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 8960733540.827682,
+                  "stiffness_quadratic_form": 8960733540.82768,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-2-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000656,
+                  "expected_stiffness_quadratic_form": 8968454446.768412,
+                  "stiffness_quadratic_form": 8968454446.76841,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-2-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000656,
+                  "expected_stiffness_quadratic_form": 30278906020.32333,
+                  "stiffness_quadratic_form": 30278906020.323334,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.009903761280000001,
+                  "mass_quadratic_form": 0.009903761280000199,
+                  "expected_stiffness_quadratic_form": 36296990527.88247,
+                  "stiffness_quadratic_form": 36296990527.88248,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                }
+              ],
+              "maximum_mass_relative_error": 2.042810365310288e-14,
+              "maximum_stiffness_relative_error": 1.532107773982716e-14,
+              "maximum_rigid_relative_force": 7.587341883521236e-17
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -5.2845902887538313e-17,
+              -2.6627761894750997e-17,
+              6.003071978358726e-18,
+              2.4421330692507646e-17,
+              4.061113343178197e-17,
+              7.855650474810174e-17
+            ],
+            "seventh_eigenvalue_over_largest": 0.0018289748687851453,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              56887.44823823486,
+              65602.14714442949,
+              66662.28171256538,
+              73433.74331975286,
+              76769.26720688843,
+              94426.22024978208
+            ],
+            "ritz_nonincrease_passed": true,
+            "p1_independent_comparison": {
+              "passed": true,
+              "nodes": 18,
+              "tetrahedra": 24,
+              "dofs": 54,
+              "material": {
+                "young_pa": 71000000000.0,
+                "poisson": 0.29,
+                "density_kg_m3": 2800.0
+              },
+              "stiffness_relative_frobenius": 8.487000601539927e-16,
+              "consistent_mass_relative_frobenius": 1.9593514475501688e-14,
+              "row_summed_mass_relative_l2": 1.904925169817808e-14,
+              "symmetry_relative_frobenius": [
+                4.380638743951225e-17,
+                5.370570969672547e-33
+              ],
+              "smallest_six_eigenvalues_over_largest": [
+                -6.092095564137007e-17,
+                -3.6379534026370505e-18,
+                2.4419149244698868e-17,
+                4.0029520232360083e-17,
+                7.43912010330589e-17,
+                1.3557371141114806e-16
+              ],
+              "seventh_eigenvalue_over_largest": 0.0018289748687851032,
+              "six_rigid_modes": true,
+              "relative_matrix_tolerance": 1e-10,
+              "relative_rigid_eigenvalue_tolerance": 1e-10
+            },
+            "passed": true,
+            "operators_sha256": "b7ef69a7ecdab7d39cc823ef5aa91c6ef47e48142d8591fb5732c0dd379d586f"
+          },
+          {
+            "order": 2,
+            "dofs": 225,
+            "topology_screen": {
+              "scalar_dofs": 75,
+              "vector_dofs": 225,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.6591796875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 279635979.2688454,
+                  "stiffness_quadratic_form": 279635979.26885164,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.2426505097428162e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 87233748.11674647,
+                  "stiffness_quadratic_form": 87233748.11674836,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1760371282653068e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 83999962.54108155,
+                  "stiffness_quadratic_form": 83999962.5410844,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 3.397282455352979e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.001980752255999953,
+                  "expected_stiffness_quadratic_form": 182248845.9344128,
+                  "stiffness_quadratic_form": 182248845.93441713,
+                  "mass_relative_error": 2.3869795029440866e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999536,
+                  "expected_stiffness_quadratic_form": 611233615.6480869,
+                  "stiffness_quadratic_form": 611233615.6480999,
+                  "mass_relative_error": 2.3647750424515834e-14,
+                  "stiffness_relative_error": 2.1316282072803006e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999536,
+                  "expected_stiffness_quadratic_form": 181463492.36896846,
+                  "stiffness_quadratic_form": 181463492.3689736,
+                  "mass_relative_error": 2.3647750424515834e-14,
+                  "stiffness_relative_error": 2.842170943040401e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 11947644721.103577,
+                  "stiffness_quadratic_form": 11947644721.103807,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9317880628477724e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 11957939262.357882,
+                  "stiffness_quadratic_form": 11957939262.358116,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9539925233402755e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 40371874693.76444,
+                  "stiffness_quadratic_form": 40371874693.765236,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.005942256768000001,
+                  "mass_quadratic_form": 0.005942256767999857,
+                  "expected_stiffness_quadratic_form": 46612676600.05281,
+                  "stiffness_quadratic_form": 46612676600.053734,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                }
+              ],
+              "maximum_mass_relative_error": 2.475797344914099e-14,
+              "maximum_stiffness_relative_error": 3.397282455352979e-14,
+              "maximum_rigid_relative_force": 2.9364962691496544e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -3.4835596336181686e-17,
+              -2.1976038658596952e-17,
+              -1.137343865288131e-17,
+              2.0072460217688225e-17,
+              4.69032713946361e-17,
+              6.771062787912116e-17
+            ],
+            "seventh_eigenvalue_over_largest": 1.2471659770205823e-05,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              9591.694517483387,
+              12582.262461873243,
+              27010.45815721888,
+              29975.21433553192,
+              36467.300926029886,
+              42364.13903846857
+            ],
+            "ritz_nonincrease_passed": true,
+            "p2_elmer_basis_comparison": {
+              "stiffness_relative_frobenius": 2.622725616892386e-14,
+              "mass_relative_frobenius": 2.6281219499723325e-14,
+              "basis_condition_number": 38.26520425147524,
+              "basis_rank": 225,
+              "dimension": 225,
+              "elmer_exact_mass_relative_error": 2.8537567385995666e-15,
+              "ngsolve_exact_mass_relative_error": 2.546772960218184e-14
+            },
+            "passed": true,
+            "operators_sha256": "d62ea30f304f574064fab19f3894dd5e0ae8b0a1db2f2d7fe5d1c2696f8f7e92"
+          },
+          {
+            "order": 3,
+            "dofs": 588,
+            "topology_screen": {
+              "scalar_dofs": 196,
+              "vector_dofs": 588,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 2.63671875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999824,
+                  "expected_stiffness_quadratic_form": 377508572.0129413,
+                  "stiffness_quadratic_form": 377508572.0129333,
+                  "mass_relative_error": 1.2545520178264269e-14,
+                  "stiffness_relative_error": 2.120525977034049e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999824,
+                  "expected_stiffness_quadratic_form": 117765559.95760778,
+                  "stiffness_quadratic_form": 117765559.95760462,
+                  "mass_relative_error": 1.2545520178264269e-14,
+                  "stiffness_relative_error": 2.6867397195928788e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999822,
+                  "expected_stiffness_quadratic_form": 113399949.4304601,
+                  "stiffness_quadratic_form": 113399949.43046118,
+                  "mass_relative_error": 1.27675647831893e-14,
+                  "stiffness_relative_error": 9.547918011776346e-15
+                },
+                {
+                  "field": "axis-1-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999844,
+                  "expected_stiffness_quadratic_form": 246035942.01145735,
+                  "stiffness_quadratic_form": 246035942.01145253,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 1.965094753586527e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999844,
+                  "expected_stiffness_quadratic_form": 825165381.1249171,
+                  "stiffness_quadratic_form": 825165381.1249008,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999842,
+                  "expected_stiffness_quadratic_form": 244975714.6981074,
+                  "stiffness_quadratic_form": 244975714.69810453,
+                  "mass_relative_error": 1.1324274851176597e-14,
+                  "stiffness_relative_error": 1.1657341758564144e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.00141482303999998,
+                  "expected_stiffness_quadratic_form": 16129320373.489828,
+                  "stiffness_quadratic_form": 16129320373.489437,
+                  "mass_relative_error": 1.4210854715202004e-14,
+                  "stiffness_relative_error": 2.4202861936828413e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999798,
+                  "expected_stiffness_quadratic_form": 16143218004.18314,
+                  "stiffness_quadratic_form": 16143218004.182749,
+                  "mass_relative_error": 1.4432899320127035e-14,
+                  "stiffness_relative_error": 2.4202861936828413e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999803,
+                  "expected_stiffness_quadratic_form": 54502030836.582,
+                  "stiffness_quadratic_form": 54502030836.5807,
+                  "mass_relative_error": 1.4099832412739488e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.004244469120000001,
+                  "mass_quadratic_form": 0.004244469119999947,
+                  "expected_stiffness_quadratic_form": 61054637101.09131,
+                  "stiffness_quadratic_form": 61054637101.08986,
+                  "mass_relative_error": 1.2656542480726785e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                }
+              ],
+              "maximum_mass_relative_error": 1.4432899320127035e-14,
+              "maximum_stiffness_relative_error": 2.6867397195928788e-14,
+              "maximum_rigid_relative_force": 7.090741885242741e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.451636190670462e-17,
+              -1.900358254433169e-17,
+              -4.054753507034153e-18,
+              6.1464079584090836e-18,
+              3.3223891730955794e-17,
+              6.114625105086895e-17
+            ],
+            "seventh_eigenvalue_over_largest": 4.246438826716675e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8971.803188519922,
+              11140.430340401625,
+              21898.80539053884,
+              23510.855906413562,
+              28495.631255155346,
+              34193.86613548437
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "6787cbf3efb9693040eac35ae198b59860af465fe79bed332a247cb6238e5e02"
+          },
+          {
+            "order": 4,
+            "dofs": 1215,
+            "topology_screen": {
+              "scalar_dofs": 405,
+              "vector_dofs": 1215,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 8.074951171875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.001100417919999975,
+                  "expected_stiffness_quadratic_form": 479375964.4608778,
+                  "stiffness_quadratic_form": 479375964.4608678,
+                  "mass_relative_error": 2.2648549702353193e-14,
+                  "stiffness_relative_error": 2.0761170560490427e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.001100417919999975,
+                  "expected_stiffness_quadratic_form": 149543568.2001368,
+                  "stiffness_quadratic_form": 149543568.20013395,
+                  "mass_relative_error": 2.2648549702353193e-14,
+                  "stiffness_relative_error": 1.9095836023552692e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999753,
+                  "expected_stiffness_quadratic_form": 143999935.7847112,
+                  "stiffness_quadratic_form": 143999935.78470632,
+                  "mass_relative_error": 2.2426505097428162e-14,
+                  "stiffness_relative_error": 3.397282455352979e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999814,
+                  "expected_stiffness_quadratic_form": 312426593.0304219,
+                  "stiffness_quadratic_form": 312426593.0304246,
+                  "mass_relative_error": 1.6986412276764895e-14,
+                  "stiffness_relative_error": 8.659739592076221e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999814,
+                  "expected_stiffness_quadratic_form": 1047829055.3967203,
+                  "stiffness_quadratic_form": 1047829055.3967309,
+                  "mass_relative_error": 1.6986412276764895e-14,
+                  "stiffness_relative_error": 1.021405182655144e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999816,
+                  "expected_stiffness_quadratic_form": 311080272.63251734,
+                  "stiffness_quadratic_form": 311080272.63251865,
+                  "mass_relative_error": 1.6764367671839864e-14,
+                  "stiffness_relative_error": 4.218847493575595e-15
+                },
+                {
+                  "field": "axis-2-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999582,
+                  "expected_stiffness_quadratic_form": 20481676664.74899,
+                  "stiffness_quadratic_form": 20481676664.74848,
+                  "mass_relative_error": 3.808064974464287e-14,
+                  "stiffness_relative_error": 2.475797344914099e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999582,
+                  "expected_stiffness_quadratic_form": 20499324449.75637,
+                  "stiffness_quadratic_form": 20499324449.755863,
+                  "mass_relative_error": 3.808064974464287e-14,
+                  "stiffness_relative_error": 2.475797344914099e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999577,
+                  "expected_stiffness_quadratic_form": 69208928046.45332,
+                  "stiffness_quadratic_form": 69208928046.45163,
+                  "mass_relative_error": 3.8413716652030416e-14,
+                  "stiffness_relative_error": 2.4424906541753444e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253759999916,
+                  "expected_stiffness_quadratic_form": 76086065377.68237,
+                  "stiffness_quadratic_form": 76086065377.6806,
+                  "mass_relative_error": 2.5646151868841116e-14,
+                  "stiffness_relative_error": 2.3314683517128287e-14
+                }
+              ],
+              "maximum_mass_relative_error": 3.8413716652030416e-14,
+              "maximum_stiffness_relative_error": 3.397282455352979e-14,
+              "maximum_rigid_relative_force": 2.5468322312769295e-15
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.973182512631599e-17,
+              -2.791996643592665e-17,
+              -1.9462064508454136e-17,
+              -1.558401435356342e-17,
+              -1.2376397292352602e-17,
+              5.304144153044852e-18
+            ],
+            "seventh_eigenvalue_over_largest": 1.9351573692643462e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8870.516545375034,
+              11078.045239505609,
+              20474.48559001405,
+              23429.14168623184,
+              26809.844039815704,
+              31985.899915101574
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "2baceef33de0c890d97bd1f24b6032ca960fafa2005ace0bd4cdeb42874c6c71"
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "worker_run": {
+      "exit_code": 0,
+      "wall_seconds": 2.757190599979367,
+      "maximum_observed_external_processes": 5,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+    },
+    "native_report_sha256": "6e4b3af660cd53e7e1a3ba32d066fc915e7c9e7697d491e970a97f6028d2ee5e",
+    "wall_seconds": 3.7167992999893613
+  },
+  "resources": {
+    "limits": {
+      "max_seconds": 60.0,
+      "max_rss_mib": 512.0,
+      "max_system_memory_percent": 92,
+      "min_available_mib": 768,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "sampled_combined_rss_mib": 291.265625,
+    "sampled_system_memory_percent": 70.4,
+    "minimum_available_mib": 4801.91796875,
+    "gpu_used_mib": 1386.0,
+    "gpu_total_mib": 8192.0,
+    "gpu_temperature_c": 45.0,
+    "cpu_temperature_c": null,
+    "note": "Sampled monitor and observed descendants; CPU temperature unavailable; CPU physics only."
+  },
+  "initial_failed_mass_comparison": {
+    "kind": "highorder_reference_verification",
+    "completed": true,
+    "passed": false,
+    "ready_for_training_data": false,
+    "training_updates": 0,
+    "plan_fingerprint": "9ee42e64532f7f97b4ed78fee7a663b600cbc34d09241dfd9d3c44e6cedd8a34",
+    "native_runs": [
+      {
+        "case": "rectangular",
+        "conversion": {
+          "exit_code": 0,
+          "wall_seconds": 0.21278020000318065,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "assembly": {
+          "exit_code": 0,
+          "wall_seconds": 0.21636570000555366,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        }
+      },
+      {
+        "case": "affine-skewed",
+        "conversion": {
+          "exit_code": 0,
+          "wall_seconds": 0.21010090003255755,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "assembly": {
+          "exit_code": 0,
+          "wall_seconds": 0.2134712000261061,
+          "maximum_observed_external_processes": 2,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        }
+      }
+    ],
+    "cases": [
+      {
+        "name": "rectangular",
+        "orders": [
+          {
+            "order": 1,
+            "dofs": 54,
+            "topology_screen": {
+              "scalar_dofs": 18,
+              "vector_dofs": 54,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.10546875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 229692061.03494024,
+                  "stiffness_quadratic_form": 229692061.03494114,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 3.9968028886505635e-15
+                },
+                {
+                  "field": "axis-0-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000636,
+                  "expected_stiffness_quadratic_form": 58280075.18796992,
+                  "stiffness_quadratic_form": 58280075.187970534,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.0436096431476471e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 58280075.18796992,
+                  "stiffness_quadratic_form": 58280075.18796703,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 4.96269692007445e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000636,
+                  "expected_stiffness_quadratic_form": 103609022.55639099,
+                  "stiffness_quadratic_form": 103609022.55639139,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 3.774758283725532e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 408341441.8398939,
+                  "stiffness_quadratic_form": 408341441.83989465,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.9984014443252818e-15
+                },
+                {
+                  "field": "axis-1-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000064,
+                  "expected_stiffness_quadratic_form": 103609022.55639099,
+                  "stiffness_quadratic_form": 103609022.55639094,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 4.440892098500626e-16
+                },
+                {
+                  "field": "axis-2-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000644,
+                  "expected_stiffness_quadratic_form": 10360902255.639095,
+                  "stiffness_quadratic_form": 10360902255.639103,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 6.661338147750939e-16
+                },
+                {
+                  "field": "axis-2-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.0032400000000000644,
+                  "expected_stiffness_quadratic_form": 10360902255.639095,
+                  "stiffness_quadratic_form": 10360902255.639101,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 4.440892098500626e-16
+                },
+                {
+                  "field": "axis-2-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003240000000000065,
+                  "expected_stiffness_quadratic_form": 40834144183.98937,
+                  "stiffness_quadratic_form": 40834144183.98941,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 8.881784197001252e-16
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.00972,
+                  "mass_quadratic_form": 0.009720000000000192,
+                  "expected_stiffness_quadratic_form": 48813181667.40379,
+                  "stiffness_quadratic_form": 48813181667.403824,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 6.661338147750939e-16
+                }
+              ],
+              "maximum_mass_relative_error": 1.9984014443252818e-14,
+              "maximum_stiffness_relative_error": 4.96269692007445e-14,
+              "maximum_rigid_relative_force": 6.690624129610314e-17
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -6.925022982811344e-17,
+              -4.857446697140306e-17,
+              -2.022965221015686e-17,
+              2.0010247750001492e-17,
+              3.438690004087612e-17,
+              6.184665159548146e-17
+            ],
+            "seventh_eigenvalue_over_largest": 0.0009824361283671302,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              48265.30423088239,
+              62833.80000611563,
+              65002.728080461246,
+              67279.7065325826,
+              70117.55476846015,
+              83088.93796822663
+            ],
+            "ritz_nonincrease_passed": true,
+            "p1_independent_comparison": {
+              "passed": true,
+              "nodes": 18,
+              "tetrahedra": 24,
+              "dofs": 54,
+              "material": {
+                "young_pa": 68900000000.0,
+                "poisson": 0.33,
+                "density_kg_m3": 2700.0
+              },
+              "stiffness_relative_frobenius": 5.164891451428979e-16,
+              "consistent_mass_relative_frobenius": 2.0551391009438592e-14,
+              "row_summed_mass_relative_l2": 2.0187978446912726e-14,
+              "symmetry_relative_frobenius": [
+                1.3713998202276571e-17,
+                4.816659834942974e-33
+              ],
+              "smallest_six_eigenvalues_over_largest": [
+                -1.0115603168174365e-16,
+                -1.2774799080156814e-17,
+                6.51304877560295e-18,
+                5.164360170343136e-17,
+                8.690263462435372e-17,
+                1.3314636190091324e-16
+              ],
+              "seventh_eigenvalue_over_largest": 0.0009824361283671662,
+              "six_rigid_modes": true,
+              "relative_matrix_tolerance": 1e-10,
+              "relative_rigid_eigenvalue_tolerance": 1e-10
+            },
+            "passed": true,
+            "operators_sha256": "d69ff431a8929e64baf3b827f61ae513d051834e49b9090bffa7d3259d4dbb7f"
+          },
+          {
+            "order": 2,
+            "dofs": 225,
+            "topology_screen": {
+              "scalar_dofs": 75,
+              "vector_dofs": 225,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.6591796875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 306256081.3799203,
+                  "stiffness_quadratic_form": 306256081.3799268,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.1316282072803006e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999527,
+                  "expected_stiffness_quadratic_form": 77706766.91729324,
+                  "stiffness_quadratic_form": 77706766.91729486,
+                  "mass_relative_error": 2.4313884239290928e-14,
+                  "stiffness_relative_error": 2.0872192862952943e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 77706766.91729324,
+                  "stiffness_quadratic_form": 77706766.91729492,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.1760371282653068e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 138145363.40852132,
+                  "stiffness_quadratic_form": 138145363.4085243,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1538326677728037e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 544455255.7865251,
+                  "stiffness_quadratic_form": 544455255.7865368,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1538326677728037e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999531,
+                  "expected_stiffness_quadratic_form": 138145363.40852132,
+                  "stiffness_quadratic_form": 138145363.40852392,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 1.887379141862766e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999534,
+                  "expected_stiffness_quadratic_form": 13814536340.852127,
+                  "stiffness_quadratic_form": 13814536340.85241,
+                  "mass_relative_error": 2.398081733190338e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.0019439999999999534,
+                  "expected_stiffness_quadratic_form": 13814536340.852127,
+                  "stiffness_quadratic_form": 13814536340.85241,
+                  "mass_relative_error": 2.398081733190338e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.001944,
+                  "mass_quadratic_form": 0.001943999999999953,
+                  "expected_stiffness_quadratic_form": 54445525578.6525,
+                  "stiffness_quadratic_form": 54445525578.6536,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.0058319999999999995,
+                  "mass_quadratic_form": 0.005831999999999859,
+                  "expected_stiffness_quadratic_form": 62637240896.358536,
+                  "stiffness_quadratic_form": 62637240896.35981,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.042810365310288e-14
+                }
+              ],
+              "maximum_mass_relative_error": 2.4313884239290928e-14,
+              "maximum_stiffness_relative_error": 2.1760371282653068e-14,
+              "maximum_rigid_relative_force": 1.6946066800026933e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.9152576095812174e-17,
+              -3.81039674739424e-17,
+              -2.5745687443120838e-17,
+              -2.0014541431588877e-17,
+              1.0152219107506458e-17,
+              1.915633225279272e-17
+            ],
+            "seventh_eigenvalue_over_largest": 6.815333477521101e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8209.187179336219,
+              10903.968683820913,
+              20547.58489220287,
+              24710.611744049384,
+              31271.294407846268,
+              36154.908286503945
+            ],
+            "ritz_nonincrease_passed": true,
+            "p2_elmer_basis_comparison": {
+              "stiffness_relative_frobenius": 2.0489138055692473e-14,
+              "mass_relative_frobenius": 0.00026143773315146786,
+              "basis_condition_number": 38.26520425147521,
+              "basis_rank": 225,
+              "dimension": 225
+            },
+            "passed": false,
+            "operators_sha256": "e36737c961d4680e63fb09c80b86562edcca0c884a11f92de031ef8953e9645e"
+          },
+          {
+            "order": 3,
+            "dofs": 588,
+            "topology_screen": {
+              "scalar_dofs": 196,
+              "vector_dofs": 588,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 2.63671875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714129,
+                  "expected_stiffness_quadratic_form": 413445709.8628925,
+                  "stiffness_quadratic_form": 413445709.86288357,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 2.1649348980190553e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714129,
+                  "expected_stiffness_quadratic_form": 104904135.33834586,
+                  "stiffness_quadratic_form": 104904135.33834372,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 2.0317081350640365e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714124,
+                  "expected_stiffness_quadratic_form": 104904135.33834586,
+                  "stiffness_quadratic_form": 104904135.33834243,
+                  "mass_relative_error": 1.1546319456101628e-14,
+                  "stiffness_relative_error": 3.26405569239796e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.001388571428571416,
+                  "expected_stiffness_quadratic_form": 186496240.60150376,
+                  "stiffness_quadratic_form": 186496240.6015015,
+                  "mass_relative_error": 8.881784197001252e-15,
+                  "stiffness_relative_error": 1.2101430968414206e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714163,
+                  "expected_stiffness_quadratic_form": 735014595.3118088,
+                  "stiffness_quadratic_form": 735014595.3117999,
+                  "mass_relative_error": 8.770761894538737e-15,
+                  "stiffness_relative_error": 1.2212453270876722e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714159,
+                  "expected_stiffness_quadratic_form": 186496240.60150376,
+                  "stiffness_quadratic_form": 186496240.60150084,
+                  "mass_relative_error": 9.103828801926284e-15,
+                  "stiffness_relative_error": 1.5654144647214707e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714116,
+                  "expected_stiffness_quadratic_form": 18649624060.150375,
+                  "stiffness_quadratic_form": 18649624060.150032,
+                  "mass_relative_error": 1.2212453270876722e-14,
+                  "stiffness_relative_error": 1.84297022087776e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714118,
+                  "expected_stiffness_quadratic_form": 18649624060.150375,
+                  "stiffness_quadratic_form": 18649624060.150032,
+                  "mass_relative_error": 1.199040866595169e-14,
+                  "stiffness_relative_error": 1.84297022087776e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0013885714285714285,
+                  "mass_quadratic_form": 0.0013885714285714116,
+                  "expected_stiffness_quadratic_form": 73501459531.18088,
+                  "stiffness_quadratic_form": 73501459531.17955,
+                  "mass_relative_error": 1.2212453270876722e-14,
+                  "stiffness_relative_error": 1.8096635301390052e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.004165714285714286,
+                  "mass_quadratic_form": 0.0041657142857142405,
+                  "expected_stiffness_quadratic_form": 81990923816.89517,
+                  "stiffness_quadratic_form": 81990923816.89372,
+                  "mass_relative_error": 1.0880185641326534e-14,
+                  "stiffness_relative_error": 1.765254609153999e-14
+                }
+              ],
+              "maximum_mass_relative_error": 1.2212453270876722e-14,
+              "maximum_stiffness_relative_error": 3.26405569239796e-14,
+              "maximum_rigid_relative_force": 8.607395132810606e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -3.163283959726715e-17,
+              -2.1559002656005872e-17,
+              -1.972130576443862e-18,
+              1.0745201280314299e-18,
+              7.804921369056388e-18,
+              2.1785927910867453e-17
+            ],
+            "seventh_eigenvalue_over_largest": 2.453081020856149e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              7875.57495852469,
+              9559.612850219384,
+              17653.277030408473,
+              19000.25852245544,
+              22877.771248459292,
+              29930.907896353503
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "96058e954b9241e8ddb40ea4dff1ee9c67a2cc31abae1f4c1e0551ffdb0a4cde"
+          },
+          {
+            "order": 4,
+            "dofs": 1215,
+            "topology_screen": {
+              "scalar_dofs": 405,
+              "vector_dofs": 1215,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 8.074951171875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999595,
+                  "expected_stiffness_quadratic_form": 525010425.22272056,
+                  "stiffness_quadratic_form": 525010425.2226952,
+                  "mass_relative_error": 3.752553823233029e-14,
+                  "stiffness_relative_error": 4.8405723873656825e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999595,
+                  "expected_stiffness_quadratic_form": 133211600.42964554,
+                  "stiffness_quadratic_form": 133211600.42963904,
+                  "mass_relative_error": 3.752553823233029e-14,
+                  "stiffness_relative_error": 4.873879078104437e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999597,
+                  "expected_stiffness_quadratic_form": 133211600.42964554,
+                  "stiffness_quadratic_form": 133211600.42963974,
+                  "mass_relative_error": 3.730349362740526e-14,
+                  "stiffness_relative_error": 4.3520742565306136e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999664,
+                  "expected_stiffness_quadratic_form": 236820622.98603654,
+                  "stiffness_quadratic_form": 236820622.98603135,
+                  "mass_relative_error": 3.108624468950438e-14,
+                  "stiffness_relative_error": 2.1871393585115584e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999666,
+                  "expected_stiffness_quadratic_form": 933351867.0626146,
+                  "stiffness_quadratic_form": 933351867.0625969,
+                  "mass_relative_error": 3.097522238704187e-14,
+                  "stiffness_relative_error": 1.887379141862766e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999664,
+                  "expected_stiffness_quadratic_form": 236820622.98603654,
+                  "stiffness_quadratic_form": 236820622.98603395,
+                  "mass_relative_error": 3.108624468950438e-14,
+                  "stiffness_relative_error": 1.099120794378905e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999545,
+                  "expected_stiffness_quadratic_form": 23682062298.603645,
+                  "stiffness_quadratic_form": 23682062298.60286,
+                  "mass_relative_error": 4.218847493575595e-14,
+                  "stiffness_relative_error": 3.319566843629218e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999543,
+                  "expected_stiffness_quadratic_form": 23682062298.603645,
+                  "stiffness_quadratic_form": 23682062298.60286,
+                  "mass_relative_error": 4.241051954068098e-14,
+                  "stiffness_relative_error": 3.319566843629218e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00108,
+                  "mass_quadratic_form": 0.0010799999999999547,
+                  "expected_stiffness_quadratic_form": 93335186706.26143,
+                  "stiffness_quadratic_form": 93335186706.25839,
+                  "mass_relative_error": 4.196643033083092e-14,
+                  "stiffness_relative_error": 3.2529534621517087e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.00324,
+                  "mass_quadratic_form": 0.003239999999999881,
+                  "expected_stiffness_quadratic_form": 102134552979.08635,
+                  "stiffness_quadratic_form": 102134552979.08307,
+                  "mass_relative_error": 3.6637359812630166e-14,
+                  "stiffness_relative_error": 3.2085445411667024e-14
+                }
+              ],
+              "maximum_mass_relative_error": 4.241051954068098e-14,
+              "maximum_stiffness_relative_error": 4.873879078104437e-14,
+              "maximum_rigid_relative_force": 8.339443833456808e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -2.2117737532845934e-17,
+              -1.1679505568604316e-17,
+              -4.652399984710591e-19,
+              1.926697491285602e-18,
+              6.613594444828338e-18,
+              3.2320995756537336e-17
+            ],
+            "seventh_eigenvalue_over_largest": 1.1183432722533323e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              7767.824405626,
+              9535.750945061855,
+              17604.19686189348,
+              18154.201126371463,
+              22067.738923855366,
+              27202.17825268082
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "de505ff8607246422a2b9241e58e891683cfe0941424453a557b38f589397e28"
+          }
+        ],
+        "passed": false
+      },
+      {
+        "name": "affine-skewed",
+        "orders": [
+          {
+            "order": 1,
+            "dofs": 54,
+            "topology_screen": {
+              "scalar_dofs": 18,
+              "vector_dofs": 54,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.10546875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 209726984.45163402,
+                  "stiffness_quadratic_form": 209726984.45163444,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.9984014443252818e-15
+                },
+                {
+                  "field": "axis-0-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 65425311.08755986,
+                  "stiffness_quadratic_form": 65425311.0875597,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.4424906541753444e-15
+                },
+                {
+                  "field": "axis-0-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 62999971.90581116,
+                  "stiffness_quadratic_form": 62999971.90581019,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 1.532107773982716e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000067,
+                  "expected_stiffness_quadratic_form": 136686634.4508096,
+                  "stiffness_quadratic_form": 136686634.4508102,
+                  "mass_relative_error": 2.020605904817785e-14,
+                  "stiffness_relative_error": 4.440892098500626e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000673,
+                  "expected_stiffness_quadratic_form": 458425211.73606515,
+                  "stiffness_quadratic_form": 458425211.73606527,
+                  "mass_relative_error": 2.020605904817785e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-1-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000677,
+                  "expected_stiffness_quadratic_form": 136097619.27672634,
+                  "stiffness_quadratic_form": 136097619.27672532,
+                  "mass_relative_error": 2.042810365310288e-14,
+                  "stiffness_relative_error": 7.438494264988549e-15
+                },
+                {
+                  "field": "axis-2-component-0-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253760000066,
+                  "expected_stiffness_quadratic_form": 8960733540.827682,
+                  "stiffness_quadratic_form": 8960733540.82768,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-2-component-1-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000656,
+                  "expected_stiffness_quadratic_form": 8968454446.768412,
+                  "stiffness_quadratic_form": 8968454446.76841,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "axis-2-component-2-degree-1",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.0033012537600000656,
+                  "expected_stiffness_quadratic_form": 30278906020.32333,
+                  "stiffness_quadratic_form": 30278906020.323334,
+                  "mass_relative_error": 1.9761969838327786e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.009903761280000001,
+                  "mass_quadratic_form": 0.009903761280000199,
+                  "expected_stiffness_quadratic_form": 36296990527.88247,
+                  "stiffness_quadratic_form": 36296990527.88248,
+                  "mass_relative_error": 1.9984014443252818e-14,
+                  "stiffness_relative_error": 2.220446049250313e-16
+                }
+              ],
+              "maximum_mass_relative_error": 2.042810365310288e-14,
+              "maximum_stiffness_relative_error": 1.532107773982716e-14,
+              "maximum_rigid_relative_force": 7.587341883521236e-17
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -5.2845902887538313e-17,
+              -2.6627761894750997e-17,
+              6.003071978358726e-18,
+              2.4421330692507646e-17,
+              4.061113343178197e-17,
+              7.855650474810174e-17
+            ],
+            "seventh_eigenvalue_over_largest": 0.0018289748687851453,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              56887.44823823486,
+              65602.14714442949,
+              66662.28171256538,
+              73433.74331975286,
+              76769.26720688843,
+              94426.22024978208
+            ],
+            "ritz_nonincrease_passed": true,
+            "p1_independent_comparison": {
+              "passed": true,
+              "nodes": 18,
+              "tetrahedra": 24,
+              "dofs": 54,
+              "material": {
+                "young_pa": 71000000000.0,
+                "poisson": 0.29,
+                "density_kg_m3": 2800.0
+              },
+              "stiffness_relative_frobenius": 8.487000601539927e-16,
+              "consistent_mass_relative_frobenius": 1.9593514475501688e-14,
+              "row_summed_mass_relative_l2": 1.904925169817808e-14,
+              "symmetry_relative_frobenius": [
+                4.380638743951225e-17,
+                5.370570969672547e-33
+              ],
+              "smallest_six_eigenvalues_over_largest": [
+                -6.092095564137007e-17,
+                -3.6379534026370505e-18,
+                2.4419149244698868e-17,
+                4.0029520232360083e-17,
+                7.43912010330589e-17,
+                1.3557371141114806e-16
+              ],
+              "seventh_eigenvalue_over_largest": 0.0018289748687851032,
+              "six_rigid_modes": true,
+              "relative_matrix_tolerance": 1e-10,
+              "relative_rigid_eigenvalue_tolerance": 1e-10
+            },
+            "passed": true,
+            "operators_sha256": "b7ef69a7ecdab7d39cc823ef5aa91c6ef47e48142d8591fb5732c0dd379d586f"
+          },
+          {
+            "order": 2,
+            "dofs": 225,
+            "topology_screen": {
+              "scalar_dofs": 75,
+              "vector_dofs": 225,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 0.6591796875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 279635979.2688454,
+                  "stiffness_quadratic_form": 279635979.26885164,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.2426505097428162e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 87233748.11674647,
+                  "stiffness_quadratic_form": 87233748.11674836,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 2.1760371282653068e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999527,
+                  "expected_stiffness_quadratic_form": 83999962.54108155,
+                  "stiffness_quadratic_form": 83999962.5410844,
+                  "mass_relative_error": 2.4091839634365897e-14,
+                  "stiffness_relative_error": 3.397282455352979e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.001980752255999953,
+                  "expected_stiffness_quadratic_form": 182248845.9344128,
+                  "stiffness_quadratic_form": 182248845.93441713,
+                  "mass_relative_error": 2.3869795029440866e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999536,
+                  "expected_stiffness_quadratic_form": 611233615.6480869,
+                  "stiffness_quadratic_form": 611233615.6480999,
+                  "mass_relative_error": 2.3647750424515834e-14,
+                  "stiffness_relative_error": 2.1316282072803006e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999536,
+                  "expected_stiffness_quadratic_form": 181463492.36896846,
+                  "stiffness_quadratic_form": 181463492.3689736,
+                  "mass_relative_error": 2.3647750424515834e-14,
+                  "stiffness_relative_error": 2.842170943040401e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 11947644721.103577,
+                  "stiffness_quadratic_form": 11947644721.103807,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9317880628477724e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 11957939262.357882,
+                  "stiffness_quadratic_form": 11957939262.358116,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9539925233402755e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-2",
+                  "expected_mass_quadratic_form": 0.0019807522560000004,
+                  "mass_quadratic_form": 0.0019807522559999514,
+                  "expected_stiffness_quadratic_form": 40371874693.76444,
+                  "stiffness_quadratic_form": 40371874693.765236,
+                  "mass_relative_error": 2.475797344914099e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.005942256768000001,
+                  "mass_quadratic_form": 0.005942256767999857,
+                  "expected_stiffness_quadratic_form": 46612676600.05281,
+                  "stiffness_quadratic_form": 46612676600.053734,
+                  "mass_relative_error": 2.4202861936828413e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                }
+              ],
+              "maximum_mass_relative_error": 2.475797344914099e-14,
+              "maximum_stiffness_relative_error": 3.397282455352979e-14,
+              "maximum_rigid_relative_force": 2.9364962691496544e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -3.4835596336181686e-17,
+              -2.1976038658596952e-17,
+              -1.137343865288131e-17,
+              2.0072460217688225e-17,
+              4.69032713946361e-17,
+              6.771062787912116e-17
+            ],
+            "seventh_eigenvalue_over_largest": 1.2471659770205823e-05,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              9591.694517483387,
+              12582.262461873243,
+              27010.45815721888,
+              29975.21433553192,
+              36467.300926029886,
+              42364.13903846857
+            ],
+            "ritz_nonincrease_passed": true,
+            "p2_elmer_basis_comparison": {
+              "stiffness_relative_frobenius": 2.4022278650038304e-14,
+              "mass_relative_frobenius": 0.00026143773315145924,
+              "basis_condition_number": 38.26520425147524,
+              "basis_rank": 225,
+              "dimension": 225
+            },
+            "passed": false,
+            "operators_sha256": "d62ea30f304f574064fab19f3894dd5e0ae8b0a1db2f2d7fe5d1c2696f8f7e92"
+          },
+          {
+            "order": 3,
+            "dofs": 588,
+            "topology_screen": {
+              "scalar_dofs": 196,
+              "vector_dofs": 588,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 2.63671875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999824,
+                  "expected_stiffness_quadratic_form": 377508572.0129413,
+                  "stiffness_quadratic_form": 377508572.0129333,
+                  "mass_relative_error": 1.2545520178264269e-14,
+                  "stiffness_relative_error": 2.120525977034049e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999824,
+                  "expected_stiffness_quadratic_form": 117765559.95760778,
+                  "stiffness_quadratic_form": 117765559.95760462,
+                  "mass_relative_error": 1.2545520178264269e-14,
+                  "stiffness_relative_error": 2.6867397195928788e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999822,
+                  "expected_stiffness_quadratic_form": 113399949.4304601,
+                  "stiffness_quadratic_form": 113399949.43046118,
+                  "mass_relative_error": 1.27675647831893e-14,
+                  "stiffness_relative_error": 9.547918011776346e-15
+                },
+                {
+                  "field": "axis-1-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999844,
+                  "expected_stiffness_quadratic_form": 246035942.01145735,
+                  "stiffness_quadratic_form": 246035942.01145253,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 1.965094753586527e-14
+                },
+                {
+                  "field": "axis-1-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999844,
+                  "expected_stiffness_quadratic_form": 825165381.1249171,
+                  "stiffness_quadratic_form": 825165381.1249008,
+                  "mass_relative_error": 1.1213252548714081e-14,
+                  "stiffness_relative_error": 1.9761969838327786e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999842,
+                  "expected_stiffness_quadratic_form": 244975714.6981074,
+                  "stiffness_quadratic_form": 244975714.69810453,
+                  "mass_relative_error": 1.1324274851176597e-14,
+                  "stiffness_relative_error": 1.1657341758564144e-14
+                },
+                {
+                  "field": "axis-2-component-0-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.00141482303999998,
+                  "expected_stiffness_quadratic_form": 16129320373.489828,
+                  "stiffness_quadratic_form": 16129320373.489437,
+                  "mass_relative_error": 1.4210854715202004e-14,
+                  "stiffness_relative_error": 2.4202861936828413e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999798,
+                  "expected_stiffness_quadratic_form": 16143218004.18314,
+                  "stiffness_quadratic_form": 16143218004.182749,
+                  "mass_relative_error": 1.4432899320127035e-14,
+                  "stiffness_relative_error": 2.4202861936828413e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-3",
+                  "expected_mass_quadratic_form": 0.0014148230400000002,
+                  "mass_quadratic_form": 0.0014148230399999803,
+                  "expected_stiffness_quadratic_form": 54502030836.582,
+                  "stiffness_quadratic_form": 54502030836.5807,
+                  "mass_relative_error": 1.4099832412739488e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.004244469120000001,
+                  "mass_quadratic_form": 0.004244469119999947,
+                  "expected_stiffness_quadratic_form": 61054637101.09131,
+                  "stiffness_quadratic_form": 61054637101.08986,
+                  "mass_relative_error": 1.2656542480726785e-14,
+                  "stiffness_relative_error": 2.375877272697835e-14
+                }
+              ],
+              "maximum_mass_relative_error": 1.4432899320127035e-14,
+              "maximum_stiffness_relative_error": 2.6867397195928788e-14,
+              "maximum_rigid_relative_force": 7.090741885242741e-16
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.451636190670462e-17,
+              -1.900358254433169e-17,
+              -4.054753507034153e-18,
+              6.1464079584090836e-18,
+              3.3223891730955794e-17,
+              6.114625105086895e-17
+            ],
+            "seventh_eigenvalue_over_largest": 4.246438826716675e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8971.803188519922,
+              11140.430340401625,
+              21898.80539053884,
+              23510.855906413562,
+              28495.631255155346,
+              34193.86613548437
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "6787cbf3efb9693040eac35ae198b59860af465fe79bed332a247cb6238e5e02"
+          },
+          {
+            "order": 4,
+            "dofs": 1215,
+            "topology_screen": {
+              "scalar_dofs": 405,
+              "vector_dofs": 1215,
+              "vertices": 18,
+              "edges": 57,
+              "faces": 64,
+              "tetrahedra": 24,
+              "assembly_screen_mib": 8.074951171875
+            },
+            "energies": {
+              "polynomials": [
+                {
+                  "field": "axis-0-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.001100417919999975,
+                  "expected_stiffness_quadratic_form": 479375964.4608778,
+                  "stiffness_quadratic_form": 479375964.4608678,
+                  "mass_relative_error": 2.2648549702353193e-14,
+                  "stiffness_relative_error": 2.0761170560490427e-14
+                },
+                {
+                  "field": "axis-0-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.001100417919999975,
+                  "expected_stiffness_quadratic_form": 149543568.2001368,
+                  "stiffness_quadratic_form": 149543568.20013395,
+                  "mass_relative_error": 2.2648549702353193e-14,
+                  "stiffness_relative_error": 1.9095836023552692e-14
+                },
+                {
+                  "field": "axis-0-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999753,
+                  "expected_stiffness_quadratic_form": 143999935.7847112,
+                  "stiffness_quadratic_form": 143999935.78470632,
+                  "mass_relative_error": 2.2426505097428162e-14,
+                  "stiffness_relative_error": 3.397282455352979e-14
+                },
+                {
+                  "field": "axis-1-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999814,
+                  "expected_stiffness_quadratic_form": 312426593.0304219,
+                  "stiffness_quadratic_form": 312426593.0304246,
+                  "mass_relative_error": 1.6986412276764895e-14,
+                  "stiffness_relative_error": 8.659739592076221e-15
+                },
+                {
+                  "field": "axis-1-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999814,
+                  "expected_stiffness_quadratic_form": 1047829055.3967203,
+                  "stiffness_quadratic_form": 1047829055.3967309,
+                  "mass_relative_error": 1.6986412276764895e-14,
+                  "stiffness_relative_error": 1.021405182655144e-14
+                },
+                {
+                  "field": "axis-1-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999816,
+                  "expected_stiffness_quadratic_form": 311080272.63251734,
+                  "stiffness_quadratic_form": 311080272.63251865,
+                  "mass_relative_error": 1.6764367671839864e-14,
+                  "stiffness_relative_error": 4.218847493575595e-15
+                },
+                {
+                  "field": "axis-2-component-0-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999582,
+                  "expected_stiffness_quadratic_form": 20481676664.74899,
+                  "stiffness_quadratic_form": 20481676664.74848,
+                  "mass_relative_error": 3.808064974464287e-14,
+                  "stiffness_relative_error": 2.475797344914099e-14
+                },
+                {
+                  "field": "axis-2-component-1-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999582,
+                  "expected_stiffness_quadratic_form": 20499324449.75637,
+                  "stiffness_quadratic_form": 20499324449.755863,
+                  "mass_relative_error": 3.808064974464287e-14,
+                  "stiffness_relative_error": 2.475797344914099e-14
+                },
+                {
+                  "field": "axis-2-component-2-degree-4",
+                  "expected_mass_quadratic_form": 0.00110041792,
+                  "mass_quadratic_form": 0.0011004179199999577,
+                  "expected_stiffness_quadratic_form": 69208928046.45332,
+                  "stiffness_quadratic_form": 69208928046.45163,
+                  "mass_relative_error": 3.8413716652030416e-14,
+                  "stiffness_relative_error": 2.4424906541753444e-14
+                },
+                {
+                  "field": "mixed-dilation",
+                  "expected_mass_quadratic_form": 0.0033012537600000005,
+                  "mass_quadratic_form": 0.003301253759999916,
+                  "expected_stiffness_quadratic_form": 76086065377.68237,
+                  "stiffness_quadratic_form": 76086065377.6806,
+                  "mass_relative_error": 2.5646151868841116e-14,
+                  "stiffness_relative_error": 2.3314683517128287e-14
+                }
+              ],
+              "maximum_mass_relative_error": 3.8413716652030416e-14,
+              "maximum_stiffness_relative_error": 3.397282455352979e-14,
+              "maximum_rigid_relative_force": 2.5468322312769295e-15
+            },
+            "smallest_six_eigenvalues_over_largest": [
+              -4.973182512631599e-17,
+              -2.791996643592665e-17,
+              -1.9462064508454136e-17,
+              -1.558401435356342e-17,
+              -1.2376397292352602e-17,
+              5.304144153044852e-18
+            ],
+            "seventh_eigenvalue_over_largest": 1.9351573692643462e-06,
+            "six_rigid_modes": true,
+            "first_six_elastic_frequencies_hz": [
+              8870.516545375034,
+              11078.045239505609,
+              20474.48559001405,
+              23429.14168623184,
+              26809.844039815704,
+              31985.899915101574
+            ],
+            "ritz_nonincrease_passed": true,
+            "passed": true,
+            "operators_sha256": "2baceef33de0c890d97bd1f24b6032ca960fafa2005ace0bd4cdeb42874c6c71"
+          }
+        ],
+        "passed": false
+      }
+    ],
+    "worker_run": {
+      "exit_code": 0,
+      "wall_seconds": 2.765626699954737,
+      "maximum_observed_external_processes": 5,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+    },
+    "native_report_sha256": "099de4a1522acdb8ff514eb8d7d555c828615dd3adaccb6f5cb593094d6596c5",
+    "wall_seconds": 3.7409867999958806
+  },
+  "exact_quadratic_mass_diagnostic": {
+    "results": [
+      {
+        "case": "rectangular",
+        "elmer_relative_error_to_exact": 0.04656032311197474,
+        "ngsolve_relative_error_to_exact": 2.4721061611214935e-14
+      },
+      {
+        "case": "affine-skewed",
+        "elmer_relative_error_to_exact": 0.046560323111974625,
+        "ngsolve_relative_error_to_exact": 2.5467019841447513e-14
+      }
+    ],
+    "ready_for_training_data": false
+  },
+  "integration_order_diagnostic": {
+    "results": [
+      {
+        "order": 1,
+        "relative_integration_order": 0
+      },
+      {
+        "order": 1,
+        "relative_integration_order": 1
+      },
+      {
+        "order": 2,
+        "relative_integration_order": 0,
+        "exact_mass_relative_error": 0.04656032311197474
+      },
+      {
+        "order": 2,
+        "relative_integration_order": 1,
+        "exact_mass_relative_error": 1.4440542875396835e-15
+      }
+    ],
+    "ready_for_training_data": false
+  },
+  "installation": {
+    "completed": true,
+    "exit_code": 0,
+    "wall_seconds": 6.6609820000012405,
+    "maximum_observed_external_processes": 3,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "resources": {
+      "limits": {
+        "max_seconds": 120,
+        "max_rss_mib": 512,
+        "max_system_memory_percent": 85,
+        "min_available_mib": 2048,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_combined_rss_mib": 125.09765625,
+      "sampled_system_memory_percent": 72.6,
+      "minimum_available_mib": 4451.8828125,
+      "gpu_used_mib": 1378.0,
+      "gpu_total_mib": 8192.0,
+      "gpu_temperature_c": 46.0,
+      "cpu_temperature_c": null,
+      "note": "Sampled monitor and observed descendants; CPU temperature unavailable; CPU physics only."
+    }
+  },
+  "dependency_check": {
+    "successful": true,
+    "stdout": "No broken requirements found."
+  },
+  "regression": {
+    "exit_code": 0,
+    "wall_seconds": 134.49255090003135,
+    "maximum_observed_external_processes": 8,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "successful": true,
+    "tests_run": 197,
+    "resources": {
+      "limits": {
+        "max_seconds": 210,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 85,
+        "min_available_mib": 2048,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_combined_rss_mib": 771.15625,
+      "sampled_system_memory_percent": 72.6,
+      "minimum_available_mib": 4440.3125,
+      "gpu_used_mib": 1386.0,
+      "gpu_total_mib": 8192.0,
+      "gpu_temperature_c": 45.0,
+      "cpu_temperature_c": null,
+      "note": "Sampled monitor and observed descendants; CPU temperature unavailable; CPU physics only."
+    }
+  },
+  "earlier_regression_guard_stop": {
+    "exit_code": 1,
+    "wall_seconds": 133.6681896999944,
+    "maximum_observed_external_processes": 7,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+    "successful": false,
+    "tests_run": 197,
+    "resources": {
+      "limits": {
+        "max_seconds": 210,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 85,
+        "min_available_mib": 2048,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_combined_rss_mib": 785.33984375,
+      "sampled_system_memory_percent": 72.8,
+      "minimum_available_mib": 4408.328125,
+      "gpu_used_mib": 1386.0,
+      "gpu_total_mib": 8192.0,
+      "gpu_temperature_c": 45.0,
+      "cpu_temperature_c": null,
+      "note": "Sampled monitor and observed descendants; CPU temperature unavailable; CPU physics only."
+    },
+    "reason": "Native integration-test guard included retained test-parent memory; test allowance changed from 512 to 1024 MiB; standalone command unchanged."
+  },
+  "corrected_p2_control": {
+    "completed": true,
+    "ready_for_training_data": false,
+    "forward_solves": 1,
+    "cache_hit": false,
+    "quadratic_nodes": 3777,
+    "tetrahedra": 1928,
+    "dt_internal_s": 1.25e-07,
+    "internal_steps": 508,
+    "wall_seconds": 8.370702399988659,
+    "computation": {
+      "operator_run": {
+        "exit_code": 0,
+        "wall_seconds": 2.7484567999490537,
+        "maximum_observed_external_processes": 2,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 4.940391500014812,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "worker_report_sha256": "14ae60df66a9f63b3bb5661af9f1f62b90406e7bb978e389144e9946f42c2624",
+      "maximum_relative_linear_residual": 7.615555662128669e-16,
+      "postburst_relative_energy_range": 1.1445772666867724e-14,
+      "stiffness_nonzeros": 785229,
+      "mass_nonzeros": 261837,
+      "lu_factor_nonzeros": 4057932
+    },
+    "trace_sha256": "3b6feeac2758d923bda8449eefa28ff0cd4db0c2e1f19bdab7837bd49538ac6d",
+    "kernel_sha256": {
+      "solver_executable": "d79ad418b15db3bcb353ec19be6ce76cd7c44211134fc4f43cebbaf3b80cefe0",
+      "grid_executable": "3de1a91d8020dbfd6cc79001f9590585b9caaa52660cd6415c748bf190ea47cb",
+      "libelmersolver.dll": "0193f9d84c2fc69d0bbb011fe2c3710f6554f1efc0ed65c9e8cb80280c533f32",
+      "StressSolve.dll": "5fe05cfe8d2ff62d5b4cc7afbe37bbd699bda8e605dbb4f24d188b08122e0148",
+      "elements.def": "fd7797060c26856026a246dc986c3a8e1e0b56e9de0843b99c81f1176609edbd"
+    },
+    "resources": {
+      "limits": {
+        "max_seconds": 60.0,
+        "max_rss_mib": 512.0,
+        "max_system_memory_percent": 92,
+        "min_available_mib": 768,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_combined_rss_mib": 256.46875,
+      "sampled_system_memory_percent": 70.3,
+      "minimum_available_mib": 4826.390625,
+      "gpu_used_mib": 1386.0,
+      "gpu_total_mib": 8192.0,
+      "gpu_temperature_c": 45.0,
+      "cpu_temperature_c": null,
+      "note": "Sampled monitor and observed descendants; CPU temperature unavailable; CPU physics only."
+    }
+  },
+  "artifact_sha256": {
+    "outputs/elmer-assessment/ElementDescription.F90": "c4589c89a84afc84ec7913fcf06f2937266410e8372c25b9417701553fd5e5a3",
+    "outputs/elmer-assessment/Integration.F90": "cddb7a53d958e654a9dddd4231ad0d46fc85e53d0b8fbce410f35ae8d345ef56",
+    "outputs/elmer-integration-order-probe/p1-relative0/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-integration-order-probe/p1-relative0/mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/elmer-integration-order-probe/p1-relative0/mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/elmer-integration-order-probe/p1-relative0/mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+    "outputs/elmer-integration-order-probe/p1-relative0/operator.sif": "1a8160eda402e7a97dc0814d6470a296a86fa5803ab72c9333bc7ef61d446d77",
+    "outputs/elmer-integration-order-probe/p1-relative0/operator_a.dat": "0aca9f4712af2aac4f028ac100366edc4b4b4e2446b216a5cad4a753d326b0fd",
+    "outputs/elmer-integration-order-probe/p1-relative0/operator_b.dat": "ac3e514415cf660a445c929a4bc2504818b466a27a8982ec062459b0c1e75626",
+    "outputs/elmer-integration-order-probe/p1-relative0/operator_perm.dat": "be0807a18ef6aa31114ec803cb8c9ca21b31207f0c5f96825f123b3c459f7584",
+    "outputs/elmer-integration-order-probe/p1-relative0/operator_sizes.dat": "843eeab494c718c1feabe94cb47777458322d159b5e806f4fdaa952a83d05f3a",
+    "outputs/elmer-integration-order-probe/p1-relative0/solver.log": "f259123f8d0ed5c6c11b5cab012f67154fb2e8f0424f7358a0b6b363f6dd4f19",
+    "outputs/elmer-integration-order-probe/p1-relative1/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-integration-order-probe/p1-relative1/mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/elmer-integration-order-probe/p1-relative1/mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/elmer-integration-order-probe/p1-relative1/mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+    "outputs/elmer-integration-order-probe/p1-relative1/operator.sif": "ed8186125f18b9f596020c46d5f7ceeb207f40eb8dcf5a0aa1e53963f0b6596e",
+    "outputs/elmer-integration-order-probe/p1-relative1/operator_a.dat": "3c8a5669b4e9902127f54f817023a78ebeca7d5ca100d4b5e8369a6f76269561",
+    "outputs/elmer-integration-order-probe/p1-relative1/operator_b.dat": "ac3e514415cf660a445c929a4bc2504818b466a27a8982ec062459b0c1e75626",
+    "outputs/elmer-integration-order-probe/p1-relative1/operator_perm.dat": "be0807a18ef6aa31114ec803cb8c9ca21b31207f0c5f96825f123b3c459f7584",
+    "outputs/elmer-integration-order-probe/p1-relative1/operator_sizes.dat": "843eeab494c718c1feabe94cb47777458322d159b5e806f4fdaa952a83d05f3a",
+    "outputs/elmer-integration-order-probe/p1-relative1/solver.log": "f259123f8d0ed5c6c11b5cab012f67154fb2e8f0424f7358a0b6b363f6dd4f19",
+    "outputs/elmer-integration-order-probe/p2-relative0/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-integration-order-probe/p2-relative0/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/elmer-integration-order-probe/p2-relative0/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/elmer-integration-order-probe/p2-relative0/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/elmer-integration-order-probe/p2-relative0/operator.sif": "1a8160eda402e7a97dc0814d6470a296a86fa5803ab72c9333bc7ef61d446d77",
+    "outputs/elmer-integration-order-probe/p2-relative0/operator_a.dat": "3df7e438e07bdedeea6cf5f8d0b54e2afbb4fab56c89baced1c4afb3079281e4",
+    "outputs/elmer-integration-order-probe/p2-relative0/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/elmer-integration-order-probe/p2-relative0/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/elmer-integration-order-probe/p2-relative0/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/elmer-integration-order-probe/p2-relative0/solver.log": "453f25529cf4f1f5104f5a404d88cd81478cc1b8f5c61e3edb8d495e35c7fa28",
+    "outputs/elmer-integration-order-probe/p2-relative1/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/elmer-integration-order-probe/p2-relative1/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/elmer-integration-order-probe/p2-relative1/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/elmer-integration-order-probe/p2-relative1/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/elmer-integration-order-probe/p2-relative1/operator.sif": "ed8186125f18b9f596020c46d5f7ceeb207f40eb8dcf5a0aa1e53963f0b6596e",
+    "outputs/elmer-integration-order-probe/p2-relative1/operator_a.dat": "c654db088775c5c58e0a35040eb89ca783f8f72f6c35cd60408e1287d3e5d6fe",
+    "outputs/elmer-integration-order-probe/p2-relative1/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/elmer-integration-order-probe/p2-relative1/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/elmer-integration-order-probe/p2-relative1/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/elmer-integration-order-probe/p2-relative1/solver.log": "453f25529cf4f1f5104f5a404d88cd81478cc1b8f5c61e3edb8d495e35c7fa28",
+    "outputs/elmer-integration-order-probe/report.json": "8a3ddd281e217bacd72bb5f9c0d8b8559dfbdcd0a2c023102b0d22c2ac338862",
+    "outputs/highorder-assembly-trial/affine-skewed/exact-quadratic-mass.npz": "706d11db9aa453a7a785ab7b0d3e0c99b243655e38fdea2ac0813a074dbf5a6e",
+    "outputs/highorder-assembly-trial/affine-skewed/grid.log": "3c8891e3dd8be5f83694620243fe68b2623bff73459fea9a4c6598d3560e5865",
+    "outputs/highorder-assembly-trial/affine-skewed/linear-mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-assembly-trial/affine-skewed/linear-mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/highorder-assembly-trial/affine-skewed/linear-mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/highorder-assembly-trial/affine-skewed/linear-mesh/mesh.nodes": "06aa6bd648d7e5e0361e4f91c5cef4df0fd9fbba103979cb6cd75262510a6a63",
+    "outputs/highorder-assembly-trial/affine-skewed/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-assembly-trial/affine-skewed/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/highorder-assembly-trial/affine-skewed/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/highorder-assembly-trial/affine-skewed/mesh/mesh.nodes": "6f518388f6dc78326f5c1d68bcc0b3b4ca65ba12e07691b376b982fdce665e82",
+    "outputs/highorder-assembly-trial/affine-skewed/operator.log": "71cd0106a56bc2fb754baf797bdd0b846b5ed99120bf41c1d24d6826391e4b7a",
+    "outputs/highorder-assembly-trial/affine-skewed/operator.sif": "fae0457133a619e377c4a98556a3b32893e2936524624875f22aec875006781c",
+    "outputs/highorder-assembly-trial/affine-skewed/operator_a.dat": "d189d2635033e60401ac7708ce57c048f47395e6031570b55d41ad0960b37966",
+    "outputs/highorder-assembly-trial/affine-skewed/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/highorder-assembly-trial/affine-skewed/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/highorder-assembly-trial/affine-skewed/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/highorder-assembly-trial/exact-quadratic-mass.json": "ea559a8b134e9698e7474899b1844e2d01d1977aff69d7ab92775b334d31a7c5",
+    "outputs/highorder-assembly-trial/highorder-plan.json": "4fcf659a1fe1cabc42f490815aa1755c969a818fba01d0daaefed03c2205ecca",
+    "outputs/highorder-assembly-trial/highorder-report.json": "6c861e78c9faa213529af22fdbf77b200010e3f7fa1a8ed3b6a676390b44b70d",
+    "outputs/highorder-assembly-trial/ngsolve/affine-skewed/order-1-operators.npz": "b7ef69a7ecdab7d39cc823ef5aa91c6ef47e48142d8591fb5732c0dd379d586f",
+    "outputs/highorder-assembly-trial/ngsolve/affine-skewed/order-2-operators.npz": "d62ea30f304f574064fab19f3894dd5e0ae8b0a1db2f2d7fe5d1c2696f8f7e92",
+    "outputs/highorder-assembly-trial/ngsolve/affine-skewed/order-3-operators.npz": "6787cbf3efb9693040eac35ae198b59860af465fe79bed332a247cb6238e5e02",
+    "outputs/highorder-assembly-trial/ngsolve/affine-skewed/order-4-operators.npz": "2baceef33de0c890d97bd1f24b6032ca960fafa2005ace0bd4cdeb42874c6c71",
+    "outputs/highorder-assembly-trial/ngsolve/affine-skewed/p2-basis-transform.npz": "39357b9a60749ffa0bd7f1f80be913ea7864b054ffb04e59c969724bca730013",
+    "outputs/highorder-assembly-trial/ngsolve/native-report.json": "099de4a1522acdb8ff514eb8d7d555c828615dd3adaccb6f5cb593094d6596c5",
+    "outputs/highorder-assembly-trial/ngsolve/rectangular/order-1-operators.npz": "d69ff431a8929e64baf3b827f61ae513d051834e49b9090bffa7d3259d4dbb7f",
+    "outputs/highorder-assembly-trial/ngsolve/rectangular/order-2-operators.npz": "e36737c961d4680e63fb09c80b86562edcca0c884a11f92de031ef8953e9645e",
+    "outputs/highorder-assembly-trial/ngsolve/rectangular/order-3-operators.npz": "96058e954b9241e8ddb40ea4dff1ee9c67a2cc31abae1f4c1e0551ffdb0a4cde",
+    "outputs/highorder-assembly-trial/ngsolve/rectangular/order-4-operators.npz": "de505ff8607246422a2b9241e58e891683cfe0941424453a557b38f589397e28",
+    "outputs/highorder-assembly-trial/ngsolve/rectangular/p2-basis-transform.npz": "1a99bc4d8043be0978b87aabe4b10f8a2508292811846ec4d6d732f72ba56671",
+    "outputs/highorder-assembly-trial/rectangular/exact-quadratic-mass.npz": "c04b60b2c29178cf1fcefc4ed36580d278ab37549d82dce24ff31004fab6af7f",
+    "outputs/highorder-assembly-trial/rectangular/grid.log": "bf6c9a8316cd000fccb7fcdf2ff61b338f1ca0c366d172836fa987cf643b51cb",
+    "outputs/highorder-assembly-trial/rectangular/linear-mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-assembly-trial/rectangular/linear-mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/highorder-assembly-trial/rectangular/linear-mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/highorder-assembly-trial/rectangular/linear-mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+    "outputs/highorder-assembly-trial/rectangular/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-assembly-trial/rectangular/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/highorder-assembly-trial/rectangular/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/highorder-assembly-trial/rectangular/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/highorder-assembly-trial/rectangular/operator.log": "71cd0106a56bc2fb754baf797bdd0b846b5ed99120bf41c1d24d6826391e4b7a",
+    "outputs/highorder-assembly-trial/rectangular/operator.sif": "e5d392ccdd4411a657ed8e2e2673d2b27bd6697b7f89bb342c753d2b273ea980",
+    "outputs/highorder-assembly-trial/rectangular/operator_a.dat": "3df7e438e07bdedeea6cf5f8d0b54e2afbb4fab56c89baced1c4afb3079281e4",
+    "outputs/highorder-assembly-trial/rectangular/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/highorder-assembly-trial/rectangular/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/highorder-assembly-trial/rectangular/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/highorder-assembly-trial/source-snapshot.zip": "30cdc83023c1f57255aae4eb1e8f09f8dc33e36acde1111fe069de62158dfdf1",
+    "outputs/highorder-assembly-trial/worker-job.json": "9d6fa986b2212d7a1677dbe75372fcac36579020d0e5a8ceaf1c0a72535c34b6",
+    "outputs/highorder-assembly-trial/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-reference/affine-skewed/grid.log": "3c8891e3dd8be5f83694620243fe68b2623bff73459fea9a4c6598d3560e5865",
+    "outputs/highorder-reference/affine-skewed/linear-mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-reference/affine-skewed/linear-mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/highorder-reference/affine-skewed/linear-mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/highorder-reference/affine-skewed/linear-mesh/mesh.nodes": "06aa6bd648d7e5e0361e4f91c5cef4df0fd9fbba103979cb6cd75262510a6a63",
+    "outputs/highorder-reference/affine-skewed/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-reference/affine-skewed/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/highorder-reference/affine-skewed/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/highorder-reference/affine-skewed/mesh/mesh.nodes": "6f518388f6dc78326f5c1d68bcc0b3b4ca65ba12e07691b376b982fdce665e82",
+    "outputs/highorder-reference/affine-skewed/operator.log": "6dc2241fdf3e9ce5f42ffe9511ad928849c852836212c6011f7fdd553eb13bc9",
+    "outputs/highorder-reference/affine-skewed/operator.sif": "5ac1932d92a6d5e7945c00e6000cbd503de6935cb38b0ea10ec81d73f53693c8",
+    "outputs/highorder-reference/affine-skewed/operator_a.dat": "78fcb47308bd8ee43730c8931c05b847dc017ed152c9e73c3b9f6ad695a423d9",
+    "outputs/highorder-reference/affine-skewed/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/highorder-reference/affine-skewed/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/highorder-reference/affine-skewed/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/highorder-reference/highorder-plan.json": "3e66f38038b95856380f4e59d7c9b68cb6a63897b462e269f52c999b4de4932c",
+    "outputs/highorder-reference/highorder-report.json": "0c9b33df7c0c4cd8da0db1758f93a4561de0c96955811c401bb49c3ae7d04a4e",
+    "outputs/highorder-reference/ngsolve/affine-skewed/order-1-operators.npz": "b7ef69a7ecdab7d39cc823ef5aa91c6ef47e48142d8591fb5732c0dd379d586f",
+    "outputs/highorder-reference/ngsolve/affine-skewed/order-2-operators.npz": "d62ea30f304f574064fab19f3894dd5e0ae8b0a1db2f2d7fe5d1c2696f8f7e92",
+    "outputs/highorder-reference/ngsolve/affine-skewed/order-3-operators.npz": "6787cbf3efb9693040eac35ae198b59860af465fe79bed332a247cb6238e5e02",
+    "outputs/highorder-reference/ngsolve/affine-skewed/order-4-operators.npz": "2baceef33de0c890d97bd1f24b6032ca960fafa2005ace0bd4cdeb42874c6c71",
+    "outputs/highorder-reference/ngsolve/affine-skewed/p2-basis-transform.npz": "39357b9a60749ffa0bd7f1f80be913ea7864b054ffb04e59c969724bca730013",
+    "outputs/highorder-reference/ngsolve/native-report.json": "6e4b3af660cd53e7e1a3ba32d066fc915e7c9e7697d491e970a97f6028d2ee5e",
+    "outputs/highorder-reference/ngsolve/rectangular/order-1-operators.npz": "d69ff431a8929e64baf3b827f61ae513d051834e49b9090bffa7d3259d4dbb7f",
+    "outputs/highorder-reference/ngsolve/rectangular/order-2-operators.npz": "e36737c961d4680e63fb09c80b86562edcca0c884a11f92de031ef8953e9645e",
+    "outputs/highorder-reference/ngsolve/rectangular/order-3-operators.npz": "96058e954b9241e8ddb40ea4dff1ee9c67a2cc31abae1f4c1e0551ffdb0a4cde",
+    "outputs/highorder-reference/ngsolve/rectangular/order-4-operators.npz": "de505ff8607246422a2b9241e58e891683cfe0941424453a557b38f589397e28",
+    "outputs/highorder-reference/ngsolve/rectangular/p2-basis-transform.npz": "1a99bc4d8043be0978b87aabe4b10f8a2508292811846ec4d6d732f72ba56671",
+    "outputs/highorder-reference/rectangular/grid.log": "bf6c9a8316cd000fccb7fcdf2ff61b338f1ca0c366d172836fa987cf643b51cb",
+    "outputs/highorder-reference/rectangular/linear-mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-reference/rectangular/linear-mesh/mesh.elements": "929b1b7b2cf9b60596dd83187d42182c4e7746687439d55c9fb95255246d9c05",
+    "outputs/highorder-reference/rectangular/linear-mesh/mesh.header": "3b152ee3e894379d41c5a618f62b5917ad0d4e2c84a40571c706845e2acceb4e",
+    "outputs/highorder-reference/rectangular/linear-mesh/mesh.nodes": "61bebdc8b2f22c7e537ca045ed26e12a2329a400397f310d2ff58dcfaec94d45",
+    "outputs/highorder-reference/rectangular/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-reference/rectangular/mesh/mesh.elements": "91905bc7dbba886f968d5f1f2e204aab6ba13b56511a82453fc0a11e48f8e63b",
+    "outputs/highorder-reference/rectangular/mesh/mesh.header": "d10055fbd5845d688d48cff0fe1dee08cafb8e6790843e1dfbe6f8c3d4203df7",
+    "outputs/highorder-reference/rectangular/mesh/mesh.nodes": "1e704a60ec5b356da635272a768b2fc7214ff4ff2cbbcba3c401069871a7912e",
+    "outputs/highorder-reference/rectangular/operator.log": "6dc2241fdf3e9ce5f42ffe9511ad928849c852836212c6011f7fdd553eb13bc9",
+    "outputs/highorder-reference/rectangular/operator.sif": "ed8186125f18b9f596020c46d5f7ceeb207f40eb8dcf5a0aa1e53963f0b6596e",
+    "outputs/highorder-reference/rectangular/operator_a.dat": "c654db088775c5c58e0a35040eb89ca783f8f72f6c35cd60408e1287d3e5d6fe",
+    "outputs/highorder-reference/rectangular/operator_b.dat": "359db60bfada651a59d904372379032bd26f86e4c0b925eec81d3947902b3a18",
+    "outputs/highorder-reference/rectangular/operator_perm.dat": "1327fb000bfb7bf236267d2a5a42d984d29c20cdde85f5b813067b36cf0633a2",
+    "outputs/highorder-reference/rectangular/operator_sizes.dat": "b3cc7717c67e92e9c8414afd13523227191e1982ebdcc6c2a712386d75b01d21",
+    "outputs/highorder-reference/source-snapshot.zip": "ec7c9ace5277c85076ad82a47cae1facfba5c2c21134e64626241e9336fb3e69",
+    "outputs/highorder-reference/worker-job.json": "bc66c1023dd929aa90d71ab46548215da866cda01e747a87eee42e0775bfa51e",
+    "outputs/highorder-reference/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-verification/regression-result.json": "4536281ec1b08cc628fedfc5df0f6b0ff5a6efb7c8fb7fff0b52ac10c0f6f95b",
+    "outputs/highorder-verification/regression.log": "7ba19ccaf396024ca5d056682c7747e57eb64e17e39190cb512fe7e1b5b4f507",
+    "outputs/highorder-verification-final/corrected-p2-control/case-plan.json": "6e6cd117d1f03eac8c86f82ab5580379cb8576f791199123470dd27a1f4c222a",
+    "outputs/highorder-verification-final/corrected-p2-control/grid.log": "dc77301b74ce4c6381f506bd05ddbac879201699d5a5015623fa19c2a66b88d0",
+    "outputs/highorder-verification-final/corrected-p2-control/implicit/traces.npz": "6d9bc6d6801ccb7919311bef8b7702901e261708c470d9ae414db90877ce3e2b",
+    "outputs/highorder-verification-final/corrected-p2-control/implicit/worker-report.json": "14ae60df66a9f63b3bb5661af9f1f62b90406e7bb978e389144e9946f42c2624",
+    "outputs/highorder-verification-final/corrected-p2-control/linear-mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-verification-final/corrected-p2-control/linear-mesh/mesh.elements": "16e597f861ff4f79e91fb634079385966c3f9064dcf43c7f556a4814f133c8b1",
+    "outputs/highorder-verification-final/corrected-p2-control/linear-mesh/mesh.header": "fd0d50ae337f439593e37d4a779c69f100af3653f8c585a0d4f2d048eb0156ae",
+    "outputs/highorder-verification-final/corrected-p2-control/linear-mesh/mesh.nodes": "d2acb03569ae367e490d99b382f7c26726679bca09c2aeb70b3d898593fb63a6",
+    "outputs/highorder-verification-final/corrected-p2-control/loads-probes.npz": "3bc6a6af2d54a08386b5ff8a80aa3e5f78a2887c2ecd73eb32ccf71b0f1b74bc",
+    "outputs/highorder-verification-final/corrected-p2-control/mesh/mesh.boundary": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/highorder-verification-final/corrected-p2-control/mesh/mesh.elements": "22e6dca6e2483243e610013273e9e2d1370b17eaa467f44da2901eec5d98b462",
+    "outputs/highorder-verification-final/corrected-p2-control/mesh/mesh.header": "11c8c2fb55e92ffc8c6eb6193e65924572ddcdec8102d58baf74b8c9f36bec5e",
+    "outputs/highorder-verification-final/corrected-p2-control/mesh/mesh.nodes": "c1f22dbb1a4bc7f079afc17c9c06208b58358b040af9c59f23b8988e54c19679",
+    "outputs/highorder-verification-final/corrected-p2-control/operator.log": "e31bc06e24a05116dba518267229551460eb9139601684442da1c4f92f9ec444",
+    "outputs/highorder-verification-final/corrected-p2-control/operator.sif": "ed8186125f18b9f596020c46d5f7ceeb207f40eb8dcf5a0aa1e53963f0b6596e",
+    "outputs/highorder-verification-final/corrected-p2-control/operator_a.dat": "e988e017046b9e65b0a174476ace41aa58eeb52b29f4ab9dcdc7fd24a2782d7a",
+    "outputs/highorder-verification-final/corrected-p2-control/operator_b.dat": "6975de730d73663df6efe1d26e558e97585b68f5e9811849ffd572394660b004",
+    "outputs/highorder-verification-final/corrected-p2-control/operator_perm.dat": "c605ffaa8c1eee753c69efb749dc192c7929731e9c5809358dafa716dfceebd6",
+    "outputs/highorder-verification-final/corrected-p2-control/operator_sizes.dat": "eaea2cf5daf406c8a8f7d2189cbb06966fac3b7c397caaa165763fe0257af346",
+    "outputs/highorder-verification-final/corrected-p2-control/solver-traces.npz": "3b6feeac2758d923bda8449eefa28ff0cd4db0c2e1f19bdab7837bd49538ac6d",
+    "outputs/highorder-verification-final/corrected-p2-control/source-snapshot.zip": "ec7c9ace5277c85076ad82a47cae1facfba5c2c21134e64626241e9336fb3e69",
+    "outputs/highorder-verification-final/corrected-p2-control/waveform-case.json": "45db65cbf6d58742d5cad574a5b179059ab70c770f26a8d2255b5fd9ce41ae33",
+    "outputs/highorder-verification-final/corrected-p2-control/worker-job.json": "7c371106b24bafca44f2919b659db8109d5d43c676b3465e222ae41ff56d7924",
+    "outputs/highorder-verification-final/corrected-p2-control/worker.log": "ad34298a9f54f0142e6a592204bd4f20bdd3e76363c52988ecc4b464c6b5f66f",
+    "outputs/highorder-verification-final/regression-result.json": "a7ec1ff63b58ae5293c3b5e873860c52ae7bb37951adfb1464e9f46c19889725",
+    "outputs/highorder-verification-final/regression.log": "092eea1f5e725caa1eecbd898d9987b854bd79d6dc86f585a25b1f45da2a4656",
+    "outputs/ngsolve-basic-probe/assembly-results.json": "1a7271f78d1c6dd00eb419b45ef2f001408cb0ebdb2c3a4e428e9d4e2e3f34f3",
+    "outputs/ngsolve-basic-probe/probe-result.json": "ae1927584a25e0890593d2732acf8ab05f9bed3fbb0bd4042614e784b89950b0",
+    "outputs/ngsolve-basic-probe/probe.log": "ed7a7f2065085fd80f6173f2a8944a7472043e7a95fe074c61b57b55d442d2b6",
+    "outputs/probe_elmer_integration_order.py": "5f21ebb4b51bbd280a197433e2f43710c97850b113d1f8123b3c090145cdce28",
+    "outputs/probe_exact_quadratic_mass.py": "bc4ea15b5a684f5c516808d51ed0dea509499685aeff916763d1de15df169735",
+    "outputs/probe_ngsolve_basic.py": "f12e729378173bb46989f80a9b77cc090eab2601e8e9cf309470b480f1da99de",
+    "outputs/reference-tools/elmer-26.1/ElmerFEM-nogui-nompi-Windows-AMD64/share/elmersolver/lib/elements.def": "fd7797060c26856026a246dc986c3a8e1e0b56e9de0843b99c81f1176609edbd",
+    "outputs/reference-tools/ngsolve-6.2.2606/installation-result.json": "af31dd311062ce93325c1a4ef710e0fc9d40fdb604b31a95ecc1d2b88329e2f6",
+    "outputs/reference-tools/ngsolve-6.2.2606/installation.json": "976dc63006557dd1c8895dfb5f9b54675ae517c22e50e5aa9bb27d923d65d2e6",
+    "outputs/reference-tools/ngsolve-6.2.2606/installation.log": "5aafd929099c7e04a0b7a8ce184253b85fe4b53a20a955decc6838bdef094091",
+    "outputs/reference-tools/ngsolve-6.2.2606/pip-plan.json": "1aa0300f3a193f9d419b96edbe6eae5d1f156e3bdb486d788b541629e4a5be1e",
+    "requirements-highorder-win-lock.txt": "91534e424e39706f793cc20fd622d42a9b24f14dbc834856c9a946cadc0fee4f",
+    "requirements-highorder.txt": "b4fde482e2db0f8e91383a3405d4abcd1dcf294ef46e65fc6e46abeb5d4b8798"
+  },
+  "fingerprint": "e177d859700016e7a1377ca268683421ce9ac654c248754dd471f5c58eb105cd"
+}

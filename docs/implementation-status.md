@@ -12,6 +12,7 @@ validation rather than inventing those outcomes.
 | --- | --- |
 | Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly, P2 dispersion and finite-plate trials run. P2 spatial screen failed; coupled PZT benchmark remains open |
 | 3D elastic propagation and backside loss | Local linear-tet FEM and independent Elmer P2 mechanical reference implemented; algebraic/dynamic/dispersion checks run. Spatial and physical acceptance remain open |
+| Independent higher-order assembly | Optional NGSolve P1-P4 checks pass on rectangular/skewed blocks, including exact energies and corrected Elmer P2 equivalence. Higher-order apertures/waves and physical acceptance remain open |
 | PZT electromechanics, supports, noise/coupling variation | Seeded material, equivalent force/gain/drift/noise variation implemented; PZT/adhesive/electrical/support models and measured calibration still needed |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. P1/P2 finite-plate time screens passed, mesh screens failed; PZT/physical validation still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
@@ -509,4 +510,33 @@ at 785.1 MiB sampled test-tree RSS and 76.6% system RAM. GPU observations were
 guarded example recovered all seven groups with identical saved arrays,
 zero new solves and the correct failed-screen exit code 2 in 5.53 seconds.
 Raw and difference PNG/SVG figures were visually checked. No full training ran.
+
+## Independent high-order assembly and mass correction
+
+NGSolve 6.2.2606 is installed only in the project virtual environment, with
+four hash-pinned Windows/Python 3.12 wheels and unchanged NumPy/SciPy. The
+isolated P1-P4 assembly check covers rectangular and affine-skewed blocks,
+exact monomial/mixed-strain energies, six rigid modes and Ritz refinement.
+See highorder-reference.md for commands and scope.
+
+The first comparison exposed under-integration in the previous Elmer P2
+mass configuration: a 4.656% nodal-matrix error against exact barycentric
+integrals. Exports and native transients now explicitly request the higher
+rule, reducing error below 2.86e-15 on both blocks. The waveform cache binds
+elements.def. All earlier P2 dispersion/transient/refinement numbers are
+historical and require regeneration for the corrected formulation. Their
+provisional flags and failed screens are preserved; see elmer-mass-quadrature.md.
+
+All eight corrected degree/geometry cases pass, with polynomial energy
+errors below 5e-14 and P2 operator agreement with NGSolve below 2.63e-14.
+The native pilot took 3.72 seconds at 291.3 MiB sampled combined RSS.
+A corrected P2 waveform control completed in 8.37 seconds at 256.5 MiB;
+it remains unsuitable for research training pending spatial/physical checks.
+
+All 197 regression tests passed in 134.49 seconds with both native libraries
+enabled. Sampled combined RSS peaked at 771.2 MiB, system RAM at 72.6%, GPU
+memory at 1,386/8,192 MiB and GPU temperature at 45 C. CPU temperature was
+unavailable. The earlier full-suite guard stop and original failed mass
+comparison are retained in docs/evidence/highorder-reference-debug.json.
+No full training ran.
 

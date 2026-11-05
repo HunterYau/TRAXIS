@@ -1,5 +1,9 @@
 # Independent transient interfaces and time refinement
 
+The P2 measurements below predate the [mass quadrature correction](elmer-mass-quadrature.md).
+Current operator and native-transient inputs explicitly use the higher
+integration rule. Archived results describe their original discrete systems.
+
 Elmer's 3D transient solver now has bounded checks for force units, named
 scalar probes, equivalent nodal loads and second-order time integration.
 Both linear and quadratic tetrahedra passed. This establishes a tested

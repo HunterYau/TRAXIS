@@ -1,5 +1,9 @@
 # Bounded quadratic mechanical waveform references
 
+The measured P2 pilot below predates the [mass quadrature correction](elmer-mass-quadrature.md).
+Current exports explicitly integrate the mass products with the higher
+rule and bind `elements.def` in cache identity. Archived traces remain provisional.
+
 `reference-waveforms` runs one transmitter/frequency group on a CAD plate
 with independent Elmer P2 stiffness and consistent mass. A separate monitored
 Python worker integrates those exported operators with average-acceleration

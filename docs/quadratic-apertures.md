@@ -1,5 +1,9 @@
 # Quadratic circular mechanical apertures
 
+The archived native P2 waveform measurements below predate the
+[mass quadrature correction](elmer-mass-quadrature.md). The analytic surface
+integrals remain unchanged; corrected native results require regeneration.
+
 P2 mechanical sources and receivers now integrate their actual circular
 footprint over straight-sided quadratic tetrahedral top faces. Signed nodal
 weights preserve area, centroid and quadratic moments under remeshing. A

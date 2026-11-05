@@ -1,5 +1,9 @@
 # Quadratic finite-plate mesh and time refinement
 
+The measured P2 study below predates the [mass quadrature correction](elmer-mass-quadrature.md).
+Its original failed screens and inputs are preserved. Corrected waveform
+acceptance requires regeneration; data-readiness flags remain false.
+
 `check-reference-waveforms` measures raw receiver changes for one P2
 transmitter/frequency group, using independent spatial and temporal axes.
 It builds on the [checked sparse mechanical reference](elmer-waveforms.md).

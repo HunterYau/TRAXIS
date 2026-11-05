@@ -119,6 +119,12 @@ An optional [Elmer reference check](docs/elmer-reference.md) compares independen
 portable Windows solver trial runs entirely inside the project; matching
 coarse operators does not establish converged finite-plate waveforms.
 
+The [P2 mass quadrature correction](docs/elmer-mass-quadrature.md) makes
+integration explicit for exports and native transients. Earlier P2 numerical
+results are historical; corrected waveform/dispersion acceptance requires
+regeneration. An [independent P1-P4 assembly check](docs/highorder-reference.md)
+now matches exact energies and corrected Elmer operators using NGSolve.
+
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.
 Small analytic errors support further reference work; one strict decrease

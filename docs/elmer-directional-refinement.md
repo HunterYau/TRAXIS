@@ -1,5 +1,9 @@
 # Directional P2 plate refinement
 
+The measured P2 study below predates the [mass quadrature correction](elmer-mass-quadrature.md).
+Its failed screens describe the archived formulation. Corrected directional
+results require regeneration; none of these traces are approved training data.
+
 The [unstructured finite-plate study](elmer-plate-refinement.md) failed its
 spatial screen while passing its time screen. This follow-up varies in-plane
 and through-thickness resolution separately on the same intact box, with

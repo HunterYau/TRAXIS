@@ -1,5 +1,9 @@
 # Independent quadratic guided-wave reference
 
+The P2 measurements below predate the [mass quadrature correction](elmer-mass-quadrature.md).
+They describe the archived inputs; corrected dispersion results require
+regeneration. Data-readiness flags remain false.
+
 Quadratic tetrahedra offer a promising way to reduce the bending-resolution
 cost observed in the local linear-tet solver. A bounded Elmer P2 dispersion
 study reached a maximum finest-grid frequency error of 0.0677% against the

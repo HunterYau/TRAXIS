@@ -28,6 +28,7 @@ experiment framework rather than a full production multiphysics package.
 | OnScale | Documented time-domain electromechanical transducer modeling | Sources describe capability, not confirmed current account availability or price |
 | Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; optional CAD-conforming mesh; no extra wave-solver license | Low-order elements need fine meshes; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
 | Elmer FEM | Free independent elastic reference; portable Windows release and tiny 3D stiffness/consistent-mass checks actually tested | Full-plate transient/high-order cost, spatial convergence and bonded-PZT voltage workflow remain unverified |
+| NGSolve | Optional independent P1-P4 mechanical assembly trial passed on Windows, including exact energies and corrected Elmer P2 basis equivalence | High-order aperture/waveform pipeline, finite-plate convergence, PZT coupling and full-size cost remain unverified |
 | Scalar acoustic / straight-ray synthetic data | Useful for plumbing and deliberate mismatch experiments only | Cannot establish quantitative thickness reconstruction for dispersive elastic plate waves |
 
 The Pogo paper reports large speedups in its own benchmark; these are not
@@ -132,6 +133,14 @@ Time refinement passes at 0.2205% with order 1.99909. The fine intact grid
 uses 15,129 nodes and about 1,010 MiB sampled outer process-tree RSS. The
 separate axes support further spatial-resolution work, rather than accepting
 the current mechanical references for research data.
+
+The [independent high-order assembly check](highorder-reference.md) exposed
+under-integration in our earlier Elmer P2 mass configuration. Exports and
+native transients now explicitly select the higher rule and pass an exact
+quadratic mass reference. Earlier P2 numbers on this page are historical
+and need regeneration for the corrected formulation; see the
+[quadrature correction](elmer-mass-quadrature.md). This fixes an assembly
+configuration error without establishing wave/PZT/physical acceptance.
 
 ## Primary sources
 

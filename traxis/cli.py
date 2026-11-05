@@ -98,6 +98,11 @@ def main() -> None:
     p2.add_argument("--output", type=Path, required=True)
     p2.add_argument("--max-seconds", type=float, default=60)
     p2.add_argument("--max-rss-mib", type=float, default=512)
+    highorder = sub.add_parser('verify-highorder-reference', help='independent P1/P2 assembly and P1-P4 exact-energy checks; no wave acceptance')
+    highorder.add_argument('--elmer-home', type=Path, required=True)
+    highorder.add_argument('--output', type=Path, required=True)
+    highorder.add_argument('--max-seconds', type=float, default=60)
+    highorder.add_argument('--max-rss-mib', type=float, default=512)
     report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
     report.add_argument("--evaluations", type=Path, nargs="+", required=True)
     report.add_argument("--labels", nargs="+")
@@ -113,7 +118,17 @@ def main() -> None:
     add_study_commands(sub)
     add_waveform_commands(sub)
     args = parser.parse_args()
-    if args.command == "reference-waveforms":
+    if args.command == 'verify-highorder-reference':
+        from traxis.highorder_verification import verify_highorder
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = verify_highorder(args.elmer_home, args.output, guard)
+            print(json.dumps({key: result[key] for key in ('completed', 'passed', 'ready_for_training_data', 'wall_seconds')}, indent=2))
+        except Exception as exc:
+            parser.exit(1, f'High-order reference stopped: {type(exc).__name__}: {exc}\n')
+        if not result['passed']:
+            parser.exit(2, 'High-order discrete operator screen failed; inspect highorder-report.json.\n')
+    elif args.command == "reference-waveforms":
         from traxis.elmer_waveforms import ElmerWaveSettings, run_elmer_waveform_case
         from traxis.scenarios import load_scenario_plan
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
