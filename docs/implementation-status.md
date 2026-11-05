@@ -481,3 +481,32 @@ at 782.6 MiB sampled combined RSS and 78.3% system RAM. GPU observations were
 recovery took 7.49 seconds with zero new solves, identical saved arrays and
 the expected failed-screen exit code 2. Refinement figures were visually checked.
 
+## Independent in-plane, thickness and time checks
+
+A seven-case structured intact-box study now separates both spatial axes
+and time, sharing the finest case. The reference rejects recess geometries
+and verifies exact box volume, screened P2 node counts, physical apertures,
+source/kernel/runtime identities and saved comparison arrays. The CAD path
+continues to support conforming recesses. See elmer-directional-refinement.md.
+
+In-plane changes decreased from 57.14% to 12.83%; thickness changes from
+41.60% to 8.01%. Both fail the predeclared 5% screen. Time refinement passed
+at 0.2205% and order 1.99909. These results leave spatial accuracy unresolved
+in both directions, with all data-readiness flags false.
+
+The initial 768 MiB attempt stopped on the finest grid after two completed
+groups. A measured-capacity recovery preserved those groups and all physics,
+raised the RSS cap to 1,280 MiB and added outer guards of 85% system RAM and
+2,048 MiB minimum available memory. It completed in 486.33 seconds under
+the outer monitor at 1,009.9 MiB sampled combined RSS and 76.5% system RAM.
+GPU observations peaked at 1,831/8,192 MiB and 48 C; CPU temperature was
+unavailable. Earlier stops, costs and independent algebraic memory probes
+are retained in docs/evidence/elmer-directional-refinement-debug.json.
+
+All 189 regression tests passed with native checks enabled in 114.88 seconds,
+at 785.1 MiB sampled test-tree RSS and 76.6% system RAM. GPU observations were
+1,378/8,192 MiB and 49 C; CPU temperature was unavailable. The committed
+guarded example recovered all seven groups with identical saved arrays,
+zero new solves and the correct failed-screen exit code 2 in 5.53 seconds.
+Raw and difference PNG/SVG figures were visually checked. No full training ran.
+

@@ -21,6 +21,15 @@ def add_waveform_commands(sub):
     reference.add_argument('--state', choices=['intact', 'current'], default='intact')
     reference.add_argument('--cache-dir', type=Path)
     reference.add_argument('--output', type=Path, required=True)
+    directional = sub.add_parser('check-directional-waveforms', help='intact P2 in-plane/thickness/time axes; failed screens return 2')
+    directional.add_argument('--plan', type=Path, required=True)
+    directional.add_argument('--index', type=int, default=0)
+    directional.add_argument('--settings', type=Path, required=True)
+    directional.add_argument('--elmer-home', type=Path, required=True)
+    directional.add_argument('--transmitter', type=int, default=0)
+    directional.add_argument('--frequency-khz', type=float)
+    directional.add_argument('--cache-dir', type=Path)
+    directional.add_argument('--output', type=Path, required=True)
     plot = sub.add_parser("plot-waveforms", help="plot checked float64 refinement probes without new solves")
     plot.add_argument("--sweep", type=Path, required=True)
     plot.add_argument("--records", type=int, nargs="+", default=[0, 12])
@@ -29,7 +38,11 @@ def add_waveform_commands(sub):
     reference_plot.add_argument('--sweep', type=Path, required=True)
     reference_plot.add_argument('--records', type=int, nargs='+', default=[0, 3])
     reference_plot.add_argument('--output', type=Path, required=True)
-    for command in (sweep, plot, reference, reference_plot):
+    directional_plot = sub.add_parser('plot-directional-waveforms', help='plot checked P2 in-plane/thickness/time probes without new solves')
+    directional_plot.add_argument('--sweep', type=Path, required=True)
+    directional_plot.add_argument('--records', type=int, nargs='+', default=[0, 3])
+    directional_plot.add_argument('--output', type=Path, required=True)
+    for command in (sweep, plot, reference, reference_plot, directional, directional_plot):
         command.add_argument("--max-seconds", type=float, default=60)
         command.add_argument("--max-rss-mib", type=float, default=512)
 
@@ -37,9 +50,10 @@ def add_waveform_commands(sub):
 def run_waveform_command(args, guard):
     from traxis.waveform_checks import WaveformSweepSettings, plot_waveform_sweep, run_waveform_sweep
     guard.check(force=True)
-    if args.command in ('plot-waveforms', 'plot-reference-waveforms'):
+    if args.command in ('plot-waveforms', 'plot-reference-waveforms', 'plot-directional-waveforms'):
         result = plot_waveform_sweep(args.sweep, args.output, tuple(args.records), guard,
-                                      reference=args.command == 'plot-reference-waveforms')
+                                      reference=args.command == 'plot-reference-waveforms',
+                                      directional=args.command == 'plot-directional-waveforms')
         return {"completed": True, "figures": result["files"], "ready_for_training_data": False}
     from traxis.scenarios import load_scenario_plan
     cases = load_scenario_plan(args.plan)
@@ -48,7 +62,14 @@ def run_waveform_command(args, guard):
     if args.settings.stat().st_size > 1024**2:
         raise MemoryError("refinement settings exceed 1 MiB")
     values = json.loads(args.settings.read_text(encoding='utf-8-sig'))
-    if args.command == 'check-reference-waveforms':
+    if args.command == 'check-directional-waveforms':
+        from traxis.elmer_directional import ElmerDirectionalSettings, run_elmer_directional_refinement
+        settings = ElmerDirectionalSettings.from_dict(values)
+        result = run_elmer_directional_refinement(cases[args.index], settings, args.elmer_home, args.output, guard,
+            transmitter=args.transmitter, frequency_hz=args.frequency_khz * 1000 if args.frequency_khz is not None else None,
+            cache_dir=args.cache_dir)
+        filename = 'directional-report.json'
+    elif args.command == 'check-reference-waveforms':
         from traxis.elmer_plate_refinement import ElmerPlateRefinementSettings, run_elmer_plate_refinement
         settings = ElmerPlateRefinementSettings.from_dict(values)
         result = run_elmer_plate_refinement(cases[args.index], settings, args.elmer_home, args.output, guard,
@@ -59,7 +80,9 @@ def run_waveform_command(args, guard):
         settings = WaveformSweepSettings.from_dict(values)
         result = run_waveform_sweep(cases[args.index], settings, args.output, guard, cache_dir=args.cache_dir)
         filename = 'waveform-report.json'
-    return {"completed": result["completed"], "discretization_screen_passed": result["discretization_screen_passed"],
+    summary = {"completed": result["completed"], "discretization_screen_passed": result["discretization_screen_passed"],
             "spatial_screen_passed": result["spatial_screen_passed"], "temporal_screen_passed": result["temporal_screen_passed"],
             "observed_temporal_order": result["observed_temporal_order"], "wall_seconds": result["wall_seconds"],
             "ready_for_training_data": False, "report": str(args.output / filename)}
+    summary.update({key: result[key] for key in ('in_plane_screen_passed', 'thickness_screen_passed', 'observed_thickness_order') if key in result})
+    return summary

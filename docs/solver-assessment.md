@@ -126,6 +126,13 @@ completed. Its temporal screen passed at 0.2205% maximum change and order
 The 15,478-node reference fits a 768 MiB guard after sparse memory fixes,
 but these discretizations cannot yet supply research-quality plate traces.
 
+An [independent directional P2 study](elmer-directional-refinement.md) also
+fails its in-plane and thickness screens at 12.83% and 8.01%, respectively.
+Time refinement passes at 0.2205% with order 1.99909. The fine intact grid
+uses 15,129 nodes and about 1,010 MiB sampled outer process-tree RSS. The
+separate axes support further spatial-resolution work, rather than accepting
+the current mechanical references for research data.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

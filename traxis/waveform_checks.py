@@ -226,13 +226,14 @@ def run_waveform_sweep(scenario: Scenario, settings: WaveformSweepSettings, outp
     return report
 
 
-def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=None, *, reference=False) -> dict:
+def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=None, *, reference=False, directional=False) -> dict:
     """Plot preselected probe records without new solves or fitted alignment."""
     import json
     import zipfile
     from traxis.reporting import _figure_api, _new_figure, _save_figure
     directory, output = Path(directory).resolve(), Path(output)
-    report_name = 'refinement-report.json' if reference else 'waveform-report.json'
+    reference = reference or directional
+    report_name = 'directional-report.json' if directional else ('refinement-report.json' if reference else 'waveform-report.json')
     path = directory / report_name
     if path.stat().st_size > 16 * 1024**2:
         raise MemoryError("waveform report exceeds 16 MiB")
@@ -252,8 +253,9 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
         if not selected or len(set(selected)) != len(selected) or any(a not in actions for a in selected):
             raise ValueError('reference plot actions disagree with the scenario catalog')
         actions = selected
-    if len(report['cases']) != 5:
-        raise ValueError('refinement figures require five completed cases')
+    expected_cases = 7 if directional else 5
+    if len(report['cases']) != expected_cases:
+        raise ValueError(f'refinement figures require {expected_cases} completed cases')
     if not records or len(records) > 4 or any(type(i) is not int or not 0 <= i < len(actions) for i in records):
         raise ValueError("select 1–4 available probe records before reviewing errors")
     if output.exists() and any(output.iterdir()):
@@ -278,6 +280,33 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
             raise ValueError('solver trace time grid disagrees with the sweep plan')
         arrays.append(traces)
     api = _figure_api(output / ".matplotlib-cache")
+    if directional:
+        files = []
+        axes_definitions = (('In-plane refinement', (0, 1, 2)), ('Thickness refinement', (3, 4, 2)), ('Time refinement', (5, 6, 2)))
+        for differences in (False, True):
+            figure = _new_figure(api, (14, 3.5 * len(records)))
+            axes = figure.subplots(len(records), 3, squeeze=False)
+            for row, index in enumerate(records):
+                action = actions[index]
+                for column, (title, levels) in enumerate(axes_definitions):
+                    axis = axes[row, column]
+                    for level in levels:
+                        case = report['cases'][level]
+                        label = f"{case['cells'][0]} x {case['cells'][1]} x {case['cells'][2]} cells" if column < 2 else f"dt={case['dt_internal_s'] * 1e9:g} ns"
+                        values = arrays[level][index] - arrays[2][index] if differences else arrays[level][index]
+                        axis.plot(times * 1e6, values * 1e9, label=label, linewidth=1)
+                    axis.set(title=f"{title}\nTX {action.transmitter} to RX {action.receiver}, {action.frequency_hz/1000:g} kHz",
+                             xlabel='Time (microseconds)', ylabel='Difference from common finest (nm)' if differences else 'Displacement (nm)')
+                    axis.grid(alpha=.2)
+                    axis.legend(fontsize=7)
+            figure.suptitle('Directional P2 intact-plate pilot - provisional spatial resolution', fontsize=13)
+            figure.supxlabel('Float64 probes; fixed physical apertures; no fitted amplitude, phase or time shift. No PZT/physical validation.', fontsize=8)
+            files.extend(_save_figure(figure, output, 'directional-differences' if differences else 'directional-waveforms', guard))
+        result = {'kind': 'directional_refinement_figures', 'records': list(records), 'files': files,
+                  'waveform_report_sha256': sha256_file(directory / report_name), 'ready_for_training_data': False,
+                  'file_sha256': {name: sha256_file(output / name) for name in files}, 'resources': guard.report() if guard else None}
+        write_json(output / 'figures.json', result)
+        return result
     figure = _new_figure(api, (14, 3.5 * len(records)))
     axes = figure.subplots(len(records), 3, squeeze=False)
     for row, index in enumerate(records):

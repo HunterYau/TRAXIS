@@ -142,6 +142,11 @@ mesh/time axes for one mechanical group and preserves failed screens and
 resource interruptions. The current spatial screen fails; finer modeling
 and PZT/physical validation remain necessary.
 
+[Directional P2 refinement](docs/elmer-directional-refinement.md) checks
+in-plane, thickness and time resolution independently on an intact box.
+Both spatial screens still fail; the workflow records the numerical and
+resource evidence without promoting these traces into training data.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.
