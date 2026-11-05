@@ -127,6 +127,8 @@ now matches exact energies and corrected Elmer operators using NGSolve.
 [Circular P1-P4 mechanical footprints](docs/highorder-apertures.md) also pass
 represented-field checks; coarse P2 pulse traces match fresh native Elmer
 transients. Spatial convergence and PZT calibration remain open.
+The [higher-order waveform study](docs/highorder-waveforms.md) separates
+in-plane, thickness and time refinements under an outer process-tree guard.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.

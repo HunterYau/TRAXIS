@@ -1,0 +1,11 @@
+{
+  "in_plane_cells": [7, 8, 9],
+  "thickness_cells": [1, 2, 3],
+  "substeps_per_output": [4, 8, 16],
+  "in_plane_relative_l2_tolerance": 0.05,
+  "thickness_relative_l2_tolerance": 0.05,
+  "temporal_relative_l2_tolerance": 0.01,
+  "reference_rms_floor": 1e-18,
+  "max_total_solves": 7,
+  "reference": {"order": 3, "max_dofs": 30000, "max_assembly_mib": 256, "max_internal_steps": 5000}
+}

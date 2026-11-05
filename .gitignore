@@ -1,13 +1,35 @@
 .venv/
+venv/
+env/
 .idea/
+.vscode/
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+htmlcov/
 outputs/
 data/
 checkpoints/
 *.mph
 *.mphbin
 *.log
+
+# Operating system metadata
+.DS_Store
+._*
+__MACOSX/
+Thumbs.db
+Desktop.ini
+
+# Local secrets
+.env
+.env.*
+!.env.example
 
