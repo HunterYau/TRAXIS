@@ -18,37 +18,13 @@ from traxis.elmer_reference import elmer_environment, run_monitored
 from traxis.fem import tone_burst
 from traxis.geometry import structured_mesh
 from traxis.highorder import assemble_highorder, nodal_evaluation_transform
-from traxis.highorder_patches import highorder_surface_patch
+from traxis.highorder_patches import highorder_surface_patch, patch_polynomial_moments
 from traxis.highorder_verification import distribution_identity
 from traxis.implicit_fem import implicit_simulate
-from traxis.polynomial_patches import triangle_powers
 from traxis.quadratic_patch_verification import verify_quadratic_patches
 from traxis.quadratic_patches import load_quadratic_elmer_mesh, quadratic_surface_patch
 from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
-
-
-def _disk_average(a, b, region):
-    quarter = math.gamma((a+1)/2)*math.gamma((b+1)/2)/(2*(a+b+2)*math.gamma((a+b+2)/2))
-    if region == 'quarter':
-        return quarter/(math.pi/4)
-    if region == 'half':
-        return 0. if b % 2 else 2*quarter/(math.pi/2)
-    return 0. if a % 2 or b % 2 else 4*quarter/math.pi
-
-
-def _moments(system, vector, center, radius, direction, region, order):
-    import ngsolve as ng
-    direction = np.array(direction, float)/np.linalg.norm(direction)
-    field = ng.GridFunction(system.scalar_space)
-    rows = []
-    for a, b in triangle_powers(order):
-        field.Set(((ng.x-center[0])/radius)**a*((ng.y-center[1])/radius)**b)
-        measured = vector.reshape(3, -1) @ field.vec.FV().NumPy()
-        expected = direction*_disk_average(a, b, region)
-        rows.append({'powers': [a, b], 'expected_component_averages': expected.tolist(),
-            'measured_component_averages': measured.tolist(), 'absolute_error': float(np.max(abs(measured-expected)))})
-    return {'monomials': rows, 'maximum_absolute_error': max(row['absolute_error'] for row in rows)}
 
 
 def _validate_job(job_path, output, guard):
@@ -112,7 +88,7 @@ def run_native_job(job_path, output, guard):
                 transform = nodal_evaluation_transform(system, quadratic.points_m) if name != 'refined' and order == 2 else None
                 for center, direction, region in patches:
                     vector, details = highorder_surface_patch(system, plate, center, radius, direction, guard)
-                    moments = _moments(system, vector, center, radius, direction, region, order)
+                    moments = patch_polynomial_moments(system, vector, center, radius, direction, region, order)
                     expected_area = math.pi*radius**2/({'full': 1, 'half': 2, 'quarter': 4}[region])
                     passed = moments['maximum_absolute_error'] < plan['moment_absolute_tolerance']
                     details.update({'region': region, 'moments': moments, 'expected_area_relative_error': abs(details['area_m2']/expected_area-1)})

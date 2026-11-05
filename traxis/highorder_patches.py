@@ -8,6 +8,30 @@ from traxis.config import positive
 from traxis.polynomial_patches import disk_triangle_barycentric_moments, triangle_powers
 
 
+def patch_polynomial_moments(system, vector, center, radius, direction, region, order):
+    """Compare represented centered monomials to exact disk-sector averages."""
+    if region not in ('full', 'half', 'quarter'):
+        raise ValueError('choose a full disk, positive-x half disk or positive-xy quarter disk')
+    import ngsolve as ng
+    direction = np.array(direction, float)/np.linalg.norm(direction)
+    field = ng.GridFunction(system.scalar_space)
+    rows = []
+    for a, b in triangle_powers(order):
+        quarter = math.gamma((a+1)/2)*math.gamma((b+1)/2)/(2*(a+b+2)*math.gamma((a+b+2)/2))
+        if region == 'quarter':
+            average = quarter/(math.pi/4)
+        elif region == 'half':
+            average = 0. if b % 2 else 2*quarter/(math.pi/2)
+        else:
+            average = 0. if a % 2 or b % 2 else 4*quarter/math.pi
+        field.Set(((ng.x-center[0])/radius)**a*((ng.y-center[1])/radius)**b)
+        measured = vector.reshape(3, -1) @ field.vec.FV().NumPy()
+        expected = direction*average
+        rows.append({'powers': [a, b], 'expected_component_averages': expected.tolist(),
+            'measured_component_averages': measured.tolist(), 'absolute_error': float(np.max(abs(measured-expected)))})
+    return {'monomials': rows, 'maximum_absolute_error': max(row['absolute_error'] for row in rows)}
+
+
 def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0., 0., 1.), guard=None):
     """Unit-total-force load and identical area-average displacement probe.
 

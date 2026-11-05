@@ -299,7 +299,7 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
                              xlabel='Time (microseconds)', ylabel='Difference from common finest (nm)' if differences else 'Displacement (nm)')
                     axis.grid(alpha=.2)
                     axis.legend(fontsize=7)
-            figure.suptitle('Directional P2 intact-plate pilot - provisional spatial resolution', fontsize=13)
+            figure.suptitle(f"Directional {report.get('solver_label', 'P2')} intact-plate pilot - provisional spatial resolution", fontsize=13)
             figure.supxlabel('Float64 probes; fixed physical apertures; no fitted amplitude, phase or time shift. No PZT/physical validation.', fontsize=8)
             files.extend(_save_figure(figure, output, 'directional-differences' if differences else 'directional-waveforms', guard))
         result = {'kind': 'directional_refinement_figures', 'records': list(records), 'files': files,

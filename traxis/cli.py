@@ -211,7 +211,7 @@ def main() -> None:
         if not result['passed']:
             parser.exit(2, "Independent operator check failed; inspect elmer-report.json.\n")
     elif args.command in ("check-waveforms", "plot-waveforms", "check-reference-waveforms", "plot-reference-waveforms",
-                          'check-directional-waveforms', 'plot-directional-waveforms'):
+                          'check-directional-waveforms', 'plot-directional-waveforms', 'check-highorder-waveforms'):
         from traxis.waveform_commands import run_waveform_command
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
         try:
@@ -219,7 +219,7 @@ def main() -> None:
             print(json.dumps(result, indent=2, allow_nan=False))
         except Exception as exc:
             parser.exit(1, f"Waveform check stopped: {type(exc).__name__}: {exc}\n")
-        if args.command in ("check-waveforms", "check-reference-waveforms", 'check-directional-waveforms') and not result["discretization_screen_passed"]:
+        if args.command in ("check-waveforms", "check-reference-waveforms", 'check-directional-waveforms', 'check-highorder-waveforms') and not result["discretization_screen_passed"]:
             parser.exit(2, "Mesh/time discrepancy screen failed; banks remain pilot-only.\n")
     elif args.command in ("plan-study", "advance-study", "freeze-study"):
         from traxis.study_commands import run_study_command

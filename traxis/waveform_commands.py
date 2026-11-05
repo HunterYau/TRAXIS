@@ -30,6 +30,16 @@ def add_waveform_commands(sub):
     directional.add_argument('--frequency-khz', type=float)
     directional.add_argument('--cache-dir', type=Path)
     directional.add_argument('--output', type=Path, required=True)
+    highorder = sub.add_parser('check-highorder-waveforms', help='intact P1-P4 in-plane/thickness/time discrepancies; failed screens return 2')
+    highorder.add_argument('--plan', type=Path, required=True)
+    highorder.add_argument('--index', type=int, default=0)
+    highorder.add_argument('--settings', type=Path, required=True)
+    highorder.add_argument('--transmitter', type=int, default=0)
+    highorder.add_argument('--frequency-khz', type=float)
+    highorder.add_argument('--cache-dir', type=Path)
+    highorder.add_argument('--output', type=Path, required=True)
+    highorder.add_argument('--max-seconds', type=float, default=600)
+    highorder.add_argument('--max-rss-mib', type=float, default=1024)
     plot = sub.add_parser("plot-waveforms", help="plot checked float64 refinement probes without new solves")
     plot.add_argument("--sweep", type=Path, required=True)
     plot.add_argument("--records", type=int, nargs="+", default=[0, 12])
@@ -62,7 +72,14 @@ def run_waveform_command(args, guard):
     if args.settings.stat().st_size > 1024**2:
         raise MemoryError("refinement settings exceed 1 MiB")
     values = json.loads(args.settings.read_text(encoding='utf-8-sig'))
-    if args.command == 'check-directional-waveforms':
+    if args.command == 'check-highorder-waveforms':
+        from traxis.highorder_directional import HighOrderDirectionalSettings, run_highorder_directional
+        settings = HighOrderDirectionalSettings.from_dict(values)
+        result = run_highorder_directional(cases[args.index], settings, args.output, guard,
+            transmitter=args.transmitter, frequency_hz=args.frequency_khz*1000 if args.frequency_khz is not None else None,
+            cache_dir=args.cache_dir)
+        filename = 'directional-report.json'
+    elif args.command == 'check-directional-waveforms':
         from traxis.elmer_directional import ElmerDirectionalSettings, run_elmer_directional_refinement
         settings = ElmerDirectionalSettings.from_dict(values)
         result = run_elmer_directional_refinement(cases[args.index], settings, args.elmer_home, args.output, guard,
