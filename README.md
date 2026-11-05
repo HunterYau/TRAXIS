@@ -124,6 +124,9 @@ integration explicit for exports and native transients. Earlier P2 numerical
 results are historical; corrected waveform/dispersion acceptance requires
 regeneration. An [independent P1-P4 assembly check](docs/highorder-reference.md)
 now matches exact energies and corrected Elmer operators using NGSolve.
+[Circular P1-P4 mechanical footprints](docs/highorder-apertures.md) also pass
+represented-field checks; coarse P2 pulse traces match fresh native Elmer
+transients. Spatial convergence and PZT calibration remain open.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.

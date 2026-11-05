@@ -28,7 +28,7 @@ experiment framework rather than a full production multiphysics package.
 | OnScale | Documented time-domain electromechanical transducer modeling | Sources describe capability, not confirmed current account availability or price |
 | Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; optional CAD-conforming mesh; no extra wave-solver license | Low-order elements need fine meshes; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
 | Elmer FEM | Free independent elastic reference; portable Windows release and tiny 3D stiffness/consistent-mass checks actually tested | Full-plate transient/high-order cost, spatial convergence and bonded-PZT voltage workflow remain unverified |
-| NGSolve | Optional independent P1-P4 mechanical assembly trial passed on Windows, including exact energies and corrected Elmer P2 basis equivalence | High-order aperture/waveform pipeline, finite-plate convergence, PZT coupling and full-size cost remain unverified |
+| NGSolve | Optional P1-P4 mechanical assembly and circular footprint checks passed on Windows; coarse P2 pulse traces agree with fresh corrected Elmer transients | Finite-plate spatial/time convergence, production waveform pipeline, PZT coupling and full-size cost remain unverified |
 | Scalar acoustic / straight-ray synthetic data | Useful for plumbing and deliberate mismatch experiments only | Cannot establish quantitative thickness reconstruction for dispersive elastic plate waves |
 
 The Pogo paper reports large speedups in its own benchmark; these are not

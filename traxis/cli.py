@@ -103,6 +103,11 @@ def main() -> None:
     highorder.add_argument('--output', type=Path, required=True)
     highorder.add_argument('--max-seconds', type=float, default=60)
     highorder.add_argument('--max-rss-mib', type=float, default=512)
+    highorder_patches = sub.add_parser('verify-highorder-patches', help='P1-P4 circular aperture moments and independent P2 transients')
+    highorder_patches.add_argument('--elmer-home', type=Path, required=True)
+    highorder_patches.add_argument('--output', type=Path, required=True)
+    highorder_patches.add_argument('--max-seconds', type=float, default=60)
+    highorder_patches.add_argument('--max-rss-mib', type=float, default=512)
     report = sub.add_parser("report", help="render physical-unit figures and tables from completed frozen replay")
     report.add_argument("--evaluations", type=Path, nargs="+", required=True)
     report.add_argument("--labels", nargs="+")
@@ -118,6 +123,17 @@ def main() -> None:
     add_study_commands(sub)
     add_waveform_commands(sub)
     args = parser.parse_args()
+    if args.command == 'verify-highorder-patches':
+        from traxis.highorder_patch_verification import verify_highorder_patches
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        try:
+            result = verify_highorder_patches(args.elmer_home, args.output, guard)
+            print(json.dumps({'completed': result['completed'], 'passed': result['passed'], 'ready_for_training_data': False}))
+        except Exception as exc:
+            parser.exit(1, f'High-order aperture verification stopped: {type(exc).__name__}: {exc}\n')
+        if not result['passed']:
+            parser.exit(2, 'High-order aperture screen failed; inspect highorder-aperture-report.json.\n')
+        return
     if args.command == 'verify-highorder-reference':
         from traxis.highorder_verification import verify_highorder
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))

@@ -12,7 +12,7 @@ validation rather than inventing those outcomes.
 | --- | --- |
 | Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly, P2 dispersion and finite-plate trials run. P2 spatial screen failed; coupled PZT benchmark remains open |
 | 3D elastic propagation and backside loss | Local linear-tet FEM and independent Elmer P2 mechanical reference implemented; algebraic/dynamic/dispersion checks run. Spatial and physical acceptance remain open |
-| Independent higher-order assembly | Optional NGSolve P1-P4 checks pass on rectangular/skewed blocks, including exact energies and corrected Elmer P2 equivalence. Higher-order apertures/waves and physical acceptance remain open |
+| Independent higher-order assembly | Optional NGSolve P1-P4 checks pass for operators, exact energies, circular footprint moments and coarse reciprocal pulses; P2 agrees with fresh Elmer transients. Spatial/time convergence and physical acceptance remain open |
 | PZT electromechanics, supports, noise/coupling variation | Seeded material, equivalent force/gain/drift/noise variation implemented; PZT/adhesive/electrical/support models and measured calibration still needed |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. P1/P2 finite-plate time screens passed, mesh screens failed; PZT/physical validation still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
@@ -539,4 +539,29 @@ memory at 1,386/8,192 MiB and GPU temperature at 45 C. CPU temperature was
 unavailable. The earlier full-suite guard stop and original failed mass
 comparison are retained in docs/evidence/highorder-reference-debug.json.
 No full training ran.
+
+## Higher-order circular footprints
+
+The native P1-P4 coefficient basis now has analytic circular mechanical
+traction/displacement covectors. All 48 cases pass across baseline,
+renumbered and refined meshes, including full, half and quarter disks.
+Exact represented monomial averages, oblique directions and independent
+slice quadrature check the interface. P2 covectors agree with the nodal
+interface within 5.74e-16 relative error; coarse pulse traces agree with
+fresh corrected native Elmer transients within 1.62e-12. All degrees pass
+reciprocity and postburst energy checks on the fixed coarse mesh.
+
+The retained pilot took 11.42 seconds at 256.4 MiB sampled combined RSS.
+All 205 full-suite tests passed in 147.96 seconds with both native solvers
+enabled; five focused tests passed after the final CLI-only adjustment.
+Full-suite peaks were 772.9 MiB combined RSS, 73.4% system RAM and 45 C GPU
+temperature. CPU temperature was unavailable. Source snapshots, native
+inputs, footprint covectors, sparse operators, traces and receipts remain
+hash-linked in evidence/highorder-aperture-debug.json. See
+highorder-apertures.md for commands and fixed tolerances.
+
+This establishes discrete mechanical interfaces. Finite-plate spatial/time
+convergence, the production higher-order waveform pipeline, bonded-PZT
+physics and physical calibration remain open. Research training readiness
+remains false, and no full training ran.
 

@@ -2,8 +2,9 @@
 
 The optional NGSolve reference now has bounded P1-P4 assembly checks on
 rectangular and affine-skewed blocks. It independently matches corrected
-Elmer P2 operators and exact polynomial energies. It does not yet generate
-finite-plate waveforms, circular aperture loads or PZT voltages. These
+Elmer P2 operators and exact polynomial energies. A separate
+[circular aperture check](highorder-apertures.md) now verifies P1-P4 loads,
+receivers and coarse pulse traces. It does not generate PZT voltages. These
 operator checks do not establish spatial convergence or physical acceptance.
 
 NGSolve supplies high-order H1 spaces and a Python variational interface,
@@ -85,9 +86,9 @@ Elmer and NGSolve errors were at most 2.86e-15 and 2.55e-14, respectively.
 
 These are discrete free-block frequencies. The degree sequence demonstrates
 the variational refinement check, not an accepted continuum value or a
-verified 100 kHz finite-plate waveform. Higher-order source/probe integration,
-wave propagation, mesh/time convergence and physical PZT calibration remain
-required.
+verified 100 kHz finite-plate waveform. The later circular aperture and
+discrete transient checks are described in highorder-apertures.md;
+mesh/time convergence and physical PZT calibration remain required.
 
 The complete native pilot took 3.72 s with sampled combined RSS 291.3 MiB
 and system RAM 70.4%. System GPU observations were 1,386/8,192 MiB and
