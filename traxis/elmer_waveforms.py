@@ -115,7 +115,7 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
     atomic_write(output / 'source-snapshot.zip', snapshot)
     runtime = {'python': sys.version, 'numpy': np.__version__, 'scipy': scipy.__version__}
     identity = {'solver_executable': sha256_file(solver), 'grid_executable': sha256_file(grid)}
-    for path in (solver.parent / 'libelmersolver.dll', Path(env['ELMER_LIB']) / 'StressSolve.dll'):
+    for path in (solver.parent / 'libelmersolver.dll', Path(env['ELMER_LIB']) / 'StressSolve.dll', Path(env['ELMER_LIB']) / 'elements.def'):
         if path.exists():
             identity[path.name] = sha256_file(path)
     plan = {'kind': 'bounded_elmer_p2_waveform_case', 'scenario': asdict(scenario), 'settings': asdict(settings),

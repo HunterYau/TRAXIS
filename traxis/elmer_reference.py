@@ -53,12 +53,16 @@ def write_elmer_mesh(mesh: TetMesh, directory: Path, *, max_nodes=128, max_tetra
     (directory / 'mesh.boundary').write_text('', encoding='ascii')
 
 
-def operator_sif(material: Material) -> str:
+def operator_sif(material: Material, *, relative_integration_order=1) -> str:
     """Export before constraints/scaling/eigen solution; retain consistent mass.
 
     The save flags and format are implemented in Elmer's SolverUtils.F90;
     some are absent from that release's keyword warning dictionary.
     """
+    if type(relative_integration_order) is not int or relative_integration_order not in (0, 1):
+        raise ValueError('relative integration order must be zero or one')
+    # P2 mass products have degree four. The release's default 27-point
+    # Duffy rule is not exact for them; the higher 64-point rule is.
     return f'''Header
   CHECK KEYWORDS Warn
   Mesh DB "." "mesh"
@@ -85,6 +89,7 @@ Solver 1
   Eigen Analysis = Logical True
   Eigen System Values = 10
   Displace Mesh = Logical False
+  Relative Integration Order = Integer {relative_integration_order}
   Optimize Bandwidth = Logical False
   Linear System Save = Logical True
   Linear System Save Slot = String "assembly"

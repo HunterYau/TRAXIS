@@ -46,7 +46,7 @@ def sinusoidal_displacement(times, acceleration, drive_omega, natural_omega=0.):
 
 def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
                   nodal_force_n=None, volume_force_n_m3=None, probe_nodes=None, burst_cycles=None,
-                  max_nodes=128, output_stride=1, reuse_factorization=False):
+                  max_nodes=128, output_stride=1, reuse_factorization=False, relative_integration_order=1):
     """Bossak alpha=0 is average-acceleration Newmark (gamma=.5, beta=.25).
 
     Stress Bodyforce is force/volume. Displacement i Load is a direct nodal
@@ -54,6 +54,8 @@ def transient_sif(material: Material, *, dt_s, steps, drive_omega, probe_node,
     """
     positive('time step', dt_s)
     positive('drive angular frequency', drive_omega)
+    if type(relative_integration_order) is not int or relative_integration_order not in (0, 1):
+        raise ValueError('relative integration order must be zero or one')
     if (type(max_nodes) is not int or not 4 <= max_nodes <= 20000 or type(output_stride) is not int
             or not 1 <= output_stride <= 64 or type(reuse_factorization) is not bool):
         raise ValueError('invalid mesh, output stride or reuse bounds')
@@ -141,6 +143,7 @@ Solver 1
   Variable = -dofs 3 Displacement
   Procedure = "StressSolve" "StressSolver"
   Displace Mesh = False
+  Relative Integration Order = Integer {relative_integration_order}
   Linear System Solver = Direct
   Linear System Direct Method = umfpack
 {reuse}  Nonlinear System Max Iterations = 1
