@@ -110,6 +110,10 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
         linear, mesh_report = cad_mesh(scenario.plate, recesses, settings.mesh_size_m,
             max_assembly_mib=settings.max_cad_assembly_mib, max_tetrahedra=settings.max_tetrahedra,
             seed=scenario.geometry_seed, optimization=settings.mesh_optimization, algorithm=settings.mesh_algorithm, guard=guard)
+        corners = linear.points_m[linear.tetrahedra]
+        lengths = np.linalg.norm(corners[:, TETRAHEDRON_EDGES[:, 0]] - corners[:, TETRAHEDRON_EDGES[:, 1]], axis=2)
+        mesh_report.update({'minimum_edge_m': float(lengths.min()), 'maximum_edge_m': float(lengths.max()),
+                            'maximum_element_z_span_m': float(np.ptp(corners[:, :, 2], axis=1).max())})
         volume_error = abs(linear.removed_volume_m3 / linear.requested_removed_volume_m3 - 1) if linear.requested_removed_volume_m3 else 0.
         if volume_error > settings.max_volume_error:
             raise ValueError('CAD-facet recess volume error exceeds the reference limit')

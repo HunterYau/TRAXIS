@@ -1,0 +1,15 @@
+{
+  "mesh_sizes_m": [0.003, 0.002, 0.0015],
+  "substeps_per_output": [4, 8, 16],
+  "spatial_relative_l2_tolerance": 0.05,
+  "temporal_relative_l2_tolerance": 0.01,
+  "reference_rms_floor": 1e-18,
+  "max_total_solves": 5,
+  "reference": {
+    "mesh_algorithm": 10,
+    "mesh_optimization": "Netgen",
+    "max_matrix_screen_mib": 256,
+    "max_quadratic_nodes": 20000,
+    "max_internal_steps": 5000
+  }
+}

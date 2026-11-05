@@ -10,10 +10,10 @@ validation rather than inventing those outcomes.
 
 | Requirement | Current state / acceptance evidence needed |
 | --- | --- |
-| Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly and P2 dispersion trials run. Finite-plate/PZT reference benchmark remains open |
-| 3D elastic propagation and backside loss | Implemented local linear-tet FEM; algebraic/dynamic checks and independent guided-mode dispersion convergence pass. Physical validation remains open |
+| Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly, P2 dispersion and finite-plate trials run. P2 spatial screen failed; coupled PZT benchmark remains open |
+| 3D elastic propagation and backside loss | Local linear-tet FEM and independent Elmer P2 mechanical reference implemented; algebraic/dynamic/dispersion checks run. Spatial and physical acceptance remain open |
 | PZT electromechanics, supports, noise/coupling variation | Seeded material, equivalent force/gain/drift/noise variation implemented; PZT/adhesive/electrical/support models and measured calibration still needed |
-| Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. Local finite-plate time screen passed, mesh screen failed; finite-plate/PZT/physical validation still needed |
+| Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. P1/P2 finite-plate time screens passed, mesh screens failed; PZT/physical validation still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
 | CAD-conforming geometry and elastic bank generation | Gmsh/OpenCASCADE recess mesh with volume/refinement checks and bounded grouped 3D elastic solves/cache implemented; banks remain plumbing_only pending wave/PZT/physical validation |
 | Waveform bank indexed by specimen, TX, RX, frequency/settings | NPZ schema, integrity/bounds, anchored scalar CSV import, actual local elastic pilot generation and checked TX-frequency cache implemented; validated research dataset pending |
@@ -453,4 +453,31 @@ enabled. Sampled combined RSS peaked at 783.5 MiB, system RAM at 66.2%, GPU
 memory at 921/8,192 MiB and GPU temperature at 47 C. CPU temperature was
 unavailable. No training ran. Source snapshots and input/kernel/runtime
 hashes bind the pilot; all solver/source changes remain inside this project.
+
+## Quadratic finite-plate refinement
+
+The five-case independent P2 mesh/time study completed for one intact-plate
+transmitter and seven receivers. Target mesh sizes were 3/2/1.5 mm at a
+common 31.25 ns step; temporal cases used 125/62.5/31.25 ns on the finest
+mesh, with identical mesh/aperture hashes. Source/kernel/runtime and saved
+trace checks guard the comparisons. See elmer-plate-refinement.md.
+
+The time screen passed at 0.2205% maximum finest-pair change and order
+1.99917. The spatial screen failed at 30.84%, following 12.27% on the first
+pair. Thresholds remain 5% space/1% time, and ready_for_training_data=false.
+Separate through-thickness/in-plane refinement and PZT/physical validation
+remain open; the cause of the spatial discrepancy is not established.
+
+The completed run took 327.70 seconds at 640.4 MiB sampled combined RSS and
+79.4% system RAM. GPU observations peaked at 1,690/8,192 MiB and 51 C;
+CPU temperature was unavailable. The 15,478-node system completed after
+tested sparse factor/diagnostic memory changes, within the original 768 MiB
+cap. Earlier time/RSS interruptions, source snapshots and their costs are
+retained in docs/evidence/elmer-plate-refinement-debug.json. No training ran.
+
+All 183 regression tests passed with native checks enabled in 112.02 seconds,
+at 782.6 MiB sampled combined RSS and 78.3% system RAM. GPU observations were
+1,531/8,192 MiB and 48 C; CPU temperature was unavailable. Five-case CLI cache
+recovery took 7.49 seconds with zero new solves, identical saved arrays and
+the expected failed-screen exit code 2. Refinement figures were visually checked.
 

@@ -137,6 +137,11 @@ Elmer sparse operators with checked implicit time integration. A small finite
 plate ran under the resource guard; spatial/time and PZT acceptance remain
 open, and these traces are not approved research training data.
 
+[P2 finite-plate refinement](docs/elmer-plate-refinement.md) freezes separate
+mesh/time axes for one mechanical group and preserves failed screens and
+resource interruptions. The current spatial screen fails; finer modeling
+and PZT/physical validation remain necessary.
+
 The [scientific reporting command](docs/scientific-reporting.md) exports
 error-versus-record curves, depth/error/uncertainty maps, 2.5D surfaces,
 parameter counts and compute tables from completed frozen replay results.

@@ -8,7 +8,7 @@ import time
 import numpy as np
 from scipy.signal import hilbert
 
-from traxis.acquisition import action_catalog
+from traxis.acquisition import Action, action_catalog
 from traxis.config import positive
 from traxis.dispersion import mode_velocity
 from traxis.forward import ForwardSettings, generate_waveform_bank, load_cached_group, minimum_stable_substeps
@@ -226,13 +226,14 @@ def run_waveform_sweep(scenario: Scenario, settings: WaveformSweepSettings, outp
     return report
 
 
-def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=None) -> dict:
+def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=None, *, reference=False) -> dict:
     """Plot preselected probe records without new solves or fitted alignment."""
     import json
     import zipfile
     from traxis.reporting import _figure_api, _new_figure, _save_figure
     directory, output = Path(directory).resolve(), Path(output)
-    path = directory / "waveform-report.json"
+    report_name = 'refinement-report.json' if reference else 'waveform-report.json'
+    path = directory / report_name
     if path.stat().st_size > 16 * 1024**2:
         raise MemoryError("waveform report exceeds 16 MiB")
     report = json.loads(path.read_text(encoding="utf-8-sig"))
@@ -246,6 +247,13 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
         raise ValueError("waveform plan changed")
     scenario = Scenario.from_dict(plan["scenario"])
     actions = action_catalog(scenario.acquisition.sensor_count, scenario.acquisition.frequencies_hz, scenario.acquisition.reciprocal)
+    if reference:
+        selected = tuple(Action(**row) for row in plan['actions'])
+        if not selected or len(set(selected)) != len(selected) or any(a not in actions for a in selected):
+            raise ValueError('reference plot actions disagree with the scenario catalog')
+        actions = selected
+    if len(report['cases']) != 5:
+        raise ValueError('refinement figures require five completed cases')
     if not records or len(records) > 4 or any(type(i) is not int or not 0 <= i < len(actions) for i in records):
         raise ValueError("select 1–4 available probe records before reviewing errors")
     if output.exists() and any(output.iterdir()):
@@ -259,12 +267,15 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
         if not path.is_relative_to(directory) or sha256_file(path) != case["float64_traces_sha256"]:
             raise ValueError("solver trace file changed or escaped the sweep directory")
         with zipfile.ZipFile(path) as archive:
-            if sum(e.file_size for e in archive.infolist()) > plan["settings"]["max_raw_trace_mib"] * 1024**2 + 1024**2:
+            trace_limit_mib = 16 if reference else plan['settings']['max_raw_trace_mib']
+            if sum(e.file_size for e in archive.infolist()) > trace_limit_mib * 1024**2 + 1024**2:
                 raise MemoryError("solver trace archive exceeds its planned limit")
         with np.load(path, allow_pickle=False) as saved:
-            traces, times = saved["current"].copy(), saved["time_s"].copy()
+            traces, times = saved['displacement_m' if reference else 'current'].copy(), saved['time_s'].copy()
         if traces.shape != (len(actions), scenario.acquisition.samples) or times.shape != (scenario.acquisition.samples,) or not np.isfinite(traces).all():
             raise ValueError("solver trace shape/values disagree with the sweep plan")
+        if not np.allclose(times, np.arange(scenario.acquisition.samples) * scenario.acquisition.sample_dt_s, rtol=1e-13, atol=1e-18):
+            raise ValueError('solver trace time grid disagrees with the sweep plan')
         arrays.append(traces)
     api = _figure_api(output / ".matplotlib-cache")
     figure = _new_figure(api, (14, 3.5 * len(records)))
@@ -289,7 +300,7 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
     figure.supxlabel("Float64 probes; no amplitude normalization, time alignment or interpolation. Reflections and rigid motion remain in the traces.", fontsize=8)
     files = _save_figure(figure, output, "waveform-refinement", guard)
     result = {"kind": "waveform_refinement_figures", "records": list(records), "files": files,
-              "waveform_report_sha256": sha256_file(directory / "waveform-report.json"),
+              "waveform_report_sha256": sha256_file(directory / report_name),
               "file_sha256": {name: sha256_file(output / name) for name in files}, "ready_for_training_data": False,
               "resources": guard.report() if guard else None}
     write_json(output / "figures.json", result)

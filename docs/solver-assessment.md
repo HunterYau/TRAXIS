@@ -120,6 +120,12 @@ RSS. Native bulk-matrix reuse crashed in isolated tests on this release;
 the worker avoids that path. This is a practical mechanical reference
 candidate, pending finite-plate/recess refinement and physical PZT validation.
 
+The first [P2 finite-plate refinement](elmer-plate-refinement.md) has now
+completed. Its temporal screen passed at 0.2205% maximum change and order
+1.99917; its spatial screen failed at 30.84% between the finest two meshes.
+The 15,478-node reference fits a 768 MiB guard after sparse memory fixes,
+but these discretizations cannot yet supply research-quality plate traces.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)
