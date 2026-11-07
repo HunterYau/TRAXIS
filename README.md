@@ -129,6 +129,9 @@ represented-field checks; coarse P2 pulse traces match fresh native Elmer
 transients. Spatial convergence and PZT calibration remain open.
 The [higher-order waveform study](docs/highorder-waveforms.md) separates
 in-plane, thickness and time refinements under an outer process-tree guard.
+The [research readiness checklist](docs/research-readiness.md) maps the
+confirmed plan to existing evidence and remaining validation, and describes
+the monitored regression command.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.
