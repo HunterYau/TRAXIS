@@ -1,0 +1,3367 @@
+{
+  "scope": "One mechanical first-step check and a full-size wall-limit measurement; no research waveform acceptance.",
+  "source_commit": "e1cc79b",
+  "ready_for_training_data": false,
+  "full_training_cycle_run": false,
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "00d00a30fd7da5ce6690b54a748c1854122fd7c918585396da6e2d4d48584dee",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "matrixfree_step.py": "138cfd3706d76b498d0f8eb3caa56e077bf0a79e2a3a8f46912ddcbfdcf03065",
+    "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383"
+  },
+  "test_sha256": {
+    "__init__.py": "5018a20159b1a64a2636e2050ab0fdb7f869c54714ab94ff3256206fa63d408f",
+    "fixtures.py": "85a8a28de6572aa937066a4b430432503e5fa0f4f485ada017b794344a6d2834",
+    "test_adaptive.py": "d9c74d712375172e0535af4a911249a3084bfd39dc3c3d3ff3071dbec2006f7c",
+    "test_bank.py": "b9984f54df9e5d6e1ae7ca579e03a342dde685527aaf06c1733bd3257d1a9cd9",
+    "test_cad_mesh.py": "62ab67dbb3e30c81d15315eaee2e20a5f419350e9a3f54ecf414cda9c6cd09af",
+    "test_das_baseline.py": "e1d2ae67d91ad1f721e335b9c73ce2e8500279464fd18d00e7b2d60c82520177",
+    "test_dataset.py": "cf2e6d99a68cd06ad7c09d5256491c37b73a5563a7b89154e452d805532b8e8f",
+    "test_dispersion.py": "864f2ce7c9f278a1b97e990bafe87c985f5f79085ce049a59f7c444396e9945c",
+    "test_elmer_directional.py": "60d3f760cab69186ca0986296ad3255822c3c3680b5b2315da0e43c32d5da9d5",
+    "test_elmer_plate_refinement.py": "8f9284075fa224b3265282d36fee681e96ab9c60ad6bd06cd5da84271478ca0b",
+    "test_elmer_reference.py": "0667885fda2080172f34eb148c3443aea7f92b76c392f87e3452bd95f827dc71",
+    "test_elmer_transient.py": "b39c656752fc020627c13c83843ca0fac07c23ae2775001ffe5156d13876176a",
+    "test_elmer_waveguide.py": "b0ef898a36df4807338a5f9e1000fc411cbf074d87afeff7c1f87340e4072b8c",
+    "test_evaluation.py": "799179975026b85903fba0bcbb0d843509e17f9bcc9fbddd28c7921553182bef",
+    "test_experiment_commands.py": "ecd1f328ef5eb60193bbf5e81941f40879d931bd3dbbef196950dee6940bdce9",
+    "test_fem.py": "fcf7d761ca23983f105d411ec246fc2945610b42520b8ae6a882252bbc9c66e2",
+    "test_forward.py": "0a37acae1f06b291ced181211b32fb26d5837f665d0d2a03443b8d53c24f5e3b",
+    "test_generation_commands.py": "d1a691701dc3e07a0fc4a27cd78c66be0a6856d781be7d32f301f7527720d6ef",
+    "test_geometry_acquisition.py": "884c2152a157268fbef340977c220729d895b5083caa1f75ad40c57d3dab60e9",
+    "test_highorder_cad_refinement.py": "0079f5ead331a40b436eb1f77d0ac06f9074a23fcdfdecb5103c3e88b4c2ca4e",
+    "test_highorder_directional.py": "19f4871cc9d869c937754123cac17e18c124a4470c4872fe3c897b620768b009",
+    "test_highorder_patches.py": "a8159b4b577060d318bb9ab0a64a5b488d3064687c063cac1f534cb315cd6967",
+    "test_highorder_reference.py": "a63a8bc2b29a2e30f467605ebe25214ee20baba8b5ca75262652d6dcf4c762b6",
+    "test_highorder_waveforms.py": "79ace12c3ee42bc355581ab81d9c2979076e19e41add8a94cdcd690f609573f3",
+    "test_imaging_metrics.py": "8912adad247e9ef14f6773d5b389a9802748b0893282c51072be11ab417ffc34",
+    "test_implicit_fem.py": "eee88e3420e7c79643ae2f8a0bb3f6ef0a17bbbef1d8ece34a4facad30b47d7e",
+    "test_importers.py": "7c6fd24a19f52db490835088a57b85013acd3d87f5aa80c771c92c02684fd18e",
+    "test_iterative_fem.py": "bafbbebbd6af87da8f073eea4ded509325d4aac5a2a92df69613b9bfd094dda0",
+    "test_matrixfree.py": "2cbc96c84dec1882a8fb92d826bd03f6d255c81822fbe863b5296c26a81f58eb",
+    "test_matrixfree_step.py": "2fd5383a098929c76a15e5559962b7fdfb944158d16ba5bccfe3f6ef4ee6aed7",
+    "test_models.py": "a7e130c7b305cbb27735f6ae844a5d64e7127a946e4ae2d714163fdd86af22f2",
+    "test_patches.py": "9dd6a337b8789de32dbebf5730a08ee7594284f4aaf626e7255acc5958739572",
+    "test_policy_training.py": "8c07076b654e4e0c7b9db8d291dea85a62a30d1ca21409f241a9e234748cb298",
+    "test_polynomial_patches.py": "38504f260d9cf9de530b6fbf9fa7df67242a3046502c8ce0d3c7884abfe6cdf8",
+    "test_quadratic_mass.py": "4bc9cd433e0dd9b54d437f56b58ef5ecbe4767cf5ba820826f911ac9cf2e548b",
+    "test_quadratic_patches.py": "7f86d72c603d587d8e268944b71988eeb327c10b7a4e3c3f2698c34313160bc1",
+    "test_reporting.py": "341f13047d619bab7b5528caf2360af7b0178060ba5df8bace49ba467cdda7b2",
+    "test_resources.py": "b4bb05e6ba673aa7e50aa6b41a47fa185491774baa1605f20bc9fbdf1a0c6f06",
+    "test_scenarios.py": "6e446e56991cfb18635167f1ffa3053db6f1d1faeb539a0730bb9e830c0bcdaf",
+    "test_solver_requests.py": "0eb0ce6a6bf83ca348fa05e37dd7afc403ffb79486717cce7c6a05fa7f62b3fd",
+    "test_studies.py": "5d5b100402dd5bba08020905a14a28810d0fbf92e34964914f889ab130ea696e",
+    "test_training.py": "fc640f5866565933cc7f8891ab502da0db5b6d73eba07459112917a5f6950a7a",
+    "test_uncertainty.py": "54a5db16e8fc79df8dd87866431eeeedd870b7f16d1d54a1eff1c7f3c23696cc",
+    "test_waveform_checks.py": "59acf48253566f0f7fe88b196dc580b5a49d61b0b8e67fd7225a29de8d688f3f",
+    "test_waveguide.py": "c33d5d1cf9218f091455b172ebff977a05736c785d53d2bc1e6ca02ecaea23f8"
+  },
+  "full_size": {
+    "plan": {
+      "path": "outputs/matrixfree-fullplate-first-step-20261107/step-plan.json",
+      "sha256": "c2dc0e5389c8654000d8fbe80950531af5829f5820f9ecc06415358b807c47b5",
+      "receipt": {
+        "kind": "matrixfree_first_step",
+        "capacity_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-fullplate-capacity-20261107",
+        "settings": {
+          "dt_s": 1.25e-07,
+          "frequency_hz": 100000,
+          "cycles": 2,
+          "peak_patch_force_n": 1,
+          "center_xy_m": [
+            0.02,
+            0.02
+          ],
+          "radius_m": 0.003,
+          "verify_sparse": false,
+          "iterative": {
+            "relative_tolerance": 1e-11,
+            "residual_limit": 1e-09,
+            "max_iterations": 500,
+            "max_dofs": 2000000,
+            "max_workspace_mib": 512
+          }
+        },
+        "input_sha256": {
+          "capacity-plan.json": "fdd1bab19a7a83d57b85f0e9ebfff7ef23eab16e94c2aeb3b5952d70cf082abf",
+          "monitor-result.json": "fd2b971515cd658bb0598c296fdaa2939beb5bb18b81cad4bebd839a8e2ca54c",
+          "native/capacity-report.json": "c4f56957f6797a495118d2c6a368b1d04ddf6d997705d26741a7a267adb05f7a",
+          "native/mesh.npz": "568cb0ba3cf1a691988caaa5073010d081670a8feaa3cf34b3617eca65a07cb3"
+        },
+        "source_sha256": {
+          "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+          "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+          "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+          "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+          "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+          "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+          "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+          "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+          "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+          "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+          "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+          "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+          "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+          "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+          "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+          "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+          "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+          "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+          "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+          "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+          "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+          "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+          "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+          "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+          "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+          "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+          "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+          "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+          "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+          "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+          "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+          "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+          "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+          "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+          "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+          "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+          "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+          "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+          "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+          "iterative_fem.py": "00d00a30fd7da5ce6690b54a748c1854122fd7c918585396da6e2d4d48584dee",
+          "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+          "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+          "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+          "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+          "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+          "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+          "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+          "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+          "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+          "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+          "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+          "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+          "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+          "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+          "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+          "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+          "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+          "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+          "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+          "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+          "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+          "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+          "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+          "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+          "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+          "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+          "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+          "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+          "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+          "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+        },
+        "driver_sha256": {
+          "matrixfree_step.py": "138cfd3706d76b498d0f8eb3caa56e077bf0a79e2a3a8f46912ddcbfdcf03065",
+          "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383"
+        },
+        "runtime": {
+          "ngsolve": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+              "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+              "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+              "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+              "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-mesher": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+              "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+              "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+              "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+              "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+              "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+              "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+              "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+              "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-occt": {
+            "version": "7.8.1",
+            "kernel_sha256": {
+              "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+              "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+              "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+              "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+              "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+              "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+              "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+              "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+              "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+              "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+              "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+              "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+              "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+              "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+              "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+              "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+              "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+              "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+              "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+              "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+              "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+              "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+              "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+              "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+              "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+              "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+              "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+              "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+              "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+              "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+              "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+              "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+              "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+              "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+              "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+              "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+              "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+              "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+              "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+              "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+              "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+              "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+              "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+              "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+              "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+              "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+              "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+            }
+          },
+          "ngsolve-openblas": {
+            "version": "0.3.33",
+            "kernel_sha256": {
+              "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+              "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+            }
+          },
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "gmsh": {
+            "version": "4.15.2",
+            "kernel_sha256": {
+              "../gmsh-4.15.dll": "6cac3eefb477265d9fa60bbd869dbbbf7c7ca4cb308c0f8f2b43e91d43de3c1c",
+              "gmsh.py": "a56ebe69dc57a3ea15eee191cae4f1881b06784174b2d9df306a98bdd8b06606"
+            }
+          }
+        },
+        "fingerprint": "0bfc5b776a50f7ef673cbd9b041371dbeb9c223f5f731b702c088752df27c657"
+      }
+    },
+    "monitor": {
+      "path": "outputs/matrixfree-fullplate-first-step-20261107/monitor-result.json",
+      "sha256": "eb394179e1ad3fb19ab85efb0c5cc2150b8c10ac4a64d763e1b3ccc4bc5a92fd",
+      "receipt": {
+        "completed": false,
+        "steps_completed": 0,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "plan_fingerprint": "0bfc5b776a50f7ef673cbd9b041371dbeb9c223f5f731b702c088752df27c657",
+        "source_snapshot_sha256": "68cc60c1d15d0db3f92543c17ede6a9eeb6b369120c042e5a4ec5b7783b81a19",
+        "error": "ResourceLimitError: wall-time limit reached",
+        "last_progress_sha256": "ac2839525826f89bd1dcea65ecae23d0eeed9177cfed8494e6bc30adce27c8dc",
+        "fingerprint": "8214a183f15ba8bb20dc224aaae0e0b4ba1ea7fca59327e3c0f23759536db979",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 180.0,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 846,
+          "maximum_sampled_rss_mib": 494.48046875,
+          "maximum_system_memory_percent": 45.4,
+          "minimum_available_mib": 8860.16015625,
+          "maximum_gpu_used_mib": 894.0,
+          "maximum_gpu_temperature_c": 57.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+          "gpu_computation_performed": false
+        }
+      }
+    },
+    "progress": {
+      "path": "outputs/matrixfree-fullplate-first-step-20261107/native/progress.json",
+      "sha256": "ac2839525826f89bd1dcea65ecae23d0eeed9177cfed8494e6bc30adce27c8dc",
+      "receipt": {
+        "completed": false,
+        "steps_completed": 0,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "sparse_reference_assembled": false,
+        "plan_fingerprint": "0bfc5b776a50f7ef673cbd9b041371dbeb9c223f5f731b702c088752df27c657",
+        "stages": [
+          {
+            "elapsed_seconds": 0.0228301000315696,
+            "stage": "mesh_loaded",
+            "vertices": 24579,
+            "tetrahedra": 73487
+          },
+          {
+            "elapsed_seconds": 25.91244840004947,
+            "stage": "space_and_diagonals",
+            "dofs": 1319508,
+            "screen": {
+              "scalar_dofs": 439836,
+              "vector_dofs": 1319508,
+              "vertices": 24579,
+              "edges": 122116,
+              "faces": 171025,
+              "tetrahedra": 73487,
+              "topology_screen_mib": 72.32721710205078,
+              "assembly_screen_mib": 8073.52294921875,
+              "native_vector_screen_mib": 80.536376953125
+            }
+          },
+          {
+            "elapsed_seconds": 39.24457049998455,
+            "stage": "mechanical_load",
+            "footprint": {
+              "integration": "analytic_disk_native_H1_trace_polynomial",
+              "order": 3,
+              "requested_center_xy_m": [
+                0.02,
+                0.02
+              ],
+              "radius_m": 0.003,
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "area_m2": 2.827433388230814e-05,
+              "edge_clipped": false,
+              "full_disk_area_relative_error": 2.220446049250313e-16,
+              "covered_surface_triangles": 10,
+              "support_coefficients": 57,
+              "negative_coefficients": 25,
+              "maximum_trace_fit_absolute_error": 1.3877787807814457e-16,
+              "trace_vandermonde_condition": 312.44579248662075,
+              "extraction_workspace_screen_mib": 85.74994659423828,
+              "coefficient_layout": "component_major_hierarchical_H1",
+              "work_conjugate": true
+            },
+            "moments": {
+              "monomials": [
+                {
+                  "powers": [
+                    0,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.9999999999999999
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    1.0000000000000004
+                  ],
+                  "absolute_error": 5.551115123125783e-16
+                },
+                {
+                  "powers": [
+                    1,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -3.793069016593783e-16
+                  ],
+                  "absolute_error": 3.793069016593783e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -1.8290420283746916e-15
+                  ],
+                  "absolute_error": 1.8290420283746916e-15
+                },
+                {
+                  "powers": [
+                    2,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.2500000000000006
+                  ],
+                  "absolute_error": 6.106226635438361e-16
+                },
+                {
+                  "powers": [
+                    1,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    6.432025390570988e-16
+                  ],
+                  "absolute_error": 6.432025390570988e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    2
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.2500000000000107
+                  ],
+                  "absolute_error": 1.071365218763276e-14
+                },
+                {
+                  "powers": [
+                    3,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    6.692563170318522e-15
+                  ],
+                  "absolute_error": 6.692563170318522e-15
+                },
+                {
+                  "powers": [
+                    2,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    4.3220616345720836e-15
+                  ],
+                  "absolute_error": 4.3220616345720836e-15
+                },
+                {
+                  "powers": [
+                    1,
+                    2
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -2.45029690981724e-15
+                  ],
+                  "absolute_error": 2.45029690981724e-15
+                },
+                {
+                  "powers": [
+                    0,
+                    3
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -1.0162221456992476e-14
+                  ],
+                  "absolute_error": 1.0162221456992476e-14
+                }
+              ],
+              "maximum_absolute_error": 1.071365218763276e-14
+            },
+            "force_n_at_step": 3.0244559695910553e-05,
+            "load_sha256": "d464072c7aab1b820eddf862c1f09c8b189de237e78a29c07138d25a163a9164"
+          }
+        ],
+        "solve_progress": [
+          {
+            "elapsed_seconds": 39.31415270001162,
+            "stiffness_applications": 0,
+            "mass_applications": 0,
+            "phase": "solve_start",
+            "rhs_norm": 1.6152053427241198e-05,
+            "relative_tolerance": 1e-11
+          },
+          {
+            "elapsed_seconds": 49.41098789998796,
+            "stiffness_applications": 1,
+            "mass_applications": 1,
+            "phase": "cg_iteration",
+            "iteration": 1,
+            "iterate_norm": 17.183449215808682
+          },
+          {
+            "elapsed_seconds": 58.662112900055945,
+            "stiffness_applications": 2,
+            "mass_applications": 2,
+            "phase": "cg_iteration",
+            "iteration": 2,
+            "iterate_norm": 25.232389887185654
+          },
+          {
+            "elapsed_seconds": 68.13798910006881,
+            "stiffness_applications": 3,
+            "mass_applications": 3,
+            "phase": "cg_iteration",
+            "iteration": 3,
+            "iterate_norm": 29.203844222176663
+          },
+          {
+            "elapsed_seconds": 77.48195929999929,
+            "stiffness_applications": 4,
+            "mass_applications": 4,
+            "phase": "cg_iteration",
+            "iteration": 4,
+            "iterate_norm": 30.184900620562523
+          },
+          {
+            "elapsed_seconds": 86.81316640006844,
+            "stiffness_applications": 5,
+            "mass_applications": 5,
+            "phase": "cg_iteration",
+            "iteration": 5,
+            "iterate_norm": 30.93641263767768
+          },
+          {
+            "elapsed_seconds": 96.05058779998217,
+            "stiffness_applications": 6,
+            "mass_applications": 6,
+            "phase": "cg_iteration",
+            "iteration": 6,
+            "iterate_norm": 31.820533356647722
+          },
+          {
+            "elapsed_seconds": 105.43056160002016,
+            "stiffness_applications": 7,
+            "mass_applications": 7,
+            "phase": "cg_iteration",
+            "iteration": 7,
+            "iterate_norm": 33.068597695660195
+          },
+          {
+            "elapsed_seconds": 114.78316170000471,
+            "stiffness_applications": 8,
+            "mass_applications": 8,
+            "phase": "cg_iteration",
+            "iteration": 8,
+            "iterate_norm": 34.15637135190744
+          },
+          {
+            "elapsed_seconds": 124.09840090002399,
+            "stiffness_applications": 9,
+            "mass_applications": 9,
+            "phase": "cg_iteration",
+            "iteration": 9,
+            "iterate_norm": 34.78110853925372
+          },
+          {
+            "elapsed_seconds": 133.33331900008488,
+            "stiffness_applications": 10,
+            "mass_applications": 10,
+            "phase": "cg_iteration",
+            "iteration": 10,
+            "iterate_norm": 35.04106368084964
+          },
+          {
+            "elapsed_seconds": 142.45949080004357,
+            "stiffness_applications": 11,
+            "mass_applications": 11,
+            "phase": "cg_iteration",
+            "iteration": 11,
+            "iterate_norm": 35.10666076323499
+          },
+          {
+            "elapsed_seconds": 151.79132289998233,
+            "stiffness_applications": 12,
+            "mass_applications": 12,
+            "phase": "cg_iteration",
+            "iteration": 12,
+            "iterate_norm": 35.09277705092376
+          },
+          {
+            "elapsed_seconds": 161.05263749998994,
+            "stiffness_applications": 13,
+            "mass_applications": 13,
+            "phase": "cg_iteration",
+            "iteration": 13,
+            "iterate_norm": 35.02680705851283
+          },
+          {
+            "elapsed_seconds": 170.47057990008034,
+            "stiffness_applications": 14,
+            "mass_applications": 14,
+            "phase": "cg_iteration",
+            "iteration": 14,
+            "iterate_norm": 34.89508508130041
+          }
+        ],
+        "scope": "First zero-initial-state mechanical Newmark step only; no arrival, convergence or PZT acceptance."
+      }
+    },
+    "load_sha256": "d464072c7aab1b820eddf862c1f09c8b189de237e78a29c07138d25a163a9164",
+    "source_snapshot_sha256": "68cc60c1d15d0db3f92543c17ede6a9eeb6b369120c042e5a4ec5b7783b81a19",
+    "worker_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final_true_residual_available": false,
+    "converged_state_available": false
+  },
+  "small_direct_reference": {
+    "plan": {
+      "path": "outputs/matrixfree-step-direct-reference-20261107/step/step-plan.json",
+      "sha256": "233ba04e8424d17075c8074064df9a379b4ce055189acbc84f89a733f5d4a464",
+      "receipt": {
+        "kind": "matrixfree_first_step",
+        "capacity_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-step-native-regression-20261107\\temporary-files\\tmppbm9hrm_\\capacity",
+        "settings": {
+          "dt_s": 1.25e-07,
+          "frequency_hz": 100000.0,
+          "cycles": 2,
+          "peak_patch_force_n": 1.0,
+          "center_xy_m": [
+            0.01,
+            0.008
+          ],
+          "radius_m": 0.003,
+          "verify_sparse": true,
+          "iterative": {
+            "relative_tolerance": 1e-11,
+            "residual_limit": 1e-09,
+            "max_iterations": 500,
+            "max_dofs": 20000,
+            "max_workspace_mib": 64
+          }
+        },
+        "input_sha256": {
+          "capacity-plan.json": "f35729f0fa13cc64fba095fe405faad237c60313b2e0f189af21309661bf1d5e",
+          "monitor-result.json": "f3259c4f78f3c65be667899e4d1f154f0a8e28f6160892d4a6cd98fa5e31e2a2",
+          "native/capacity-report.json": "e8a70fd45140682a8642ae7d77b8180a39b0703a677569bbcf7ee5e4bd86da49",
+          "native/mesh.npz": "1672fc9dd6573e51340a5a1c3268c79d1813e1bde0fff2734461d924b8002623"
+        },
+        "source_sha256": {
+          "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+          "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+          "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+          "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+          "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+          "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+          "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+          "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+          "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+          "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+          "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+          "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+          "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+          "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+          "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+          "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+          "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+          "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+          "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+          "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+          "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+          "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+          "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+          "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+          "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+          "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+          "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+          "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+          "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+          "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+          "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+          "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+          "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+          "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+          "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+          "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+          "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+          "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+          "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+          "iterative_fem.py": "00d00a30fd7da5ce6690b54a748c1854122fd7c918585396da6e2d4d48584dee",
+          "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+          "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+          "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+          "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+          "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+          "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+          "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+          "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+          "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+          "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+          "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+          "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+          "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+          "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+          "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+          "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+          "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+          "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+          "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+          "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+          "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+          "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+          "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+          "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+          "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+          "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+          "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+          "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+          "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+          "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+        },
+        "driver_sha256": {
+          "matrixfree_step.py": "138cfd3706d76b498d0f8eb3caa56e077bf0a79e2a3a8f46912ddcbfdcf03065",
+          "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383"
+        },
+        "runtime": {
+          "ngsolve": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+              "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+              "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+              "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+              "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-mesher": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+              "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+              "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+              "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+              "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+              "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+              "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+              "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+              "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-occt": {
+            "version": "7.8.1",
+            "kernel_sha256": {
+              "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+              "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+              "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+              "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+              "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+              "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+              "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+              "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+              "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+              "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+              "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+              "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+              "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+              "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+              "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+              "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+              "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+              "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+              "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+              "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+              "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+              "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+              "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+              "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+              "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+              "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+              "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+              "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+              "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+              "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+              "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+              "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+              "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+              "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+              "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+              "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+              "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+              "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+              "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+              "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+              "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+              "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+              "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+              "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+              "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+              "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+              "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+            }
+          },
+          "ngsolve-openblas": {
+            "version": "0.3.33",
+            "kernel_sha256": {
+              "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+              "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+            }
+          },
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "gmsh": {
+            "version": "4.15.2",
+            "kernel_sha256": {
+              "../gmsh-4.15.dll": "6cac3eefb477265d9fa60bbd869dbbbf7c7ca4cb308c0f8f2b43e91d43de3c1c",
+              "gmsh.py": "a56ebe69dc57a3ea15eee191cae4f1881b06784174b2d9df306a98bdd8b06606"
+            }
+          }
+        },
+        "fingerprint": "79d4cf572a00135e6e74aab0ded8ee35ba2a3d223e1a05120ba3d0baa6b0f327"
+      }
+    },
+    "native": {
+      "path": "outputs/matrixfree-step-direct-reference-20261107/step/native/step-report.json",
+      "sha256": "5fdf88e9c229f63b6af2d1180f8d815f42a434258989d360354d821188141f97",
+      "receipt": {
+        "completed": true,
+        "steps_completed": 1,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "sparse_reference_assembled": true,
+        "plan_fingerprint": "79d4cf572a00135e6e74aab0ded8ee35ba2a3d223e1a05120ba3d0baa6b0f327",
+        "stages": [
+          {
+            "elapsed_seconds": 0.001784199965186417,
+            "stage": "mesh_loaded",
+            "vertices": 98,
+            "tetrahedra": 290
+          },
+          {
+            "elapsed_seconds": 0.10664159990847111,
+            "stage": "space_and_diagonals",
+            "dofs": 1671,
+            "screen": {
+              "scalar_dofs": 557,
+              "vector_dofs": 1671,
+              "vertices": 98,
+              "edges": 459,
+              "faces": 652,
+              "tetrahedra": 290,
+              "topology_screen_mib": 0.2854461669921875,
+              "assembly_screen_mib": 7.965087890625,
+              "native_vector_screen_mib": 0.10198974609375
+            }
+          },
+          {
+            "elapsed_seconds": 0.12373939994722605,
+            "stage": "mechanical_load",
+            "footprint": {
+              "integration": "analytic_disk_native_H1_trace_polynomial",
+              "order": 2,
+              "requested_center_xy_m": [
+                0.01,
+                0.008
+              ],
+              "radius_m": 0.003,
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "area_m2": 2.8274333882308137e-05,
+              "edge_clipped": false,
+              "full_disk_area_relative_error": 0.0,
+              "covered_surface_triangles": 7,
+              "support_coefficients": 22,
+              "negative_coefficients": 14,
+              "maximum_trace_fit_absolute_error": 1.1102230246251565e-16,
+              "trace_vandermonde_condition": 30.969353404288103,
+              "extraction_workspace_screen_mib": 0.3024444580078125,
+              "coefficient_layout": "component_major_hierarchical_H1",
+              "work_conjugate": true
+            },
+            "moments": {
+              "monomials": [
+                {
+                  "powers": [
+                    0,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.9999999999999999
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.9999999999999998
+                  ],
+                  "absolute_error": 1.1102230246251565e-16
+                },
+                {
+                  "powers": [
+                    1,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -1.942890293094024e-16
+                  ],
+                  "absolute_error": 1.942890293094024e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    7.216449660063518e-16
+                  ],
+                  "absolute_error": 7.216449660063518e-16
+                },
+                {
+                  "powers": [
+                    2,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.2499999999999989
+                  ],
+                  "absolute_error": 1.1102230246251565e-15
+                },
+                {
+                  "powers": [
+                    1,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -4.996003610813204e-16
+                  ],
+                  "absolute_error": 4.996003610813204e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    2
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.2499999999999979
+                  ],
+                  "absolute_error": 2.1094237467877974e-15
+                }
+              ],
+              "maximum_absolute_error": 2.1094237467877974e-15
+            },
+            "force_n_at_step": 3.0244559695910553e-05,
+            "load_sha256": "ce939a4348906407d923537b7b99a5815c512a3fca74634240408dbec273e747"
+          }
+        ],
+        "solve_progress": [
+          {
+            "elapsed_seconds": 0.1264251999091357,
+            "stiffness_applications": 0,
+            "mass_applications": 0,
+            "phase": "solve_start",
+            "rhs_norm": 2.0001894700750634e-05,
+            "relative_tolerance": 1e-11
+          },
+          {
+            "elapsed_seconds": 0.13369669998064637,
+            "stiffness_applications": 1,
+            "mass_applications": 1,
+            "phase": "cg_iteration",
+            "iteration": 1,
+            "iterate_norm": 4.161232822195602
+          },
+          {
+            "elapsed_seconds": 0.14064969995524734,
+            "stiffness_applications": 2,
+            "mass_applications": 2,
+            "phase": "cg_iteration",
+            "iteration": 2,
+            "iterate_norm": 5.868721332981281
+          },
+          {
+            "elapsed_seconds": 0.14787759992759675,
+            "stiffness_applications": 3,
+            "mass_applications": 3,
+            "phase": "cg_iteration",
+            "iteration": 3,
+            "iterate_norm": 6.687129888205476
+          },
+          {
+            "elapsed_seconds": 0.15519610000774264,
+            "stiffness_applications": 4,
+            "mass_applications": 4,
+            "phase": "cg_iteration",
+            "iteration": 4,
+            "iterate_norm": 6.967554693047948
+          },
+          {
+            "elapsed_seconds": 0.16296379989944398,
+            "stiffness_applications": 5,
+            "mass_applications": 5,
+            "phase": "cg_iteration",
+            "iteration": 5,
+            "iterate_norm": 6.997947454391544
+          },
+          {
+            "elapsed_seconds": 0.17023129994049668,
+            "stiffness_applications": 6,
+            "mass_applications": 6,
+            "phase": "cg_iteration",
+            "iteration": 6,
+            "iterate_norm": 7.12108111664033
+          },
+          {
+            "elapsed_seconds": 0.1774724000133574,
+            "stiffness_applications": 7,
+            "mass_applications": 7,
+            "phase": "cg_iteration",
+            "iteration": 7,
+            "iterate_norm": 7.56720892871327
+          },
+          {
+            "elapsed_seconds": 0.18449919996783137,
+            "stiffness_applications": 8,
+            "mass_applications": 8,
+            "phase": "cg_iteration",
+            "iteration": 8,
+            "iterate_norm": 7.970686825198507
+          },
+          {
+            "elapsed_seconds": 0.19156029995065182,
+            "stiffness_applications": 9,
+            "mass_applications": 9,
+            "phase": "cg_iteration",
+            "iteration": 9,
+            "iterate_norm": 8.127708930358255
+          },
+          {
+            "elapsed_seconds": 0.19878539990168065,
+            "stiffness_applications": 10,
+            "mass_applications": 10,
+            "phase": "cg_iteration",
+            "iteration": 10,
+            "iterate_norm": 8.195984874202853
+          },
+          {
+            "elapsed_seconds": 0.2057982999831438,
+            "stiffness_applications": 11,
+            "mass_applications": 11,
+            "phase": "cg_iteration",
+            "iteration": 11,
+            "iterate_norm": 8.232798955577785
+          },
+          {
+            "elapsed_seconds": 0.21339769999030977,
+            "stiffness_applications": 12,
+            "mass_applications": 12,
+            "phase": "cg_iteration",
+            "iteration": 12,
+            "iterate_norm": 8.246733976320398
+          },
+          {
+            "elapsed_seconds": 0.2204935000045225,
+            "stiffness_applications": 13,
+            "mass_applications": 13,
+            "phase": "cg_iteration",
+            "iteration": 13,
+            "iterate_norm": 8.262330626191241
+          },
+          {
+            "elapsed_seconds": 0.22837699996307492,
+            "stiffness_applications": 14,
+            "mass_applications": 14,
+            "phase": "cg_iteration",
+            "iteration": 14,
+            "iterate_norm": 8.283824931458417
+          },
+          {
+            "elapsed_seconds": 0.23769420001190156,
+            "stiffness_applications": 15,
+            "mass_applications": 15,
+            "phase": "cg_iteration",
+            "iteration": 15,
+            "iterate_norm": 8.308164406163009
+          },
+          {
+            "elapsed_seconds": 0.24479869997594506,
+            "stiffness_applications": 16,
+            "mass_applications": 16,
+            "phase": "cg_iteration",
+            "iteration": 16,
+            "iterate_norm": 8.335004178626399
+          },
+          {
+            "elapsed_seconds": 0.25160089996643364,
+            "stiffness_applications": 17,
+            "mass_applications": 17,
+            "phase": "cg_iteration",
+            "iteration": 17,
+            "iterate_norm": 8.355418331846629
+          },
+          {
+            "elapsed_seconds": 0.25897450000047684,
+            "stiffness_applications": 18,
+            "mass_applications": 18,
+            "phase": "cg_iteration",
+            "iteration": 18,
+            "iterate_norm": 8.370580174500832
+          },
+          {
+            "elapsed_seconds": 0.26613469992298633,
+            "stiffness_applications": 19,
+            "mass_applications": 19,
+            "phase": "cg_iteration",
+            "iteration": 19,
+            "iterate_norm": 8.378123771718725
+          },
+          {
+            "elapsed_seconds": 0.27392319997306913,
+            "stiffness_applications": 20,
+            "mass_applications": 20,
+            "phase": "cg_iteration",
+            "iteration": 20,
+            "iterate_norm": 8.380901450237245
+          },
+          {
+            "elapsed_seconds": 0.2813487999374047,
+            "stiffness_applications": 21,
+            "mass_applications": 21,
+            "phase": "cg_iteration",
+            "iteration": 21,
+            "iterate_norm": 8.381727488680527
+          },
+          {
+            "elapsed_seconds": 0.28901299997232854,
+            "stiffness_applications": 22,
+            "mass_applications": 22,
+            "phase": "cg_iteration",
+            "iteration": 22,
+            "iterate_norm": 8.38224552084893
+          },
+          {
+            "elapsed_seconds": 0.2979246999602765,
+            "stiffness_applications": 23,
+            "mass_applications": 23,
+            "phase": "cg_iteration",
+            "iteration": 23,
+            "iterate_norm": 8.382701651837241
+          },
+          {
+            "elapsed_seconds": 0.3059892999008298,
+            "stiffness_applications": 24,
+            "mass_applications": 24,
+            "phase": "cg_iteration",
+            "iteration": 24,
+            "iterate_norm": 8.382457701711601
+          },
+          {
+            "elapsed_seconds": 0.3139802999794483,
+            "stiffness_applications": 25,
+            "mass_applications": 25,
+            "phase": "cg_iteration",
+            "iteration": 25,
+            "iterate_norm": 8.382596431879847
+          },
+          {
+            "elapsed_seconds": 0.32136599998921156,
+            "stiffness_applications": 26,
+            "mass_applications": 26,
+            "phase": "cg_iteration",
+            "iteration": 26,
+            "iterate_norm": 8.383185200433287
+          },
+          {
+            "elapsed_seconds": 0.3290563999908045,
+            "stiffness_applications": 27,
+            "mass_applications": 27,
+            "phase": "cg_iteration",
+            "iteration": 27,
+            "iterate_norm": 8.38333892295652
+          },
+          {
+            "elapsed_seconds": 0.3366968999616802,
+            "stiffness_applications": 28,
+            "mass_applications": 28,
+            "phase": "cg_iteration",
+            "iteration": 28,
+            "iterate_norm": 8.383280693083867
+          },
+          {
+            "elapsed_seconds": 0.34428449999541044,
+            "stiffness_applications": 29,
+            "mass_applications": 29,
+            "phase": "cg_iteration",
+            "iteration": 29,
+            "iterate_norm": 8.3833239427045
+          },
+          {
+            "elapsed_seconds": 0.3516998999984935,
+            "stiffness_applications": 30,
+            "mass_applications": 30,
+            "phase": "cg_iteration",
+            "iteration": 30,
+            "iterate_norm": 8.383331509783066
+          },
+          {
+            "elapsed_seconds": 0.3588519999757409,
+            "stiffness_applications": 31,
+            "mass_applications": 31,
+            "phase": "cg_iteration",
+            "iteration": 31,
+            "iterate_norm": 8.383219535709221
+          },
+          {
+            "elapsed_seconds": 0.36641229991801083,
+            "stiffness_applications": 32,
+            "mass_applications": 32,
+            "phase": "cg_iteration",
+            "iteration": 32,
+            "iterate_norm": 8.383109577815398
+          },
+          {
+            "elapsed_seconds": 0.37330069998279214,
+            "stiffness_applications": 33,
+            "mass_applications": 33,
+            "phase": "cg_iteration",
+            "iteration": 33,
+            "iterate_norm": 8.383110327292123
+          },
+          {
+            "elapsed_seconds": 0.38080689997877926,
+            "stiffness_applications": 34,
+            "mass_applications": 34,
+            "phase": "cg_iteration",
+            "iteration": 34,
+            "iterate_norm": 8.383177162062466
+          },
+          {
+            "elapsed_seconds": 0.3881549999350682,
+            "stiffness_applications": 35,
+            "mass_applications": 35,
+            "phase": "cg_iteration",
+            "iteration": 35,
+            "iterate_norm": 8.383178874408637
+          },
+          {
+            "elapsed_seconds": 0.3956891999114305,
+            "stiffness_applications": 36,
+            "mass_applications": 36,
+            "phase": "cg_iteration",
+            "iteration": 36,
+            "iterate_norm": 8.383172663412122
+          },
+          {
+            "elapsed_seconds": 0.40317679999861866,
+            "stiffness_applications": 37,
+            "mass_applications": 37,
+            "phase": "cg_iteration",
+            "iteration": 37,
+            "iterate_norm": 8.383168450746119
+          },
+          {
+            "elapsed_seconds": 0.41011599998455495,
+            "stiffness_applications": 38,
+            "mass_applications": 38,
+            "phase": "cg_iteration",
+            "iteration": 38,
+            "iterate_norm": 8.383162773739661
+          },
+          {
+            "elapsed_seconds": 0.41747789992950857,
+            "stiffness_applications": 39,
+            "mass_applications": 39,
+            "phase": "cg_iteration",
+            "iteration": 39,
+            "iterate_norm": 8.38314897921507
+          },
+          {
+            "elapsed_seconds": 0.42456299997866154,
+            "stiffness_applications": 40,
+            "mass_applications": 40,
+            "phase": "cg_iteration",
+            "iteration": 40,
+            "iterate_norm": 8.383128577564623
+          },
+          {
+            "elapsed_seconds": 0.43217309995088726,
+            "stiffness_applications": 41,
+            "mass_applications": 41,
+            "phase": "cg_iteration",
+            "iteration": 41,
+            "iterate_norm": 8.383121411946536
+          },
+          {
+            "elapsed_seconds": 0.4393107999349013,
+            "stiffness_applications": 42,
+            "mass_applications": 42,
+            "phase": "cg_iteration",
+            "iteration": 42,
+            "iterate_norm": 8.383123342569782
+          },
+          {
+            "elapsed_seconds": 0.44644239998888224,
+            "stiffness_applications": 43,
+            "mass_applications": 43,
+            "phase": "cg_iteration",
+            "iteration": 43,
+            "iterate_norm": 8.383125646149246
+          },
+          {
+            "elapsed_seconds": 0.4537561999168247,
+            "stiffness_applications": 44,
+            "mass_applications": 44,
+            "phase": "cg_iteration",
+            "iteration": 44,
+            "iterate_norm": 8.38313283646096
+          },
+          {
+            "elapsed_seconds": 0.4611395999090746,
+            "stiffness_applications": 45,
+            "mass_applications": 45,
+            "phase": "cg_iteration",
+            "iteration": 45,
+            "iterate_norm": 8.383133948293594
+          },
+          {
+            "elapsed_seconds": 0.4681230999995023,
+            "stiffness_applications": 46,
+            "mass_applications": 46,
+            "phase": "cg_iteration",
+            "iteration": 46,
+            "iterate_norm": 8.383131012278618
+          },
+          {
+            "elapsed_seconds": 0.47526059998199344,
+            "stiffness_applications": 47,
+            "mass_applications": 47,
+            "phase": "cg_iteration",
+            "iteration": 47,
+            "iterate_norm": 8.383128507032884
+          },
+          {
+            "elapsed_seconds": 0.482608399935998,
+            "stiffness_applications": 48,
+            "mass_applications": 48,
+            "phase": "cg_iteration",
+            "iteration": 48,
+            "iterate_norm": 8.38312629451313
+          },
+          {
+            "elapsed_seconds": 0.48988529993221164,
+            "stiffness_applications": 49,
+            "mass_applications": 49,
+            "phase": "cg_iteration",
+            "iteration": 49,
+            "iterate_norm": 8.383125819112317
+          },
+          {
+            "elapsed_seconds": 0.4973638999508694,
+            "stiffness_applications": 50,
+            "mass_applications": 50,
+            "phase": "cg_iteration",
+            "iteration": 50,
+            "iterate_norm": 8.383125524726033
+          },
+          {
+            "elapsed_seconds": 0.5043190999422222,
+            "stiffness_applications": 51,
+            "mass_applications": 51,
+            "phase": "cg_iteration",
+            "iteration": 51,
+            "iterate_norm": 8.383125567691103
+          },
+          {
+            "elapsed_seconds": 0.5114181999815628,
+            "stiffness_applications": 52,
+            "mass_applications": 52,
+            "phase": "cg_iteration",
+            "iteration": 52,
+            "iterate_norm": 8.383126493707678
+          },
+          {
+            "elapsed_seconds": 0.518817099975422,
+            "stiffness_applications": 53,
+            "mass_applications": 53,
+            "phase": "cg_iteration",
+            "iteration": 53,
+            "iterate_norm": 8.383125746648261
+          },
+          {
+            "elapsed_seconds": 0.5260065000038594,
+            "stiffness_applications": 54,
+            "mass_applications": 54,
+            "phase": "cg_iteration",
+            "iteration": 54,
+            "iterate_norm": 8.383125995970241
+          },
+          {
+            "elapsed_seconds": 0.5334022999741137,
+            "stiffness_applications": 55,
+            "mass_applications": 55,
+            "phase": "cg_iteration",
+            "iteration": 55,
+            "iterate_norm": 8.383126396609992
+          },
+          {
+            "elapsed_seconds": 0.5410469999769703,
+            "stiffness_applications": 56,
+            "mass_applications": 56,
+            "phase": "cg_iteration",
+            "iteration": 56,
+            "iterate_norm": 8.383126238687494
+          },
+          {
+            "elapsed_seconds": 0.5487380999838933,
+            "stiffness_applications": 57,
+            "mass_applications": 57,
+            "phase": "cg_iteration",
+            "iteration": 57,
+            "iterate_norm": 8.383126083685532
+          },
+          {
+            "elapsed_seconds": 0.556512099923566,
+            "stiffness_applications": 58,
+            "mass_applications": 58,
+            "phase": "cg_iteration",
+            "iteration": 58,
+            "iterate_norm": 8.383126072041044
+          },
+          {
+            "elapsed_seconds": 0.5640122999902815,
+            "stiffness_applications": 59,
+            "mass_applications": 59,
+            "phase": "cg_iteration",
+            "iteration": 59,
+            "iterate_norm": 8.383126192178485
+          },
+          {
+            "elapsed_seconds": 0.5712952999165282,
+            "stiffness_applications": 60,
+            "mass_applications": 60,
+            "phase": "cg_iteration",
+            "iteration": 60,
+            "iterate_norm": 8.383126363253101
+          },
+          {
+            "elapsed_seconds": 0.5788958999328315,
+            "stiffness_applications": 61,
+            "mass_applications": 61,
+            "phase": "cg_iteration",
+            "iteration": 61,
+            "iterate_norm": 8.383126428178276
+          },
+          {
+            "elapsed_seconds": 0.5864369999617338,
+            "stiffness_applications": 62,
+            "mass_applications": 62,
+            "phase": "cg_iteration",
+            "iteration": 62,
+            "iterate_norm": 8.383126466895868
+          },
+          {
+            "elapsed_seconds": 0.5940987999783829,
+            "stiffness_applications": 63,
+            "mass_applications": 63,
+            "phase": "cg_iteration",
+            "iteration": 63,
+            "iterate_norm": 8.383126501979108
+          },
+          {
+            "elapsed_seconds": 0.6016307999379933,
+            "stiffness_applications": 64,
+            "mass_applications": 64,
+            "phase": "cg_iteration",
+            "iteration": 64,
+            "iterate_norm": 8.38312650879079
+          },
+          {
+            "elapsed_seconds": 0.6087304999819025,
+            "stiffness_applications": 65,
+            "mass_applications": 65,
+            "phase": "cg_iteration",
+            "iteration": 65,
+            "iterate_norm": 8.383126555275918
+          },
+          {
+            "elapsed_seconds": 0.6161443999735638,
+            "stiffness_applications": 66,
+            "mass_applications": 66,
+            "phase": "cg_iteration",
+            "iteration": 66,
+            "iterate_norm": 8.383126583163614
+          },
+          {
+            "elapsed_seconds": 0.6233261999441311,
+            "stiffness_applications": 67,
+            "mass_applications": 67,
+            "phase": "cg_iteration",
+            "iteration": 67,
+            "iterate_norm": 8.383126572396483
+          },
+          {
+            "elapsed_seconds": 0.6312284999294207,
+            "stiffness_applications": 68,
+            "mass_applications": 68,
+            "phase": "cg_iteration",
+            "iteration": 68,
+            "iterate_norm": 8.383126581613489
+          },
+          {
+            "elapsed_seconds": 0.6391359999543056,
+            "stiffness_applications": 69,
+            "mass_applications": 69,
+            "phase": "cg_iteration",
+            "iteration": 69,
+            "iterate_norm": 8.38312659712064
+          },
+          {
+            "elapsed_seconds": 0.6466681999154389,
+            "stiffness_applications": 70,
+            "mass_applications": 70,
+            "phase": "cg_iteration",
+            "iteration": 70,
+            "iterate_norm": 8.383126596224045
+          },
+          {
+            "elapsed_seconds": 0.6542837999295443,
+            "stiffness_applications": 71,
+            "mass_applications": 71,
+            "phase": "cg_iteration",
+            "iteration": 71,
+            "iterate_norm": 8.38312658998531
+          },
+          {
+            "elapsed_seconds": 0.6619683000026271,
+            "stiffness_applications": 72,
+            "mass_applications": 72,
+            "phase": "cg_iteration",
+            "iteration": 72,
+            "iterate_norm": 8.38312659264316
+          },
+          {
+            "elapsed_seconds": 0.6696185999317095,
+            "stiffness_applications": 73,
+            "mass_applications": 73,
+            "phase": "cg_iteration",
+            "iteration": 73,
+            "iterate_norm": 8.383126597025656
+          },
+          {
+            "elapsed_seconds": 0.6772090999875218,
+            "stiffness_applications": 74,
+            "mass_applications": 74,
+            "phase": "cg_iteration",
+            "iteration": 74,
+            "iterate_norm": 8.383126602458567
+          },
+          {
+            "elapsed_seconds": 0.6848708000034094,
+            "stiffness_applications": 75,
+            "mass_applications": 75,
+            "phase": "cg_iteration",
+            "iteration": 75,
+            "iterate_norm": 8.383126608246224
+          },
+          {
+            "elapsed_seconds": 0.6923758999910206,
+            "stiffness_applications": 76,
+            "mass_applications": 76,
+            "phase": "cg_iteration",
+            "iteration": 76,
+            "iterate_norm": 8.383126610849125
+          },
+          {
+            "elapsed_seconds": 0.6999178999103606,
+            "stiffness_applications": 77,
+            "mass_applications": 77,
+            "phase": "cg_iteration",
+            "iteration": 77,
+            "iterate_norm": 8.383126609959819
+          },
+          {
+            "elapsed_seconds": 0.7072205999866128,
+            "stiffness_applications": 78,
+            "mass_applications": 78,
+            "phase": "cg_iteration",
+            "iteration": 78,
+            "iterate_norm": 8.383126609601383
+          },
+          {
+            "elapsed_seconds": 0.7147136999992654,
+            "stiffness_applications": 79,
+            "mass_applications": 79,
+            "phase": "cg_iteration",
+            "iteration": 79,
+            "iterate_norm": 8.38312661026386
+          },
+          {
+            "elapsed_seconds": 0.7222884999355301,
+            "stiffness_applications": 80,
+            "mass_applications": 80,
+            "phase": "cg_iteration",
+            "iteration": 80,
+            "iterate_norm": 8.383126609944927
+          },
+          {
+            "elapsed_seconds": 0.7302286999765784,
+            "stiffness_applications": 81,
+            "mass_applications": 81,
+            "phase": "cg_iteration",
+            "iteration": 81,
+            "iterate_norm": 8.383126609442103
+          },
+          {
+            "elapsed_seconds": 0.737635099911131,
+            "stiffness_applications": 82,
+            "mass_applications": 82,
+            "phase": "cg_iteration",
+            "iteration": 82,
+            "iterate_norm": 8.383126609655486
+          },
+          {
+            "elapsed_seconds": 0.7466258999193087,
+            "stiffness_applications": 83,
+            "mass_applications": 83,
+            "phase": "cg_iteration",
+            "iteration": 83,
+            "iterate_norm": 8.383126609726034
+          },
+          {
+            "elapsed_seconds": 0.7541757000144571,
+            "stiffness_applications": 84,
+            "mass_applications": 84,
+            "phase": "cg_iteration",
+            "iteration": 84,
+            "iterate_norm": 8.383126609572725
+          },
+          {
+            "elapsed_seconds": 0.7618516999064013,
+            "stiffness_applications": 85,
+            "mass_applications": 85,
+            "phase": "cg_iteration",
+            "iteration": 85,
+            "iterate_norm": 8.383126609741137
+          },
+          {
+            "elapsed_seconds": 0.7693067999789491,
+            "stiffness_applications": 86,
+            "mass_applications": 86,
+            "phase": "cg_iteration",
+            "iteration": 86,
+            "iterate_norm": 8.38312660946732
+          },
+          {
+            "elapsed_seconds": 0.7766659999033436,
+            "stiffness_applications": 87,
+            "mass_applications": 87,
+            "phase": "cg_iteration",
+            "iteration": 87,
+            "iterate_norm": 8.383126609233848
+          },
+          {
+            "elapsed_seconds": 0.7842125999741256,
+            "stiffness_applications": 88,
+            "mass_applications": 88,
+            "phase": "cg_iteration",
+            "iteration": 88,
+            "iterate_norm": 8.383126609140817
+          },
+          {
+            "elapsed_seconds": 0.7916310000000522,
+            "stiffness_applications": 89,
+            "mass_applications": 89,
+            "phase": "cg_iteration",
+            "iteration": 89,
+            "iterate_norm": 8.383126609088048
+          },
+          {
+            "elapsed_seconds": 0.7991382000036538,
+            "stiffness_applications": 90,
+            "mass_applications": 90,
+            "phase": "cg_iteration",
+            "iteration": 90,
+            "iterate_norm": 8.3831266091239
+          },
+          {
+            "elapsed_seconds": 0.8065751999383792,
+            "stiffness_applications": 91,
+            "mass_applications": 91,
+            "phase": "cg_iteration",
+            "iteration": 91,
+            "iterate_norm": 8.383126609022659
+          },
+          {
+            "elapsed_seconds": 0.8144661999540403,
+            "stiffness_applications": 92,
+            "mass_applications": 92,
+            "phase": "cg_iteration",
+            "iteration": 92,
+            "iterate_norm": 8.38312660897877
+          },
+          {
+            "elapsed_seconds": 0.8217365999007598,
+            "stiffness_applications": 93,
+            "mass_applications": 93,
+            "phase": "cg_iteration",
+            "iteration": 93,
+            "iterate_norm": 8.383126608953399
+          },
+          {
+            "elapsed_seconds": 0.8292893999023363,
+            "stiffness_applications": 94,
+            "mass_applications": 94,
+            "phase": "cg_iteration",
+            "iteration": 94,
+            "iterate_norm": 8.383126608917665
+          },
+          {
+            "elapsed_seconds": 0.8367715999484062,
+            "stiffness_applications": 95,
+            "mass_applications": 95,
+            "phase": "cg_iteration",
+            "iteration": 95,
+            "iterate_norm": 8.383126608910976
+          },
+          {
+            "elapsed_seconds": 0.8443063999293372,
+            "stiffness_applications": 96,
+            "mass_applications": 96,
+            "phase": "cg_iteration",
+            "iteration": 96,
+            "iterate_norm": 8.383126608890871
+          },
+          {
+            "elapsed_seconds": 0.8517429999774322,
+            "stiffness_applications": 97,
+            "mass_applications": 97,
+            "phase": "cg_iteration",
+            "iteration": 97,
+            "iterate_norm": 8.383126608875177
+          },
+          {
+            "elapsed_seconds": 0.8593850999604911,
+            "stiffness_applications": 98,
+            "mass_applications": 98,
+            "phase": "cg_iteration",
+            "iteration": 98,
+            "iterate_norm": 8.383126608881017
+          },
+          {
+            "elapsed_seconds": 0.8667623999062926,
+            "stiffness_applications": 99,
+            "mass_applications": 99,
+            "phase": "cg_iteration",
+            "iteration": 99,
+            "iterate_norm": 8.383126608877875
+          },
+          {
+            "elapsed_seconds": 0.8742602999554947,
+            "stiffness_applications": 100,
+            "mass_applications": 100,
+            "phase": "cg_iteration",
+            "iteration": 100,
+            "iterate_norm": 8.38312660887325
+          },
+          {
+            "elapsed_seconds": 0.8818955000024289,
+            "stiffness_applications": 101,
+            "mass_applications": 101,
+            "phase": "cg_iteration",
+            "iteration": 101,
+            "iterate_norm": 8.383126608879271
+          },
+          {
+            "elapsed_seconds": 0.8893049999605864,
+            "stiffness_applications": 102,
+            "mass_applications": 102,
+            "phase": "cg_iteration",
+            "iteration": 102,
+            "iterate_norm": 8.383126608876648
+          },
+          {
+            "elapsed_seconds": 0.8967675999738276,
+            "stiffness_applications": 103,
+            "mass_applications": 103,
+            "phase": "cg_iteration",
+            "iteration": 103,
+            "iterate_norm": 8.383126608873152
+          },
+          {
+            "elapsed_seconds": 0.9045145999407396,
+            "stiffness_applications": 104,
+            "mass_applications": 104,
+            "phase": "cg_iteration",
+            "iteration": 104,
+            "iterate_norm": 8.383126608874711
+          },
+          {
+            "elapsed_seconds": 0.912245100014843,
+            "stiffness_applications": 105,
+            "mass_applications": 105,
+            "phase": "cg_iteration",
+            "iteration": 105,
+            "iterate_norm": 8.383126608873601
+          },
+          {
+            "elapsed_seconds": 0.9200510999653488,
+            "stiffness_applications": 106,
+            "mass_applications": 106,
+            "phase": "cg_iteration",
+            "iteration": 106,
+            "iterate_norm": 8.383126608872594
+          },
+          {
+            "elapsed_seconds": 0.9278475999599323,
+            "stiffness_applications": 107,
+            "mass_applications": 107,
+            "phase": "cg_iteration",
+            "iteration": 107,
+            "iterate_norm": 8.3831266088739
+          },
+          {
+            "elapsed_seconds": 0.9354532000143081,
+            "stiffness_applications": 108,
+            "mass_applications": 108,
+            "phase": "cg_iteration",
+            "iteration": 108,
+            "iterate_norm": 8.383126608875687
+          },
+          {
+            "elapsed_seconds": 0.9429677999578416,
+            "stiffness_applications": 109,
+            "mass_applications": 109,
+            "phase": "solve_end",
+            "iterations": 108,
+            "status": 0,
+            "true_relative_residual": 7.975750297991205e-12
+          }
+        ],
+        "scope": "First zero-initial-state mechanical Newmark step only; no arrival, convergence or PZT acceptance.",
+        "direct_acceleration_relative_l2": 3.0390623879061234e-11,
+        "direct_probe_relative_error": 1.5543122344752192e-15,
+        "solve_seconds": 0.8197076000506058,
+        "iterations": 108,
+        "true_relative_residual": 7.975750297991205e-12,
+        "source_mean_displacement_m": 2.28526628781471e-15,
+        "energy_j": 3.455843633143199e-20,
+        "work_j": 3.4558436331431956e-20,
+        "relative_energy_balance_error": 1.1102230246251565e-15,
+        "acceleration_sha256": "c2a0addd7d7d3383855979cd028f3626f434f8e40ffb1d1f256daf66f6b61dda",
+        "wall_seconds": 1.3439871999435127,
+        "fingerprint": "073842d765989c2adddf9e03ce2fd46f21937fd8ad6f54ca6e731be0b011ccdd",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 44.45299999997951,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 15,
+          "maximum_sampled_rss_mib": 135.23828125,
+          "maximum_system_memory_percent": 45.4,
+          "minimum_available_mib": 8869.4375,
+          "maximum_gpu_used_mib": 742.0,
+          "maximum_gpu_temperature_c": 42.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+          "gpu_computation_performed": false
+        }
+      }
+    },
+    "source_snapshot_sha256": "58d31ee5f2631c1304ebd40f13cc60723e5c06a96c1185e9c30d63f18ecfbd20",
+    "copied_inputs_verified": true,
+    "note": "Retained from the actual native regression before temporary-directory cleanup; no extra solve launched."
+  },
+  "earlier_direct_cap_rejection": {
+    "monitor": {
+      "path": "outputs/matrixfree-first-step-native-debug-20261107/step/monitor-result.json",
+      "sha256": "0cbebfea4b1e5d949fa67346923ba30c28ca17d701064ef255713824cdf7c86c",
+      "receipt": {
+        "completed": false,
+        "steps_completed": 0,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "plan_fingerprint": "0b3027898e92c906508cb0ed9dc71c363aa483c835cdeca3f83ae4bc8e399624",
+        "source_snapshot_sha256": "dfef55d2ec1ab76460f90d54a66f233a75e3692a72f3954505fd845d431d39c0",
+        "worker_run": {
+          "exit_code": 1,
+          "wall_seconds": 2.9355338000459597,
+          "maximum_observed_external_processes": 3,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "error": "RuntimeError: step worker stopped; inspect retained progress/report",
+        "last_progress_sha256": "3a7a52fbd4e04bdcb28d472a09e245c38331dec15193a34b15be02f210108bcf",
+        "fingerprint": "17d41666bf2891992cc6a3e3dcfbb12f234125fe6dc3e4716b1a73165aafa581",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 45,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 92,
+            "min_available_mib": 768,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 18,
+          "maximum_sampled_rss_mib": 240.8515625,
+          "maximum_system_memory_percent": 53.1,
+          "minimum_available_mib": 7620.94921875,
+          "maximum_gpu_used_mib": 1410.0,
+          "maximum_gpu_temperature_c": 73.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+          "gpu_computation_performed": false
+        }
+      }
+    },
+    "native": {
+      "path": "outputs/matrixfree-first-step-native-debug-20261107/step/native/step-report.json",
+      "sha256": "cb271cb2a3bb1f9efe214dce30e6a0d015cc2565f459d883ec55318ed01698c1",
+      "receipt": {
+        "completed": false,
+        "steps_completed": 0,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "sparse_reference_assembled": false,
+        "plan_fingerprint": "0b3027898e92c906508cb0ed9dc71c363aa483c835cdeca3f83ae4bc8e399624",
+        "stages": [
+          {
+            "elapsed_seconds": 0.002284299931488931,
+            "stage": "mesh_loaded",
+            "vertices": 174,
+            "tetrahedra": 499
+          },
+          {
+            "elapsed_seconds": 0.14083099993877113,
+            "stage": "space_and_diagonals",
+            "dofs": 2958,
+            "screen": {
+              "scalar_dofs": 986,
+              "vector_dofs": 2958,
+              "vertices": 174,
+              "edges": 812,
+              "faces": 1138,
+              "tetrahedra": 499,
+              "topology_screen_mib": 0.4912872314453125,
+              "assembly_screen_mib": 13.7054443359375,
+              "native_vector_screen_mib": 0.1805419921875
+            }
+          },
+          {
+            "elapsed_seconds": 0.16033579991199076,
+            "stage": "mechanical_load",
+            "footprint": {
+              "integration": "analytic_disk_native_H1_trace_polynomial",
+              "order": 2,
+              "requested_center_xy_m": [
+                0.01,
+                0.008
+              ],
+              "radius_m": 0.003,
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "area_m2": 2.827433388230814e-05,
+              "edge_clipped": false,
+              "full_disk_area_relative_error": 2.220446049250313e-16,
+              "covered_surface_triangles": 5,
+              "support_coefficients": 16,
+              "negative_coefficients": 10,
+              "maximum_trace_fit_absolute_error": 1.1102230246251565e-16,
+              "trace_vandermonde_condition": 30.969353404288103,
+              "extraction_workspace_screen_mib": 0.5213775634765625,
+              "coefficient_layout": "component_major_hierarchical_H1",
+              "work_conjugate": true
+            },
+            "moments": {
+              "monomials": [
+                {
+                  "powers": [
+                    0,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.9999999999999999
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    1.0000000000000002
+                  ],
+                  "absolute_error": 3.3306690738754696e-16
+                },
+                {
+                  "powers": [
+                    1,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -6.106226635438361e-16
+                  ],
+                  "absolute_error": 6.106226635438361e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    -8.326672684688674e-17
+                  ],
+                  "absolute_error": 8.326672684688674e-17
+                },
+                {
+                  "powers": [
+                    2,
+                    0
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.2500000000000008
+                  ],
+                  "absolute_error": 7.771561172376096e-16
+                },
+                {
+                  "powers": [
+                    1,
+                    1
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    2.0816681711721685e-16
+                  ],
+                  "absolute_error": 2.0816681711721685e-16
+                },
+                {
+                  "powers": [
+                    0,
+                    2
+                  ],
+                  "expected_component_averages": [
+                    0.0,
+                    0.0,
+                    0.25
+                  ],
+                  "measured_component_averages": [
+                    0.0,
+                    0.0,
+                    0.24999999999999994
+                  ],
+                  "absolute_error": 5.551115123125783e-17
+                }
+              ],
+              "maximum_absolute_error": 7.771561172376096e-16
+            },
+            "force_n_at_step": 3.0244559695910553e-05,
+            "load_sha256": "850d9cb7c888cb01f8fec91fa1785c59f6ea59046b1de178b77f39d11852b561"
+          }
+        ],
+        "solve_progress": [
+          {
+            "elapsed_seconds": 0.16327519994229078,
+            "stiffness_applications": 0,
+            "mass_applications": 0,
+            "phase": "solve_start",
+            "rhs_norm": 1.6454390318854395e-05,
+            "relative_tolerance": 1e-11
+          },
+          {
+            "elapsed_seconds": 0.17423359991516918,
+            "stiffness_applications": 1,
+            "mass_applications": 1,
+            "phase": "cg_iteration",
+            "iteration": 1,
+            "iterate_norm": 6.162524499406998
+          },
+          {
+            "elapsed_seconds": 0.18545250000897795,
+            "stiffness_applications": 2,
+            "mass_applications": 2,
+            "phase": "cg_iteration",
+            "iteration": 2,
+            "iterate_norm": 8.704800813518256
+          },
+          {
+            "elapsed_seconds": 0.19643849995918572,
+            "stiffness_applications": 3,
+            "mass_applications": 3,
+            "phase": "cg_iteration",
+            "iteration": 3,
+            "iterate_norm": 9.82179154947685
+          },
+          {
+            "elapsed_seconds": 0.20699959993362427,
+            "stiffness_applications": 4,
+            "mass_applications": 4,
+            "phase": "cg_iteration",
+            "iteration": 4,
+            "iterate_norm": 10.051203517274455
+          },
+          {
+            "elapsed_seconds": 0.2179297999246046,
+            "stiffness_applications": 5,
+            "mass_applications": 5,
+            "phase": "cg_iteration",
+            "iteration": 5,
+            "iterate_norm": 9.970944233917056
+          },
+          {
+            "elapsed_seconds": 0.228902000002563,
+            "stiffness_applications": 6,
+            "mass_applications": 6,
+            "phase": "cg_iteration",
+            "iteration": 6,
+            "iterate_norm": 9.721014756725262
+          },
+          {
+            "elapsed_seconds": 0.24078679992817342,
+            "stiffness_applications": 7,
+            "mass_applications": 7,
+            "phase": "cg_iteration",
+            "iteration": 7,
+            "iterate_norm": 9.421459978987876
+          },
+          {
+            "elapsed_seconds": 0.25163239997345954,
+            "stiffness_applications": 8,
+            "mass_applications": 8,
+            "phase": "cg_iteration",
+            "iteration": 8,
+            "iterate_norm": 9.23334559644605
+          },
+          {
+            "elapsed_seconds": 0.2624993999488652,
+            "stiffness_applications": 9,
+            "mass_applications": 9,
+            "phase": "cg_iteration",
+            "iteration": 9,
+            "iterate_norm": 9.207949559267698
+          },
+          {
+            "elapsed_seconds": 0.2734251000219956,
+            "stiffness_applications": 10,
+            "mass_applications": 10,
+            "phase": "cg_iteration",
+            "iteration": 10,
+            "iterate_norm": 9.210901332322942
+          },
+          {
+            "elapsed_seconds": 0.2841135999187827,
+            "stiffness_applications": 11,
+            "mass_applications": 11,
+            "phase": "cg_iteration",
+            "iteration": 11,
+            "iterate_norm": 9.211818321665412
+          },
+          {
+            "elapsed_seconds": 0.2951329000061378,
+            "stiffness_applications": 12,
+            "mass_applications": 12,
+            "phase": "cg_iteration",
+            "iteration": 12,
+            "iterate_norm": 9.209178360667556
+          },
+          {
+            "elapsed_seconds": 0.30611070001032203,
+            "stiffness_applications": 13,
+            "mass_applications": 13,
+            "phase": "cg_iteration",
+            "iteration": 13,
+            "iterate_norm": 9.207124665922422
+          },
+          {
+            "elapsed_seconds": 0.31721160002052784,
+            "stiffness_applications": 14,
+            "mass_applications": 14,
+            "phase": "cg_iteration",
+            "iteration": 14,
+            "iterate_norm": 9.207512853913784
+          },
+          {
+            "elapsed_seconds": 0.327743100002408,
+            "stiffness_applications": 15,
+            "mass_applications": 15,
+            "phase": "cg_iteration",
+            "iteration": 15,
+            "iterate_norm": 9.209180369251593
+          },
+          {
+            "elapsed_seconds": 0.3387882999377325,
+            "stiffness_applications": 16,
+            "mass_applications": 16,
+            "phase": "cg_iteration",
+            "iteration": 16,
+            "iterate_norm": 9.208773074338032
+          },
+          {
+            "elapsed_seconds": 0.34953559993300587,
+            "stiffness_applications": 17,
+            "mass_applications": 17,
+            "phase": "cg_iteration",
+            "iteration": 17,
+            "iterate_norm": 9.21019720260866
+          },
+          {
+            "elapsed_seconds": 0.3598970000166446,
+            "stiffness_applications": 18,
+            "mass_applications": 18,
+            "phase": "cg_iteration",
+            "iteration": 18,
+            "iterate_norm": 9.212753495060532
+          },
+          {
+            "elapsed_seconds": 0.3702967999270186,
+            "stiffness_applications": 19,
+            "mass_applications": 19,
+            "phase": "cg_iteration",
+            "iteration": 19,
+            "iterate_norm": 9.213618074082827
+          },
+          {
+            "elapsed_seconds": 0.38053389999549836,
+            "stiffness_applications": 20,
+            "mass_applications": 20,
+            "phase": "cg_iteration",
+            "iteration": 20,
+            "iterate_norm": 9.213625023949277
+          },
+          {
+            "elapsed_seconds": 0.39112980000209063,
+            "stiffness_applications": 21,
+            "mass_applications": 21,
+            "phase": "cg_iteration",
+            "iteration": 21,
+            "iterate_norm": 9.213922682134509
+          },
+          {
+            "elapsed_seconds": 0.40146189997904,
+            "stiffness_applications": 22,
+            "mass_applications": 22,
+            "phase": "cg_iteration",
+            "iteration": 22,
+            "iterate_norm": 9.21436008351826
+          },
+          {
+            "elapsed_seconds": 0.41164669999852777,
+            "stiffness_applications": 23,
+            "mass_applications": 23,
+            "phase": "cg_iteration",
+            "iteration": 23,
+            "iterate_norm": 9.214587120475146
+          },
+          {
+            "elapsed_seconds": 0.4215643999632448,
+            "stiffness_applications": 24,
+            "mass_applications": 24,
+            "phase": "cg_iteration",
+            "iteration": 24,
+            "iterate_norm": 9.214987209578194
+          },
+          {
+            "elapsed_seconds": 0.4320353999501094,
+            "stiffness_applications": 25,
+            "mass_applications": 25,
+            "phase": "cg_iteration",
+            "iteration": 25,
+            "iterate_norm": 9.215671364600361
+          },
+          {
+            "elapsed_seconds": 0.44295259995851666,
+            "stiffness_applications": 26,
+            "mass_applications": 26,
+            "phase": "cg_iteration",
+            "iteration": 26,
+            "iterate_norm": 9.216326516490163
+          },
+          {
+            "elapsed_seconds": 0.4532678999239579,
+            "stiffness_applications": 27,
+            "mass_applications": 27,
+            "phase": "cg_iteration",
+            "iteration": 27,
+            "iterate_norm": 9.216641721488624
+          },
+          {
+            "elapsed_seconds": 0.4635647999821231,
+            "stiffness_applications": 28,
+            "mass_applications": 28,
+            "phase": "cg_iteration",
+            "iteration": 28,
+            "iterate_norm": 9.21676459060348
+          },
+          {
+            "elapsed_seconds": 0.4736785999266431,
+            "stiffness_applications": 29,
+            "mass_applications": 29,
+            "phase": "cg_iteration",
+            "iteration": 29,
+            "iterate_norm": 9.216748772262132
+          },
+          {
+            "elapsed_seconds": 0.48399480001535267,
+            "stiffness_applications": 30,
+            "mass_applications": 30,
+            "phase": "cg_iteration",
+            "iteration": 30,
+            "iterate_norm": 9.216684063804887
+          },
+          {
+            "elapsed_seconds": 0.49435759999323636,
+            "stiffness_applications": 31,
+            "mass_applications": 31,
+            "phase": "cg_iteration",
+            "iteration": 31,
+            "iterate_norm": 9.216630350215278
+          },
+          {
+            "elapsed_seconds": 0.5050616000080481,
+            "stiffness_applications": 32,
+            "mass_applications": 32,
+            "phase": "cg_iteration",
+            "iteration": 32,
+            "iterate_norm": 9.216562456546997
+          },
+          {
+            "elapsed_seconds": 0.5157058999175206,
+            "stiffness_applications": 33,
+            "mass_applications": 33,
+            "phase": "cg_iteration",
+            "iteration": 33,
+            "iterate_norm": 9.216417875558227
+          },
+          {
+            "elapsed_seconds": 0.526147099910304,
+            "stiffness_applications": 34,
+            "mass_applications": 34,
+            "phase": "cg_iteration",
+            "iteration": 34,
+            "iterate_norm": 9.216268282755413
+          },
+          {
+            "elapsed_seconds": 0.5368742999853566,
+            "stiffness_applications": 35,
+            "mass_applications": 35,
+            "phase": "cg_iteration",
+            "iteration": 35,
+            "iterate_norm": 9.216153660375918
+          },
+          {
+            "elapsed_seconds": 0.5479484999086708,
+            "stiffness_applications": 36,
+            "mass_applications": 36,
+            "phase": "cg_iteration",
+            "iteration": 36,
+            "iterate_norm": 9.216082734729284
+          },
+          {
+            "elapsed_seconds": 0.5587900999234989,
+            "stiffness_applications": 37,
+            "mass_applications": 37,
+            "phase": "cg_iteration",
+            "iteration": 37,
+            "iterate_norm": 9.216037694441257
+          },
+          {
+            "elapsed_seconds": 0.569195199990645,
+            "stiffness_applications": 38,
+            "mass_applications": 38,
+            "phase": "cg_iteration",
+            "iteration": 38,
+            "iterate_norm": 9.21602008855864
+          },
+          {
+            "elapsed_seconds": 0.5800743999425322,
+            "stiffness_applications": 39,
+            "mass_applications": 39,
+            "phase": "cg_iteration",
+            "iteration": 39,
+            "iterate_norm": 9.216018592961168
+          },
+          {
+            "elapsed_seconds": 0.5908039999194443,
+            "stiffness_applications": 40,
+            "mass_applications": 40,
+            "phase": "cg_iteration",
+            "iteration": 40,
+            "iterate_norm": 9.216026377834494
+          },
+          {
+            "elapsed_seconds": 0.601373799960129,
+            "stiffness_applications": 41,
+            "mass_applications": 41,
+            "phase": "cg_iteration",
+            "iteration": 41,
+            "iterate_norm": 9.216034041514861
+          },
+          {
+            "elapsed_seconds": 0.612105599953793,
+            "stiffness_applications": 42,
+            "mass_applications": 42,
+            "phase": "cg_iteration",
+            "iteration": 42,
+            "iterate_norm": 9.216040442583415
+          },
+          {
+            "elapsed_seconds": 0.623117099981755,
+            "stiffness_applications": 43,
+            "mass_applications": 43,
+            "phase": "cg_iteration",
+            "iteration": 43,
+            "iterate_norm": 9.216045744411913
+          },
+          {
+            "elapsed_seconds": 0.6341211999533698,
+            "stiffness_applications": 44,
+            "mass_applications": 44,
+            "phase": "cg_iteration",
+            "iteration": 44,
+            "iterate_norm": 9.216048203212004
+          },
+          {
+            "elapsed_seconds": 0.6447902999352664,
+            "stiffness_applications": 45,
+            "mass_applications": 45,
+            "phase": "cg_iteration",
+            "iteration": 45,
+            "iterate_norm": 9.216049568860589
+          },
+          {
+            "elapsed_seconds": 0.6553356000222266,
+            "stiffness_applications": 46,
+            "mass_applications": 46,
+            "phase": "cg_iteration",
+            "iteration": 46,
+            "iterate_norm": 9.21605072286308
+          },
+          {
+            "elapsed_seconds": 0.6658918999601156,
+            "stiffness_applications": 47,
+            "mass_applications": 47,
+            "phase": "cg_iteration",
+            "iteration": 47,
+            "iterate_norm": 9.216052070944524
+          },
+          {
+            "elapsed_seconds": 0.6763038999633864,
+            "stiffness_applications": 48,
+            "mass_applications": 48,
+            "phase": "cg_iteration",
+            "iteration": 48,
+            "iterate_norm": 9.216054375054961
+          },
+          {
+            "elapsed_seconds": 0.6868692999705672,
+            "stiffness_applications": 49,
+            "mass_applications": 49,
+            "phase": "cg_iteration",
+            "iteration": 49,
+            "iterate_norm": 9.216057388054328
+          },
+          {
+            "elapsed_seconds": 0.697634799988009,
+            "stiffness_applications": 50,
+            "mass_applications": 50,
+            "phase": "cg_iteration",
+            "iteration": 50,
+            "iterate_norm": 9.216061230511542
+          },
+          {
+            "elapsed_seconds": 0.7082859999500215,
+            "stiffness_applications": 51,
+            "mass_applications": 51,
+            "phase": "cg_iteration",
+            "iteration": 51,
+            "iterate_norm": 9.216064796045242
+          },
+          {
+            "elapsed_seconds": 0.7187679000198841,
+            "stiffness_applications": 52,
+            "mass_applications": 52,
+            "phase": "cg_iteration",
+            "iteration": 52,
+            "iterate_norm": 9.216067227034417
+          },
+          {
+            "elapsed_seconds": 0.7292673999909312,
+            "stiffness_applications": 53,
+            "mass_applications": 53,
+            "phase": "cg_iteration",
+            "iteration": 53,
+            "iterate_norm": 9.216068171577845
+          },
+          {
+            "elapsed_seconds": 0.7397776999277994,
+            "stiffness_applications": 54,
+            "mass_applications": 54,
+            "phase": "cg_iteration",
+            "iteration": 54,
+            "iterate_norm": 9.216068354856464
+          },
+          {
+            "elapsed_seconds": 0.7509792000055313,
+            "stiffness_applications": 55,
+            "mass_applications": 55,
+            "phase": "cg_iteration",
+            "iteration": 55,
+            "iterate_norm": 9.216068338966146
+          },
+          {
+            "elapsed_seconds": 0.7620269999606535,
+            "stiffness_applications": 56,
+            "mass_applications": 56,
+            "phase": "cg_iteration",
+            "iteration": 56,
+            "iterate_norm": 9.216068195671708
+          },
+          {
+            "elapsed_seconds": 0.7725697999121621,
+            "stiffness_applications": 57,
+            "mass_applications": 57,
+            "phase": "cg_iteration",
+            "iteration": 57,
+            "iterate_norm": 9.216067887203039
+          },
+          {
+            "elapsed_seconds": 0.7834536000154912,
+            "stiffness_applications": 58,
+            "mass_applications": 58,
+            "phase": "cg_iteration",
+            "iteration": 58,
+            "iterate_norm": 9.216067435234116
+          },
+          {
+            "elapsed_seconds": 0.7945936999749392,
+            "stiffness_applications": 59,
+            "mass_applications": 59,
+            "phase": "cg_iteration",
+            "iteration": 59,
+            "iterate_norm": 9.21606701308461
+          },
+          {
+            "elapsed_seconds": 0.805336199933663,
+            "stiffness_applications": 60,
+            "mass_applications": 60,
+            "phase": "cg_iteration",
+            "iteration": 60,
+            "iterate_norm": 9.216066729313555
+          },
+          {
+            "elapsed_seconds": 0.8162899999879301,
+            "stiffness_applications": 61,
+            "mass_applications": 61,
+            "phase": "cg_iteration",
+            "iteration": 61,
+            "iterate_norm": 9.216066568786175
+          },
+          {
+            "elapsed_seconds": 0.8270313999382779,
+            "stiffness_applications": 62,
+            "mass_applications": 62,
+            "phase": "cg_iteration",
+            "iteration": 62,
+            "iterate_norm": 9.216066487778011
+          },
+          {
+            "elapsed_seconds": 0.8382538999430835,
+            "stiffness_applications": 63,
+            "mass_applications": 63,
+            "phase": "cg_iteration",
+            "iteration": 63,
+            "iterate_norm": 9.216066444370323
+          },
+          {
+            "elapsed_seconds": 0.8495970999356359,
+            "stiffness_applications": 64,
+            "mass_applications": 64,
+            "phase": "cg_iteration",
+            "iteration": 64,
+            "iterate_norm": 9.216066410550916
+          },
+          {
+            "elapsed_seconds": 0.8604512999299914,
+            "stiffness_applications": 65,
+            "mass_applications": 65,
+            "phase": "cg_iteration",
+            "iteration": 65,
+            "iterate_norm": 9.216066351073142
+          },
+          {
+            "elapsed_seconds": 0.8719247999833897,
+            "stiffness_applications": 66,
+            "mass_applications": 66,
+            "phase": "cg_iteration",
+            "iteration": 66,
+            "iterate_norm": 9.216066262529086
+          },
+          {
+            "elapsed_seconds": 0.8830081999767572,
+            "stiffness_applications": 67,
+            "mass_applications": 67,
+            "phase": "cg_iteration",
+            "iteration": 67,
+            "iterate_norm": 9.21606618953314
+          },
+          {
+            "elapsed_seconds": 0.8938180999830365,
+            "stiffness_applications": 68,
+            "mass_applications": 68,
+            "phase": "cg_iteration",
+            "iteration": 68,
+            "iterate_norm": 9.216066146232876
+          },
+          {
+            "elapsed_seconds": 0.9044807999162003,
+            "stiffness_applications": 69,
+            "mass_applications": 69,
+            "phase": "cg_iteration",
+            "iteration": 69,
+            "iterate_norm": 9.216066125973308
+          },
+          {
+            "elapsed_seconds": 0.9156155999517068,
+            "stiffness_applications": 70,
+            "mass_applications": 70,
+            "phase": "cg_iteration",
+            "iteration": 70,
+            "iterate_norm": 9.21606612006977
+          },
+          {
+            "elapsed_seconds": 0.9266270999796689,
+            "stiffness_applications": 71,
+            "mass_applications": 71,
+            "phase": "cg_iteration",
+            "iteration": 71,
+            "iterate_norm": 9.216066120616798
+          },
+          {
+            "elapsed_seconds": 0.9374902999261394,
+            "stiffness_applications": 72,
+            "mass_applications": 72,
+            "phase": "cg_iteration",
+            "iteration": 72,
+            "iterate_norm": 9.216066128393319
+          },
+          {
+            "elapsed_seconds": 0.9482857999391854,
+            "stiffness_applications": 73,
+            "mass_applications": 73,
+            "phase": "cg_iteration",
+            "iteration": 73,
+            "iterate_norm": 9.216066138054249
+          },
+          {
+            "elapsed_seconds": 0.9588010999141261,
+            "stiffness_applications": 74,
+            "mass_applications": 74,
+            "phase": "cg_iteration",
+            "iteration": 74,
+            "iterate_norm": 9.21606614782017
+          },
+          {
+            "elapsed_seconds": 0.9696493999799713,
+            "stiffness_applications": 75,
+            "mass_applications": 75,
+            "phase": "cg_iteration",
+            "iteration": 75,
+            "iterate_norm": 9.216066157432758
+          },
+          {
+            "elapsed_seconds": 0.9804809999186546,
+            "stiffness_applications": 76,
+            "mass_applications": 76,
+            "phase": "cg_iteration",
+            "iteration": 76,
+            "iterate_norm": 9.216066164392638
+          },
+          {
+            "elapsed_seconds": 0.9916044999845326,
+            "stiffness_applications": 77,
+            "mass_applications": 77,
+            "phase": "cg_iteration",
+            "iteration": 77,
+            "iterate_norm": 9.216066167515699
+          },
+          {
+            "elapsed_seconds": 1.002376199932769,
+            "stiffness_applications": 78,
+            "mass_applications": 78,
+            "phase": "cg_iteration",
+            "iteration": 78,
+            "iterate_norm": 9.216066168381008
+          },
+          {
+            "elapsed_seconds": 1.013203699956648,
+            "stiffness_applications": 79,
+            "mass_applications": 79,
+            "phase": "cg_iteration",
+            "iteration": 79,
+            "iterate_norm": 9.216066169112903
+          },
+          {
+            "elapsed_seconds": 1.0239853999810293,
+            "stiffness_applications": 80,
+            "mass_applications": 80,
+            "phase": "cg_iteration",
+            "iteration": 80,
+            "iterate_norm": 9.21606616990214
+          },
+          {
+            "elapsed_seconds": 1.0349637999897823,
+            "stiffness_applications": 81,
+            "mass_applications": 81,
+            "phase": "cg_iteration",
+            "iteration": 81,
+            "iterate_norm": 9.216066170446243
+          },
+          {
+            "elapsed_seconds": 1.046156600001268,
+            "stiffness_applications": 82,
+            "mass_applications": 82,
+            "phase": "cg_iteration",
+            "iteration": 82,
+            "iterate_norm": 9.216066171004591
+          },
+          {
+            "elapsed_seconds": 1.0570275000063702,
+            "stiffness_applications": 83,
+            "mass_applications": 83,
+            "phase": "cg_iteration",
+            "iteration": 83,
+            "iterate_norm": 9.216066171752447
+          },
+          {
+            "elapsed_seconds": 1.0678028999827802,
+            "stiffness_applications": 84,
+            "mass_applications": 84,
+            "phase": "cg_iteration",
+            "iteration": 84,
+            "iterate_norm": 9.216066172050695
+          },
+          {
+            "elapsed_seconds": 1.0790115999989212,
+            "stiffness_applications": 85,
+            "mass_applications": 85,
+            "phase": "cg_iteration",
+            "iteration": 85,
+            "iterate_norm": 9.216066172126123
+          },
+          {
+            "elapsed_seconds": 1.0898731999332085,
+            "stiffness_applications": 86,
+            "mass_applications": 86,
+            "phase": "cg_iteration",
+            "iteration": 86,
+            "iterate_norm": 9.216066172178113
+          },
+          {
+            "elapsed_seconds": 1.100569700007327,
+            "stiffness_applications": 87,
+            "mass_applications": 87,
+            "phase": "cg_iteration",
+            "iteration": 87,
+            "iterate_norm": 9.216066172194633
+          },
+          {
+            "elapsed_seconds": 1.1123961999546736,
+            "stiffness_applications": 88,
+            "mass_applications": 88,
+            "phase": "cg_iteration",
+            "iteration": 88,
+            "iterate_norm": 9.216066172154322
+          },
+          {
+            "elapsed_seconds": 1.1232160999206826,
+            "stiffness_applications": 89,
+            "mass_applications": 89,
+            "phase": "cg_iteration",
+            "iteration": 89,
+            "iterate_norm": 9.216066171974756
+          },
+          {
+            "elapsed_seconds": 1.1345852999947965,
+            "stiffness_applications": 90,
+            "mass_applications": 90,
+            "phase": "cg_iteration",
+            "iteration": 90,
+            "iterate_norm": 9.216066171735237
+          },
+          {
+            "elapsed_seconds": 1.145662699942477,
+            "stiffness_applications": 91,
+            "mass_applications": 91,
+            "phase": "cg_iteration",
+            "iteration": 91,
+            "iterate_norm": 9.21606617156881
+          },
+          {
+            "elapsed_seconds": 1.1565899999113753,
+            "stiffness_applications": 92,
+            "mass_applications": 92,
+            "phase": "cg_iteration",
+            "iteration": 92,
+            "iterate_norm": 9.216066171524345
+          },
+          {
+            "elapsed_seconds": 1.167409999994561,
+            "stiffness_applications": 93,
+            "mass_applications": 93,
+            "phase": "cg_iteration",
+            "iteration": 93,
+            "iterate_norm": 9.216066171503536
+          },
+          {
+            "elapsed_seconds": 1.1781716999830678,
+            "stiffness_applications": 94,
+            "mass_applications": 94,
+            "phase": "cg_iteration",
+            "iteration": 94,
+            "iterate_norm": 9.216066171495704
+          },
+          {
+            "elapsed_seconds": 1.189439499983564,
+            "stiffness_applications": 95,
+            "mass_applications": 95,
+            "phase": "cg_iteration",
+            "iteration": 95,
+            "iterate_norm": 9.21606617150076
+          },
+          {
+            "elapsed_seconds": 1.2009504999732599,
+            "stiffness_applications": 96,
+            "mass_applications": 96,
+            "phase": "cg_iteration",
+            "iteration": 96,
+            "iterate_norm": 9.21606617150833
+          },
+          {
+            "elapsed_seconds": 1.2119062999263406,
+            "stiffness_applications": 97,
+            "mass_applications": 97,
+            "phase": "cg_iteration",
+            "iteration": 97,
+            "iterate_norm": 9.216066171511459
+          },
+          {
+            "elapsed_seconds": 1.2225960999494419,
+            "stiffness_applications": 98,
+            "mass_applications": 98,
+            "phase": "cg_iteration",
+            "iteration": 98,
+            "iterate_norm": 9.21606617151433
+          },
+          {
+            "elapsed_seconds": 1.2334849999751896,
+            "stiffness_applications": 99,
+            "mass_applications": 99,
+            "phase": "cg_iteration",
+            "iteration": 99,
+            "iterate_norm": 9.21606617152213
+          },
+          {
+            "elapsed_seconds": 1.2444779999786988,
+            "stiffness_applications": 100,
+            "mass_applications": 100,
+            "phase": "cg_iteration",
+            "iteration": 100,
+            "iterate_norm": 9.216066171530684
+          },
+          {
+            "elapsed_seconds": 1.2555640999926254,
+            "stiffness_applications": 101,
+            "mass_applications": 101,
+            "phase": "cg_iteration",
+            "iteration": 101,
+            "iterate_norm": 9.216066171533845
+          },
+          {
+            "elapsed_seconds": 1.265945199993439,
+            "stiffness_applications": 102,
+            "mass_applications": 102,
+            "phase": "cg_iteration",
+            "iteration": 102,
+            "iterate_norm": 9.216066171541407
+          },
+          {
+            "elapsed_seconds": 1.2766319999936968,
+            "stiffness_applications": 103,
+            "mass_applications": 103,
+            "phase": "cg_iteration",
+            "iteration": 103,
+            "iterate_norm": 9.216066171548468
+          },
+          {
+            "elapsed_seconds": 1.2874260999960825,
+            "stiffness_applications": 104,
+            "mass_applications": 104,
+            "phase": "cg_iteration",
+            "iteration": 104,
+            "iterate_norm": 9.216066171552683
+          },
+          {
+            "elapsed_seconds": 1.299117699963972,
+            "stiffness_applications": 105,
+            "mass_applications": 105,
+            "phase": "cg_iteration",
+            "iteration": 105,
+            "iterate_norm": 9.21606617155555
+          },
+          {
+            "elapsed_seconds": 1.3103582999901846,
+            "stiffness_applications": 106,
+            "mass_applications": 106,
+            "phase": "solve_end",
+            "iterations": 105,
+            "status": 0,
+            "true_relative_residual": 9.424480364959942e-12
+          }
+        ],
+        "scope": "First zero-initial-state mechanical Newmark step only; no arrival, convergence or PZT acceptance.",
+        "error": "MemoryError: direct first-step verification is restricted to at most 2000 coefficients",
+        "wall_seconds": 1.3211093000136316,
+        "fingerprint": "b86f4cad385116b3992b0359c170897a1c5ce5cbabc529a0ced97ab89e2eb403",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 44.40600000007544,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 9,
+          "maximum_sampled_rss_mib": 127.3359375,
+          "maximum_system_memory_percent": 53.0,
+          "minimum_available_mib": 7621.19140625,
+          "maximum_gpu_used_mib": 1410.0,
+          "maximum_gpu_temperature_c": 73.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+          "gpu_computation_performed": false
+        }
+      }
+    }
+  },
+  "tests": [
+    {
+      "invocation": {
+        "path": "outputs/matrixfree-first-step-focused-20261107/invocation.json",
+        "sha256": "918333696cc6da3704eae3443e494db50e7414e2296def80270d7534edc5fdfc",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "-v",
+            "tests.test_iterative_fem",
+            "tests.test_highorder_patches.HighOrderPatchPreflightTests",
+            "tests.test_matrixfree_step"
+          ],
+          "limits": {
+            "max_seconds": 90.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": null,
+          "highorder_checks": true,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-first-step-focused-20261107\\temporary-files",
+          "wrapper_source_sha256": "328691e6b5429ef2ffb2116ef56abb324d589c1a0e69f28e2d7c1b5d763ebcdc"
+        }
+      },
+      "monitor": {
+        "path": "outputs/matrixfree-first-step-focused-20261107/monitor-result.json",
+        "sha256": "0127cff7d59fd39acb55aa4b23e66758208ed011e8e526e29b0bc7024d068209",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 1,
+          "wall_seconds": 8.68532510008663,
+          "maximum_observed_external_processes": 8,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 90.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 43,
+            "maximum_sampled_rss_mib": 315.765625,
+            "maximum_system_memory_percent": 53.5,
+            "minimum_available_mib": 7555.890625,
+            "maximum_gpu_used_mib": 1442.0,
+            "maximum_gpu_temperature_c": 74.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+            "gpu_computation_performed": false
+          }
+        }
+      },
+      "log_path": "outputs/matrixfree-first-step-focused-20261107/tests.log",
+      "log_sha256": "a24853cb6305b071e091edfd72f7481d9e81b915294bb34089e5485a605a7dfd",
+      "test_count": 12,
+      "unittest_summary": [
+        "Ran 12 tests in 7.226s",
+        "FAILED (failures=1)"
+      ],
+      "skip_lines": []
+    },
+    {
+      "invocation": {
+        "path": "outputs/matrixfree-first-step-focused-checked-20261107/invocation.json",
+        "sha256": "afa35a461a77407b8a69fb14dbf46d5c5a141be4f1bdb322d078e627aa56f5f7",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "-v",
+            "tests.test_iterative_fem",
+            "tests.test_highorder_patches.HighOrderPatchPreflightTests",
+            "tests.test_matrixfree_step"
+          ],
+          "limits": {
+            "max_seconds": 90.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": null,
+          "highorder_checks": true,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-first-step-focused-checked-20261107\\temporary-files",
+          "wrapper_source_sha256": "328691e6b5429ef2ffb2116ef56abb324d589c1a0e69f28e2d7c1b5d763ebcdc"
+        }
+      },
+      "monitor": {
+        "path": "outputs/matrixfree-first-step-focused-checked-20261107/monitor-result.json",
+        "sha256": "26efac22b1b002d4943d3a58d262b614b03cab820a5b3d555cc0e248507d5a39",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 0,
+          "wall_seconds": 8.492944899946451,
+          "maximum_observed_external_processes": 6,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 90.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 42,
+            "maximum_sampled_rss_mib": 314.484375,
+            "maximum_system_memory_percent": 53.6,
+            "minimum_available_mib": 7529.75390625,
+            "maximum_gpu_used_mib": 1508.0,
+            "maximum_gpu_temperature_c": 77.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+            "gpu_computation_performed": false
+          }
+        }
+      },
+      "log_path": "outputs/matrixfree-first-step-focused-checked-20261107/tests.log",
+      "log_sha256": "a02e3b131bee6451d43c8950abc95854a4a7f92f4856b60adfb231417e850f94",
+      "test_count": 12,
+      "unittest_summary": [
+        "Ran 12 tests in 7.253s",
+        "OK"
+      ],
+      "skip_lines": []
+    },
+    {
+      "invocation": {
+        "path": "outputs/matrixfree-step-native-regression-20261107/invocation.json",
+        "sha256": "182b984b4015daaad8879308d11eaffcd274c209ea098046b25d85dba5329d74",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "discover",
+            "-v"
+          ],
+          "limits": {
+            "max_seconds": 750.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\recovered-tools-20261106\\ElmerFEM-nogui-nompi-Windows-AMD64",
+          "highorder_checks": true,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-step-native-regression-20261107\\temporary-files",
+          "wrapper_source_sha256": "328691e6b5429ef2ffb2116ef56abb324d589c1a0e69f28e2d7c1b5d763ebcdc"
+        }
+      },
+      "monitor": {
+        "path": "outputs/matrixfree-step-native-regression-20261107/monitor-result.json",
+        "sha256": "a4821632428fdd2c188b20a25e52557cc89904143ab3f7cb1a822f60e7342f95",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 0,
+          "wall_seconds": 445.2673719000304,
+          "maximum_observed_external_processes": 8,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 750.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 2099,
+            "maximum_sampled_rss_mib": 775.54296875,
+            "maximum_system_memory_percent": 46.0,
+            "minimum_available_mib": 8767.078125,
+            "maximum_gpu_used_mib": 742.0,
+            "maximum_gpu_temperature_c": 43.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified",
+            "gpu_computation_performed": false
+          }
+        }
+      },
+      "log_path": "outputs/matrixfree-step-native-regression-20261107/tests.log",
+      "log_sha256": "17cf3a61d65b8fe4ef29fbba42f15c4130f0e38358d78cacbda62f22906ccfe9",
+      "test_count": 243,
+      "unittest_summary": [
+        "Ran 243 tests in 442.153s",
+        "OK"
+      ],
+      "skip_lines": []
+    }
+  ],
+  "fingerprint": "e01d5fe1f0ece9bd7c5b3cf486085693d381b798718a657877c20767a1fb9b81"
+}

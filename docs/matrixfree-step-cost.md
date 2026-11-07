@@ -87,5 +87,23 @@ fixture had 2,958 coefficients and was rejected; its retained run remains in
 solving. The small verification fixture uses an 8 mm target mesh to stay within
 that existing bound; the full-size measurement retains its original 5 mm mesh.
 
-A new complete native regression is required after this shared-CG/footprint
-change. The earlier 239-test pass predates this increment. No full training ran.
+All 243 regression tests pass without skips with real Elmer/Gmsh/NGSolve,
+including the all-column/direct-transient comparison and zero-new-case cache
+recovery. The suite took 442.15 test seconds / 445.27 monitored seconds at
+775.54 MiB sampled combined RSS, 46.0% system RAM and at least 8,767 MiB
+available memory. System GPU observations peaked at 742/8,192 MiB and 43 C;
+calculation used CPU and CPU temperature was unavailable. No full training ran.
+
+The retained native P2 direct-reference mesh has 1,671 vector coefficients.
+Its first equation converged in 108 iterations / 0.820 solve seconds, with
+true relative residual 7.98e-12, acceleration difference 3.04e-11, probe
+difference 1.55e-15 and relative work/energy error 1.11e-15. These are small
+discrete checks; its iteration count must not be extrapolated to the full plate.
+The actual test's reports and arrays were retained before cleanup, without
+another solve, under `outputs/matrixfree-step-direct-reference-20261107`.
+
+The compact [evidence record](evidence/matrixfree-step-debug.json) binds source,
+drivers, tests, retained inputs/arrays, the initial direct-cap rejection,
+full-size stage/iteration progress and all monitor summaries. The full-size
+stop has no final independent residual or accepted state; partial iterate
+norms do not establish whether the CG target was reached before interruption.

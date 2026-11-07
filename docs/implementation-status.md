@@ -683,7 +683,11 @@ CPU temperature was unavailable; the run used CPU and performed no training.
 
 This is a cost/resource stop, not a numerical-accuracy failure or usable
 waveform. Affordable full-window propagation remains unproven. The modified
-tree's full native regression is pending; the prior 239-test result predates
-this increment. See matrixfree-step-cost.md and
-outputs/matrixfree-fullplate-first-step-20261107 for retained inputs/progress.
+tree's full native regression now passes all 243 tests without skips in
+445.27 monitored seconds at 775.54 MiB combined RSS, 46.0% system RAM and
+43 C system GPU temperature. A retained 1,671-coefficient P2 native step
+agrees with sparse acceleration to 3.04e-11 and direct Newmark's probe to
+1.55e-15, with true residual 7.98e-12. No full training ran. See
+matrixfree-step-cost.md, evidence/matrixfree-step-debug.json and
+outputs/matrixfree-fullplate-first-step-20261107 for retained evidence.
 

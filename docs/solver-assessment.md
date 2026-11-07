@@ -207,7 +207,26 @@ P1-P4 comparisons and direct/iterative transients agree, with checked zero-new-
 solve recovery. See evidence/matrixfree-debug.json for frozen sources, arrays,
 failed attempts and resource receipts. Coupled/calibrated PZT voltage and
 physical agreement remain open. The installed build still has CUDA disabled;
-no full training or full-size time propagation has run.
+no full training or accepted full-size time propagation has run.
+
+The [actual first-step probe](matrixfree-step-cost.md) now measures this
+limitation directly: the unchanged full-size P3 mesh, 125 ns step and checked
+3 mm-radius force disk reach the 180-second wall guard with fourteen completed
+CG iterations and no independently accepted state. Peak sampled combined RSS
+was 494.48 MiB. Iterations cost roughly 9-10 seconds; no final true residual is
+available. This cost stop does not establish a numerical-accuracy failure.
+It does rule out treating the memory-capacity result as proof of an affordable
+research-data workflow. All 243 native-enabled regression tests pass; the
+small first-step control independently agrees with sparse Newmark.
+
+A faster backend must preserve the full vector elastic and consistent-mass
+operators and repeat the same independent checks. CuPy's official
+[installation documentation](https://docs.cupy.dev/en/stable/install.html)
+describes Windows CUDA wheels and optional CUDA component wheels that avoid
+a system-wide toolkit installation. This is a possible route for a separately
+bounded GPU element-operator candidate, not an implemented or verified TRAXIS
+GPU solver. No package/toolkit/driver change or GPU computation occurred in
+this cost investigation. Scalar acoustics must not replace elastic plate waves.
 
 ## Primary sources
 
