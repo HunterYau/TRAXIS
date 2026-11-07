@@ -1,0 +1,12 @@
+{
+  "order": 3,
+  "mesh_backend": "cad",
+  "mesh_size_m": 0.002,
+  "mesh_algorithm": 10,
+  "mesh_optimization": "Netgen",
+  "substeps_per_output": 8,
+  "max_dofs": 20000,
+  "max_assembly_mib": 256,
+  "max_internal_steps": 5000,
+  "max_volume_error": 0.05
+}

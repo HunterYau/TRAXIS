@@ -144,6 +144,30 @@ def polynomial_energy_checks(system, material, lengths, transform, order):
             'maximum_rigid_relative_force': max(rigid)}
 
 
+def rigid_body_checks(system, material, volume_m3):
+    """Check free-body null forces and translation mass on the actual mesh."""
+    if not math.isfinite(volume_m3) or volume_m3 <= 0:
+        raise ValueError('rigid-body checks require positive mesh volume')
+    import ngsolve as ng
+    field = ng.GridFunction(system.space)
+    matrix_norm = float(np.linalg.norm(system.stiffness.data))
+    forces, masses = [], []
+    for i, coefficients in enumerate(((1., 0., 0.), (0., 1., 0.), (0., 0., 1.),
+                                      (0., -ng.z, ng.y), (ng.z, 0., -ng.x), (-ng.y, ng.x, 0.))):
+        field.vec[:] = 0.
+        for component, value in enumerate(coefficients):
+            field.components[component].Set(ng.CF(value))
+        values = field.vec.FV().NumPy()
+        forces.append(float(np.linalg.norm(system.stiffness @ values)
+            / max(matrix_norm*np.linalg.norm(values), 1e-30)))
+        if i < 3:
+            masses.append(abs(float(values @ (system.mass @ values))/(material.density_kg_m3*volume_m3)-1))
+    if max(forces) > 1e-10 or max(masses) > 1e-10:
+        raise ArithmeticError('native free-body force or translation-mass check failed')
+    return {'six_rigid_relative_forces': forces, 'translation_mass_relative_errors': masses,
+        'maximum_rigid_relative_force': max(forces), 'maximum_translation_mass_relative_error': max(masses)}
+
+
 def nodal_evaluation_transform(system, points):
     """Map component-major H1 coefficients to node-major point values."""
     import ngsolve as ng

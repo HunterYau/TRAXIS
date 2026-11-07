@@ -41,6 +41,8 @@ class HighOrderDirectionalSettings:
             positive(name, getattr(self, name))
         if type(self.max_total_solves) is not int or not 1 <= self.max_total_solves <= 7 or not isinstance(self.reference, HighOrderWaveSettings):
             raise ValueError('choose bounded high-order settings and at most seven solves')
+        if self.reference.mesh_backend != 'structured':
+            raise ValueError('directional cell-count refinements require structured intact geometry')
 
     @classmethod
     def from_dict(cls, values):
@@ -62,13 +64,14 @@ def _checked_case(scenario, settings, case, guard, plan, cache_dir, runtime):
         raise ValueError('high-order source changed during the frozen study')
     action = plan['actions'][0]
     values, measured = run_highorder_waveform_case(scenario, settings, case, guard,
-        transmitter=action['transmitter'], frequency_hz=action['frequency_hz'], cache_dir=cache_dir)
+        transmitter=action['transmitter'], frequency_hz=action['frequency_hz'], cache_dir=cache_dir,
+        state=plan.get('state', 'intact'))
     case_plan = json.loads((case / 'case-plan.json').read_text())
     runtime = case_plan['runtime'] if runtime is None else runtime
     if (canonical_hash({k: v for k, v in case_plan.items() if k != 'fingerprint'}) != case_plan['fingerprint']
             or runtime != case_plan['runtime'] or case_plan['source_sha256'] != plan['source_sha256']
             or case_plan['actions'] != plan['actions'] or canonical_hash(case_plan['scenario']) != canonical_hash(plan['scenario'])
-            or canonical_hash(case_plan['settings']) != canonical_hash(asdict(settings)) or case_plan['state'] != 'intact'
+            or canonical_hash(case_plan['settings']) != canonical_hash(asdict(settings)) or case_plan['state'] != plan.get('state', 'intact')
             or not measured['completed'] or measured['plan_fingerprint'] != case_plan['fingerprint']):
         raise ValueError('high-order case changed its frozen source/runtime/scenario/settings/actions')
     path = case / 'solver-traces.npz'
@@ -78,12 +81,15 @@ def _checked_case(scenario, settings, case, guard, plan, cache_dir, runtime):
     if not np.array_equal(saved, values):
         raise ValueError('returned high-order traces disagree with saved comparison arrays')
     row = {'directory': case.name, 'substeps_per_output': settings.substeps_per_output,
+        'mesh_size_m': settings.mesh_size_m, 'mesh_backend': settings.mesh_backend,
         **{k: measured[k] for k in ('order', 'cells', 'dofs', 'dt_internal_s', 'internal_steps', 'linear_mesh',
             'geometry_load_fingerprint', 'geometry_load_sha256', 'cache_hit', 'forward_solves', 'native_directory',
             'worker_report_sha256', 'stiffness_nonzeros', 'mass_nonzeros', 'lu_factor_nonzeros',
             'maximum_relative_linear_residual', 'postburst_relative_energy_range', 'wall_seconds')},
         'case_plan_sha256': sha256_file(case / 'case-plan.json'), 'case_report_sha256': sha256_file(case / 'waveform-case.json'),
         'float64_traces_sha256': measured['trace_sha256']}
+    if 'mesh_geometry' in measured:
+        row['mesh_geometry'] = measured['mesh_geometry']
     return values, row, runtime
 
 

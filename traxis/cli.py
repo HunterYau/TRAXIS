@@ -98,6 +98,17 @@ def main() -> None:
     p2.add_argument("--output", type=Path, required=True)
     p2.add_argument("--max-seconds", type=float, default=60)
     p2.add_argument("--max-rss-mib", type=float, default=512)
+    highorder_wave = sub.add_parser('highorder-waveforms', help='one bounded intact or CAD-recessed mechanical group; no training-data acceptance')
+    highorder_wave.add_argument('--plan', type=Path, required=True)
+    highorder_wave.add_argument('--index', type=int, default=0)
+    highorder_wave.add_argument('--settings', type=Path, required=True)
+    highorder_wave.add_argument('--transmitter', type=int, default=0)
+    highorder_wave.add_argument('--frequency-khz', type=float)
+    highorder_wave.add_argument('--state', choices=['intact', 'current'], default='intact')
+    highorder_wave.add_argument('--cache-dir', type=Path)
+    highorder_wave.add_argument('--output', type=Path, required=True)
+    highorder_wave.add_argument('--max-seconds', type=float, default=180)
+    highorder_wave.add_argument('--max-rss-mib', type=float, default=1024)
     highorder = sub.add_parser('verify-highorder-reference', help='independent P1/P2 assembly and P1-P4 exact-energy checks; no wave acceptance')
     highorder.add_argument('--elmer-home', type=Path, required=True)
     highorder.add_argument('--output', type=Path, required=True)
@@ -144,22 +155,29 @@ def main() -> None:
             parser.exit(1, f'High-order reference stopped: {type(exc).__name__}: {exc}\n')
         if not result['passed']:
             parser.exit(2, 'High-order discrete operator screen failed; inspect highorder-report.json.\n')
-    elif args.command == "reference-waveforms":
-        from traxis.elmer_waveforms import ElmerWaveSettings, run_elmer_waveform_case
+    elif args.command in ('reference-waveforms', 'highorder-waveforms'):
         from traxis.scenarios import load_scenario_plan
-        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        highorder_case = args.command == 'highorder-waveforms'
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib,
+            max_system_memory_percent=85, min_available_mib=2048))
         try:
             scenarios = load_scenario_plan(args.plan)
             if not 0 <= args.index < len(scenarios) or args.settings.stat().st_size > 1024**2:
                 raise ValueError('invalid scenario index or oversized settings')
-            settings = ElmerWaveSettings(**json.loads(args.settings.read_text(encoding='utf-8-sig')))
-            _, result = run_elmer_waveform_case(scenarios[args.index], settings, args.elmer_home, args.output, guard,
-                transmitter=args.transmitter, frequency_hz=args.frequency_khz * 1000 if args.frequency_khz is not None else None,
-                state=args.state, cache_dir=args.cache_dir)
+            values = json.loads(args.settings.read_text(encoding='utf-8-sig'))
+            options = {'transmitter': args.transmitter,
+                'frequency_hz': args.frequency_khz*1000 if args.frequency_khz is not None else None,
+                'state': args.state, 'cache_dir': args.cache_dir}
+            if highorder_case:
+                from traxis.highorder_waveforms import HighOrderWaveSettings, run_highorder_waveform_case
+                _, result = run_highorder_waveform_case(scenarios[args.index], HighOrderWaveSettings(**values), args.output, guard, **options)
+            else:
+                from traxis.elmer_waveforms import ElmerWaveSettings, run_elmer_waveform_case
+                _, result = run_elmer_waveform_case(scenarios[args.index], ElmerWaveSettings(**values), args.elmer_home, args.output, guard, **options)
             print(json.dumps({k: result[k] for k in ('completed', 'ready_for_training_data', 'forward_solves', 'cache_hit',
-                                                     'quadratic_nodes', 'dt_internal_s', 'wall_seconds')}, indent=2))
+                'dt_internal_s', 'wall_seconds', *(['dofs', 'state'] if highorder_case else ['quadratic_nodes']))}, indent=2))
         except Exception as exc:
-            parser.exit(1, f'P2 waveform reference stopped: {type(exc).__name__}: {exc}\n')
+            parser.exit(1, f'Waveform reference stopped: {type(exc).__name__}: {exc}\n')
     elif args.command == "verify-quadratic-patches":
         from traxis.quadratic_patch_verification import verify_quadratic_patches
         guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
@@ -211,15 +229,16 @@ def main() -> None:
         if not result['passed']:
             parser.exit(2, "Independent operator check failed; inspect elmer-report.json.\n")
     elif args.command in ("check-waveforms", "plot-waveforms", "check-reference-waveforms", "plot-reference-waveforms",
-                          'check-directional-waveforms', 'plot-directional-waveforms', 'check-highorder-waveforms'):
+                          'check-directional-waveforms', 'plot-directional-waveforms', 'check-highorder-waveforms', 'check-highorder-cad-waveforms'):
         from traxis.waveform_commands import run_waveform_command
-        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib))
+        guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds, max_rss_mib=args.max_rss_mib,
+            max_system_memory_percent=85, min_available_mib=2048))
         try:
             result = run_waveform_command(args, guard)
             print(json.dumps(result, indent=2, allow_nan=False))
         except Exception as exc:
             parser.exit(1, f"Waveform check stopped: {type(exc).__name__}: {exc}\n")
-        if args.command in ("check-waveforms", "check-reference-waveforms", 'check-directional-waveforms', 'check-highorder-waveforms') and not result["discretization_screen_passed"]:
+        if args.command in ("check-waveforms", "check-reference-waveforms", 'check-directional-waveforms', 'check-highorder-waveforms', 'check-highorder-cad-waveforms') and not result["discretization_screen_passed"]:
             parser.exit(2, "Mesh/time discrepancy screen failed; banks remain pilot-only.\n")
     elif args.command in ("plan-study", "advance-study", "freeze-study"):
         from traxis.study_commands import run_study_command

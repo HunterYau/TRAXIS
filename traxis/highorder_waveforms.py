@@ -1,8 +1,9 @@
-"""Bounded, isolated higher-order mechanical pulses on exact intact boxes."""
+"""Bounded higher-order mechanical pulses on intact and CAD-recessed plates."""
 
 import argparse
 from dataclasses import asdict, dataclass
 import json
+from importlib import metadata
 import math
 import os
 from pathlib import Path
@@ -14,13 +15,14 @@ import zipfile
 import numpy as np
 
 from traxis.acquisition import action_catalog
+from traxis.cad_mesh import cad_mesh
 from traxis.config import positive
 from traxis.elmer_operators import save_operators
 from traxis.elmer_plate_refinement import reference_source_hashes
 from traxis.elmer_reference import run_monitored
 from traxis.fem import tone_burst
 from traxis.geometry import estimate_mesh, structured_mesh
-from traxis.highorder import assemble_highorder
+from traxis.highorder import assemble_highorder, rigid_body_checks
 from traxis.highorder_patches import highorder_surface_patch, patch_polynomial_moments
 from traxis.highorder_verification import distribution_identity
 from traxis.implicit_fem import implicit_simulate
@@ -37,6 +39,12 @@ class HighOrderWaveSettings:
     max_dofs: int = 20000
     max_assembly_mib: float = 256
     max_internal_steps: int = 5000
+    mesh_backend: str = 'structured'
+    mesh_size_m: float = .003
+    mesh_algorithm: int = 10
+    mesh_optimization: str = 'Netgen'
+    max_tetrahedra: int = 40000
+    max_volume_error: float = .05
 
     def __post_init__(self):
         object.__setattr__(self, 'cells', tuple(self.cells))
@@ -50,21 +58,40 @@ class HighOrderWaveSettings:
         positive('max assembly MiB', self.max_assembly_mib)
         if self.max_assembly_mib > 512:
             raise ValueError('high-order assembly screen must not exceed 512 MiB')
+        if self.mesh_backend not in ('structured', 'cad'):
+            raise ValueError('choose structured or CAD high-order geometry')
+        positive('CAD mesh size', self.mesh_size_m)
+        positive('removed-volume error limit', self.max_volume_error)
+        if self.max_volume_error > 1:
+            raise ValueError('removed-volume error limit must not exceed one')
+        if type(self.max_tetrahedra) is not int or not 1 <= self.max_tetrahedra <= 40000:
+            raise ValueError('high-order tetrahedron limit must lie in [1,40000]')
+        if (type(self.mesh_algorithm) is not int or self.mesh_algorithm not in (1, 4, 10)
+                or self.mesh_optimization not in ('default', 'Netgen')):
+            raise ValueError('invalid CAD algorithm or optimizer')
 
 
 def screen_highorder_reference(settings):
+    if settings.mesh_backend == 'cad':
+        # Gmsh screens geometry cost before meshing; actual topological H1
+        # counts and assembly storage are checked before NGSolve allocation.
+        return {'mesh_backend': 'cad', 'actual_topology_screen_required': True}
     estimate = estimate_mesh(settings.cells)
     dofs = 3*math.prod(settings.order*n+1 for n in settings.cells)
     local = 3*math.comb(settings.order+3, 3)
     assembly_mib = estimate.tetrahedra_upper*local**2*32/1024**2
-    if (dofs > settings.max_dofs or estimate.nodes_upper > 20000 or estimate.tetrahedra_upper > 40000
+    if (dofs > settings.max_dofs or estimate.nodes_upper > 20000 or estimate.tetrahedra_upper > settings.max_tetrahedra
             or assembly_mib > settings.max_assembly_mib or estimate.assembly_bytes_upper > settings.max_assembly_mib*1024**2):
         raise MemoryError('structured high-order degree/element/assembly screen exceeds its limits')
     return {'vector_dofs': dofs, 'vertices': estimate.nodes_upper, 'tetrahedra': estimate.tetrahedra_upper,
         'assembly_screen_mib': assembly_mib}
 
 
-def reference_actions(scenario, settings, transmitter=0, frequency_hz=None):
+def reference_actions(scenario, settings, transmitter=0, frequency_hz=None, *, state='intact'):
+    if state not in ('intact', 'current'):
+        raise ValueError('choose intact or current high-order geometry')
+    if state == 'current' and scenario.recesses and settings.mesh_backend != 'cad':
+        raise ValueError('recessed high-order geometry requires the CAD mesh backend')
     if scenario.nuisance.support != 'free' or scenario.nuisance.relative_noise_std or scenario.nuisance.absolute_noise_std_m:
         raise ValueError('high-order numerical references require a free plate and zero stochastic noise')
     if type(transmitter) is not int or not 0 <= transmitter < scenario.acquisition.sensor_count:
@@ -78,6 +105,47 @@ def reference_actions(scenario, settings, transmitter=0, frequency_hz=None):
         raise ValueError('high-order reference exceeds its internal-step limit before meshing')
     screen_highorder_reference(settings)
     return actions
+
+
+def waveform_runtime(settings, guard=None):
+    runtime = distribution_identity(guard)
+    if settings.mesh_backend == 'cad':
+        distribution = metadata.distribution('gmsh')
+        files = {}
+        for entry in distribution.files or ():
+            if entry.suffix.lower() in ('.dll', '.so', '.dylib') or entry.name == 'gmsh.py':
+                if guard:
+                    guard.check()
+                files[str(entry).replace('\\', '/')] = sha256_file(distribution.locate_file(entry))
+        if not files or not any(Path(name).suffix.lower() in ('.dll', '.so', '.dylib') for name in files):
+            raise ValueError('Gmsh runtime must identify its native library')
+        runtime['gmsh'] = {'version': distribution.version, 'kernel_sha256': files}
+    return runtime
+
+
+def reference_mesh(scenario, settings, state, guard):
+    if state not in ('intact', 'current'):
+        raise ValueError('choose intact or current high-order geometry')
+    recesses = scenario.recesses if state == 'current' else ()
+    if settings.mesh_backend == 'structured':
+        if recesses:
+            raise ValueError('structured high-order meshes support intact geometry only')
+        mesh = structured_mesh(scenario.plate, settings.cells, max_assembly_bytes=settings.max_assembly_mib*1024**2)
+        report = {'backend': 'structured', 'cells': list(settings.cells),
+            'cad_retained_volume_m3': scenario.plate.width_m*scenario.plate.height_m*scenario.plate.thickness_m,
+            'removed_volume_relative_error': None}
+    else:
+        mesh, report = cad_mesh(scenario.plate, recesses, settings.mesh_size_m,
+            max_assembly_mib=settings.max_assembly_mib, max_tetrahedra=settings.max_tetrahedra,
+            seed=scenario.geometry_seed, optimization=settings.mesh_optimization,
+            algorithm=settings.mesh_algorithm, guard=guard)
+    if len(mesh.tetrahedra) > settings.max_tetrahedra:
+        raise MemoryError('actual high-order mesh exceeds its tetrahedron limit')
+    if recesses and (report['removed_volume_relative_error'] is None
+            or report['removed_volume_relative_error'] > settings.max_volume_error):
+        raise ValueError('meshed recess volume exceeds the declared geometric error limit')
+    report['maximum_allowed_removed_volume_error'] = settings.max_volume_error
+    return mesh, report
 
 
 def _load_traces(path, samples, records, dt):
@@ -99,21 +167,21 @@ def run_native_job(path, output, guard):
     job = json.loads(path.read_text())
     if canonical_hash({k: v for k, v in job.items() if k != 'fingerprint'}) != job['fingerprint']:
         raise ValueError('high-order waveform job changed')
-    if (set(job) != {'kind', 'scenario', 'settings', 'transmitter', 'frequency_hz', 'source_sha256', 'runtime', 'fingerprint'}
-            or job['kind'] != 'highorder_intact_unit_force_job' or reference_source_hashes() != job['source_sha256']):
+    if (set(job) != {'kind', 'scenario', 'settings', 'state', 'transmitter', 'frequency_hz', 'source_sha256', 'runtime', 'fingerprint'}
+            or job['kind'] != 'highorder_unit_force_job' or reference_source_hashes() != job['source_sha256']):
         raise ValueError('high-order waveform job is missing bindings or its source changed')
     scenario, settings = Scenario.from_dict(job['scenario']), HighOrderWaveSettings(**job['settings'])
-    actions = reference_actions(scenario, settings, job['transmitter'], job['frequency_hz'])
+    actions = reference_actions(scenario, settings, job['transmitter'], job['frequency_hz'], state=job['state'])
     if not output.is_relative_to(path.parent) or (output.exists() and any(output.iterdir())):
         raise ValueError('high-order waveform output must be new and within its job directory')
-    if distribution_identity(guard) != job['runtime']:
+    if waveform_runtime(settings, guard) != job['runtime']:
         raise ValueError('high-order native runtime changed')
     output.mkdir(parents=True, exist_ok=True)
-    report = {'kind': 'highorder_intact_mechanical_worker', 'completed': False, 'ready_for_training_data': False,
+    report = {'kind': 'highorder_mechanical_worker', 'state': job['state'], 'completed': False, 'ready_for_training_data': False,
         'training_updates': 0, 'job_fingerprint': job['fingerprint']}
     started = time.perf_counter()
     try:
-        mesh = structured_mesh(scenario.plate, settings.cells, max_assembly_bytes=settings.max_assembly_mib*1024**2)
+        mesh, mesh_report = reference_mesh(scenario, settings, job['state'], guard)
         system = assemble_highorder(mesh, scenario.nuisance.material, settings.order, guard,
             max_dofs=settings.max_dofs, max_assembly_mib=settings.max_assembly_mib)
         atomic_write(output / 'mesh.npz', lambda stream: np.savez_compressed(stream, points_m=mesh.points_m, tetrahedra=mesh.tetrahedra))
@@ -135,9 +203,10 @@ def run_native_job(path, output, guard):
         geometry = {name: sha256_file(output / name) for name in ('mesh.npz', 'loads-probes.npz', 'operators.npz')}
         corners = mesh.points_m[mesh.tetrahedra]
         volume = float(abs(np.linalg.det(corners[:,1:]-corners[:,:1])).sum()/6)
-        expected_volume = scenario.plate.width_m*scenario.plate.height_m*scenario.plate.thickness_m
-        if abs(volume/expected_volume-1) > 1e-12:
+        expected_volume = mesh_report['cad_retained_volume_m3']
+        if (not scenario.recesses or job['state'] == 'intact') and abs(volume/expected_volume-1) > 1e-12:
             raise ArithmeticError('high-order tetrahedra lost the intact box volume')
+        rigid = rigid_body_checks(system, scenario.nuisance.material, volume)
         maximum_edge = max(float(np.linalg.norm(corners[:,i]-corners[:,j], axis=1).max())
             for i in range(4) for j in range(i))
         assembly_seconds = time.perf_counter()-started
@@ -154,12 +223,15 @@ def run_native_job(path, output, guard):
         energy_range = float(np.ptp(after)/abs(after.mean())) if len(after) > 1 and after.mean() else None
         if energy_range is not None and energy_range > 1e-8:
             raise ArithmeticError('high-order postburst energy drift exceeds tolerance')
-        report.update({'completed': True, 'order': settings.order, 'cells': settings.cells, 'dofs': system.space.ndof,
+        report.update({'completed': True, 'order': settings.order,
+            'cells': settings.cells if settings.mesh_backend == 'structured' else None, 'dofs': system.space.ndof,
+            'mesh_geometry': mesh_report, 'rigid_body_checks': rigid,
             'dt_internal_s': dt, 'internal_steps': steps, 'assembly_seconds': assembly_seconds,
             'stiffness_nonzeros': system.stiffness.nnz, 'mass_nonzeros': system.mass.nnz, 'lu_factor_nonzeros': solved.factor_nonzeros,
             'maximum_relative_linear_residual': solved.maximum_relative_residual, 'postburst_relative_energy_range': energy_range,
             'geometry_load_sha256': geometry, 'geometry_load_fingerprint': canonical_hash(geometry), 'patches': patches,
-            'linear_mesh': {'cells': settings.cells, 'nodes': len(mesh.points_m), 'tetrahedra': len(mesh.tetrahedra),
+            'linear_mesh': {'cells': settings.cells if settings.mesh_backend == 'structured' else None,
+                'nodes': len(mesh.points_m), 'tetrahedra': len(mesh.tetrahedra),
                 'maximum_edge_m': maximum_edge, 'maximum_element_z_span_m': float(np.ptp(corners[:,:,2], axis=1).max()),
                 'retained_volume_relative_error': abs(volume/expected_volume-1)},
             'artifact_sha256': {name: sha256_file(output / name) for name in ('mesh.npz', 'loads-probes.npz', 'operators.npz', 'traces.npz', 'energy.npz')}})
@@ -187,6 +259,7 @@ def _checked_worker(directory, fingerprint):
     report = json.loads(path.read_text())
     if (canonical_hash({k: v for k, v in report.items() if k != 'fingerprint'}) != report['fingerprint']
             or not report['completed'] or report['job_fingerprint'] != fingerprint
+            or report['state'] != job['state']
             or set(report['artifact_sha256']) != {'mesh.npz', 'loads-probes.npz', 'operators.npz', 'traces.npz', 'energy.npz'}):
         raise ValueError('high-order worker receipt is incomplete or changed')
     for name, digest in report['artifact_sha256'].items():
@@ -198,14 +271,14 @@ def _checked_worker(directory, fingerprint):
     return report
 
 
-def run_highorder_waveform_case(scenario, settings, output, guard, *, transmitter=0, frequency_hz=None, cache_dir=None):
-    actions = reference_actions(scenario, settings, transmitter, frequency_hz)
+def run_highorder_waveform_case(scenario, settings, output, guard, *, transmitter=0, frequency_hz=None, cache_dir=None, state='intact'):
+    actions = reference_actions(scenario, settings, transmitter, frequency_hz, state=state)
     output = Path(output).resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError('high-order waveform case needs a new output directory')
     output.mkdir(parents=True, exist_ok=True)
-    source, runtime = reference_source_hashes(), distribution_identity(guard)
-    job = {'kind': 'highorder_intact_unit_force_job', 'scenario': asdict(scenario), 'settings': asdict(settings),
+    source, runtime = reference_source_hashes(), waveform_runtime(settings, guard)
+    job = {'kind': 'highorder_unit_force_job', 'scenario': asdict(scenario), 'settings': asdict(settings), 'state': state,
         'transmitter': transmitter, 'frequency_hz': actions[0].frequency_hz, 'source_sha256': source, 'runtime': runtime}
     job['fingerprint'] = canonical_hash(job)
     def snapshot(stream):
@@ -215,9 +288,9 @@ def run_highorder_waveform_case(scenario, settings, output, guard, *, transmitte
                 info.compress_type = zipfile.ZIP_DEFLATED
                 archive.writestr(info, (Path(__file__).parent / name).read_bytes())
     atomic_write(output / 'source-snapshot.zip', snapshot)
-    plan = {**job, 'kind': 'highorder_intact_waveform_case', 'actions': [asdict(a) for a in actions], 'state': 'intact',
+    plan = {**job, 'kind': 'highorder_waveform_case', 'actions': [asdict(a) for a in actions],
         'source_snapshot_sha256': sha256_file(output / 'source-snapshot.zip'), 'ready_for_training_data': False,
-        'scope': 'Intact straight-tetrahedron mechanical reference; no PZT voltage drive or physical acceptance.'}
+        'scope': 'Straight-tetrahedron mechanical reference; no PZT voltage drive or physical acceptance.'}
     plan['fingerprint'] = canonical_hash({k: v for k, v in plan.items() if k != 'fingerprint'})
     write_json(output / 'case-plan.json', plan)
     write_json(output / 'worker-job.json', job)
@@ -254,15 +327,18 @@ def run_highorder_waveform_case(scenario, settings, output, guard, *, transmitte
         measured = _checked_worker(attempt / 'native', job['fingerprint'])
         raw = _load_traces(attempt / 'native/traces.npz', scenario.acquisition.samples, len(actions), scenario.acquisition.sample_dt_s)
         gain = np.array([scenario.nuisance.peak_force_n*scenario.nuisance.sensor_gains[transmitter]*scenario.nuisance.sensor_gains[a.receiver] for a in actions])
+        if state == 'current':
+            gain *= scenario.nuisance.current_gain_drift[transmitter]*np.array([scenario.nuisance.current_gain_drift[a.receiver] for a in actions])
         values = raw*gain[:,None]
         atomic_write(output / 'solver-traces.npz', lambda stream: np.savez_compressed(stream,
             time_s=np.arange(scenario.acquisition.samples)*scenario.acquisition.sample_dt_s, displacement_m=values))
-        if reference_source_hashes() != source or distribution_identity(guard) != runtime:
+        if reference_source_hashes() != source or waveform_runtime(settings, guard) != runtime:
             raise ValueError('high-order source/runtime changed during the frozen case')
         report.update({'completed': True, 'cache_hit': hit, 'forward_solves': int(not hit), 'native_directory': str(attempt / 'native'),
             'worker_report_sha256': sha256_file(attempt / 'native/worker-report.json'),
-            'trace_sha256': sha256_file(output / 'solver-traces.npz'), 'gain_application': 'Unit-force raw probes multiplied by declared drive/coupling gains; intact state, zero noise.',
-            **{k: measured[k] for k in ('order', 'cells', 'dofs', 'dt_internal_s', 'internal_steps', 'linear_mesh', 'patches',
+            'trace_sha256': sha256_file(output / 'solver-traces.npz'), 'state': state,
+            'gain_application': 'Unit-force raw probes multiplied by declared drive/coupling gains and current-state drift where applicable; zero noise.',
+            **{k: measured[k] for k in ('order', 'cells', 'dofs', 'mesh_geometry', 'rigid_body_checks', 'dt_internal_s', 'internal_steps', 'linear_mesh', 'patches',
                 'geometry_load_sha256', 'geometry_load_fingerprint', 'stiffness_nonzeros', 'mass_nonzeros', 'lu_factor_nonzeros',
                 'maximum_relative_linear_residual', 'postburst_relative_energy_range')}})
     except Exception as exc:

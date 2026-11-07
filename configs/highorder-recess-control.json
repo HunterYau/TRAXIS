@@ -1,0 +1,17 @@
+{
+  "sampling": {
+    "count": 1, "seed": 2026, "intact_fraction": 0.0,
+    "diameters_m": [0.008], "depths_m": [0.0015],
+    "edge_clearance_m": 0.0005, "sensor_clearance_m": 0.0,
+    "young_relative_range": 0.0, "density_relative_range": 0.0,
+    "poisson_absolute_range": 0.0, "coupling_relative_range": 0.0,
+    "drift_relative_range": 0.0, "force_relative_range": 0.0,
+    "relative_noise_std": 0.0
+  },
+  "plate": {"width_m": 0.02, "height_m": 0.02, "thickness_m": 0.003},
+  "acquisition": {
+    "sensor_count": 8, "inset_m": 0.004, "patch_radius_m": 0.0015,
+    "frequencies_hz": [100000], "reciprocal": true,
+    "sample_dt_s": 0.0000005, "samples": 128, "cycles": 2
+  }
+}

@@ -40,6 +40,17 @@ def add_waveform_commands(sub):
     highorder.add_argument('--output', type=Path, required=True)
     highorder.add_argument('--max-seconds', type=float, default=600)
     highorder.add_argument('--max-rss-mib', type=float, default=1024)
+    cad = sub.add_parser('check-highorder-cad-waveforms', help='CAD high-order mesh/time discrepancies for intact or recessed geometry')
+    cad.add_argument('--plan', type=Path, required=True)
+    cad.add_argument('--index', type=int, default=0)
+    cad.add_argument('--settings', type=Path, required=True)
+    cad.add_argument('--transmitter', type=int, default=0)
+    cad.add_argument('--frequency-khz', type=float)
+    cad.add_argument('--state', choices=['intact', 'current'], default='current')
+    cad.add_argument('--cache-dir', type=Path)
+    cad.add_argument('--output', type=Path, required=True)
+    cad.add_argument('--max-seconds', type=float, default=600)
+    cad.add_argument('--max-rss-mib', type=float, default=1024)
     plot = sub.add_parser("plot-waveforms", help="plot checked float64 refinement probes without new solves")
     plot.add_argument("--sweep", type=Path, required=True)
     plot.add_argument("--records", type=int, nargs="+", default=[0, 12])
@@ -72,7 +83,14 @@ def run_waveform_command(args, guard):
     if args.settings.stat().st_size > 1024**2:
         raise MemoryError("refinement settings exceed 1 MiB")
     values = json.loads(args.settings.read_text(encoding='utf-8-sig'))
-    if args.command == 'check-highorder-waveforms':
+    if args.command == 'check-highorder-cad-waveforms':
+        from traxis.highorder_cad_refinement import HighOrderCADRefinementSettings, run_highorder_cad_refinement
+        settings = HighOrderCADRefinementSettings.from_dict(values)
+        result = run_highorder_cad_refinement(cases[args.index], settings, args.output, guard,
+            transmitter=args.transmitter, frequency_hz=args.frequency_khz*1000 if args.frequency_khz is not None else None,
+            state=args.state, cache_dir=args.cache_dir)
+        filename = 'refinement-report.json'
+    elif args.command == 'check-highorder-waveforms':
         from traxis.highorder_directional import HighOrderDirectionalSettings, run_highorder_directional
         settings = HighOrderDirectionalSettings.from_dict(values)
         result = run_highorder_directional(cases[args.index], settings, args.output, guard,

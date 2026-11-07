@@ -132,6 +132,9 @@ in-plane, thickness and time refinements under an outer process-tree guard.
 The finer P3 intact control passes its fixed discrepancy screens; the P4
 in-plane screen remains failed. These checks cover a 40 mm mechanical control,
 with full-size/recess/PZT/physical validation still required.
+The [CAD high-order reference](docs/highorder-recesses.md) now distinguishes
+intact/current geometry, meshes backside recesses, and exposes bounded
+single-group and mesh/time refinement commands.
 The [research readiness checklist](docs/research-readiness.md) maps the
 confirmed plan to existing evidence and remaining validation, and describes
 the monitored regression command.

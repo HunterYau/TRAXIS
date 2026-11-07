@@ -1,4 +1,4 @@
-"""Run the higher-order intact study with an outer process-tree guard."""
+"""Run a higher-order directional or CAD study under a process-tree guard."""
 
 import argparse
 import os
@@ -14,6 +14,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('plan', 'settings', 'output', 'monitor-output', 'cache-dir'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--cad', action='store_true', help='use CAD mesh-size/time refinement')
+    parser.add_argument('--index', type=int, default=0)
+    parser.add_argument('--state', choices=['intact', 'current'], default='current', help='geometry state for CAD studies')
     parser.add_argument('--max-seconds', type=float, default=600)
     parser.add_argument('--max-rss-mib', type=float, default=1024)
     parser.add_argument('--max-system-memory-percent', type=float, default=85)
@@ -24,9 +27,11 @@ def main():
         parser.error('monitor output needs a new directory')
     guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds+10, max_rss_mib=args.max_rss_mib,
         max_system_memory_percent=args.max_system_memory_percent, min_available_mib=args.min_available_mib))
-    command = [sys.executable, '-m', 'traxis', 'check-highorder-waveforms', '--plan', str(args.plan.resolve()),
+    command = [sys.executable, '-m', 'traxis', 'check-highorder-cad-waveforms' if args.cad else 'check-highorder-waveforms', '--plan', str(args.plan.resolve()),
         '--settings', str(args.settings.resolve()), '--output', str(args.output.resolve()), '--cache-dir', str(args.cache_dir.resolve()),
-        '--max-seconds', str(args.max_seconds), '--max-rss-mib', str(args.max_rss_mib)]
+        '--index', str(args.index), '--max-seconds', str(args.max_seconds), '--max-rss-mib', str(args.max_rss_mib)]
+    if args.cad:
+        command += ['--state', args.state]
     monitor.mkdir(parents=True, exist_ok=True)
     write_json(monitor / 'invocation.json', {'command': command, 'outer_resource_limits': guard.report()['limits'],
         'wrapper_source_sha256': sha256_file(Path(__file__)), 'ready_for_training_data': False})
