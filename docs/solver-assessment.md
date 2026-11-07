@@ -23,12 +23,12 @@ experiment framework rather than a full production multiphysics package.
 | Candidate | Fit | Important limit |
 | --- | --- | --- |
 | COMSOL Elastic Waves / Piezoelectric Waves, Time Explicit | Preferred reference; explicit high-order elastic propagation and electrostatic coupling; documented plate NDT example | Commercial access and exact module entitlement must be checked; full-plate cost remains to be measured |
-| Pogo | Promising alternative for GPU explicit linear elastodynamics and large waveform banks | The original paper establishes the elastic solver; current distribution, maintenance, Windows support, and bonded-PZT workflow have not been verified here |
+| Pogo | GPU elastodynamic solver; Imperial documents NVIDIA hardware and Windows/Linux support | Current installer/license access, project-specific performance and bonded-PZT voltage workflow remain unverified |
 | Ansys coupled-field transient piezoelectric analysis | Credible alternative if already available through the school | Solver choice, mesh and performance need a project-specific pilot; do not assume every Ansys product includes the same features |
 | OnScale | Documented time-domain electromechanical transducer modeling | Sources describe capability, not confirmed current account availability or price |
 | Local linear-tetrahedron FEM | Transparent regression reference; traction-free recesses and finite boundaries; optional CAD-conforming mesh; no extra wave-solver license | Low-order elements need fine meshes; no adhesive, PZT domain, electrodes, electrical loading, or voltage readout |
 | Elmer FEM | Free independent elastic reference; portable Windows release and tiny 3D stiffness/consistent-mass checks actually tested | Full-plate transient/high-order cost, spatial convergence and bonded-PZT voltage workflow remain unverified |
-| NGSolve | P1-P4 assembly and circular footprints checked on Windows; corrected native P2 transients agree; finer P3 40 mm intact control passes fixed mesh/time discrepancy screens | Full-size/recess convergence, PZT coupling, physical calibration and production cost remain unverified |
+| NGSolve | P1-P4 mechanical checks, corrected native P2 agreement, and passing small intact/paired-recess discrepancy screens | Installed Windows build has CUDA disabled; full-size capacity, PZT voltage coupling and physical calibration remain unverified |
 | Scalar acoustic / straight-ray synthetic data | Useful for plumbing and deliberate mismatch experiments only | Cannot establish quantitative thickness reconstruction for dispersive elastic plate waves |
 
 The Pogo paper reports large speedups in its own benchmark; these are not
@@ -141,6 +141,48 @@ quadratic mass reference. Earlier P2 numbers on this page are historical
 and need regeneration for the corrected formulation; see the
 [quadrature correction](elmer-mass-quadrature.md). This fixes an assembly
 configuration error without establishing wave/PZT/physical acceptance.
+
+## Full-size decision update, November 7, 2026
+
+The [paired CAD control](highorder-recesses.md) passes its declared current
+and current-minus-intact mesh/time screens on a 20 mm plate. A separate
+500 mm geometry-only screen rejects the current local element/assembly
+budget before creating a mesh. This establishes a limit of the bounded worker
+configuration, not an intrinsic inability of NGSolve to model the full plate.
+No full-size performance number or accepted training bank is available.
+
+A guarded inspection of this installed NGSolve 6.2.2606 build reports
+`USE_CUDA=False`. A GPU path must not be advertised for this environment.
+NGSolve's official [matrix-free tutorial](https://docu.ngsolve.org/latest/i-tutorials/unit-2.11-matrixfree/matrixfree.html)
+and [explicit DG wave example](https://docu.ngsolve.org/latest/i-tutorials/unit-5.5-cuda/wave_cuda.html)
+document candidates for reducing matrix storage. The latter is a scalar
+first-order wave example, not a validated elastic plate/PZT implementation;
+it cannot substitute for vector elasticity. The current online tutorial
+version also differs from the pinned local build. Any local extension must
+retain exact-field, traction, mode-dispersion, mesh/time and resource checks
+before comparing physical plate results.
+
+COMSOL remains the preferred coupled reference if accessible. Its
+[documented Piezoelectric Waves interface](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_intro.04.14.html)
+couples transient elasticity and electrostatics. This is capability evidence,
+not a measured project benchmark or confirmed module entitlement. GPU support
+documented for pressure acoustics must not be assumed to cover this coupled
+elastic application. No license purchase, installation or commercial solve
+has occurred in this work.
+
+[Imperial's Pogo project page](https://www.imperial.ac.uk/non-destructive-evaluation/publications-products-and-services/pogo/)
+confirms its elastodynamic focus and Windows/Linux NVIDIA support. The linked
+vendor site returned HTTP 403 during this check, so current download/license
+availability and an actual PZT workflow remain unverified. No vendor speedup
+claim is used as a prediction for this machine.
+
+The next measured comparison should preserve the intended 500 x 500 x 3 mm
+plate, physical observation duration, source/probe definitions and defect
+dimensions. Compare a scalable elastic implementation or accessible external
+solver against the retained small references; then establish PZT/adhesive,
+electrode, drive and receiver-loading inputs and intact physical agreement.
+Preserve vector elasticity and the acquisition window needed for relevant
+arrivals, and accept research banks only after those checks pass.
 
 ## Primary sources
 

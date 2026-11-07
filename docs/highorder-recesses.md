@@ -76,6 +76,12 @@ coupling and physical measurements remain separate validation requirements.
 Every case retains
 `ready_for_training_data=false`.
 
+Baseline subtraction here includes the change in free-body motion caused by
+removed mass under a net applied force. It is not an isolated propagating
+scattered mode. A bonded PZT's internal actuation and voltage readout require
+their own coupled or calibrated model; a rigid translation cannot be treated
+as a measured piezoelectric voltage.
+
 ## Capacity preflight
 
 `examples.screen_highorder_cad` builds only the six distinct meshes needed by
@@ -93,3 +99,68 @@ the original physics/error criteria. The topology preflight passes for the
 updated setting and returns completed-screen status 2 for the old cap, with
 zero wave solves in both checks. The 900-second wave-study wall guard reflects
 the measured cost of ten groups, rather than relaxing spatial/time tolerances.
+
+## Completed paired control, November 6–7, 2026
+
+All five intact/current pairs completed with the original physical settings
+and error thresholds. The damaged grids have 13,752 / 16,902 / 24,153 vector
+coefficients; the intact grids have 11,307 / 14,073 / 20,118. Removed-volume
+errors decrease from 3.9881% to 2.6859% to 1.9297%. The seeded recess center
+is (10.04749, 9.93786) mm; radius is 4 mm and depth 1.5 mm.
+
+| Signal/check | First pair, worst relative L2 | Final pair, worst relative L2 | Fixed limit | Screen |
+| --- | --- | --- | --- | --- |
+| Current waveform, spatial | 5.0318% | 2.3213% | 5% | Passed |
+| Current waveform, temporal | 1.0272% | 0.25625% | 1% | Passed |
+| Current-minus-intact, spatial | 10.1501% | 4.5183% | 5% | Passed |
+| Current-minus-intact, temporal | 2.4216% | 0.60780% | 1% | Passed |
+
+Observed time orders are 1.99934 for current waveforms and 1.99625 for the
+subtraction. Every selected receiver exceeds the RMS floor. Maximum linear
+residual is 2.59e-15 and maximum postburst relative energy range 1.28e-14.
+These are discrepancy/algebraic checks, not continuum error bounds.
+
+The capacity-adjusted run was interrupted after eight completed groups, with
+no final study/monitor receipt. Its tool session was unavailable on resumption;
+an explicit process check found no monitor or native worker alive. Source and
+settings still matched the frozen plan. Recovery verified eight cached groups
+and solved the two missing groups in 77.13 monitored seconds, peaking at
+710.8 MiB combined RSS and 57.1% system RAM. GPU observations reached
+1,412/8,192 MiB and 74 C from system activity; calculation used CPU only and
+retained the 80 C GPU guard. CPU temperature was unavailable. The original
+interruption's cause and total cost are not established. Its eight completed
+case receipts cover at least 490.65 seconds and remain retained.
+
+All five subtraction arrays are bitwise equal to saved current minus saved
+intact traces. Both current and subtraction PNG/SVG figure sets were inspected.
+The public `highorder-waveforms` command recovered the fine 62.5 ns current
+group with identical arrays, one cache hit and zero new solves.
+
+All 224 regression tests passed without skips with real Elmer/Gmsh/NGSolve
+checks enabled. The run took 207.62 monitored seconds at 762.8 MiB combined
+RSS, 69.4% system RAM and 50 C GPU temperature. An earlier run retained one
+RAM-stop error: the existing Elmer cache test's 512 MiB envelope included the
+already-imported test runner and worker. Its envelope is now 768 MiB under
+the unchanged outer 1,024 MiB cap. RAM-stop messages now include measured
+and allowed MiB. No numerical tolerance changed and no full training ran.
+
+The compact source/runtime, worker, trace, plot, recovery and test record is
+[highorder-cad-recess-debug.json](evidence/highorder-cad-recess-debug.json).
+It also retains the original capacity stop, interrupted receipts, topology
+screens and first failed regression log. All training-readiness flags remain
+false. One small mechanical recess does not validate the full research plate,
+other defect geometries, frequencies, bonded PZTs or physical measurements.
+
+## Full-size feasibility
+
+A separate geometry-only screen used a 500 x 500 x 3 mm plate with a 20 mm
+diameter, 1.5 mm-deep recess and 5/3/2 mm candidate mesh sizes. It rejected
+the configured local element/assembly limit at the coarsest size before
+meshing, elastic assembly or any waveform solve. This is a pilot-limit
+rejection, not a measured full-size memory/runtime benchmark. Its observation
+window was not validated for full-size arrivals because no waves were solved.
+
+The installed NGSolve 6.2.2606 build reports `USE_CUDA=False`. The presence of
+an NVIDIA GPU does not make this installed reference GPU accelerated. The next
+solver decision must address full-size cost and coupled PZT physics; see
+[solver-assessment.md](solver-assessment.md).

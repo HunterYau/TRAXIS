@@ -597,3 +597,43 @@ only to this intact mechanical control. Full-size plates, recess scattering,
 bonded-PZT voltage output and physical calibration remain open. All research
 training-data readiness flags remain false.
 
+## CAD recess and paired-scattering checks, November 6–7
+
+The high-order worker now accepts explicit intact/current CAD geometry and
+binds Gmsh kernels, physical state and mesh settings into each job. It checks
+removed volume, circular footprint moments, rigid-body forces and translation
+mass before propagation. A topology-only worker counts actual H1 coefficients
+without elastic assembly or time integration. The seeded 20 mm control's fine
+intact/current grids require 20,118/24,153 coefficients, so its declared
+capacity is now 30,000 under the unchanged 1,024 MiB outer RAM guard.
+
+The ten-group paired study passes its frozen 5% spatial/1% temporal screens:
+final current-waveform changes are 2.3213%/0.25625%; raw current-minus-intact
+changes are 4.5183%/0.60780%. Observed time orders are 1.99934 and 1.99625.
+Geometry error decreases to 1.9297% removed volume. Maximum linear residual
+is 2.59e-15 and postburst relative energy range 1.28e-14. These differences
+include rigid-motion changes and do not establish isolated PZT scattering.
+
+After an interruption with no final receipt, actual process inspection found
+the monitor and workers absent. Recovery verified unchanged source/settings,
+reused eight groups and solved only the remaining two. It took 77.13 seconds
+at 710.8 MiB combined RSS and 57.1% system RAM. GPU observations reached
+1,412/8,192 MiB and 74 C from system activity; calculation used CPU. CPU
+temperature was unavailable. Cause/total cost of the interruption are unknown;
+the eight completed receipts and earlier intentional capacity stop are retained.
+
+All 224 regression tests pass without skips with real native solvers, in
+207.62 monitored seconds at 762.8 MiB RSS and 69.4% system RAM. The original
+512 MiB test-envelope stop remains recorded; the test now allows 768 MiB
+inside the 1,024 MiB suite guard. No physics tolerance changed. Current and
+subtraction figures were inspected; subtraction arrays are exact saved-state
+differences. The public command recovers the finest current group with zero
+new solves. No full training ran.
+
+The 500 mm geometry-only screen rejects the current pilot element/assembly
+budget before meshing. NGSolve's installed build reports CUDA disabled. Full
+plate scaling, coupled/calibrated PZT voltage responses and physical validation
+remain required. See highorder-recesses.md and
+evidence/highorder-cad-recess-debug.json for the exact scope and receipts.
+No research training-data acceptance is claimed.
+

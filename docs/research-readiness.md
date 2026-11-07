@@ -7,7 +7,7 @@ plate, defect and transducer configuration.
 
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
-| Credible elastic forward solver | Independent operator, exact-field, dispersion and transient interface checks; the 40 mm intact P3 control passes its fixed spatial/time discrepancy screens; see highorder-waveforms.md | Full-size spatial/time refinement, recessed-plate scattering, independent continuum agreement, measured cost and intact physical agreement |
+| Credible elastic forward solver | Independent operator, exact-field, dispersion and transient checks; the 40 mm intact P3 control and 20 mm paired CAD recess control pass fixed discrepancy screens; see highorder-waveforms.md and highorder-recesses.md | Full-size capacity and refinement, representative defect/frequency variation, independent continuum agreement and physical agreement |
 | PZT transmission and voltage reception | Mechanical circular traction/displacement interfaces, including P1-P4 represented-field and native P2 checks | Bonded PZT/adhesive domains or a calibrated equivalent, drive and receiver electronics, measured material/input values |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |
