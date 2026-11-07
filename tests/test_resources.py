@@ -35,3 +35,8 @@ class ResourceTests(unittest.TestCase):
     def test_invalid_limits(self):
         with self.assertRaises(ValueError):
             ResourceLimits(max_seconds=float("inf"))
+
+    def test_process_memory_stop_reports_measurement_and_limit(self):
+        guard = ResourceGuard(ResourceLimits(max_rss_mib=50))
+        with self.assertRaisesRegex(ResourceLimitError, r'100\.0 MiB > 50\.0 MiB'):
+            guard.enforce(self.sample, [])

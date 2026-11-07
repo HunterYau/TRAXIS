@@ -119,5 +119,6 @@ def run_waveform_command(args, guard):
             "spatial_screen_passed": result["spatial_screen_passed"], "temporal_screen_passed": result["temporal_screen_passed"],
             "observed_temporal_order": result["observed_temporal_order"], "wall_seconds": result["wall_seconds"],
             "ready_for_training_data": False, "report": str(args.output / filename)}
-    summary.update({key: result[key] for key in ('in_plane_screen_passed', 'thickness_screen_passed', 'observed_thickness_order') if key in result})
+    summary.update({key: result[key] for key in ('in_plane_screen_passed', 'thickness_screen_passed', 'observed_thickness_order',
+        'scattered_spatial_screen_passed', 'scattered_temporal_screen_passed', 'scattered_observed_temporal_order') if key in result})
     return summary

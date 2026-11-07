@@ -325,7 +325,8 @@ def plot_waveform_sweep(directory: Path, output: Path, records=(0, 12), guard=No
             axis.set(title=f"{title}\n{name}", xlabel="Time (μs)", ylabel="Displacement (nm)")
             axis.grid(alpha=.2)
             axis.legend(fontsize=7)
-    figure.suptitle("Finite-plate mechanical pilot — no PZT/physical validation", fontsize=13)
+    signal = 'Defect-scattered' if plan.get('signal') == 'current_minus_intact' else 'Finite-plate'
+    figure.suptitle(f"{signal} mechanical pilot — no PZT/physical validation", fontsize=13)
     figure.supxlabel("Float64 probes; no amplitude normalization, time alignment or interpolation. Reflections and rigid motion remain in the traces.", fontsize=8)
     files = _save_figure(figure, output, "waveform-refinement", guard)
     result = {"kind": "waveform_refinement_figures", "records": list(records), "files": files,

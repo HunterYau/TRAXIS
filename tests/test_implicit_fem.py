@@ -226,15 +226,17 @@ class NativeReferencePipelineTests(unittest.TestCase):
             root = Path(directory)
             settings = ElmerWaveSettings(mesh_size_m=.006, substeps_per_output=1)
             scenario = local_scenario(intact=True)
+            # The process-tree cap includes the imported unittest runner.
+            # The outer regression monitor still limits the complete suite.
             values, report = run_elmer_waveform_case(scenario, settings, home, root / 'first',
-                ResourceGuard(ResourceLimits(max_seconds=30, max_rss_mib=512)), cache_dir=root / 'cache')
+                ResourceGuard(ResourceLimits(max_seconds=30, max_rss_mib=768)), cache_dir=root / 'cache')
             self.assertEqual(values.shape, (7, 64))
             self.assertTrue(report['completed'])
             self.assertGreater(report['quadratic_nodes'], 128)
             self.assertFalse(report['ready_for_training_data'])
             with patch('traxis.elmer_waveforms.sys.executable', 'must-not-run-an-implicit-worker'):
                 repeated, recovered = run_elmer_waveform_case(scenario, settings, home, root / 'recovered',
-                    ResourceGuard(ResourceLimits(max_seconds=30, max_rss_mib=512)), cache_dir=root / 'cache')
+                    ResourceGuard(ResourceLimits(max_seconds=30, max_rss_mib=768)), cache_dir=root / 'cache')
             self.assertTrue(recovered['cache_hit'])
             self.assertEqual(recovered['forward_solves'], 0)
             np.testing.assert_array_equal(repeated, values)

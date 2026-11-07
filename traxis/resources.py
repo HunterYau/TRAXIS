@@ -102,7 +102,9 @@ class ResourceGuard:
                    for t in sample["cpu_temperatures_c"] or []]
         for exceeded, label in checks:
             if exceeded:
-                raise ResourceLimitError(f"{label} limit reached")
+                detail = (f" ({sample['process_rss_mib']:.1f} MiB > {limits.max_rss_mib:.1f} MiB)"
+                    if label == 'process RAM' else '')
+                raise ResourceLimitError(f"{label} limit reached{detail}")
 
     def report(self) -> dict:
         return {"limits": asdict(self.limits), "samples": self.history,

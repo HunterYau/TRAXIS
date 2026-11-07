@@ -23,6 +23,7 @@ class CADRefinementTests(unittest.TestCase):
             'substeps_per_output': settings.substeps_per_output,
             'dt_internal_s': scenario.acquisition.sample_dt_s/settings.substeps_per_output,
             'linear_mesh': {'maximum_edge_m': settings.mesh_size_m, 'maximum_element_z_span_m': .001},
+            'float64_traces_sha256': 'fixture',
             'geometry_load_fingerprint': canonical_hash({'mesh_size_m': settings.mesh_size_m})}
         return np.tile(values, (len(plan['actions']), 1)), row, {'fixture': True}
 
@@ -63,7 +64,7 @@ class CADRefinementTests(unittest.TestCase):
 
     def test_invalid_settings_budgets_and_noise_fail_before_native_work(self):
         for values in ({'mesh_sizes_m': (.003,.003,.002)}, {'substeps_per_output': (4,8,17)},
-                       {'max_total_solves': 6}, {'reference': HighOrderWaveSettings()}):
+                       {'max_total_solves': 11}, {'reference': HighOrderWaveSettings()}, {'compare_scattering': 1}):
             with self.assertRaises(ValueError):
                 HighOrderCADRefinementSettings(**values)
         with tempfile.TemporaryDirectory() as directory:
@@ -75,3 +76,65 @@ class CADRefinementTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 run_highorder_cad_refinement(noisy, HighOrderCADRefinementSettings(), output)
             self.assertFalse(output.exists())
+
+    def test_direct_arrival_agreement_cannot_hide_scattering_failure(self):
+        def paired(scenario, settings, output, guard, plan, cache, runtime):
+            _, row, runtime = self.produce(scenario, settings, output, guard, plan, cache, runtime)
+            phase = 2*np.pi*100000*np.arange(scenario.acquisition.samples)*scenario.acquisition.sample_dt_s
+            values = 1e-9*np.sin(phase)
+            if plan['state'] == 'current':
+                values += 1e-11*((1+5*(settings.mesh_size_m/.002)**2)*np.sin(phase)
+                    + .1/settings.substeps_per_output**2*np.cos(phase))
+            return np.tile(values, (len(plan['actions']), 1)), row, runtime
+        settings = HighOrderCADRefinementSettings(compare_scattering=True, max_total_solves=10)
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)/'study'
+            with patch('traxis.highorder_cad_refinement._checked_case', side_effect=paired) as solve:
+                report = run_highorder_cad_refinement(local_scenario(), settings, output)
+            self.assertEqual(solve.call_count, 10)
+            self.assertTrue(report['current_spatial_screen_passed'])
+            self.assertFalse(report['scattered_spatial_screen_passed'])
+            self.assertFalse(report['discretization_screen_passed'])
+            self.assertTrue(report['scattered_temporal_screen_passed'])
+            plan = json.loads((output/'refinement-plan.json').read_text())
+            self.assertEqual(plan['requested_forward_solves'], 10)
+            view = json.loads((output/'scattered/refinement-report.json').read_text())
+            self.assertFalse(view['discretization_screen_passed'])
+            self.assertFalse(view['ready_for_training_data'])
+            with np.load(output/'scattered/case-02/solver-traces.npz') as saved:
+                phase = 2*np.pi*100000*np.arange(64)*local_scenario().acquisition.sample_dt_s
+                baseline = 1e-9*np.sin(phase)
+                signal = 1e-11*(6*np.sin(phase)+.1/16**2*np.cos(phase))
+                # Subtraction retains float64 cancellation; no signal fit or
+                # normalization is permitted between paired states.
+                expected = (baseline+signal)-baseline
+                np.testing.assert_array_equal(saved['displacement_m'][0], expected)
+
+    def test_scattering_requires_a_recess_no_coupling_drift_and_ten_solve_budget(self):
+        scenario = local_scenario()
+        settings = HighOrderCADRefinementSettings(compare_scattering=True, max_total_solves=10)
+        drifted = replace(scenario, nuisance=replace(scenario.nuisance, current_gain_drift=(1.1,)*8))
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)/'absent'
+            for case, config, state in ((local_scenario(intact=True), settings, 'current'),
+                                       (scenario, settings, 'intact'), (drifted, settings, 'current'),
+                                       (scenario, replace(settings, max_total_solves=5), 'current')):
+                with self.assertRaises(ValueError):
+                    run_highorder_cad_refinement(case, config, output, state=state)
+            self.assertFalse(output.exists())
+
+    def test_changed_intact_mesh_cannot_pass_a_paired_time_comparison(self):
+        def changed(*args):
+            values, row, runtime = self.produce(*args)
+            if args[4]['state'] == 'intact' and args[2].name == 'case-04':
+                row['geometry_load_fingerprint'] = 'changed-intact-mesh'
+            return values, row, runtime
+        settings = HighOrderCADRefinementSettings(compare_scattering=True, max_total_solves=10)
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)/'study'
+            with patch('traxis.highorder_cad_refinement._checked_case', side_effect=changed):
+                with self.assertRaisesRegex(ValueError, 'scattered time refinement'):
+                    run_highorder_cad_refinement(local_scenario(), settings, output)
+            report = json.loads((output/'refinement-report.json').read_text())
+            self.assertFalse(report['completed'])
+            self.assertFalse(report['discretization_screen_passed'])
