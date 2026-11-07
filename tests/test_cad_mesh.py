@@ -1,5 +1,6 @@
 import importlib.util
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -10,8 +11,31 @@ from traxis.fem import assemble
 HAS_GMSH = importlib.util.find_spec("gmsh") is not None
 
 
+class CADPreflightTests(unittest.TestCase):
+    def test_geometry_budget_is_explicit_and_does_not_weaken_assembly_defaults(self):
+        with patch.dict('sys.modules',{'gmsh':None}):
+            with self.assertRaisesRegex(MemoryError,'element/assembly'):
+                cad_mesh(Plate(),(),.005,max_tetrahedra=250000)
+            with self.assertRaisesRegex(MemoryError,'geometry workspace'):
+                cad_mesh(Plate(),(),.005,max_tetrahedra=250000,max_geometry_mib=1)
+            for budget in (0,-1,float('nan'),float('inf'),2049):
+                with self.assertRaises(ValueError):
+                    cad_mesh(Plate(),(),.005,max_geometry_mib=budget)
+
+
 @unittest.skipUnless(HAS_GMSH, "install optional Gmsh for CAD mesh checks")
 class CADMeshTests(unittest.TestCase):
+    def test_geometry_only_mode_reports_its_separate_workspace_policy(self):
+        mesh,report = cad_mesh(Plate(.02,.02,.003),(),.003,max_assembly_mib=1e-6,max_geometry_mib=16,
+                              algorithm=10,optimization='Netgen')
+        self.assertEqual(report['screen_policy'],'geometry_only')
+        self.assertFalse(report['assembly_screen_applied'])
+        self.assertLess(report['screened_geometry_mib'],16)
+        self.assertEqual(report['actual_geometry_screen_mib'],len(mesh.tetrahedra)/1024)
+        self.assertLess(report['retained_volume_relative_error'],1e-10)
+        with self.assertRaisesRegex(MemoryError,'element/assembly'):
+            cad_mesh(Plate(.02,.02,.003),(),.003,max_assembly_mib=1e-6)
+
     def test_hxt_controls_the_observed_thin_plate_sliver_stability_case(self):
         from traxis.forward import ForwardSettings, minimum_stable_substeps
         from traxis.scenarios import AcquisitionSettings, SamplingSettings, sample_scenarios

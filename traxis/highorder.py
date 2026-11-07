@@ -12,14 +12,23 @@ import numpy as np
 from scipy import sparse
 
 
-def highorder_dofs(mesh, order):
+def highorder_dofs(mesh, order, *, max_vertices=20000, max_tetrahedra=40000, max_topology_mib=256):
     if type(order) is not int or not 1 <= order <= 4:
         raise ValueError('reference polynomial degree must lie in [1,4]')
+    if (type(max_vertices) is not int or not 4 <= max_vertices <= 1000000
+            or type(max_tetrahedra) is not int or not 1 <= max_tetrahedra <= 5000000
+            or not math.isfinite(max_topology_mib) or not 0 < max_topology_mib <= 2048):
+        raise ValueError('invalid topology count/storage limits')
     points, tets = np.asarray(mesh.points_m), np.asarray(mesh.tetrahedra)
-    if (np.iscomplexobj(points) or points.ndim != 2 or points.shape[1] != 3 or not 4 <= len(points) <= 20000 or not np.isfinite(points).all()
-            or tets.ndim != 2 or tets.shape[1] != 4 or tets.dtype.kind not in 'iu' or not 1 <= len(tets) <= 40000
-            or tets.min() < 0 or tets.max() >= len(points) or len(np.unique(tets)) != len(points)):
+    if (np.iscomplexobj(points) or points.ndim != 2 or points.shape[1] != 3 or not 4 <= len(points) <= max_vertices or not np.isfinite(points).all()
+            or tets.ndim != 2 or tets.shape[1] != 4 or tets.dtype.kind not in 'iu' or not 1 <= len(tets) <= max_tetrahedra
+            or tets.min() < 0 or tets.max() >= len(points)):
         raise ValueError('need a bounded complete linear-tetrahedron geometry')
+    topology_mib = (points.nbytes+len(tets)*1024)/1024**2
+    if topology_mib > max_topology_mib:
+        raise MemoryError('high-order topology workspace exceeds its declared limit')
+    if len(np.unique(tets)) != len(points):
+        raise ValueError('reference mesh contains unused vertices')
     if len(np.unique(np.sort(tets, axis=1), axis=0)) != len(tets):
         raise ValueError('duplicate reference tetrahedron')
     corners = points[tets]
@@ -33,7 +42,8 @@ def highorder_dofs(mesh, order):
               + len(tets) * (order-1) * (order-2) * (order-3) // 6)
     local = math.comb(order + 3, 3) * 3
     return {'scalar_dofs': scalar, 'vector_dofs': scalar * 3, 'vertices': len(points), 'edges': edge_count,
-            'faces': face_count, 'tetrahedra': len(tets), 'assembly_screen_mib': len(tets) * local**2 * 32 / 1024**2}
+            'faces': face_count, 'tetrahedra': len(tets), 'topology_screen_mib': topology_mib,
+            'assembly_screen_mib': len(tets) * local**2 * 32 / 1024**2}
 
 
 @dataclass
@@ -46,20 +56,22 @@ class HighOrderSystem:
     screen: dict
 
 
-def assemble_highorder(mesh, material, order, guard=None, *, max_dofs=60000, max_assembly_mib=256):
-    screen = highorder_dofs(mesh, order)
-    if (type(max_dofs) is not int or not 12 <= max_dofs <= 60000 or not 0 < max_assembly_mib <= 512
-            or screen['vector_dofs'] > max_dofs or screen['assembly_screen_mib'] > max_assembly_mib):
-        raise MemoryError('high-order reference exceeds its declared degree-of-freedom/assembly screen')
+def _native_space(mesh, order, screen, guard=None):
     if guard:
         guard.check(force=True)
     import ngsolve as ng
     import netgen.meshing as nm
     ng.SetNumThreads(1)
     native = nm.Mesh(dim=3)
-    vertices = [native.Add(nm.MeshPoint(nm.Pnt(*point))) for point in mesh.points_m]
+    vertices = []
+    for i, point in enumerate(mesh.points_m):
+        if guard and i % 2048 == 0:
+            guard.check()
+        vertices.append(native.Add(nm.MeshPoint(nm.Pnt(*point))))
     region = native.AddRegion('aluminum', dim=3)
-    for tet in mesh.tetrahedra:
+    for i, tet in enumerate(mesh.tetrahedra):
+        if guard and i % 1024 == 0:
+            guard.check()
         native.Add(nm.Element3D(region, [vertices[i] for i in tet]))
     native_mesh = ng.Mesh(native)
     scalar = ng.H1(native_mesh, order=order)
@@ -69,16 +81,39 @@ def assemble_highorder(mesh, material, order, guard=None, *, max_dofs=60000, max
     for c in range(3):
         if list(space.Range(c)) != list(range(c*scalar.ndof, (c+1)*scalar.ndof)):
             raise ArithmeticError('native component coefficient ordering changed')
+    if guard:
+        guard.check(force=True)
+    return native_mesh, scalar, space
+
+
+def highorder_forms(space, material, *, matrix_free=False):
+    """Use identical elastic and consistent-mass forms for both operators."""
+    import ngsolve as ng
     u, v = space.TnT()
     du, dv = [[ng.grad(field[i]) for i in range(3)] for field in (u, v)]
     lam, mu = material.lame
     elastic = mu/2 * sum((du[i][j]+du[j][i])*(dv[i][j]+dv[j][i]) for i in range(3) for j in range(3))
     elastic += lam * sum(du[i][i] for i in range(3)) * sum(dv[i][i] for i in range(3))
-    stiffness = ng.BilinearForm(space, symmetric=False)
+    mass_expression = material.density_kg_m3*sum(u[i]*v[i] for i in range(3))
+    if matrix_free:
+        # Evaluation-sequence compilation needs no external compiler/files.
+        elastic = elastic.Compile(realcompile=False)
+        mass_expression = mass_expression.Compile(realcompile=False)
+    stiffness = ng.BilinearForm(space, symmetric=False, nonassemble=matrix_free)
     stiffness += elastic * ng.dx(bonus_intorder=2)
+    mass = ng.BilinearForm(space, symmetric=False, nonassemble=matrix_free)
+    mass += mass_expression * ng.dx(bonus_intorder=2)
+    return stiffness, mass
+
+
+def assemble_highorder(mesh, material, order, guard=None, *, max_dofs=60000, max_assembly_mib=256):
+    screen = highorder_dofs(mesh, order)
+    if (type(max_dofs) is not int or not 12 <= max_dofs <= 60000 or not 0 < max_assembly_mib <= 512
+            or screen['vector_dofs'] > max_dofs or screen['assembly_screen_mib'] > max_assembly_mib):
+        raise MemoryError('high-order reference exceeds its declared degree-of-freedom/assembly screen')
+    native_mesh, scalar, space = _native_space(mesh, order, screen, guard)
+    stiffness, mass = highorder_forms(space, material)
     stiffness.Assemble()
-    mass = ng.BilinearForm(space, symmetric=False)
-    mass += material.density_kg_m3 * sum(u[i]*v[i] for i in range(3)) * ng.dx(bonus_intorder=2)
     mass.Assemble()
     def copy_csr(matrix):
         values, indices, pointers = matrix.CSR()

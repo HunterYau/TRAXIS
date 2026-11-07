@@ -637,3 +637,24 @@ remain required. See highorder-recesses.md and
 evidence/highorder-cad-recess-debug.json for the exact scope and receipts.
 No research training-data acceptance is claimed.
 
+## Matrix-free full-size capacity, November 7
+
+The new matrix-free candidate retains the checked vector H1 elastic and
+consistent-mass forms. A tiny P1-P4 rectangular/skewed all-column and direct
+Newmark comparison passed eight cases before recovery hardening. Exact
+effective-operator diagonals addressed an initial P4 CG iteration failure;
+one 180-second attempt still hit its wall guard. Complete case receipts now
+check shapes, expanded size, exact times, counts and recomputed saved metrics.
+Sixteen focused protocol/CAD tests and the native capacity-driver test pass;
+the full modified-tree native regression is still pending at this entry.
+
+An actual 500 x 500 x 3 mm intact 5 mm CAD mesh and P3 matrix-free operators
+completed in 64.15 monitored seconds with 1,319,508 vector coefficients.
+The two stiffness/mass actions cost about 6.5/2.7 seconds each. Translation
+mass, null force and work reciprocity pass. Peak sampled combined RSS was
+482.6 MiB, system RAM 53.9%, minimum available RAM 7,476 MiB, and GPU system
+temperature 77 C. Calculation used CPU, with CPU temperature unavailable.
+No sparse assembly, time propagation or training ran. This establishes
+bounded capacity, with transient cost and full-size wave/PZT accuracy open.
+See matrixfree-reference.md and outputs/matrixfree-fullplate-capacity-20261107.
+

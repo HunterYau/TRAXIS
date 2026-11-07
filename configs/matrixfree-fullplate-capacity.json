@@ -1,0 +1,13 @@
+{
+  "plate": {"width_m": 0.5, "height_m": 0.5, "thickness_m": 0.003},
+  "material": {"young_pa": 68900000000.0, "poisson": 0.33, "density_kg_m3": 2700.0},
+  "mesh_size_m": 0.005,
+  "max_geometry_mib": 256,
+  "max_tetrahedra": 250000,
+  "reference": {
+    "order": 3, "max_dofs": 2000000, "max_vertices": 250000,
+    "max_tetrahedra": 250000, "max_topology_mib": 256, "max_vector_mib": 256
+  },
+  "seed": 2026,
+  "operator_repeats": 2
+}

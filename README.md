@@ -143,6 +143,12 @@ The [research readiness checklist](docs/research-readiness.md) maps the
 confirmed plan to existing evidence and remaining validation, and describes
 the monitored regression command.
 
+The [matrix-free reference candidate](docs/matrixfree-reference.md) retains
+three-component high-order elasticity and consistent mass while avoiding
+global sparse operators. Tiny all-column/direct-transient checks and guarded
+full-plate capacity measurements distinguish algebraic agreement from full-size
+wave/PZT acceptance. No new research training data is approved by this path.
+
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.
 Small analytic errors support further reference work; one strict decrease

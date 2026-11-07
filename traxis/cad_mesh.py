@@ -16,10 +16,13 @@ from traxis.resources import ResourceGuard
 
 def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
               *, max_assembly_mib: float = 256, max_tetrahedra: int = 40000,
+              max_geometry_mib: float | None = None,
               seed: int = 2026, optimization: str = "default", algorithm: int = 1,
               guard: ResourceGuard | None = None) -> tuple[TetMesh, dict]:
     positive("CAD mesh size", size_m)
     positive("assembly limit", max_assembly_mib)
+    if max_geometry_mib is not None and (not math.isfinite(max_geometry_mib) or not 0 < max_geometry_mib <= 2048):
+        raise ValueError("geometry workspace limit must lie in (0,2048] MiB")
     if type(max_tetrahedra) is not int or max_tetrahedra < 1:
         raise ValueError("tetrahedron limit must be positive")
     if type(seed) is not int or seed < 0:
@@ -35,7 +38,14 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
     # Screening estimate only: actual mesh size depends on geometry/quality.
     estimated_tets = math.ceil(12 * volume / size_m**3 + 6 * area / size_m**2)
     estimated_bytes = estimated_tets * 144 * 40
-    if estimated_tets > max_tetrahedra or estimated_bytes > max_assembly_mib * 1024**2:
+    # Geometry-only callers do not allocate the P1 sparse assembly workspace.
+    # This separate screen still needs an outer native-process memory guard.
+    geometry_bytes = estimated_tets * 1024
+    selected_bytes = estimated_bytes if max_geometry_mib is None else geometry_bytes
+    selected_limit = max_assembly_mib if max_geometry_mib is None else max_geometry_mib
+    if estimated_tets > max_tetrahedra or selected_bytes > selected_limit * 1024**2:
+        if max_geometry_mib is not None:
+            raise MemoryError("CAD mesh screening estimate exceeds the geometry workspace/element limit")
         raise MemoryError("CAD mesh screening estimate exceeds the local element/assembly limit")
     if guard:
         guard.check(force=True)
@@ -89,7 +99,10 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
             raise ValueError("CAD mesh has nonpositive/invalid scaled inverse-condition quality")
         tags, coordinates, _ = gmsh.model.mesh.getNodes()
         count = len(connectivity[0]) // 4
-        if count > max_tetrahedra or count * 144 * 40 > max_assembly_mib * 1024**2:
+        actual_bytes = count * (144 * 40 if max_geometry_mib is None else 1024)
+        if count > max_tetrahedra or actual_bytes > selected_limit * 1024**2:
+            if max_geometry_mib is not None:
+                raise MemoryError("actual CAD mesh exceeds the geometry workspace/element limit")
             raise MemoryError("actual CAD mesh exceeds the local element/assembly limit")
         order = np.argsort(tags)
         tags = tags[order]
@@ -118,6 +131,11 @@ def cad_mesh(plate: Plate, recesses: tuple[CircularRecess, ...], size_m: float,
                   "requested_removed_volume_m3": requested, "meshed_removed_volume_m3": removed,
                   "removed_volume_relative_error": abs(removed / requested - 1) if requested else None,
                   "screened_tetrahedra": estimated_tets, "screened_assembly_mib": estimated_bytes / 1024**2,
+                  "screen_policy": "p1_assembly" if max_geometry_mib is None else "geometry_only",
+                  "assembly_screen_applied": max_geometry_mib is None,
+                  "screened_geometry_mib": geometry_bytes / 1024**2,
+                  "actual_geometry_screen_mib": count * 1024 / 1024**2,
+                  "max_geometry_mib": max_geometry_mib,
                   "ready_for_training_data": False,
                   "note": "CAD/mesh geometry check only; no PZT or guided-wave convergence validation."}
         if guard:
