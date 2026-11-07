@@ -41,6 +41,9 @@ measurement inside the 1 GiB guard (1,319,508 coefficients, 482.6 MiB sampled
 combined RSS). It performs no propagation, and measured 6.5-second stiffness
 actions leave affordable transient cost unproven. See matrixfree-reference.md.
 Full-size wave accuracy, defect/PZT coupling and physical agreement remain open.
+All 239 native-enabled regression tests pass without skips in 475.49 monitored
+seconds; checked matrix-free recovery adds no new solves. The compact record is
+evidence/matrixfree-debug.json.
 
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource

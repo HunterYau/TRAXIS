@@ -184,6 +184,31 @@ electrode, drive and receiver-loading inputs and intact physical agreement.
 Preserve vector elasticity and the acquisition window needed for relevant
 arrivals, and accept research banks only after those checks pass.
 
+## Measured matrix-free capacity, November 7
+
+The [matrix-free H1 candidate](matrixfree-reference.md) now constructs the
+actual 500 x 500 x 3 mm intact P3 mesh/operators with 1,319,508 vector
+coefficients, without global sparse assembly. It passes translation mass,
+rigid null-force and work reciprocity in 64.15 monitored seconds at 482.6 MiB
+sampled combined RSS. This supersedes the earlier preflight-only limit as
+evidence about this specific intact matrix-free allocation path; it does not
+retroactively turn the earlier recess/assembled request into a successful run.
+
+Two full-size stiffness actions cost about 6.5 seconds each and mass actions
+2.7 seconds. Iterative transient solves need many such actions, so fitting in
+RAM does not establish practical full-window propagation. The next benchmark
+must measure an actual acceleration solve at the intended time step and
+source, including strict residual/iteration costs, without accepting truncated
+arrivals as a research window. Efficient preconditioning or a different
+verified elastic implementation may still be necessary.
+
+All 239 native-enabled regression tests pass without skips; tiny all-column
+P1-P4 comparisons and direct/iterative transients agree, with checked zero-new-
+solve recovery. See evidence/matrixfree-debug.json for frozen sources, arrays,
+failed attempts and resource receipts. Coupled/calibrated PZT voltage and
+physical agreement remain open. The installed build still has CUDA disabled;
+no full training or full-size time propagation has run.
+
 ## Primary sources
 
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)

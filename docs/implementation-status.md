@@ -645,8 +645,11 @@ Newmark comparison passed eight cases before recovery hardening. Exact
 effective-operator diagonals addressed an initial P4 CG iteration failure;
 one 180-second attempt still hit its wall guard. Complete case receipts now
 check shapes, expanded size, exact times, counts and recomputed saved metrics.
-Sixteen focused protocol/CAD tests and the native capacity-driver test pass;
-the full modified-tree native regression is still pending at this entry.
+All 239 full-suite tests now pass without skips with real native solvers in
+475.49 monitored seconds at 776.95 MiB combined RSS, 56.8% system RAM and
+77 C system GPU temperature. The eight current-source native comparisons
+completed in 287.25 seconds and recovery reused all cases with zero new
+computations. Raw comparison evidence was retained before test cleanup.
 
 An actual 500 x 500 x 3 mm intact 5 mm CAD mesh and P3 matrix-free operators
 completed in 64.15 monitored seconds with 1,319,508 vector coefficients.
@@ -656,5 +659,7 @@ mass, null force and work reciprocity pass. Peak sampled combined RSS was
 temperature 77 C. Calculation used CPU, with CPU temperature unavailable.
 No sparse assembly, time propagation or training ran. This establishes
 bounded capacity, with transient cost and full-size wave/PZT accuracy open.
-See matrixfree-reference.md and outputs/matrixfree-fullplate-capacity-20261107.
+See matrixfree-reference.md, evidence/matrixfree-debug.json and
+outputs/matrixfree-fullplate-capacity-20261107. Failed CG/wall-limit attempts
+remain recorded. No full training ran and no research bank is accepted.
 

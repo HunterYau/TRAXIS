@@ -148,6 +148,9 @@ three-component high-order elasticity and consistent mass while avoiding
 global sparse operators. Tiny all-column/direct-transient checks and guarded
 full-plate capacity measurements distinguish algebraic agreement from full-size
 wave/PZT acceptance. No new research training data is approved by this path.
+The intact 500 mm P3 operator check fits the 1 GiB guard; 239 regression tests
+pass without skips with native references enabled. Full-size propagation cost
+and coupled/calibrated voltage responses remain open.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.

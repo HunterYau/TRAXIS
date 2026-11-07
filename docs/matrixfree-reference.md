@@ -81,9 +81,19 @@ combined RSS was 281.6 MiB, system RAM 54.3%, GPU memory 1,524/8,192 MiB and
 GPU temperature 75 C. All calculation used CPU; CPU temperature was unavailable.
 This includes tiny sparse comparison operators and is not a full-size benchmark.
 
-Sixteen focused solver/cache/CAD tests and a separate native capacity-driver
-check pass after the recovery and geometry-budget changes. A new full native
-regression remains required before treating the whole modified tree as checked.
+After recovery hardening, all 239 tests pass without skips with real native
+libraries enabled. The current-source eight-case comparison took 287.25 seconds;
+checked recovery reused every case with zero new computations and identical
+archive hashes. The complete regression took 475.49 monitored seconds, with
+776.95 MiB sampled combined RSS, 56.8% system RAM, at least 7,015 MiB available,
+GPU memory 1,536/8,192 MiB and GPU temperature 77 C. No GPU computation or full
+training ran; CPU temperature was unavailable.
+
+All eight current-source reports, receipts, arrays and source snapshot were
+retained from the native test before temporary-directory cleanup, without
+launching another solver run. Compact source/artifact hashes, numerical metrics,
+resource summaries and the earlier failures are in
+[evidence/matrixfree-debug.json](evidence/matrixfree-debug.json).
 
 ## Full-size capacity measurement
 
