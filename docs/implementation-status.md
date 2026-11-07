@@ -565,3 +565,35 @@ convergence, the production higher-order waveform pipeline, bonded-PZT
 physics and physical calibration remain open. Research training readiness
 remains false, and no full training ran.
 
+## Higher-order intact-plate waveform refinement, November 6
+
+The seven-case P4 run completed on the original 40 x 40 x 3 mm intact control.
+Thickness and time screens passed at 0.2093% and 0.2217% maximum final-pair
+relative L2 change. In-plane refinement failed at 18.888%, with the original
+5% criterion retained. Its outer monitor recorded 305.48 seconds, 628.5 MiB
+combined RSS and 72.6% system RAM. A fresh-output recovery reused all seven
+groups with identical arrays, zero new solves and the correct exit status 2.
+
+The existing P3 7/8/9-cell configuration then completed all seven cases under
+the same resource and error limits. Final-pair changes were 3.4578% in-plane,
+0.5939% through thickness and 0.2240% in time. All three declared screens
+passed, with observed temporal order 1.99907. The finest case has 23,520
+vector coefficients. The finest P4/P3 traces differ by at most 2.1195% in
+a supplemental comparison; no continuum bound is claimed.
+
+The P3 outer monitor recorded 408.61 seconds, 684.4 MiB combined RSS, 73.7%
+system RAM and at least 4,262 MiB available. GPU observations peaked at
+1,007/8,192 MiB and 45 C. All 213 regression tests passed without skips with
+both native solvers enabled, in 210.31 monitored seconds at 771.0 MiB combined
+RSS. Five resource/child-termination tests passed after the regression wrapper
+was updated to keep temporary files inside its project output directory.
+Dependency checks passed. CPU temperature was unavailable; no GPU calculation
+or full training ran. Raw/difference figures were inspected.
+
+See highorder-waveforms.md and evidence/highorder-waveform-refinement-debug.json
+for frozen settings, source/runtime and artifact hashes, checked arrays,
+resource receipts and the retained failed P4 run. The passing P3 screen applies
+only to this intact mechanical control. Full-size plates, recess scattering,
+bonded-PZT voltage output and physical calibration remain open. All research
+training-data readiness flags remain false.
+

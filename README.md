@@ -129,6 +129,9 @@ represented-field checks; coarse P2 pulse traces match fresh native Elmer
 transients. Spatial convergence and PZT calibration remain open.
 The [higher-order waveform study](docs/highorder-waveforms.md) separates
 in-plane, thickness and time refinements under an outer process-tree guard.
+The finer P3 intact control passes its fixed discrepancy screens; the P4
+in-plane screen remains failed. These checks cover a 40 mm mechanical control,
+with full-size/recess/PZT/physical validation still required.
 The [research readiness checklist](docs/research-readiness.md) maps the
 confirmed plan to existing evidence and remaining validation, and describes
 the monitored regression command.

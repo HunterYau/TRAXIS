@@ -40,9 +40,13 @@ def main():
     if args.highorder:
         env['TRAXIS_HIGHORDER_CHECKS'] = '1'
     output.mkdir(parents=True, exist_ok=True)
+    temporary = output / 'temporary-files'
+    temporary.mkdir()
+    env.update({name: str(temporary) for name in ('TEMP', 'TMP', 'TMPDIR')})
     write_json(output / 'invocation.json', {'command': command,
         'limits': guard.report()['limits'], 'elmer_home': env.get('TRAXIS_ELMER_HOME'),
         'highorder_checks': env.get('TRAXIS_HIGHORDER_CHECKS') == '1',
+        'temporary_directory': str(temporary),
         'wrapper_source_sha256': sha256_file(Path(__file__))})
     result = {'completed': False, 'full_training_cycle_run': False}
     try:
