@@ -130,6 +130,14 @@ guard, but these action costs do not establish affordable transient solves.
 The conservative 8,073.5 MiB P3 assembly screen estimates a different storage
 route; it is not a measured sparse allocation or measured memory saving.
 
+## First-step measurement
+
+The [first full-size acceleration measurement](matrixfree-step-cost.md) now
+reaches the 180-second guard after fourteen completed CG iterations with no
+completed step. Its roughly 9-10-second iterations establish a practical
+cost concern even though memory remains below 500 MiB. No final true residual
+or accepted waveform follows from that interrupted solve.
+
 ## Sources
 
 NGSolve documents nonassembled form applications in its

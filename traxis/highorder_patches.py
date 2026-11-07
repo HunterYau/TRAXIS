@@ -32,7 +32,8 @@ def patch_polynomial_moments(system, vector, center, radius, direction, region, 
     return {'monomials': rows, 'maximum_absolute_error': max(row['absolute_error'] for row in rows)}
 
 
-def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0., 0., 1.), guard=None):
+def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0., 0., 1.), guard=None,
+                            *, max_scalar_dofs=20000, max_tetrahedra=40000, max_workspace_mib=128):
     """Unit-total-force load and identical area-average displacement probe.
 
     Integrate the native finite-element trace polynomial on each free, flat
@@ -46,15 +47,24 @@ def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0.,
             or np.linalg.norm(direction) == 0):
         raise ValueError('patch center and nonzero direction must be finite real coordinates')
     center, direction = center.astype(float), direction.astype(float)/np.linalg.norm(direction)
+    if (type(max_scalar_dofs) is not int or not 4 <= max_scalar_dofs <= 2000000
+            or type(max_tetrahedra) is not int or not 1 <= max_tetrahedra <= 1000000
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
+        raise ValueError('invalid circular H1 surface extraction limits')
     order = system.scalar_space.globalorder
     powers = triangle_powers(order)
-    if order < 1 or not 4 <= system.scalar_space.ndof <= 20000:
+    if not 1 <= order <= 4 or not 4 <= system.scalar_space.ndof <= max_scalar_dofs:
         raise ValueError('circular H1 footprints require bounded degree-one through degree-four spaces')
+    if not 1 <= system.mesh.ne <= max_tetrahedra or not 4 <= system.mesh.nv <= 1000000:
+        raise ValueError('surface extraction exceeds the reference element/vertex bound')
+    workspace_mib = (system.mesh.ne*1024+system.mesh.nv*24+system.scalar_space.ndof*32)/1024**2
+    if workspace_mib > max_workspace_mib:
+        raise MemoryError('circular H1 surface extraction exceeds its workspace screen')
     import ngsolve as ng
     points = np.array([tuple(vertex.point) for vertex in system.mesh.vertices])
     elements = list(system.mesh.Elements(ng.VOL))
-    if not 1 <= len(elements) <= 40000:
-        raise ValueError('surface extraction exceeds the reference element bound')
+    if len(elements) != system.mesh.ne:
+        raise ValueError('native volume element count changed during surface extraction')
     tets = np.array([[v.nr for v in element.vertices] for element in elements], dtype=int)
     if tets.shape != (len(elements), 4):
         raise ValueError('circular H1 footprints require straight tetrahedra')
@@ -127,5 +137,6 @@ def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0.,
         'covered_surface_triangles': covered, 'support_coefficients': int(np.count_nonzero(abs(weights) > 1e-13)),
         'negative_coefficients': int(np.count_nonzero(weights < -1e-13)),
         'maximum_trace_fit_absolute_error': maximum_fit_error, 'trace_vandermonde_condition': condition,
+        'extraction_workspace_screen_mib': workspace_mib,
         'coefficient_layout': 'component_major_hierarchical_H1', 'work_conjugate': True}
     return (direction[:, None]*weights).ravel(), report

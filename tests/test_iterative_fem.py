@@ -5,10 +5,31 @@ from scipy.integrate import solve_ivp
 from scipy.sparse.linalg import aslinearoperator
 
 from traxis.implicit_fem import implicit_simulate
-from traxis.iterative_fem import IterativeSettings, iterative_simulate
+from traxis.iterative_fem import IterativeSettings, checked_cg, iterative_simulate
 
 
 class IterativeDynamicsTests(unittest.TestCase):
+    def test_checked_cg_preserves_guess_and_retains_progress_on_failure(self):
+        matrix = np.array([[4.,1.],[1.,2.]])
+        rhs,guess = np.array([1.,3.]),np.array([.1,.2])
+        events = []
+        result = checked_cg(matrix,rhs,guess,matrix.diagonal(),progress=events.append)
+        np.testing.assert_allclose(result.solution,np.linalg.solve(matrix,rhs),rtol=1e-12,atol=1e-14)
+        np.testing.assert_array_equal(guess,[.1,.2])
+        self.assertEqual(events[0]['phase'],'solve_start')
+        self.assertEqual(events[-1]['phase'],'solve_end')
+        self.assertLess(events[-1]['true_relative_residual'],1e-11)
+        self.assertEqual(len([e for e in events if e['phase']=='cg_iteration']),result.iterations)
+        events.clear()
+        with self.assertRaises(ArithmeticError):
+            checked_cg(matrix,rhs,guess,matrix.diagonal(),IterativeSettings(max_iterations=1),progress=events.append)
+        self.assertEqual(events[-1]['status'],1)
+        self.assertGreater(events[-1]['true_relative_residual'],1e-9)
+        with self.assertRaises(ValueError):
+            checked_cg(matrix,rhs,guess,np.zeros(2))
+        with self.assertRaises(MemoryError):
+            checked_cg(matrix,rhs,guess,matrix.diagonal(),IterativeSettings(max_workspace_mib=1e-9))
+
     def test_coupled_consistent_mass_agrees_with_direct_and_independent_ode(self):
         mass = np.array([[2.,.3],[.3,1.]])
         stiffness = np.array([[8.,-2.],[-2.,3.]])

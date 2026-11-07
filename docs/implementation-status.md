@@ -663,3 +663,27 @@ See matrixfree-reference.md, evidence/matrixfree-debug.json and
 outputs/matrixfree-fullplate-capacity-20261107. Failed CG/wall-limit attempts
 remain recorded. No full training ran and no research bank is accepted.
 
+## Full-size first-step cost, November 7
+
+The shared strict CG solve now supports saved iteration timing/count/norm
+progress; the original Newmark integrator uses that same checked path. Larger
+mechanical footprints require explicit scalar/element/workspace limits and
+screen before allocating extraction arrays. Twelve focused checks pass,
+including an actual small native first-step comparison to sparse acceleration
+and direct Newmark. The first direct-reference fixture exceeded its existing
+2,000-coefficient cap; that rejection now happens before solving.
+
+An actual first Newmark acceleration equation on the retained 500 mm P3
+mesh, 3 mm-radius force disk and 125 ns step stopped at the 180-second guard
+after fourteen completed CG iterations. Last progress was at 170.47 seconds;
+each iteration cost roughly 9-10 seconds. There is no final true residual
+or completed state. Peak sampled combined RSS was 494.48 MiB, system RAM
+45.4%, minimum available memory 8,860 MiB and system GPU temperature 57 C.
+CPU temperature was unavailable; the run used CPU and performed no training.
+
+This is a cost/resource stop, not a numerical-accuracy failure or usable
+waveform. Affordable full-window propagation remains unproven. The modified
+tree's full native regression is pending; the prior 239-test result predates
+this increment. See matrixfree-step-cost.md and
+outputs/matrixfree-fullplate-first-step-20261107 for retained inputs/progress.
+

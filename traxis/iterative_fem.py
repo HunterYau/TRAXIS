@@ -47,6 +47,56 @@ class IterativeResult:
     workspace_screen_mib: float
 
 
+@dataclass
+class CheckedCGResult:
+    solution: np.ndarray
+    iterations: int
+    relative_residual: float
+
+
+def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, progress=None):
+    """Solve an SPD equation with strict status and a fresh final residual.
+
+    Optional progress contains iteration counts/norms, not residual estimates.
+    Only the final operator application provides a checked relative residual.
+    """
+    settings = settings or IterativeSettings()
+    operator = aslinearoperator(operator)
+    rhs, guess, diagonal = (np.asarray(value) for value in (rhs,guess,diagonal))
+    n = operator.shape[0]
+    if (operator.shape != (n,n) or not 1 <= n <= settings.max_dofs
+            or operator.dtype is None or np.issubdtype(operator.dtype,np.complexfloating)
+            or any(np.iscomplexobj(value) or value.shape != (n,) or not np.isfinite(value).all()
+                   for value in (rhs,guess,diagonal)) or np.any(diagonal <= 0)
+            or (progress is not None and not callable(progress))):
+        raise ValueError('CG needs bounded real operators/vectors and a positive diagonal')
+    if 12*n*8/1024**2 > settings.max_workspace_mib:
+        raise MemoryError('CG vector workspace exceeds its declared screen')
+    count = 0
+    if guard:
+        guard.check()
+    def emit(**fields):
+        if progress:
+            progress(fields)
+    emit(phase='solve_start',rhs_norm=float(np.linalg.norm(rhs)),relative_tolerance=settings.relative_tolerance)
+    def counted(values):
+        nonlocal count
+        count += 1
+        if progress:
+            emit(phase='cg_iteration',iteration=count,iterate_norm=float(np.linalg.norm(values)))
+        if guard:
+            guard.check()
+    preconditioner = LinearOperator((n,n),matvec=lambda x:x/diagonal,dtype=float)
+    answer,info = cg(operator,rhs,x0=guess.copy(),M=preconditioner,rtol=settings.relative_tolerance,
+        atol=0.,maxiter=settings.max_iterations,callback=counted)
+    relative = float(np.linalg.norm(operator@answer-rhs)/max(float(np.linalg.norm(rhs)),1e-30))
+    emit(phase='solve_end',iterations=count,status=int(info),
+        true_relative_residual=relative if math.isfinite(relative) else None)
+    if info != 0 or not math.isfinite(relative) or relative > settings.residual_limit or not np.isfinite(answer).all():
+        raise ArithmeticError(f'CG solve failed: status={info}, iterations={count}, relative residual={relative:.6g}')
+    return CheckedCGResult(answer,count,relative)
+
+
 def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, force=None,
                        initial_displacement=None, initial_velocity=None, output_stride=1,
                        stiffness_diagonal=None, settings=None, guard=None):
@@ -91,22 +141,9 @@ def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, f
     maximum_residual = 0.
     def solve(operator, rhs, guess, operator_diagonal):
         nonlocal maximum_residual
-        count = 0
-        def counted(_):
-            nonlocal count
-            count += 1
-            if guard:
-                guard.check()
-        # CG may mutate a starting vector. Preserve the preceding acceleration
-        # for the Newmark velocity update.
-        preconditioner = LinearOperator((n,n), matvec=lambda x:x/operator_diagonal, dtype=float)
-        answer, info = cg(operator, rhs, x0=guess.copy(), M=preconditioner,
-            rtol=settings.relative_tolerance, atol=0., maxiter=settings.max_iterations, callback=counted)
-        relative = float(np.linalg.norm(operator @ answer-rhs)/max(float(np.linalg.norm(rhs)), 1e-30))
-        if info != 0 or not math.isfinite(relative) or relative > settings.residual_limit or not np.isfinite(answer).all():
-            raise ArithmeticError(f'CG solve failed: status={info}, iterations={count}, relative residual={relative:.6g}')
-        maximum_residual = max(maximum_residual, relative)
-        return answer, count
+        result = checked_cg(operator,rhs,guess,operator_diagonal,settings,guard=guard)
+        maximum_residual = max(maximum_residual,result.relative_residual)
+        return result.solution,result.iterations
     load = vector(force(0.) if force else None)
     initial_rhs = load-k @ u
     acceleration, initial_iterations = solve(m, initial_rhs, np.zeros(n),diagonal) if np.any(initial_rhs) else (np.zeros(n), 0)

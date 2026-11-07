@@ -16,6 +16,18 @@ from traxis.storage import canonical_hash, write_json
 
 
 class HighOrderPatchPreflightTests(unittest.TestCase):
+    def test_larger_footprints_need_explicit_limits_and_screen_before_allocation(self):
+        from types import SimpleNamespace
+        system = SimpleNamespace(scalar_space=SimpleNamespace(globalorder=3,ndof=100000),
+                                 mesh=SimpleNamespace(ne=100000,nv=20000))
+        with self.assertRaisesRegex(ValueError,'bounded'):
+            highorder_surface_patch(system,Plate(),(.02,.02),.003)
+        with self.assertRaisesRegex(ValueError,'element/vertex'):
+            highorder_surface_patch(system,Plate(),(.02,.02),.003,max_scalar_dofs=100000)
+        with self.assertRaisesRegex(MemoryError,'workspace'):
+            highorder_surface_patch(system,Plate(),(.02,.02),.003,max_scalar_dofs=100000,
+                                    max_tetrahedra=100000,max_workspace_mib=1e-6)
+
     def test_command_distinguishes_operational_and_numerical_failure(self):
         from traxis.cli import main
         args = ['traxis', 'verify-highorder-patches', '--elmer-home', 'unused', '--output', 'unused']
