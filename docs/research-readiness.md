@@ -56,6 +56,14 @@ input-contract checks were verified separately. See gpu-element-reference.md
 and evidence/gpu-element-debug.json. One first step leaves full-window,
 mesh/time, defect/frequency and PZT/physical acceptance open.
 
+Optional element additive Schwarz preconditioning reduces this first solve
+to 70 iterations / 7.03 seconds, with current native CPU residual agreement.
+Extra factorization raises total monitored time to 95.17 seconds and system
+GPU memory to 5,264 MiB. All 250 integrated native CPU/GPU tests pass without
+skips in 498.92 monitored seconds at 894.28 MiB combined RSS. See
+gpu-element-preconditioning.md and evidence/gpu-schwarz-debug.json. Longer
+propagation and its cost have not yet been demonstrated.
+
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource
 limits. Individual training-related tests perform short debug updates; this

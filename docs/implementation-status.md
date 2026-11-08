@@ -728,3 +728,29 @@ window or research-bank acceptance. Full-size space/time and defect/frequency
 accuracy, coupled/calibrated PZT voltage and physical agreement remain open.
 See gpu-element-reference.md and outputs/gpu-fullplate-first-step-20261107.
 
+## Element preconditioning, November 7
+
+An optional symmetric, multiplicity-weighted element additive Schwarz inverse
+passes all-column local-solve reference, symmetry/positive-factor and 32-step
+direct comparisons on rectangular/affine P1-P4 cases. Fourteen focused tests
+pass. It preserves the full equations and checked residual targets. Its local
+inverse/weight storage adds 2,021.74 MiB on the full-size plate.
+
+The unchanged full-size first equation converges in 70 iterations / 7.032
+solve seconds with residual 7.43908e-12. Native CPU actions confirm 7.43907e-12.
+Total monitored time increases to 95.17 seconds because setup costs more;
+the previous diagonal solve took 12.08 seconds / 78.80 total. Peak sampled
+combined RSS is 586.98 MiB, system RAM 48.6%, available memory at least
+8,339.71 MiB, system GPU memory 5,264/8,192 MiB and GPU temperature 64 C.
+CPU temperature remains unavailable. The diagonal baseline remains default.
+Full-window propagation, full-size refinement, defect/PZT/physical acceptance
+and research training remain unfinished. See gpu-element-preconditioning.md.
+
+The integrated native CPU/GPU regression passes all 250 tests without skips
+in 495.937 test seconds / 498.918 monitored seconds. Peak sampled combined
+RSS is 894.28 MiB, system RAM 49.4%, available RAM at least 8,205.86 MiB and
+system GPU temperature 42 C. Current-source array/receipt checks and compact
+evidence are retained in evidence/gpu-schwarz-debug.json. The saved acceleration
+differs from the earlier diagonal GPU result by 7.65e-11 relative L2; independent
+current native CPU actions also pass. No full training ran.
+

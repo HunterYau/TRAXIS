@@ -136,8 +136,9 @@ The [CAD high-order reference](docs/highorder-recesses.md) now distinguishes
 intact/current geometry, meshes backside recesses, and exposes bounded
 single-group and mesh/time refinement commands.
 The 20 mm paired recess control passes its fixed current/scattered discrepancy
-screens; 224 native-enabled regression tests pass. The 500 mm geometry-only
-screen still exceeds this worker's configured pilot limits. No research-data
+screens; 224 native-enabled regression tests passed at that milestone. That
+refined 500 mm pilot exceeds its configured limits; the different intact
+matrix-free capacity configuration is described below. No research-data
 or bonded-PZT acceptance is implied.
 The [research readiness checklist](docs/research-readiness.md) maps the
 confirmed plan to existing evidence and remaining validation, and describes
@@ -148,7 +149,7 @@ three-component high-order elasticity and consistent mass while avoiding
 global sparse operators. Tiny all-column/direct-transient checks and guarded
 full-plate capacity measurements distinguish algebraic agreement from full-size
 wave/PZT acceptance. No new research training data is approved by this path.
-The intact 500 mm P3 operator check fits the 1 GiB guard; 247 regression tests
+The intact 500 mm P3 operator check fits the 1 GiB guard; 250 regression tests
 pass without skips with native CPU/GPU references enabled. Full-size propagation cost
 and coupled/calibrated voltage responses remain open.
 The [first full-size acceleration probe](docs/matrixfree-step-cost.md) reaches
@@ -162,6 +163,10 @@ first acceleration equation in 12.08 solve seconds inside the original guard.
 An independent native CPU action check confirms its saved full-size residual.
 This is one checked step; full-window, mesh/time and PZT/physical acceptance
 remain open. Optional GPU dependencies are separate from the core setup.
+An optional [element preconditioner](docs/gpu-element-preconditioning.md)
+reduces the measured full-size solve to 70 iterations / 7.03 seconds, with
+native CPU residual agreement. It uses more VRAM and setup time; affordable
+full-window propagation remains unproven.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.

@@ -154,3 +154,8 @@ Compact source/package/file identities, metrics, hashes and monitor/test
 receipts are retained in `evidence/gpu-element-debug.json`. Raw CPU check and
 input-check evidence are under `outputs/gpu-fullplate-cpu-residual-20261107`
 and `outputs/gpu-step-input-checks-20261107`.
+
+The optional [element preconditioner](gpu-element-preconditioning.md) adds a
+separately verified SPD local inverse. Its full-size cost/memory tradeoff and
+subsequent 250-test integrated regression are recorded separately; the diagonal
+baseline described above remains available.
