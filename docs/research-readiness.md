@@ -64,6 +64,14 @@ skips in 498.92 monitored seconds at 894.28 MiB combined RSS. See
 gpu-element-preconditioning.md and evidence/gpu-schwarz-debug.json. Longer
 propagation and its cost have not yet been demonstrated.
 
+Device-resident CG and revised kernel indexing reduce the observed first
+solve to 5.33 seconds with the same 70 iterations and independent native CPU
+residual agreement. Full-size CG transfers two vectors to the GPU and one
+back; Newmark state handling remains on the CPU. All 253 integrated native
+CPU/GPU tests pass without skips in 528.19 monitored seconds at 875.42 MiB
+combined RSS. See gpu-resident-cg.md and evidence/gpu-resident-debug.json.
+This is still one full-size step, with full-window and physical acceptance open.
+
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource
 limits. Individual training-related tests perform short debug updates; this

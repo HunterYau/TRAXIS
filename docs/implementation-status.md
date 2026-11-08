@@ -754,3 +754,30 @@ evidence are retained in evidence/gpu-schwarz-debug.json. The saved acceleration
 differs from the earlier diagonal GPU result by 7.65e-11 relative L2; independent
 current native CPU actions also pass. No full training ran.
 
+## GPU-resident CG, November 7
+
+The optional device-resident CG solver keeps iteration coefficient vectors
+and reductions on the GPU, with scalar synchronization and one accepted-state
+download. Recurrence convergence and a fresh original-equation residual are
+both required. The kernels also avoid integer division in their inner component
+loops. Storage preflight reserves sixteen vectors; the original guards remain.
+
+All eight rectangular/affine P1-P4 direct-reference cases pass, along with
+warm/zero-state, transfer-count and nonconvergence checks. Seventeen focused
+tests pass; the native contract probe was then isolated and checked separately
+to release its CUDA context before later worker tests.
+
+The unchanged 500 mm P3 first equation completes in 70 iterations / 5.326 solve
+seconds, 93.573 monitored seconds total. GPU and native CPU residuals are
+7.438959e-12 and 7.438951e-12. CG uploads two vectors, downloads one, and reads
+213 scalar reductions. Sampled combined RSS is 599.82 MiB, system RAM 48.2%,
+available RAM at least 8,403.89 MiB, GPU memory 5,352/8,192 MiB and temperature
+66 C. CPU temperature remains unavailable. Newmark states still use CPU arrays.
+
+All 253 integrated native CPU/GPU tests pass without skips in 525.159 test
+seconds / 528.187 monitored seconds, at 875.42 MiB combined RSS, 49.9% system
+RAM and 43 C GPU temperature. Compact evidence is in
+evidence/gpu-resident-debug.json; see gpu-resident-cg.md. Full-window cost,
+full-size refinement, defect/PZT/physical acceptance and research training
+remain open. No full training ran.
+

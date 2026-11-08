@@ -110,3 +110,8 @@ are in `evidence/gpu-schwarz-debug.json`, fingerprint
 `d1cd1a20c4079e2035d8f3c7eae90081b8413b5db4e74490842bb06f065600d1`.
 Full-suite logs and monitor receipts are under
 `outputs/gpu-schwarz-native-regression-20261107`.
+
+An optional [device-resident CG path](gpu-resident-cg.md) subsequently reduces
+the observed full-size solve to 5.33 seconds while retaining 70 iterations.
+Its separate native CPU check, revised kernel indexing, transfer counters and
+253-test regression are recorded with that implementation.
