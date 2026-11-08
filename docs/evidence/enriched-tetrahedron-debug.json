@@ -1,0 +1,1490 @@
+{
+  "scope": "Enriched/native/P4 discrete operators, explicit time checks and full-size space/mass capacity; no full-window or PZT acceptance.",
+  "implementation_commit": "9391211",
+  "ready_for_training_data": false,
+  "full_training_cycle_run": false,
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "enriched_capacity.py": "9343f004832fa98336d9bde5981f2bfec5a73fc13b6c340f3727821f92199cb0",
+    "matrixfree_step.py": "cfddac1da94b09d5713836acd31f6d8da18238ac20443136dce13d2ca992c27c",
+    "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383"
+  },
+  "native_api_probe": {
+    "path": "outputs/mass-lumped-screen-20261107/probe.json",
+    "sha256": "02aebfb645ca01e4afe129b2fc195d2fcd793e1abd289f325f575c6ef6bb1db9",
+    "receipt": {
+      "ngsolve": "6.2.2606",
+      "implemented_3d_element": true,
+      "ready_for_training_data": false,
+      "training_updates": 0,
+      "global_scalar_dofs": 51,
+      "local_dofs": 15,
+      "documentation_sha256": "9e9f6f2e7b6f6154e2f8f9c70ba18b3ab1f7d11099b273e16f5e66a7a0aa3b02"
+    }
+  },
+  "coarse_failed_reference": {
+    "path": "outputs/enriched-native-reference-20261107/native/native-report.json",
+    "sha256": "8e1982dd2802dcf8d31dbb1b056d9f9583f9984ec98ee902ea5dcfd1ab5f73cb",
+    "receipt": {
+      "completed": true,
+      "passed": false,
+      "ready_for_training_data": false,
+      "training_updates": 0,
+      "plan_fingerprint": "2ef8858fc1a01c0cfeac27fb6e67a24392de682c7e612becd99c15c718ec0461",
+      "cases": [
+        {
+          "geometry": "rectangular",
+          "dofs": 153,
+          "scalar_dofs": 51,
+          "all_coefficient_columns_checked": 153,
+          "native_stiffness_relative_frobenius": 2.873346637591478e-14,
+          "native_consistent_mass_relative_frobenius": 4.020312345745536e-14,
+          "native_nodal_mass_relative_frobenius": 9.646452014660383e-16,
+          "p4_stiffness_relative_frobenius": 1.5662275100101334e-14,
+          "p4_consistent_mass_relative_frobenius": 1.6124343143030348e-14,
+          "native_api_local_dofs": 45,
+          "native_embedding_overlap_error": 9.992007221626409e-16,
+          "p4_embedding_overlap_error": 4.9737991503207007e-14,
+          "six_rigid_modes": true,
+          "first_six_normalized_eigenvalues": [
+            5.349675173165349e-18,
+            7.655769485069477e-18,
+            1.5936909665258977e-17,
+            2.2769294727353495e-17,
+            3.4734476010180776e-17,
+            6.983415232209217e-17
+          ],
+          "seventh_normalized_eigenvalue": 6.272148622860917e-06,
+          "stability_bound_valid": true,
+          "conservative_dt_s": 8.079749697905775e-08,
+          "exact_discrete_stability_dt_s": 1.1179113522280145e-07,
+          "manufactured_mode_omega_rad_s": 17585138.215104714,
+          "base_dt_s": 4.039874848952888e-08,
+          "temporal_errors": [
+            0.28452735050407835,
+            0.06712081335078997,
+            0.01655926792961704
+          ],
+          "temporal_error_ratios": [
+            4.239033115064743,
+            4.053368399863934
+          ],
+          "modified_energy_relative_ranges": [
+            8.024599707070303e-16,
+            1.086074849902994e-15,
+            1.0601768168927512e-15
+          ],
+          "intentional_lumped_vs_consistent_relative_frobenius": 0.986940180665794,
+          "comparison_file": "rectangular/comparison.npz",
+          "comparison_sha256": "044aa285222f107a4220491be4be42b3aa1938199541b3dc69b805c5b12788c0",
+          "passed": false
+        },
+        {
+          "geometry": "affine-skewed",
+          "dofs": 153,
+          "scalar_dofs": 51,
+          "all_coefficient_columns_checked": 153,
+          "native_stiffness_relative_frobenius": 3.018072878096156e-14,
+          "native_consistent_mass_relative_frobenius": 4.092021152566846e-14,
+          "native_nodal_mass_relative_frobenius": 1.475970014470602e-15,
+          "p4_stiffness_relative_frobenius": 1.6601812520837305e-14,
+          "p4_consistent_mass_relative_frobenius": 1.6827149085184638e-14,
+          "native_api_local_dofs": 45,
+          "native_embedding_overlap_error": 1.9984014443252818e-15,
+          "p4_embedding_overlap_error": 9.947598300641403e-14,
+          "six_rigid_modes": true,
+          "first_six_normalized_eigenvalues": [
+            -3.643731832712911e-17,
+            -2.195565975535206e-17,
+            -1.547739428224342e-17,
+            -9.994444427414499e-18,
+            3.012997019524352e-17,
+            5.746726059940888e-17
+          ],
+          "seventh_normalized_eigenvalue": 9.395103401857725e-06,
+          "stability_bound_valid": true,
+          "conservative_dt_s": 9.303336051752589e-08,
+          "exact_discrete_stability_dt_s": 1.308197943695889e-07,
+          "manufactured_mode_omega_rad_s": 15090512.820028333,
+          "base_dt_s": 4.6516680258762943e-08,
+          "temporal_errors": [
+            0.2692341246795424,
+            0.0645023834628448,
+            0.016014410328139092
+          ],
+          "temporal_error_ratios": [
+            4.174018233522004,
+            4.027771372231356
+          ],
+          "modified_energy_relative_ranges": [
+            1.3574860710606576e-15,
+            9.824657683580331e-16,
+            9.595971046166905e-16
+          ],
+          "intentional_lumped_vs_consistent_relative_frobenius": 0.9869401806657938,
+          "comparison_file": "affine-skewed/comparison.npz",
+          "comparison_sha256": "6a0db79589113d2132ce7a84c64c34acbf633146edd4a303e015d8ec1afbb3de",
+          "passed": true
+        }
+      ],
+      "scope": "Small enriched/native/P4 operator agreement and discrete explicit time checks; no full-size wave/PZT acceptance.",
+      "wall_seconds": 0.5079741000663489,
+      "resource_summary": {
+        "limits": {
+          "max_seconds": 89.68799999996554,
+          "max_rss_mib": 1024.0,
+          "max_system_memory_percent": 92,
+          "min_available_mib": 768,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "sample_count": 15,
+        "maximum_sampled_rss_mib": 134.51953125,
+        "maximum_system_memory_percent": 45.9,
+        "minimum_available_mib": 8782.94921875,
+        "maximum_gpu_used_mib": 847.0,
+        "maximum_gpu_temperature_c": 48.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "fingerprint": "f7559802ef39832b0ea844b4258be8ee0f44d1325e3fad4a2cde892cb63fce36"
+    }
+  },
+  "reference": {
+    "plan": {
+      "path": "outputs/enriched-native-final-20261108/enriched-plan.json",
+      "sha256": "332ba822f1e2ce9d1023cd12a3298c3e20a5ddc94935366dcadd9eb6ab17d06c",
+      "receipt": {
+        "kind": "enriched_tetrahedron_reference",
+        "meshes": [
+          {
+            "name": "rectangular",
+            "plate": {
+              "width_m": 0.04,
+              "height_m": 0.03,
+              "thickness_m": 0.003
+            },
+            "cells": [
+              1,
+              1,
+              1
+            ],
+            "transform": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "material": {
+              "young_pa": 68900000000.0,
+              "poisson": 0.33,
+              "density_kg_m3": 2700.0
+            }
+          },
+          {
+            "name": "affine-skewed",
+            "plate": {
+              "width_m": 0.04,
+              "height_m": 0.03,
+              "thickness_m": 0.003
+            },
+            "cells": [
+              1,
+              1,
+              1
+            ],
+            "transform": [
+              [
+                1.0,
+                0.12,
+                0.04
+              ],
+              [
+                0.05,
+                0.9,
+                0.03
+              ],
+              [
+                0.01,
+                0.02,
+                1.1
+              ]
+            ],
+            "material": {
+              "young_pa": 71000000000.0,
+              "poisson": 0.29,
+              "density_kg_m3": 2800.0
+            }
+          }
+        ],
+        "operator_tolerance": 1e-10,
+        "quadrature_bonus": 6,
+        "modified_energy_tolerance": 1e-09,
+        "temporal_steps": [
+          64,
+          128,
+          256
+        ],
+        "diagnostic_steps": 32,
+        "source_sha256": {
+          "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+          "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+          "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+          "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+          "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+          "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+          "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+          "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+          "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+          "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+          "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+          "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+          "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+          "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+          "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+          "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+          "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+          "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+          "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+          "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+          "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+          "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+          "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+          "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+          "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+          "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+          "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+          "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+          "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+          "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+          "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+          "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+          "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+          "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+          "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+          "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+          "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+          "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+          "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+          "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+          "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+          "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+          "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+          "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+          "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+          "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+          "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+          "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+          "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+          "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+          "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+          "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+          "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+          "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+          "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+          "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+          "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+          "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+          "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+          "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+          "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+          "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+          "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+          "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+          "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+          "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+          "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+          "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+          "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+          "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+          "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+          "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+          "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+          "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+          "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+        },
+        "runtime": {
+          "ngsolve": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+              "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+              "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+              "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+              "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-mesher": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+              "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+              "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+              "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+              "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+              "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+              "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+              "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+              "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-occt": {
+            "version": "7.8.1",
+            "kernel_sha256": {
+              "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+              "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+              "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+              "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+              "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+              "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+              "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+              "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+              "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+              "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+              "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+              "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+              "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+              "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+              "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+              "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+              "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+              "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+              "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+              "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+              "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+              "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+              "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+              "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+              "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+              "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+              "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+              "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+              "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+              "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+              "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+              "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+              "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+              "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+              "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+              "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+              "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+              "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+              "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+              "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+              "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+              "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+              "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+              "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+              "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+              "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+              "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+            }
+          },
+          "ngsolve-openblas": {
+            "version": "0.3.33",
+            "kernel_sha256": {
+              "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+              "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+            }
+          },
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+        },
+        "fingerprint": "302671df35482acd60a71f85e18d362509957e65c1bb2f9522c17f5cec35401f"
+      }
+    },
+    "parent": {
+      "path": "outputs/enriched-native-final-20261108/monitor-result.json",
+      "sha256": "63dd866242811eb54d2e4c0599c61d00719e3d0dcda8742c7b557a0b691b6449",
+      "receipt": {
+        "completed": true,
+        "passed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "plan_fingerprint": "302671df35482acd60a71f85e18d362509957e65c1bb2f9522c17f5cec35401f",
+        "source_snapshot_sha256": "17e1d3d062e304cca60374f87e6a589df928f9c5bb46b74f2804dc21a1851931",
+        "worker_run": {
+          "exit_code": 0,
+          "wall_seconds": 2.119416500092484,
+          "maximum_observed_external_processes": 5,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "cases": [
+          {
+            "geometry": "rectangular",
+            "dofs": 153,
+            "scalar_dofs": 51,
+            "all_coefficient_columns_checked": 153,
+            "native_stiffness_relative_frobenius": 2.873346637591478e-14,
+            "native_consistent_mass_relative_frobenius": 4.020312345745536e-14,
+            "native_nodal_mass_relative_frobenius": 9.646452014660383e-16,
+            "p4_stiffness_relative_frobenius": 1.5662275100101334e-14,
+            "p4_consistent_mass_relative_frobenius": 1.6124343143030348e-14,
+            "native_api_local_scalar_dofs": 15,
+            "native_api_local_vector_dofs": 45,
+            "native_embedding_overlap_error": 9.992007221626409e-16,
+            "p4_embedding_overlap_error": 4.9737991503207007e-14,
+            "native_embedding_rank": 153,
+            "p4_embedding_rank": 153,
+            "affine_mass_relative_errors": [
+              2.220446049250313e-16,
+              0.0,
+              1.1102230246251565e-16,
+              1.1102230246251565e-16
+            ],
+            "topology_screen": {
+              "scalar_dofs": 51,
+              "vector_dofs": 153,
+              "vertices": 8,
+              "edges": 19,
+              "faces": 18,
+              "tetrahedra": 6,
+              "topology_screen_mib": 0.00604248046875,
+              "assembly_screen_mib": 0.37078857421875,
+              "local_scalar_dofs": 15,
+              "polynomial_degree": 2,
+              "enrichment_maximum_degree": 4,
+              "construction_workspace_screen_mib": 0.00789642333984375,
+              "coefficient_layout": "component_major_enriched_nodal"
+            },
+            "six_rigid_modes": true,
+            "first_six_normalized_eigenvalues": [
+              5.349675173165349e-18,
+              7.655769485069477e-18,
+              1.5936909665258977e-17,
+              2.2769294727353495e-17,
+              3.4734476010180776e-17,
+              6.983415232209217e-17
+            ],
+            "seventh_normalized_eigenvalue": 6.272148622860917e-06,
+            "stability_bound_valid": true,
+            "conservative_dt_s": 8.079749697905775e-08,
+            "exact_discrete_stability_dt_s": 1.1179113522280145e-07,
+            "manufactured_mode_omega_rad_s": 17585138.215104714,
+            "base_dt_s": 4.039874848952888e-08,
+            "temporal_errors": [
+              0.28452735050407835,
+              0.06712081335078997,
+              0.01655926792961704,
+              0.004127002350121411
+            ],
+            "temporal_step_counts": [
+              32,
+              64,
+              128,
+              256
+            ],
+            "temporal_error_ratios": [
+              4.053368399863934,
+              4.012420281061843
+            ],
+            "coarse_temporal_error_ratio": 4.239033115064743,
+            "coarse_ratio_in_screen": false,
+            "modified_energy_relative_ranges": [
+              8.024599707070303e-16,
+              1.086074849902994e-15,
+              1.0601768168927512e-15,
+              8.782451250999458e-16
+            ],
+            "intentional_lumped_vs_consistent_relative_frobenius": 0.986940180665794,
+            "comparison_file": "rectangular/comparison.npz",
+            "comparison_sha256": "b398e0e1eaf43153e28b338a0454f3b957f4302cbd4f857c29abc02a9b5c3ec4",
+            "passed": true
+          },
+          {
+            "geometry": "affine-skewed",
+            "dofs": 153,
+            "scalar_dofs": 51,
+            "all_coefficient_columns_checked": 153,
+            "native_stiffness_relative_frobenius": 3.018072878096156e-14,
+            "native_consistent_mass_relative_frobenius": 4.092021152566846e-14,
+            "native_nodal_mass_relative_frobenius": 1.475970014470602e-15,
+            "p4_stiffness_relative_frobenius": 1.6601812520837305e-14,
+            "p4_consistent_mass_relative_frobenius": 1.6827149085184638e-14,
+            "native_api_local_scalar_dofs": 15,
+            "native_api_local_vector_dofs": 45,
+            "native_embedding_overlap_error": 1.9984014443252818e-15,
+            "p4_embedding_overlap_error": 9.947598300641403e-14,
+            "native_embedding_rank": 153,
+            "p4_embedding_rank": 153,
+            "affine_mass_relative_errors": [
+              0.0,
+              0.0,
+              2.220446049250313e-16,
+              2.220446049250313e-16
+            ],
+            "topology_screen": {
+              "scalar_dofs": 51,
+              "vector_dofs": 153,
+              "vertices": 8,
+              "edges": 19,
+              "faces": 18,
+              "tetrahedra": 6,
+              "topology_screen_mib": 0.00604248046875,
+              "assembly_screen_mib": 0.37078857421875,
+              "local_scalar_dofs": 15,
+              "polynomial_degree": 2,
+              "enrichment_maximum_degree": 4,
+              "construction_workspace_screen_mib": 0.00789642333984375,
+              "coefficient_layout": "component_major_enriched_nodal"
+            },
+            "six_rigid_modes": true,
+            "first_six_normalized_eigenvalues": [
+              -3.643731832712911e-17,
+              -2.195565975535206e-17,
+              -1.547739428224342e-17,
+              -9.994444427414499e-18,
+              3.012997019524352e-17,
+              5.746726059940888e-17
+            ],
+            "seventh_normalized_eigenvalue": 9.395103401857725e-06,
+            "stability_bound_valid": true,
+            "conservative_dt_s": 9.303336051752589e-08,
+            "exact_discrete_stability_dt_s": 1.308197943695889e-07,
+            "manufactured_mode_omega_rad_s": 15090512.820028333,
+            "base_dt_s": 4.6516680258762943e-08,
+            "temporal_errors": [
+              0.2692341246795424,
+              0.0645023834628448,
+              0.016014410328139092,
+              0.0040016377913117355
+            ],
+            "temporal_step_counts": [
+              32,
+              64,
+              128,
+              256
+            ],
+            "temporal_error_ratios": [
+              4.027771372231356,
+              4.001963986573001
+            ],
+            "coarse_temporal_error_ratio": 4.174018233522004,
+            "coarse_ratio_in_screen": true,
+            "modified_energy_relative_ranges": [
+              1.3574860710606576e-15,
+              9.824657683580331e-16,
+              9.595971046166905e-16,
+              1.3118123190837794e-15
+            ],
+            "intentional_lumped_vs_consistent_relative_frobenius": 0.9869401806657938,
+            "comparison_file": "affine-skewed/comparison.npz",
+            "comparison_sha256": "65f5165f576db24c1bba7c1ca6b40378eec76e2178ea2b77b9661264ade8bbc8",
+            "passed": true
+          }
+        ],
+        "native_report_sha256": "5054a13b88881a5fdf4985ea57b9d59c6459c88a8fe348b5498922803d8fa768",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 90.0,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 92,
+            "min_available_mib": 768,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 20,
+          "maximum_sampled_rss_mib": 243.21484375,
+          "maximum_system_memory_percent": 56.1,
+          "minimum_available_mib": 7129.5859375,
+          "maximum_gpu_used_mib": 759.0,
+          "maximum_gpu_temperature_c": 30.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+        },
+        "fingerprint": "f5252841bdf7852c35e311971971d9911de8ccc528cf616515311aba395b174d"
+      }
+    },
+    "native": {
+      "path": "outputs/enriched-native-final-20261108/native/native-report.json",
+      "sha256": "5054a13b88881a5fdf4985ea57b9d59c6459c88a8fe348b5498922803d8fa768",
+      "receipt": {
+        "completed": true,
+        "passed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "plan_fingerprint": "302671df35482acd60a71f85e18d362509957e65c1bb2f9522c17f5cec35401f",
+        "cases": [
+          {
+            "geometry": "rectangular",
+            "dofs": 153,
+            "scalar_dofs": 51,
+            "all_coefficient_columns_checked": 153,
+            "native_stiffness_relative_frobenius": 2.873346637591478e-14,
+            "native_consistent_mass_relative_frobenius": 4.020312345745536e-14,
+            "native_nodal_mass_relative_frobenius": 9.646452014660383e-16,
+            "p4_stiffness_relative_frobenius": 1.5662275100101334e-14,
+            "p4_consistent_mass_relative_frobenius": 1.6124343143030348e-14,
+            "native_api_local_scalar_dofs": 15,
+            "native_api_local_vector_dofs": 45,
+            "native_embedding_overlap_error": 9.992007221626409e-16,
+            "p4_embedding_overlap_error": 4.9737991503207007e-14,
+            "native_embedding_rank": 153,
+            "p4_embedding_rank": 153,
+            "affine_mass_relative_errors": [
+              2.220446049250313e-16,
+              0.0,
+              1.1102230246251565e-16,
+              1.1102230246251565e-16
+            ],
+            "topology_screen": {
+              "scalar_dofs": 51,
+              "vector_dofs": 153,
+              "vertices": 8,
+              "edges": 19,
+              "faces": 18,
+              "tetrahedra": 6,
+              "topology_screen_mib": 0.00604248046875,
+              "assembly_screen_mib": 0.37078857421875,
+              "local_scalar_dofs": 15,
+              "polynomial_degree": 2,
+              "enrichment_maximum_degree": 4,
+              "construction_workspace_screen_mib": 0.00789642333984375,
+              "coefficient_layout": "component_major_enriched_nodal"
+            },
+            "six_rigid_modes": true,
+            "first_six_normalized_eigenvalues": [
+              5.349675173165349e-18,
+              7.655769485069477e-18,
+              1.5936909665258977e-17,
+              2.2769294727353495e-17,
+              3.4734476010180776e-17,
+              6.983415232209217e-17
+            ],
+            "seventh_normalized_eigenvalue": 6.272148622860917e-06,
+            "stability_bound_valid": true,
+            "conservative_dt_s": 8.079749697905775e-08,
+            "exact_discrete_stability_dt_s": 1.1179113522280145e-07,
+            "manufactured_mode_omega_rad_s": 17585138.215104714,
+            "base_dt_s": 4.039874848952888e-08,
+            "temporal_errors": [
+              0.28452735050407835,
+              0.06712081335078997,
+              0.01655926792961704,
+              0.004127002350121411
+            ],
+            "temporal_step_counts": [
+              32,
+              64,
+              128,
+              256
+            ],
+            "temporal_error_ratios": [
+              4.053368399863934,
+              4.012420281061843
+            ],
+            "coarse_temporal_error_ratio": 4.239033115064743,
+            "coarse_ratio_in_screen": false,
+            "modified_energy_relative_ranges": [
+              8.024599707070303e-16,
+              1.086074849902994e-15,
+              1.0601768168927512e-15,
+              8.782451250999458e-16
+            ],
+            "intentional_lumped_vs_consistent_relative_frobenius": 0.986940180665794,
+            "comparison_file": "rectangular/comparison.npz",
+            "comparison_sha256": "b398e0e1eaf43153e28b338a0454f3b957f4302cbd4f857c29abc02a9b5c3ec4",
+            "passed": true
+          },
+          {
+            "geometry": "affine-skewed",
+            "dofs": 153,
+            "scalar_dofs": 51,
+            "all_coefficient_columns_checked": 153,
+            "native_stiffness_relative_frobenius": 3.018072878096156e-14,
+            "native_consistent_mass_relative_frobenius": 4.092021152566846e-14,
+            "native_nodal_mass_relative_frobenius": 1.475970014470602e-15,
+            "p4_stiffness_relative_frobenius": 1.6601812520837305e-14,
+            "p4_consistent_mass_relative_frobenius": 1.6827149085184638e-14,
+            "native_api_local_scalar_dofs": 15,
+            "native_api_local_vector_dofs": 45,
+            "native_embedding_overlap_error": 1.9984014443252818e-15,
+            "p4_embedding_overlap_error": 9.947598300641403e-14,
+            "native_embedding_rank": 153,
+            "p4_embedding_rank": 153,
+            "affine_mass_relative_errors": [
+              0.0,
+              0.0,
+              2.220446049250313e-16,
+              2.220446049250313e-16
+            ],
+            "topology_screen": {
+              "scalar_dofs": 51,
+              "vector_dofs": 153,
+              "vertices": 8,
+              "edges": 19,
+              "faces": 18,
+              "tetrahedra": 6,
+              "topology_screen_mib": 0.00604248046875,
+              "assembly_screen_mib": 0.37078857421875,
+              "local_scalar_dofs": 15,
+              "polynomial_degree": 2,
+              "enrichment_maximum_degree": 4,
+              "construction_workspace_screen_mib": 0.00789642333984375,
+              "coefficient_layout": "component_major_enriched_nodal"
+            },
+            "six_rigid_modes": true,
+            "first_six_normalized_eigenvalues": [
+              -3.643731832712911e-17,
+              -2.195565975535206e-17,
+              -1.547739428224342e-17,
+              -9.994444427414499e-18,
+              3.012997019524352e-17,
+              5.746726059940888e-17
+            ],
+            "seventh_normalized_eigenvalue": 9.395103401857725e-06,
+            "stability_bound_valid": true,
+            "conservative_dt_s": 9.303336051752589e-08,
+            "exact_discrete_stability_dt_s": 1.308197943695889e-07,
+            "manufactured_mode_omega_rad_s": 15090512.820028333,
+            "base_dt_s": 4.6516680258762943e-08,
+            "temporal_errors": [
+              0.2692341246795424,
+              0.0645023834628448,
+              0.016014410328139092,
+              0.0040016377913117355
+            ],
+            "temporal_step_counts": [
+              32,
+              64,
+              128,
+              256
+            ],
+            "temporal_error_ratios": [
+              4.027771372231356,
+              4.001963986573001
+            ],
+            "coarse_temporal_error_ratio": 4.174018233522004,
+            "coarse_ratio_in_screen": true,
+            "modified_energy_relative_ranges": [
+              1.3574860710606576e-15,
+              9.824657683580331e-16,
+              9.595971046166905e-16,
+              1.3118123190837794e-15
+            ],
+            "intentional_lumped_vs_consistent_relative_frobenius": 0.9869401806657938,
+            "comparison_file": "affine-skewed/comparison.npz",
+            "comparison_sha256": "65f5165f576db24c1bba7c1ca6b40378eec76e2178ea2b77b9661264ade8bbc8",
+            "passed": true
+          }
+        ],
+        "scope": "Small enriched/native/P4 operator agreement and discrete explicit time checks; no full-size wave/PZT acceptance.",
+        "wall_seconds": 0.6215575999813154,
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 87.75,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 92,
+            "min_available_mib": 768,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 17,
+          "maximum_sampled_rss_mib": 135.7890625,
+          "maximum_system_memory_percent": 55.9,
+          "minimum_available_mib": 7150.85546875,
+          "maximum_gpu_used_mib": 759.0,
+          "maximum_gpu_temperature_c": 30.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+        },
+        "fingerprint": "30bda03cd27706e7a5450341b91ffd8548139f854381f1066cb4f4aa25cfbae6"
+      }
+    }
+  },
+  "capacity": {
+    "plan": {
+      "path": "outputs/enriched-fullplate-capacity-20261108/enriched-capacity-plan.json",
+      "sha256": "66a9f763ccd596f55f3ef97b3128e6948d2469d7c2aa57fea16e7e0e373c5f2a",
+      "receipt": {
+        "kind": "enriched_space_capacity",
+        "capacity_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\matrixfree-fullplate-capacity-20261107",
+        "source_sha256": {
+          "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+          "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+          "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+          "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+          "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+          "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+          "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+          "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+          "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+          "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+          "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+          "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+          "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+          "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+          "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+          "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+          "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+          "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+          "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+          "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+          "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+          "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+          "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+          "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+          "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+          "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+          "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+          "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+          "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+          "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+          "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+          "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+          "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+          "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+          "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+          "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+          "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+          "highorder_patches.py": "c48bf9fb83fd6d909b6d0fd80f309a38c80744de28dac36c4919495d63c04704",
+          "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+          "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+          "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+          "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+          "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+          "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+          "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+          "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+          "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+          "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+          "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+          "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+          "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+          "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+          "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+          "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+          "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+          "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+          "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+          "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+          "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+          "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+          "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+          "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+          "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+          "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+          "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+          "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+          "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+          "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+          "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+          "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+          "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+          "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+          "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+          "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+          "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+        },
+        "driver_sha256": {
+          "matrixfree_step.py": "cfddac1da94b09d5713836acd31f6d8da18238ac20443136dce13d2ca992c27c",
+          "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383",
+          "enriched_capacity.py": "9343f004832fa98336d9bde5981f2bfec5a73fc13b6c340f3727821f92199cb0"
+        },
+        "runtime": {
+          "ngsolve": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+              "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+              "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+              "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+              "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-mesher": {
+            "version": "6.2.2606",
+            "kernel_sha256": {
+              "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+              "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+              "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+              "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+              "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+              "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+              "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+              "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+              "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+              "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+              "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+              "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+            }
+          },
+          "netgen-occt": {
+            "version": "7.8.1",
+            "kernel_sha256": {
+              "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+              "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+              "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+              "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+              "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+              "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+              "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+              "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+              "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+              "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+              "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+              "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+              "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+              "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+              "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+              "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+              "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+              "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+              "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+              "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+              "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+              "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+              "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+              "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+              "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+              "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+              "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+              "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+              "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+              "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+              "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+              "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+              "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+              "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+              "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+              "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+              "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+              "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+              "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+              "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+              "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+              "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+              "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+              "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+              "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+              "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+              "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+            }
+          },
+          "ngsolve-openblas": {
+            "version": "0.3.33",
+            "kernel_sha256": {
+              "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+              "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+            }
+          },
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+        },
+        "input_sha256": {
+          "capacity-plan.json": "fdd1bab19a7a83d57b85f0e9ebfff7ef23eab16e94c2aeb3b5952d70cf082abf",
+          "monitor-result.json": "fd2b971515cd658bb0598c296fdaa2939beb5bb18b81cad4bebd839a8e2ca54c",
+          "native/capacity-report.json": "c4f56957f6797a495118d2c6a368b1d04ddf6d997705d26741a7a267adb05f7a",
+          "native/mesh.npz": "568cb0ba3cf1a691988caaa5073010d081670a8feaa3cf34b3617eca65a07cb3"
+        },
+        "fingerprint": "c6588d11a6d062c6ddfa2fdaeb5f7df0c9c2cc873cc023095be905c58f7cac90"
+      }
+    },
+    "parent": {
+      "path": "outputs/enriched-fullplate-capacity-20261108/monitor-result.json",
+      "sha256": "cefd86cbb21347f4bd6ed44536d0c98abfaf65281045cbbd77bcd685924d093f",
+      "receipt": {
+        "completed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "plan_fingerprint": "c6588d11a6d062c6ddfa2fdaeb5f7df0c9c2cc873cc023095be905c58f7cac90",
+        "source_snapshot_sha256": "76c5ed6372b5bb41db56ecd383bba900b12fe2b42425ab1e04302d5cfd1c4cab",
+        "worker_run": {
+          "exit_code": 0,
+          "wall_seconds": 4.241203099954873,
+          "maximum_observed_external_processes": 3,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+        },
+        "vector_dofs": 1173621,
+        "native_report_sha256": "843e43e2bb91f647d73896def2b79661f374926c50607dc2af0a5e88d5852658",
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 90.0,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 92,
+            "min_available_mib": 768,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 24,
+          "maximum_sampled_rss_mib": 303.8359375,
+          "maximum_system_memory_percent": 50.8,
+          "minimum_available_mib": 7978.609375,
+          "maximum_gpu_used_mib": 759.0,
+          "maximum_gpu_temperature_c": 31.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+        },
+        "fingerprint": "cc77bf19178260f9cf89c68bc2f014139da72e9abd35cd312094d07711416cab"
+      }
+    },
+    "native": {
+      "path": "outputs/enriched-fullplate-capacity-20261108/native/capacity-report.json",
+      "sha256": "843e43e2bb91f647d73896def2b79661f374926c50607dc2af0a5e88d5852658",
+      "receipt": {
+        "completed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "time_steps": 0,
+        "stiffness_applications": 0,
+        "cuda_allocation": false,
+        "sparse_assembly": false,
+        "plan_fingerprint": "c6588d11a6d062c6ddfa2fdaeb5f7df0c9c2cc873cc023095be905c58f7cac90",
+        "scalar_dofs": 391207,
+        "vector_dofs": 1173621,
+        "screen": {
+          "scalar_dofs": 391207,
+          "vector_dofs": 1173621,
+          "vertices": 24579,
+          "edges": 122116,
+          "faces": 171025,
+          "tetrahedra": 73487,
+          "topology_screen_mib": 72.32721710205078,
+          "assembly_screen_mib": 4541.356658935547,
+          "local_scalar_dofs": 15,
+          "polynomial_degree": 2,
+          "enrichment_maximum_degree": 4,
+          "construction_workspace_screen_mib": 89.69115447998047,
+          "coefficient_layout": "component_major_enriched_nodal"
+        },
+        "native_local_scalar_dofs": 15,
+        "positive_mass_minimum_kg": 2.7877727438761416e-07,
+        "positive_mass_maximum_kg": 1.304483183632465e-05,
+        "total_mass_kg": 2.0249999999999995,
+        "moments": [
+          {
+            "powers": [
+              0,
+              0,
+              0
+            ],
+            "measured": 2.0250000000001904,
+            "expected": 2.025,
+            "relative_error": 9.414691248821327e-14
+          },
+          {
+            "powers": [
+              0,
+              0,
+              1
+            ],
+            "measured": 0.003037500000000236,
+            "expected": 0.0030375,
+            "relative_error": 7.771561172376096e-14
+          },
+          {
+            "powers": [
+              0,
+              1,
+              0
+            ],
+            "measured": 0.5062500000000001,
+            "expected": 0.50625,
+            "relative_error": 2.220446049250313e-16
+          },
+          {
+            "powers": [
+              1,
+              0,
+              0
+            ],
+            "measured": 0.5062499999999996,
+            "expected": 0.50625,
+            "relative_error": 6.661338147750939e-16
+          },
+          {
+            "powers": [
+              0,
+              0,
+              2
+            ],
+            "measured": 6.075000000000914e-06,
+            "expected": 6.075e-06,
+            "relative_error": 1.5054624213917123e-13
+          },
+          {
+            "powers": [
+              0,
+              1,
+              1
+            ],
+            "measured": 0.0007593750000000014,
+            "expected": 0.000759375,
+            "relative_error": 1.7763568394002505e-15
+          },
+          {
+            "powers": [
+              0,
+              2,
+              0
+            ],
+            "measured": 0.16875000000000004,
+            "expected": 0.16874999999999998,
+            "relative_error": 2.220446049250313e-16
+          },
+          {
+            "powers": [
+              1,
+              0,
+              1
+            ],
+            "measured": 0.0007593750000000019,
+            "expected": 0.000759375,
+            "relative_error": 2.6645352591003757e-15
+          },
+          {
+            "powers": [
+              1,
+              1,
+              0
+            ],
+            "measured": 0.12656249999999986,
+            "expected": 0.1265625,
+            "relative_error": 1.1102230246251565e-15
+          },
+          {
+            "powers": [
+              2,
+              0,
+              0
+            ],
+            "measured": 0.1687499999999998,
+            "expected": 0.16874999999999998,
+            "relative_error": 1.1102230246251565e-15
+          }
+        ],
+        "mass_sha256": "0ad0a3e6839e052fd3cbe42ac12ba7b97c1c31e8e740ccdf33f5f210ad0f801c",
+        "mass_layout": "enriched_topology_nodal",
+        "native_coefficient_permutation_verified": false,
+        "estimated_local_stiffness_mib": 1135.3391647338867,
+        "scope": "Actual native space counts and topology-order positive mass only; no stiffness, time propagation or native/topology permutation acceptance.",
+        "wall_seconds": 2.783221199992113,
+        "resource_summary": {
+          "limits": {
+            "max_seconds": 89.59399999992456,
+            "max_rss_mib": 1024.0,
+            "max_system_memory_percent": 92,
+            "min_available_mib": 768,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "sample_count": 5,
+          "maximum_sampled_rss_mib": 192.890625,
+          "maximum_system_memory_percent": 50.7,
+          "minimum_available_mib": 7997.67578125,
+          "maximum_gpu_used_mib": 759.0,
+          "maximum_gpu_temperature_c": 31.0,
+          "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+        },
+        "fingerprint": "d6af52822176699eea351f518369193aa61875cbd7623b266b8c9915449f4ffa"
+      }
+    }
+  },
+  "tests": [
+    {
+      "invocation": {
+        "path": "outputs/enriched-focused-20261107/invocation.json",
+        "sha256": "b8816f955acc053c28d6a08bbd9db8b14ca07336d110efac9a35169daa3b8f0e",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "-v",
+            "tests.test_enriched_tet"
+          ],
+          "limits": {
+            "max_seconds": 120.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": null,
+          "highorder_checks": true,
+          "gpu_checks": false,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\enriched-focused-20261107\\temporary-files",
+          "wrapper_source_sha256": "bd11954d5717a4cae582f306c30cd69c620236d066fbe66b5f4ff4a7d513a40f"
+        }
+      },
+      "monitor": {
+        "path": "outputs/enriched-focused-20261107/monitor-result.json",
+        "sha256": "05542f8d42256226c786f90b671cdb7456b82e5e150196fb701426af4526a8e5",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 0,
+          "wall_seconds": 3.7412091000005603,
+          "maximum_observed_external_processes": 6,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 120.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 20,
+            "maximum_sampled_rss_mib": 306.97265625,
+            "maximum_system_memory_percent": 46.3,
+            "minimum_available_mib": 8721.4921875,
+            "maximum_gpu_used_mib": 847.0,
+            "maximum_gpu_temperature_c": 48.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+          }
+        }
+      },
+      "tests": 6,
+      "test_seconds": 3.2,
+      "skip_count": 0,
+      "log_sha256": "d74df6f6f46dfa9d659ee95ea62b49674022abf6a4484d3664e5605350296746"
+    },
+    {
+      "invocation": {
+        "path": "outputs/enriched-integrator-checks-20261108/invocation.json",
+        "sha256": "c3bf6046ab47c15fcdc16d760df51c2ad3d8aabd276d96f1759d6727c2d78d9e",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "-v",
+            "tests.test_enriched_tet",
+            "tests.test_fem",
+            "tests.test_implicit_fem"
+          ],
+          "limits": {
+            "max_seconds": 120.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": null,
+          "highorder_checks": true,
+          "gpu_checks": false,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\enriched-integrator-checks-20261108\\temporary-files",
+          "wrapper_source_sha256": "bd11954d5717a4cae582f306c30cd69c620236d066fbe66b5f4ff4a7d513a40f"
+        }
+      },
+      "monitor": {
+        "path": "outputs/enriched-integrator-checks-20261108/monitor-result.json",
+        "sha256": "fa09fdc483eb4efd1865a40bb90828c1ac026d882f81c4d91b0af87df5c6795e",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 0,
+          "wall_seconds": 4.223067500046454,
+          "maximum_observed_external_processes": 6,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 120.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 22,
+            "maximum_sampled_rss_mib": 309.19140625,
+            "maximum_system_memory_percent": 50.5,
+            "minimum_available_mib": 8036.1640625,
+            "maximum_gpu_used_mib": 759.0,
+            "maximum_gpu_temperature_c": 33.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+          }
+        }
+      },
+      "tests": 29,
+      "test_seconds": 3.215,
+      "skip_count": 4,
+      "log_sha256": "52720bc6a30d0c9f5e579f854b057feb050e39c61dad5fd5b6d1751f1a51b114"
+    },
+    {
+      "invocation": {
+        "path": "outputs/enriched-integrator-native-checks-20261108/invocation.json",
+        "sha256": "4f4be17ecac8a7d79d9a4f6accae536b6d3379b56ae8df0299e7c5aeff3dbc74",
+        "receipt": {
+          "command": [
+            "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Scripts\\python.exe",
+            "-m",
+            "unittest",
+            "-v",
+            "tests.test_enriched_tet",
+            "tests.test_fem",
+            "tests.test_implicit_fem"
+          ],
+          "limits": {
+            "max_seconds": 180.0,
+            "max_rss_mib": 1024,
+            "max_system_memory_percent": 85,
+            "min_available_mib": 2048,
+            "max_gpu_memory_percent": 90,
+            "max_gpu_temperature_c": 80,
+            "max_cpu_temperature_c": 90
+          },
+          "elmer_home": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\recovered-tools-20261106\\ElmerFEM-nogui-nompi-Windows-AMD64",
+          "highorder_checks": true,
+          "gpu_checks": false,
+          "temporary_directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\enriched-integrator-native-checks-20261108\\temporary-files",
+          "wrapper_source_sha256": "bd11954d5717a4cae582f306c30cd69c620236d066fbe66b5f4ff4a7d513a40f"
+        }
+      },
+      "monitor": {
+        "path": "outputs/enriched-integrator-native-checks-20261108/monitor-result.json",
+        "sha256": "ace859f7681811804e4e85d1a5691d12ae87b75981d2c5b70f13732d38c43e1a",
+        "receipt": {
+          "completed": true,
+          "full_training_cycle_run": false,
+          "exit_code": 0,
+          "wall_seconds": 22.51487320009619,
+          "maximum_observed_external_processes": 8,
+          "memory_scope": "TRAXIS monitor plus external executable and all observed descendants",
+          "resource_summary": {
+            "limits": {
+              "max_seconds": 180.0,
+              "max_rss_mib": 1024,
+              "max_system_memory_percent": 85,
+              "min_available_mib": 2048,
+              "max_gpu_memory_percent": 90,
+              "max_gpu_temperature_c": 80,
+              "max_cpu_temperature_c": 90
+            },
+            "sample_count": 107,
+            "maximum_sampled_rss_mib": 312.015625,
+            "maximum_system_memory_percent": 59.1,
+            "minimum_available_mib": 6640.0234375,
+            "maximum_gpu_used_mib": 2218.0,
+            "maximum_gpu_temperature_c": 38.0,
+            "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+          }
+        }
+      },
+      "tests": 29,
+      "test_seconds": 21.345,
+      "skip_count": 0,
+      "log_sha256": "5620965e668a742883700176eb35e28633ed616b6fe37391adc63832ec9f4f4b"
+    }
+  ],
+  "operational_interruption": "The pending November 7 test launch was not executed after automatic approval review reported a usage allowance limit; verification resumed November 8.",
+  "collector_sha256": "bdee253f26e73c21ca5041b3a907a11ed405f2ef8dfb3db702bfa343cd801385",
+  "fingerprint": "762dbcfe826e28eff5be82ec17d8dc6bb3a9d41ebbd89a0b812dab0e6ba49eb2"
+}

@@ -149,8 +149,8 @@ three-component high-order elasticity and consistent mass while avoiding
 global sparse operators. Tiny all-column/direct-transient checks and guarded
 full-plate capacity measurements distinguish algebraic agreement from full-size
 wave/PZT acceptance. No new research training data is approved by this path.
-The intact 500 mm P3 operator check fits the 1 GiB guard; 253 regression tests
-pass without skips with native CPU/GPU references enabled. Full-size propagation cost
+The intact 500 mm P3 operator check fits the 1 GiB guard; the last complete
+native CPU/GPU regression passed 253 tests without skips. Full-size propagation cost
 and coupled/calibrated voltage responses remain open.
 The [first full-size acceleration probe](docs/matrixfree-step-cost.md) reaches
 its 180-second guard with zero completed steps despite using less than 500 MiB.
@@ -171,6 +171,11 @@ The optional [GPU-resident CG path](docs/gpu-resident-cg.md) keeps iteration
 vectors on the device. The same full-size step completes in 5.33 solve seconds
 with native CPU residual agreement; source/probe and Newmark state handling
 still use CPU arrays. Full propagation and PZT/physical acceptance remain open.
+The separate [enriched-tetrahedron candidate](docs/enriched-tetrahedra.md)
+investigates positive nodal mass for explicit elasticity. Native/P4 operator
+comparisons and fixed-window temporal checks pass, and actual full-size space
+and positive-mass capacity fit the guard. Its six new checks are covered in a
+29-test targeted pass; full-size propagation and wave accuracy remain open.
 
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.

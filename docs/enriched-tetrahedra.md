@@ -94,6 +94,34 @@ The topology workspace screen is 89.69 MiB. A future dense local-stiffness
 representation would require an estimated 1,135.34 MiB, not measured VRAM.
 Raw evidence is under `outputs/enriched-fullplate-capacity-20261108`.
 
+## Explicit time-step restriction
+
+The conservative limits on these small controls are 80.80 ns rectangular
+and 93.03 ns skewed. The existing Verlet integrator applies its 0.95 safety
+factor. The implicit reference's 125 ns increment therefore cannot simply be
+reused for this explicit method. The actual full-mesh stability limit remains
+to be computed; positive mass alone does not establish time stability.
+
+## Focused regression and retained evidence
+
+All 29 selected enriched-element, explicit-integrator and implicit-integrator
+checks pass with actual NGSolve, Gmsh and Elmer references enabled, without
+skips. Test time is 21.345 seconds; monitored time is 22.515 seconds. Peak
+sampled combined RSS is 312.02 MiB, system RAM 59.1%, available RAM at least
+6,640.02 MiB and system GPU observations 2,218 MiB / 38 C. Computation used
+CPU; CPU temperature was unavailable. The initial targeted run's four optional
+Elmer skips are retained, followed by the fully enabled pass.
+
+This isolated candidate adds six new checks. The last complete integrated
+CPU/GPU run remains the earlier 253-test milestone; it was not repeated for
+this separate element/driver addition. Current evidence is in
+`evidence/enriched-tetrahedron-debug.json`, fingerprint
+`762dbcfe826e28eff5be82ec17d8dc6bb3a9d41ebbd89a0b812dab0e6ba49eb2`.
+It binds source/runtime, arrays, the original coarse temporal failure,
+capacity receipts and focused tests. The November 7 usage-limit approval
+failure prevented the pending launch; the final checks resumed November 8.
+No full training ran.
+
 ## Remaining acceptance work
 
 The next implementation must establish the full native/topology map, accurate

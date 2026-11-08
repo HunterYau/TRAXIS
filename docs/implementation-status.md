@@ -781,3 +781,31 @@ evidence/gpu-resident-debug.json; see gpu-resident-cg.md. Full-window cost,
 full-size refinement, defect/PZT/physical acceptance and research training
 remain open. No full training ran.
 
+## Enriched explicit candidate, November 7-8
+
+A separate 15-node quadratic-plus-bubbles tetrahedron has positive nodal mass
+and exact comparison stiffness/consistent-mass integrals. Independent basis,
+quadrature/strain, permutation, continuity and native enriched/P4 embedding
+checks pass. The largest matrix discrepancy is 4.10e-14. A retained coarse
+temporal ratio miss of 4.239 is followed by 64/128/256-step convergence over
+the same interval, with unchanged criteria and ratios approaching four.
+
+The installed native mass-lumping docstring describes 2D support, but actual
+3D probes return the required 15-node tetrahedron. The unchanged full-size
+mesh has 391,207 scalar / 1,173,621 vector coefficients and finite positive
+nodal mass totaling 2.025 kg. All ten degree-zero-to-two mass moments pass
+to 1.51e-13. This space/mass-only run took 4.241 monitored seconds at 303.84
+MiB combined RSS; no stiffness, CUDA allocation or time propagation ran.
+Full-size native/topology coefficient permutation remains unverified.
+
+All 29 targeted enriched/explicit/implicit checks pass without skips with
+NGSolve, Gmsh and Elmer enabled in 22.515 monitored seconds at 312.02 MiB
+combined RSS. The last complete integrated suite is the earlier 253-test
+run. CPU temperature remains unavailable; no full training ran. See
+enriched-tetrahedra.md and evidence/enriched-tetrahedron-debug.json.
+
+This candidate needs a mesh-specific explicit stability limit, scalable GPU
+operators, cubic surface traction/probes, full-window cost and spatial/defect/
+frequency validation before acceptance. Coupled/calibrated PZT voltage and
+physical agreement remain open; the existing consistent-mass path is unchanged.
+

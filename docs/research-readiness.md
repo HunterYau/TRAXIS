@@ -72,6 +72,14 @@ CPU/GPU tests pass without skips in 528.19 monitored seconds at 875.42 MiB
 combined RSS. See gpu-resident-cg.md and evidence/gpu-resident-debug.json.
 This is still one full-size step, with full-window and physical acceptance open.
 
+A separate 15-node positive-mass enriched candidate passes native/P4 operator
+and discrete temporal checks. Its full-size native space and topology-order
+positive mass fit the guard, with 1,173,621 vector coefficients. All 29 targeted
+element/integrator checks pass without skips; the last complete integrated
+suite remains the earlier 253-test result. See enriched-tetrahedra.md and
+evidence/enriched-tetrahedron-debug.json. Full-size mapping, explicit CFL cost,
+GPU propagation and space/time/defect/PZT/physical acceptance remain open.
+
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource
 limits. Individual training-related tests perform short debug updates; this

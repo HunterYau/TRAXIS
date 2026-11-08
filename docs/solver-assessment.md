@@ -152,7 +152,8 @@ configuration, not an intrinsic inability of NGSolve to model the full plate.
 No full-size performance number or accepted training bank is available.
 
 A guarded inspection of this installed NGSolve 6.2.2606 build reports
-`USE_CUDA=False`. A GPU path must not be advertised for this environment.
+`USE_CUDA=False`. This build's native CUDA support remains disabled; the
+separately verified CuPy operators below use its native local matrices.
 NGSolve's official [matrix-free tutorial](https://docu.ngsolve.org/latest/i-tutorials/unit-2.11-matrixfree/matrixfree.html)
 and [explicit DG wave example](https://docu.ngsolve.org/latest/i-tutorials/unit-5.5-cuda/wave_cuda.html)
 document candidates for reducing matrix storage. The latter is a scalar
@@ -219,8 +220,11 @@ It does rule out treating the memory-capacity result as proof of an affordable
 research-data workflow. All 243 native-enabled regression tests pass; the
 small first-step control independently agrees with sparse Newmark.
 
-A faster backend must preserve the full vector elastic and consistent-mass
-operators and repeat the same independent checks. CuPy's official
+Execution optimizations within the current H1 formulation must preserve its
+full vector stiffness and consistent mass and repeat the same independent
+checks. A different finite-element formulation needs a declared space/mass
+rule, independent reference checks and new dispersion/mesh/time validation.
+CuPy's official
 [installation documentation](https://docs.cupy.dev/en/stable/install.html)
 describes Windows CUDA wheels and optional CUDA component wheels that avoid
 a system-wide toolkit installation. The subsequent
@@ -236,8 +240,18 @@ This is a measured improvement in the bounded first-step path. Full-window
 throughput, full-size spatial/time accuracy and PZT/physical agreement remain
 unproven. Do not extrapolate a first-step timing into accepted dataset cost.
 
+## Enriched explicit candidate
+
+The separate [enriched tetrahedral candidate](enriched-tetrahedra.md) implements
+an independently checked 15-node positive-mass space for investigating explicit
+elasticity. Its native enriched/P4 embeddings and temporal checks pass, and the
+unchanged 500 mm mesh fits native-space/positive-mass capacity limits. This is
+a different discretization, with full-size wave accuracy, CFL cost, GPU
+implementation and PZT/physical acceptance still open.
+
 ## Primary sources
 
+- [Geevers et al. (2018), enriched positive-mass tetrahedra](https://arxiv.org/abs/1803.10065)
 - [COMSOL 6.4 Elastic Waves, Time Explicit](https://doc.comsol.com/6.4/doc/com.comsol.help.aco/aco_ug_elastic_waves.06.30.html)
 - [COMSOL 6.4 Lamb-wave NDT plate example](https://doc.comsol.com/6.4/doc/com.comsol.help.models.aco.lamb_waves_ndt_plate/lamb_waves_ndt_plate.html)
 - [COMSOL transient piezoelectric formulation](https://www.comsol.com/blogs/modeling-piezoelectricity-using-the-discontinuous-galerkin-method)
