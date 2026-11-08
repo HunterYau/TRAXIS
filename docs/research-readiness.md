@@ -7,7 +7,7 @@ plate, defect and transducer configuration.
 
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
-| Credible elastic forward solver | Independent operator, exact-field, dispersion and transient checks; the 40 mm intact P3 control and 20 mm paired CAD recess control pass fixed discrepancy screens; see highorder-waveforms.md and highorder-recesses.md | Full-size capacity and refinement, representative defect/frequency variation, independent continuum agreement and physical agreement |
+| Credible elastic forward solver | Independent operator, exact-field, dispersion and transient checks; the 40 mm intact P3 and 20 mm paired CAD recess controls pass fixed discrepancy screens; full-size P3 capacity and one GPU step with native CPU residual agreement | Full-window propagation, full-size refinement, representative defect/frequency variation, independent continuum agreement and physical agreement |
 | PZT transmission and voltage reception | Mechanical circular traction/displacement interfaces, including P1-P4 represented-field and native P2 checks | Bonded PZT/adhesive domains or a calibrated equivalent, drive and receiver electronics, measured material/input values |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |
@@ -46,6 +46,15 @@ fourteen completed iterations with no accepted state. All 243 native-enabled
 regression tests pass without skips in 445.27 monitored seconds; checked
 matrix-free recovery adds no new solves. The compact records are
 evidence/matrixfree-debug.json and evidence/matrixfree-step-debug.json.
+
+A subsequent float64 GPU element backend completes the same full-size first
+equation in 12.08 solve seconds / 78.80 monitored seconds, with true residual
+9.53e-12 and peak combined RSS 568.20 MiB. A separate native CPU action check
+confirms that residual. All 247 integrated native CPU/GPU tests pass without
+skips in 477.00 monitored seconds; the later standalone CPU checker and seven
+input-contract checks were verified separately. See gpu-element-reference.md
+and evidence/gpu-element-debug.json. One first step leaves full-window,
+mesh/time, defect/frequency and PZT/physical acceptance open.
 
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource

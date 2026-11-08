@@ -148,8 +148,8 @@ three-component high-order elasticity and consistent mass while avoiding
 global sparse operators. Tiny all-column/direct-transient checks and guarded
 full-plate capacity measurements distinguish algebraic agreement from full-size
 wave/PZT acceptance. No new research training data is approved by this path.
-The intact 500 mm P3 operator check fits the 1 GiB guard; 243 regression tests
-pass without skips with native references enabled. Full-size propagation cost
+The intact 500 mm P3 operator check fits the 1 GiB guard; 247 regression tests
+pass without skips with native CPU/GPU references enabled. Full-size propagation cost
 and coupled/calibrated voltage responses remain open.
 The [first full-size acceleration probe](docs/matrixfree-step-cost.md) reaches
 its 180-second guard with zero completed steps despite using less than 500 MiB.
@@ -159,6 +159,7 @@ The separate [float64 CUDA element backend](docs/gpu-element-reference.md)
 preserves the same native H1 elasticity/consistent mass and passes small
 all-column/direct-transient comparisons. It completes the unchanged 500 mm
 first acceleration equation in 12.08 solve seconds inside the original guard.
+An independent native CPU action check confirms its saved full-size residual.
 This is one checked step; full-window, mesh/time and PZT/physical acceptance
 remain open. Optional GPU dependencies are separate from the core setup.
 

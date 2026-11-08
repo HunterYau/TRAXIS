@@ -87,8 +87,10 @@ These timings are individual observations, not a controlled throughput claim.
 The actual first-step driver also passed a streamed, multi-chunk small P2
 comparison to sparse acceleration and direct Newmark. Eleven focused tests
 cover those cases, fusion/scalar/block/transpose behavior, preflight limits,
-the CPU step driver and the shared integrator. A complete native/GPU-enabled
-regression is still pending at this entry.
+the CPU step driver and the shared integrator. The complete native/GPU-enabled
+regression passed all 247 tests without skips in 473.383 test seconds /
+477.001 monitored seconds. Peak sampled combined RSS was 830.89 MiB, system
+RAM 47.1%, available memory at least 8,583.19 MiB and GPU temperature 46 C.
 
 ## Actual 500 mm first-step measurement
 
@@ -127,3 +129,28 @@ does not establish affordable full-window propagation, full-size mesh/time
 accuracy, representative defect/frequency responses or calibrated PZT voltage.
 Research-data readiness remains false. Longer guarded propagation and the
 remaining physical checks are required before generating research banks.
+
+## Independent CPU check of the full-size saved state
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.verify_gpu_step --gpu-result outputs/gpu-fullplate-first-step-20261107 --output outputs/gpu-step-cpu-check --max-seconds 120 --max-rss-mib 1024
+```
+
+The read-only checker rebuilds the native CPU nonassembled operators and
+circular load, then applies them to the saved GPU acceleration. It verifies
+the frozen inputs, source/runtime and bounded float64 archives before loading.
+No CPU CG solve, global sparse matrix or CUDA context is needed.
+
+The full-size native CPU residual is 9.527939665e-12, compared with the GPU's
+9.527926869e-12. The reconstructed load agrees exactly; energy and probe
+differences are 4.44e-16 and 2.22e-16. CPU work/energy balance error is zero
+at reported precision. The check took 36.91 monitored seconds at 404.15 MiB
+combined RSS. Seven separate input checks pass, including rejection of changed
+acceleration, incomplete receipt, wrong dtype/shape, object arrays and expanded
+archive overflow. This checker was added after the 247-test suite and verified
+separately. It checks the execution path, not an independent physical model.
+
+Compact source/package/file identities, metrics, hashes and monitor/test
+receipts are retained in `evidence/gpu-element-debug.json`. Raw CPU check and
+input-check evidence are under `outputs/gpu-fullplate-cpu-residual-20261107`
+and `outputs/gpu-step-input-checks-20261107`.

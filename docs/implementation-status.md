@@ -704,8 +704,9 @@ All eight P1-P4 rectangular/skewed GPU cases pass every-column K/M/fused-A,
 diagonal, buffer/block and 32-step sparse-direct comparisons. Worst waveform
 change is 2.75e-11 and true residual 1.001e-11. The initial run took 16.16
 monitored worker seconds at 427.6 MiB combined RSS and 53 C GPU temperature.
-Eleven focused GPU/CPU driver/integrator checks pass; a full integrated
-native/GPU regression remains pending at this entry.
+Eleven focused GPU/CPU driver/integrator checks pass. The full integrated
+native/GPU regression passes all 247 tests without skips in 477.00 monitored
+seconds at 830.89 MiB combined RSS, 47.1% system RAM and 46 C GPU temperature.
 
 The unchanged full-size P3 first acceleration equation now completes in
 242 iterations / 12.08 solve seconds, 78.80 monitored worker seconds total,
@@ -714,6 +715,13 @@ RSS was 568.20 MiB, system RAM 45.3%, minimum available memory 8,876.9 MiB,
 GPU system memory 3,135/8,192 MiB and GPU temperature 63 C. CPU temperature
 was unavailable. Local matrices occupy 2,242.65 MiB on the device, with no
 global sparse assembly. No full training ran.
+
+A separate native CPU action check of the saved full-size GPU acceleration
+gives residual 9.527939665e-12 versus GPU 9.527926869e-12, exact source-covector
+agreement and energy/probe differences below 4.45e-16. It completes in 36.91
+monitored seconds at 404.15 MiB combined RSS without CPU CG or sparse assembly.
+Seven saved-input checks pass; the standalone checker was verified after the
+247-test run. Compact identities and receipts are in evidence/gpu-element-debug.json.
 
 This passes one first-step cost/consistency check, not a full-size observation
 window or research-bank acceptance. Full-size space/time and defect/frequency
