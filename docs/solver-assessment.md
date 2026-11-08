@@ -223,10 +223,18 @@ A faster backend must preserve the full vector elastic and consistent-mass
 operators and repeat the same independent checks. CuPy's official
 [installation documentation](https://docs.cupy.dev/en/stable/install.html)
 describes Windows CUDA wheels and optional CUDA component wheels that avoid
-a system-wide toolkit installation. This is a possible route for a separately
-bounded GPU element-operator candidate, not an implemented or verified TRAXIS
-GPU solver. No package/toolkit/driver change or GPU computation occurred in
-this cost investigation. Scalar acoustics must not replace elastic plate waves.
+a system-wide toolkit installation. The subsequent
+[CUDA element trial](gpu-element-reference.md) now implements that route with
+the same native H1 matrices, float64 scatter/add and fused Newmark application.
+Eight small every-column/direct-transient comparisons pass. The unchanged
+500 mm first equation converges in 242 iterations / 12.08 solve seconds,
+with 78.80 seconds total and 3,135/8,192 MiB sampled system GPU memory at
+63 C. Optional wheels stayed inside the project environment; no global
+toolkit/driver change occurred. Scalar acoustics did not replace elastic waves.
+
+This is a measured improvement in the bounded first-step path. Full-window
+throughput, full-size spatial/time accuracy and PZT/physical agreement remain
+unproven. Do not extrapolate a first-step timing into accepted dataset cost.
 
 ## Primary sources
 

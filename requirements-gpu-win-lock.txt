@@ -1,0 +1,10 @@
+# Optional Windows x64 / CPython 3.12 CUDA element-operator runtime.
+# Install the core requirements first; this adds no system-wide toolkit or driver.
+# Resolved from official PyPI metadata on 2026-11-07. Kernels use NVRTC, not nvcc.
+
+cupy-cuda12x==14.2.0 --hash=sha256:c9571d3b5f2e65758137e210f7fb3c3b34767f0af6b6ca04035a244b6141ee12
+cuda-pathfinder==1.8.6 --hash=sha256:bf6b3b06323cf95a11d671818392da5da23ddbbb4dfc4b77ca10622783c25980
+nvidia-cuda-runtime-cu12==12.9.79 --hash=sha256:8e018af8fa02363876860388bd10ccb89eb9ab8fb0aa749aaf58430a9f7c4891
+nvidia-cuda-nvrtc-cu12==12.9.86 --hash=sha256:72972ebdcf504d69462d3bcd67e7b81edd25d0fb85a2c46d3ea3517666636349
+nvidia-cuda-cccl-cu12==12.9.27 --hash=sha256:72106f95a9bb3be18472806b4f663ebf0f9248a86d14b4ae3305725b855d9d92
+

@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--elmer-home', type=Path)
     parser.add_argument('--highorder', action='store_true')
+    parser.add_argument('--gpu', action='store_true',help='enable optional isolated CUDA operator checks')
     parser.add_argument('--max-seconds', type=float, default=300)
     parser.add_argument('--max-rss-mib', type=float, default=1024)
     parser.add_argument('--max-system-memory-percent', type=float, default=85)
@@ -39,6 +40,10 @@ def main():
         env['TRAXIS_ELMER_HOME'] = str(args.elmer_home.resolve())
     if args.highorder:
         env['TRAXIS_HIGHORDER_CHECKS'] = '1'
+    if args.gpu:
+        env['TRAXIS_GPU_CHECKS'] = '1'
+        env['CUPY_CACHE_DIR'] = str(output/'kernel-cache')
+        env['CUPY_CACHE_SAVE_CUDA_SOURCE'] = '1'
     output.mkdir(parents=True, exist_ok=True)
     temporary = output / 'temporary-files'
     temporary.mkdir()
@@ -46,6 +51,7 @@ def main():
     write_json(output / 'invocation.json', {'command': command,
         'limits': guard.report()['limits'], 'elmer_home': env.get('TRAXIS_ELMER_HOME'),
         'highorder_checks': env.get('TRAXIS_HIGHORDER_CHECKS') == '1',
+        'gpu_checks': env.get('TRAXIS_GPU_CHECKS') == '1',
         'temporary_directory': str(temporary),
         'wrapper_source_sha256': sha256_file(Path(__file__))})
     result = {'completed': False, 'full_training_cycle_run': False}

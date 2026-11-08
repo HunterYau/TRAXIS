@@ -691,3 +691,32 @@ agrees with sparse acceleration to 3.04e-11 and direct Newmark's probe to
 matrixfree-step-cost.md, evidence/matrixfree-step-debug.json and
 outputs/matrixfree-fullplate-first-step-20261107 for retained evidence.
 
+## Float64 GPU element reference, November 7
+
+Five hash-pinned optional CUDA/CuPy wheels were installed in the project
+virtual environment, preserving NumPy 2.5.4/SciPy 1.18.1. A guarded float64
+kernel matched its NumPy reference and dependency checks passed. No global
+toolkit, compiler or driver change occurred. NGSolve's installed build still
+has CUDA disabled; this backend streams its checked native local matrices
+and applies them separately through CuPy/NVRTC.
+
+All eight P1-P4 rectangular/skewed GPU cases pass every-column K/M/fused-A,
+diagonal, buffer/block and 32-step sparse-direct comparisons. Worst waveform
+change is 2.75e-11 and true residual 1.001e-11. The initial run took 16.16
+monitored worker seconds at 427.6 MiB combined RSS and 53 C GPU temperature.
+Eleven focused GPU/CPU driver/integrator checks pass; a full integrated
+native/GPU regression remains pending at this entry.
+
+The unchanged full-size P3 first acceleration equation now completes in
+242 iterations / 12.08 solve seconds, 78.80 monitored worker seconds total,
+with true residual 9.53e-12 and work/energy error 6.66e-16. Sampled combined
+RSS was 568.20 MiB, system RAM 45.3%, minimum available memory 8,876.9 MiB,
+GPU system memory 3,135/8,192 MiB and GPU temperature 63 C. CPU temperature
+was unavailable. Local matrices occupy 2,242.65 MiB on the device, with no
+global sparse assembly. No full training ran.
+
+This passes one first-step cost/consistency check, not a full-size observation
+window or research-bank acceptance. Full-size space/time and defect/frequency
+accuracy, coupled/calibrated PZT voltage and physical agreement remain open.
+See gpu-element-reference.md and outputs/gpu-fullplate-first-step-20261107.
+

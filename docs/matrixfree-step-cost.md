@@ -107,3 +107,9 @@ drivers, tests, retained inputs/arrays, the initial direct-cap rejection,
 full-size stage/iteration progress and all monitor summaries. The full-size
 stop has no final independent residual or accepted state; partial iterate
 norms do not establish whether the CG target was reached before interruption.
+
+The subsequent [float64 CUDA element trial](gpu-element-reference.md)
+completes the same full-size first equation in 12.08 solve seconds, retaining
+the original mesh, source, dt, strict criteria and 180-second/1 GiB guard.
+The CPU stop remains historical evidence for its own implementation. One GPU
+step does not establish full-window cost, convergence or PZT acceptance.

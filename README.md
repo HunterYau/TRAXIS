@@ -155,6 +155,13 @@ The [first full-size acceleration probe](docs/matrixfree-step-cost.md) reaches
 its 180-second guard with zero completed steps despite using less than 500 MiB.
 Its iteration progress is retained; the stopped run supplies no accepted trace.
 
+The separate [float64 CUDA element backend](docs/gpu-element-reference.md)
+preserves the same native H1 elasticity/consistent mass and passes small
+all-column/direct-transient comparisons. It completes the unchanged 500 mm
+first acceleration equation in 12.08 solve seconds inside the original guard.
+This is one checked step; full-window, mesh/time and PZT/physical acceptance
+remain open. Optional GPU dependencies are separate from the core setup.
+
 [Quadratic guided-mode refinement](docs/elmer-waveguide.md) checks Elmer's
 P2 modes against Rayleigh-Lamb roots with separate in-plane/thickness axes.
 Small analytic errors support further reference work; one strict decrease

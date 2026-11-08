@@ -29,8 +29,19 @@ INPUTS = ('capacity-plan.json','monitor-result.json','native/capacity-report.jso
 
 
 def checked_settings(values, plate):
-    if set(values) != {'dt_s','frequency_hz','cycles','peak_patch_force_n','center_xy_m','radius_m','iterative','verify_sparse'}:
+    required = {'dt_s','frequency_hz','cycles','peak_patch_force_n','center_xy_m','radius_m','iterative','verify_sparse'}
+    if not required.issubset(values) or set(values)-required-{'backend','gpu'}:
         raise ValueError('step settings have missing or unknown fields')
+    backend = values.get('backend','native')
+    if backend not in ('native','gpu_elements') or (backend == 'native' and 'gpu' in values):
+        raise ValueError('select the native or explicit GPU element backend')
+    if backend == 'gpu_elements':
+        gpu = values.get('gpu',{})
+        if (set(gpu) != {'max_device_mib','chunk_elements','device_id'}
+                or not math.isfinite(gpu['max_device_mib']) or not 0 < gpu['max_device_mib'] <= 6144
+                or type(gpu['chunk_elements']) is not int or not 1 <= gpu['chunk_elements'] <= 1024
+                or type(gpu['device_id']) is not int or not 0 <= gpu['device_id'] <= 31):
+            raise ValueError('GPU step needs explicit device/storage/chunk limits')
     for key in ('dt_s','frequency_hz','peak_patch_force_n','radius_m'):
         positive(key,values[key])
     center = np.asarray(values['center_xy_m'])
@@ -104,11 +115,19 @@ def driver_hashes():
     return {name:sha256_file(Path(__file__).parent/name) for name in ('matrixfree_step.py','matrixfree_capacity.py')}
 
 
+def gpu_identity(settings, guard):
+    if settings.get('backend','native') == 'gpu_elements':
+        from traxis.gpu_verification import gpu_package_identity
+        return gpu_package_identity(guard)
+    return None
+
+
 def worker(plan_path, output, guard):
     plan_path,output = Path(plan_path).resolve(),Path(output).resolve()
     plan = _json(plan_path)
     if (plan['kind'] != 'matrixfree_first_step' or plan['source_sha256'] != reference_source_hashes()
             or plan['driver_sha256'] != driver_hashes()
+            or plan.get('gpu_packages') != gpu_identity(plan['settings'],guard)
             or plan['runtime'] != waveform_runtime(HighOrderWaveSettings(mesh_backend='cad'),guard)):
         raise ValueError('step plan/source/runtime changed')
     root = Path(plan['capacity_directory'])
@@ -122,6 +141,7 @@ def worker(plan_path, output, guard):
     output.mkdir(parents=True,exist_ok=True)
     started = time.perf_counter()
     report = {'completed':False,'steps_completed':0,'ready_for_training_data':False,'training_updates':0,
+        'backend':plan['settings'].get('backend','native'),
         'sparse_reference_assembled':False,
         'plan_fingerprint':plan['fingerprint'],'stages':[],'solve_progress':[],
         'scope':'First zero-initial-state mechanical Newmark step only; no arrival, convergence or PZT acceptance.'}
@@ -131,9 +151,21 @@ def worker(plan_path, output, guard):
     try:
         mesh = load_mesh(root,context)
         progress(stage='mesh_loaded',vertices=len(mesh.points_m),tetrahedra=len(mesh.tetrahedra))
-        system = build_matrix_free(mesh,material,reference,guard)
-        progress(stage='space_and_diagonals',dofs=system.space.ndof,screen=system.screen)
         cfg = plan['settings']
+        if cfg.get('backend','native') == 'gpu_elements':
+            from traxis.gpu_elements import build_gpu_elements
+            last_upload_time = -math.inf
+            def uploaded(event):
+                nonlocal last_upload_time
+                elapsed = time.perf_counter()-started
+                if elapsed-last_upload_time >= 1 or event['elements_uploaded'] == event['total_elements']:
+                    progress(stage='elements_uploaded',**event)
+                    last_upload_time = elapsed
+            system = build_gpu_elements(mesh,material,reference,guard=guard,progress=uploaded,**cfg['gpu'])
+            report['device'] = system.device
+        else:
+            system = build_matrix_free(mesh,material,reference,guard)
+        progress(stage='space_and_diagonals',dofs=system.space.ndof,screen=system.screen)
         if cfg['verify_sparse'] and system.space.ndof > 2000:
             raise MemoryError('direct first-step verification is restricted to at most 2000 coefficients')
         load,footprint = highorder_surface_patch(system,plate,cfg['center_xy_m'],cfg['radius_m'],guard=guard,
@@ -149,7 +181,8 @@ def worker(plan_path, output, guard):
             load_sha256=sha256_file(output/'load.npz'))
         def solve_progress(event):
             report['solve_progress'].append({'elapsed_seconds':time.perf_counter()-started,
-                'stiffness_applications':system.stiffness.applications,'mass_applications':system.mass.applications,**event})
+                'stiffness_applications':system.stiffness.applications,'mass_applications':system.mass.applications,
+                'effective_operator_applications':getattr(equation,'applications',None),**event})
             write_json(output/'progress.json',report,overwrite=True)
         dt = cfg['dt_s']
         equation = system.mass+(.25*dt*dt)*system.stiffness
@@ -180,6 +213,7 @@ def worker(plan_path, output, guard):
                 direct_probe_relative_error=probe_error)
         atomic_write(output/'step.npz',lambda stream:np.savez_compressed(stream,acceleration_m_s2=result.solution))
         if (reference_source_hashes() != plan['source_sha256'] or driver_hashes() != plan['driver_sha256']
+                or gpu_identity(cfg,guard) != plan.get('gpu_packages')
                 or waveform_runtime(HighOrderWaveSettings(mesh_backend='cad'),guard) != plan['runtime']):
             raise ValueError('step source/runtime changed during the solve')
         report.update(completed=True,steps_completed=1,solve_seconds=solve_seconds,iterations=result.iterations,
@@ -216,6 +250,7 @@ def measure_step(capacity_directory, settings, output, guard=None):
         plan = {'kind':'matrixfree_first_step','capacity_directory':str(root),'settings':settings,
             'input_sha256':{name:sha256_file(root/name) for name in INPUTS},'source_sha256':reference_source_hashes(),
             'driver_sha256':driver_hashes(),'runtime':runtime}
+        plan['gpu_packages'] = gpu_identity(settings,guard)
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output/'step-plan.json',plan)
         def snapshot(stream):
@@ -229,13 +264,18 @@ def measure_step(capacity_directory, settings, output, guard=None):
         remaining = max(1.,guard.limits.max_seconds-(time.monotonic()-guard.started))
         command = [sys.executable,'-m','examples.matrixfree_step','--worker','--plan',str(output/'step-plan.json'),
             '--output',str(output/'native'),'--max-seconds',str(remaining),'--max-rss-mib',str(guard.limits.max_rss_mib)]
-        result['worker_run'] = run_monitored(command,Path(__file__).resolve().parents[1],
-            {**os.environ,'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1'},guard,output/'worker.log')
+        temporary,cache = output/'temporary',output/'kernel-cache'
+        temporary.mkdir()
+        cache.mkdir()
+        env = {**os.environ,'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1','TEMP':str(temporary),'TMP':str(temporary),
+            'TMPDIR':str(temporary),'CUPY_CACHE_DIR':str(cache),'CUPY_CACHE_SAVE_CUDA_SOURCE':'1'}
+        result['worker_run'] = run_monitored(command,Path(__file__).resolve().parents[1],env,guard,output/'worker.log')
         if result['worker_run']['exit_code'] != 0:
             raise RuntimeError('step worker stopped; inspect retained progress/report')
         native = _json(output/'native/step-report.json')
         if (native['completed'] is not True or native['steps_completed'] != 1 or native['plan_fingerprint'] != plan['fingerprint']
                 or reference_source_hashes() != plan['source_sha256'] or driver_hashes() != plan['driver_sha256']
+                or gpu_identity(settings,guard) != plan.get('gpu_packages')
                 or native['sparse_reference_assembled'] != settings['verify_sparse']
                 or sha256_file(output/'native/step.npz') != native['acceleration_sha256']
                 or sha256_file(output/'native/load.npz') != native['stages'][-1]['load_sha256']):
