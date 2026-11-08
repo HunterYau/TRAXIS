@@ -2,6 +2,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import sys
 from types import SimpleNamespace
 import tempfile
 import unittest
@@ -116,33 +117,17 @@ class NativeGPUReferenceTests(unittest.TestCase):
                 self.assertLess(row['waveform_relative_l2'],1e-7)
 
     def test_device_cg_warm_start_zero_rhs_transfer_count_and_nonconvergence(self):
-        from traxis.config import Material
-        from traxis.highorder import assemble_highorder
-        mesh = structured_mesh(Plate(.04,.03,.003),(2,2,1))
-        guard = ResourceGuard(ResourceLimits(max_seconds=45,max_rss_mib=1024))
-        gpu = build_gpu_elements(mesh,Material(),MatrixFreeSettings(order=2),guard=guard)
-        native = assemble_highorder(mesh,Material(),2,guard)
-        rhs = np.random.default_rng(2026).normal(size=gpu.space.ndof)
-        guess = np.full(gpu.space.ndof,.1)
-        saved = guess.copy()
-        result = gpu_checked_cg(gpu.mass,rhs,guess,gpu.mass_diagonal,
-            IterativeSettings(max_iterations=500),guard=guard)
-        from scipy.sparse.linalg import spsolve
-        np.testing.assert_allclose(result.solution,spsolve(native.mass,rhs),rtol=1e-8,atol=1e-8)
-        np.testing.assert_array_equal(guess,saved)
-        self.assertLess(np.linalg.norm(native.mass@result.solution-rhs)/np.linalg.norm(rhs),1e-9)
-        self.assertEqual(result.statistics['host_vector_uploads'],3)
-        self.assertEqual(result.statistics['host_vector_downloads'],1)
-        self.assertGreater(result.iterations,3)
-        zero = gpu_checked_cg(gpu.mass,np.zeros_like(rhs),guess,gpu.mass_diagonal,guard=guard)
-        np.testing.assert_array_equal(zero.solution,np.zeros_like(rhs))
-        self.assertEqual(zero.iterations,0)
-        events = []
-        with self.assertRaisesRegex(ArithmeticError,'device CG solve failed'):
-            gpu_checked_cg(gpu.mass,rhs,np.zeros_like(rhs),gpu.mass_diagonal,
-                IterativeSettings(max_iterations=1),guard=guard,progress=events.append)
-        self.assertEqual(events[-1]['status'],1)
-        self.assertGreater(events[-1]['true_relative_residual'],1e-9)
+        from traxis.elmer_reference import run_monitored
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = run_monitored([sys.executable,'-m','tests.gpu_cg_contract_probe',
+                '--output',str(root/'probe.json')],Path(__file__).resolve().parents[1],dict(os.environ),
+                ResourceGuard(ResourceLimits(max_seconds=60,max_rss_mib=1024)),root/'probe.log')
+            self.assertEqual(result['exit_code'],0,(root/'probe.log').read_text()[-3000:])
+            probe = json.loads((root/'probe.json').read_text())
+            self.assertTrue(probe['passed'])
+            self.assertLess(probe['cpu_relative_residual'],1e-9)
+            self.assertTrue(probe['nonconvergence_rejected'])
 
     def test_schwarz_all_columns_are_spd_and_transients_match_direct(self):
         with tempfile.TemporaryDirectory() as directory:
