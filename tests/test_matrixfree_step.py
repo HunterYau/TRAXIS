@@ -24,7 +24,8 @@ class FirstStepPreflightTests(unittest.TestCase):
         checked_settings(step_settings(),plate)
         for changes in ({'dt_s':1e-5},{'center_xy_m':[0.,0.]},{'cycles':0},{'radius_m':0},
                         {'peak_patch_force_n':float('nan')},{'verify_sparse':1},{'unexpected':0},
-                        {'backend':'unknown'},{'backend':'native','gpu':{}},{'backend':'gpu_elements'}):
+                        {'backend':'unknown'},{'backend':'native','gpu':{}},{'backend':'gpu_elements'},
+                        {'preconditioner':'element_schwarz'},{'preconditioner':'unknown'}):
             with self.subTest(changes=changes):
                 with self.assertRaises(ValueError):
                     checked_settings({**step_settings(),**changes},plate)

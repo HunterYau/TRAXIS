@@ -54,11 +54,13 @@ class CheckedCGResult:
     relative_residual: float
 
 
-def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, progress=None):
+def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, progress=None, preconditioner=None):
     """Solve an SPD equation with strict status and a fresh final residual.
 
     Optional progress contains iteration counts/norms, not residual estimates.
     Only the final operator application provides a checked relative residual.
+    An optional preconditioner must be independently established symmetric
+    positive definite. Its actions are checked for finite positive work here.
     """
     settings = settings or IterativeSettings()
     operator = aslinearoperator(operator)
@@ -86,7 +88,22 @@ def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, pro
             emit(phase='cg_iteration',iteration=count,iterate_norm=float(np.linalg.norm(values)))
         if guard:
             guard.check()
-    preconditioner = LinearOperator((n,n),matvec=lambda x:x/diagonal,dtype=float)
+    if preconditioner is None:
+        preconditioner = LinearOperator((n,n),matvec=lambda x:x/diagonal,dtype=float)
+    else:
+        supplied = aslinearoperator(preconditioner)
+        if (supplied.shape != (n,n) or supplied.dtype is None
+                or np.issubdtype(supplied.dtype,np.complexfloating)):
+            raise ValueError('CG preconditioner must be a matching real SPD operator')
+        def apply_preconditioner(x):
+            if guard:
+                guard.check()
+            y = np.asarray(supplied@x)
+            if (np.iscomplexobj(y) or y.shape != (n,) or not np.isfinite(y).all()
+                    or (np.any(x) and float(x@y) <= 0)):
+                raise ArithmeticError('CG preconditioner produced invalid or nonpositive work')
+            return y
+        preconditioner = LinearOperator((n,n),matvec=apply_preconditioner,dtype=float)
     answer,info = cg(operator,rhs,x0=guess.copy(),M=preconditioner,rtol=settings.relative_tolerance,
         atol=0.,maxiter=settings.max_iterations,callback=counted)
     relative = float(np.linalg.norm(operator@answer-rhs)/max(float(np.linalg.norm(rhs)),1e-30))
@@ -99,7 +116,8 @@ def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, pro
 
 def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, force=None,
                        initial_displacement=None, initial_velocity=None, output_stride=1,
-                       stiffness_diagonal=None, settings=None, guard=None):
+                       stiffness_diagonal=None, settings=None, guard=None,
+                       effective_preconditioner=None, mass_preconditioner=None):
     settings = settings or IterativeSettings()
     positive('time step', dt_s)
     if (type(steps) is not int or not 1 <= steps <= 50000 or type(output_stride) is not int
@@ -139,14 +157,14 @@ def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, f
     effective_diagonal = diagonal if stiffness_diagonal is None else diagonal+.25*dt_s**2*stiffness_diagonal
     effective = m + (.25*dt_s**2)*k
     maximum_residual = 0.
-    def solve(operator, rhs, guess, operator_diagonal):
+    def solve(operator, rhs, guess, operator_diagonal, preconditioner):
         nonlocal maximum_residual
-        result = checked_cg(operator,rhs,guess,operator_diagonal,settings,guard=guard)
+        result = checked_cg(operator,rhs,guess,operator_diagonal,settings,guard=guard,preconditioner=preconditioner)
         maximum_residual = max(maximum_residual,result.relative_residual)
         return result.solution,result.iterations
     load = vector(force(0.) if force else None)
     initial_rhs = load-k @ u
-    acceleration, initial_iterations = solve(m, initial_rhs, np.zeros(n),diagonal) if np.any(initial_rhs) else (np.zeros(n), 0)
+    acceleration, initial_iterations = solve(m, initial_rhs, np.zeros(n),diagonal,mass_preconditioner) if np.any(initial_rhs) else (np.zeros(n), 0)
     samples, energy = np.empty((samples_count,len(probes))), np.empty(steps+1)
     iterations = np.empty(steps+1, dtype=np.int32)
     def physical_energy():
@@ -157,7 +175,7 @@ def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, f
             guard.check()
         predicted = u+dt_s*v+.25*dt_s**2*acceleration
         load = vector(force(step*dt_s) if force else None)
-        following, iterations[step] = solve(effective, load-k @ predicted, acceleration,effective_diagonal)
+        following, iterations[step] = solve(effective, load-k @ predicted, acceleration,effective_diagonal,effective_preconditioner)
         u = predicted+.25*dt_s**2*following
         v += .5*dt_s*(acceleration+following)
         acceleration = following

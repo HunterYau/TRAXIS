@@ -9,6 +9,21 @@ from traxis.iterative_fem import IterativeSettings, checked_cg, iterative_simula
 
 
 class IterativeDynamicsTests(unittest.TestCase):
+    def test_supplied_spd_inverse_preserves_solution_and_rejects_bad_actions(self):
+        matrix = np.array([[4.,1.],[1.,2.]])
+        rhs = np.array([1.,3.])
+        result = checked_cg(matrix,rhs,np.zeros(2),matrix.diagonal(),preconditioner=np.linalg.inv(matrix))
+        self.assertEqual(result.iterations,1)
+        np.testing.assert_allclose(result.solution,np.linalg.solve(matrix,rhs),rtol=1e-13,atol=1e-14)
+        with self.assertRaises(ArithmeticError):
+            checked_cg(matrix,rhs,np.zeros(2),matrix.diagonal(),preconditioner=-np.eye(2))
+        with self.assertRaises(ValueError):
+            checked_cg(matrix,rhs,np.zeros(2),matrix.diagonal(),preconditioner=np.eye(3))
+        from scipy.sparse.linalg import LinearOperator
+        invalid = LinearOperator((2,2),matvec=lambda x:np.full(2,np.nan),dtype=float)
+        with self.assertRaises(ArithmeticError):
+            checked_cg(matrix,rhs,np.zeros(2),matrix.diagonal(),preconditioner=invalid)
+
     def test_checked_cg_preserves_guess_and_retains_progress_on_failure(self):
         matrix = np.array([[4.,1.],[1.,2.]])
         rhs,guess = np.array([1.,3.]),np.array([.1,.2])

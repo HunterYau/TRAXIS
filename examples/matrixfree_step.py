@@ -30,11 +30,14 @@ INPUTS = ('capacity-plan.json','monitor-result.json','native/capacity-report.jso
 
 def checked_settings(values, plate):
     required = {'dt_s','frequency_hz','cycles','peak_patch_force_n','center_xy_m','radius_m','iterative','verify_sparse'}
-    if not required.issubset(values) or set(values)-required-{'backend','gpu'}:
+    if not required.issubset(values) or set(values)-required-{'backend','gpu','preconditioner'}:
         raise ValueError('step settings have missing or unknown fields')
     backend = values.get('backend','native')
     if backend not in ('native','gpu_elements') or (backend == 'native' and 'gpu' in values):
         raise ValueError('select the native or explicit GPU element backend')
+    preconditioner = values.get('preconditioner','diagonal')
+    if preconditioner not in ('diagonal','element_schwarz') or (preconditioner != 'diagonal' and backend != 'gpu_elements'):
+        raise ValueError('element Schwarz requires the explicit GPU backend')
     if backend == 'gpu_elements':
         gpu = values.get('gpu',{})
         if (set(gpu) != {'max_device_mib','chunk_elements','device_id'}
@@ -161,7 +164,9 @@ def worker(plan_path, output, guard):
                 if elapsed-last_upload_time >= 1 or event['elements_uploaded'] == event['total_elements']:
                     progress(stage='elements_uploaded',**event)
                     last_upload_time = elapsed
-            system = build_gpu_elements(mesh,material,reference,guard=guard,progress=uploaded,**cfg['gpu'])
+            system = build_gpu_elements(mesh,material,reference,guard=guard,progress=uploaded,
+                preconditioner_scale=.25*cfg['dt_s']**2 if cfg.get('preconditioner') == 'element_schwarz' else None,
+                **cfg['gpu'])
             report['device'] = system.device
         else:
             system = build_matrix_free(mesh,material,reference,guard)
@@ -183,13 +188,14 @@ def worker(plan_path, output, guard):
             report['solve_progress'].append({'elapsed_seconds':time.perf_counter()-started,
                 'stiffness_applications':system.stiffness.applications,'mass_applications':system.mass.applications,
                 'effective_operator_applications':getattr(equation,'applications',None),**event})
+            report['solve_progress'][-1]['preconditioner_applications'] = getattr(getattr(system,'preconditioner',None),'applications',0)
             write_json(output/'progress.json',report,overwrite=True)
         dt = cfg['dt_s']
         equation = system.mass+(.25*dt*dt)*system.stiffness
         diagonal = system.mass_diagonal+.25*dt*dt*system.stiffness_diagonal
         before = time.perf_counter()
         result = checked_cg(equation,force*load,np.zeros(system.space.ndof),diagonal,iterative,
-            guard=guard,progress=solve_progress)
+            guard=guard,progress=solve_progress,preconditioner=getattr(system,'preconditioner',None))
         solve_seconds = time.perf_counter()-before
         u,v = .25*dt*dt*result.solution,.5*dt*result.solution
         energy = float((v@(system.mass@v)+u@(system.stiffness@u))/2)

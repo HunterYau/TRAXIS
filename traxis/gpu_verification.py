@@ -18,7 +18,7 @@ from traxis.elmer_plate_refinement import reference_source_hashes
 from traxis.elmer_reference import run_monitored
 from traxis.fem import tone_burst
 from traxis.gpu_elements import build_gpu_elements, GPUElementOperator
-from traxis.highorder import assemble_highorder
+from traxis.highorder import assemble_highorder,highorder_forms
 from traxis.highorder_patches import highorder_surface_patch
 from traxis.highorder_verification import distribution_identity,reference_mesh
 from traxis.implicit_fem import implicit_simulate
@@ -46,6 +46,33 @@ def gpu_package_identity(guard=None):
     return result
 
 
+def schwarz_reference(system, material, scale, guard):
+    """Tiny CPU reference using independent local dense solves and scatter."""
+    import ngsolve as ng
+    n = system.space.ndof
+    if n > 2000:
+        raise MemoryError('explicit Schwarz verification is restricted to 2000 coefficients')
+    stiffness,_ = highorder_forms(system.space,material,matrix_free=True)
+    u,v = system.scalar_space.TnT()
+    mass = ng.BilinearForm(system.scalar_space,nonassemble=True)
+    mass += material.density_kg_m3*u*v*ng.dx(bonus_intorder=2)
+    result,coverage = np.zeros((n,n)),np.zeros(n)
+    for element in system.mesh.Elements(ng.VOL):
+        guard.check()
+        eid = ng.ElementId(ng.VOL,element.nr)
+        indices = np.asarray(system.space.GetDofNrs(eid),dtype=int)
+        transformation = system.mesh.GetTrafo(eid)
+        k = sum(np.asarray(i.CalcElementMatrix(system.space.GetFE(eid),transformation)) for i in stiffness.integrators)
+        m = sum(np.asarray(i.CalcElementMatrix(system.scalar_space.GetFE(eid),transformation)) for i in mass.integrators)
+        local = scale*k+np.kron(np.eye(3),m)
+        result[np.ix_(indices,indices)] += np.linalg.solve(local,np.eye(len(local)))
+        coverage[indices] += 1
+    if np.any(coverage <= 0):
+        raise ArithmeticError('Schwarz reference contains an uncovered coefficient')
+    result /= coverage[:,None]*coverage[None,:]
+    return result
+
+
 def worker(plan_path, output, guard):
     plan_path,output = Path(plan_path).resolve(),Path(output).resolve()
     if plan_path.stat().st_size > 1024**2:
@@ -56,6 +83,7 @@ def worker(plan_path, output, guard):
             or any(type(p) is not int or not 1 <= p <= 4 for p in plan['orders'])
             or plan.get('operator_tolerance') != 1e-10 or plan.get('waveform_tolerance') != 1e-7
             or plan.get('energy_tolerance') != 1e-8
+            or plan.get('preconditioner') not in ('diagonal','element_schwarz')
             or plan.get('iterative_settings') != asdict(IterativeSettings(max_iterations=500))
             or canonical_hash({k:v for k,v in plan.items() if k!='fingerprint'}) != plan['fingerprint']
             or plan['source_sha256'] != reference_source_hashes()
@@ -76,15 +104,36 @@ def worker(plan_path, output, guard):
                 case = output/f"{recipe['name']}-p{degree}"
                 case.mkdir()
                 sparse = assemble_highorder(mesh,material,degree,guard)
-                gpu = build_gpu_elements(mesh,material,MatrixFreeSettings(order=degree),guard=guard)
+                dt = 2.5e-7
+                use_schwarz = plan['preconditioner'] == 'element_schwarz'
+                gpu = build_gpu_elements(mesh,material,MatrixFreeSettings(order=degree),guard=guard,
+                    preconditioner_scale=.25*dt*dt if use_schwarz else None)
                 k_error,m_error = _column_error(gpu.stiffness,sparse.stiffness,guard),_column_error(gpu.mass,sparse.mass,guard)
                 kdiag = float(np.linalg.norm(gpu.stiffness_diagonal-sparse.stiffness.diagonal())/np.linalg.norm(sparse.stiffness.diagonal()))
                 mdiag = float(np.linalg.norm(gpu.mass_diagonal-sparse.mass.diagonal())/np.linalg.norm(sparse.mass.diagonal()))
-                dt = 2.5e-7
                 effective = gpu.mass+(.25*dt*dt)*gpu.stiffness
                 if not isinstance(effective,GPUElementOperator) or effective.storage is not gpu.stiffness.storage:
                     raise ArithmeticError('GPU Newmark combination failed to fuse element application')
                 a_error = _column_error(effective,sparse.mass+(.25*dt*dt)*sparse.stiffness,guard)
+                preconditioner_metrics = {}
+                if use_schwarz:
+                    reference = schwarz_reference(gpu,material,.25*dt*dt,guard)
+                    columns = []
+                    for column in range(gpu.space.ndof):
+                        guard.check()
+                        unit = np.zeros(gpu.space.ndof)
+                        unit[column] = 1.
+                        columns.append(gpu.preconditioner@unit)
+                    represented = np.column_stack(columns)
+                    b_error = float(np.linalg.norm(represented-reference)/np.linalg.norm(reference))
+                    b_symmetry = float(np.linalg.norm(represented-represented.T)/np.linalg.norm(represented))
+                    factor = np.linalg.cholesky((represented+represented.T)*.5)
+                    if max(b_error,b_symmetry) > plan['operator_tolerance']:
+                        raise ArithmeticError('Schwarz reference or symmetry check failed')
+                    preconditioner_metrics = {'preconditioner_relative_frobenius':b_error,
+                        'preconditioner_relative_skew':b_symmetry,
+                        'preconditioner_minimum_cholesky_diagonal':float(factor.diagonal().min()),
+                        'preconditioner_columns_checked':gpu.space.ndof}
                 rng = np.random.default_rng(2026+degree)
                 vectors = rng.normal(size=(gpu.space.ndof,2))
                 first = gpu.mass@vectors[:,0]
@@ -104,7 +153,8 @@ def worker(plan_path, output, guard):
                 direct = implicit_simulate(sparse.stiffness,sparse.mass,32,dt,probes,force=force,guard=guard)
                 result = iterative_simulate(gpu.stiffness,gpu.mass,gpu.mass_diagonal,32,dt,probes,
                     force=force,stiffness_diagonal=gpu.stiffness_diagonal,
-                    settings=IterativeSettings(**plan['iterative_settings']),guard=guard)
+                    settings=IterativeSettings(**plan['iterative_settings']),guard=guard,
+                    effective_preconditioner=gpu.preconditioner)
                 if not np.array_equal(result.time_s,direct.time_s):
                     raise ArithmeticError('GPU transient time grid changed')
                 waveform = float(np.linalg.norm(result.displacement_m-direct.displacement_m)/np.linalg.norm(direct.displacement_m))
@@ -123,6 +173,7 @@ def worker(plan_path, output, guard):
                     'block_application_relative_l2':block_error,'waveform_relative_l2':waveform,
                     'postburst_relative_energy_range':energy,'maximum_relative_residual':result.maximum_relative_residual,
                     'maximum_cg_iterations':int(result.iterations.max()),'total_cg_iterations':int(result.iterations.sum()),
+                    'preconditioner':plan['preconditioner'],**preconditioner_metrics,
                     'fused_effective_operator':True,'device':gpu.device,'screen':gpu.screen,'passed':bool(passed),
                     'comparison_file':arrays.relative_to(output).as_posix(),'comparison_sha256':sha256_file(arrays),
                     'wall_seconds':time.perf_counter()-case_started}
@@ -144,9 +195,11 @@ def worker(plan_path, output, guard):
     return report
 
 
-def verify_gpu(output, guard=None, *, orders=(1,2,3,4)):
+def verify_gpu(output, guard=None, *, orders=(1,2,3,4), preconditioner='diagonal'):
     if not orders or len(set(orders)) != len(orders) or any(type(p) is not int or not 1 <= p <= 4 for p in orders):
         raise ValueError('choose unique GPU reference degrees in [1,4]')
+    if preconditioner not in ('diagonal','element_schwarz'):
+        raise ValueError('choose diagonal or element_schwarz preconditioning')
     output = Path(output).resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError('GPU verification needs a fresh output directory')
@@ -158,7 +211,8 @@ def verify_gpu(output, guard=None, *, orders=(1,2,3,4)):
         plan = {'kind':'gpu_element_reference','meshes':_reference_recipes(),'orders':list(orders),
             'source_sha256':reference_source_hashes(),'reference_runtime':distribution_identity(guard),
             'gpu_packages':gpu_package_identity(guard),'operator_tolerance':1e-10,'waveform_tolerance':1e-7,
-            'energy_tolerance':1e-8,'iterative_settings':asdict(IterativeSettings(max_iterations=500))}
+            'energy_tolerance':1e-8,'iterative_settings':asdict(IterativeSettings(max_iterations=500)),
+            'preconditioner':preconditioner}
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output/'gpu-plan.json',plan)
         def snapshot(stream):
@@ -208,12 +262,14 @@ if __name__ == '__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--plan',type=Path)
     parser.add_argument('--orders',type=int,nargs='+',default=[1,2,3,4])
+    parser.add_argument('--preconditioner',choices=('diagonal','element_schwarz'),default='diagonal')
     parser.add_argument('--worker',action='store_true')
     parser.add_argument('--max-seconds',type=float,default=180)
     parser.add_argument('--max-rss-mib',type=float,default=1024)
     args = parser.parse_args()
     guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds,max_rss_mib=args.max_rss_mib,
         max_system_memory_percent=85,min_available_mib=2048))
-    result = worker(args.plan,args.output,guard) if args.worker else verify_gpu(args.output,guard,orders=tuple(args.orders))
+    result = worker(args.plan,args.output,guard) if args.worker else verify_gpu(args.output,guard,
+        orders=tuple(args.orders),preconditioner=args.preconditioner)
     print(json.dumps({k:result[k] for k in ('completed','passed','ready_for_training_data')}))
     raise SystemExit(0 if result['passed'] else 2)

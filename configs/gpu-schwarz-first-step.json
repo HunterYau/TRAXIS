@@ -1,0 +1,19 @@
+{
+  "dt_s": 1.25e-7,
+  "frequency_hz": 100000,
+  "cycles": 2,
+  "peak_patch_force_n": 1,
+  "center_xy_m": [0.02, 0.02],
+  "radius_m": 0.003,
+  "verify_sparse": false,
+  "backend": "gpu_elements",
+  "preconditioner": "element_schwarz",
+  "gpu": {"max_device_mib": 5120, "chunk_elements": 128, "device_id": 0},
+  "iterative": {
+    "relative_tolerance": 1e-11,
+    "residual_limit": 1e-9,
+    "max_iterations": 500,
+    "max_dofs": 2000000,
+    "max_workspace_mib": 512
+  }
+}
