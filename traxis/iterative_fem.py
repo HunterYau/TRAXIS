@@ -117,9 +117,11 @@ def checked_cg(operator, rhs, guess, diagonal, settings=None, *, guard=None, pro
 def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, force=None,
                        initial_displacement=None, initial_velocity=None, output_stride=1,
                        stiffness_diagonal=None, settings=None, guard=None,
-                       effective_preconditioner=None, mass_preconditioner=None):
+                       effective_preconditioner=None, mass_preconditioner=None, solver='scipy_cg'):
     settings = settings or IterativeSettings()
     positive('time step', dt_s)
+    if solver not in ('scipy_cg','gpu_cg'):
+        raise ValueError('select scipy_cg or gpu_cg for iterative integration')
     if (type(steps) is not int or not 1 <= steps <= 50000 or type(output_stride) is not int
             or not 1 <= output_stride <= 64 or steps % output_stride):
         raise ValueError('invalid iterative step count or output stride')
@@ -159,7 +161,11 @@ def iterative_simulate(stiffness, mass, mass_diagonal, steps, dt_s, probes, *, f
     maximum_residual = 0.
     def solve(operator, rhs, guess, operator_diagonal, preconditioner):
         nonlocal maximum_residual
-        result = checked_cg(operator,rhs,guess,operator_diagonal,settings,guard=guard,preconditioner=preconditioner)
+        solve_equation = checked_cg
+        if solver == 'gpu_cg':
+            from traxis.gpu_cg import gpu_checked_cg
+            solve_equation = gpu_checked_cg
+        result = solve_equation(operator,rhs,guess,operator_diagonal,settings,guard=guard,preconditioner=preconditioner)
         maximum_residual = max(maximum_residual,result.relative_residual)
         return result.solution,result.iterations
     load = vector(force(0.) if force else None)

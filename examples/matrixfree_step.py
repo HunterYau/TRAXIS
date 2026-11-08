@@ -30,7 +30,7 @@ INPUTS = ('capacity-plan.json','monitor-result.json','native/capacity-report.jso
 
 def checked_settings(values, plate):
     required = {'dt_s','frequency_hz','cycles','peak_patch_force_n','center_xy_m','radius_m','iterative','verify_sparse'}
-    if not required.issubset(values) or set(values)-required-{'backend','gpu','preconditioner'}:
+    if not required.issubset(values) or set(values)-required-{'backend','gpu','preconditioner','solver'}:
         raise ValueError('step settings have missing or unknown fields')
     backend = values.get('backend','native')
     if backend not in ('native','gpu_elements') or (backend == 'native' and 'gpu' in values):
@@ -38,6 +38,9 @@ def checked_settings(values, plate):
     preconditioner = values.get('preconditioner','diagonal')
     if preconditioner not in ('diagonal','element_schwarz') or (preconditioner != 'diagonal' and backend != 'gpu_elements'):
         raise ValueError('element Schwarz requires the explicit GPU backend')
+    solver = values.get('solver','scipy_cg')
+    if solver not in ('scipy_cg','gpu_cg') or (solver == 'gpu_cg' and backend != 'gpu_elements'):
+        raise ValueError('device CG requires the explicit GPU element backend')
     if backend == 'gpu_elements':
         gpu = values.get('gpu',{})
         if (set(gpu) != {'max_device_mib','chunk_elements','device_id'}
@@ -145,6 +148,7 @@ def worker(plan_path, output, guard):
     started = time.perf_counter()
     report = {'completed':False,'steps_completed':0,'ready_for_training_data':False,'training_updates':0,
         'backend':plan['settings'].get('backend','native'),
+        'solver':plan['settings'].get('solver','scipy_cg'),
         'sparse_reference_assembled':False,
         'plan_fingerprint':plan['fingerprint'],'stages':[],'solve_progress':[],
         'scope':'First zero-initial-state mechanical Newmark step only; no arrival, convergence or PZT acceptance.'}
@@ -194,8 +198,14 @@ def worker(plan_path, output, guard):
         equation = system.mass+(.25*dt*dt)*system.stiffness
         diagonal = system.mass_diagonal+.25*dt*dt*system.stiffness_diagonal
         before = time.perf_counter()
-        result = checked_cg(equation,force*load,np.zeros(system.space.ndof),diagonal,iterative,
+        solve_equation = checked_cg
+        if cfg.get('solver') == 'gpu_cg':
+            from traxis.gpu_cg import gpu_checked_cg
+            solve_equation = gpu_checked_cg
+        result = solve_equation(equation,force*load,np.zeros(system.space.ndof),diagonal,iterative,
             guard=guard,progress=solve_progress,preconditioner=getattr(system,'preconditioner',None))
+        if hasattr(result,'statistics'):
+            report['gpu_solver_statistics'] = result.statistics
         solve_seconds = time.perf_counter()-before
         u,v = .25*dt*dt*result.solution,.5*dt*result.solution
         energy = float((v@(system.mass@v)+u@(system.stiffness@u))/2)

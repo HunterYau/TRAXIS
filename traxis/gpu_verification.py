@@ -84,6 +84,7 @@ def worker(plan_path, output, guard):
             or plan.get('operator_tolerance') != 1e-10 or plan.get('waveform_tolerance') != 1e-7
             or plan.get('energy_tolerance') != 1e-8
             or plan.get('preconditioner') not in ('diagonal','element_schwarz')
+            or plan.get('solver') not in ('scipy_cg','gpu_cg')
             or plan.get('iterative_settings') != asdict(IterativeSettings(max_iterations=500))
             or canonical_hash({k:v for k,v in plan.items() if k!='fingerprint'}) != plan['fingerprint']
             or plan['source_sha256'] != reference_source_hashes()
@@ -154,7 +155,7 @@ def worker(plan_path, output, guard):
                 result = iterative_simulate(gpu.stiffness,gpu.mass,gpu.mass_diagonal,32,dt,probes,
                     force=force,stiffness_diagonal=gpu.stiffness_diagonal,
                     settings=IterativeSettings(**plan['iterative_settings']),guard=guard,
-                    effective_preconditioner=gpu.preconditioner)
+                    effective_preconditioner=gpu.preconditioner,solver=plan['solver'])
                 if not np.array_equal(result.time_s,direct.time_s):
                     raise ArithmeticError('GPU transient time grid changed')
                 waveform = float(np.linalg.norm(result.displacement_m-direct.displacement_m)/np.linalg.norm(direct.displacement_m))
@@ -173,7 +174,7 @@ def worker(plan_path, output, guard):
                     'block_application_relative_l2':block_error,'waveform_relative_l2':waveform,
                     'postburst_relative_energy_range':energy,'maximum_relative_residual':result.maximum_relative_residual,
                     'maximum_cg_iterations':int(result.iterations.max()),'total_cg_iterations':int(result.iterations.sum()),
-                    'preconditioner':plan['preconditioner'],**preconditioner_metrics,
+                    'preconditioner':plan['preconditioner'],'solver':plan['solver'],**preconditioner_metrics,
                     'fused_effective_operator':True,'device':gpu.device,'screen':gpu.screen,'passed':bool(passed),
                     'comparison_file':arrays.relative_to(output).as_posix(),'comparison_sha256':sha256_file(arrays),
                     'wall_seconds':time.perf_counter()-case_started}
@@ -195,11 +196,13 @@ def worker(plan_path, output, guard):
     return report
 
 
-def verify_gpu(output, guard=None, *, orders=(1,2,3,4), preconditioner='diagonal'):
+def verify_gpu(output, guard=None, *, orders=(1,2,3,4), preconditioner='diagonal',solver='scipy_cg'):
     if not orders or len(set(orders)) != len(orders) or any(type(p) is not int or not 1 <= p <= 4 for p in orders):
         raise ValueError('choose unique GPU reference degrees in [1,4]')
     if preconditioner not in ('diagonal','element_schwarz'):
         raise ValueError('choose diagonal or element_schwarz preconditioning')
+    if solver not in ('scipy_cg','gpu_cg'):
+        raise ValueError('choose scipy_cg or gpu_cg')
     output = Path(output).resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError('GPU verification needs a fresh output directory')
@@ -212,7 +215,7 @@ def verify_gpu(output, guard=None, *, orders=(1,2,3,4), preconditioner='diagonal
             'source_sha256':reference_source_hashes(),'reference_runtime':distribution_identity(guard),
             'gpu_packages':gpu_package_identity(guard),'operator_tolerance':1e-10,'waveform_tolerance':1e-7,
             'energy_tolerance':1e-8,'iterative_settings':asdict(IterativeSettings(max_iterations=500)),
-            'preconditioner':preconditioner}
+            'preconditioner':preconditioner,'solver':solver}
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output/'gpu-plan.json',plan)
         def snapshot(stream):
@@ -263,6 +266,7 @@ if __name__ == '__main__':
     parser.add_argument('--plan',type=Path)
     parser.add_argument('--orders',type=int,nargs='+',default=[1,2,3,4])
     parser.add_argument('--preconditioner',choices=('diagonal','element_schwarz'),default='diagonal')
+    parser.add_argument('--solver',choices=('scipy_cg','gpu_cg'),default='scipy_cg')
     parser.add_argument('--worker',action='store_true')
     parser.add_argument('--max-seconds',type=float,default=180)
     parser.add_argument('--max-rss-mib',type=float,default=1024)
@@ -270,6 +274,6 @@ if __name__ == '__main__':
     guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds,max_rss_mib=args.max_rss_mib,
         max_system_memory_percent=85,min_available_mib=2048))
     result = worker(args.plan,args.output,guard) if args.worker else verify_gpu(args.output,guard,
-        orders=tuple(args.orders),preconditioner=args.preconditioner)
+        orders=tuple(args.orders),preconditioner=args.preconditioner,solver=args.solver)
     print(json.dumps({k:result[k] for k in ('completed','passed','ready_for_training_data')}))
     raise SystemExit(0 if result['passed'] else 2)

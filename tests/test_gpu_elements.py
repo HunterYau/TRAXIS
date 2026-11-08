@@ -17,11 +17,25 @@ from traxis.config import Plate
 from traxis.geometry import structured_mesh
 from traxis.gpu_elements import build_gpu_elements,GPUElementOperator,storage_screen,element_inverse
 from traxis.gpu_verification import verify_gpu
+from traxis.gpu_cg import gpu_checked_cg
+from traxis.iterative_fem import IterativeSettings
 from traxis.matrixfree import MatrixFreeSettings
 from traxis.resources import ResourceGuard,ResourceLimits
 
 
 class GPUPreflightTests(unittest.TestCase):
+    def test_device_cg_rejects_invalid_inputs_before_device_access(self):
+        with self.assertRaises(ValueError):
+            gpu_checked_cg(np.eye(2),np.ones(2),np.zeros(2),np.ones(2))
+        op = GPUElementOperator(SimpleNamespace(ns=2),0,1)
+        with self.assertRaises(MemoryError):
+            gpu_checked_cg(op,np.ones(6),np.zeros(6),np.ones(6),IterativeSettings(max_workspace_mib=1e-9))
+        for values in (np.ones(5),np.full(6,np.nan),np.ones(6,dtype=complex)):
+            with self.assertRaises(ValueError):
+                gpu_checked_cg(op,values,np.zeros(6),np.ones(6))
+        with self.assertRaises(ValueError):
+            gpu_checked_cg(op,np.ones(6),np.zeros(6),np.zeros(6))
+
     def test_local_cholesky_inverse_and_storage_include_schwarz_workspace(self):
         rng = np.random.default_rng(2026)
         x = rng.normal(size=(2,6,6))
@@ -89,6 +103,47 @@ class GPUPreflightTests(unittest.TestCase):
 @unittest.skipUnless(os.environ.get('TRAXIS_GPU_CHECKS') == '1' and importlib.util.find_spec('cupy')
                      and importlib.util.find_spec('ngsolve'),'enable optional CUDA/native operator checks')
 class NativeGPUReferenceTests(unittest.TestCase):
+    def test_resident_cg_all_order_transients_match_direct(self):
+        with tempfile.TemporaryDirectory() as directory:
+            report = verify_gpu(Path(directory)/'reference',
+                ResourceGuard(ResourceLimits(max_seconds=150,max_rss_mib=1024)),
+                preconditioner='element_schwarz',solver='gpu_cg')
+            self.assertTrue(report['passed'])
+            self.assertEqual(len(report['cases']),8)
+            for row in report['cases']:
+                self.assertEqual(row['solver'],'gpu_cg')
+                self.assertLess(row['maximum_relative_residual'],1e-9)
+                self.assertLess(row['waveform_relative_l2'],1e-7)
+
+    def test_device_cg_warm_start_zero_rhs_transfer_count_and_nonconvergence(self):
+        from traxis.config import Material
+        from traxis.highorder import assemble_highorder
+        mesh = structured_mesh(Plate(.04,.03,.003),(2,2,1))
+        guard = ResourceGuard(ResourceLimits(max_seconds=45,max_rss_mib=1024))
+        gpu = build_gpu_elements(mesh,Material(),MatrixFreeSettings(order=2),guard=guard)
+        native = assemble_highorder(mesh,Material(),2,guard)
+        rhs = np.random.default_rng(2026).normal(size=gpu.space.ndof)
+        guess = np.full(gpu.space.ndof,.1)
+        saved = guess.copy()
+        result = gpu_checked_cg(gpu.mass,rhs,guess,gpu.mass_diagonal,
+            IterativeSettings(max_iterations=500),guard=guard)
+        from scipy.sparse.linalg import spsolve
+        np.testing.assert_allclose(result.solution,spsolve(native.mass,rhs),rtol=1e-8,atol=1e-8)
+        np.testing.assert_array_equal(guess,saved)
+        self.assertLess(np.linalg.norm(native.mass@result.solution-rhs)/np.linalg.norm(rhs),1e-9)
+        self.assertEqual(result.statistics['host_vector_uploads'],3)
+        self.assertEqual(result.statistics['host_vector_downloads'],1)
+        self.assertGreater(result.iterations,3)
+        zero = gpu_checked_cg(gpu.mass,np.zeros_like(rhs),guess,gpu.mass_diagonal,guard=guard)
+        np.testing.assert_array_equal(zero.solution,np.zeros_like(rhs))
+        self.assertEqual(zero.iterations,0)
+        events = []
+        with self.assertRaisesRegex(ArithmeticError,'device CG solve failed'):
+            gpu_checked_cg(gpu.mass,rhs,np.zeros_like(rhs),gpu.mass_diagonal,
+                IterativeSettings(max_iterations=1),guard=guard,progress=events.append)
+        self.assertEqual(events[-1]['status'],1)
+        self.assertGreater(events[-1]['true_relative_residual'],1e-9)
+
     def test_schwarz_all_columns_are_spd_and_transients_match_direct(self):
         with tempfile.TemporaryDirectory() as directory:
             report = verify_gpu(Path(directory)/'reference',
@@ -132,13 +187,14 @@ class NativeGPUReferenceTests(unittest.TestCase):
             capacity = measure_capacity({**capacity_settings(),'mesh_size_m':.008},root/'capacity',
                 ResourceGuard(ResourceLimits(max_seconds=45,max_rss_mib=1024)))
             self.assertTrue(capacity['completed'],capacity.get('error'))
-            for method in ('diagonal','element_schwarz'):
-                cfg = {**step_settings(),'backend':'gpu_elements','preconditioner':method,
+            for method,solver in (('diagonal','scipy_cg'),('element_schwarz','scipy_cg'),('element_schwarz','gpu_cg')):
+                name = method+'-'+solver
+                cfg = {**step_settings(),'backend':'gpu_elements','preconditioner':method,'solver':solver,
                     'gpu':{'max_device_mib':16,'chunk_elements':31,'device_id':0}}
-                result = measure_step(root/'capacity',cfg,root/method,
+                result = measure_step(root/'capacity',cfg,root/name,
                     ResourceGuard(ResourceLimits(max_seconds=45,max_rss_mib=1024)))
                 self.assertTrue(result['completed'],result.get('error'))
-                native = json.loads((root/method/'native/step-report.json').read_text())
+                native = json.loads((root/name/'native/step-report.json').read_text())
                 self.assertEqual(native['backend'],'gpu_elements')
                 self.assertEqual(native['device']['precision'],'float64')
                 self.assertLess(native['direct_acceleration_relative_l2'],1e-7)
@@ -146,3 +202,6 @@ class NativeGPUReferenceTests(unittest.TestCase):
                 self.assertGreater(native['solve_progress'][-1]['effective_operator_applications'],0)
                 if method == 'element_schwarz':
                     self.assertGreater(native['solve_progress'][-1]['preconditioner_applications'],0)
+                if solver == 'gpu_cg':
+                    self.assertEqual(native['gpu_solver_statistics']['host_vector_uploads'],2)
+                    self.assertEqual(native['gpu_solver_statistics']['host_vector_downloads'],1)

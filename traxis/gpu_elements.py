@@ -30,9 +30,10 @@ extern "C" __global__ void element_apply(
     double value = 0.0;
     if (ks != 0.0) {
         double sum = 0.0;
-        for (int j=0; j<nv; ++j)
-            sum += k[((long long)e*nv+row)*nv+j]
-                *x[dofs[(long long)e*nl+j%nl]+(j/nl)*ns];
+        for (int c=0; c<3; ++c)
+            for (int j=0; j<nl; ++j)
+                sum += k[((long long)e*nv+row)*nv+c*nl+j]
+                    *x[dofs[(long long)e*nl+j]+c*ns];
         value += ks*sum;
     }
     if (ms != 0.0) {
@@ -56,11 +57,12 @@ extern "C" __global__ void schwarz_apply(
     if (index >= (long long)ne*nv) return;
     int e = (int)(index/nv), row = (int)(index%nv);
     double sum = 0.0;
-    for (int j=0; j<nv; ++j) {
-        int scalar = dofs[(long long)e*nl+j%nl];
-        sum += inverse[((long long)e*nv+row)*nv+j]*weight[scalar]
-            *x[scalar+(j/nl)*ns];
-    }
+    for (int c=0; c<3; ++c)
+        for (int j=0; j<nl; ++j) {
+            int scalar = dofs[(long long)e*nl+j];
+            sum += inverse[((long long)e*nv+row)*nv+c*nl+j]*weight[scalar]
+                *x[scalar+c*ns];
+        }
     int scalar = dofs[(long long)e*nl+row%nl];
     atomicAdd(y+scalar+(row/nl)*ns,weight[scalar]*sum);
 }
@@ -107,7 +109,7 @@ def storage_screen(mesh, settings, *, max_device_mib=3072, chunk_elements=128, d
     local = math.comb(settings.order+3,3)
     element_bytes = screen['tetrahedra']*((3*local)**2+local**2)*8
     index_bytes = screen['tetrahedra']*local*4
-    vector_bytes = screen['vector_dofs']*8*8
+    vector_bytes = screen['vector_dofs']*8*16
     inverse_bytes = 0 if preconditioner_scale is None else screen['tetrahedra']*(3*local)**2*8+screen['scalar_dofs']*8
     device_mib = (element_bytes+index_bytes+vector_bytes+inverse_bytes)/1024**2
     host_chunk_mib = chunk_elements*((3*local)**2+local**2)*8/1024**2
@@ -127,9 +129,10 @@ def storage_screen(mesh, settings, *, max_device_mib=3072, chunk_elements=128, d
 class _Storage:
     def __init__(self, cp, screen, device_id, guard):
         self.cp,self.screen,self.device_id,self.guard = cp,screen,device_id,guard
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
         self.applications = 0
         self.preconditioner_applications = 0
+        self.vector_uploads = self.vector_downloads = 0
         self.ne,self.nl,self.ns = screen['tetrahedra'],screen['local_scalar_dofs'],screen['scalar_dofs']
         self.stiffness = cp.empty((self.ne,3*self.nl,3*self.nl),dtype=cp.float64)
         self.mass = cp.empty((self.ne,self.nl,self.nl),dtype=cp.float64)
@@ -150,6 +153,23 @@ class _Storage:
                 np.int32(0),np.int32(self.nl),np.int32(self.ns)))
             cp.cuda.get_current_stream().synchronize()
 
+    def _launch(self, values, result, stiffness_scale=0., mass_scale=0., *, inverse=False):
+        """Apply to device buffers; caller owns the storage lock/device context."""
+        result.fill(0.)
+        count = self.ne*3*self.nl
+        if inverse:
+            if self.inverse is None:
+                raise ValueError('GPU element preconditioner was not constructed')
+            self.schwarz_kernel(((count+127)//128,),(128,),
+                (self.inverse,self.weight,self.indices,values,result,np.int32(self.ne),
+                 np.int32(self.nl),np.int32(self.ns)))
+            self.preconditioner_applications += 1
+        else:
+            self.kernel(((count+127)//128,),(128,),
+                (self.stiffness,self.mass,self.indices,values,result,np.int32(self.ne),np.int32(self.nl),
+                 np.int32(self.ns),np.float64(stiffness_scale),np.float64(mass_scale)))
+            self.applications += 1
+
     def apply(self, values, stiffness_scale=0., mass_scale=0., *, inverse=False):
         values = np.asarray(values)
         if (np.iscomplexobj(values) or values.shape not in ((3*self.ns,),(3*self.ns,1))
@@ -159,21 +179,10 @@ class _Storage:
             if self.guard:
                 self.guard.check()
             self.input.set(np.ascontiguousarray(values.reshape(-1),dtype=np.float64))
-            self.output.fill(0.)
-            count = self.ne*3*self.nl
-            if inverse:
-                if self.inverse is None:
-                    raise ValueError('GPU element preconditioner was not constructed')
-                self.schwarz_kernel(((count+127)//128,),(128,),
-                    (self.inverse,self.weight,self.indices,self.input,self.output,np.int32(self.ne),
-                     np.int32(self.nl),np.int32(self.ns)))
-                self.preconditioner_applications += 1
-            else:
-                self.kernel(((count+127)//128,),(128,),
-                    (self.stiffness,self.mass,self.indices,self.input,self.output,np.int32(self.ne),np.int32(self.nl),
-                     np.int32(self.ns),np.float64(stiffness_scale),np.float64(mass_scale)))
-                self.applications += 1
+            self.vector_uploads += 1
+            self._launch(self.input,self.output,stiffness_scale,mass_scale,inverse=inverse)
             answer = self.cp.asnumpy(self.output)
+            self.vector_downloads += 1
             if self.guard:
                 self.guard.check()
         if not np.isfinite(answer).all():
