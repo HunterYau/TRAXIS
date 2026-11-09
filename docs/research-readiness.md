@@ -21,6 +21,12 @@ plate, defect and transducer configuration.
 
 ## Interpretation of numerical evidence
 
+The primary materials list proposes approximately 7 mm PZT discs, while the
+current full-size mechanical control uses 6 mm disks. Its twelve-sensor ring
+and eight-sensor edge-layout descriptions also differ. These remain proposed
+hardware details, not calibrated numerical inputs; see hardware-assumptions.md.
+The temporal study keeps its existing footprints fixed to isolate time error.
+
 Earlier Elmer P2 studies used an under-integrated mass configuration. The
 corrected rule agrees with exact quadratic mass and the independent high-order
 assembly, but earlier dispersion/waveform/refinement measurements must be
