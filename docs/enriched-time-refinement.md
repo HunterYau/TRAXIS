@@ -51,6 +51,43 @@ isolation, shifted/missing samples, unidentifiable rates, changed physics/code
 and tampered archives. This selected seven-test result is not added to the
 earlier complete 268-test count. The simulation implementation is unchanged.
 
-Fine measurements are in progress at this commit. A passing time result will
+## Half-step measurement and independent CPU check
+
+The 62,938-step half case completes all 500 microseconds in 420.403 propagation
+seconds / 470.163 monitored seconds. Raw differences from the coarse trace are
+0.0574956% and 0.0382134% per receiver. Its native map, coordinates, positive
+mass and physical footprint coefficients agree exactly with the coarse case.
+The postburst modified-energy relative range is 6.47e-16. This two-level
+comparison alone does not identify temporal order.
+
+`examples.verify_enriched_window` independently reconstructs mass and the
+final CPU stiffness action from geometry. It checks saved-state energies and
+receiver covectors without a CUDA allocation. The half case's mass agrees
+exactly; final energy errors are 3.11e-14 relative and the final probe check
+agrees exactly in this saved result. Two tests exercise arbitrary native
+permutations against direct assembled energies and invalid map/state rejection.
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.verify_enriched_window --run outputs/enriched-gpu-fullplate-half-dt-20261108 --steps 62938 --output outputs/enriched-half-cpu-check
+```
+
+## Scheduling during longer checks
+
+The half case peaks at 79 C on the GPU, near the unchanged 80 C stop. The
+quarter case uses `examples.pace_gpu_worker`, limited to one live leaf worker
+whose module and explicit project plan path match. It pauses host submission
+at 78 C and resumes at 72 C or cooler, retaining the CUDA state and numerical
+step. Force and observation times depend on the step count, not wall time.
+The original monitor keeps its memory, temperature and total-time guards.
+No other application's process or global hardware setting is changed.
+
+The helper records the verified PID/create time, plan/source hashes,
+temperatures, scheduling events and pause duration. Cleanup resumes its owned
+worker if needed. Three mock-process tests cover hysteresis, cleanup, a failed
+suspend and an already-exited worker. Paused wall time counts in reported
+propagation seconds; these timings are not an unpaced throughput comparison.
+Pacing records are under `outputs/enriched-quarter-dt-pacing-20261108`.
+
+The quarter measurement is in progress at this commit. A passing time result will
 still not establish spatial/thickness convergence, recess scattering, PZT
 voltage accuracy or physical agreement. `ready_for_training_data` stays false.
