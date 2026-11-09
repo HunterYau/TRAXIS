@@ -38,9 +38,9 @@ Unperformed driven checks now use null values and an explicit status flag.
 
 All 17 selected enriched GPU/element/circular-patch tests pass without skips in
 23.454 test seconds. The final standalone reference also passes and retains
-plans, source/runtime/package bindings, arrays and monitor receipts. The last
-complete integrated suite remains the earlier 253-test result; overlapping
-selected suites are not added to that total.
+plans, source/runtime/package bindings, arrays and monitor receipts. The complete
+integrated result below covers the final code; overlapping selected suites
+are not added to that total.
 
 ## Full-size operator measurement
 
@@ -128,6 +128,22 @@ resource summaries are in `evidence/enriched-gpu-wave-debug.json`.
 
 Use fresh output directories and the retained capacity inputs. The settings
 file keeps the window and criteria explicit. Operator mode runs no time steps.
+
+## Complete integrated regression
+
+All 268 tests pass without skips with Elmer, NGSolve/Gmsh and actual GPU checks
+enabled. Test time is 616.504 seconds and monitored time 622.304 seconds. Peak
+sampled combined RSS is 876.81 MiB, system RAM 57.6%, minimum available RAM
+6,876.92 MiB, system-wide GPU memory 3,139 MiB and GPU temperature 65 C. CPU
+temperature remains unavailable. Model/policy checks perform only their
+bounded debug updates; no full training cycle ran.
+
+Logs and the invocation/resource receipts are under
+`outputs/enriched-gpu-native-regression-20261108`. The evidence collector binds
+all final test-source hashes, verifies their timestamps predate the invocation,
+and retains the complete result alongside the numerical studies. Compact
+evidence fingerprint:
+`e0ef03c80776511766f54ad356da9d3848776d664afdf4ff26e2676afef3d6a5`.
 
 ## Remaining acceptance
 

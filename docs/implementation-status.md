@@ -834,3 +834,11 @@ Full-size space/thickness/time and recess/frequency studies, PZT/electrical
 calibration, physical agreement, accepted banks and meaningful model/policy
 experiments remain open. No full training ran.
 
+The final complete regression passes all 268 tests without skips, with Elmer,
+NGSolve/Gmsh and GPU checks enabled. Test time is 616.504 seconds; monitored
+time 622.304 seconds. Peak sampled combined RSS is 876.81 MiB, system RAM 57.6%,
+available RAM at least 6,876.92 MiB and GPU observations 3,139 MiB / 65 C.
+The compact evidence includes final test-source hashes, numerical archives,
+independent CPU checks and resource receipts. The earlier 253-test count is
+historical; selected-suite counts are not added to the complete 268.
+

@@ -4,8 +4,8 @@
   "training_updates": 0,
   "collector": {
     "path": "outputs/enriched-gpu-evidence-tools-20261108/collect_evidence.py",
-    "sha256": "d9a1e3923a4ac2434320b4a3e7254d0bdc0c6f9546b4ccf6469d6c21b5f1f69d",
-    "bytes": 7331
+    "sha256": "27fa130d809da26cf83c9ca3984c87fd62a6a9e9309b108e2b11c218407db9be",
+    "bytes": 8630
   },
   "source_sha256": {
     "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
@@ -2304,13 +2304,126 @@
       "bytes": 12242
     }
   },
+  "integrated_regression": {
+    "tests": 268,
+    "test_seconds": 616.504,
+    "wall_seconds": 622.3037663000869,
+    "monitor": {
+      "path": "outputs/enriched-gpu-native-regression-20261108/monitor-result.json",
+      "sha256": "c51132bdfa037b9f6d6fecd859790edf6889f9b628a45dee1305e5197717833e",
+      "bytes": 838194
+    },
+    "log": {
+      "path": "outputs/enriched-gpu-native-regression-20261108/tests.log",
+      "sha256": "e73d619c2cbc9c85af614aaa2a6f2f3b99522cc6d1637abb9ec364a9868db459",
+      "bytes": 46494
+    },
+    "invocation": {
+      "path": "outputs/enriched-gpu-native-regression-20261108/invocation.json",
+      "sha256": "b7fe8598093f9517784f862567cf9353dc13eb556bb7688431d7cc3ba60dac93",
+      "bytes": 837
+    },
+    "test_source_sha256": {
+      "tests/__init__.py": "5018a20159b1a64a2636e2050ab0fdb7f869c54714ab94ff3256206fa63d408f",
+      "tests/fixtures.py": "85a8a28de6572aa937066a4b430432503e5fa0f4f485ada017b794344a6d2834",
+      "tests/gpu_cg_contract_probe.py": "c270dc1cb4015be639ca6e9254a9f94d8052209fa3451b7f5f1709fefd67a20c",
+      "tests/test_adaptive.py": "d9c74d712375172e0535af4a911249a3084bfd39dc3c3d3ff3071dbec2006f7c",
+      "tests/test_bank.py": "b9984f54df9e5d6e1ae7ca579e03a342dde685527aaf06c1733bd3257d1a9cd9",
+      "tests/test_cad_mesh.py": "62ab67dbb3e30c81d15315eaee2e20a5f419350e9a3f54ecf414cda9c6cd09af",
+      "tests/test_das_baseline.py": "e1d2ae67d91ad1f721e335b9c73ce2e8500279464fd18d00e7b2d60c82520177",
+      "tests/test_dataset.py": "cf2e6d99a68cd06ad7c09d5256491c37b73a5563a7b89154e452d805532b8e8f",
+      "tests/test_dispersion.py": "864f2ce7c9f278a1b97e990bafe87c985f5f79085ce049a59f7c444396e9945c",
+      "tests/test_elmer_directional.py": "60d3f760cab69186ca0986296ad3255822c3c3680b5b2315da0e43c32d5da9d5",
+      "tests/test_elmer_plate_refinement.py": "8f9284075fa224b3265282d36fee681e96ab9c60ad6bd06cd5da84271478ca0b",
+      "tests/test_elmer_reference.py": "0667885fda2080172f34eb148c3443aea7f92b76c392f87e3452bd95f827dc71",
+      "tests/test_elmer_transient.py": "b39c656752fc020627c13c83843ca0fac07c23ae2775001ffe5156d13876176a",
+      "tests/test_elmer_waveguide.py": "b0ef898a36df4807338a5f9e1000fc411cbf074d87afeff7c1f87340e4072b8c",
+      "tests/test_enriched_dispersion.py": "41a8a8a1884f3522972f41631fc1c191ab7de0bc50d2085f059c9f4d38f7d581",
+      "tests/test_enriched_gpu_wave.py": "ebed6a132e42385b330adaa1353994d9b22d2451506025ba92f37fb400a19244",
+      "tests/test_enriched_tet.py": "176ca12aa362ed71f5bbc31ab75841dc45b9e5f5e29793196d56f8688a00a7d4",
+      "tests/test_evaluation.py": "799179975026b85903fba0bcbb0d843509e17f9bcc9fbddd28c7921553182bef",
+      "tests/test_experiment_commands.py": "ecd1f328ef5eb60193bbf5e81941f40879d931bd3dbbef196950dee6940bdce9",
+      "tests/test_fem.py": "fcf7d761ca23983f105d411ec246fc2945610b42520b8ae6a882252bbc9c66e2",
+      "tests/test_forward.py": "0a37acae1f06b291ced181211b32fb26d5837f665d0d2a03443b8d53c24f5e3b",
+      "tests/test_generation_commands.py": "d1a691701dc3e07a0fc4a27cd78c66be0a6856d781be7d32f301f7527720d6ef",
+      "tests/test_geometry_acquisition.py": "884c2152a157268fbef340977c220729d895b5083caa1f75ad40c57d3dab60e9",
+      "tests/test_gpu_elements.py": "b80843c4ddccf2ea2b688972307c21fff5cce72a2861eff3e568f391444e8056",
+      "tests/test_gpu_enriched.py": "b6fe096687066af5aeb12180af2a48c74cea7124d5b6158a7eff31bd193522ee",
+      "tests/test_highorder_cad_refinement.py": "0079f5ead331a40b436eb1f77d0ac06f9074a23fcdfdecb5103c3e88b4c2ca4e",
+      "tests/test_highorder_directional.py": "19f4871cc9d869c937754123cac17e18c124a4470c4872fe3c897b620768b009",
+      "tests/test_highorder_patches.py": "a8159b4b577060d318bb9ab0a64a5b488d3064687c063cac1f534cb315cd6967",
+      "tests/test_highorder_reference.py": "a63a8bc2b29a2e30f467605ebe25214ee20baba8b5ca75262652d6dcf4c762b6",
+      "tests/test_highorder_waveforms.py": "79ace12c3ee42bc355581ab81d9c2979076e19e41add8a94cdcd690f609573f3",
+      "tests/test_imaging_metrics.py": "8912adad247e9ef14f6773d5b389a9802748b0893282c51072be11ab417ffc34",
+      "tests/test_implicit_fem.py": "eee88e3420e7c79643ae2f8a0bb3f6ef0a17bbbef1d8ece34a4facad30b47d7e",
+      "tests/test_importers.py": "7c6fd24a19f52db490835088a57b85013acd3d87f5aa80c771c92c02684fd18e",
+      "tests/test_iterative_fem.py": "a1337bc278699df6c4f756a4b04d0758ee5534e27505d8bb42d7460c8ad992b2",
+      "tests/test_matrixfree.py": "2cbc96c84dec1882a8fb92d826bd03f6d255c81822fbe863b5296c26a81f58eb",
+      "tests/test_matrixfree_step.py": "75400601fc652c98d13aabc41eb5c7b16cc23829298471a8ba972a078d5103ef",
+      "tests/test_models.py": "a7e130c7b305cbb27735f6ae844a5d64e7127a946e4ae2d714163fdd86af22f2",
+      "tests/test_patches.py": "9dd6a337b8789de32dbebf5730a08ee7594284f4aaf626e7255acc5958739572",
+      "tests/test_policy_training.py": "8c07076b654e4e0c7b9db8d291dea85a62a30d1ca21409f241a9e234748cb298",
+      "tests/test_polynomial_patches.py": "38504f260d9cf9de530b6fbf9fa7df67242a3046502c8ce0d3c7884abfe6cdf8",
+      "tests/test_quadratic_mass.py": "4bc9cd433e0dd9b54d437f56b58ef5ecbe4767cf5ba820826f911ac9cf2e548b",
+      "tests/test_quadratic_patches.py": "7f86d72c603d587d8e268944b71988eeb327c10b7a4e3c3f2698c34313160bc1",
+      "tests/test_reporting.py": "341f13047d619bab7b5528caf2360af7b0178060ba5df8bace49ba467cdda7b2",
+      "tests/test_resources.py": "b4bb05e6ba673aa7e50aa6b41a47fa185491774baa1605f20bc9fbdf1a0c6f06",
+      "tests/test_scenarios.py": "6e446e56991cfb18635167f1ffa3053db6f1d1faeb539a0730bb9e830c0bcdaf",
+      "tests/test_solver_requests.py": "0eb0ce6a6bf83ca348fa05e37dd7afc403ffb79486717cce7c6a05fa7f62b3fd",
+      "tests/test_studies.py": "5d5b100402dd5bba08020905a14a28810d0fbf92e34964914f889ab130ea696e",
+      "tests/test_training.py": "fc640f5866565933cc7f8891ab502da0db5b6d73eba07459112917a5f6950a7a",
+      "tests/test_uncertainty.py": "54a5db16e8fc79df8dd87866431eeeedd870b7f16d1d54a1eff1c7f3c23696cc",
+      "tests/test_waveform_checks.py": "59acf48253566f0f7fe88b196dc580b5a49d61b0b8e67fd7225a29de8d688f3f",
+      "tests/test_waveguide.py": "c33d5d1cf9218f091455b172ebff977a05736c785d53d2bc1e6ca02ecaea23f8"
+    },
+    "resources": {
+      "limits": {
+        "max_seconds": 900.0,
+        "max_rss_mib": 1024,
+        "max_system_memory_percent": 85,
+        "min_available_mib": 2048,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "sampled_peak_combined_rss_mib": 876.80859375,
+      "sampled_peak_system_memory_percent": 57.6,
+      "sampled_minimum_available_mib": 6876.91796875,
+      "sampled_peak_system_gpu_mib": 3139.0,
+      "sampled_peak_gpu_temperature_c": 65.0,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    },
+    "full_training_cycle_run": false
+  },
+  "figures": [
+    {
+      "path": "outputs/enriched-gpu-evidence-tools-20261108/fullplate-mechanical-window.png",
+      "sha256": "5e70174e3b6687b9d9de7f414bc6bb3342361c308e086fe86862ac1cfa084451",
+      "bytes": 179727
+    },
+    {
+      "path": "outputs/enriched-gpu-evidence-tools-20261108/fullplate-mechanical-window.pdf",
+      "sha256": "528d9a52bd4c9aeb0dfd2a9992188f74646972b5c83c07973498599b9f98439b",
+      "bytes": 31812
+    },
+    {
+      "path": "outputs/enriched-gpu-evidence-tools-20261108/enriched-lamb-refinement.png",
+      "sha256": "5abcddfc04f660e04e997dc680ca2c2de47af0cf27972d5b459d09c235416e13",
+      "bytes": 125434
+    },
+    {
+      "path": "outputs/enriched-gpu-evidence-tools-20261108/enriched-lamb-refinement.pdf",
+      "sha256": "f2270f5039b21c6274e58d742f7f3e8b01bc06e582255bf6aacc69ef59f1f109",
+      "bytes": 22737
+    }
+  ],
   "limits": [
     "One intact mesh/window at 100 kHz; no full-size spatial/thickness/time convergence.",
     "Structured periodic Lamb benchmark does not validate the unstructured full plate or recess scattering.",
     "Coarse bending-wave frequency errors reach 3.67%; one-layer lateral refinement is not monotone.",
     "No coupled/calibrated PZT voltage, physical agreement, accepted bank, or full model/policy training.",
-    "Selected tests overlap; the last full integrated suite is the earlier 253-test run.",
+    "Selected tests overlap and are not added to the complete integrated test count.",
     "GPU readings are system-wide; CPU temperature is unavailable."
   ],
-  "fingerprint": "127b308d341b5b81604a3f4bc2f946a6fc7d952418fb0e3be95e45a362f4d392"
+  "fingerprint": "e0ef03c80776511766f54ad356da9d3848776d664afdf4ff26e2676afef3d6a5"
 }

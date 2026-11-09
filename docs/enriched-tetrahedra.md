@@ -115,9 +115,10 @@ sampled combined RSS is 312.02 MiB, system RAM 59.1%, available RAM at least
 CPU; CPU temperature was unavailable. The initial targeted run's four optional
 Elmer skips are retained, followed by the fully enabled pass.
 
-This isolated candidate adds six new checks. The last complete integrated
-CPU/GPU run remains the earlier 253-test milestone; it was not repeated for
-this separate element/driver addition. Current evidence is in
+This isolated candidate adds six new checks. At this element/capacity cutoff,
+the last complete integrated CPU/GPU run was the earlier 253-test milestone.
+The later GPU/window work passes the complete 268-test suite; see
+enriched-gpu-waveforms.md. Evidence for this foundation is in
 `evidence/enriched-tetrahedron-debug.json`, fingerprint
 `762dbcfe826e28eff5be82ec17d8dc6bb3a9d41ebbd89a0b812dab0e6ba49eb2`.
 It binds source/runtime, arrays, the original coarse temporal failure,

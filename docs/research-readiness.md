@@ -90,6 +90,12 @@ reach 3.67% and one-layer lateral refinement is nonmonotone. This is not a
 full-size wave-convergence or PZT/physical acceptance. See
 enriched-gpu-waveforms.md and evidence/enriched-gpu-wave-debug.json.
 
+The final complete integrated run passes all 268 tests without skips, with real
+Elmer, high-order and GPU references enabled, in 616.504 test / 622.304 monitored
+seconds. Sampled combined RSS peaks at 876.81 MiB, system RAM at 57.6% and GPU
+temperature at 65 C. Short model/policy debug updates are included; no full
+training cycle ran. This supersedes the earlier complete-suite counts above.
+
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource
 limits. Individual training-related tests perform short debug updates; this
