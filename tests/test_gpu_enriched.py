@@ -4,6 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
 
 import numpy as np
 from scipy.linalg import eigh
@@ -13,11 +14,27 @@ from traxis.enriched_factor import gradient_factor,local_stability_data,streamed
 from traxis.enriched_tet import WEIGHTS,assemble_enriched,element_matrices,reference_integrals
 from traxis.geometry import structured_mesh
 from traxis.gpu_enriched import build_gpu_enriched
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate
+from traxis.highorder_patches import highorder_surface_patch
 from traxis.matrixfree import MatrixFreeSettings
 from traxis.resources import ResourceGuard,ResourceLimits
 
 
 class FactorizedEnrichedTests(unittest.TestCase):
+    def test_explicit_limits_reject_before_device_access(self):
+        system = SimpleNamespace(stable_dt_s=1e-8,mass_diagonal=np.ones(3))
+        with self.assertRaises(ValueError):
+            gpu_explicit_simulate(system,1,1.25e-7,np.eye(3),np.zeros(3))
+        with self.assertRaises(ValueError):
+            gpu_explicit_simulate(system,0,1e-9,np.eye(3),np.zeros(3))
+        with self.assertRaises(ValueError):
+            gpu_explicit_simulate(system,1,1e-9,np.eye(4),np.zeros(3))
+        with self.assertRaises(MemoryError):
+            gpu_explicit_simulate(system,1,1e-9,np.eye(3),np.zeros(3),max_workspace_mib=1e-9)
+        fake = SimpleNamespace(scalar_space=SimpleNamespace(globalorder=3))
+        with self.assertRaises(ValueError):
+            highorder_surface_patch(fake,Plate(.04,.03,.003),(.01,.01),.003,trace_degree=2)
+
     def test_reference_gradient_factor_and_local_cfl_bound_preserve_all_coefficients(self):
         factor,error = gradient_factor()
         self.assertEqual(factor.shape,(13,3,15))
@@ -66,8 +83,23 @@ class NativeFactorizedGPUChecks(unittest.TestCase):
             self.assertTrue(result['passed'])
             self.assertEqual(len(result['cases']),2)
             for row in result['cases']:
+                archive = Path(directory)/'reference/native'/row['comparison_file']
+                with np.load(archive,allow_pickle=False) as arrays:
+                    measured = np.linalg.norm(arrays['gpu_stiffness']-arrays['reference_stiffness'])/np.linalg.norm(arrays['reference_stiffness'])
+                self.assertEqual(row['stiffness_relative_frobenius'],measured)
                 self.assertEqual(row['all_columns_checked'],row['dofs'])
                 self.assertLess(row['stiffness_relative_frobenius'],1e-10)
                 self.assertLess(row['mass_relative_l2'],1e-12)
                 self.assertTrue(row['native_topology_map_verified'])
                 self.assertTrue(row['stable_dt_is_conservative'])
+                self.assertLess(max(row['discrete_waveform_relative_l2']),1e-7)
+                self.assertLess(max(row['modified_energy_relative_ranges']),1e-9)
+                if row['geometry']=='rectangular':
+                    self.assertTrue(row['forced_patch_check_run'])
+                    self.assertLess(row['forced_waveform_relative_l2'],1e-7)
+                    self.assertTrue(row['underdegree_trace_rejected'])
+                else:
+                    self.assertFalse(row['forced_patch_check_run'])
+                    self.assertIsNone(row['circular_patch_error'])
+                    self.assertIsNone(row['forced_waveform_relative_l2'])
+                    self.assertIsNone(row['forced_reciprocity_relative_l2'])

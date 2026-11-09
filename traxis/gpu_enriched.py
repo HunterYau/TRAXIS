@@ -120,6 +120,7 @@ def build_gpu_enriched(mesh,material,settings=None,*,max_device_mib=1024,chunk_e
         raise MemoryError('enriched GPU operator exceeds its declared vector/storage/workspace screen')
     factor,error = gradient_factor()
     screen.update(device_storage_screen_mib=device_mib,host_chunk_screen_mib=host_chunk_mib,
+        max_device_mib=max_device_mib,
         reference_gradient_rank=13,gradient_factor_relative_error=error,
         kernel_source_sha256=hashlib.sha256(KERNEL.encode()).hexdigest(),global_sparse_assembly=False,
         local_dense_stiffness_stored=False)

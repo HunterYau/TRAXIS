@@ -33,7 +33,8 @@ def patch_polynomial_moments(system, vector, center, radius, direction, region, 
 
 
 def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0., 0., 1.), guard=None,
-                            *, max_scalar_dofs=20000, max_tetrahedra=40000, max_workspace_mib=128):
+                            *, max_scalar_dofs=20000, max_tetrahedra=40000, max_workspace_mib=128,
+                            trace_degree=None):
     """Unit-total-force load and identical area-average displacement probe.
 
     Integrate the native finite-element trace polynomial on each free, flat
@@ -51,7 +52,10 @@ def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0.,
             or type(max_tetrahedra) is not int or not 1 <= max_tetrahedra <= 1000000
             or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
         raise ValueError('invalid circular H1 surface extraction limits')
-    order = system.scalar_space.globalorder
+    space_order = system.scalar_space.globalorder
+    order = space_order if trace_degree is None else trace_degree
+    if type(order) is not int or not space_order<=order<=4:
+        raise ValueError('surface trace degree must cover the declared space order through degree four')
     powers = triangle_powers(order)
     if not 1 <= order <= 4 or not 4 <= system.scalar_space.ndof <= max_scalar_dofs:
         raise ValueError('circular H1 footprints require bounded degree-one through degree-four spaces')
@@ -131,6 +135,7 @@ def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0.,
         raise ArithmeticError('nonfinite native footprint coefficients')
     clipped = bool(np.any(center < radius_m) or np.any(center > dimensions[:2]-radius_m))
     report = {'integration': 'analytic_disk_native_H1_trace_polynomial', 'order': order,
+        'space_order':space_order,'trace_degree':order,
         'requested_center_xy_m': center.tolist(), 'radius_m': radius_m, 'direction': direction.tolist(),
         'area_m2': float(area), 'edge_clipped': clipped,
         'full_disk_area_relative_error': float(abs(area/(math.pi*radius_m**2)-1)),
@@ -138,5 +143,6 @@ def highorder_surface_patch(system, plate, center_xy_m, radius_m, direction=(0.,
         'negative_coefficients': int(np.count_nonzero(weights < -1e-13)),
         'maximum_trace_fit_absolute_error': maximum_fit_error, 'trace_vandermonde_condition': condition,
         'extraction_workspace_screen_mib': workspace_mib,
-        'coefficient_layout': 'component_major_hierarchical_H1', 'work_conjugate': True}
+        'coefficient_layout': getattr(system,'screen',{}).get('coefficient_layout','component_major_hierarchical_H1'),
+        'work_conjugate': True}
     return (direction[:, None]*weights).ravel(), report

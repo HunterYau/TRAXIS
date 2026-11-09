@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import time
 import zipfile
+from types import SimpleNamespace
 
 import numpy as np
 from scipy.linalg import eigh
@@ -17,7 +18,10 @@ from traxis.elmer_reference import run_monitored
 from traxis.enriched_tet import assemble_enriched
 from traxis.enriched_verification import recipes
 from traxis.gpu_enriched import build_gpu_enriched
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate
 from traxis.gpu_verification import gpu_package_identity
+from traxis.highorder_patches import highorder_surface_patch,patch_polynomial_moments
+from traxis.fem import simulate,tone_burst
 from traxis.highorder_verification import distribution_identity,reference_mesh
 from traxis.resources import ResourceGuard,ResourceLimits
 from traxis.storage import atomic_write,canonical_hash,sha256_file,write_json
@@ -30,6 +34,7 @@ def worker(plan_path,output,guard):
     plan = json.loads(plan_path.read_text())
     if (plan.get('kind')!='factorized_enriched_gpu_reference' or plan.get('meshes')!=recipes()
             or plan.get('operator_tolerance')!=1e-10 or plan.get('mass_tolerance')!=1e-12
+            or plan.get('waveform_tolerance')!=1e-7 or plan.get('energy_tolerance')!=1e-9
             or canonical_hash({k:v for k,v in plan.items() if k!='fingerprint'})!=plan['fingerprint']
             or plan['source_sha256']!=reference_source_hashes() or plan['runtime']!=distribution_identity(guard)
             or plan['gpu_packages']!=gpu_package_identity(guard)):
@@ -56,7 +61,7 @@ def worker(plan_path,output,guard):
                 unit[column] = 1.
                 columns.append(gpu.stiffness@unit)
             represented = np.column_stack(columns)
-            error = float(np.linalg.norm(represented-exact)/np.linalg.norm(exact))
+            stiffness_error = float(np.linalg.norm(represented-exact)/np.linalg.norm(exact))
             mass_error = float(np.linalg.norm(gpu.mass_diagonal-mass)/np.linalg.norm(mass))
             diagonal_error = float(np.linalg.norm(gpu.stiffness_diagonal-exact.diagonal())/np.linalg.norm(exact.diagonal()))
             rng = np.random.default_rng(2026)
@@ -69,21 +74,73 @@ def worker(plan_path,output,guard):
             block_error = float(np.linalg.norm(gpu.stiffness@block-exact@block)/np.linalg.norm(exact@block))
             eigenvalues = eigh(exact,np.diag(mass),eigvals_only=True)
             stability = bool(gpu.stable_dt_s<=2/np.sqrt(eigenvalues[-1])*(1+1e-12))
+            model = SimpleNamespace(stiffness=exact,mass_kg=mass,ndof=3*n,stable_dt_s=gpu.stable_dt_s)
+            values,modes = eigh(exact,np.diag(mass))
+            duration = 32*.5*reference.stable_dt_s
+            base_steps = max(64,2**int(np.ceil(np.log2(duration/(.5*gpu.stable_dt_s)))))
+            initial = modes[:,-4]*1e-9
+            probe = (mass*modes[:,-4])[None,:]
+            arrays_data = {}
+            waveform_errors,modified_ranges = [],[]
+            for steps in (base_steps,2*base_steps,4*base_steps):
+                dt = duration/steps
+                result = gpu_explicit_simulate(gpu,steps,dt,probe,np.zeros(3*n),
+                    initial_displacement=initial,energy_stride=1,guard=guard)
+                direct = simulate(model,steps,dt,probe,initial_displacement=initial,guard=guard)
+                waveform_error = float(np.linalg.norm(result.displacement_m-direct.displacement_m)/np.linalg.norm(direct.displacement_m))
+                waveform_errors.append(waveform_error)
+                modified_ranges.append(float(np.ptp(result.modified_energy_j)/abs(result.modified_energy_j.mean())))
+                arrays_data.update({f'time_{steps}_s':result.time_s,f'gpu_{steps}_m':result.displacement_m,
+                    f'direct_{steps}_m':direct.displacement_m})
+            patch_error,reciprocity_error,forced_error = None,None,None
+            underdegree_trace_rejected = None
+            if recipe['name']=='rectangular':
+                try:
+                    highorder_surface_patch(gpu,mesh.plate,(.01,.008),.003,trace_degree=2,guard=guard)
+                except ArithmeticError:
+                    underdegree_trace_rejected = True
+                else:
+                    raise ArithmeticError('quadratic-only integration accepted a cubic enriched surface trace')
+                source,source_info = highorder_surface_patch(gpu,mesh.plate,(.01,.008),.003,trace_degree=3,guard=guard)
+                receiver,_ = highorder_surface_patch(gpu,mesh.plate,(.03,.022),.003,trace_degree=3,guard=guard)
+                moments = patch_polynomial_moments(gpu,source,(.01,.008),.003,(0,0,1),'full',2)
+                patch_error = max(source_info['full_disk_area_relative_error'],moments['maximum_absolute_error'])
+                steps = int(np.ceil(20e-6/(.5*gpu.stable_dt_s)))
+                dt = 20e-6/steps
+                force = lambda t:1e-3*tone_burst(t,200000.,1)
+                result = gpu_explicit_simulate(gpu,steps,dt,receiver[None,:],source,force=force,guard=guard)
+                direct = simulate(model,steps,dt,receiver[None,:],force=lambda t:force(t)*source,guard=guard)
+                reverse = gpu_explicit_simulate(gpu,steps,dt,source[None,:],receiver,force=force,guard=guard)
+                forced_error = float(np.linalg.norm(result.displacement_m-direct.displacement_m)/np.linalg.norm(direct.displacement_m))
+                reciprocity_error = float(np.linalg.norm(result.displacement_m-reverse.displacement_m)/np.linalg.norm(result.displacement_m))
+                after = result.modified_energy_j[result.energy_time_s>5e-6+2*dt]
+                modified_ranges.append(float(np.ptp(after)/abs(after.mean())))
+                arrays_data.update(forced_time_s=result.time_s,forced_gpu_m=result.displacement_m,
+                    forced_direct_m=direct.displacement_m,forced_reciprocal_m=reverse.displacement_m)
             case = output/recipe['name']
             case.mkdir()
             arrays = case/'comparison.npz'
             atomic_write(arrays,lambda stream:np.savez_compressed(stream,gpu_stiffness=represented,
                 reference_stiffness=exact,nodal_mass_kg=gpu.mass_diagonal,reference_mass_kg=mass,
-                native_to_topology=gpu.native_to_topology,points_m=gpu.points_m))
+                native_to_topology=gpu.native_to_topology,points_m=gpu.points_m,**arrays_data))
             row = dict(geometry=recipe['name'],dofs=3*n,all_columns_checked=3*n,
-                stiffness_relative_frobenius=error,mass_relative_l2=mass_error,
+                stiffness_relative_frobenius=stiffness_error,mass_relative_l2=mass_error,
                 stiffness_diagonal_relative_l2=diagonal_error,block_relative_l2=block_error,
                 native_topology_map_verified=gpu.screen['native_topology_permutation_verified'],
                 stable_dt_is_conservative=stability,conservative_dt_s=gpu.stable_dt_s,
                 exact_discrete_stable_dt_s=float(2/np.sqrt(eigenvalues[-1])),screen=gpu.screen,device=gpu.device,
+                discrete_waveform_relative_l2=waveform_errors,modified_energy_relative_ranges=modified_ranges,
+                circular_patch_error=patch_error,forced_waveform_relative_l2=forced_error,
+                forced_patch_check_run=recipe['name']=='rectangular',
+                underdegree_trace_rejected=underdegree_trace_rejected,
+                forced_reciprocity_relative_l2=reciprocity_error,
                 comparison_file=arrays.relative_to(output).as_posix(),comparison_sha256=sha256_file(arrays))
-            row['passed'] = bool(max(error,diagonal_error,block_error)<plan['operator_tolerance']
-                and mass_error<plan['mass_tolerance'] and stability and row['native_topology_map_verified'])
+            patch_passed = (recipe['name']!='rectangular' or (underdegree_trace_rejected is True
+                and max(forced_error,reciprocity_error)<plan['waveform_tolerance'] and patch_error<1e-9))
+            row['passed'] = bool(max(stiffness_error,diagonal_error,block_error)<plan['operator_tolerance']
+                and mass_error<plan['mass_tolerance'] and stability and row['native_topology_map_verified']
+                and max(waveform_errors)<plan['waveform_tolerance']
+                and max(modified_ranges)<plan['energy_tolerance'] and patch_passed)
             report['cases'].append(row)
         if (reference_source_hashes()!=plan['source_sha256'] or distribution_identity(guard)!=plan['runtime']
                 or gpu_package_identity(guard)!=plan['gpu_packages']):
@@ -111,7 +168,8 @@ def verify_gpu_enriched(output,guard=None):
     result = dict(completed=False,passed=False,ready_for_training_data=False,training_updates=0)
     try:
         plan = dict(kind='factorized_enriched_gpu_reference',meshes=recipes(),operator_tolerance=1e-10,
-            mass_tolerance=1e-12,source_sha256=reference_source_hashes(),runtime=distribution_identity(guard),
+            mass_tolerance=1e-12,waveform_tolerance=1e-7,energy_tolerance=1e-9,
+            source_sha256=reference_source_hashes(),runtime=distribution_identity(guard),
             gpu_packages=gpu_package_identity(guard))
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output/'gpu-enriched-plan.json',plan)
