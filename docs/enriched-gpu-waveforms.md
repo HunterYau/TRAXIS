@@ -147,7 +147,9 @@ evidence fingerprint:
 
 ## Remaining acceptance
 
-Spatial/thickness/time convergence,
-Lamb-wave dispersion, representative defects/frequencies, coupled or calibrated
-PZT voltage and physical agreement remain required. No research bank is
-accepted and no full training ran. `ready_for_training_data` remains false.
+The later [complete-window temporal refinement](enriched-time-refinement.md)
+passes on this fixed intact 100 kHz control. Full-size spatial/thickness
+convergence, representative defects/frequencies and their time checks,
+coupled/calibrated PZT voltage and physical agreement remain required. No
+research bank is accepted and no full training ran.
+`ready_for_training_data` remains false.

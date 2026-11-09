@@ -7,7 +7,7 @@ plate, defect and transducer configuration.
 
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
-| Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small P3 intact/recess controls; full-size P3 first step and enriched 500-microsecond mechanical window with independent CPU state checks | Full-size space/thickness/time refinement, representative defect/frequency variation, continuum and physical agreement |
+| Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small P3 intact/recess controls; full-size enriched 500-microsecond window, second-order temporal convergence and CPU state checks | Full-size space/thickness refinement, representative defect/frequency variation and their time checks, continuum and physical agreement |
 | PZT transmission and voltage reception | Mechanical circular traction/displacement interfaces, including P1-P4 represented-field and native P2 checks | Bonded PZT/adhesive domains or a calibrated equivalent, drive and receiver electronics, measured material/input values |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |
@@ -26,6 +26,13 @@ current full-size mechanical control uses 6 mm disks. Its twelve-sensor ring
 and eight-sensor edge-layout descriptions also differ. These remain proposed
 hardware details, not calibrated numerical inputs; see hardware-assumptions.md.
 The temporal study keeps its existing footprints fixed to isolate time error.
+
+The full 500-microsecond temporal refinement now passes on one fixed intact
+mesh at 100 kHz. Observed orders are 2.000018/2.000014; final raw trace changes
+are 0.0144%/0.0096%. Source, runtime, mass and footprint coefficients match
+exactly, and independent CPU final-state checks pass. This does not resolve
+spatial/thickness error or validate another defect/frequency/hardware case.
+See enriched-time-refinement.md and evidence/enriched-time-debug.json.
 
 Earlier Elmer P2 studies used an under-integrated mass configuration. The
 corrected rule agrees with exact quadratic mass and the independent high-order

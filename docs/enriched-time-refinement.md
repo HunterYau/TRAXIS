@@ -55,7 +55,8 @@ earlier complete 268-test count. The simulation implementation is unchanged.
 
 The 62,938-step half case completes all 500 microseconds in 420.403 propagation
 seconds / 470.163 monitored seconds. Raw differences from the coarse trace are
-0.0574956% and 0.0382134% per receiver. Its native map, coordinates, positive
+0.0574956% and 0.0382134% per receiver, normalized by the half-level norms.
+Its native map, coordinates, positive
 mass and physical footprint coefficients agree exactly with the coarse case.
 The postburst modified-energy relative range is 6.47e-16. This two-level
 comparison alone does not identify temporal order.
@@ -88,6 +89,56 @@ suspend and an already-exited worker. Paused wall time counts in reported
 propagation seconds; these timings are not an unpaced throughput comparison.
 Pacing records are under `outputs/enriched-quarter-dt-pacing-20261108`.
 
-The quarter measurement is in progress at this commit. A passing time result will
-still not establish spatial/thickness convergence, recess scattering, PZT
-voltage accuracy or physical agreement. `ready_for_training_data` stays false.
+## Completed three-level result
+
+All three runs finish the complete 500-microsecond interval with the same
+numerical implementation, mesh, material, source and receiver coefficients.
+
+| Level | Steps | Increment (ns) | Propagation (s) | Monitored run (s) |
+| --- | ---: | ---: | ---: | ---: |
+| Retained coarse | 31,469 | 15.8886523 | 216.077 | 266.092 |
+| Half | 62,938 | 7.94432616 | 420.403 | 470.163 |
+| Quarter | 125,876 | 3.97216308 | 982.005 | 1,036.204 |
+
+The quarter timing includes 37.233 seconds of cooling pauses. The runs are
+separate measurements, not controlled unpaced throughput comparisons.
+
+| Receiver center (mm) | Difference ratio | Observed order | Finest relative change |
+| --- | ---: | ---: | ---: |
+| (250,250) | 4.00005037 | 2.00001817 | 0.0143737% |
+| (480,480) | 4.00003795 | 2.00001369 | 0.00955326% |
+
+Both receivers meet the unchanged ratio/relative-change criteria on every
+shared coarse-grid sample through 500 microseconds. The quarter-level
+postburst modified-energy relative range is 9.70e-16. Independent CPU checks
+pass on all three saved states: mass agrees exactly, energy errors stay below
+3.11e-14 relative and final probe errors below 3.96e-16 relative. These checks
+recompute exact local stiffness actions rather than replaying the whole CPU
+transient. Conditional second-order Richardson relative estimates for the
+quarter time error are 0.00479125% and 0.00318442%; they concern this fixed
+spatial discretization, not continuum or physical error.
+
+The quarter run peaks at 650.68 MiB sampled combined RSS, 57.4% system RAM,
+at least 6,918.68 MiB available RAM, 3,325/8,192 MiB system-wide GPU memory and
+80 C GPU temperature. The original thermal bound is reached but not exceeded;
+it is never raised. CPU temperature remains unavailable. All worker/helper
+processes finish normally.
+
+The assessment, aligned traces, CPU check receipts and pacing events are
+bound in `evidence/enriched-time-debug.json`, fingerprint
+`4c26c942ec869f3dd823df50b44670de8fb69a3b69c28feeef8646b58ee12e7b`.
+Raw assessment is under `outputs/enriched-time-refinement-20261108`; PNG/PDF
+raw-difference figures are under `outputs/enriched-time-evidence-tools-20261108`.
+The figures plot the finer difference multiplied by four only to display the
+observed second-order relation; the numerical comparison does not rescale
+inputs. Plots were visually checked.
+
+The last complete integrated suite remains the earlier 268-test run. The
+new analysis/state/pacing tests pass in overlapping selected suites, without
+skips. Numerical simulation sources are unchanged and verified identical to
+the retained coarse case. No full training ran.
+
+This verifies complete-window temporal convergence only for the declared
+intact 100 kHz/two-receiver control. Full-size spatial/thickness convergence,
+representative recess/frequency cases, coupled/calibrated PZT voltage and
+physical agreement remain open. `ready_for_training_data` stays false.

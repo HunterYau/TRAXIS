@@ -842,3 +842,25 @@ The compact evidence includes final test-source hashes, numerical archives,
 independent CPU checks and resource receipts. The earlier 253-test count is
 historical; selected-suite counts are not added to the complete 268.
 
+## Complete-window time convergence, November 8
+
+The unchanged full-size mesh/source/receivers complete 31,469, 62,938 and
+125,876 explicit steps over the same 500 microseconds. Exact coarse sample
+matching avoids interpolation. Raw per-receiver difference ratios are
+4.000050/4.000038 and orders 2.000018/2.000014; final changes are
+0.0143737%/0.00955326%. Both fixed screens pass. CPU-reconstructed mass, final
+stiffness/energy and receiver checks also pass for every level.
+
+The quarter run takes 982.005 propagation / 1,036.204 monitored seconds,
+including 37.233 seconds of verified-worker cooling pauses. It reaches but
+does not exceed the original 80 C GPU limit, with 650.68 MiB peak combined
+RSS and 57.4% system RAM. Numerical states, forcing/sample times and original
+guards are unchanged by host scheduling. New tools have focused tests; the
+last complete integrated suite remains the earlier 268. No training ran.
+
+See enriched-time-refinement.md and evidence/enriched-time-debug.json. Full-size
+space/thickness refinement, representative defects/frequencies, PZT/electrical
+calibration and physical agreement remain open. hardware-assumptions.md records
+the proposed 7 mm transducers and unresolved sensor layout separately from the
+6 mm disks used in this numerical control.
+
