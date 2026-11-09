@@ -1,0 +1,26 @@
+{
+  "plate": {
+    "width_m": 0.5,
+    "height_m": 0.5,
+    "thickness_m": 0.003
+  },
+  "material": {
+    "young_pa": 68900000000.0,
+    "poisson": 0.33,
+    "density_kg_m3": 2700.0
+  },
+  "cells": [
+    100,
+    100,
+    1
+  ],
+  "max_geometry_mib": 256,
+  "reference": {
+    "order": 2,
+    "max_dofs": 4500000,
+    "max_vertices": 100000,
+    "max_tetrahedra": 400000,
+    "max_topology_mib": 512,
+    "max_vector_mib": 768
+  }
+}

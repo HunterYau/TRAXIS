@@ -12,6 +12,7 @@ import zipfile
 import numpy as np
 
 from examples.matrixfree_step import INPUTS,_json,capacity_context,driver_hashes,load_mesh
+from examples.layered_mesh import INPUTS as LAYERED_INPUTS,bundle_context,load_bundle_mesh
 from traxis.config import positive
 from traxis.elmer_plate_refinement import reference_source_hashes
 from traxis.elmer_reference import run_monitored
@@ -28,7 +29,25 @@ from traxis.storage import atomic_write,canonical_hash,sha256_file,write_json
 
 
 def identity():
-    return {**driver_hashes(),'enriched_gpu_wave.py':sha256_file(Path(__file__))}
+    return {**driver_hashes(),**{name:sha256_file(Path(__file__).parent/name)
+        for name in ('enriched_gpu_wave.py','layered_mesh.py')}}
+
+
+def mesh_context(plan):
+    keys = [key for key in ('capacity_directory','mesh_bundle_directory') if key in plan]
+    if len(keys)!=1:
+        raise ValueError('wave plan needs exactly one declared geometry input')
+    layered = keys[0]=='mesh_bundle_directory'
+    root = Path(plan[keys[0]]).resolve()
+    inputs = LAYERED_INPUTS if layered else INPUTS
+    if set(plan['input_sha256'])!=set(inputs) or any(sha256_file(root/n)!=h for n,h in plan['input_sha256'].items()):
+        raise ValueError('wave geometry input identities changed')
+    context = bundle_context(root) if layered else capacity_context(root)
+    return root,context,layered
+
+
+def load_context_mesh(root,context,layered,guard=None):
+    return load_bundle_mesh(root,context,guard) if layered else load_mesh(root,context)
 
 
 def checked_settings(values,plate):
@@ -81,7 +100,8 @@ def volume_moments(system,plate,material):
 
 def circular_patch(system,plate,center,radius,settings,guard):
     vector,report = highorder_surface_patch(system,plate,center,radius,guard=guard,trace_degree=3,
-        max_scalar_dofs=settings.max_dofs//3,max_tetrahedra=settings.max_tetrahedra,max_workspace_mib=256)
+        max_scalar_dofs=settings.max_dofs//3,max_tetrahedra=settings.max_tetrahedra,
+        max_workspace_mib=settings.max_topology_mib)
     weights = vector.reshape(3,-1)[2]
     selected = np.flatnonzero(weights)
     xy = (system.points_m[selected,:2]-center)/radius
@@ -102,10 +122,7 @@ def worker(plan_path,output,guard):
             or plan['source_sha256']!=reference_source_hashes() or plan['driver_sha256']!=identity()
             or plan['runtime']!=distribution_identity(guard) or plan['gpu_packages']!=gpu_package_identity(guard)):
         raise ValueError('enriched GPU measurement source/runtime/plan changed')
-    root = Path(plan['capacity_directory'])
-    if set(plan['input_sha256'])!=set(INPUTS) or any(sha256_file(root/n)!=h for n,h in plan['input_sha256'].items()):
-        raise ValueError('retained intact capacity inputs changed')
-    context = capacity_context(root)
+    root,context,layered = mesh_context(plan)
     _,_,plate,material,settings = context
     cfg = checked_settings(plan['settings'],plate)
     if not output.is_relative_to(plan_path.parent) or (output.exists() and any(output.iterdir())):
@@ -119,8 +136,9 @@ def worker(plan_path,output,guard):
         report['stages'].append(dict(stage=stage,elapsed_seconds=time.perf_counter()-started,**fields))
         write_json(output/'progress.json',report,overwrite=True)
     try:
-        mesh = load_mesh(root,context)
-        progress('mesh_loaded',vertices=len(mesh.points_m),tetrahedra=len(mesh.tetrahedra))
+        mesh = load_context_mesh(root,context,layered,guard)
+        progress('mesh_loaded',vertices=len(mesh.points_m),tetrahedra=len(mesh.tetrahedra),
+            geometry_kind='layered_intact' if layered else 'retained_capacity')
         last_upload = -math.inf
         def uploaded(event):
             nonlocal last_upload
@@ -242,7 +260,9 @@ def worker(plan_path,output,guard):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--capacity',type=Path)
+    geometry = parser.add_mutually_exclusive_group()
+    geometry.add_argument('--capacity',type=Path)
+    geometry.add_argument('--mesh-bundle',type=Path)
     parser.add_argument('--settings',type=Path,default=Path(__file__).resolve().parents[1]/'configs/enriched-gpu-wave.json')
     parser.add_argument('--mode',choices=('operator','wave'),default='operator')
     parser.add_argument('--output',type=Path,required=True)
@@ -255,19 +275,21 @@ def main():
         max_system_memory_percent=85,min_available_mib=2048))
     if args.worker:
         return 0 if worker(args.plan,args.output,guard)['passed'] else 2
-    if not args.capacity:
-        parser.error('provide the retained intact capacity directory')
-    root,output = args.capacity.resolve(),args.output.resolve()
-    context = capacity_context(root)
+    if not args.capacity and not args.mesh_bundle:
+        parser.error('provide a retained intact capacity or layered mesh bundle')
+    root,output = (args.mesh_bundle or args.capacity).resolve(),args.output.resolve()
+    context = bundle_context(root) if args.mesh_bundle else capacity_context(root)
+    inputs = LAYERED_INPUTS if args.mesh_bundle else INPUTS
     cfg = checked_settings(json.loads(args.settings.read_text()),context[2])
     if output.exists() and any(output.iterdir()):
         parser.error('enriched GPU measurement needs a fresh output directory')
     output.mkdir(parents=True,exist_ok=True)
     result = dict(completed=False,passed=False,ready_for_training_data=False,training_updates=0,mode=args.mode)
     try:
-        plan = dict(kind='enriched_gpu_mechanical_window',mode=args.mode,settings=cfg,capacity_directory=str(root),
+        plan = dict(kind='enriched_gpu_mechanical_window',mode=args.mode,settings=cfg,
             source_sha256=reference_source_hashes(),driver_sha256=identity(),runtime=distribution_identity(guard),
-            gpu_packages=gpu_package_identity(guard),input_sha256={n:sha256_file(root/n) for n in INPUTS})
+            gpu_packages=gpu_package_identity(guard),input_sha256={n:sha256_file(root/n) for n in inputs})
+        plan['mesh_bundle_directory' if args.mesh_bundle else 'capacity_directory'] = str(root)
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output/'enriched-gpu-plan.json',plan)
         def snapshot(stream):

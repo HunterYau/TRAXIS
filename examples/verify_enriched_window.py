@@ -9,7 +9,7 @@ import numpy as np
 import scipy
 
 from examples.enriched_time_refinement import read_level
-from examples.matrixfree_step import _json,capacity_context,load_mesh
+from examples.enriched_gpu_wave import load_context_mesh,mesh_context
 from traxis.elmer_plate_refinement import reference_source_hashes
 from traxis.enriched_factor import streamed_action
 from traxis.enriched_tet import WEIGHTS,build_topology
@@ -56,9 +56,9 @@ def verify(root,steps,output,guard):
         plan,native = level['plan'],level['native']
         if plan['source_sha256']!=reference_source_hashes():
             raise ValueError('independent check source no longer matches the recorded formulation')
-        context = capacity_context(Path(plan['capacity_directory']))
+        geometry_root,context,layered = mesh_context(plan)
         _,_,_,material,settings = context
-        mesh = load_mesh(Path(plan['capacity_directory']),context)
+        mesh = load_context_mesh(geometry_root,context,layered,guard)
         with np.load(root/'native/mechanical-window.npz',allow_pickle=False) as arrays:
             u,v = arrays['final_displacement_m'],arrays['final_velocity_m_s']
             physical,modified = arrays['physical_energy_j'][-1],arrays['modified_energy_j'][-1]
