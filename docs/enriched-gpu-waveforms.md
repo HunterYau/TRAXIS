@@ -42,10 +42,34 @@ plans, source/runtime/package bindings, arrays and monitor receipts. The last
 complete integrated suite remains the earlier 253-test result; overlapping
 selected suites are not added to that total.
 
+## Full-size operator measurement
+
+`examples.enriched_gpu_wave` binds the retained capacity mesh, source, driver,
+native/GPU packages, explicit settings and acceptance criteria. Operator mode
+does not propagate; wave mode must finish its entire declared window. Both
+compare a nonaffine physical-coordinate GPU field action with independent
+streamed exact local CPU matrices. The native-order positive mass is checked
+against all intact-box moments through degree two. Circular patches check
+their area and represented quadratic moments before propagation.
+
+The actual unchanged 500 x 500 x 3 mm mesh has 73,487 tetrahedra and 1,173,621
+vector enriched coefficients. Every element's native/topology map passes.
+The independent full-size action discrepancy is 4.44948e-15 relative L2.
+The conservative explicit limit is 19.8610 ns. At CFL fraction 0.8, the declared
+500-microsecond window requires 31,469 steps of 15.8887 ns. Twenty repeated
+device actions average 17.8820 ms wall / 17.8489 ms device time, versus 29.5028
+ms for the host-facing action. The independent CPU action takes 2.59161 seconds.
+No full-window throughput follows from this isolated action measurement.
+
+Raw evidence is in `outputs/enriched-gpu-fullplate-operator-20261108`, which
+completed in 48.3122 monitored seconds. The two preflight tests pass and keep
+the observation window, stability/accuracy criteria, geometry and GPU limits
+explicit. Settings are in `configs/enriched-gpu-wave.json`.
+
 ## Remaining acceptance
 
-Full-size GPU construction, explicit CFL/cost and the complete acquisition
-window remain unmeasured at this commit. Spatial/thickness/time convergence,
+The complete acquisition window remains unmeasured at this commit.
+Spatial/thickness/time convergence,
 Lamb-wave dispersion, representative defects/frequencies, coupled or calibrated
 PZT voltage and physical agreement remain required. No research bank is
 accepted and no full training ran. `ready_for_training_data` remains false.
