@@ -66,9 +66,71 @@ completed in 48.3122 monitored seconds. The two preflight tests pass and keep
 the observation window, stability/accuracy criteria, geometry and GPU limits
 explicit. Settings are in `configs/enriched-gpu-wave.json`.
 
+## Complete 500-microsecond mechanical window
+
+The same full-size mesh completes all 31,469 steps in 216.077 propagation
+seconds / 266.092 monitored seconds. It uses the declared 100 kHz, two-cycle
+Hann force scale of 1 N on the normal 3 mm disk at (20,20) mm. Free finite
+edges remain present. Normal-displacement probes at (250,250) and (480,480) mm
+retain all 31,470 samples through exactly 500 microseconds. Peak magnitudes
+are 0.500490 and 0.847393 nm. These are mechanical displacement, not voltage.
+
+Postburst modified-energy relative range is 6.46940e-16, below the fixed 1e-8
+screen. The run performs 31,470 stiffness actions, transfers no coefficient
+state per step and downloads two final state vectors. Its explicit workspace
+screen is 143.79 MiB. Measured peak combined RSS is 644.25 MiB, system RAM 57.2%,
+available RAM at least 6,954.33 MiB, system-wide GPU memory 3,503/8,192 MiB and
+GPU temperature 77 C. Guards remain 1 GiB combined RSS, 85% system RAM, 2 GiB
+available RAM, 90% VRAM and 80 C GPU temperature. CPU temperature is unavailable.
+
+The warm sustained propagation cost differs from the short isolated action
+forecast; the full measured interval is the throughput evidence. A separate
+read-only CPU audit checks file hashes, sample times, receiver covectors and
+recomputes positive mass and final Ku from exact streamed local stiffness.
+Mass agrees exactly, final physical/modified energies agree to 3.08e-14
+relative and final probes to 3.96e-16 relative L2. This is not a CPU replay of
+the entire history. Raw evidence is under
+`outputs/enriched-gpu-fullplate-window-20261108` and
+`outputs/enriched-gpu-evidence-tools-20261108`; the latter contains PNG/PDF
+trace plots and the independent CPU-check receipt.
+
+## Independent dispersion study
+
+`examples.enriched_dispersion` compares enriched periodic-cell eigenvalues
+with Rayleigh-Lamb roots at 100/200 kHz in 1.5/3 mm stock. Only opposite lateral
+faces are tied; enriched interior coefficients remain free. The component-major
+x/z sector excludes SH motion. This benchmark's periodic faces do not replace
+the finite physical edges in the full waveform. Positive nodal mass is used,
+with exact enriched stiffness, retaining its intentional difference from the
+ordinary consistent-mass discretization.
+
+The 72 cases independently vary 4/8/16 cells per wavelength and 1/2/4 thickness
+cells for both A0/S0. All eight finest cases meet the fixed 2% frequency screen;
+the largest error is 0.0250435%. Coarse A0 errors reach 3.66794%. At 100 kHz in
+3 mm stock, the 4-by-1 A0 error is 2.62969%, versus 0.0194325% for 16-by-4.
+With one thickness cell, lateral refinement from 8 to 16 changes the A0 error
+from 1.25245% to 1.39808%: lateral refinement alone is not a convergence proof.
+These structured-cell errors do not estimate the error of the full unstructured
+mesh. Full-size space/thickness/time studies remain necessary.
+
+The study completes in 4.481 monitored seconds. Two independent projection
+tests check phase-one/Bloch face ties, free interior coefficients, rank and
+invalid/unmatched geometry rejection. The evidence audit verifies all 72
+archive hashes, independently recomputes their generalized eigenvalues and
+rechecks their analytical wavenumbers. Raw results are under
+`outputs/enriched-lamb-dispersion-20261108`. Compact identities, metrics and
+resource summaries are in `evidence/enriched-gpu-wave-debug.json`.
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.enriched_gpu_wave --capacity outputs/matrixfree-fullplate-capacity-20261107 --mode wave --output outputs/enriched-window --max-seconds 900
+.\.venv\Scripts\python.exe -m examples.enriched_dispersion --output outputs/enriched-dispersion
+```
+
+Use fresh output directories and the retained capacity inputs. The settings
+file keeps the window and criteria explicit. Operator mode runs no time steps.
+
 ## Remaining acceptance
 
-The complete acquisition window remains unmeasured at this commit.
 Spatial/thickness/time convergence,
 Lamb-wave dispersion, representative defects/frequencies, coupled or calibrated
 PZT voltage and physical agreement remain required. No research bank is

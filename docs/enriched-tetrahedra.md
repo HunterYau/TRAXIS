@@ -3,8 +3,10 @@
 The current consistent-mass H1 reference is useful for accuracy checks, but
 its measured full-size solve still needs many CG operator applications per
 step. This separate candidate investigates a positive diagonal mass so that
-explicit elastic propagation can avoid those solves. GPU propagation and
-research-quality waveform acceptance have not yet been implemented here.
+explicit elastic propagation can avoid those solves. The later
+[factorized GPU path](enriched-gpu-waveforms.md) completes a full-size mechanical
+window and small dispersion checks. Research-quality waveform acceptance remains
+open; the original construction/capacity measurements below retain their scope.
 
 The 15-node construction follows Table 1 of
 [Geevers, Mulder and van der Vegt (2018)](https://arxiv.org/abs/1803.10065).
@@ -84,8 +86,9 @@ two. Native and topology coefficient permutations are not assumed equivalent.
 The unchanged 500 x 500 x 3 mm, 73,487-tetrahedron mesh contains 391,207 scalar /
 1,173,621 vector enriched coefficients. All nodal masses are positive and
 total 2.025 kg. The ten mass-moment checks have maximum relative error
-1.51e-13. Native/topology coefficient permutation remains unverified at this
-size. No stiffness matrix, CUDA allocation or time step was constructed.
+1.51e-13. That capacity run did not verify the native/topology permutation or
+construct a stiffness matrix, CUDA allocation or time step. The later GPU
+measurement verifies the full-size permutation separately.
 
 The run completed in 4.241 monitored seconds at 303.84 MiB sampled combined
 RSS, 50.8% system RAM and at least 7,978.61 MiB available. System GPU readings
@@ -124,10 +127,11 @@ No full training ran.
 
 ## Remaining acceptance work
 
-The next implementation must establish the full native/topology map, accurate
-circular traction/probe integration for cubic surface traces, a scalable GPU
-stiffness path and a mesh-specific stability limit. Full observation-window
-cost, Lamb-mode dispersion, spatial/thickness/time refinement and representative
-recess/frequency cases remain necessary. Coupled or calibrated PZT voltage and
-physical agreement remain open. No accepted research bank or full training
-result follows from these element/capacity checks.
+The later factorized GPU work establishes the full native/topology map, cubic
+circular traction/probe integration, mesh-specific stability limit and a complete
+500-microsecond intact mechanical window. Its separate structured Lamb-mode
+study shows the need for both in-plane and thickness refinement. Full-size
+spatial/thickness/time refinement and representative recess/frequency cases
+remain necessary. Coupled or calibrated PZT voltage and physical agreement
+remain open. No accepted research bank or full training result follows from
+these element/capacity checks.

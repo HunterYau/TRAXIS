@@ -7,7 +7,7 @@ plate, defect and transducer configuration.
 
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
-| Credible elastic forward solver | Independent operator, exact-field, dispersion and transient checks; the 40 mm intact P3 and 20 mm paired CAD recess controls pass fixed discrepancy screens; full-size P3 capacity and one GPU step with native CPU residual agreement | Full-window propagation, full-size refinement, representative defect/frequency variation, independent continuum agreement and physical agreement |
+| Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small P3 intact/recess controls; full-size P3 first step and enriched 500-microsecond mechanical window with independent CPU state checks | Full-size space/thickness/time refinement, representative defect/frequency variation, continuum and physical agreement |
 | PZT transmission and voltage reception | Mechanical circular traction/displacement interfaces, including P1-P4 represented-field and native P2 checks | Bonded PZT/adhesive domains or a calibrated equivalent, drive and receiver electronics, measured material/input values |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |
@@ -76,9 +76,19 @@ A separate 15-node positive-mass enriched candidate passes native/P4 operator
 and discrete temporal checks. Its full-size native space and topology-order
 positive mass fit the guard, with 1,173,621 vector coefficients. All 29 targeted
 element/integrator checks pass without skips; the last complete integrated
-suite remains the earlier 253-test result. See enriched-tetrahedra.md and
-evidence/enriched-tetrahedron-debug.json. Full-size mapping, explicit CFL cost,
-GPU propagation and space/time/defect/PZT/physical acceptance remain open.
+suite at that cutoff was the earlier 253-test result. See enriched-tetrahedra.md
+and evidence/enriched-tetrahedron-debug.json. Those element/capacity receipts
+alone do not prove full-size mapping, explicit cost or waveform acceptance.
+
+The later factorized enriched GPU method verifies the full native/topology map
+and completes the unchanged 500 mm / 500-microsecond intact mechanical window:
+31,469 steps, 216.08 propagation / 266.09 monitored seconds, 644.25 MiB sampled
+combined RSS and GPU peak 77 C. Independent streamed CPU final-state energies
+agree to 3.08e-14 relative. A separate 72-case structured-cell study reaches
+0.0251% maximum finest Lamb-frequency error, while coarse bending-mode errors
+reach 3.67% and one-layer lateral refinement is nonmonotone. This is not a
+full-size wave-convergence or PZT/physical acceptance. See
+enriched-gpu-waveforms.md and evidence/enriched-gpu-wave-debug.json.
 
 Use a new directory for each run. The wrapper retains its invocation, test log
 and process-tree monitor result, and stops the test process tree on resource

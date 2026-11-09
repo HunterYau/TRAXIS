@@ -809,3 +809,28 @@ operators, cubic surface traction/probes, full-window cost and spatial/defect/
 frequency validation before acceptance. Coupled/calibrated PZT voltage and
 physical agreement remain open; the existing consistent-mass path is unchanged.
 
+## Full enriched GPU window and dispersion, November 8
+
+The factorized float64 stiffness retains all enriched displacement coefficients
+without dense local matrices. Native maps, mass, exact local CPU actions and
+explicit stability bounds pass on the unchanged full-size mesh. Cubic circular
+traces handle the enriched face bubbles; lower-degree fits are rejected.
+
+The full 500-microsecond intact window completes at 15.8887 ns increments:
+31,469 steps, 216.077 propagation / 266.092 monitored seconds. The postburst
+modified-energy relative range is 6.47e-16. Independent CPU final-state energies
+agree to 3.08e-14 and probes to 3.96e-16 relative. Sampled peaks are 644.25 MiB
+combined RSS, 57.2% system RAM, 3,503 MiB system-wide VRAM and 77 C GPU temperature.
+
+Seventy-two structured periodic Lamb cases vary in-plane and thickness
+resolution independently. Finest frequency errors stay below 0.0251%, but
+coarse bending errors reach 3.67%; one thickness cell retains a nonmonotone
+in-plane sequence. These controls do not establish full-size wave accuracy.
+The comparison report's stiffness/waveform variable-reuse bug is fixed, with
+saved-matrix re-evaluation in the native test. Unperformed checks use null
+values. See enriched-gpu-waveforms.md and evidence/enriched-gpu-wave-debug.json.
+
+Full-size space/thickness/time and recess/frequency studies, PZT/electrical
+calibration, physical agreement, accepted banks and meaningful model/policy
+experiments remain open. No full training ran.
+

@@ -16,8 +16,11 @@ the dataset, reconstruction models, and sensing experiments in Python.
 See [the solver assessment](docs/solver-assessment.md) for alternatives,
 limitations, and the acceptance gates before generating training data.
 
-The local solver is a small, inspectable 3D linear-elastic tetrahedral FEM
-backend for numerical verification and pilot experiments. It is not a
+The local solvers use inspectable 3D linear-elastic tetrahedral FEM for
+numerical verification and bounded mechanical pilots. The
+[enriched GPU candidate](docs/enriched-gpu-waveforms.md) completes a full
+500 mm plate / 500-microsecond mechanical window, with full-size mesh/time
+and physical acceptance still open. The local implementation is not a
 replacement for calibrated PZT electromechanics or a validated commercial
 solver. Small smoke geometries are deliberately different from the full
 500 x 500 x 3 mm research plate.
