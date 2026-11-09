@@ -98,8 +98,11 @@ def main():
     parser.add_argument('--run',type=Path,required=True)
     parser.add_argument('--steps',type=int,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--max-seconds',type=float,default=90)
+    parser.add_argument('--max-rss-mib',type=float,default=1024)
     args = parser.parse_args()
-    guard = ResourceGuard(ResourceLimits(max_seconds=90,max_rss_mib=1024,max_system_memory_percent=85,min_available_mib=2048))
+    guard = ResourceGuard(ResourceLimits(max_seconds=args.max_seconds,max_rss_mib=args.max_rss_mib,
+        max_system_memory_percent=85,min_available_mib=2048))
     result = verify(args.run,args.steps,args.output,guard)
     print(json.dumps({k:v for k,v in result.items() if k not in ('resources','input_identities')}))
     return 0 if result['passed'] else 2

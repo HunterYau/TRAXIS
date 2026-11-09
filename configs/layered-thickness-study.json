@@ -1,0 +1,13 @@
+{
+  "kind": "enriched_layered_thickness_study",
+  "wave_settings": "configs/enriched-layered-wave.json",
+  "minimum_common_steps": 65536,
+  "maximum_cfl_fraction": 0.4,
+  "maximum_finest_relative_change": 0.05,
+  "require_decreasing_differences": true,
+  "levels": [
+    {"layers": 1, "mesh": "outputs/layered-fullplate-z1-20261108", "operator": "outputs/layered-operator-z1-20261108", "wave": "outputs/layered-wave-z1-20261108", "cpu": "outputs/layered-cpu-z1-20261108", "max_seconds": 1800, "max_rss_mib": 1536},
+    {"layers": 2, "mesh": "outputs/layered-fullplate-z2-20261108", "operator": "outputs/layered-operator-z2-20261108", "wave": "outputs/layered-wave-z2-20261108", "cpu": "outputs/layered-cpu-z2-20261108", "max_seconds": 3000, "max_rss_mib": 1536},
+    {"layers": 4, "mesh": "outputs/layered-fullplate-z4-20261108", "operator": "outputs/layered-operator-z4-20261108", "wave": "outputs/layered-wave-z4-20261108", "cpu": "outputs/layered-cpu-z4-20261108", "max_seconds": 6000, "max_rss_mib": 2048}
+  ]
+}

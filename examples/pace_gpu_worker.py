@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import math
 from pathlib import Path
 import time
 
@@ -57,9 +58,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--max-seconds',type=float,default=2400.)
     args = parser.parse_args()
     project = Path(__file__).resolve().parents[1]
     plan,output = args.plan.resolve(),args.output.resolve()
+    if not math.isfinite(args.max_seconds) or args.max_seconds<=0:
+        raise ValueError('pacing wall limit must be finite and positive')
     if not plan.is_relative_to(project/'outputs') or not output.is_relative_to(project/'outputs'):
         raise ValueError('pacing is limited to project output plans and receipts')
     if output.exists() and any(output.iterdir()):
@@ -71,11 +75,11 @@ def main():
     started,last_pause = time.monotonic(),None
     report = dict(completed=False,worker_pid=process.pid,worker_created=created,
         plan_sha256=sha256_file(plan),pacer_sha256=sha256_file(Path(__file__)),
-        suspend_at_c=78.,resume_at_c=72.,maximum_wall_seconds=2400.,pause_seconds=0.,events=[],samples=[],
+        suspend_at_c=78.,resume_at_c=72.,maximum_wall_seconds=args.max_seconds,pause_seconds=0.,events=[],samples=[],
         scope='Scheduling only for this exact project worker; original resource guards and numerical state remain active.')
     try:
         while process.is_running() and process.create_time()==created:
-            if time.monotonic()-started>2400:
+            if time.monotonic()-started>args.max_seconds:
                 raise TimeoutError('GPU pacer reached its wall-time cap')
             reading = snapshot()
             if reading['gpu_status']!='available' or len(reading['gpus'])!=1:
