@@ -1,0 +1,13 @@
+{
+  "kind": "enriched_full_window_time_refinement",
+  "duration_s": 0.0005,
+  "reference_result_fingerprint": "0498b54f5252d688359ae25ee822d87c101ce488c164f651794ecebb9872af05",
+  "levels": [
+    {"factor": 1, "steps": 31469, "directory": "outputs/enriched-gpu-fullplate-window-20261108"},
+    {"factor": 2, "steps": 62938, "directory": "outputs/enriched-gpu-fullplate-half-dt-20261108"},
+    {"factor": 4, "steps": 125876, "directory": "outputs/enriched-gpu-fullplate-quarter-dt-20261108"}
+  ],
+  "ratio_bounds": [3.8, 4.2],
+  "maximum_finest_relative_change": 0.01,
+  "relative_identifiability_floor": 1e-11
+}

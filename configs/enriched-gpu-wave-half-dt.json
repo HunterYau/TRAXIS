@@ -1,0 +1,13 @@
+{
+  "duration_s": 0.0005,
+  "frequency_hz": 100000.0,
+  "cycles": 2,
+  "peak_patch_force_n": 1.0,
+  "source_center_xy_m": [0.02, 0.02],
+  "receiver_centers_xy_m": [[0.25, 0.25], [0.48, 0.48]],
+  "radius_m": 0.003,
+  "cfl_fraction": 0.4,
+  "gpu": {"max_device_mib": 1024, "chunk_elements": 128, "device_id": 0},
+  "operator_tolerance": 1e-10,
+  "energy_tolerance": 1e-8
+}
