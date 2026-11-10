@@ -65,9 +65,54 @@ waveform convergence remains required.
 Twelve selected profile/tensor tests pass without skips, including physical
 fields, periodic parity, force spectrum, support selection and protocol
 rejection. They are separate from the historical complete 268-test suite.
-The measured profile study is pending at this protocol checkpoint. It will
-run in a source/runtime-bound CPU worker with 512 MiB and 180-second caps,
-system RAM below 85% and at least 2 GiB available. No training is involved.
+The frozen profile study completes all 2,592 cases in 31.2966 monitored worker
+seconds, with 256.91 MiB peak combined RSS, 48.0% system RAM and at least
+8,439.11 MiB available. It stays inside its 512 MiB/180-second caps and the
+usual system guards. No training is involved.
+
+## Measured profile-band result
+
+The 5-250 kHz band retains 99.99511498% of the nominal force spectral energy,
+above its predeclared 99.9% requirement. The source-time energy is 3.75e-6
+N^2 s. This does not quantify received-wave or electrical energy.
+
+All 234 outside-first-zone cases are assessed by analytic profile support;
+219 have a nonlowest dominant eigenmode. In 150 cases more than one mode is
+needed, with up to three selected. Minimum captured profile mass is
+99.0402483%. No nearest-frequency matching is used. All 96 prospective finest
+cases pass; maximum support frequency error is 0.0300180%.
+
+For standard Q4 GLL with one thickness cell, maximum support frequency errors
+over the twelve frequencies and both modes are:
+
+| Uniform thickness | Lateral spacing | Worst frequency error | 0.05% design screen |
+| --- | ---: | ---: | --- |
+| 3 mm | 5 mm | 0.0780050% | Fail |
+| 3 mm | 3.333 mm | 0.00730436% | Pass |
+| 3 mm | 2.5 mm | 0.00378979% | Pass |
+| 1 mm | 5 mm | 2.42064% | Fail |
+| 1 mm | 3.333 mm | 0.222969% | Fail |
+| 1 mm | 2.5 mm | 0.0302558% | Pass |
+
+Thus the earlier 5 mm carrier result cannot be used as a band-wide mesh
+acceptance. The 3.333 mm candidate is worth a full-size intact-plate cost
+measurement; locally thinned/recess cases need their own finer resolution or
+another verified choice. These are sampled uniform-waveguide design screens,
+not finite-plate wave errors, recess scattering or physical acceptance.
+
+Every selected eigenpair and profile overlap was audited from the raw archive,
+reconstructing the small operators and analytic target. Maximum selected
+eigenpair relative residual is 5.55e-8. Maximum projection error in the study
+is 2.35e-15, analytic Navier residual 2.90e-11 and traction residual 8.44e-14.
+The audit verifies complete case counts, exact support selection, retained
+mass and every unchanged frequency criterion.
+
+`outputs/tensor-profile-band-20261109` retains the source-bound plan, snapshots,
+monitor and raw proofs. The collector is
+`outputs/tensor-profile-tools-20261109/collect_profile.py`.
+`evidence/lamb-profile-debug.json` binds those records, all 54 GLL summary
+groups, the twelve-test group and retained derivative-fixture failure. Its
+fingerprint is `8691f435abebf327bb857fc5a39af988372c0853c604dc557a2ad7273605c990`.
 
 The next decision uses actual profile-support errors and retained source
 energy, then requires an accelerated action, full-size capacity/cost and

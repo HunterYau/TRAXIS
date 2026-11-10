@@ -155,8 +155,11 @@ not treated as accuracy evidence. The prior complete integrated suite remains
 
 The prospective full 100-by-100-by-1 Q4 grid has 2,412,015 vector coefficients;
 two/four thickness cells have 4,341,627 / 8,200,851. Those are exact algebraic
-counts, not measured capacity or runtime. The next implementation needs
-full-band branch checks, a verified accelerated action, full-size capacity and
+counts, not measured capacity or runtime. The subsequent
+[profile-band study](lamb-profiles.md) assesses folded modes by analytic
+displacement support and shows that the 5 mm carrier-only result fails the
+sampled band screen. The next implementation needs a verified accelerated
+action, full-size capacity and
 measured complete-window cost, physical circular load/probe integration and
 full space/time comparisons. Conforming recess geometry, bonded/calibrated PZT
 response and physical agreement remain required. No research bank or full

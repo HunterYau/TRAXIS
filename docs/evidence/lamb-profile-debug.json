@@ -1,0 +1,718 @@
+{
+  "kind": "analytic_lamb_profile_band_debug",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "collector": {
+    "path": "outputs/tensor-profile-tools-20261109/collect_profile.py",
+    "sha256": "88bcdd7f2ee58b99c990ea423dff0f5d10d9bc20866586658fb8e8262731c6f3",
+    "bytes": 9057
+  },
+  "core": {
+    "path": "traxis/lamb_profiles.py",
+    "sha256": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+    "bytes": 5512
+  },
+  "driver": {
+    "path": "examples/tensor_profile_study.py",
+    "sha256": "1325d7b358448c692911f0a41f552c9e9738328d69c3d0068e09aa087446df38",
+    "bytes": 14635
+  },
+  "test_source": {
+    "path": "tests/test_lamb_profiles.py",
+    "sha256": "3c1b2f642f77588cd1d3f9e851e9d5148b7d861358faa4484655eb966e9e1896",
+    "bytes": 4895
+  },
+  "plan": {
+    "path": "outputs/tensor-profile-band-20261109/profile-plan.json",
+    "sha256": "0b212da6601844954d30f3d0d7383f440a9376952fb5cea6014a4bae0643cbce",
+    "bytes": 17354
+  },
+  "configuration": {
+    "kind": "tensor_lamb_profile_design",
+    "orders": [
+      2,
+      3,
+      4
+    ],
+    "lateral_spacing_m": [
+      0.005,
+      0.0033333333333333335,
+      0.0025
+    ],
+    "thickness_m": [
+      0.003,
+      0.001
+    ],
+    "thickness_cells": [
+      1,
+      2,
+      4
+    ],
+    "frequencies_hz": [
+      5000,
+      10000,
+      25000,
+      50000,
+      75000,
+      100000,
+      125000,
+      150000,
+      175000,
+      200000,
+      225000,
+      250000
+    ],
+    "modes": [
+      "A0",
+      "S0"
+    ],
+    "stiffness_rules": [
+      "gll",
+      "exact"
+    ],
+    "profile_mass_coverage": 0.99,
+    "maximum_support_relative_frequency_error": 0.0005,
+    "maximum_profile_projection_error": 1e-10,
+    "burst": {
+      "carrier_hz": 100000,
+      "cycles": 2,
+      "band_hz": [
+        5000,
+        250000
+      ],
+      "minimum_force_spectral_energy_fraction": 0.999
+    }
+  },
+  "monitor": {
+    "path": "outputs/tensor-profile-band-20261109/monitor-result.json",
+    "sha256": "d4730a2f5107cd80d27210ef31d04fd46b5d487a6240747795e7983dd6842a5c",
+    "bytes": 45515
+  },
+  "native_report": {
+    "path": "outputs/tensor-profile-band-20261109/native/profile-report.json",
+    "sha256": "f1a617bd5ddeec14bbe2c79d44b071d8964126181db5ba815c1db17ad7332dea",
+    "bytes": 2440220
+  },
+  "source_snapshot": {
+    "path": "outputs/tensor-profile-band-20261109/source-snapshot.zip",
+    "sha256": "81efa2432344b75adbd8751258971991083f8507a4f877e254bfb32ed69271ec",
+    "bytes": 264116
+  },
+  "raw_proofs": {
+    "path": "outputs/tensor-profile-band-20261109/native/profile-proofs.npz",
+    "sha256": "bb19b908c77fa50a173a60ccd02ee9e347dee0175e66e784018d4696508e04ef",
+    "bytes": 14247219
+  },
+  "worker_run": {
+    "exit_code": 0,
+    "wall_seconds": 31.296582199982367,
+    "maximum_observed_external_processes": 5,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+  },
+  "resources": {
+    "limits": {
+      "max_seconds": 180,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 85,
+      "min_available_mib": 2048,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "peak_combined_rss_mib": 256.91015625,
+    "peak_system_memory_percent": 48.0,
+    "minimum_available_mib": 8439.109375,
+    "peak_gpu_mib": 895.0,
+    "peak_gpu_temperature_c": 48.0,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "burst_spectrum": {
+    "time_energy_n2_s": 3.75e-06,
+    "positive_frequency_energy_n2_s": 1.875e-06,
+    "retained_force_energy_fraction": 0.9999511497602537,
+    "quadrature_absolute_error": 3.938271649097291e-19,
+    "passed": true,
+    "scope": "Nominal mechanical force spectrum only; receiver transfer functions and PZT electrical drive are not included."
+  },
+  "case_count": 2592,
+  "outside_first_zone_cases": 234,
+  "multiple_support_cases": 150,
+  "maximum_selected_eigenpair_relative_residual": 5.544219753306517e-08,
+  "maximum_overlap_recomputation_error": 2.220446049250313e-15,
+  "maximum_selected_mass_gram_error": 3.4416913763379853e-15,
+  "finest_case_count": 96,
+  "maximum_finest_support_relative_frequency_error": 0.00030017964139372744,
+  "gll_band_summary": [
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 1.947346761573085,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.9498438035436017,
+      "worst_frequency_hz": 150000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.9452718412623742,
+      "worst_frequency_hz": 150000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.017231247913938263,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.014428215793954258,
+      "worst_frequency_hz": 200000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.01452583136469432,
+      "worst_frequency_hz": 200000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.0007800502337469428,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.0007399383202999488,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.0007392333007620877,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.05801003435453578,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.031062524625842025,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.024212778315521932,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.006975830884815348,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.0014985790506625296,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.0013448759882890293,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 7.30435798270701e-05,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 3.856715707084568e-05,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 3.789790588726305e-05,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.04155393550840647,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.016317798748100243,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.010283314731432291,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.005827437909514455,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.00042442631609329595,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.00029204756860523595,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 3.789793457076307e-05,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 4.68785316343201e-06,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.003,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 4.247382993760596e-06,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 8.954171047079267,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 8.02872519648605,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 8.046991251643563,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 2.0074673403275956,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 2.006653256974132,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 2.0066343669255025,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.024206357007924062,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.02418407295006797,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.005,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.024183707852837077,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 2.234932231672823,
+      "worst_frequency_hz": 125000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 2.223001405109996,
+      "worst_frequency_hz": 125000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 2.2218220610088926,
+      "worst_frequency_hz": 125000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.21528867114917727,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.21380142346950226,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.2137462109616235,
+      "worst_frequency_hz": 175000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.002229694197599219,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.002227455191274208,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0033333333333333335,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.002227436568986496,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 1.4342246402990684,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 1.4178879313718622,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 2,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 1.4158781971821464,
+      "worst_frequency_hz": 225000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.008843857078558282,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.007777139025730184,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 3,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.0077419810822101365,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": false
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 1,
+      "maximum_support_relative_frequency_error": 0.00030255841814663675,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 2,
+      "maximum_support_relative_frequency_error": 0.0003002264367411023,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    },
+    {
+      "thickness_m": 0.001,
+      "lateral_spacing_m": 0.0025,
+      "order": 4,
+      "thickness_cells": 4,
+      "maximum_support_relative_frequency_error": 0.00030017964139372744,
+      "worst_frequency_hz": 250000,
+      "worst_mode": "A0",
+      "all_passed": true
+    }
+  ],
+  "tests": {
+    "count": 12,
+    "monitor": {
+      "path": "outputs/tensor-profile-protocol-tests-20261109/monitor-result.json",
+      "sha256": "0d9eecbb1b7763634169efa57c35a4fbbef3d9d91cb79306c0577b25ed2e1f00",
+      "bytes": 3215
+    },
+    "log": {
+      "path": "outputs/tensor-profile-protocol-tests-20261109/tests.log",
+      "sha256": "9f4865945a9a8c33c7f6902d3d312022ddeb57c181156d0f6f147afd7cee56a9",
+      "bytes": 2162
+    }
+  },
+  "retained_fd_fixture_failure": {
+    "log": {
+      "path": "outputs/lamb-profile-tests-20261109/tests.log",
+      "sha256": "7e6f5d67fb8a88841a235c934bf2ea499592b62ec2dd98a71692f1eb7a6d7ddc",
+      "bytes": 1536
+    },
+    "source": {
+      "path": "outputs/lamb-profile-tests-20261109/test-at-failure.py",
+      "sha256": "19d645902fda8699c59000e65de9b53b6dd3a178e14516015d465f4e0ac5511a",
+      "bytes": 3100
+    }
+  },
+  "limits": [
+    "Sampled 5-250 kHz nominal mechanical-force band, not received/PZT energy or continuous-band proof.",
+    "Modes selected by 99% profile mass norm before using frequency errors; worst selected error uses the unchanged 0.05% design screen.",
+    "No finite-plate waveform, CUDA action/capacity, recess geometry, PZT electrical coupling, accepted bank or training in this record."
+  ],
+  "fingerprint": "8691f435abebf327bb857fc5a39af988372c0853c604dc557a2ad7273605c990"
+}
