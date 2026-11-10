@@ -114,6 +114,7 @@ monitor and raw proofs. The collector is
 groups, the twelve-test group and retained derivative-fixture failure. Its
 fingerprint is `8691f435abebf327bb857fc5a39af988372c0853c604dc557a2ad7273605c990`.
 
-The next decision uses actual profile-support errors and retained source
-energy, then requires an accelerated action, full-size capacity/cost and
-finite-plate validation. It accepts no data and makes no PZT or physical claim.
+The separate [GPU investigation](tensor-gpu-operators.md) now verifies an
+accelerated action and full-size operator capacity for the selected intact
+candidate. Complete-window cost and finite-plate validation remain required.
+The profile study accepts no data and makes no PZT or physical claim.

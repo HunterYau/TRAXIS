@@ -43,8 +43,9 @@ an exact-integration agreement claim.
 `local_gll_action` separately applies gradient, constitutive stress and weak
 divergence by tensor contractions without forming an element matrix. Tests
 compare it with the full GLL stiffness on rectangular and skewed cells.
-This supplies an independently checked operation for a future accelerated
-backend; no CUDA tensor kernel is implemented in this milestone.
+This supplies an independently checked operation for the subsequent
+[accelerated backend](tensor-gpu-operators.md). Its CUDA implementation and
+actual full-plate operator capacity are now measured separately.
 
 ## Geometry, continuity and mathematical checks
 
@@ -158,9 +159,10 @@ two/four thickness cells have 4,341,627 / 8,200,851. Those are exact algebraic
 counts, not measured capacity or runtime. The subsequent
 [profile-band study](lamb-profiles.md) assesses folded modes by analytic
 displacement support and shows that the 5 mm carrier-only result fails the
-sampled band screen. The next implementation needs a verified accelerated
-action, full-size capacity and
-measured complete-window cost, physical circular load/probe integration and
+sampled band screen. The subsequent GPU investigation verifies the accelerated
+action and actual 150-by-150-by-1 Q4 full-plate operator capacity. The next
+implementation needs measured complete-window cost, physical circular
+load/probe integration and
 full space/time comparisons. Conforming recess geometry, bonded/calibrated PZT
 response and physical agreement remain required. No research bank or full
 model/policy training is accepted by this work.

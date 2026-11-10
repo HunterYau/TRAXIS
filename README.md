@@ -33,10 +33,11 @@ synthetic verification fixtures; bonded/calibrated plate-PZT modeling remains
 required before accepting voltage training data.
 
 The [tensor-element investigation](docs/tensor-elements.md) verifies positive
-GLL mass, exact/GLL stiffness and parity-separated periodic modes on small
-hexahedral grids. It is a candidate for improving the failed full-size spatial
-screen; full-band mode identification, accelerated capacity and finite-plate
-waveform convergence remain open.
+GLL mass, exact/GLL stiffness and analytic-profile mode support. Its
+[GPU operator](docs/tensor-gpu-operators.md) fits an actual 5.42-million-coefficient
+full plate and agrees with independent CPU action. Physical patches,
+complete-window convergence, recess geometry and calibrated PZT response
+remain open.
 
 ## Setup
 

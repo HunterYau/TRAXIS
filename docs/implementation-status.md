@@ -910,3 +910,28 @@ forecasts only; capacity, acceleration and full-window convergence remain
 unmeasured. See tensor-elements.md and evidence/tensor-reference-debug.json.
 The prior complete suite remains 268 tests and no research training ran.
 
+## Analytic profile support and full-size tensor GPU operator
+
+The frozen 2,592-case 5-250 kHz profile study captures 99.9951% of nominal
+force spectral energy. Modes are selected by 99% analytic-profile mass norm,
+with the worst selected frequency error screened at 0.05%. This assesses 234
+outside-first-zone cases, including 150 multi-mode supports. The 5 mm Q4
+carrier-only mesh fails the sampled band screen; 3.333 mm passes for uniform
+3 mm stock, while uniform 1 mm stock needs the tested 2.5 mm spacing.
+All 96 finest cases pass. See lamb-profiles.md and its raw audit.
+
+The new matrix-free tensor CUDA action passes every native stiffness column
+on eight Q1-Q4 rectangular/skewed cases and two additional multi-axis sharing
+cases. A small native eigenmode shows error ratios 4.001095/4.000274 and
+modified-energy range below 5.08e-16. Ten selected CPU and two enabled native
+tests pass without skips; these are not a new complete-suite total.
+
+The actual 500 mm intact Q4 grid has 150-by-150-by-1 elements and 5,418,015
+vector coefficients. GPU/streamed-CPU full-field discrepancy is 9.87e-16,
+mass is 2.025 kg and box-moment error is below 1.14e-13. The worker completes
+in 10.6254 seconds at 631.20 MiB combined RSS, 50.7% system RAM and 52 C.
+Five isolated device actions take 4.488-5.386 ms. It performs zero full-plate
+propagation steps; physical patch integration, complete-window accuracy/cost,
+recess/PZT modeling and accepted data remain open. See tensor-gpu-operators.md
+and evidence/tensor-gpu-debug.json. No research training ran.
+

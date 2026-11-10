@@ -21,11 +21,12 @@ plate, defect and transducer configuration.
 
 ## Interpretation of numerical evidence
 
-The tensor-element branch adds independent/native Q1-Q4 exact/GLL operator
-checks and 432 periodic design cases, with 72 out-of-zone branch comparisons
-withheld. Q4 is promising at the carrier frequency, but full-band identification,
-full-size capacity/cost, wave convergence and recess/PZT geometry remain open.
-See tensor-elements.md and evidence/tensor-reference-debug.json.
+The tensor investigation adds native/CUDA Q1-Q4 operators and analytic-profile
+support across 2,592 sampled band cases, including folded modes. Its actual
+5.42-million-coefficient full-plate operator fits the guard and agrees with
+streamed CPU action. Physical patches, complete-window convergence, conforming
+recesses and calibrated PZT/physical agreement remain open. See
+lamb-profiles.md, tensor-gpu-operators.md and their evidence records.
 
 The full-size 1/2/4-layer thickness study completes all three 500-microsecond
 windows and independent CPU checks, but fails its frozen 5% raw discrepancy
