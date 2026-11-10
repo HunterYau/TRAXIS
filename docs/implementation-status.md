@@ -890,3 +890,23 @@ This is a constitutive/port building block, not bonded PZT plate or physical
 validation. No accepted bank, full research training or model superiority
 result is implied by either milestone.
 
+## Higher-order tensor-element investigation
+
+The isolated tensor-element branch verifies Q1-Q4 hexahedral operators with
+explicit exact/GLL stiffness rules and separately checked positive GLL mass.
+Eight connected-element rectangular/skewed native comparisons pass at a
+maximum 4.26e-14 relative block discrepancy. Six focused quadrature, action,
+energy, rigid-mode, shared-mass, limit and physical-parity tests pass without
+skips. A first complex-root dtype failure is retained and corrected by an
+explicit checked-real conversion.
+
+The 432-case periodic design study separates A0/S0 by midplane parity. Its
+360 within-zone branches are identified; 72 out-of-zone comparisons are
+withheld. All sixteen declared finest cases pass the 0.05% frequency design
+screen. At nominal 100 kHz/3 mm with 5 mm cells and one thickness cell, Q4 A0
+error is 0.00299911%, versus 0.265193% for Q3. This does not establish the full
+pulse-band, finite-plate or defect/PZT result. Full-size tensor counts are
+forecasts only; capacity, acceleration and full-window convergence remain
+unmeasured. See tensor-elements.md and evidence/tensor-reference-debug.json.
+The prior complete suite remains 268 tests and no research training ran.
+

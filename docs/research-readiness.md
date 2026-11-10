@@ -21,6 +21,12 @@ plate, defect and transducer configuration.
 
 ## Interpretation of numerical evidence
 
+The tensor-element branch adds independent/native Q1-Q4 exact/GLL operator
+checks and 432 periodic design cases, with 72 out-of-zone branch comparisons
+withheld. Q4 is promising at the carrier frequency, but full-band identification,
+full-size capacity/cost, wave convergence and recess/PZT geometry remain open.
+See tensor-elements.md and evidence/tensor-reference-debug.json.
+
 The full-size 1/2/4-layer thickness study completes all three 500-microsecond
 windows and independent CPU checks, but fails its frozen 5% raw discrepancy
 screen at every receiver: finest changes are 18.0010%, 9.90936% and 19.5625%.

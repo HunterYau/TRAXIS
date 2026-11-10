@@ -32,6 +32,12 @@ and passive/driven circuit energy. Its material and small block geometry are
 synthetic verification fixtures; bonded/calibrated plate-PZT modeling remains
 required before accepting voltage training data.
 
+The [tensor-element investigation](docs/tensor-elements.md) verifies positive
+GLL mass, exact/GLL stiffness and parity-separated periodic modes on small
+hexahedral grids. It is a candidate for improving the failed full-size spatial
+screen; full-band mode identification, accelerated capacity and finite-plate
+waveform convergence remain open.
+
 ## Setup
 
 Python 3.12 or newer:
