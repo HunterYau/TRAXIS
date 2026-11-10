@@ -1,0 +1,14 @@
+{
+  "kind": "tensor_lamb_profile_design",
+  "orders": [2, 3, 4],
+  "lateral_spacing_m": [0.005, 0.0033333333333333335, 0.0025],
+  "thickness_m": [0.003, 0.001],
+  "thickness_cells": [1, 2, 4],
+  "frequencies_hz": [5000, 10000, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 225000, 250000],
+  "modes": ["A0", "S0"],
+  "stiffness_rules": ["gll", "exact"],
+  "profile_mass_coverage": 0.99,
+  "maximum_support_relative_frequency_error": 0.0005,
+  "maximum_profile_projection_error": 1e-10,
+  "burst": {"carrier_hz": 100000, "cycles": 2, "band_hz": [5000, 250000], "minimum_force_spectral_energy_fraction": 0.999}
+}
