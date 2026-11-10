@@ -37,12 +37,17 @@ class CoolingPacer:
             self.paused = False
 
 
-def find_worker(plan):
+MODULES=('examples.enriched_gpu_wave','examples.tensor_wave')
+
+
+def find_worker(plan,module='examples.enriched_gpu_wave'):
+    if module not in MODULES:
+        raise ValueError('pacing is restricted to the named project wave workers')
     candidates = []
     for process in psutil.process_iter(['pid','cmdline']):
         try:
             args = process.info['cmdline'] or []
-            if ('examples.enriched_gpu_wave' in args and '--worker' in args and '--plan' in args
+            if (module in args and '--worker' in args and '--plan' in args
                     and Path(args[args.index('--plan')+1]).resolve()==plan):
                 candidates.append(process)
         except (psutil.NoSuchProcess,psutil.AccessDenied,ValueError,IndexError):
@@ -59,6 +64,7 @@ def main():
     parser.add_argument('--plan',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--max-seconds',type=float,default=2400.)
+    parser.add_argument('--module',choices=MODULES,default='examples.enriched_gpu_wave')
     args = parser.parse_args()
     project = Path(__file__).resolve().parents[1]
     plan,output = args.plan.resolve(),args.output.resolve()
@@ -68,12 +74,12 @@ def main():
         raise ValueError('pacing is limited to project output plans and receipts')
     if output.exists() and any(output.iterdir()):
         raise FileExistsError('GPU pacing needs a fresh output directory')
-    process = find_worker(plan)
+    process = find_worker(plan,args.module)
     created = process.create_time()
     output.mkdir(parents=True,exist_ok=True)
     pacer = CoolingPacer(process)
     started,last_pause = time.monotonic(),None
-    report = dict(completed=False,worker_pid=process.pid,worker_created=created,
+    report = dict(completed=False,worker_pid=process.pid,worker_created=created,worker_module=args.module,
         plan_sha256=sha256_file(plan),pacer_sha256=sha256_file(Path(__file__)),
         suspend_at_c=78.,resume_at_c=72.,maximum_wall_seconds=args.max_seconds,pause_seconds=0.,events=[],samples=[],
         scope='Scheduling only for this exact project worker; original resource guards and numerical state remain active.')

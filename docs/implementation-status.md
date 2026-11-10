@@ -935,3 +935,27 @@ propagation steps; physical patch integration, complete-window accuracy/cost,
 recess/PZT modeling and accepted data remain open. See tensor-gpu-operators.md
 and evidence/tensor-gpu-debug.json. No research training ran.
 
+## Physical tensor ports and full-window workflow preflight
+
+The reference and CUDA action extend through Q5. Connected skewed Q5 native
+comparisons check every stiffness column, GLL mass, exact stiffness and
+consistent mass. Physical 3 mm radius circular covectors integrate the
+piecewise top trace, retain signed weights and check analytic area and
+represented moments. Five independent native-shape fixtures pass below
+1.14e-12 relative against a fixed 1e-9 screen. The current-source reference,
+CUDA, footprint and cooling-selection group passes 24 tests without skips.
+
+Three drivers freeze the complete p/time study, execute guarded tensor
+windows and independently check saved states with local-scatter CPU mass
+and streamed stiffness. Raw ZIP/NPY shape/header bounds are checked before
+array loading. Nine selected protocol/comparison/state tests pass; these
+overlap the earlier checks and are not a new full-suite total.
+
+The complete 500-microsecond small smoke window runs 32,768 steps with
+1,215 vector coefficients in 13.235 propagation seconds. CPU final energies
+agree within 2.23e-16 relative and mass within 2.53e-16. The measured peak is
+438.26 MiB combined RSS, 49.9% system RAM and 1,047 MiB / 53 C GPU. CPU
+temperature is unavailable. See tensor-wave-windows.md and
+evidence/tensor-wave-preflight-debug.json. Full-size tensor windows and
+convergence remain pending, with no research training/data acceptance.
+

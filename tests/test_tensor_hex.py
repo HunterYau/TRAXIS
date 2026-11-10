@@ -69,7 +69,7 @@ class TensorHexTests(unittest.TestCase):
         with patch('numpy.meshgrid',side_effect=AssertionError('allocation attempted')):
             with self.assertRaises(MemoryError):
                 make_grid(Plate(),(16,16,16),4)
-        for order in (True,0,5,2.5):
+        for order in (True,0,6,2.5):
             with self.assertRaises(ValueError):
                 line_rule(order)
         with self.assertRaises(ValueError):

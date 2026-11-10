@@ -6,7 +6,7 @@ import unittest
 import numpy as np
 from examples.tensor_reference import native_operators
 from traxis.config import Plate,Material
-from traxis.tensor_hex import make_grid
+from traxis.tensor_hex import make_grid,assemble_tensor
 from traxis.gpu_tensor import make_layout,build_gpu_tensor
 from traxis.elmer_plate_refinement import reference_source_hashes
 from traxis.resources import ResourceGuard,ResourceLimits
@@ -26,10 +26,17 @@ class GPUTensorSharedNativeTests(unittest.TestCase):
         error=float(np.linalg.norm(gpu-k)/np.linalg.norm(k))
         mass_error=float(np.linalg.norm(system.mass_diagonal-np.diag(native[3]))/np.linalg.norm(system.mass_diagonal))
         self.assertLess(error,1e-10);self.assertLess(mass_error,1e-10)
+        exact_checks={}
+        if order==5:
+            reference=assemble_tensor(grid,material,'exact')
+            exact_checks=dict(exact_stiffness=float(np.linalg.norm(reference.stiffness.toarray()-native[0])/np.linalg.norm(native[0])),
+                consistent_mass=float(np.linalg.norm(reference.consistent_mass.toarray()-native[1])/np.linalg.norm(native[1])))
+            self.assertLess(max(exact_checks.values()),1e-10)
         root=Path(os.environ['TMP']);path=root/(name+'.npz')
         np.savez_compressed(path,native_stiffness=k,gpu_stiffness=gpu,mass_diagonal=system.mass_diagonal)
         report=dict(cells=list(cells),order=order,transform=np.asarray(transform).tolist(),vector_dofs=len(k),
             all_column_native_relative_l2=error,mass_relative_l2=mass_error,shared_transform_difference=overlap,
+            exact_operator_checks=exact_checks,
             source_sha256=reference_source_hashes(),test_sha256=sha256_file(__file__),
             native_driver_sha256=sha256_file('examples/tensor_reference.py'),archive_sha256=sha256_file(path))
         report['fingerprint']=canonical_hash(report);write_json(root/(name+'.json'),report)
@@ -39,6 +46,9 @@ class GPUTensorSharedNativeTests(unittest.TestCase):
 
     def test_q4_skewed_sharing_across_y_z(self):
         self.check_grid((1,2,2),4,np.array([[1,.13,.07],[.04,1,.11],[.02,.03,1.]]),'shared-yz-q4')
+
+    def test_q5_connected_elements(self):
+        self.check_grid((2,1,1),5,np.array([[1,.13,.07],[.04,1,.11],[.02,.03,1.]]),'shared-x-q5')
 
 
 if __name__=='__main__':unittest.main()

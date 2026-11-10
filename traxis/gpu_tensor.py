@@ -16,7 +16,7 @@ extern "C" __global__ void tensor_apply(
     if(e>=ne) return;
     int q=order+1,n=q*q*q;
     int ex=e/(ny*nz),ey=(e/nz)%ny,ez=e%nz;
-    __shared__ double u[375],flux[1125];
+    __shared__ double u[3*LOCAL_NODES],flux[9*LOCAL_NODES];
     int i=t/(q*q),j=(t/q)%q,k=t%q;
     long long node=0;
     if(t<n) {
@@ -113,6 +113,7 @@ def make_layout(plate,cells,order,transform=None,*,max_dofs=12000000,max_device_
         max_device_mib=max_device_mib,max_host_mib=max_host_mib,stiffness_rule='gll',precision='float64',
         kernel_source_sha256=hashlib.sha256(KERNEL.encode()).hexdigest(),global_sparse_assembly=False,
         dense_element_matrices_stored_on_device=False,element_index_table_stored=False)
+    screen.update(kernel_defines={'LOCAL_NODES':(order+1)**3},kernel_threads=128 if (order+1)**3<=128 else 256)
     return TensorLayout(plate,tuple(cells),order,np.array(transform,copy=True),axes,screen)
 
 
@@ -168,13 +169,13 @@ class TensorStorage(_Storage):
         self.inverse=cp.asarray(np.ascontiguousarray(np.linalg.inv(layout.jacobian)))
         self.determinant=float(np.linalg.det(layout.jacobian));self.lam,self.mu=material.lame
         self.input=cp.empty(3*self.ns,dtype=cp.float64);self.output=cp.empty_like(self.input)
-        self.kernel=cp.RawKernel(KERNEL,'tensor_apply',options=('--std=c++11',))
+        self.kernel=cp.RawKernel(KERNEL,'tensor_apply',options=('--std=c++11',f'-DLOCAL_NODES={(layout.order+1)**3}'))
         self._kernel(self.input,self.output,0.,0)
         cp.cuda.get_current_stream().synchronize()
 
     def _kernel(self,values,result,scale,elements):
         nx,ny,nz=self.layout.cells
-        self.kernel((max(1,elements),),(128,),(self.derivative,self.weights,self.inverse,values,result,
+        self.kernel((max(1,elements),),(self.screen['kernel_threads'],),(self.derivative,self.weights,self.inverse,values,result,
             np.int32(nx),np.int32(ny),np.int32(nz),np.int32(self.layout.order),np.int64(self.ns),
             np.float64(self.determinant),np.float64(self.lam),np.float64(self.mu),np.float64(scale),np.int32(elements)))
 

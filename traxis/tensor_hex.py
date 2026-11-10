@@ -13,10 +13,10 @@ from numpy.polynomial import Legendre, Polynomial
 from scipy import sparse
 
 
-@lru_cache(maxsize=4,typed=True)
+@lru_cache(maxsize=5,typed=True)
 def line_rule(order):
-    if type(order) is not int or not 1<=order<=4:
-        raise ValueError('tensor reference order must be an integer from one to four')
+    if type(order) is not int or not 1<=order<=5:
+        raise ValueError('tensor reference order must be an integer from one to five')
     polynomial = Legendre.basis(order)
     roots = polynomial.deriv().roots()
     if np.iscomplexobj(roots) and np.max(abs(roots.imag),initial=0)>1e-13:
@@ -40,7 +40,7 @@ def product(matrices):
     return np.kron(np.kron(matrices[0],matrices[1]),matrices[2])
 
 
-@lru_cache(maxsize=8,typed=True)
+@lru_cache(maxsize=10,typed=True)
 def reference_integrals(order,rule):
     if rule not in ('gll','exact'):
         raise ValueError('tensor stiffness quadrature must be gll or exact')

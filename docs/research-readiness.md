@@ -21,12 +21,14 @@ plate, defect and transducer configuration.
 
 ## Interpretation of numerical evidence
 
-The tensor investigation adds native/CUDA Q1-Q4 operators and analytic-profile
+The tensor investigation adds native/CUDA Q1-Q5 operators and analytic-profile
 support across 2,592 sampled band cases, including folded modes. Its actual
 5.42-million-coefficient full-plate operator fits the guard and agrees with
-streamed CPU action. Physical patches, complete-window convergence, conforming
-recesses and calibrated PZT/physical agreement remain open. See
-lamb-profiles.md, tensor-gpu-operators.md and their evidence records.
+streamed CPU action. Physical circular footprints pass native checks; the
+guarded wave workflow and independent saved-state checker pass a full-interval
+small fixture. Research-plate tensor windows/convergence, conforming recesses
+and calibrated PZT/physical agreement remain open. See lamb-profiles.md,
+tensor-gpu-operators.md, tensor-wave-windows.md and their evidence records.
 
 The full-size 1/2/4-layer thickness study completes all three 500-microsecond
 windows and independent CPU checks, but fails its frozen 5% raw discrepancy

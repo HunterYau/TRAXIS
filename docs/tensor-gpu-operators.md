@@ -101,7 +101,9 @@ full-action and moment audit, fingerprint
 `416e1a05f92203ced3548f65a4d8c486785512afe7b2bc72b7e64b486ccf5ad7`.
 Its collector is `outputs/tensor-gpu-tools-20261109/collect_gpu.py`.
 
-Physical circular source/probe integration, complete 500-microsecond waves,
+Subsequent Q5 and physical circular covectors pass native verification, and
+the guarded window workflow passes a small full-interval fixture; see
+tensor-wave-windows.md. Research-plate complete 500-microsecond waves,
 space/thickness/time refinement, conforming recesses and PZT/electrical
 calibration remain required. This capacity result does not change the
 earlier failed tetrahedral thickness screen or accept a training bank.

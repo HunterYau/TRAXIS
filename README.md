@@ -35,7 +35,10 @@ required before accepting voltage training data.
 The [tensor-element investigation](docs/tensor-elements.md) verifies positive
 GLL mass, exact/GLL stiffness and analytic-profile mode support. Its
 [GPU operator](docs/tensor-gpu-operators.md) fits an actual 5.42-million-coefficient
-full plate and agrees with independent CPU action. Physical patches,
+full plate and agrees with independent CPU action. Q5 operators and physical
+circular footprints now pass independent native checks; a guarded
+[wave-window workflow](docs/tensor-wave-windows.md) passes an end-to-end small
+fixture and independent CPU state audit. Research-plate tensor propagation,
 complete-window convergence, recess geometry and calibrated PZT response
 remain open.
 
