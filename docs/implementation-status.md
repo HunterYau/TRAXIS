@@ -864,3 +864,29 @@ calibration and physical agreement remain open. hardware-assumptions.md records
 the proposed 7 mm transducers and unresolved sensor layout separately from the
 6 mm disks used in this numerical control.
 
+## Full-size layered thickness result and coupled reference
+
+On November 9 the 500 mm, 100 kHz, three-receiver 1/2/4-layer study completes
+all three 500-microsecond windows at the same 65,536 increments. Each native
+coefficient map, GPU/CPU operator check and independent final-state check
+passes. The largest case has 3,315,627 vector coefficients, takes 1,041.389
+propagation / 1,189.113 monitored seconds, and peaks at 982.02 MiB combined
+RSS and 75 C. All pacers complete with no pauses.
+
+The declared thickness screen fails: raw finest changes are 18.0010%,
+9.90936% and 19.5625%, all above 5%, despite decreasing differences. The
+complete unchanged window and receiver set are retained. See
+layered-spatial-refinement.md and evidence/layered-thickness-debug.json.
+The cost and accuracy of further thickness/in-plane resolution remain open.
+
+A separate small synthetic coupled piezoelectric reference passes independent
+native 3D operator, affine-energy, electrode-condensation and open/short
+circuit checks on rectangular/skewed blocks. Six passive/driven circuit
+comparisons against matrix exponentials show second-order ratios 3.99557 to
+3.99896. Three focused invariant tests pass; the last full integrated suite
+remains 268 tests. Raw modal states/matrices are independently audited.
+See piezoelectric-reference.md and evidence/piezoelectric-reference-debug.json.
+This is a constitutive/port building block, not bonded PZT plate or physical
+validation. No accepted bank, full research training or model superiority
+result is implied by either milestone.
+

@@ -100,9 +100,9 @@ fingerprint `a679a64ae406ed83573d0e0cc8023aaa842c6322debde440cdb137fe342c8f2e`.
 Its 44 file identities were rechecked before recording this milestone.
 It covers geometry/operator capacity, not complete-waveform convergence.
 
-## First two complete windows
+## Completed windows and thickness screen
 
-The frozen one- and two-layer runs each complete 65,536 increments and save
+The frozen one-, two- and four-layer runs each complete 65,536 increments and save
 65,537 samples through the full 500 microseconds. The common increment is
 7.62939453125 ns. No source, material, forcing, receiver or runtime setting
 changes between these levels; their geometry and stability-derived CFL
@@ -112,18 +112,49 @@ fractions differ as declared in the study plan.
 | --- | ---: | ---: | ---: |
 | 1 | 357.815 / 400.954 | 612.67 | 1.04e-15 |
 | 2 | 515.291 / 597.379 | 738.62 | 6.87e-16 |
+| 4 | 1,041.389 / 1,189.113 | 982.02 | 8.59e-16 |
 
-Both independent CPU saved-state checks pass, with exactly matching positive
-mass. Maximum relative energy discrepancies are 4.72e-14 and 1.68e-13;
-final-probe discrepancies are zero and 1.62e-16. These checks independently
+All three independent CPU saved-state checks pass, with exactly matching
+positive mass. Maximum relative energy discrepancies are 4.72e-14, 1.68e-13
+and 4.08e-13; final-probe discrepancies are at most 1.62e-16. These checks independently
 apply streamed stiffness to the saved final displacement, rather than replaying
 every step on the CPU. The pacing receipts complete normally with no pauses.
 Raw records are under `outputs/layered-wave-z1-20261108`,
-`outputs/layered-wave-z2-20261108` and the corresponding `layered-cpu-z1/z2`
-and `layered-pacing-z1/z2` directories. Resumed November 9 jobs keep the
+`outputs/layered-wave-z2-20261108`, `outputs/layered-wave-z4-20261108` and
+the corresponding `layered-cpu-z1/z2/z4` and `layered-pacing-z1/z2/z4`
+directories. Resumed November 9 jobs keep the
 original frozen family suffix.
 
-Complete three-level thickness comparisons remain pending at this commit.
+The completed comparison **fails** the unchanged 5% per-receiver screen:
+
+| Receiver (mm) | Raw 1-to-2-layer difference (m, discrete L2) | Raw 2-to-4-layer difference (m, discrete L2) | Finest relative change |
+| --- | ---: | ---: | ---: |
+| (250,250) | 3.72262e-8 | 5.60305e-9 | 18.0010% |
+| (480,480) | 5.11458e-8 | 4.56243e-9 | 9.90936% |
+| (350,200) | 3.37357e-8 | 5.09953e-9 | 19.5625% |
+
+Every successive difference decreases, but none meets the finest-change limit.
+The complete comparison retains all 65,537 common raw samples and their late
+edge reflections. Similar peak amplitudes and conserved discrete energy do
+not establish thickness accuracy. No screen, waveform window or receiver set
+was changed after observing this result.
+
+The four-layer run peaks at 75 C, 54.2% system RAM, at least 7,435.71 MiB
+available RAM and 1,423 MiB sampled system-wide GPU memory. Its explicit
+workspace screen is 406.33 MiB. It completes 65,537 stiffness applications,
+zero per-step full-state host transfers and two final downloads. No cooling
+pause occurs. CPU temperature remains unavailable. All three wave workers,
+pacers and state checks have normal terminal receipts.
+
+The assessment is `outputs/layered-thickness-assessment-20261109`.
+`evidence/layered-thickness-debug.json` binds complete raw wave/state/pacing
+records, settings, source identities, resource summaries and receiver metrics;
+fingerprint `a6d63f180a2336b71d92ddca89a72b3e48284acb5a3e79bc87ce81dcad825ed8`.
+Its collector independently checks the comparison against original traces and
+exports PNG/PDF plots under `outputs/layered-thickness-tools-20261109`.
+The PNG was visually checked for complete time span, units, labels and clipping.
+
+Further thickness accuracy and its computational cost must be resolved.
 Full-size in-plane refinement, defects/frequencies, PZT coupling/calibration
 and physical agreement remain necessary. No training bank is accepted and
 no full training ran.

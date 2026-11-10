@@ -21,6 +21,13 @@ plate, defect and transducer configuration.
 
 ## Interpretation of numerical evidence
 
+The full-size 1/2/4-layer thickness study completes all three 500-microsecond
+windows and independent CPU checks, but fails its frozen 5% raw discrepancy
+screen at every receiver: finest changes are 18.0010%, 9.90936% and 19.5625%.
+Differences decrease, with in-plane cells fixed at 5 mm. This preserves the
+spatial accuracy gate; it accepts no research data. See
+layered-spatial-refinement.md and evidence/layered-thickness-debug.json.
+
 The small coupled piezoelectric reference verifies constitutive signs,
 electrode condensation and circuit energy on rectangular/skewed block
 fixtures. All modal states are retained and independently audited. Its

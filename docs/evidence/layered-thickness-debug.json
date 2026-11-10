@@ -1,0 +1,661 @@
+{
+  "kind": "fullplate_layered_thickness_debug",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "collector": {
+    "path": "outputs/layered-thickness-tools-20261109/collect_study.py",
+    "sha256": "a7048ea5227f395a73f2a9e814a5938106e213e229ce448222f1d8b379ed1eac",
+    "bytes": 7933
+  },
+  "plan": {
+    "path": "outputs/layered-thickness-study-20261108/study-plan.json",
+    "sha256": "b841e834dc1f85a471ee3373f03aea130d2bf0a4024d4401dda48416a3f6c687",
+    "bytes": 32889
+  },
+  "configuration": {
+    "kind": "enriched_layered_thickness_study",
+    "wave_settings": "configs/enriched-layered-wave.json",
+    "minimum_common_steps": 65536,
+    "maximum_cfl_fraction": 0.4,
+    "maximum_finest_relative_change": 0.05,
+    "require_decreasing_differences": true,
+    "levels": [
+      {
+        "layers": 1,
+        "mesh": "outputs/layered-fullplate-z1-20261108",
+        "operator": "outputs/layered-operator-z1-20261108",
+        "wave": "outputs/layered-wave-z1-20261108",
+        "cpu": "outputs/layered-cpu-z1-20261108",
+        "max_seconds": 1800,
+        "max_rss_mib": 1536
+      },
+      {
+        "layers": 2,
+        "mesh": "outputs/layered-fullplate-z2-20261108",
+        "operator": "outputs/layered-operator-z2-20261108",
+        "wave": "outputs/layered-wave-z2-20261108",
+        "cpu": "outputs/layered-cpu-z2-20261108",
+        "max_seconds": 3000,
+        "max_rss_mib": 1536
+      },
+      {
+        "layers": 4,
+        "mesh": "outputs/layered-fullplate-z4-20261108",
+        "operator": "outputs/layered-operator-z4-20261108",
+        "wave": "outputs/layered-wave-z4-20261108",
+        "cpu": "outputs/layered-cpu-z4-20261108",
+        "max_seconds": 6000,
+        "max_rss_mib": 2048
+      }
+    ]
+  },
+  "steps": 65536,
+  "dt_s": 7.62939453125e-09,
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "matrixfree_step.py": "cfddac1da94b09d5713836acd31f6d8da18238ac20443136dce13d2ca992c27c",
+    "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383",
+    "enriched_gpu_wave.py": "e72e1ffb0868887342a93930332506c2e2826b7dbe04b45770be47bd81418621",
+    "layered_mesh.py": "05f0216cba92cbca38d5aa4cae9df15ee6842f9cc189caf42c47361c342c7115",
+    "layered_spatial_study.py": "1e11c958225c3fc3be5bcbc72a3dfdaea8797a6793b5563c40e6ba46d2c7b6f8",
+    "verify_enriched_window.py": "8b563dc944d90beb6a0cefd788aaa0b8dd2fb4455988ee364f00128e1d50bbeb",
+    "enriched_time_refinement.py": "47a12e4002103448e2e11bf5b3e800690db1e012d7fda516537d1207b06ada5c",
+    "pace_gpu_worker.py": "66737381333440c558460738106c3dba5598e38de174d947244186a7e58825a4"
+  },
+  "source_snapshot": {
+    "path": "outputs/layered-thickness-study-20261108/source-snapshot.zip",
+    "sha256": "b67515edd2ee987e4e15c9d576edc58c81b71a3087d38420012163066b8e1ea5",
+    "bytes": 283107
+  },
+  "assessment": {
+    "path": "outputs/layered-thickness-assessment-20261109/thickness-report.json",
+    "sha256": "e86185f85fa64ad5b9b5fc0fef1643573d8e40d84347cce8da83b35146e6cfce",
+    "bytes": 5035
+  },
+  "comparison": {
+    "path": "outputs/layered-thickness-assessment-20261109/comparison.npz",
+    "sha256": "c4b45e3fc6b3b517cfcf2013624f58f39fca016f8e58df7084418b172992de1a",
+    "bytes": 4672436
+  },
+  "passed": false,
+  "levels": [
+    {
+      "layers": 1,
+      "vector_dofs": 964809,
+      "stable_dt_s": 6.314875851807349e-08,
+      "propagation_seconds": 357.81473839993123,
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 400.9541312000947,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 1800.0,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 612.66796875,
+        "peak_system_memory_percent": 59.1,
+        "minimum_available_mib": 6634.36328125,
+        "peak_system_gpu_mib": 3321.0,
+        "peak_gpu_temperature_c": 76.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "native_resources": {
+        "limits": {
+          "max_seconds": 1798.936999999918,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 475.98828125,
+        "peak_system_memory_percent": 58.9,
+        "minimum_available_mib": 6670.0546875,
+        "peak_system_gpu_mib": 3321.0,
+        "peak_gpu_temperature_c": 77.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "peak_receiver_displacement_m": [
+        4.3269015569982556e-10,
+        6.840664795999205e-10,
+        4.2997477914615916e-10
+      ],
+      "postburst_modified_energy_relative_range": 1.0374488984477745e-15,
+      "propagation_statistics": {
+        "method": "gpu_velocity_verlet",
+        "precision": "float64",
+        "steps_completed": 65536,
+        "requested_steps": 65536,
+        "duration_s": 0.0005,
+        "workspace_screen_mib": 119.36947631835938,
+        "probe_nonzero_coefficients": 75,
+        "stiffness_applications": 65537,
+        "per_step_host_state_transfers": 0,
+        "final_host_state_downloads": 2
+      },
+      "cpu_check": {
+        "completed": true,
+        "passed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "checker_sha256": "8b563dc944d90beb6a0cefd788aaa0b8dd2fb4455988ee364f00128e1d50bbeb",
+        "cpu_runtime": {
+          "python": "3.12.10",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1"
+        },
+        "plan_fingerprint": "aeec6ddf7a194197c0323d2b49b554479fd538540d2082266f585d014a3943f2",
+        "forward_result_fingerprint": "2e9b05bc7a368d5d27e99a769933abf51b54a474401090a3a3e3883fcfbb5804",
+        "duration_s": 0.0005,
+        "steps": 65536,
+        "vector_dofs": 964809,
+        "mass_relative_l2": 0.0,
+        "physical_energy_j": 9.567890194403698e-09,
+        "modified_energy_j": 9.56786147779167e-09,
+        "final_physical_energy_relative_error": 4.718447854656915e-14,
+        "final_modified_energy_relative_error": 4.718447854656915e-14,
+        "final_probe_relative_l2": 0.0,
+        "scope": "Saved-state CPU mass/stiffness/energy/probe checks, not a full CPU replay or spatial/PZT acceptance.",
+        "fingerprint": "c59b8e339736620cb80231dddabe1bf5058a7ccb496f70c3b965551d7e4d0121"
+      },
+      "cpu_receipt": {
+        "path": "outputs/layered-cpu-z1-20261108/cpu-window-check.json",
+        "sha256": "2c1803247e3204be36d0ff75955ec9b5440a6fa4575d7ccc7e30451fe80c8e28",
+        "bytes": 5120
+      },
+      "pacing": {
+        "completed": true,
+        "worker_pid": 9492,
+        "worker_created": 1794188911.4639096,
+        "plan_sha256": "b9454b6a078944a63350a7c43f47b9efe1a97f33461753b8c3296d3727574777",
+        "pacer_sha256": "66737381333440c558460738106c3dba5598e38de174d947244186a7e58825a4",
+        "suspend_at_c": 78.0,
+        "resume_at_c": 72.0,
+        "maximum_wall_seconds": 1800.0,
+        "pause_seconds": 0.0,
+        "scope": "Scheduling only for this exact project worker; original resource guards and numerical state remain active.",
+        "wall_seconds": 390.43700000003446,
+        "fingerprint": "868139cf78513374b64d6376803a53a7a0c3ee417e4aeabe8fbd954d72cf9893"
+      },
+      "pacing_peak_gpu_temperature_c": 77.0,
+      "pacing_receipt": {
+        "path": "outputs/layered-pacing-z1-20261108/pacing-report.json",
+        "sha256": "bec064da91e5e7ba435ae0639afae24a1cbc3fd9e1b4c003a8942d4f64874250",
+        "bytes": 55882
+      },
+      "inputs": [
+        {
+          "path": "outputs/layered-wave-z1-20261108/enriched-gpu-plan.json",
+          "sha256": "b9454b6a078944a63350a7c43f47b9efe1a97f33461753b8c3296d3727574777",
+          "bytes": 26360
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/source-snapshot.zip",
+          "sha256": "123a2caf97d60c859335ce41d1bdc0dfb2aa0dd52b5bd6eca7529cb81da5680f",
+          "bytes": 269677
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/monitor-result.json",
+          "sha256": "2d08254c0bd6b0ad4a18d5c1da5ee9bc45262efe7795d42c1db91eea8cad6395",
+          "bytes": 543467
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/native/wave-report.json",
+          "sha256": "d383c8e8dd5d05611869575a5edbb17ac1b2b36c6dd9b1f9723bd5deded9d41d",
+          "bytes": 516654
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/native/mechanical-window.npz",
+          "sha256": "c4cab547da91d9d0b3306bb9a6694493385e87d84429716491fbb045ce533e31",
+          "bytes": 16451568
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/native/mechanical-patches.npz",
+          "sha256": "4fedbce53e8ace6c9533ab17a9563990a8586cbb13f30bd9bebcc9fade72e7bf",
+          "bytes": 31607
+        },
+        {
+          "path": "outputs/layered-wave-z1-20261108/native/operator-comparison.npz",
+          "sha256": "b7f3e6450f5af5666bde2a889556c597ebdc8820ab691f6846046d2b964e6448",
+          "bytes": 16253843
+        }
+      ]
+    },
+    {
+      "layers": 2,
+      "vector_dofs": 1748415,
+      "stable_dt_s": 3.564656492409667e-08,
+      "propagation_seconds": 515.2912673000246,
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 597.3790647001006,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 3000.0,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 738.62109375,
+        "peak_system_memory_percent": 58.3,
+        "minimum_available_mib": 6761.328125,
+        "peak_system_gpu_mib": 1265.0,
+        "peak_gpu_temperature_c": 73.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "native_resources": {
+        "limits": {
+          "max_seconds": 2999.0310000000754,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 613.25390625,
+        "peak_system_memory_percent": 58.2,
+        "minimum_available_mib": 6791.73046875,
+        "peak_system_gpu_mib": 1265.0,
+        "peak_gpu_temperature_c": 73.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "peak_receiver_displacement_m": [
+        4.279370935834893e-10,
+        6.818773265792402e-10,
+        4.311301629729627e-10
+      ],
+      "postburst_modified_energy_relative_range": 6.86902957169818e-16,
+      "propagation_statistics": {
+        "method": "gpu_velocity_verlet",
+        "precision": "float64",
+        "steps_completed": 65536,
+        "requested_steps": 65536,
+        "duration_s": 0.0005,
+        "workspace_screen_mib": 215.02450561523438,
+        "probe_nonzero_coefficients": 75,
+        "stiffness_applications": 65537,
+        "per_step_host_state_transfers": 0,
+        "final_host_state_downloads": 2
+      },
+      "cpu_check": {
+        "completed": true,
+        "passed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "checker_sha256": "8b563dc944d90beb6a0cefd788aaa0b8dd2fb4455988ee364f00128e1d50bbeb",
+        "cpu_runtime": {
+          "python": "3.12.10",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1"
+        },
+        "plan_fingerprint": "84e88d3cccf6a409ec7696443d7fd36baa1bc346e7546aab9ecd4656762eb27b",
+        "forward_result_fingerprint": "feb32efdfec87d093c72912ce1d810925c0bc35272cd9cdb8c824178e3e2eecd",
+        "duration_s": 0.0005,
+        "steps": 65536,
+        "vector_dofs": 1748415,
+        "mass_relative_l2": 0.0,
+        "physical_energy_j": 9.633768976967761e-09,
+        "modified_energy_j": 9.633740590793717e-09,
+        "final_physical_energy_relative_error": 1.6764367671839864e-13,
+        "final_modified_energy_relative_error": 1.6764367671839864e-13,
+        "final_probe_relative_l2": 1.6123639557269906e-16,
+        "scope": "Saved-state CPU mass/stiffness/energy/probe checks, not a full CPU replay or spatial/PZT acceptance.",
+        "fingerprint": "26f5b694051fd2e884883c30117d7d649e5f6ceb1b4ccc13b5e9e82f6bf3227e"
+      },
+      "cpu_receipt": {
+        "path": "outputs/layered-cpu-z2-20261108/cpu-window-check.json",
+        "sha256": "326a0fc9c156f2554a810a2104db5313f8b0b02fd07d1f115f4825e70cdb9174",
+        "bytes": 7272
+      },
+      "pacing": {
+        "completed": true,
+        "worker_pid": 30888,
+        "worker_created": 1794274154.9371352,
+        "plan_sha256": "7b4d6dfdaa7ba06d97f3657d84cadd20ab9c85d0956682db2330cb8aca52ffe2",
+        "pacer_sha256": "66737381333440c558460738106c3dba5598e38de174d947244186a7e58825a4",
+        "suspend_at_c": 78.0,
+        "resume_at_c": 72.0,
+        "maximum_wall_seconds": 3000.0,
+        "pause_seconds": 0.0,
+        "scope": "Scheduling only for this exact project worker; original resource guards and numerical state remain active.",
+        "wall_seconds": 585.2339999999385,
+        "fingerprint": "1f12b1dced26b32416008ca7c4688f6458e192b644a56351f93401e7854ef70b"
+      },
+      "pacing_peak_gpu_temperature_c": 73.0,
+      "pacing_receipt": {
+        "path": "outputs/layered-pacing-z2-20261108/pacing-report.json",
+        "sha256": "b3904acf592b628d3e6d607fc7abe93922123fdb44212309532de2359dfdc5a0",
+        "bytes": 83900
+      },
+      "inputs": [
+        {
+          "path": "outputs/layered-wave-z2-20261108/enriched-gpu-plan.json",
+          "sha256": "7b4d6dfdaa7ba06d97f3657d84cadd20ab9c85d0956682db2330cb8aca52ffe2",
+          "bytes": 26360
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/source-snapshot.zip",
+          "sha256": "b9b476cfdd9eb36ef3746058beb886afa4cde46cd9818e90f899542c6ec7e606",
+          "bytes": 269677
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/monitor-result.json",
+          "sha256": "ca25657f0df928223db53cd385b6b4f4bf62fa8c780da97bad32ec6d3b365c83",
+          "bytes": 812132
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/native/wave-report.json",
+          "sha256": "e39bf35d82fc2a3b93c1016eafacf15217a94a24fab3cedabedafa4a2b7edf02",
+          "bytes": 738906
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/native/mechanical-window.npz",
+          "sha256": "2adaf285fc0e2e641210323d1a21785fb46553d4eea6ed3965470b2552ef66d7",
+          "bytes": 28492511
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/native/mechanical-patches.npz",
+          "sha256": "85ac5cfaa5fb4fec01baefe29f36c23b671b13f6b9581ae66fafd80f44902838",
+          "bytes": 56043
+        },
+        {
+          "path": "outputs/layered-wave-z2-20261108/native/operator-comparison.npz",
+          "sha256": "979d77088260d66269409db1e48eb651a43b620d5cb4a2f81f19fcf0b72f164b",
+          "bytes": 29424644
+        }
+      ]
+    },
+    {
+      "layers": 4,
+      "vector_dofs": 3315627,
+      "stable_dt_s": 1.9073965113583645e-08,
+      "propagation_seconds": 1041.3885210999288,
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 1189.1129768999526,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 6000.0,
+          "max_rss_mib": 2048.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 982.015625,
+        "peak_system_memory_percent": 54.2,
+        "minimum_available_mib": 7435.7109375,
+        "peak_system_gpu_mib": 1423.0,
+        "peak_gpu_temperature_c": 75.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "native_resources": {
+        "limits": {
+          "max_seconds": 5998.953000000096,
+          "max_rss_mib": 2048.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 834.4765625,
+        "peak_system_memory_percent": 54.4,
+        "minimum_available_mib": 7409.32421875,
+        "peak_system_gpu_mib": 1423.0,
+        "peak_gpu_temperature_c": 75.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "peak_receiver_displacement_m": [
+        4.213451882689828e-10,
+        6.795435507596012e-10,
+        4.3020024850800994e-10
+      ],
+      "postburst_modified_energy_relative_range": 8.586582356008578e-16,
+      "propagation_statistics": {
+        "method": "gpu_velocity_verlet",
+        "precision": "float64",
+        "steps_completed": 65536,
+        "requested_steps": 65536,
+        "duration_s": 0.0005,
+        "workspace_screen_mib": 406.3345642089844,
+        "probe_nonzero_coefficients": 75,
+        "stiffness_applications": 65537,
+        "per_step_host_state_transfers": 0,
+        "final_host_state_downloads": 2
+      },
+      "cpu_check": {
+        "completed": true,
+        "passed": true,
+        "ready_for_training_data": false,
+        "training_updates": 0,
+        "checker_sha256": "8b563dc944d90beb6a0cefd788aaa0b8dd2fb4455988ee364f00128e1d50bbeb",
+        "cpu_runtime": {
+          "python": "3.12.10",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1"
+        },
+        "plan_fingerprint": "15e0fb3a0c6cacc4e561537ae57784091ffaa66e77f8d3d2583b3e07119442f2",
+        "forward_result_fingerprint": "b1f313f3dfea4d26c78c6c0cad4de478661d484bffb5fdfbbd988fdc1387bcd3",
+        "duration_s": 0.0005,
+        "steps": 65536,
+        "vector_dofs": 3315627,
+        "mass_relative_l2": 0.0,
+        "physical_energy_j": 9.6334377309895e-09,
+        "modified_energy_j": 9.633409175582646e-09,
+        "final_physical_energy_relative_error": 4.0756287233989497e-13,
+        "final_modified_energy_relative_error": 4.0756287233989497e-13,
+        "final_probe_relative_l2": 1.6157005996297986e-16,
+        "scope": "Saved-state CPU mass/stiffness/energy/probe checks, not a full CPU replay or spatial/PZT acceptance.",
+        "fingerprint": "cc0f155f870972c330b313e2978e33576ae867b30c5ec8f2fac54dd966af3aee"
+      },
+      "cpu_receipt": {
+        "path": "outputs/layered-cpu-z4-20261108/cpu-window-check.json",
+        "sha256": "f8a857cac91c9ff8231fced09433de9c9bbbd0c489eff7995fc6cbe75534d000",
+        "bytes": 11352
+      },
+      "pacing": {
+        "completed": true,
+        "worker_pid": 24388,
+        "worker_created": 1794275308.4152384,
+        "plan_sha256": "40fce9d466fcd47eb6a78347597b4c8a19166d4c0bb2fbfef8b44551245b741e",
+        "pacer_sha256": "66737381333440c558460738106c3dba5598e38de174d947244186a7e58825a4",
+        "suspend_at_c": 78.0,
+        "resume_at_c": 72.0,
+        "maximum_wall_seconds": 6000.0,
+        "pause_seconds": 0.0,
+        "scope": "Scheduling only for this exact project worker; original resource guards and numerical state remain active.",
+        "wall_seconds": 1174.2339999999385,
+        "fingerprint": "a5be21082f260136cf2c11e52c0ea98f240379de7fcc3dc9599d4427aa3a394a"
+      },
+      "pacing_peak_gpu_temperature_c": 75.0,
+      "pacing_receipt": {
+        "path": "outputs/layered-pacing-z4-20261108/pacing-report.json",
+        "sha256": "658089b9712dbd4c30b12bac86a6ab8df6414c0f798fe2c46cdb2880011949ff",
+        "bytes": 166838
+      },
+      "inputs": [
+        {
+          "path": "outputs/layered-wave-z4-20261108/enriched-gpu-plan.json",
+          "sha256": "40fce9d466fcd47eb6a78347597b4c8a19166d4c0bb2fbfef8b44551245b741e",
+          "bytes": 26359
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/source-snapshot.zip",
+          "sha256": "64b359731aff0678785f0c8ca701368340903041850de64d1c6504bd86446c25",
+          "bytes": 269677
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/monitor-result.json",
+          "sha256": "934f552d4b35d9e433bdb9585e5fcb7966e099ab6ad43f66bdeda932f035330b",
+          "bytes": 1609426
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/native/wave-report.json",
+          "sha256": "6ae5c734054dfce0e977e2f342e5811d66c738e0caa87213c3185cbe45b006c2",
+          "bytes": 1351196
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/native/mechanical-window.npz",
+          "sha256": "e0ed698397c7190dc1aab481c3d1093bf5352fee7f275adf4b8b2914514519dd",
+          "bytes": 52568371
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/native/mechanical-patches.npz",
+          "sha256": "69b4390008214391e50070aaeb633db054bb9b77bd070c565e8e84c55720cabc",
+          "bytes": 104867
+        },
+        {
+          "path": "outputs/layered-wave-z4-20261108/native/operator-comparison.npz",
+          "sha256": "c9b0a247b76ef69229e38527cd0d153c94cab005c0a6fe5781b5bd03a5218bf6",
+          "bytes": 57565435
+        }
+      ]
+    }
+  ],
+  "receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 3.722623722812803e-08,
+      "fine_difference_l2_m": 5.603053328157329e-09,
+      "finest_relative_change": 0.18001042127016595,
+      "decreasing": true,
+      "passed": false
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 5.114581186537143e-08,
+      "fine_difference_l2_m": 4.562428648849993e-09,
+      "finest_relative_change": 0.09909362153437569,
+      "decreasing": true,
+      "passed": false
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 3.373566916945508e-08,
+      "fine_difference_l2_m": 5.099528192462874e-09,
+      "finest_relative_change": 0.19562520778331594,
+      "decreasing": true,
+      "passed": false
+    }
+  ],
+  "figures": [
+    {
+      "path": "outputs/layered-thickness-tools-20261109/thickness-waveforms.png",
+      "sha256": "fae507301535133201719c1496ff1f119362dbd2a900361fbdde2690b7ed41d4",
+      "bytes": 605510
+    },
+    {
+      "path": "outputs/layered-thickness-tools-20261109/thickness-waveforms.pdf",
+      "sha256": "92cf622d7229fa2588ac181de3aec752a587f9afac0de73eb53543c5e10561f4",
+      "bytes": 106462
+    }
+  ],
+  "limits": [
+    "Thickness discrepancy screen on fixed 5 mm lateral cells and common time grid; not a continuum, in-plane, defect or PZT acceptance.",
+    "Passing this provisional 5% thickness screen does not establish in-plane convergence or a continuum error bound.",
+    "Mechanical force/displacement controls are not calibrated PZT-voltage records.",
+    "No training or accepted research bank."
+  ],
+  "fingerprint": "a6d63f180a2336b71d92ddca89a72b3e48284acb5a3e79bc87ce81dcad825ed8"
+}
