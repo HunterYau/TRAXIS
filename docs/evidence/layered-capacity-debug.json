@@ -1,0 +1,1328 @@
+{
+  "kind": "layered_fullplate_capacity_debug",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "collector": {
+    "path": "outputs/layered-tools-20261108/collect_capacity.py",
+    "sha256": "3ecb37a877afc82b08b7b6df1b9dbd05552799eb0434946068637632445a8b4b",
+    "bytes": 6622
+  },
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "matrixfree_step.py": "cfddac1da94b09d5713836acd31f6d8da18238ac20443136dce13d2ca992c27c",
+    "matrixfree_capacity.py": "15834399ef2af91c1fe6ad615d142c761db2c437fa4c084d2f9d786600f27383",
+    "enriched_gpu_wave.py": "e72e1ffb0868887342a93930332506c2e2826b7dbe04b45770be47bd81418621",
+    "layered_mesh.py": "05f0216cba92cbca38d5aa4cae9df15ee6842f9cc189caf42c47361c342c7115"
+  },
+  "cases": [
+    {
+      "layers": 1,
+      "specification": {
+        "plate": {
+          "width_m": 0.5,
+          "height_m": 0.5,
+          "thickness_m": 0.003
+        },
+        "material": {
+          "young_pa": 68900000000.0,
+          "poisson": 0.33,
+          "density_kg_m3": 2700.0
+        },
+        "cells": [
+          100,
+          100,
+          1
+        ],
+        "max_geometry_mib": 256,
+        "reference": {
+          "order": 2,
+          "max_dofs": 4500000,
+          "max_vertices": 100000,
+          "max_tetrahedra": 400000,
+          "max_topology_mib": 512,
+          "max_vector_mib": 768
+        }
+      },
+      "geometry_screen": {
+        "vertices": 20402,
+        "edges": 100801,
+        "faces": 140400,
+        "tetrahedra": 60000,
+        "scalar_dofs": 321603,
+        "vector_dofs": 964809,
+        "geometry_workspace_screen_mib": 9.945816040039062,
+        "boundary_triangles": 40800,
+        "cells": [
+          100,
+          100,
+          1
+        ],
+        "spacing_m": [
+          0.005,
+          0.005,
+          0.003
+        ]
+      },
+      "geometry_plan": {
+        "path": "outputs/layered-fullplate-z1-20261108/mesh-plan.json",
+        "sha256": "b0ae6dcb9180bced1da89d4f99c9fad56b1f023972261f385624f1b6ad82c928",
+        "bytes": 8488
+      },
+      "geometry_report": {
+        "path": "outputs/layered-fullplate-z1-20261108/geometry/mesh-report.json",
+        "sha256": "e72e2b9ca79515aa295582b805644b9d00fe5454812da0954f539ba68fc140fc",
+        "bytes": 2298
+      },
+      "mesh": {
+        "path": "outputs/layered-fullplate-z1-20261108/geometry/mesh.npz",
+        "sha256": "372591e229280839464745702c9fa578a44ef3ef1d34c439ea110df9e0891ea2",
+        "bytes": 301038
+      },
+      "geometry_monitor": {
+        "path": "outputs/layered-fullplate-z1-20261108/monitor-result.json",
+        "sha256": "a59aba09c4fe364c2f282781a619bfaac4e52a09b5344dc2ad3d64af02a7f546",
+        "bytes": 6360
+      },
+      "geometry_resources": {
+        "limits": {
+          "max_seconds": 120.0,
+          "max_rss_mib": 1024.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 243.67578125,
+        "peak_system_memory_percent": 56.2,
+        "minimum_available_mib": 7104.9140625,
+        "peak_system_gpu_mib": 3094.0,
+        "peak_gpu_temperature_c": 61.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_plan": {
+        "path": "outputs/layered-operator-z1-20261108/enriched-gpu-plan.json",
+        "sha256": "87390cfafbec9cdda351a45fc7285620f1c725ba8602d8a60442be27319a5855",
+        "bytes": 26348
+      },
+      "operator_report": {
+        "path": "outputs/layered-operator-z1-20261108/native/wave-report.json",
+        "sha256": "117cb6ace07358c136b1ae80dd7f7448e5a05c20b4c21bbfeb66606c09a7a90d",
+        "bytes": 48534
+      },
+      "operator_monitor": {
+        "path": "outputs/layered-operator-z1-20261108/monitor-result.json",
+        "sha256": "49d8db0b4be20e7ca67c73dd6052e05c49e9c5e333c7854f1c6c07b4f6151881",
+        "bytes": 55743
+      },
+      "operator_resources": {
+        "limits": {
+          "max_seconds": 240.0,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 505.09375,
+        "peak_system_memory_percent": 58.6,
+        "minimum_available_mib": 6716.5390625,
+        "peak_system_gpu_mib": 3350.0,
+        "peak_gpu_temperature_c": 53.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_comparison": {
+        "path": "outputs/layered-operator-z1-20261108/native/operator-comparison.npz",
+        "sha256": "1399c13a468c2687494fe08f8845f7cddbc8d5c2d8acb2f39728f7dd85be241e",
+        "bytes": 16253858
+      },
+      "operator": {
+        "relative_l2": 3.75446685424335e-15,
+        "host_action_seconds": 0.021652700030244887,
+        "device_action_wall_seconds": 0.015381420002086088,
+        "device_action_event_seconds": 0.015355809020996094,
+        "timed_device_actions": 20,
+        "cpu_reference_seconds": 2.1778116999194026
+      },
+      "stable_dt_s": 6.314875851807349e-08,
+      "screen": {
+        "scalar_dofs": 321603,
+        "vector_dofs": 964809,
+        "vertices": 20402,
+        "edges": 100801,
+        "faces": 140400,
+        "tetrahedra": 60000,
+        "topology_screen_mib": 59.06071472167969,
+        "assembly_screen_mib": 3707.8857421875,
+        "local_scalar_dofs": 15,
+        "polynomial_degree": 2,
+        "enrichment_maximum_degree": 4,
+        "construction_workspace_screen_mib": 73.28807830810547,
+        "coefficient_layout": "component_major_enriched_nodal",
+        "device_storage_screen_mib": 125.78986358642578,
+        "host_chunk_screen_mib": 15.8203125,
+        "max_device_mib": 1024,
+        "reference_gradient_rank": 13,
+        "gradient_factor_relative_error": 1.505378804039294e-15,
+        "kernel_source_sha256": "e721fe5ef04f98c4ce0ab13340cb6cdaf62bd5433b586b49cc83e01086d2725a",
+        "global_sparse_assembly": false,
+        "local_dense_stiffness_stored": false,
+        "native_topology_permutation_verified": true,
+        "maximum_coordinate_error_m": 1.1102230246251565e-16,
+        "maximum_local_normalized_row_sum_bound": 1003067957984281.1,
+        "stability_policy": "maximum_element_lumped_mass_gershgorin",
+        "scalar_total_mass_kg": 2.025000000000003
+      },
+      "mass_moments": [
+        {
+          "powers": [
+            0,
+            0,
+            0
+          ],
+          "measured": 2.025000000000068,
+          "expected": 2.025,
+          "relative_error": 3.352873534367973e-14
+        },
+        {
+          "powers": [
+            0,
+            0,
+            1
+          ],
+          "measured": 0.0030375000000003745,
+          "expected": 0.0030375,
+          "relative_error": 1.234568003383174e-13
+        },
+        {
+          "powers": [
+            0,
+            1,
+            0
+          ],
+          "measured": 0.506250000000002,
+          "expected": 0.50625,
+          "relative_error": 3.9968028886505635e-15
+        },
+        {
+          "powers": [
+            1,
+            0,
+            0
+          ],
+          "measured": 0.5062500000000022,
+          "expected": 0.50625,
+          "relative_error": 4.440892098500626e-15
+        },
+        {
+          "powers": [
+            0,
+            0,
+            2
+          ],
+          "measured": 6.07499999999938e-06,
+          "expected": 6.075e-06,
+          "relative_error": 1.0202949596305189e-13
+        },
+        {
+          "powers": [
+            0,
+            1,
+            1
+          ],
+          "measured": 0.0007593750000000028,
+          "expected": 0.000759375,
+          "relative_error": 3.774758283725532e-15
+        },
+        {
+          "powers": [
+            0,
+            2,
+            0
+          ],
+          "measured": 0.16875000000000123,
+          "expected": 0.16874999999999998,
+          "relative_error": 7.327471962526033e-15
+        },
+        {
+          "powers": [
+            1,
+            0,
+            1
+          ],
+          "measured": 0.0007593750000000031,
+          "expected": 0.000759375,
+          "relative_error": 4.218847493575595e-15
+        },
+        {
+          "powers": [
+            1,
+            1,
+            0
+          ],
+          "measured": 0.12656250000000052,
+          "expected": 0.1265625,
+          "relative_error": 4.218847493575595e-15
+        },
+        {
+          "powers": [
+            2,
+            0,
+            0
+          ],
+          "measured": 0.16875000000000173,
+          "expected": 0.16874999999999998,
+          "relative_error": 1.0436096431476471e-14
+        }
+      ],
+      "device": {
+        "name": "NVIDIA GeForce RTX 3060 Ti",
+        "compute_capability": [
+          8,
+          6
+        ],
+        "total_bytes": 8589410304,
+        "free_bytes_before_allocation": 7486832640,
+        "cupy_version": "14.2.0",
+        "precision": "float64"
+      },
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 38.80176709999796,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "source_snapshot": {
+        "path": "outputs/layered-operator-z1-20261108/source-snapshot.zip",
+        "sha256": "a145b754898dec81843d695fb53b3b08b460fe6992f518b2a4f5e55169106e6f",
+        "bytes": 269677
+      }
+    },
+    {
+      "layers": 2,
+      "specification": {
+        "plate": {
+          "width_m": 0.5,
+          "height_m": 0.5,
+          "thickness_m": 0.003
+        },
+        "material": {
+          "young_pa": 68900000000.0,
+          "poisson": 0.33,
+          "density_kg_m3": 2700.0
+        },
+        "cells": [
+          100,
+          100,
+          2
+        ],
+        "max_geometry_mib": 256,
+        "reference": {
+          "order": 2,
+          "max_dofs": 4500000,
+          "max_vertices": 100000,
+          "max_tetrahedra": 400000,
+          "max_topology_mib": 512,
+          "max_vector_mib": 768
+        }
+      },
+      "geometry_screen": {
+        "vertices": 30603,
+        "edges": 171402,
+        "faces": 260800,
+        "tetrahedra": 120000,
+        "scalar_dofs": 582805,
+        "vector_dofs": 1748415,
+        "geometry_workspace_screen_mib": 19.191184997558594,
+        "boundary_triangles": 41600,
+        "cells": [
+          100,
+          100,
+          2
+        ],
+        "spacing_m": [
+          0.005,
+          0.005,
+          0.0015
+        ]
+      },
+      "geometry_plan": {
+        "path": "outputs/layered-fullplate-z2-20261108/mesh-plan.json",
+        "sha256": "46ee01dbc394280481ecb069a84a4708a64b6cc84cd604d52773b14c79cbe82b",
+        "bytes": 8488
+      },
+      "geometry_report": {
+        "path": "outputs/layered-fullplate-z2-20261108/geometry/mesh-report.json",
+        "sha256": "8d276c2fa633f2ecf425acee6f633a1f956371c46043eec2ca541e2235d78dea",
+        "bytes": 2305
+      },
+      "mesh": {
+        "path": "outputs/layered-fullplate-z2-20261108/geometry/mesh.npz",
+        "sha256": "89331c791c5429889a1e79714ab66753a1f3666573cef585a6247a87b754d5dd",
+        "bytes": 531870
+      },
+      "geometry_monitor": {
+        "path": "outputs/layered-fullplate-z2-20261108/monitor-result.json",
+        "sha256": "5018e58f21e7b88f120beadb57b18dea0337f71bddd516534bcd4ac238698adf",
+        "bytes": 6902
+      },
+      "geometry_resources": {
+        "limits": {
+          "max_seconds": 120.0,
+          "max_rss_mib": 1024.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 301.87890625,
+        "peak_system_memory_percent": 57.5,
+        "minimum_available_mib": 6905.3125,
+        "peak_system_gpu_mib": 3189.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_plan": {
+        "path": "outputs/layered-operator-z2-20261108/enriched-gpu-plan.json",
+        "sha256": "af11c98cc8c024341d5eafd893a4969ad9207e628e042122a829709b6ce1baeb",
+        "bytes": 26348
+      },
+      "operator_report": {
+        "path": "outputs/layered-operator-z2-20261108/native/wave-report.json",
+        "sha256": "d7256ba0e4058d1aea0009ca0f6a7bf6cb0a904ce1595a6a74c611713a6b5123",
+        "bytes": 88037
+      },
+      "operator_monitor": {
+        "path": "outputs/layered-operator-z2-20261108/monitor-result.json",
+        "sha256": "92a05130d8c0f315830c6d0f4ae8e66d65ee9e85b0d943262eb37bf176663957",
+        "bytes": 103165
+      },
+      "operator_resources": {
+        "limits": {
+          "max_seconds": 240.0,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 612.50390625,
+        "peak_system_memory_percent": 59.3,
+        "minimum_available_mib": 6613.14453125,
+        "peak_system_gpu_mib": 3302.0,
+        "peak_gpu_temperature_c": 55.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_comparison": {
+        "path": "outputs/layered-operator-z2-20261108/native/operator-comparison.npz",
+        "sha256": "9e8861c9b0e11d77321dd3b18d7a3dab2baba30082de533e4f6c90db738c7ce3",
+        "bytes": 29424694
+      },
+      "operator": {
+        "relative_l2": 7.881756563511486e-15,
+        "host_action_seconds": 0.10792849992867559,
+        "device_action_wall_seconds": 0.027808075002394617,
+        "device_action_event_seconds": 0.027771868896484374,
+        "timed_device_actions": 20,
+        "cpu_reference_seconds": 4.372680900036357
+      },
+      "stable_dt_s": 3.564656492409667e-08,
+      "screen": {
+        "scalar_dofs": 582805,
+        "vector_dofs": 1748415,
+        "vertices": 30603,
+        "edges": 171402,
+        "faces": 260800,
+        "tetrahedra": 120000,
+        "topology_screen_mib": 117.88794708251953,
+        "assembly_screen_mib": 7415.771484375,
+        "local_scalar_dofs": 15,
+        "polynomial_degree": 2,
+        "enrichment_maximum_degree": 4,
+        "construction_workspace_screen_mib": 144.960205078125,
+        "coefficient_layout": "component_major_enriched_nodal",
+        "device_storage_screen_mib": 229.45575714111328,
+        "host_chunk_screen_mib": 15.8203125,
+        "max_device_mib": 1024,
+        "reference_gradient_rank": 13,
+        "gradient_factor_relative_error": 1.505378804039294e-15,
+        "kernel_source_sha256": "e721fe5ef04f98c4ce0ab13340cb6cdaf62bd5433b586b49cc83e01086d2725a",
+        "global_sparse_assembly": false,
+        "local_dense_stiffness_stored": false,
+        "native_topology_permutation_verified": true,
+        "maximum_coordinate_error_m": 1.1102230246251565e-16,
+        "maximum_local_normalized_row_sum_bound": 3147926766541266.0,
+        "stability_policy": "maximum_element_lumped_mass_gershgorin",
+        "scalar_total_mass_kg": 2.0250000000000004
+      },
+      "mass_moments": [
+        {
+          "powers": [
+            0,
+            0,
+            0
+          ],
+          "measured": 2.025000000000068,
+          "expected": 2.025,
+          "relative_error": 3.352873534367973e-14
+        },
+        {
+          "powers": [
+            0,
+            0,
+            1
+          ],
+          "measured": 0.003037499999999471,
+          "expected": 0.0030375,
+          "relative_error": 1.7408297026122455e-13
+        },
+        {
+          "powers": [
+            0,
+            1,
+            0
+          ],
+          "measured": 0.5062500000000016,
+          "expected": 0.50625,
+          "relative_error": 3.3306690738754696e-15
+        },
+        {
+          "powers": [
+            1,
+            0,
+            0
+          ],
+          "measured": 0.506250000000007,
+          "expected": 0.50625,
+          "relative_error": 1.3766765505351941e-14
+        },
+        {
+          "powers": [
+            0,
+            0,
+            2
+          ],
+          "measured": 6.0750000000006085e-06,
+          "expected": 6.075e-06,
+          "relative_error": 1.0014211682118912e-13
+        },
+        {
+          "powers": [
+            0,
+            1,
+            1
+          ],
+          "measured": 0.0007593750000000027,
+          "expected": 0.000759375,
+          "relative_error": 3.552713678800501e-15
+        },
+        {
+          "powers": [
+            0,
+            2,
+            0
+          ],
+          "measured": 0.1687499999999971,
+          "expected": 0.16874999999999998,
+          "relative_error": 1.709743457922741e-14
+        },
+        {
+          "powers": [
+            1,
+            0,
+            1
+          ],
+          "measured": 0.0007593750000000066,
+          "expected": 0.000759375,
+          "relative_error": 8.659739592076221e-15
+        },
+        {
+          "powers": [
+            1,
+            1,
+            0
+          ],
+          "measured": 0.12656250000000008,
+          "expected": 0.1265625,
+          "relative_error": 6.661338147750939e-16
+        },
+        {
+          "powers": [
+            2,
+            0,
+            0
+          ],
+          "measured": 0.16874999999999613,
+          "expected": 0.16874999999999998,
+          "relative_error": 2.2870594307278225e-14
+        }
+      ],
+      "device": {
+        "name": "NVIDIA GeForce RTX 3060 Ti",
+        "compute_capability": [
+          8,
+          6
+        ],
+        "total_bytes": 8589410304,
+        "free_bytes_before_allocation": 7486832640,
+        "cupy_version": "14.2.0",
+        "precision": "float64"
+      },
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 74.38782279996667,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "source_snapshot": {
+        "path": "outputs/layered-operator-z2-20261108/source-snapshot.zip",
+        "sha256": "612c51f2fe823643f73e2f13fdcca8893e6c71100f12a03ab1beaba10c45b8c0",
+        "bytes": 269677
+      }
+    },
+    {
+      "layers": 4,
+      "specification": {
+        "plate": {
+          "width_m": 0.5,
+          "height_m": 0.5,
+          "thickness_m": 0.003
+        },
+        "material": {
+          "young_pa": 68900000000.0,
+          "poisson": 0.33,
+          "density_kg_m3": 2700.0
+        },
+        "cells": [
+          100,
+          100,
+          4
+        ],
+        "max_geometry_mib": 256,
+        "reference": {
+          "order": 2,
+          "max_dofs": 4500000,
+          "max_vertices": 100000,
+          "max_tetrahedra": 400000,
+          "max_topology_mib": 512,
+          "max_vector_mib": 768
+        }
+      },
+      "geometry_screen": {
+        "vertices": 51005,
+        "edges": 312604,
+        "faces": 501600,
+        "tetrahedra": 240000,
+        "scalar_dofs": 1105209,
+        "vector_dofs": 3315627,
+        "geometry_workspace_screen_mib": 37.681922912597656,
+        "boundary_triangles": 43200,
+        "cells": [
+          100,
+          100,
+          4
+        ],
+        "spacing_m": [
+          0.005,
+          0.005,
+          0.00075
+        ]
+      },
+      "geometry_plan": {
+        "path": "outputs/layered-fullplate-z4-20261108/mesh-plan.json",
+        "sha256": "ec584760fac3c3b182a658bdda517f5122d1f9aeb1df8a3b3515bda2f0ea6b3f",
+        "bytes": 8488
+      },
+      "geometry_report": {
+        "path": "outputs/layered-fullplate-z4-20261108/geometry/mesh-report.json",
+        "sha256": "d7a6e16255c833dee7b766a9c6a1c86a011f982e3762081221a5c7492855171a",
+        "bytes": 2314
+      },
+      "mesh": {
+        "path": "outputs/layered-fullplate-z4-20261108/geometry/mesh.npz",
+        "sha256": "d8aaaa4a19734ab1078ce9b6fef1e4d170c7fd5eeed45f7c7a781f2ff5ad4d4d",
+        "bytes": 929812
+      },
+      "geometry_monitor": {
+        "path": "outputs/layered-fullplate-z4-20261108/monitor-result.json",
+        "sha256": "63f6641458773ea7b8e41a528ad1615465ef9c314f6ed986e5befbc634bd86f6",
+        "bytes": 10755
+      },
+      "geometry_resources": {
+        "limits": {
+          "max_seconds": 120.0,
+          "max_rss_mib": 1024.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 371.0390625,
+        "peak_system_memory_percent": 58.0,
+        "minimum_available_mib": 6813.54296875,
+        "peak_system_gpu_mib": 3189.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_plan": {
+        "path": "outputs/layered-operator-z4-20261108/enriched-gpu-plan.json",
+        "sha256": "cc44d865571bfc4abe7908df61f758f877627bd28d6e39c75824d417f55cd434",
+        "bytes": 26348
+      },
+      "operator_report": {
+        "path": "outputs/layered-operator-z4-20261108/native/wave-report.json",
+        "sha256": "4ef3d60d8df81899e14142ea8eb1c919c43d5a9804372bfa6b0bccf78dfac9c1",
+        "bytes": 164046
+      },
+      "operator_monitor": {
+        "path": "outputs/layered-operator-z4-20261108/monitor-result.json",
+        "sha256": "1dbc26a50059421b689e6045aee78fb69401bc869aef1ff50f9b56df0ff17b00",
+        "bytes": 196587
+      },
+      "operator_resources": {
+        "limits": {
+          "max_seconds": 300.0,
+          "max_rss_mib": 1536.0,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 827.00390625,
+        "peak_system_memory_percent": 60.4,
+        "minimum_available_mib": 6427.33984375,
+        "peak_system_gpu_mib": 3366.0,
+        "peak_gpu_temperature_c": 54.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      },
+      "operator_comparison": {
+        "path": "outputs/layered-operator-z4-20261108/native/operator-comparison.npz",
+        "sha256": "3e2afef0a80a00fc6165f4706cfce8a125376f067bf561417cf983ee3d8435db",
+        "bytes": 57565430
+      },
+      "operator": {
+        "relative_l2": 2.1383660233715325e-14,
+        "host_action_seconds": 0.08461539994459599,
+        "device_action_wall_seconds": 0.049836570001207295,
+        "device_action_event_seconds": 0.049798397827148434,
+        "timed_device_actions": 20,
+        "cpu_reference_seconds": 8.175104299909435
+      },
+      "stable_dt_s": 1.9073965113583645e-08,
+      "screen": {
+        "scalar_dofs": 1105209,
+        "vector_dofs": 3315627,
+        "vertices": 51005,
+        "edges": 312604,
+        "faces": 501600,
+        "tetrahedra": 240000,
+        "topology_screen_mib": 235.54241180419922,
+        "assembly_screen_mib": 14831.54296875,
+        "local_scalar_dofs": 15,
+        "polynomial_degree": 2,
+        "enrichment_maximum_degree": 4,
+        "construction_workspace_screen_mib": 288.30445861816406,
+        "coefficient_layout": "component_major_enriched_nodal",
+        "device_storage_screen_mib": 436.7875442504883,
+        "host_chunk_screen_mib": 15.8203125,
+        "max_device_mib": 1024,
+        "reference_gradient_rank": 13,
+        "gradient_factor_relative_error": 1.505378804039294e-15,
+        "kernel_source_sha256": "e721fe5ef04f98c4ce0ab13340cb6cdaf62bd5433b586b49cc83e01086d2725a",
+        "global_sparse_assembly": false,
+        "local_dense_stiffness_stored": false,
+        "native_topology_permutation_verified": true,
+        "maximum_coordinate_error_m": 1.1102230246251565e-16,
+        "maximum_local_normalized_row_sum_bound": 1.0994564296492594e+16,
+        "stability_policy": "maximum_element_lumped_mass_gershgorin",
+        "scalar_total_mass_kg": 2.025000000000001
+      },
+      "mass_moments": [
+        {
+          "powers": [
+            0,
+            0,
+            0
+          ],
+          "measured": 2.0250000000002304,
+          "expected": 2.025,
+          "relative_error": 1.1390888232654106e-13
+        },
+        {
+          "powers": [
+            0,
+            0,
+            1
+          ],
+          "measured": 0.0030375000000002665,
+          "expected": 0.0030375,
+          "relative_error": 8.770761894538737e-14
+        },
+        {
+          "powers": [
+            0,
+            1,
+            0
+          ],
+          "measured": 0.5062499999999912,
+          "expected": 0.50625,
+          "relative_error": 1.7319479184152442e-14
+        },
+        {
+          "powers": [
+            1,
+            0,
+            0
+          ],
+          "measured": 0.506249999999996,
+          "expected": 0.50625,
+          "relative_error": 7.882583474838611e-15
+        },
+        {
+          "powers": [
+            0,
+            0,
+            2
+          ],
+          "measured": 6.074999999999806e-06,
+          "expected": 6.075e-06,
+          "relative_error": 3.197442310920451e-14
+        },
+        {
+          "powers": [
+            0,
+            1,
+            1
+          ],
+          "measured": 0.0007593750000000034,
+          "expected": 0.000759375,
+          "relative_error": 4.6629367034256575e-15
+        },
+        {
+          "powers": [
+            0,
+            2,
+            0
+          ],
+          "measured": 0.16875000000000792,
+          "expected": 0.16874999999999998,
+          "relative_error": 4.707345624410664e-14
+        },
+        {
+          "powers": [
+            1,
+            0,
+            1
+          ],
+          "measured": 0.0007593750000000115,
+          "expected": 0.000759375,
+          "relative_error": 1.509903313490213e-14
+        },
+        {
+          "powers": [
+            1,
+            1,
+            0
+          ],
+          "measured": 0.12656249999999977,
+          "expected": 0.1265625,
+          "relative_error": 1.7763568394002505e-15
+        },
+        {
+          "powers": [
+            2,
+            0,
+            0
+          ],
+          "measured": 0.16875000000000115,
+          "expected": 0.16874999999999998,
+          "relative_error": 6.8833827526759706e-15
+        }
+      ],
+      "device": {
+        "name": "NVIDIA GeForce RTX 3060 Ti",
+        "compute_capability": [
+          8,
+          6
+        ],
+        "total_bytes": 8589410304,
+        "free_bytes_before_allocation": 7486832640,
+        "cupy_version": "14.2.0",
+        "precision": "float64"
+      },
+      "worker_run": {
+        "exit_code": 0,
+        "wall_seconds": 143.54151629994158,
+        "maximum_observed_external_processes": 5,
+        "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+      },
+      "source_snapshot": {
+        "path": "outputs/layered-operator-z4-20261108/source-snapshot.zip",
+        "sha256": "fb5f1c7d5eb96fc5a1d4a313c7f5e63e77013f45f4cce94ccbd152059c54e831",
+        "bytes": 269677
+      }
+    }
+  ],
+  "tests": [
+    {
+      "count": 11,
+      "monitor": {
+        "path": "outputs/layered-geometry-tests-20261108/monitor-result.json",
+        "sha256": "e94286b9f9ed53634ad4d2e3fe898014fef29221d093c4201608d98fea548ab9",
+        "bytes": 4258
+      },
+      "log": {
+        "path": "outputs/layered-geometry-tests-20261108/tests.log",
+        "sha256": "f74ab0fad740e730c79441cdc4ecb3abacdc0ca50a7aa602995123a40ad16d61",
+        "bytes": 2166
+      },
+      "invocation": {
+        "path": "outputs/layered-geometry-tests-20261108/invocation.json",
+        "sha256": "ba68b3f2903cc1e6e800964aba335be8a453e42868ab17478d53b40ad28f9ea4",
+        "bytes": 842
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 45.0,
+          "max_rss_mib": 1024,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 163.67578125,
+        "peak_system_memory_percent": 54.1,
+        "minimum_available_mib": 7457.28125,
+        "peak_system_gpu_mib": 2901.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      }
+    },
+    {
+      "count": 13,
+      "monitor": {
+        "path": "outputs/layered-native-input-tests-20261108/monitor-result.json",
+        "sha256": "89c22e904e68d5092e97698b949bd92cec7005f35648e057eee990ddf6b9e9f8",
+        "bytes": 32204
+      },
+      "log": {
+        "path": "outputs/layered-native-input-tests-20261108/tests.log",
+        "sha256": "3627056b1770108b34600094a0b1f3c9ffacac757ec5c7627d4067123bf766dc",
+        "bytes": 2514
+      },
+      "invocation": {
+        "path": "outputs/layered-native-input-tests-20261108/invocation.json",
+        "sha256": "d8eb503e273294e9614211639a75be5caf5901b7cd64b864c57a859e39d28be1",
+        "bytes": 845
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 180.0,
+          "max_rss_mib": 1024,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 621.41796875,
+        "peak_system_memory_percent": 58.7,
+        "minimum_available_mib": 6698.66015625,
+        "peak_system_gpu_mib": 3182.0,
+        "peak_gpu_temperature_c": 54.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      }
+    },
+    {
+      "count": 14,
+      "monitor": {
+        "path": "outputs/layered-study-tests-20261108/monitor-result.json",
+        "sha256": "a309853cdca296ef03b7eecec7a98e631f0081998ae36d41616085e6a53ad384",
+        "bytes": 32948
+      },
+      "log": {
+        "path": "outputs/layered-study-tests-20261108/tests.log",
+        "sha256": "fb40fa2bf80de85bb51b0c7bd2ed6710af223a16c74ffcf0c1adca2cde8ab38b",
+        "bytes": 2615
+      },
+      "invocation": {
+        "path": "outputs/layered-study-tests-20261108/invocation.json",
+        "sha256": "95ab16cc745e2b29bf73ce352786d6565adc11960e2dd3146afede10f1c9dafc",
+        "bytes": 864
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 180.0,
+          "max_rss_mib": 1024,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 630.8671875,
+        "peak_system_memory_percent": 58.4,
+        "minimum_available_mib": 6759.6953125,
+        "peak_system_gpu_mib": 3246.0,
+        "peak_gpu_temperature_c": 53.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      }
+    },
+    {
+      "count": 3,
+      "monitor": {
+        "path": "outputs/layered-study-final-checks-20261108/monitor-result.json",
+        "sha256": "910c38a6634eb344f41661aacd05a686b5b22af66e05617033580c49a2a3b034",
+        "bytes": 3231
+      },
+      "log": {
+        "path": "outputs/layered-study-final-checks-20261108/tests.log",
+        "sha256": "e153955ec7c71420709631b182f20c6e3b454cc9764bcf2b8ab88f0d31407fa5",
+        "bytes": 654
+      },
+      "invocation": {
+        "path": "outputs/layered-study-final-checks-20261108/invocation.json",
+        "sha256": "509d7cd7065553943e1b41448f52ff2596579a636ed10df929dbb1011eafbc97",
+        "bytes": 736
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 30.0,
+          "max_rss_mib": 1024,
+          "max_system_memory_percent": 85,
+          "min_available_mib": 2048,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_combined_rss_mib": 157.96484375,
+        "peak_system_memory_percent": 55.8,
+        "minimum_available_mib": 7178.5625,
+        "peak_system_gpu_mib": 3093.0,
+        "peak_gpu_temperature_c": 50.0,
+        "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+      }
+    }
+  ],
+  "legacy_input_check": {
+    "monitor": {
+      "path": "outputs/layered-legacy-operator-20261108/monitor-result.json",
+      "sha256": "78e093a6030a4dab6808e007caf8f330f19b26bb75c2dc08186cc46076ea19a1",
+      "bytes": 69454
+    },
+    "native_report": {
+      "path": "outputs/layered-legacy-operator-20261108/native/wave-report.json",
+      "sha256": "cc83236ec37fd155e3f218f653151083c93c718e68a3be99c0b07800a1eadff1",
+      "bytes": 58241
+    },
+    "operator": {
+      "relative_l2": 4.449445032867466e-15,
+      "host_action_seconds": 0.02699759998358786,
+      "device_action_wall_seconds": 0.017193369998130946,
+      "device_action_event_seconds": 0.017159637451171876,
+      "timed_device_actions": 20,
+      "cpu_reference_seconds": 2.7998549999902025
+    },
+    "worker_run": {
+      "exit_code": 0,
+      "wall_seconds": 49.10196759994142,
+      "maximum_observed_external_processes": 5,
+      "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+    },
+    "resources": {
+      "limits": {
+        "max_seconds": 180.0,
+        "max_rss_mib": 1024.0,
+        "max_system_memory_percent": 85,
+        "min_available_mib": 2048,
+        "max_gpu_memory_percent": 90,
+        "max_gpu_temperature_c": 80,
+        "max_cpu_temperature_c": 90
+      },
+      "peak_combined_rss_mib": 539.7421875,
+      "peak_system_memory_percent": 57.7,
+      "minimum_available_mib": 6872.74609375,
+      "peak_system_gpu_mib": 3264.0,
+      "peak_gpu_temperature_c": 53.0,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "frozen_wave_study": {
+    "plan": {
+      "path": "outputs/layered-thickness-study-20261108/study-plan.json",
+      "sha256": "b841e834dc1f85a471ee3373f03aea130d2bf0a4024d4401dda48416a3f6c687",
+      "bytes": 32889
+    },
+    "source_snapshot": {
+      "path": "outputs/layered-thickness-study-20261108/source-snapshot.zip",
+      "sha256": "b67515edd2ee987e4e15c9d576edc58c81b71a3087d38420012163066b8e1ea5",
+      "bytes": 283107
+    },
+    "steps": 65536,
+    "dt_s": 7.62939453125e-09,
+    "configuration": {
+      "kind": "enriched_layered_thickness_study",
+      "wave_settings": "configs/enriched-layered-wave.json",
+      "minimum_common_steps": 65536,
+      "maximum_cfl_fraction": 0.4,
+      "maximum_finest_relative_change": 0.05,
+      "require_decreasing_differences": true,
+      "levels": [
+        {
+          "layers": 1,
+          "mesh": "outputs/layered-fullplate-z1-20261108",
+          "operator": "outputs/layered-operator-z1-20261108",
+          "wave": "outputs/layered-wave-z1-20261108",
+          "cpu": "outputs/layered-cpu-z1-20261108",
+          "max_seconds": 1800,
+          "max_rss_mib": 1536
+        },
+        {
+          "layers": 2,
+          "mesh": "outputs/layered-fullplate-z2-20261108",
+          "operator": "outputs/layered-operator-z2-20261108",
+          "wave": "outputs/layered-wave-z2-20261108",
+          "cpu": "outputs/layered-cpu-z2-20261108",
+          "max_seconds": 3000,
+          "max_rss_mib": 1536
+        },
+        {
+          "layers": 4,
+          "mesh": "outputs/layered-fullplate-z4-20261108",
+          "operator": "outputs/layered-operator-z4-20261108",
+          "wave": "outputs/layered-wave-z4-20261108",
+          "cpu": "outputs/layered-cpu-z4-20261108",
+          "max_seconds": 6000,
+          "max_rss_mib": 2048
+        }
+      ]
+    },
+    "levels": [
+      {
+        "layers": 1,
+        "mesh": "outputs/layered-fullplate-z1-20261108",
+        "operator": "outputs/layered-operator-z1-20261108",
+        "wave": "outputs/layered-wave-z1-20261108",
+        "cpu": "outputs/layered-cpu-z1-20261108",
+        "max_seconds": 1800,
+        "max_rss_mib": 1536,
+        "settings": {
+          "duration_s": 0.0005,
+          "frequency_hz": 100000.0,
+          "cycles": 2,
+          "peak_patch_force_n": 1.0,
+          "source_center_xy_m": [
+            0.02,
+            0.02
+          ],
+          "receiver_centers_xy_m": [
+            [
+              0.25,
+              0.25
+            ],
+            [
+              0.48,
+              0.48
+            ],
+            [
+              0.35,
+              0.2
+            ]
+          ],
+          "radius_m": 0.003,
+          "cfl_fraction": 0.12081622363274855,
+          "gpu": {
+            "max_device_mib": 1024,
+            "chunk_elements": 128,
+            "device_id": 0
+          },
+          "operator_tolerance": 1e-10,
+          "energy_tolerance": 1e-08
+        },
+        "settings_file": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\layered-thickness-study-20261108\\settings-z1.json",
+        "settings_sha256": "35af36b8733710692b5e967c80d9e0ac07ede9420b65175a0c1ab32a566ea770"
+      },
+      {
+        "layers": 2,
+        "mesh": "outputs/layered-fullplate-z2-20261108",
+        "operator": "outputs/layered-operator-z2-20261108",
+        "wave": "outputs/layered-wave-z2-20261108",
+        "cpu": "outputs/layered-cpu-z2-20261108",
+        "max_seconds": 3000,
+        "max_rss_mib": 1536,
+        "settings": {
+          "duration_s": 0.0005,
+          "frequency_hz": 100000.0,
+          "cycles": 2,
+          "peak_patch_force_n": 1.0,
+          "source_center_xy_m": [
+            0.02,
+            0.02
+          ],
+          "receiver_centers_xy_m": [
+            [
+              0.25,
+              0.25
+            ],
+            [
+              0.48,
+              0.48
+            ],
+            [
+              0.35,
+              0.2
+            ]
+          ],
+          "radius_m": 0.003,
+          "cfl_fraction": 0.21402888462031353,
+          "gpu": {
+            "max_device_mib": 1024,
+            "chunk_elements": 128,
+            "device_id": 0
+          },
+          "operator_tolerance": 1e-10,
+          "energy_tolerance": 1e-08
+        },
+        "settings_file": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\layered-thickness-study-20261108\\settings-z2.json",
+        "settings_sha256": "205df769d94358411ae2c9ce311fcc92b2db5082f9a3047fda2db542f96ab7d7"
+      },
+      {
+        "layers": 4,
+        "mesh": "outputs/layered-fullplate-z4-20261108",
+        "operator": "outputs/layered-operator-z4-20261108",
+        "wave": "outputs/layered-wave-z4-20261108",
+        "cpu": "outputs/layered-cpu-z4-20261108",
+        "max_seconds": 6000,
+        "max_rss_mib": 2048,
+        "settings": {
+          "duration_s": 0.0005,
+          "frequency_hz": 100000.0,
+          "cycles": 2,
+          "peak_patch_force_n": 1.0,
+          "source_center_xy_m": [
+            0.02,
+            0.02
+          ],
+          "receiver_centers_xy_m": [
+            [
+              0.25,
+              0.25
+            ],
+            [
+              0.48,
+              0.48
+            ],
+            [
+              0.35,
+              0.2
+            ]
+          ],
+          "radius_m": 0.003,
+          "cfl_fraction": 0.3999899593932192,
+          "gpu": {
+            "max_device_mib": 1024,
+            "chunk_elements": 128,
+            "device_id": 0
+          },
+          "operator_tolerance": 1e-10,
+          "energy_tolerance": 1e-08
+        },
+        "settings_file": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\layered-thickness-study-20261108\\settings-z4.json",
+        "settings_sha256": "03beb1db0d147acdd674453985635aac2915d612ef3b4ed70fe59d7ded62a92e"
+      }
+    ]
+  },
+  "limits": [
+    "Geometry and GPU operator capacity only; no full-size waveform convergence result in this record.",
+    "Five-millimeter in-plane cells remain fixed in the first thickness family.",
+    "The prior complete integrated suite is 268 tests; these selected test counts overlap.",
+    "No accepted research waveform bank, PZT-voltage calibration, physical agreement or full training."
+  ],
+  "fingerprint": "a679a64ae406ed83573d0e0cc8023aaa842c6322debde440cdb137fe342c8f2e"
+}

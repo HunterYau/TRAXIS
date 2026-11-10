@@ -95,7 +95,35 @@ three pure study checks additionally cover empty/complex records and confirm
 the fixed common-grid and 5% criteria. The last complete integrated suite is
 the earlier 268-test result; selected counts are not added to it.
 
-Complete-waveform thickness comparisons remain pending at this commit.
+The compact capacity record is `evidence/layered-capacity-debug.json`, with
+fingerprint `a679a64ae406ed83573d0e0cc8023aaa842c6322debde440cdb137fe342c8f2e`.
+Its 44 file identities were rechecked before recording this milestone.
+It covers geometry/operator capacity, not complete-waveform convergence.
+
+## First two complete windows
+
+The frozen one- and two-layer runs each complete 65,536 increments and save
+65,537 samples through the full 500 microseconds. The common increment is
+7.62939453125 ns. No source, material, forcing, receiver or runtime setting
+changes between these levels; their geometry and stability-derived CFL
+fractions differ as declared in the study plan.
+
+| Thickness layers | Propagation / monitored seconds | Peak combined RSS (MiB) | Postburst modified-energy range |
+| --- | ---: | ---: | ---: |
+| 1 | 357.815 / 400.954 | 612.67 | 1.04e-15 |
+| 2 | 515.291 / 597.379 | 738.62 | 6.87e-16 |
+
+Both independent CPU saved-state checks pass, with exactly matching positive
+mass. Maximum relative energy discrepancies are 4.72e-14 and 1.68e-13;
+final-probe discrepancies are zero and 1.62e-16. These checks independently
+apply streamed stiffness to the saved final displacement, rather than replaying
+every step on the CPU. The pacing receipts complete normally with no pauses.
+Raw records are under `outputs/layered-wave-z1-20261108`,
+`outputs/layered-wave-z2-20261108` and the corresponding `layered-cpu-z1/z2`
+and `layered-pacing-z1/z2` directories. Resumed November 9 jobs keep the
+original frozen family suffix.
+
+Complete three-level thickness comparisons remain pending at this commit.
 Full-size in-plane refinement, defects/frequencies, PZT coupling/calibration
 and physical agreement remain necessary. No training bank is accepted and
 no full training ran.
