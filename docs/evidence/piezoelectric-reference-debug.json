@@ -1,0 +1,729 @@
+{
+  "kind": "small_coupled_piezoelectric_reference_debug",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "collector": {
+    "path": "outputs/piezoelectric-tools-20261109/collect_reference.py",
+    "sha256": "21d8729047863cb9214af692aa2700a009c24f7d74f7ac145c6f5b0c7472655b",
+    "bytes": 7678
+  },
+  "driver": {
+    "path": "examples/piezoelectric_reference.py",
+    "sha256": "2855f7ab6f784765b63876a1a14c9a7f131a09056c4236e1e016f1f28b689ee7",
+    "bytes": 22045
+  },
+  "test_source": {
+    "path": "tests/test_piezoelectric_reference.py",
+    "sha256": "3e530d4010f7e9d848494c943070f3aa78e04f223eb85f2465325c9632d17e99",
+    "bytes": 3316
+  },
+  "plan": {
+    "path": "outputs/piezoelectric-complete-evidence-20261109/reference-plan.json",
+    "sha256": "89db99c4a6fe55c23e7a0a8a1e2d532d25f6659ff126df67556370183fcd4fa7",
+    "bytes": 15916
+  },
+  "monitor": {
+    "path": "outputs/piezoelectric-complete-evidence-20261109/monitor-result.json",
+    "sha256": "8daafb77ad65d04ece127ddfad49086bf343d4c0e380391a94dcd55e7741e410",
+    "bytes": 4577
+  },
+  "native_report": {
+    "path": "outputs/piezoelectric-complete-evidence-20261109/native/reference-report.json",
+    "sha256": "8a6650b545c13823e4a1a3f797561bf3954c51e39e02fcfded01c9adf7677222",
+    "bytes": 21486
+  },
+  "source_snapshot": {
+    "path": "outputs/piezoelectric-complete-evidence-20261109/source-snapshot.zip",
+    "sha256": "28a6a4460370a4f8b961b985513a5584156f7a3f1276f7de75e2daa34187a84b",
+    "bytes": 256374
+  },
+  "raw_archive": {
+    "path": "outputs/piezoelectric-complete-evidence-20261109/native/coupled-reference.npz",
+    "sha256": "13413d8f3f158493730515a8b4ff82e0c3099facf58e61ee055c08723c09d1f2",
+    "bytes": 591768
+  },
+  "worker_run": {
+    "exit_code": 0,
+    "wall_seconds": 1.9212278000777587,
+    "maximum_observed_external_processes": 3,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+  },
+  "resources": {
+    "limits": {
+      "max_seconds": 120,
+      "max_rss_mib": 512,
+      "max_system_memory_percent": 85,
+      "min_available_mib": 2048,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "peak_combined_rss_mib": 236.32421875,
+    "peak_system_memory_percent": 52.5,
+    "minimum_available_mib": 7708.1015625,
+    "peak_system_gpu_mib": 1423.0,
+    "peak_gpu_temperature_c": 74.0,
+    "gpu_scope": "System-wide; simultaneous full-plate GPU experiment, not device use attributable to this CPU reference.",
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "material": {
+    "elasticity_pa": [
+      [
+        110000000000.0,
+        55000000000.0,
+        50000000000.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        55000000000.0,
+        110000000000.0,
+        50000000000.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        50000000000.0,
+        50000000000.0,
+        100000000000.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        25000000000.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        25000000000.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        27500000000.0
+      ]
+    ],
+    "coupling_c_m2": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        10.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        10.0,
+        0.0,
+        0.0
+      ],
+      [
+        -4.0,
+        -4.0,
+        12.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "clamped_permittivity_f_m": [
+      [
+        1.2000000000000002e-08,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.2000000000000002e-08,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1e-08
+      ]
+    ],
+    "density_kg_m3": 7800.0
+  },
+  "material_status": "Synthetic positive-definite verification coefficients; no hardware identification.",
+  "sources": [
+    "https://doc.comsol.com/6.3/doc/com.comsol.help.sme/sme_ug_theory.06.043.html",
+    "https://doc.comsol.com/6.4/doc/com.comsol.help.acdc/acdc_ug_electric_fields.07.020.html"
+  ],
+  "cases": [
+    {
+      "name": "rectangular",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "vertices": 27,
+      "tetrahedra": 48,
+      "volume_m3": 3.600000000000002e-06,
+      "operator_relative_l2": {
+        "stiffness": 2.0310748426519214e-14,
+        "consistent_mass": 2.44635741186057e-14,
+        "coupling": 2.0163582995310084e-14,
+        "dielectric": 2.0170392659869727e-14
+      },
+      "affine_energy_relative_errors": [
+        1.532107773982716e-14,
+        2.6867397195928788e-14,
+        6.661338147750939e-16
+      ],
+      "gauge_relative_residual": 2.3459518408041438e-17,
+      "rigid_relative_residual": 2.0454877861463504e-17,
+      "port": {
+        "capacitance_f": 4e-09,
+        "voltage_actuation_relative_l2": 9.044573858940813e-16,
+        "internal_potential_relative_l2": 3.1186121501666136e-16,
+        "electrode_charge_relative_error": 0.0,
+        "open_circuit_displacement_relative_l2": 2.181839871265666e-14,
+        "open_circuit_voltage_relative_error": 2.1538326677728037e-14,
+        "open_circuit_voltage_v": 0.026782512391989075,
+        "short_circuit_voltage_v": 0.0,
+        "open_minus_short_min_eigenvalue": -2.660664774552331e-07,
+        "analytic_clamped_capacitance_relative_error": 0.0
+      },
+      "circuits": [
+        {
+          "mode": "isolated",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 0.0002796356138558771,
+              "maximum_step_energy_balance_relative_error": 4.0389678347315814e-16,
+              "total_energy_balance_relative_error": 1.6155871338926326e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 1.0000000000000014e-12,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 1.1102230246251565e-15
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 6.998591530195179e-05,
+              "maximum_step_energy_balance_relative_error": 6.058451752097372e-16,
+              "total_energy_balance_relative_error": 1.2116903504194744e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.999999999999877e-13,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 6.217248937900877e-15
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 1.75012997163495e-05,
+              "maximum_step_energy_balance_relative_error": 6.058451752097372e-16,
+              "total_energy_balance_relative_error": 2.7464981276174753e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.999999999999723e-13,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 1.432187701766452e-14
+            }
+          ],
+          "error_ratios": [
+            3.9955984379056697,
+            3.9988981639216084
+          ],
+          "passed": true
+        },
+        {
+          "mode": "resistive",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 0.0,
+              "final_relative_l2": 0.0008389346534239887,
+              "maximum_step_energy_balance_relative_error": 4.417621069237667e-16,
+              "total_energy_balance_relative_error": 3.1302000719169756e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.820871408516056e-14,
+              "dissipated_energy_j": 9.017912859148423e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 0.0,
+              "final_relative_l2": 0.00020995201131581014,
+              "maximum_step_energy_balance_relative_error": 4.859383176161434e-16,
+              "total_energy_balance_relative_error": 6.260400143833951e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.823410092987068e-14,
+              "dissipated_energy_j": 9.017658990701228e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 0.0,
+              "final_relative_l2": 5.250167169911228e-05,
+              "maximum_step_energy_balance_relative_error": 3.3763246743459315e-16,
+              "total_energy_balance_relative_error": 3.5340968553901337e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.824044935167218e-14,
+              "dissipated_energy_j": 9.017595506483311e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            }
+          ],
+          "error_ratios": [
+            3.9958400406179577,
+            3.998958595433831
+          ],
+          "passed": true
+        },
+        {
+          "mode": "current-driven",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 9.98598145869478e-05,
+              "final_relative_l2": 0.0005040696563079882,
+              "maximum_step_energy_balance_relative_error": 5.742907390008967e-16,
+              "total_energy_balance_relative_error": 6.664296927307109e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.6854736468379165e-13,
+              "dissipated_energy_j": 1.269015350935175e-12,
+              "supplied_energy_j": 5.375627156189603e-13,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 9.98598145869478e-05,
+              "final_relative_l2": 0.00012615254611456924,
+              "maximum_step_energy_balance_relative_error": 6.831535439213964e-16,
+              "total_energy_balance_relative_error": 1.1713006720721586e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.685803536461595e-13,
+              "dissipated_energy_j": 1.2689615392157276e-12,
+              "supplied_energy_j": 5.375418928618991e-13,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.5827312305737943e-07,
+              "conductance_s": 0.014886222242462693,
+              "current_a": 9.98598145869478e-05,
+              "final_relative_l2": 3.1546595814244675e-05,
+              "maximum_step_energy_balance_relative_error": 2.6742384686992305e-16,
+              "total_energy_balance_relative_error": 1.3126645462877638e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.685886023254241e-13,
+              "dissipated_energy_j": 1.2689480848882716e-12,
+              "supplied_energy_j": 5.375366872136972e-13,
+              "isolated_charge_relative_range": null
+            }
+          ],
+          "error_ratios": [
+            3.995715281483119,
+            3.998927391639697
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "affine-skewed",
+      "transform": [
+        [
+          1.0,
+          0.13,
+          0.07
+        ],
+        [
+          0.04,
+          1.0,
+          0.11
+        ],
+        [
+          0.02,
+          0.03,
+          1.0
+        ]
+      ],
+      "vertices": 27,
+      "tetrahedra": 48,
+      "volume_m3": 3.5656920000000006e-06,
+      "operator_relative_l2": {
+        "stiffness": 1.9380997782901805e-14,
+        "consistent_mass": 2.507504800204049e-14,
+        "coupling": 1.942352773282367e-14,
+        "dielectric": 1.943965382658279e-14
+      },
+      "affine_energy_relative_errors": [
+        3.1086244689504383e-15,
+        8.326672684688674e-15,
+        2.220446049250313e-15
+      ],
+      "gauge_relative_residual": 2.770059872881975e-17,
+      "rigid_relative_residual": 2.1068884353042704e-17,
+      "port": {
+        "capacitance_f": 4.001534540566744e-09,
+        "voltage_actuation_relative_l2": 1.0131504157058621e-15,
+        "internal_potential_relative_l2": 2.624051162303923e-16,
+        "electrode_charge_relative_error": 2.220446049250313e-16,
+        "open_circuit_displacement_relative_l2": 1.9438815974824046e-14,
+        "open_circuit_voltage_relative_error": 1.9761969838327786e-14,
+        "open_circuit_voltage_v": 0.026213175464868912,
+        "short_circuit_voltage_v": 0.0,
+        "open_minus_short_min_eigenvalue": -1.3229659886667078e-06
+      },
+      "circuits": [
+        {
+          "mode": "isolated",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 0.00028041116141352875,
+              "maximum_step_energy_balance_relative_error": 2.0194839173657907e-16,
+              "total_energy_balance_relative_error": 6.058451752097372e-16,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.999999999999992e-13,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 5.551115123125783e-16
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 7.018038258009554e-05,
+              "maximum_step_energy_balance_relative_error": 6.058451752097372e-16,
+              "total_energy_balance_relative_error": 2.5243548967072384e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 1.000000000000025e-12,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 1.3100631690576847e-14
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.0,
+              "current_a": 0.0,
+              "final_relative_l2": 1.754995290657606e-05,
+              "maximum_step_energy_balance_relative_error": 6.058451752097372e-16,
+              "total_energy_balance_relative_error": 3.1302000719169755e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 1.000000000000031e-12,
+              "dissipated_energy_j": 0.0,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": 1.5765166949677223e-14
+            }
+          ],
+          "error_ratios": [
+            3.9955775546464256,
+            3.9988929288692616
+          ],
+          "passed": true
+        },
+        {
+          "mode": "resistive",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.0,
+              "final_relative_l2": 0.0008416305956658093,
+              "maximum_step_energy_balance_relative_error": 4.1651855795669433e-16,
+              "total_energy_balance_relative_error": 1.2116903504194743e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.81436187415308e-14,
+              "dissipated_energy_j": 9.018563812584702e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.0,
+              "final_relative_l2": 0.00021062785637572732,
+              "maximum_step_energy_balance_relative_error": 5.3011452830852e-16,
+              "total_energy_balance_relative_error": 8.58280664880461e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.8169018222888e-14,
+              "dissipated_energy_j": 9.018309817771203e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.0,
+              "final_relative_l2": 5.2670749476977986e-05,
+              "maximum_step_energy_balance_relative_error": 1.830157300112748e-16,
+              "total_energy_balance_relative_error": 2.322406504970659e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 9.817536978701051e-14,
+              "dissipated_energy_j": 9.018246302129916e-13,
+              "supplied_energy_j": 0.0,
+              "isolated_charge_relative_range": null
+            }
+          ],
+          "error_ratios": [
+            3.995818075290437,
+            3.9989530900408257
+          ],
+          "passed": true
+        },
+        {
+          "mode": "current-driven",
+          "levels": [
+            {
+              "steps": 32,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.00010109704779629086,
+              "final_relative_l2": 0.0005056295904116493,
+              "maximum_step_energy_balance_relative_error": 5.080264229623317e-16,
+              "total_energy_balance_relative_error": 3.029225876048686e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.684699793348066e-13,
+              "dissipated_energy_j": 1.2691218936839496e-12,
+              "supplied_energy_j": 5.375918730187534e-13,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 64,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.00010109704779629086,
+              "final_relative_l2": 0.00012654363930204876,
+              "maximum_step_energy_balance_relative_error": 5.427363027920562e-16,
+              "total_energy_balance_relative_error": 1.1410084133116718e-14,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.6850297846175063e-13,
+              "dissipated_energy_j": 1.2690680791172964e-12,
+              "supplied_energy_j": 5.375710575790359e-13,
+              "isolated_charge_relative_range": null
+            },
+            {
+              "steps": 128,
+              "duration_s": 3.539564253951236e-07,
+              "conductance_s": 0.015073548619625737,
+              "current_a": 0.00010109704779629086,
+              "final_relative_l2": 3.164443864149421e-05,
+              "maximum_step_energy_balance_relative_error": 3.526208246337924e-16,
+              "total_energy_balance_relative_error": 9.390600215750926e-15,
+              "initial_energy_j": 9.999999999999998e-13,
+              "final_energy_j": 2.685112296605243e-13,
+              "dissipated_energy_j": 1.2690546241109167e-12,
+              "supplied_energy_j": 5.375658537714319e-13,
+              "isolated_charge_relative_range": null
+            }
+          ],
+          "error_ratios": [
+            3.9956934477343036,
+            3.998921919130417
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "independent_archive_audit": [
+    {
+      "name": "rectangular",
+      "raw_operator_relative_l2": {
+        "stiffness": 2.0310748426519214e-14,
+        "mass": 2.44635741186057e-14,
+        "coupling": 2.0163582995310084e-14,
+        "dielectric": 2.0170392659869727e-14
+      },
+      "circuit_recomputation": [
+        {
+          "mode": "isolated",
+          "endpoint_errors": [
+            0.0002796356138558679,
+            6.998591530194257e-05,
+            1.7501299716340282e-05
+          ],
+          "error_ratios": [
+            3.995598437906065,
+            3.9988981639231884
+          ]
+        },
+        {
+          "mode": "resistive",
+          "endpoint_errors": [
+            0.0008389346534239888,
+            0.00020995201131581028,
+            5.2501671699112426e-05
+          ],
+          "error_ratios": [
+            3.9958400406179555,
+            3.9989585954338223
+          ]
+        },
+        {
+          "mode": "current-driven",
+          "endpoint_errors": [
+            0.0005040696563079902,
+            0.0001261525461145712,
+            3.154659581424661e-05
+          ],
+          "error_ratios": [
+            3.995715281483073,
+            3.998927391639513
+          ]
+        }
+      ]
+    },
+    {
+      "name": "affine-skewed",
+      "raw_operator_relative_l2": {
+        "stiffness": 1.9380997782901805e-14,
+        "mass": 2.507504800204049e-14,
+        "coupling": 1.942352773282367e-14,
+        "dielectric": 1.943965382658279e-14
+      },
+      "circuit_recomputation": [
+        {
+          "mode": "isolated",
+          "endpoint_errors": [
+            0.00028041116141352875,
+            7.018038258009554e-05,
+            1.754995290657605e-05
+          ],
+          "error_ratios": [
+            3.9955775546464256,
+            3.998892928869263
+          ]
+        },
+        {
+          "mode": "resistive",
+          "endpoint_errors": [
+            0.0008416305956658093,
+            0.00021062785637572732,
+            5.267074947697802e-05
+          ],
+          "error_ratios": [
+            3.995818075290437,
+            3.998953090040823
+          ]
+        },
+        {
+          "mode": "current-driven",
+          "endpoint_errors": [
+            0.0005056295904116493,
+            0.00012654363930204884,
+            3.164443864149426e-05
+          ],
+          "error_ratios": [
+            3.995693447734301,
+            3.9989219191304137
+          ]
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "count": 3,
+    "monitor": {
+      "path": "outputs/piezoelectric-pure-tests-20261109/monitor-result.json",
+      "sha256": "9f0443d542cdffde77e76cbb74b2f4b277f825727ad7d5bb9cc65e5d89038245",
+      "bytes": 2975
+    },
+    "log": {
+      "path": "outputs/piezoelectric-pure-tests-20261109/tests.log",
+      "sha256": "4ca36d717a568cfc02e692bf7529f6dfb1b90056b3c4567471a058f5a02a6f49",
+      "bytes": 708
+    }
+  },
+  "retained_failed_attempts": [
+    {
+      "monitor": {
+        "path": "outputs/piezoelectric-native-reference-20261109/monitor-result.json",
+        "sha256": "145d3fe0a646c4b68afe89419e4ff3511fb5413e492cc5c9c9b663a6831affd3",
+        "bytes": 4026
+      },
+      "log": {
+        "path": "outputs/piezoelectric-native-reference-20261109/worker.log",
+        "sha256": "b7c372ac0cd4bf984435695a2284518b28ce3dfbc82347190394a36b7b74e86e",
+        "bytes": 1620
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\bobty\\\\PycharmProjects\\\\HelloWorld\\\\TRAXIS\\\\outputs\\\\piezoelectric-native-reference-20261109\\\\native\\\\reference-report.json'"
+    },
+    {
+      "monitor": {
+        "path": "outputs/piezoelectric-native-corrected-20261109/monitor-result.json",
+        "sha256": "171114d1e2f2a589c72f14dbc2f1eaa859cb1d8400f4145a98edc7817da6e7b9",
+        "bytes": 4558
+      },
+      "log": {
+        "path": "outputs/piezoelectric-native-corrected-20261109/worker.log",
+        "sha256": "05e5e0744170296d8afc2c55fb6f8a8364ebe4c84b63cfc1932243fcce07a051",
+        "bytes": 1620
+      },
+      "error": "RuntimeError: coupled reference worker exited 1; see worker.log"
+    }
+  ],
+  "limits": [
+    "Small 3D constitutive/electrode/circuit reference; no bonded plate, PZT product, wave convergence or physical acceptance.",
+    "Full modal basis on each small mesh, no modal truncation.",
+    "Circuit verification intervals are about 0.35 microseconds, chosen from maximum discrete frequency, not a full plate/PZT wave window.",
+    "Last complete integrated regression remains 268 tests; these three are a separate focused group."
+  ],
+  "fingerprint": "a73515fffd022fc786ea7880242b8966813d40eb829a2dd9df5cddbd98be5605"
+}

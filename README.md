@@ -19,11 +19,18 @@ limitations, and the acceptance gates before generating training data.
 The local solvers use inspectable 3D linear-elastic tetrahedral FEM for
 numerical verification and bounded mechanical pilots. The
 [enriched GPU candidate](docs/enriched-gpu-waveforms.md) completes a full
-500 mm plate / 500-microsecond mechanical window, with full-size mesh/time
-and physical acceptance still open. The local implementation is not a
+500 mm plate / 500-microsecond mechanical window and passes three-level
+[temporal refinement](docs/enriched-time-refinement.md). Full-size spatial
+and physical acceptance remain open. The local implementation is not a
 replacement for calibrated PZT electromechanics or a validated commercial
 solver. Small smoke geometries are deliberately different from the full
 500 x 500 x 3 mm research plate.
+
+A separate [coupled piezoelectric reference](docs/piezoelectric-reference.md)
+checks independent 3D operators, electrode charge, open/short-circuit response
+and passive/driven circuit energy. Its material and small block geometry are
+synthetic verification fixtures; bonded/calibrated plate-PZT modeling remains
+required before accepting voltage training data.
 
 ## Setup
 

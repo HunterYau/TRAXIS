@@ -8,7 +8,7 @@ plate, defect and transducer configuration.
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
 | Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small P3 intact/recess controls; full-size enriched 500-microsecond window, second-order temporal convergence and CPU state checks | Full-size space/thickness refinement, representative defect/frequency variation and their time checks, continuum and physical agreement |
-| PZT transmission and voltage reception | Mechanical circular traction/displacement interfaces, including P1-P4 represented-field and native P2 checks | Bonded PZT/adhesive domains or a calibrated equivalent, drive and receiver electronics, measured material/input values |
+| PZT transmission and voltage reception | Mechanical circular interfaces; small synthetic coupled 3D/electrode/circuit reference with native assembly and independent exponential checks | Bonded PZT/adhesive domains or a calibrated equivalent, identified drive/receiver electronics, measured material/input values and coupled convergence |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |
 | Direct waveform, DAS-assisted and DAS-only models | Implemented architectures/baseline; single-update model checks and matched-study pilot evidence | Meaningful validation on accepted data; debug results establish execution rather than model superiority |
@@ -20,6 +20,13 @@ plate, defect and transducer configuration.
 | Physical adaptation and final holdouts | Import/frozen-evaluation interfaces and documented plate separation | Actual intact/control measurements, limited calibration and untouched physical holdout evaluation |
 
 ## Interpretation of numerical evidence
+
+The small coupled piezoelectric reference verifies constitutive signs,
+electrode condensation and circuit energy on rectangular/skewed block
+fixtures. All modal states are retained and independently audited. Its
+synthetic material is not a hardware model, and its short circuit-check
+interval is not a full plate wave window. See piezoelectric-reference.md
+and evidence/piezoelectric-reference-debug.json. Data acceptance remains open.
 
 The primary materials list proposes approximately 7 mm PZT discs, while the
 current full-size mechanical control uses 6 mm disks. Its twelve-sensor ring
