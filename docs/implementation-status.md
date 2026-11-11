@@ -1199,3 +1199,29 @@ mapped capacity, spatial/frequency/complete-window convergence, identified
 PZT/contact traction and physical validation remain open. No model training
 or accepted bank generation ran.
 
+## Full-size compact recess capacity
+
+The compact planar/extruded builder preserves the reference geometry and
+topology with a different global numbering and int32 connectivity. Small
+degree-one through degree-five permutation checks and native Q3 all-column,
+mass and spectrum checks pass. CPU mapped action can declare a smaller batch
+budget while existing references retain the default 32-vector limit.
+
+Full 500 by 500 by 3.175 mm Q4 recess/intact cases build at 4,664,847 and
+5,543,451 displacement coefficients. CPU/GPU field discrepancies are below
+1.20e-15; analytic mass/centroid and physical disk-port checks pass. A separate
+whole-cell polynomial audit gives positive floating-point Jacobian bounds
+for all 46,592 cells. The final focused suite passes 34 tests without skips
+in 26.911 seconds. Retained failures cover a test-helper typo and Windows
+Path handling in the first capacity preflight; neither changes tolerances.
+
+Measured peak process-tree RSS is 1,254.00 MiB, system RAM 59.4%, minimum
+available RAM 6,596.85 MiB and GPU observations 1,534 MiB / 52 C. CPU
+temperature is unavailable. The 0.234375–10.800764 mm edge-size range creates
+a restrictive stability bound while exterior wave resolution is unverified.
+A 500 us operator-only extrapolation is 29.33/35.78 minutes, excluding all
+integration/sampling/cooling overhead. No propagation ran in these capacity
+jobs. Rebalancing the mesh and measuring full-size wave convergence remain
+the next numerical work. See full-size-recess-capacity.md and its compact
+evidence receipt. Training and research-bank readiness remain false.
+

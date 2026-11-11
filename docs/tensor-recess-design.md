@@ -5,11 +5,13 @@ The frozen intact tensor study has completed with its original sources.
 Explicit conforming material geometry now passes independent native checks;
 see conforming-recess-geometry.md and recess-shape-refinement.md. Mapped
 elastic stiffness, positive mass and conservative stability bounds now pass
-small independent native checks; see mapped-recess-operators.md. GPU
-propagation remains to be implemented. The existing CAD tetrahedral recess
-references remain separate evidence.
+small independent native checks; see mapped-recess-operators.md. Mapped GPU
+operators, physical disk ports and complete small pulse controls now pass
+checks; see mapped-recess-gpu.md and mapped-surface-ports.md. Full-size compact
+capacity is measured in full-size-recess-capacity.md. The existing CAD
+tetrahedral references remain separate evidence.
 
-The target remains the plan's 500-by-500-by-3 mm plate with flat-bottom
+The current target is the user's revised 500-by-500-by-3.175 mm plate with flat-bottom
 circular backside recesses, diameters 20/30/40 mm and depths
 0.75/1.50/2.00 mm. The upper surface stays flat. A depth map label does not
 define the three-dimensional elastic domain by itself.
@@ -79,12 +81,11 @@ positive mass and an independently computed spectrum/stability bound. Keep
 exact-integration and GLL-integration comparisons explicitly distinguished.
 
 The mechanical ports remain physical-area integrals with analytic disk-area
-normalization, signed weights and work-conjugate probes. The current disk
-routine only supports axis-aligned rectangular top traces. It must not be
-silently applied to a curved/nonrectangular top element. Either retain ports
-within verified rectangular blocks in the first declared fixture, or add a
-separately checked physical locator/inverse-map integration path. Native
-shape integration and represented physical moments must verify that path.
+normalization, signed weights and work-conjugate probes. A separately checked
+mapped routine now integrates circular disks on the ruled curved top faces.
+Native shapes and independent Gaussian quadrature verify complete covectors;
+represented physical moments and actual per-state mounting geometry are
+checked. This does not identify the real clamp/PZT transfer function.
 
 ## Acceptance sequence
 
@@ -94,9 +95,10 @@ full-size capacity and complete windows. Cover the planned defect dimensions
 and locally thin regions without tuning criteria to the observed outcome.
 Preserve raw failures and unchanged physical source/receiver footprints.
 
-Even a passing mechanical recess study does not identify a bonded PZT,
-adhesive or electronics response. The synthetic electrode/circuit reference,
-actual part/layout decisions and physical calibration remain necessary.
+Even a passing mechanical recess study does not identify removable-clamp
+preload/contact, PZT traction or electronics response. The synthetic
+electrode/circuit reference, actual part/layout decisions and physical
+calibration remain necessary.
 Only accepted bank generation may feed the later matched reconstruction,
 sensing-policy, resolution and uncertainty experiments. No training or
 physical validation is implied by this design note.

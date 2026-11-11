@@ -1,0 +1,521 @@
+{
+  "kind": "full_size_compact_recess_capacity_debug",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "full_windows_completed": 0,
+  "source_identity": {
+    "source_sha256": {
+      "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+      "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+      "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+      "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+      "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+      "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+      "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+      "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+      "compact_recess.py": "135bb6ffaae1a6a93cb473290502782c388ea4f331f8eab068a79fa73236e109",
+      "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+      "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+      "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+      "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+      "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+      "elmer_directional.py": "25388fc8ab16d74d5bb482d8274cdc76db4dfb29db29a01dee5a24e4bc16a649",
+      "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+      "elmer_plate_refinement.py": "77abbecad200d363eab4d759fab129ca066a1c59b8053ec708a5cf195ba8a90e",
+      "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+      "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+      "elmer_waveforms.py": "18c4f6a71024fcede3eae0c22295f41c644db67df88e9a88d13618fc47dd4bbb",
+      "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+      "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+      "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+      "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+      "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+      "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+      "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+      "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+      "forward.py": "fb0ad4747744f387af7e10b25400cb402e2985155921c9931337498d6afa22a2",
+      "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+      "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+      "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+      "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+      "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+      "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+      "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+      "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+      "gpu_mapped_tensor.py": "9efe32c9b69317bb019d9514a00a9475d19d39cf62a7915e5989b445c03ec861",
+      "gpu_tensor.py": "87234c72f34ba4e65e30a4c50a92ef1e6fbbce5324204efac9d5bef699ef12c7",
+      "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+      "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+      "highorder_cad_refinement.py": "726ea380bc56ab4f8b8f21fe40c72abd29a1d4566cb4911b705b069b3853beba",
+      "highorder_directional.py": "1361d5c9f15752a6f4250477b6a67a8444274a9e2d08d87548acfaa3d33eabdc",
+      "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+      "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+      "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+      "highorder_waveforms.py": "b359377ce7b9ae727ad8bc44c31aad1dc928899922ca99facdca054567afea80",
+      "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+      "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+      "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+      "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+      "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+      "lamb_profiles.py": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+      "mapped_patches.py": "0a23d214cd927a888483c188716801024d24a47394233dcada00972a7c79ad91",
+      "mapped_tensor.py": "80d56ac21cfef788158255b525df6e2689b8a801339f627293bcf8fc00db92c4",
+      "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+      "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+      "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+      "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+      "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+      "mounting.py": "178744ebe4035c10cb6d37c975586b4f01cf4db4cb838f8b4585a3fa4f4c7e16",
+      "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+      "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+      "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+      "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+      "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+      "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+      "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+      "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+      "recess_hex.py": "de20a3763cbbec9c22cfc1aabfd3c5afc41af45da14054a42ad28fdbd7c6f9bf",
+      "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+      "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+      "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+      "scenarios.py": "2b0bad291ed8b10aa0f739fa7ba26c0957491efb8fe53a36eaf9feaafc192dad",
+      "solver_requests.py": "5b1f15bad820e541b1e2fe73e98a99a03d594fa1f6fdc1ba2a6f8cfa3a6b9226",
+      "storage.py": "95bbae9be9def8fc4687866bc28bae23b2fa57ae43d05e8e201485f3eb2b5239",
+      "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+      "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+      "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+      "tensor_hex.py": "f5965194ba74adfcbcf71c52ace587d4729f6caae5e0ad2ee19f59505a97e070",
+      "tensor_patches.py": "8950e3d0e31537e8e8290271771ad20e365472e0f8ce37f1d8d77aa4d6f32f0e",
+      "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+      "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+      "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+      "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+      "waveform_checks.py": "d55ab6848dd05a0e66d5c9886f95032ea2fc4e90a1d9262d25a31bb59cad82fe",
+      "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+      "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+      "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+    },
+    "driver_sha256": {
+      "tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+      "tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc",
+      "verify_tensor_window.py": "90028ae7aa69230de0b6dc77388d758ea5b309be80e4a3a72e93f069834fa7cc",
+      "pace_gpu_worker.py": "f589a66d63b03de6e616ba6879b4d511d9eebd709feddb22edd23700e4347728"
+    },
+    "analysis_sources": {
+      "examples/recess_capacity.py": "c5e40f3ff1d767558347f13736d770ee1422ede030480daeadff0f68732a812d",
+      "examples/recess_geometry_reference.py": "7b52880e737a0ccff336b54bd180c5b237cde542bfd664866bf073ed61995642"
+    },
+    "runtime": {
+      "ngsolve": {
+        "version": "6.2.2606",
+        "kernel_sha256": {
+          "netgen/lib/__init__.py": "0a1547a8105e31f8595152ed622c2794afbc8b8a314e3cb5df987ce31b84e62c",
+          "netgen/libngsolve.dll": "c4b350039aeec80ac80745d7ec548c024be07c068d5c0e38aa9ec4215bd08f98",
+          "ngsolve.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+          "ngsolve/__init__.py": "ca342072acbf11b897a7f2d99075ded74d7628d3bc1d866fdfe424c4acd911ed",
+          "ngsolve/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+          "ngsolve/demos/TensorProduct/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/howto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/intro/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/demos/mpi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ngsolve/ngslib.pyd": "77ea26435ff29f542cc66d9091865f39b7625ae649d3671b9fa5bbf0b029c192",
+          "ngsolve/solvers/__init__.py": "18729a9bb9aa1632c32269c87334624caed725c0243a907826ab2d7de0285e11",
+          "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+        }
+      },
+      "netgen-mesher": {
+        "version": "6.2.2606",
+        "kernel_sha256": {
+          "netgen/__init__.py": "f32c8e0ff7007d327291c31ddc882fd6625146f9474f8080da6d5d79224da163",
+          "netgen/config/__init__.py": "22318a5811ef471e7bd99ea6fb9cf4abcdb1b90696941001cb5c21c32d94c5a9",
+          "netgen/libnggui.dll": "04b30e762448613bb3aff12a6a4e553e682bf00b560929b192cb59e59f08b889",
+          "netgen/libngguipy.pyd": "5705d5d5fa0b0c8375c90ec9b7a8918230b65cb135c4a231a00a00f2b7a88ed0",
+          "netgen/libngpy.pyd": "e860c2b46b24ab07edd5d5e3c151bb8dfcdfa09a37cb4718ac386746d0e9c2b9",
+          "netgen/ngcore.dll": "9a9a879bd064d12a4b895df0eb064bd196293e618d17a981a651238c1a04e2d8",
+          "netgen/nglib.dll": "478fcc900fbd421b32952dd1a14534140543cf2bfc3de35b8eb843da0ab0912e",
+          "netgen/togl.dll": "92b47459ec5133955105fe27989af815a7e01feb1897dd0ad7ea73ca4b7575e2",
+          "netgen_mesher.libs/msvcp140.dll": "def46aa6a8f72f27bafac0c43334419486a4d1dcdb6c479a8ef7034b3e1fa4cb",
+          "pyngcore/__init__.py": "95b74a56beb4f2e7db3cf43a87e014ae72e1b79a0f1552252191d4f73f4cb674",
+          "pyngcore/pyngcore.cp312-win_amd64.pyd": "aa7fa2e0016c051273961628e6b86f8cd31a6bbbdb761f3402f0adc50887f7bb",
+          "share/__init__.py": "6912bcf88b7a0910d8de3b4327eb422b8a6dfeeb7fc332c2e0fa2b103bb7d5d6"
+        }
+      },
+      "netgen-occt": {
+        "version": "7.8.1",
+        "kernel_sha256": {
+          "../../bin/TKBO.dll": "d3b2713325bab8827d8cd8b941deca860c9f5b00ebba9fff0cdf1253fe025dac",
+          "../../bin/TKBRep.dll": "4eeb8ac5448f05964f471149968ac085be93b9d7f031f0cd8848405bc6268d05",
+          "../../bin/TKBin.dll": "a6199a9317db26dff63780b91855bb5b2fa607bcff6db994c9361aad35eacd2d",
+          "../../bin/TKBinL.dll": "45f30125d9d68de1ce3bf99c1c129203f0ee174e563a8c0514fd9fcbc655c190",
+          "../../bin/TKBinTObj.dll": "ee10851453ad9d503a5a8058bd71fb6476126a4babfcca881601ccf829697d75",
+          "../../bin/TKBinXCAF.dll": "6a00061fce1644b26dbec709a711b4243534f578bf85d12a4e8a3c8c29d59835",
+          "../../bin/TKBool.dll": "414145c8151059ffaf3e889fec5c71b79ab4cabbd68d8e9c7a5f36fdc363c8e1",
+          "../../bin/TKCAF.dll": "4c165333b0f95c4f4d3cdc5693f6ccfbde16057467ace5d911c495a866fd4727",
+          "../../bin/TKCDF.dll": "c58882f366c25b5294c0bbdb56dad564a9974bc483bbf4f1a4d8f6104cdd8bb0",
+          "../../bin/TKDE.dll": "7ffa031b9c98e7cdc364219bea7db1a8ae506b6cb60324df8afcdb0f8339be00",
+          "../../bin/TKDECascade.dll": "7c72ab9397a5c5c89b137eac10b735e69f18e698152df8e08cdf3d363d980838",
+          "../../bin/TKDEGLTF.dll": "1a77c6f8d0bd3386c7a7ca21097f310792b3172e25000d4ee3748d274eb43706",
+          "../../bin/TKDEIGES.dll": "814ef5299bdbc1112f31f67b61ba41d455b75fbe7c1655231d5e8fff4a12a2f2",
+          "../../bin/TKDEOBJ.dll": "d87b53072f0346812d833c8c07ec2eec0b8cef9609795008e57c7ab670f8df36",
+          "../../bin/TKDEPLY.dll": "8aea7904aa1fd59b3fe8fe0d550a35e51f90da0789fe689895ed6aeedef65f19",
+          "../../bin/TKDESTEP.dll": "e1cc9208425a6fc30e6ab244a64e1a3b79721e6f49e8349e536bedab2115ced8",
+          "../../bin/TKDESTL.dll": "a1c88b435c96d15ef57ded825afdbcbd5692523d76375464e707cf6701c34007",
+          "../../bin/TKDEVRML.dll": "c84baf98d0219805057915ef570e33d436b5997a9f765258f04e4d9bb900d712",
+          "../../bin/TKFeat.dll": "80083acc225ee0a793e758740302fca0de4dfcf07f0ff1b1f57c5e8b48a12183",
+          "../../bin/TKFillet.dll": "af109276a343f33c4551e0133ea7a99b68aa4b968bf257de9a60907405f5eece",
+          "../../bin/TKG2d.dll": "75cb2397903008448394aac721cff43dad9d67dc0009c6a72a8b434600795331",
+          "../../bin/TKG3d.dll": "95209d4993bd5727b174e423dcc037ea517022c54a6279b2ced91925552d6330",
+          "../../bin/TKGeomAlgo.dll": "e9dd26ec6510708fde73488745b3349ff6cc0c4f68f5e7f8cf8b7efd3e680db0",
+          "../../bin/TKGeomBase.dll": "8d005218401bc716654ef24cc8e48044c751ed893a45119fe838553d771c2389",
+          "../../bin/TKHLR.dll": "a180c642e8e0274f4501090afd70ad5db05a968de7c9a3a2325ad5c2b2e83fa1",
+          "../../bin/TKLCAF.dll": "f5e9395b130f4e3e8c868111729974f7dcc99da2486fff6c6fa05c4a67cbfde8",
+          "../../bin/TKMath.dll": "8af896aa885d801adb5bf1755057bcb541696c7c2b50052d5b7f4c5d5e2ed7be",
+          "../../bin/TKMesh.dll": "e08a33f2d41ea94940b5cae487c5550639960ec297c1bde6a6f058d5ff53ee7e",
+          "../../bin/TKOffset.dll": "8a3e18af1f11dde245d45dfb12828a92e4fecc19b47d217483edfb6d40526b57",
+          "../../bin/TKPrim.dll": "e8fbb1afbb9ba17797002ebd12b237f35f68202a805764e67b5edae2b6bf123b",
+          "../../bin/TKRWMesh.dll": "4efdfeee1e2adbb00486b43b5419abc7ec878ee9cedf63247d18ef3d15cce712",
+          "../../bin/TKService.dll": "adb8d475290c870a774ccad795fc9198540ee63cee06db6fb1bddc912026155b",
+          "../../bin/TKShHealing.dll": "f482f534c7ed5fc5454a7ce45486eba9d5c3e727bb4ee1d76420c51c2b2975a5",
+          "../../bin/TKStd.dll": "0dacbdd8d058f2bb933b069fab7b582b0aa2111da8d80fd1b887c8162496ab6c",
+          "../../bin/TKStdL.dll": "27fc57c240346b7d198ce1cabf1f11b00786c0dff338cd34385831c4bb0b03a2",
+          "../../bin/TKTObj.dll": "96fcb7c7c471d2d9efa3d5f683a7bea61f49a71d2f85496ac2be1d1e6da63489",
+          "../../bin/TKTopAlgo.dll": "b3dae3787871b46f01e50f4da4f3f8a7fb1892f11918dfdd47950c1c50d8d86c",
+          "../../bin/TKV3d.dll": "ded61f09e1acfae836eef4058c674f720f342176d7fe350fd25418876c18c419",
+          "../../bin/TKVCAF.dll": "a4253ef4a77dcd466770376147365c9890ddebf1e2e48a229e455e642881fcb5",
+          "../../bin/TKXCAF.dll": "b1a070316c131a808dbd5301f3c97507f9c81d639673a5d4978e038708e01ef0",
+          "../../bin/TKXMesh.dll": "0c1f3eec04f770a77c620a9769e8271a7ea07e6ab2cc9318f427e8a373a06e15",
+          "../../bin/TKXSBase.dll": "942f807c6b8b11872ffe05443af7bfbab96d93bcf6dc0c132a6923e0d55fc1e0",
+          "../../bin/TKXml.dll": "1f6035afe615df8de3355cbab79c5371ff1434f04812907611282798e68b8ead",
+          "../../bin/TKXmlL.dll": "97be5a6a2b41d6c2ecace9b44a27d3c574f00c45322dffa800cce5fb33468b93",
+          "../../bin/TKXmlTObj.dll": "b97b880b11c8849014a223d44dc9cfb08d35e73693b58c1226c8d7c2444176e2",
+          "../../bin/TKXmlXCAF.dll": "97e04995104935548002b9f884caa314dbf4e1c6da0b967d0c508d64653aee19",
+          "../../bin/TKernel.dll": "883e7284a53c0da7c1e2dcf37f1a6596288c3e31ec82410d679d481e11c4a763"
+        }
+      },
+      "ngsolve-openblas": {
+        "version": "0.3.33",
+        "kernel_sha256": {
+          "ngsolve_openblas/__init__.py": "4cfbb75958c8765b5771d963b85e8ef2613eaa6d608fcc086d9bda1d2b0e734c",
+          "ngsolve_openblas/openblas.dll": "ea5706aaa7e88ea76f350faf4181c5e3393817a1ce1cd800501bf3ee21f205e8"
+        }
+      },
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    },
+    "gpu_packages": {
+      "cupy-cuda12x": {
+        "version": "14.2.0",
+        "native_sha256": {
+          "cupy/_core/_accelerator.cp312-win_amd64.pyd": "89ef434982740e7e407d987316a808f5d5b85ff63e74814d947c2e1b30c05e27",
+          "cupy/_core/_carray.cp312-win_amd64.pyd": "e71710c518a58748982868a9e2d5e90d01002e824b7cb8c2f6b4d773f9d9cb12",
+          "cupy/_core/_cub_reduction.cp312-win_amd64.pyd": "2743588de4dc604677789915cba7bd85e442736b1b07cc7dac7011cdd4f94aff",
+          "cupy/_core/_dtype.cp312-win_amd64.pyd": "df595b26ac3d6cfe342a24e46bcbab422ecc1889b9c578b7588332b2f3575262",
+          "cupy/_core/_fusion_kernel.cp312-win_amd64.pyd": "eb787cd1a4bfbaaad0a8b46ce4bd15893ae0e09cd441b97a6aad3ab0c8e34632",
+          "cupy/_core/_fusion_thread_local.cp312-win_amd64.pyd": "4c1793888567f46be959abf45263f220771a346785d663d55cf3451c75ff4b7f",
+          "cupy/_core/_fusion_trace.cp312-win_amd64.pyd": "a117d7129a5853ded87e4d6cc05e8a3d8d9e52aba92b3ead55ec43cc9647ac92",
+          "cupy/_core/_fusion_variable.cp312-win_amd64.pyd": "612f0560f404f0349f0ee9ece12f970d8efda4e1ddc300e7215dcc2b51c53e60",
+          "cupy/_core/_kernel.cp312-win_amd64.pyd": "259c33b2bc3f2d62080b3604e343e4e6475ed6702bf6848920eedeffe926226b",
+          "cupy/_core/_memory_range.cp312-win_amd64.pyd": "21319ea1436f6293a7a163ee2806d945360c1033f30d7e74d3713ff8cc0ed70e",
+          "cupy/_core/_optimize_config.cp312-win_amd64.pyd": "fbdce6143dfd2127c48f466b52da1eabeebfed3e50e52eb4709d800942e6b50c",
+          "cupy/_core/_reduction.cp312-win_amd64.pyd": "59a726e299e21b9daa208968d3d93ba82816d3d3f59ee584bf13d054715b5d50",
+          "cupy/_core/_routines_binary.cp312-win_amd64.pyd": "e7e2d22e2aa1f033e0057d6b6b1466e9fa3c510562606a6dc9d1eb509dc1e6ec",
+          "cupy/_core/_routines_indexing.cp312-win_amd64.pyd": "4f4ed4ce27e31e5654368fd36d60d5358b0aa67875c18867096b7ca2fc821173",
+          "cupy/_core/_routines_linalg.cp312-win_amd64.pyd": "01959fc82193894efc98471495101f3925e640627fb770db6045d9416094d467",
+          "cupy/_core/_routines_logic.cp312-win_amd64.pyd": "d2c0f31bcfba0f09f3464e57b02fc4ee4f58baa18677ae65d640b7e2518bc7ca",
+          "cupy/_core/_routines_manipulation.cp312-win_amd64.pyd": "541950032174098d21c239de907d24ef8c4d936941fa082c62f8cda2a1bb7149",
+          "cupy/_core/_routines_math.cp312-win_amd64.pyd": "f25b6c942295f469c558d91c30b8e193712ee48c165c69b193e1d27f63bf9f81",
+          "cupy/_core/_routines_sorting.cp312-win_amd64.pyd": "a220b2438526d2e45a30036d48878cd86df88efd986a2cbce49589d5a2d21943",
+          "cupy/_core/_routines_statistics.cp312-win_amd64.pyd": "e0a42f26b5368ecbcc9d31e3cca2ca8e56896e4678524c91cb24ae177c4659d7",
+          "cupy/_core/_scalar.cp312-win_amd64.pyd": "18c6d3166f487101e3a698252e6b2dad5c3a2257287555c921216e97fffa5243",
+          "cupy/_core/core.cp312-win_amd64.pyd": "d2d4f980dcf02e9f4cd8170e91d1c772eda88fbdb7ef1e15f0a43497df4b504d",
+          "cupy/_core/dlpack.cp312-win_amd64.pyd": "e8827226746c5d2a4381f4e25a13d49008dcd6e27aa3791296a2552c3a15901e",
+          "cupy/_core/flags.cp312-win_amd64.pyd": "8dfae30c146e8728752dd9faaed9dff7a8a279d3ab0d8a1ed6de9ea85836d6b1",
+          "cupy/_core/fusion.cp312-win_amd64.pyd": "8c44b5eb1aad73f3d3ece76fea2c61c8b2fe46a1e78d85078af677a13c47714f",
+          "cupy/_core/internal.cp312-win_amd64.pyd": "290fc2938f4c0c5c35a594ed58d6a50882dcf12ed88337eebe5586464d8ba039",
+          "cupy/_core/new_fusion.cp312-win_amd64.pyd": "ac7953390574c54ceb622799fe369de265076c5f8bc519909105d9d7430a985c",
+          "cupy/_core/numpy_allocator.cp312-win_amd64.pyd": "ce7e2ac04e972ebf41894da4c101d41b8c966b9853a2bc6e1b158ddb2c9fc1bf",
+          "cupy/_core/raw.cp312-win_amd64.pyd": "85b4e4d8196355e28f54498791f202a9fa9d35777b9d0454814a3056324f5942",
+          "cupy/_util.cp312-win_amd64.pyd": "6dd7dc7257a7b7bf11b0fe2a74138e7fba330ede6db2b66fda7cdf3cdf731333",
+          "cupy/cuda/common.cp312-win_amd64.pyd": "e72a4c6c41e8c9e06ed047c5886da9c2e0bac6f61370cc5b8b1a73534f7c6fca",
+          "cupy/cuda/cub.cp312-win_amd64.pyd": "085a541a9ab576885cb792be6f55cf009d4c8f9662131d2048d91011e73236fd",
+          "cupy/cuda/cufft.cp312-win_amd64.pyd": "be75370b1dcbaab2c727d73824824b59814b94c9561e3f4c277e541f3e5bd9b4",
+          "cupy/cuda/device.cp312-win_amd64.pyd": "1838c28108e51c1d3db19785326e9d3727b2f01cb0db1aaf29d7196c938cfd32",
+          "cupy/cuda/function.cp312-win_amd64.pyd": "f739b2dd58c57dac23e5b4131c0b0065410e2fe134dee6466954a70ef78a98a3",
+          "cupy/cuda/graph.cp312-win_amd64.pyd": "ca359d619e70ca1df22b5cbbc7d89f6020386cbe580c0693edb27b12bb0728ad",
+          "cupy/cuda/jitify.cp312-win_amd64.pyd": "9876e1f31e6926ae78a3719ee6c5ee901cf4e5114856087573b60b76ce00ebe1",
+          "cupy/cuda/memory.cp312-win_amd64.pyd": "5b4783d4e4194af6352a23986adb9b01e15e730b417ce635f16572eb37cb7988",
+          "cupy/cuda/memory_hook.cp312-win_amd64.pyd": "d8eec742c709ea242d56103f6c41eccde9d2991cc37dade793286bb215481716",
+          "cupy/cuda/pinned_memory.cp312-win_amd64.pyd": "96b7e80ceccf86f1a975d36be72bac027507bfaeba85f636ce5fe877b8bb6ec5",
+          "cupy/cuda/stream.cp312-win_amd64.pyd": "30d575e300c5277ce7379ac656ab1914fc6e6efb11987b833b791dc38b6622a2",
+          "cupy/cuda/texture.cp312-win_amd64.pyd": "e71596b40b0fdf63a53c35c1183b55c8967b92fba65f7b56fe712f03fb06eaac",
+          "cupy/cuda/thrust.cp312-win_amd64.pyd": "8c220cbb4eabbbc7a8ea47948083b08db38f0e45e0cc15e6d6b3625eb457c3e5",
+          "cupy/fft/_cache.cp312-win_amd64.pyd": "c893343ddb748c5cdac7a0c3dbe0faa72c4ec9ad780e9abf4e9a85ea342e8f6c",
+          "cupy/fft/_callback.cp312-win_amd64.pyd": "2a363d73ca4b2d375bf12e5771bde68e289ba894ee7aa1dc33a7fb3fdc6143c3",
+          "cupy/lib/_polynomial.cp312-win_amd64.pyd": "c48fb3aa2c3271f5cc04866095c190f65bfd00defe4ef565631c1f0fe951f6ee",
+          "cupy/random/_bit_generator.cp312-win_amd64.pyd": "d47a4370fb78bfaf55554738434de62ab1a024be562e8fe3e9e2c9fa9e866950",
+          "cupy/random/_generator_api.cp312-win_amd64.pyd": "ef842bd38b66ac69ed1cb844c7a4324079a5e0458a40fab818d97a6be75f5057",
+          "cupy_backends/cuda/_softlink.cp312-win_amd64.pyd": "acd21eb05e0b7cfb2e08a2cd7f3c2b4f0f5b44f22ef3cd1d9610731973583639",
+          "cupy_backends/cuda/api/_driver_enum.cp312-win_amd64.pyd": "5ee0762d2aa5bf6fc074f4df75c2985c3bc8682f00bc2905d287feee1b6e0f8d",
+          "cupy_backends/cuda/api/_runtime_enum.cp312-win_amd64.pyd": "f76025671806a52f297937c12a39301e46d7a0cac621bdb8a8b7b1e6dbfe371f",
+          "cupy_backends/cuda/api/driver.cp312-win_amd64.pyd": "00ad3755993289ee62b46fad56011f1c00eac013d9c6a1f289badcd36617fe99",
+          "cupy_backends/cuda/api/runtime.cp312-win_amd64.pyd": "f24952a5589d4d1276c6e5e208fedf3958a0134f618e640e84620dc101098af5",
+          "cupy_backends/cuda/libs/cublas.cp312-win_amd64.pyd": "f74b8606c6f0c5235f6a5b549dc66c5690254e5b0171bf67dbe4def6c3e39ad4",
+          "cupy_backends/cuda/libs/curand.cp312-win_amd64.pyd": "2c861bc746c2f370da43b3d48ee9ecd381deedc1c3c23d6907bfda668bd8db94",
+          "cupy_backends/cuda/libs/cusolver.cp312-win_amd64.pyd": "9b60719d00c3cef9542a4cd3426a7f1f612680408612f40b82c82d4ede54c868",
+          "cupy_backends/cuda/libs/cusparse.cp312-win_amd64.pyd": "53601c6c1f1d979832e2b87396464cd52d2dd9b9c8266dc8d4cefb832431a869",
+          "cupy_backends/cuda/libs/cutensor.cp312-win_amd64.pyd": "29686ba114c9855bae273576bcc610d1a317f186945b2acd0a7d7f1630eeead5",
+          "cupy_backends/cuda/libs/nvrtc.cp312-win_amd64.pyd": "fe1e8fae797408f48c2dae727bb6cfff592667c8b720af6a27eb60d99ce92e6c",
+          "cupy_backends/cuda/libs/nvtx.cp312-win_amd64.pyd": "d7c924be09a464fa4e567ebbb6fb82b6e2a577aa2bd5b77c10f97c549873bee3",
+          "cupy_backends/cuda/stream.cp312-win_amd64.pyd": "2686833c49b77eadc5618aea82ca5d0779d110c756cb327b646b7cf8d5fa2e2c",
+          "cupyx/_cusolver.cp312-win_amd64.pyd": "5bb62a2ea8846f0c7d7abf071b94fb4a0b0d80c3b181f44d2b545a4cd370e154",
+          "cupyx/_cutensor.cp312-win_amd64.pyd": "9ac54273ad1be2c9aef2d91f2124d54087d03b20596489568f2362848410ed90",
+          "cupyx/scipy/ndimage/_bbox_slices.cp312-win_amd64.pyd": "fad1c1117ded79806f3e1f02385c65143cc7e84da8e45bce7509b9f3f4642dfc"
+        },
+        "record_sha256": "e310dbdb0116c3f3dffa359eb9f6b1e47abeaaad93a767ffcca42b52a89223cd"
+      },
+      "cuda-pathfinder": {
+        "version": "1.8.6",
+        "native_sha256": {},
+        "record_sha256": "5b4143c55493e3a12490c52c27679fd435964eed506315411de6abd683dd2634"
+      },
+      "nvidia-cuda-runtime-cu12": {
+        "version": "12.9.79",
+        "native_sha256": {
+          "nvidia/cuda_runtime/bin/cudart64_12.dll": "760c38928bbe5759f7b31ed6692599eb7ec83cedd5702e84c2b72028a89837e1"
+        },
+        "record_sha256": "55db0af9ac9a6a0bd7c77057e2fd7c0c5323107a440608d95f62d431d7f11c35"
+      },
+      "nvidia-cuda-nvrtc-cu12": {
+        "version": "12.9.86",
+        "native_sha256": {
+          "nvidia/cuda_nvrtc/bin/nvrtc-builtins64_129.dll": "c405226b0b394ed8bdc593bb1419b94a989f93248ed2873e8f2e0e27c1688ca1",
+          "nvidia/cuda_nvrtc/bin/nvrtc64_120_0.alt.dll": "ac56a4d3b5a99f294523abec28b8f648b96324a9277622a450ec20ddb9e2c47d",
+          "nvidia/cuda_nvrtc/bin/nvrtc64_120_0.dll": "0cc63349fedffeec1660b30955e8028b6e4e4c26cf1e41c56dc4569fd5eca82c"
+        },
+        "record_sha256": "9b367da151d80ba92cd570bacef50f7f6ab73db81a39905a64005a46546539bc"
+      },
+      "nvidia-cuda-cccl-cu12": {
+        "version": "12.9.27",
+        "native_sha256": {},
+        "record_sha256": "383b607d421897e710f54d6a63aeec7d2459bb48cdfb6b1edf90636b0dd421c7"
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": "Recess",
+      "directory": "compact-capacity-recess-q4-20261111-v2",
+      "elements": 20992,
+      "vector_dofs": 4664847,
+      "operator_relative_l2": 1.1953510412319741e-15,
+      "analytic_mass_relative_error": 4.218847493575595e-15,
+      "analytic_centroid_error": 3.556866087750871e-13,
+      "mass_kg": 2.140262223694425,
+      "lower_minimum_radius_m": 0.014999999997164937,
+      "ports": [
+        {
+          "port": "source",
+          "force_error": 4.440892098500626e-16,
+          "first_moment_error": 9.25185853854297e-15
+        },
+        {
+          "port": "receiver",
+          "force_error": 8.881784197001252e-16,
+          "first_moment_error": 1.4802973661668753e-13
+        }
+      ],
+      "stable_dt_ns": 1.461953186071967,
+      "gpu_event_seconds": [
+        0.00493887996673584,
+        0.004116479873657227,
+        0.0041101441383361815,
+        0.004102143764495849,
+        0.004584447860717773
+      ],
+      "gpu_median_ms": 4.116479873657227,
+      "shortest_corner_edge_mm": 0.23437499999995337,
+      "longest_corner_edge_mm": 10.800764325160628,
+      "source_seconds": 18.647804899999755,
+      "receiver_seconds": 18.608475999999428,
+      "worker_seconds": 97.00106020000021,
+      "forecast_steps": 427511,
+      "forecast_operator_only_minutes": 29.330673787784576,
+      "device_storage_screen_mib": 779.6485061645508,
+      "host_storage_screen_mib": 630.3044204711914,
+      "resources": {
+        "peak_rss_mib": 1170.1015625,
+        "peak_system_memory_percent": 58.8,
+        "minimum_available_mib": 6687.015625,
+        "peak_gpu_used_mib": 1474.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_verified": false
+      },
+      "plan_fingerprint": "b3b6a768f7a39339ae81e579be8295cb7d070651ca92d2e997a164490e3a6d08",
+      "report_sha256": "46c8c3c3ff6fec1d0ffa84b0063e5a7c9c1ab5072a707d532dc7a3785061fad7",
+      "proof_sha256": "377473d5688dd7e909049e2510c4e4069682afd9e1f79ad4eced34d536d09796",
+      "monitor_sha256": "db2dcf1e03594168c4baa923fa4ad45e3dc3c5d2f424d30ce042eafad52b68e5"
+    },
+    {
+      "case": "Intact",
+      "directory": "compact-capacity-intact-q4-20261111",
+      "elements": 25600,
+      "vector_dofs": 5543451,
+      "operator_relative_l2": 1.1966449250390517e-15,
+      "analytic_mass_relative_error": 4.440892098500626e-15,
+      "analytic_centroid_error": 2.3487063125528504e-13,
+      "mass_kg": 2.1431250000000093,
+      "lower_minimum_radius_m": 0.0,
+      "ports": [
+        {
+          "port": "source",
+          "force_error": 4.440892098500626e-16,
+          "first_moment_error": 9.25185853854297e-15
+        },
+        {
+          "port": "receiver",
+          "force_error": 8.881784197001252e-16,
+          "first_moment_error": 1.4802973661668753e-13
+        }
+      ],
+      "stable_dt_ns": 1.4605957567865124,
+      "gpu_event_seconds": [
+        0.005829823970794678,
+        0.005017600059509277,
+        0.00501635217666626,
+        0.005482495784759522,
+        0.005010240077972412
+      ],
+      "gpu_median_ms": 5.017600059509277,
+      "shortest_corner_edge_mm": 0.23437499999995337,
+      "longest_corner_edge_mm": 10.800764325160628,
+      "source_seconds": 18.461694100000386,
+      "receiver_seconds": 18.60081429999991,
+      "worker_seconds": 107.2667749000002,
+      "forecast_steps": 427908,
+      "forecast_operator_only_minutes": 35.78452010440826,
+      "device_storage_screen_mib": 933.0425491333008,
+      "host_storage_screen_mib": 731.8158721923828,
+      "resources": {
+        "peak_rss_mib": 1253.99609375,
+        "peak_system_memory_percent": 59.4,
+        "minimum_available_mib": 6596.8515625,
+        "peak_gpu_used_mib": 1534.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_verified": false
+      },
+      "plan_fingerprint": "07a6bd60c9411e31d9bbd21d4ff91bcee24d9627a44e3e68e27aaf4c44e8d3a3",
+      "report_sha256": "c7f04d914f4bb55e5a989b02abfbcae3530522879fd477af9829e498c8663cf1",
+      "proof_sha256": "6246bf04b725aaa625b891338c2ec69f998f89023807766cfa1c270cd689ecfb",
+      "monitor_sha256": "aa6ee59bfb51ab8584784196ffd3fd80093cc3bd771f2327e18d62dfff617e31"
+    }
+  ],
+  "tests": [
+    {
+      "directory": "compact-recess-tests-20261111",
+      "count": 17,
+      "test_seconds": 8.998,
+      "passed": false,
+      "resources": {
+        "peak_rss_mib": 335.6953125,
+        "peak_system_memory_percent": 53.5,
+        "minimum_available_mib": 7554.67578125,
+        "peak_gpu_used_mib": 1066.0,
+        "peak_gpu_temperature_c": 49.0,
+        "cpu_temperature_verified": false
+      },
+      "monitor_sha256": "567cb25a134d138c5687813b8403a3610dbf8af2983dffa1f93097c9c0210189",
+      "log_sha256": "c2569212d0614acf3abd54c63434ea47f44997407e3e0980a4398d49f1a58bcf"
+    },
+    {
+      "directory": "compact-recess-tests-20261111-v2",
+      "count": 17,
+      "test_seconds": 9.645,
+      "passed": true,
+      "resources": {
+        "peak_rss_mib": 335.4765625,
+        "peak_system_memory_percent": 53.5,
+        "minimum_available_mib": 7542.19140625,
+        "peak_gpu_used_mib": 1066.0,
+        "peak_gpu_temperature_c": 49.0,
+        "cpu_temperature_verified": false
+      },
+      "monitor_sha256": "9ef1999b1672e661869413ee4e03e25de5e6944d4c64954db13640ca5a5eeb60",
+      "log_sha256": "f8a3f572bf078ff772adf543f4d617fbf9efb00207251590e2d15dd672d1333f"
+    },
+    {
+      "directory": "compact-recess-integration-20261111",
+      "count": 34,
+      "test_seconds": 26.911,
+      "passed": true,
+      "resources": {
+        "peak_rss_mib": 502.16015625,
+        "peak_system_memory_percent": 54.1,
+        "minimum_available_mib": 7457.16796875,
+        "peak_gpu_used_mib": 1190.0,
+        "peak_gpu_temperature_c": 52.0,
+        "cpu_temperature_verified": false
+      },
+      "monitor_sha256": "e489e2f63d9dfa96d7f24e45f5f0eacc40548eb09f9f33e241578893fd60f489",
+      "log_sha256": "98b88aef5eae15ea77db7ddc7ac61265cd71d979df747467a819ca57760b5b36"
+    }
+  ],
+  "final_test_source_sha256": "e28f8440680926fedb103fb21d9c8d4871a9112fb838344839f6e61369bc74ae",
+  "simulation_resources": {
+    "peak_rss_mib": 1253.99609375,
+    "peak_system_memory_percent": 59.4,
+    "minimum_available_mib": 6596.8515625,
+    "peak_gpu_used_mib": 1534.0,
+    "peak_gpu_temperature_c": 52.0,
+    "cpu_temperature_verified": false
+  },
+  "audit_resources": {
+    "peak_rss_mib": 274.19140625,
+    "peak_system_memory_percent": 53.2,
+    "minimum_available_mib": 7590.05078125,
+    "peak_gpu_used_mib": 1067.0,
+    "peak_gpu_temperature_c": 49.0,
+    "cpu_temperature_verified": false
+  },
+  "failed_capacity_attempt": {
+    "directory": "compact-capacity-recess-q4-20261111",
+    "monitor_fingerprint": "669ccf7767c8d0d73e53242afe5ca9b111c803ed0c99f2106e594b3fe40f7b5f",
+    "reason": "Windows psutil.disk_usage rejected a WindowsPath before mesh allocation; corrected by passing str(output)."
+  },
+  "auditor_sha256": "7375843849c21c05b1864e18cc63a38e3991727e3240146449bca41c08c5627c",
+  "figures": {
+    "capacity-and-limits.png": "2934f44f624b5418ec2429db7eceb47a895abab8de7b09c3b9ef72bcd5d718f3",
+    "capacity-and-limits.pdf": "726b0cd3b93c8153a9e182777a84f34c83d08c4b6df8cd3e7ad92c7c93e0edca"
+  },
+  "scope": "Paired full-size compact Q4 geometry/operator/port capacity and runtime extrapolation; wave accuracy and contact/PZT/physical acceptance remain open.",
+  "retained_array_audit_fingerprint": "05e7176f7b3fb8a32b19a65d98509704fd5a58b6c8c940e6894b1c722f4f64c0",
+  "full_cell_geometry_audit": {
+    "cases": [
+      {
+        "case": "Recess",
+        "elements": 20992,
+        "minimum_jacobian_lower_bound_m3": 1.1501312255581117e-11,
+        "geometry_controls_sha256": "7536845faf73f95b876c58d30b3f746319d463cee77d1410e6badae055a6c525",
+        "geometry_connectivity_sha256": "bd2b03339532c29ab90777d1deacefdb36be96ef5667e26928dc70756429259e"
+      },
+      {
+        "case": "Intact",
+        "elements": 25600,
+        "minimum_jacobian_lower_bound_m3": 1.0299682616938178e-11,
+        "geometry_controls_sha256": "c1720c56ea5be88cdb2ba6bcdd9f9627971f23a412aa5f796c15069c42be07e3",
+        "geometry_connectivity_sha256": "3fbb3b6e9710d19d563c1b1787254f0a674af9994de5af6b23cdbfe720dd2eb2"
+      }
+    ],
+    "elapsed_seconds": 138.63047279999955,
+    "auditor_sha256": "c4196355ecfd0da7ae4c3d671b0de0afe595de14ab05189d987291dcf8c917d8",
+    "proof_sha256": "24653204d47b3f67813883c51199ef03ead691fcb43f26560c14e8a0eee1d0a9",
+    "fingerprint": "7ebd372dfcb61f79fa8ca1c900a6c73a37a26c7142a66fecabf2b5cb68305fa9",
+    "scope": "Floating-point Bernstein polynomial bounds on every represented geometric cell; not an interval-arithmetic proof or wave-accuracy result.",
+    "directory": "outputs\\compact-capacity-geometry-audit-20261111",
+    "report_sha256": "83e737cdb6d71aaea1dde512556ec58c8393b008fc5ac22dea2c70925656f81e"
+  },
+  "fingerprint": "e59d94a9ffd309f4406b02d672bdec78d6f52857e8da7792bcb0328f8f44b167"
+}

@@ -63,7 +63,10 @@ now passes fresh native comparisons at 3.175 mm, all small global columns and
 short modal time checks. [Curved-mesh surface ports](docs/mapped-surface-ports.md)
 now pass independent native disk-vector checks and complete small pulse tests
 with actual remounted footprints. Full-size wave resolution and calibrated
-clamp response remain work; these results do not accept research data.
+clamp response remain work. [Full-size compact capacity](docs/full-size-recess-capacity.md)
+now passes paired 4.66/5.54-million-coefficient operator checks and whole-cell
+geometry bounds, while exposing uneven cell sizes and substantial window
+costs. These results do not accept research data.
 
 ## Setup
 
