@@ -1,7 +1,7 @@
 # Implementation and evidence checklist
 
 The source of requirements is [the consolidated research plan](https://docs.google.com/document/d/1YdcENA3Y00U-8t2Yn2oDq9uq08JuIf8LWrp96weIiNI/edit),
-read 2026-11-03 and rechecked 2026-11-09. A local snapshot is in `docs/research-plan-source.txt`.
+read 2026-11-03 and rechecked 2026-11-11. A local snapshot is in `docs/research-plan-source.txt`.
 
 Status means implemented and verified only when evidence is named here.
 Full training and physical experiments are explicitly outside the short
@@ -1170,4 +1170,32 @@ See mapped-recess-gpu.md and evidence/mapped-recess-gpu-debug.json. Earlier
 3 mm references stay frozen. Full-size mapped capacity, physical/randomized
 surface ports, complete wave convergence and measured clamp/PZT agreement
 remain open. No model training or accepted waveform-bank generation ran.
+
+## Mapped circular ports and complete small pulses
+
+Curved flat-top surface integration now resolves each state's actual PZT
+centers and contact radii. Analytic integration in the ruled coordinate and
+adaptive disk-clipped integration in the other preserve signed work-conjugate
+load/probe vectors. State/geometry/allocation checks remain explicit; coupling
+gains stay separate from unit-force footprints.
+
+Six Q3/Q4/Q5 native intact/recess runs compare 24 disk covectors using
+independent native shapes and Gaussian integration. Maximum discrepancy is
+3.20e-14. Five Q4 pulse controls complete 31.5 us each, totaling 48,384 steps.
+Reciprocity error is 2.68e-15 and the halved-step trace change is 3.34e-6
+relative. A remounted intact source changes the waveform; this is sensitivity
+of the small mechanical control, not measured clamp variability.
+
+The final focused group passes 23 tests without skips in 18.853 seconds.
+An independent retained-array audit verifies vectors, pulse comparisons,
+energy and final CPU/GPU forces; the final PNG/PDF is visually checked.
+Native/pulse jobs peak at 546.55 MiB RSS, 54.0% system RAM and GPU observations
+1,076 MiB / 58 C. CPU temperature is unavailable. See mapped-surface-ports.md
+and evidence/mapped-surface-pulse-debug.json.
+
+The rechecked research-plan snapshot is unchanged; the user's later 3.175 mm
+stock and removable-clamp instructions define current hardware. Full-size
+mapped capacity, spatial/frequency/complete-window convergence, identified
+PZT/contact traction and physical validation remain open. No model training
+or accepted bank generation ran.
 

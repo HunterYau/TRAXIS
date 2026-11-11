@@ -60,8 +60,10 @@ The [mapped elastic operator](docs/mapped-recess-operators.md), positive mass
 and conservative stability bound pass paired Q3/Q4/Q5 native checks and a
 separate 200,352-column audit. A [mapped CUDA operator](docs/mapped-recess-gpu.md)
 now passes fresh native comparisons at 3.175 mm, all small global columns and
-short modal time checks. Full-size wave resolution, physical disk integration
-and calibrated clamp response remain work; these results do not accept research data.
+short modal time checks. [Curved-mesh surface ports](docs/mapped-surface-ports.md)
+now pass independent native disk-vector checks and complete small pulse tests
+with actual remounted footprints. Full-size wave resolution and calibrated
+clamp response remain work; these results do not accept research data.
 
 ## Setup
 

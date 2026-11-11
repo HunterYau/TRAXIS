@@ -92,9 +92,10 @@ and final figures are under `outputs/mapped-gpu-tools-20261111` and
 `evidence/mapped-recess-gpu-debug.json`, fingerprint
 043709a7a0c6937dc76b676a64f28ee23fa81a9c06f12e4ba16b74efbe89474b.
 
-Full-size mapped mesh/capacity, surface disk integration and the randomized
-`Scenario.sensor_geometry(state)` interface still need to be connected to
-this backend. Full 3.175 mm intact/recess space/time/frequency convergence,
+The subsequent [surface-port checkpoint](mapped-surface-ports.md) connects
+physical disk integration and actual per-state mounting geometry to this
+backend, with complete small pulse tests. Full-size mapped mesh/capacity and
+3.175 mm intact/recess space/time/frequency convergence,
 measured removable-clamp coupling/contact and physical PZT/electronics
 agreement remain required. This checkpoint accepts no research waveform
 bank: every reference retains `ready_for_training_data=false`.
