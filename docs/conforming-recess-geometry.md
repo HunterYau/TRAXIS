@@ -103,7 +103,8 @@ Its comparison figure was visually checked. Compact evidence is
 `evidence/conforming-recess-geometry-debug.json`, fingerprint
 `e44722949c80b1e4b3266b8ca3bea12d75f7b2594a96fe80d0ebf6011e8263d2`.
 
-Mapped stiffness/mass, stability bounds, physical disk integration, GPU
-capacity and complete paired wave/space/time studies still remain. See
+Mapped stiffness/mass and stability bounds now pass the separate small
+native reference in mapped-recess-operators.md. Physical disk integration,
+GPU capacity and complete paired wave/space/time studies still remain. See
 [the implementation design](tensor-recess-design.md). No geometry result
 accepts a research waveform bank or substitutes for PZT/physical calibration.

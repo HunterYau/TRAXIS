@@ -4,8 +4,10 @@ This remains the mapped recess solver design, not an accepted wave result.
 The frozen intact tensor study has completed with its original sources.
 Explicit conforming material geometry now passes independent native checks;
 see conforming-recess-geometry.md and recess-shape-refinement.md. Mapped
-elastic operators and GPU propagation remain to be implemented. The existing
-CAD tetrahedral recess references remain separate evidence.
+elastic stiffness, positive mass and conservative stability bounds now pass
+small independent native checks; see mapped-recess-operators.md. GPU
+propagation remains to be implemented. The existing CAD tetrahedral recess
+references remain separate evidence.
 
 The target remains the plan's 500-by-500-by-3 mm plate with flat-bottom
 circular backside recesses, diameters 20/30/40 mm and depths

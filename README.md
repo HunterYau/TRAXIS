@@ -49,8 +49,10 @@ The [conforming recess geometry](docs/conforming-recess-geometry.md) now has
 explicit shared connectivity, recess walls/floors and independent native
 geometry checks. A separate [circle-resolution screen](docs/recess-shape-refinement.md)
 retains coarse radius failures and selects four cubic elements per quarter-circle.
-Mapped elastic operators, wave resolution and GPU propagation remain work;
-the geometry result does not accept research data.
+The [mapped elastic operator](docs/mapped-recess-operators.md), positive mass
+and conservative stability bound pass paired Q3/Q4/Q5 native checks and a
+separate 200,352-column audit. Wave resolution, physical disk integration and
+GPU propagation remain work; these results do not accept research data.
 
 ## Setup
 

@@ -75,7 +75,81 @@ The original passed result remains retained separately.
 
 See `evidence/mapped-recess-preflight-debug.json` for exact preflight receipts.
 Q3/Q4/Q5 selected-geometry paired controls and their independent raw-array
-audit are recorded separately as they complete. Mapped GPU capacity, physical
+audit are recorded below. Mapped GPU capacity, physical
 disk integration, complete paired waves and geometry/space/time convergence
 remain necessary. PZT/electronics and physical specimen agreement remain
 open. No research training runs during these checks.
+
+## Completed native cases and raw-array audit
+
+All eight native cases pass with one fixed core/driver/runtime identity:
+Q3/Q4/Q5 on the selected four-elements-per-quarter-circle geometry, each with
+a recess and paired intact control, plus two coarse Q3 connected fixtures.
+The plate is 40-by-30-by-3 mm with an off-center 16 mm diameter, 1.5 mm deep
+backside recess. Material defaults are 68.9 GPa, nu=0.33 and 2,700 kg/m³,
+bound by the retained configuration source. Geometry stays cubic throughout.
+
+| Degree | Recess coefficients | Intact coefficients | Conservative step (ns) | Recess / intact worker (s) |
+| --- | ---: | ---: | ---: | ---: |
+| Q3 | 7,212 | 9,597 | 12.993378 | 7.182 / 9.936 |
+| Q4 | 15,855 | 21,627 | 7.408059 | 26.546 / 31.290 |
+| Q5 | 29,538 | 40,953 | 4.763678 | 58.460 / 92.653 |
+
+The bounds coincide for these paired fixtures. They are conservative
+discrete stability limits, not selected recording steps. The earlier intact
+plate's 7.62939 ns step is above the Q4 mapped bound here; it cannot be
+carried over without checking. Future experiments must freeze an appropriate
+common step after accounting for actual geometry and thin regions.
+
+Every one of 511 native element matrices passes its mass, six-rigid-mode and
+diagonal-majorant spectrum checks. The two coarse connected systems also
+pass full-matrix comparisons and smallest/largest generalized-eigenvalue
+checks. For the coarse recess, the diagonal bound returns 21.591 ns versus
+53.670 ns from the measured largest native eigenvalue, a factor 6.179 in
+eigenvalue bound. The six rigid eigenvalues are identified using normalized
+tolerances; tiny nonzero or negative floating-point values are retained.
+
+A separate auditor reconstructs physical shape gradients from retained
+native Jacobians, then assembles stiffness through a six-component strain
+matrix and constitutive matrix. This differs from the production
+gradient/stress/divergence action. It checks the maximum relative discrepancy
+of each column, transforms the raw native hierarchical matrices independently,
+reassembles positive mass and recomputes the diagonal majorant. It then
+scatters native element actions, verifies the sparse native basis transform,
+and compares the resulting global actions with native bilinear-form Apply.
+The saved full matrices and spectra are also checked independently.
+
+The audit covers 200,352 element columns. Maximum discrepancies are:
+
+| Check | Relative discrepancy |
+| --- | ---: |
+| Independent strain assembly / native, worst column | 3.51e-13 |
+| Mapped action / native, worst column | 3.53e-13 |
+| Native GLL mass / independent mapped mass | 7.70e-15 |
+| Reassembled global stiffness / native Apply | 4.33e-14 |
+| Reassembled global mass / native Apply | 8.74e-15 |
+| Physical affine strain energy | 2.40e-14 |
+
+The normalized global rigid-field residual is below 1.14e-18. All numerical
+comparison limits remain 1e-10; normalized zero/majorant limits remain 1e-12.
+The producer's whole-matrix relative norms and the auditor's maximum-column
+norms are different metrics. No acceptance limit was adjusted to obtain a pass.
+
+Peak combined RSS across native jobs is 400.31 MiB, system RAM 56.3% and
+minimum available RAM 7,092.78 MiB. GPU observations are 857 MiB / 51 C,
+including desktop activity; these computations are CPU-only. CPU temperature
+is unavailable. The independent audit completes in 55.625 sampled elapsed
+seconds at 214.16 MiB peak RSS, with 50.2% system RAM and at least 8,081.67 MiB
+available. No resource guard is relaxed and no training updates run.
+
+Raw cases are the `outputs/mapped-recess-*` and `outputs/mapped-intact-*`
+directories dated 20261110. The coarse recess's `-v2` directory carries the
+final full-matrix digest binding; its original passed receipt is preserved.
+Independent CSV and PNG/PDF artifacts are in
+`outputs/mapped-recess-native-audit-20261110`. The final figure was visually
+checked. Compact evidence is `evidence/mapped-recess-operators-debug.json`,
+fingerprint `ff800efac3ed91ead352cf8ded8ebf5d0177ba38e9767604ab48c357f486cbb3`.
+
+These are small operator and stability checks on a fixed represented
+geometry. They do not establish full-size recess cost, waveform convergence,
+adequate source/receiver integration, PZT voltages or physical accuracy.

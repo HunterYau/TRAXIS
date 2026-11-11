@@ -65,7 +65,8 @@ The final figure was visually checked. Compact evidence is
 `evidence/recess-shape-refinement-debug.json`, fingerprint
 `f19fd8523765df284342c2eecc0138320a074c8b2487a457865ea249a657633c`.
 
-Next come mapped elastic operators, positive mass, a checked stability bound,
-nonrectangular physical footprint integration and GPU propagation. Geometry
-selection remains separate from wave space/time refinement, representative
+The subsequent mapped elastic operators, positive mass and conservative
+stability bound pass small native checks in mapped-recess-operators.md.
+Nonrectangular physical footprint integration and GPU propagation remain.
+Geometry selection remains separate from wave space/time refinement, representative
 defect/frequency coverage and actual bonded PZT/physical agreement.

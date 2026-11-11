@@ -1105,3 +1105,24 @@ retained. Mapped elastic stiffness/mass, stability, physical disk integration,
 GPU capacity and full paired wave/space/time studies remain open. No research
 training, bank acceptance or PZT/physical validation follows from geometry.
 
+## Mapped recess elastic action, positive mass and stability
+
+The mapped CPU action evaluates variable geometric Jacobians and shared
+connectivity without storing dense element stiffness. A positive diagonal
+energy majorant supplies a conservative explicit bound for each geometry.
+The final focused group passes 25 tests without skips, including a separate
+spectral check for positive/negative Lamé lambda and allocation rejection.
+
+All eight small native cases pass: Q3/Q4/Q5 paired intact/recess on the
+selected circle geometry, plus two small connected Q3 full-matrix/spectrum
+references. A separate strain-matrix/native-Jacobian audit verifies 511
+elements and 200,352 columns, all local mass/nullity/majorant checks and
+global native applications. Maximum independent column discrepancy is
+3.51e-13. Native jobs peak at 400.31 MiB RSS and GPU observations at 51 C;
+the jobs are CPU-only and CPU temperature is unavailable.
+
+See mapped-recess-operators.md and evidence/mapped-recess-operators-debug.json.
+No transient, GPU propagation, physical disk integration, full-size defect,
+representative thin-stock/frequency or PZT/physical acceptance follows from
+this operator checkpoint. No research training or bank generation ran.
+
