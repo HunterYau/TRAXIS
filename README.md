@@ -42,8 +42,15 @@ fixture and independent CPU state audit. All five full-size windows complete
 500 microseconds and pass independent CPU checks. The Q3/Q4/Q5 spatial
 screen passes with finest raw changes of 0.10-0.12%; the three-level time
 screen has order 2.0000 and finest changes of 0.0091-0.0138%.
-These are intact mechanical controls. Conforming recesses, calibrated PZT
-response and physical agreement remain open.
+These are intact mechanical controls. Recess wave propagation, calibrated
+PZT response and physical agreement remain open.
+
+The [conforming recess geometry](docs/conforming-recess-geometry.md) now has
+explicit shared connectivity, recess walls/floors and independent native
+geometry checks. A separate [circle-resolution screen](docs/recess-shape-refinement.md)
+retains coarse radius failures and selects four cubic elements per quarter-circle.
+Mapped elastic operators, wave resolution and GPU propagation remain work;
+the geometry result does not accept research data.
 
 ## Setup
 

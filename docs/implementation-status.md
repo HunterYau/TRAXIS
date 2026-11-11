@@ -1081,3 +1081,27 @@ See progress-log-recovery.md and evidence/progress-log-recovery-debug.json.
 The workflow fixture runs two one-step CPU debug updates; no full or research
 training cycle ran. This is I/O reliability work, not new physics acceptance.
 
+## Conforming recess geometry and separate circle resolution
+
+The geometry extension now builds explicit shared hexahedral connectivity,
+recess walls/floors and paired intact material. The 90-case screen covers all
+planned diameters/depths and geometry degrees one through five. Ten small
+native geometry comparisons and an independent coordinate-derivative audit
+pass. The six new geometry tests and existing tensor/storage checks pass all
+19 tests without skips. An initial hand-derived node-count error and native
+report-construction failure remain retained.
+
+The area result alone hid a larger radial error in a coarse cubic circle.
+A subsequent frozen screen requires both area and radius accuracy, retains
+the one- and two-element failures and selects four cubic elements per quarter.
+All 18 planned paired domains and two small native comparisons then pass.
+Peak process-tree RSS is 397.24 MiB; observed GPU temperature reaches 51 C.
+These are CPU geometry checks; CPU temperature is unavailable.
+
+See conforming-recess-geometry.md, recess-shape-refinement.md and their compact
+evidence receipts. Geometry arrays, native coordinates/Jacobians, failed
+attempts, source snapshots and independently audited CSV/PNG/PDF figures are
+retained. Mapped elastic stiffness/mass, stability, physical disk integration,
+GPU capacity and full paired wave/space/time studies remain open. No research
+training, bank acceptance or PZT/physical validation follows from geometry.
+
