@@ -8,6 +8,11 @@ brief, bounded debug updates; no research training cycle has run. No simulation
 has been validated against a physical plate. Passing software checks do not
 establish physical accuracy or a superior model.
 
+The current physical target is **3.175 mm (1/8 inch) aluminum with removable
+clamp-mounted PZTs**. New scenario recipes use this thickness. Earlier 3 mm
+reference studies remain historical; placement/contact variability and
+clamp coupling need separate verification. See [current hardware requirements](docs/current-hardware.md).
+
 ## Solver decision
 
 Use COMSOL's 3D Elastic Waves / Piezoelectric Waves, Time Explicit formulation
