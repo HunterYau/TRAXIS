@@ -10,6 +10,7 @@ import numpy as np
 
 from traxis.acquisition import action_catalog, sensor_layout, specimen_split
 from traxis.config import CircularRecess, Material, Plate, positive
+from traxis.mounting import PZTMounting
 from traxis.storage import canonical_hash, write_json
 
 
@@ -87,6 +88,8 @@ class Scenario:
     recesses: tuple[CircularRecess, ...]
     acquisition: AcquisitionSettings
     nuisance: NuisanceSettings
+    mounting: PZTMounting | None = None
+    current_mounting: PZTMounting | None = None
 
     def __post_init__(self):
         if not self.specimen_id or not self.parent_specimen_id or self.split not in ("train", "validation", "test", "uncertainty_calibration"):
@@ -99,11 +102,32 @@ class Scenario:
             raise ValueError("scenario coupling gains do not match acquisition layout")
         for recess in self.recesses:
             recess.validate(self.plate)
+        for mount in (self.mounting, self.current_mounting):
+            if mount is not None:
+                if not isinstance(mount, PZTMounting):
+                    raise ValueError('mounting must be a PZTMounting realization')
+                mount.geometry(self.plate, self.acquisition)
         json.dumps(asdict(self), allow_nan=False)
+
+    def to_dict(self):
+        data = asdict(self)
+        # Preserve legacy nominal scenario identities and serialized recipes.
+        for name in ('mounting', 'current_mounting'):
+            if data[name] is None:
+                del data[name]
+        return data
+
+    def sensor_geometry(self, state='current'):
+        if state not in ('intact', 'current'):
+            raise ValueError('mounting state must be intact or current')
+        mount = self.current_mounting if state == 'current' and self.current_mounting is not None else self.mounting
+        if mount is None:
+            return self.acquisition.sensors(self.plate), np.full(self.acquisition.sensor_count, self.acquisition.patch_radius_m)
+        return mount.geometry(self.plate, self.acquisition)
 
     @property
     def fingerprint(self):
-        return canonical_hash(asdict(self))
+        return canonical_hash(self.to_dict())
 
     @classmethod
     def from_dict(cls, value: dict):
@@ -114,6 +138,9 @@ class Scenario:
         nuisance = dict(data["nuisance"])
         nuisance["material"] = Material(**nuisance["material"])
         data["nuisance"] = NuisanceSettings(**nuisance)
+        for name in ('mounting', 'current_mounting'):
+            if data.get(name) is not None:
+                data[name] = PZTMounting(**data[name])
         return cls(**data)
 
 
@@ -135,6 +162,9 @@ class SamplingSettings:
     force_relative_range: float = 0.1
     relative_noise_std: float = 0.01
     support: str = "free"
+    position_jitter_max_m: float = 0.
+    contact_radius_relative_range: float = 0.
+    remount_between_states: bool = False
 
     def __post_init__(self):
         for key in ("diameters_m", "depths_m"):
@@ -161,6 +191,12 @@ class SamplingSettings:
             raise ValueError("Poisson variation must be finite and nonnegative")
         if not math.isfinite(self.relative_noise_std) or self.relative_noise_std < 0:
             raise ValueError("noise level must be finite and nonnegative")
+        if isinstance(self.position_jitter_max_m, bool) or not math.isfinite(self.position_jitter_max_m) or self.position_jitter_max_m < 0:
+            raise ValueError('position jitter must be finite and nonnegative')
+        if isinstance(self.contact_radius_relative_range, bool) or not math.isfinite(self.contact_radius_relative_range) or not 0 <= self.contact_radius_relative_range < 1:
+            raise ValueError('contact radius variation must lie in [0,1)')
+        if type(self.remount_between_states) is not bool:
+            raise ValueError('remount_between_states must be a boolean')
 
 
 def _sample_nuisance(settings: SamplingSettings, acquisition: AcquisitionSettings, seed: int,
@@ -175,8 +211,33 @@ def _sample_nuisance(settings: SamplingSettings, acquisition: AcquisitionSetting
                         nominal.density_kg_m3 * factor(settings.density_relative_range))
     gains = tuple(factor(settings.coupling_relative_range) for _ in range(acquisition.sensor_count))
     drift = tuple(factor(settings.drift_relative_range) for _ in range(acquisition.sensor_count))
+    if settings.remount_between_states:
+        remount_rng = np.random.default_rng(np.random.SeedSequence([seed, 7193]))
+        current = remount_rng.uniform(1-settings.coupling_relative_range, 1+settings.coupling_relative_range, acquisition.sensor_count)
+        drift = tuple(float(c/g*d) for c, g, d in zip(current, gains, drift))
     return NuisanceSettings(material, factor(settings.force_relative_range), gains, drift,
                              settings.relative_noise_std, support=settings.support)
+
+
+def _sample_mounting(settings, acquisition, plate, recesses, seed, stream):
+    if not settings.position_jitter_max_m and not settings.contact_radius_relative_range:
+        return None
+    rng = np.random.default_rng(np.random.SeedSequence([seed, 4309, stream]))
+    for _ in range(128):
+        angle = rng.uniform(0, 2*np.pi, acquisition.sensor_count)
+        radius = settings.position_jitter_max_m*np.sqrt(rng.random(acquisition.sensor_count))
+        offsets = np.column_stack([radius*np.cos(angle), radius*np.sin(angle)])
+        scales = rng.uniform(1-settings.contact_radius_relative_range, 1+settings.contact_radius_relative_range, acquisition.sensor_count)
+        mount = PZTMounting(tuple(map(tuple, offsets)), tuple(scales))
+        try:
+            xy, radii = mount.geometry(plate, acquisition)
+        except ValueError:
+            continue
+        if all(np.all(np.linalg.norm(xy-[r.x_m, r.y_m], axis=1)
+                      > r.radius_m+np.maximum(radii, acquisition.patch_radius_m)+settings.sensor_clearance_m)
+               for r in recesses):
+            return mount
+    raise ValueError('could not sample a mounting within plate, footprint and defect clearances')
 
 
 def sample_scenarios(settings: SamplingSettings = SamplingSettings(), plate: Plate = Plate(),
@@ -201,7 +262,8 @@ def sample_scenarios(settings: SamplingSettings = SamplingSettings(), plate: Pla
             for _ in range(1000):
                 x = float(rng.uniform(margin, plate.width_m - margin))
                 y = float(rng.uniform(margin, plate.height_m - margin))
-                if np.all(np.linalg.norm(sensor_xy - [x, y], axis=1) > radius + acquisition.patch_radius_m + settings.sensor_clearance_m):
+                envelope = acquisition.patch_radius_m*(1+settings.contact_radius_relative_range)+settings.position_jitter_max_m
+                if np.all(np.linalg.norm(sensor_xy - [x, y], axis=1) > radius + envelope + settings.sensor_clearance_m):
                     break
             else:
                 raise ValueError("could not place a recess clear of the sensor footprints")
@@ -214,16 +276,23 @@ def sample_scenarios(settings: SamplingSettings = SamplingSettings(), plate: Pla
             draw = int(canonical_hash(["uncertainty-calibration", settings.seed, parent])[:16], 16) / 2**64
             if draw < settings.uncertainty_calibration_fraction / .7:
                 split = "uncertainty_calibration"
+        mounting = _sample_mounting(settings, acquisition, plate, recesses, nuisance_seed, 0)
+        current_mounting = _sample_mounting(settings, acquisition, plate, recesses, nuisance_seed, 1) if settings.remount_between_states else None
         result.append(Scenario(parent + "-v0", parent, split, geometry_seed,
-                               nuisance_seed, plate, recesses, acquisition, nuisance))
+                               nuisance_seed, plate, recesses, acquisition, nuisance, mounting, current_mounting))
     return tuple(result)
 
 
 def nuisance_variant(scenario: Scenario, settings: SamplingSettings, seed: int) -> Scenario:
     """Perturb one virtual plate without changing parent identity or split."""
-    nuisance = _sample_nuisance(settings, scenario.acquisition, seed)
-    suffix = canonical_hash({"nuisance": asdict(nuisance), "seed": seed})[:12]
-    return replace(scenario, specimen_id=f"{scenario.parent_specimen_id}-v{suffix}", nuisance_seed=seed, nuisance=nuisance)
+    nuisance = replace(_sample_nuisance(settings, scenario.acquisition, seed), material=scenario.nuisance.material)
+    mounting = _sample_mounting(settings, scenario.acquisition, scenario.plate, scenario.recesses, seed, 0)
+    current = _sample_mounting(settings, scenario.acquisition, scenario.plate, scenario.recesses, seed, 1) if settings.remount_between_states else None
+    realization = dict(nuisance=asdict(nuisance), seed=seed, mounting=asdict(mounting) if mounting else None,
+                       current_mounting=asdict(current) if current else None)
+    suffix = canonical_hash(realization)[:12]
+    return replace(scenario, specimen_id=f"{scenario.parent_specimen_id}-v{suffix}", nuisance_seed=seed,
+                   nuisance=nuisance, mounting=mounting, current_mounting=current)
 
 
 def save_scenario_plan(path: Path, scenarios: tuple[Scenario, ...]) -> dict:
@@ -238,8 +307,9 @@ def save_scenario_plan(path: Path, scenarios: tuple[Scenario, ...]) -> dict:
         strata[(s.split, label)] += 1
     if not scenarios:
         raise ValueError("scenario plan must be nonempty")
-    body = {"schema_version": 1, "kind": "unsolved_scenario_plan", "ready_for_training_data": False,
-            "scenarios": [asdict(s) for s in scenarios], "split_counts": dict(Counter(s.split for s in scenarios)),
+    schema = 2 if any(s.mounting is not None or s.current_mounting is not None for s in scenarios) else 1
+    body = {"schema_version": schema, "kind": "unsolved_scenario_plan", "ready_for_training_data": False,
+            "scenarios": [s.to_dict() for s in scenarios], "split_counts": dict(Counter(s.split for s in scenarios)),
             "parent_count": len(roles), "parent_split_counts": dict(Counter(roles.values())),
             "stratum_counts": [{"split": split, "geometry": label, "count": n} for (split, label), n in sorted(strata.items())],
             "note": "Recipes only. Frequencies, variations, supports and source/coupling assumptions require empirical validation."}
@@ -255,7 +325,7 @@ def load_scenario_plan(path: Path) -> tuple[Scenario, ...]:
     if path.stat().st_size > 64 * 1024**2:
         raise MemoryError("scenario plan exceeds 64 MiB")
     spec = json.loads(path.read_text(encoding="utf-8-sig"))
-    if spec["schema_version"] != 1 or spec["kind"] != "unsolved_scenario_plan":
+    if spec["schema_version"] not in (1, 2) or spec["kind"] != "unsolved_scenario_plan":
         raise ValueError("unsupported scenario plan")
     if canonical_hash({k: v for k, v in spec.items() if k != "fingerprint"}) != spec["fingerprint"]:
         raise ValueError("scenario plan fingerprint mismatch")

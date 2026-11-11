@@ -20,7 +20,7 @@ class HighOrderDirectionalTests(unittest.TestCase):
     def producer(self, scenario, settings, output, guard, **kwargs):
         output.mkdir()
         actions = reference_actions(scenario, settings, kwargs['transmitter'], kwargs['frequency_hz'])
-        plan = {'runtime': {'fixture': True}, 'source_sha256': reference_source_hashes(), 'scenario': asdict(scenario),
+        plan = {'runtime': {'fixture': True}, 'source_sha256': reference_source_hashes(), 'scenario': scenario.to_dict(),
             'settings': asdict(settings), 'actions': [asdict(a) for a in actions], 'state': 'intact'}
         plan['fingerprint'] = canonical_hash(plan)
         write_json(output / 'case-plan.json', plan)

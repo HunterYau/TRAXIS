@@ -106,7 +106,7 @@ def run_highorder_directional(scenario, settings, output, guard=None, *, transmi
         raise FileExistsError('high-order refinement needs a new output directory')
     output.mkdir(parents=True, exist_ok=True)
     guard = guard or ResourceGuard()
-    plan = {'kind': 'predeclared_highorder_directional_refinement', 'scenario': asdict(scenario), 'settings': asdict(settings),
+    plan = {'kind': 'predeclared_highorder_directional_refinement', 'scenario': scenario.to_dict(), 'settings': asdict(settings),
         'actions': [asdict(a) for a in actions], 'state': 'intact', 'source_sha256': reference_source_hashes(),
         'requested_forward_solves': 7, 'definitions': [asdict(case) for case in definitions],
         'comparison_indices': {'in_plane': [[0, 1], [1, 2]], 'thickness': [[3, 4], [4, 2]], 'temporal': [[5, 6], [6, 2]]},

@@ -185,12 +185,12 @@ def run_native_job(path, output, guard):
         system = assemble_highorder(mesh, scenario.nuisance.material, settings.order, guard,
             max_dofs=settings.max_dofs, max_assembly_mib=settings.max_assembly_mib)
         atomic_write(output / 'mesh.npz', lambda stream: np.savez_compressed(stream, points_m=mesh.points_m, tetrahedra=mesh.tetrahedra))
-        sensors = scenario.acquisition.sensors(scenario.plate)
+        sensors, radii = scenario.sensor_geometry(job['state'])
         ids = (job['transmitter'], *(a.receiver for a in actions))
         vectors, patches = [], []
         for sensor in ids:
-            vector, details = highorder_surface_patch(system, scenario.plate, sensors[sensor], scenario.acquisition.patch_radius_m, guard=guard)
-            moments = patch_polynomial_moments(system, vector, sensors[sensor], scenario.acquisition.patch_radius_m,
+            vector, details = highorder_surface_patch(system, scenario.plate, sensors[sensor], float(radii[sensor]), guard=guard)
+            moments = patch_polynomial_moments(system, vector, sensors[sensor], float(radii[sensor]),
                 (0., 0., 1.), 'full', settings.order)
             details['maximum_monomial_absolute_error'] = moments['maximum_absolute_error']
             if details['edge_clipped'] or details['full_disk_area_relative_error'] > 1e-10 or moments['maximum_absolute_error'] > 1e-9:
@@ -278,7 +278,7 @@ def run_highorder_waveform_case(scenario, settings, output, guard, *, transmitte
         raise FileExistsError('high-order waveform case needs a new output directory')
     output.mkdir(parents=True, exist_ok=True)
     source, runtime = reference_source_hashes(), waveform_runtime(settings, guard)
-    job = {'kind': 'highorder_unit_force_job', 'scenario': asdict(scenario), 'settings': asdict(settings), 'state': state,
+    job = {'kind': 'highorder_unit_force_job', 'scenario': scenario.to_dict(), 'settings': asdict(settings), 'state': state,
         'transmitter': transmitter, 'frequency_hz': actions[0].frequency_hz, 'source_sha256': source, 'runtime': runtime}
     job['fingerprint'] = canonical_hash(job)
     def snapshot(stream):

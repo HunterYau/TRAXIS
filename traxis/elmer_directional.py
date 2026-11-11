@@ -88,7 +88,7 @@ def run_elmer_directional_refinement(scenario, settings, home, output, guard=Non
         raise FileExistsError('directional refinement needs a new or empty output directory')
     output.mkdir(parents=True, exist_ok=True)
     guard = guard or ResourceGuard()
-    plan = {'kind': 'predeclared_elmer_p2_directional_refinement', 'scenario': asdict(scenario), 'settings': asdict(settings),
+    plan = {'kind': 'predeclared_elmer_p2_directional_refinement', 'scenario': scenario.to_dict(), 'settings': asdict(settings),
             'actions': [asdict(a) for a in actions], 'state': 'intact', 'source_sha256': reference_source_hashes(),
             'requested_forward_solves': 7, 'definitions': [asdict(case) for case in definitions],
             'comparison_indices': {'in_plane': [[0, 1], [1, 2]], 'thickness': [[3, 4], [4, 2]], 'temporal': [[5, 6], [6, 2]]},

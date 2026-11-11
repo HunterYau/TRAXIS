@@ -158,7 +158,7 @@ def run_waveform_sweep(scenario: Scenario, settings: WaveformSweepSettings, outp
         raise FileExistsError("waveform sweep needs a new or empty output directory")
     output.mkdir(parents=True, exist_ok=True)
     cache = Path(cache_dir).resolve() if cache_dir is not None else (output / "groups").resolve()
-    plan = {"kind": "predeclared_waveform_refinement", "scenario": asdict(scenario), "settings": asdict(settings),
+    plan = {"kind": "predeclared_waveform_refinement", "scenario": scenario.to_dict(), "settings": asdict(settings),
             "cache_directory": str(cache),
             "requested_forward_solves": requested_solves, "ready_for_training_data": False,
             "source_sha256": {p.name: sha256_file(p) for p in sorted(Path(__file__).parent.glob("*.py"))}}

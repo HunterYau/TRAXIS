@@ -26,7 +26,7 @@ class PlateRefinementTests(unittest.TestCase):
         (output / 'loads-probes.npz').write_bytes(b'fixed test aperture')
         actions = [asdict(a) for a in action_catalog(8, (100000.,)) if a.transmitter == kwargs['transmitter']]
         source = {p.name: sha256_file(p) for p in sorted(Path('traxis').glob('*.py'))}
-        case_plan = {'source_sha256': source, 'kernel_sha256': {'solver': 'test'}, 'scenario': asdict(scenario),
+        case_plan = {'source_sha256': source, 'kernel_sha256': {'solver': 'test'}, 'scenario': scenario.to_dict(),
                      'actions': actions, 'state': kwargs['state'], 'settings': asdict(settings), 'runtime': {'test': True}}
         case_plan['fingerprint'] = canonical_hash(case_plan)
         write_json(output / 'case-plan.json', case_plan)

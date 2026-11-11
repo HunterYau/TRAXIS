@@ -76,7 +76,7 @@ def run_highorder_cad_refinement(scenario, settings, output, guard=None, *,
         raise FileExistsError('CAD refinement needs a new output directory')
     output.mkdir(parents=True, exist_ok=True)
     guard = guard or ResourceGuard()
-    plan = {'kind': 'predeclared_highorder_cad_refinement', 'scenario': asdict(scenario),
+    plan = {'kind': 'predeclared_highorder_cad_refinement', 'scenario': scenario.to_dict(),
         'settings': asdict(settings), 'actions': [asdict(a) for a in actions], 'state': state,
         'source_sha256': reference_source_hashes(), 'requested_forward_solves': solves,
         'definitions': [asdict(case) for case in definitions], 'ready_for_training_data': False}

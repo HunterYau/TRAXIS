@@ -37,6 +37,10 @@ def export_solver_request(scenario: Scenario, directory: Path) -> dict:
         for tx, frequency in sorted({(a.transmitter, a.frequency_hz) for a in actions}):
             receivers = [a.receiver for a in actions if a.transmitter == tx and a.frequency_hz == frequency]
             groups.append({"state": state, "transmitter": tx, "frequency_hz": frequency,
+                           "actual_sensors_xy_m": scenario.sensor_geometry(state)[0].tolist(),
+                           "contact_radii_m": scenario.sensor_geometry(state)[1].tolist(),
+                           "sensor_coupling_gains": [g*(d if state == 'current' else 1.)
+                               for g, d in zip(scenario.nuisance.sensor_gains, scenario.nuisance.current_gain_drift)],
                            "eligible_receivers": receivers, "record_all_receivers_together": True,
                            "intact_geometry_reusable": not bool(scenario.recesses)})
     geometry = ["// Coordinates are meters; set downstream import units explicitly.", 'SetFactory("OpenCASCADE");',
@@ -52,7 +56,7 @@ def export_solver_request(scenario: Scenario, directory: Path) -> dict:
     atomic_write(directory / "geometry.geo", lambda stream: stream.write(("\n".join(geometry) + "\n").encode()))
     metadata = BankMetadata(scenario.specimen_id, scenario.parent_specimen_id, scenario.split, "simulation", "displacement_m",
                             "paired-intact-" + scenario.parent_specimen_id, "external solver export required", "plumbing_only", scenario.nuisance_seed,
-                            {"scenario_recipe": asdict(scenario), "scenario_fingerprint": scenario.fingerprint,
+                            {"scenario_recipe": scenario.to_dict(), "scenario_fingerprint": scenario.fingerprint,
                              "nuisance_application_status": "unverified external outputs; importer does not apply gains/noise",
                              "reference_validation_status": "unsolved; verify convergence and control agreement separately"})
     template = {"schema_version": 1, "metadata": asdict(metadata), "plate": asdict(scenario.plate),
@@ -60,15 +64,17 @@ def export_solver_request(scenario: Scenario, directory: Path) -> dict:
                 "depth_mm_npy": "depth-mm.npy", "expected_label_sha256": sha256_file(directory / "depth-mm.npy"),
                 "expected_time_s_npy": "sample-time-s.npy", "expected_time_sha256": sha256_file(directory / "sample-time-s.npy")}
     write_json(directory / "import-manifest.json", template)
-    task = {"schema_version": 1, "kind": "unsolved_external_mechanical_reference_task", "scenario": asdict(scenario),
+    task_schema = 2 if scenario.mounting is not None or scenario.current_mounting is not None else 1
+    task = {"schema_version": task_schema, "kind": "unsolved_external_mechanical_reference_task", "scenario": scenario.to_dict(),
             "scenario_fingerprint": scenario.fingerprint, "units": {"coordinates": "m", "time": "s", "depth_label": "mm", "force": "N", "probe": "m"},
             "source": {"type": "normal top-surface finite-area mechanical patch", "radius_m": acq.patch_radius_m,
-                       "waveform": "Hann-windowed sinusoid", "cycles": acq.cycles, "peak_force_n": scenario.nuisance.peak_force_n},
+                       "waveform": "Hann-windowed sinusoid", "cycles": acq.cycles, "peak_force_n": scenario.nuisance.peak_force_n,
+                       "mounting_instruction": "Use per-job actual centers/radii. Apply transmitter gain to force and receiver gain to readout once; importer does not apply gains or noise."},
             "probe": "area-averaged normal displacement at the receiving patch",
             "jobs": groups, "record_count": len(actions), "csv_header": "time_s,value",
             "import_manifest_sha256": sha256_file(directory / "import-manifest.json"),
             "ready_for_training_data": False,
-            "required_before_voltage_model": ["PZT geometry/material/poling", "adhesive geometry/properties", "electrodes and electrical drive/loading", "receiver circuit/observable"],
+            "required_before_voltage_model": ["PZT geometry/material/poling", "measured clamp/contact/couplant properties (or adhesive if bonded)", "electrodes and electrical drive/loading", "receiver circuit/observable"],
             "required_before_research_dataset": ["appropriate band/mesh/time convergence", "intact physical agreement", "support/coupling validation", "measured solver cost"],
             "note": "No solver has run. No fake/zero CSV traces are supplied. Gmsh GEO coordinates are unitless numbers assigned SI meters by this recipe."}
     write_json(directory / "solver-task.json", task)

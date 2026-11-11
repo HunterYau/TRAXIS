@@ -36,10 +36,11 @@ ranges: estimate them from repeated removal/reclamping on the intact plate.
 Store actual coordinates separately from nominal coordinates available to
 the reconstruction, so robustness tests do not silently reveal exact placement.
 
-The current scenario code varies scalar sensor gains and gain drift. This is
-an amplitude nuisance model, not a validated clamped-contact model, and it
-does not yet perturb sensor locations or footprint shape. Those extensions
-and independent contact/physical verification remain implementation work.
+The scenario code now varies positions, effective circular contact radii,
+coupling gains and drift, with independent baseline/current remounts available.
+See pzt-domain-randomization.md for provisional ranges and solver behavior.
+This is not a validated clamped-contact model; nonuniform contact, clamp
+loading and independent physical verification remain work.
 All mounting repeats of a physical plate must remain grouped by parent plate
 when splitting data. Distinguish paired measurements without remounting from
 baseline/current measurements after reclamping.

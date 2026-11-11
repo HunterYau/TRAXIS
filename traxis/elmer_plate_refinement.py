@@ -123,7 +123,7 @@ def run_elmer_plate_refinement(scenario, settings, home, output, guard=None, *,
     guard = guard or ResourceGuard()
     definitions = [(h, settings.substeps_per_output[-1]) for h in settings.mesh_sizes_m]
     definitions += [(settings.mesh_sizes_m[-1], n) for n in settings.substeps_per_output[:2]]
-    plan = {'kind': 'predeclared_elmer_p2_plate_refinement', 'scenario': asdict(scenario), 'settings': asdict(settings),
+    plan = {'kind': 'predeclared_elmer_p2_plate_refinement', 'scenario': scenario.to_dict(), 'settings': asdict(settings),
             'actions': [asdict(a) for a in actions], 'state': state, 'source_sha256': reference_source_hashes(),
             'requested_forward_solves': 5, 'ready_for_training_data': False,
             'definitions': [{'mesh_size_m': h, 'substeps_per_output': n} for h, n in definitions]}

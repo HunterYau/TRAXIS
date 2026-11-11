@@ -118,7 +118,7 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
     for path in (solver.parent / 'libelmersolver.dll', Path(env['ELMER_LIB']) / 'StressSolve.dll', Path(env['ELMER_LIB']) / 'elements.def'):
         if path.exists():
             identity[path.name] = sha256_file(path)
-    plan = {'kind': 'bounded_elmer_p2_waveform_case', 'scenario': asdict(scenario), 'settings': asdict(settings),
+    plan = {'kind': 'bounded_elmer_p2_waveform_case', 'scenario': scenario.to_dict(), 'settings': asdict(settings),
             'actions': [asdict(a) for a in actions], 'state': state, 'source_sha256': source,
             'kernel_sha256': identity, 'runtime': runtime, 'source_snapshot_sha256': sha256_file(output / 'source-snapshot.zip'),
             'ready_for_training_data': False,
@@ -169,9 +169,9 @@ def run_elmer_waveform_case(scenario: Scenario, settings: ElmerWaveSettings, hom
         mesh = load_quadratic_elmer_mesh(output / 'mesh', scenario.plate)
         if len(mesh.points_m) != quadratic_nodes or len(mesh.tetrahedra) != len(linear.tetrahedra):
             raise ArithmeticError('quadratic conversion changed the screened node/element counts')
-        sensors = scenario.acquisition.sensors(scenario.plate)
+        sensors, radii = scenario.sensor_geometry(state)
         ids = (transmitter, *(a.receiver for a in actions))
-        weights, details = zip(*(quadratic_surface_patch(mesh, sensors[i], scenario.acquisition.patch_radius_m) for i in ids))
+        weights, details = zip(*(quadratic_surface_patch(mesh, sensors[i], float(radii[i])) for i in ids))
         if any(p['edge_clipped'] or p['full_disk_area_relative_error'] > 1e-8 or p['centroid_error_m'] > 1e-12
                or p['full_disk_second_moment_error_m2'] > 1e-14 for p in details):
             raise ArithmeticError('P2 physical aperture moment checks failed before solving')

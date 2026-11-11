@@ -154,9 +154,11 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
         guard.check(force=True)
     started = time.perf_counter()
     acquisition = scenario.acquisition
+    mount_geometry = {state: scenario.sensor_geometry(state) for state in ('intact', 'current')}
+    same_mount = all(np.array_equal(a, b) for a, b in zip(mount_geometry['intact'], mount_geometry['current']))
     actions = action_catalog(acquisition.sensor_count, acquisition.frequencies_hz, acquisition.reciprocal)
     groups = sorted({(a.transmitter, a.frequency_hz) for a in actions})
-    estimated_solves = len(groups) * (2 if scenario.recesses else 1)
+    estimated_solves = len(groups) * (2 if scenario.recesses or not same_mount else 1)
     if estimated_solves > settings.max_forward_solves:
         raise ValueError("requested transmitter-frequency solves exceed the local pilot limit")
     bank_bytes = len(actions) * acquisition.samples * 4 * 2
@@ -173,15 +175,15 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
     steps = (acquisition.samples - 1) * substeps
     if steps > settings.max_internal_steps:
         raise ValueError("sample-aligned internal steps exceed the configured pilot limit")
-    sensors = acquisition.sensors(scenario.plate)
     systems = {"intact": healthy, "current": damaged}
     patches, patch_reports = {}, {}
     for kind, system in systems.items():
-        integrated = [surface_patch_with_report(system, tuple(xy), acquisition.patch_radius_m) for xy in sensors]
+        sensors, radii = mount_geometry[kind]
+        integrated = [surface_patch_with_report(system, tuple(xy), float(radius)) for xy, radius in zip(sensors, radii)]
         patches[kind] = np.stack([vector for vector, _report in integrated])
         patch_reports[kind] = [report for _vector, report in integrated]
-        if any(report["full_disk_area_relative_error"] > 1e-8 or report["centroid_error_m"] > 1e-8 * acquisition.patch_radius_m
-               for report in patch_reports[kind]):
+        if any(report["full_disk_area_relative_error"] > 1e-8 or report["centroid_error_m"] > 1e-8 * radius
+               for report, radius in zip(patch_reports[kind], radii)):
             raise ArithmeticError("circular source/probe footprint integration failed its area/centroid check")
     source = {p.name: sha256_file(p) for p in [Path(__file__), Path(__file__).with_name("fem.py"),
               Path(__file__).with_name("geometry.py"), Path(__file__).with_name("cad_mesh.py"), Path(__file__).with_name("patches.py")]}
@@ -192,14 +194,14 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
     for tx, frequency in groups:
         raw = {}
         for kind, system in systems.items():
-            if kind == "current" and not scenario.recesses:
+            if kind == "current" and not scenario.recesses and same_mount:
                 raw[kind] = raw["intact"]
                 continue
             if guard:
                 guard.check()
             recipe = {"kind": kind, "plate": asdict(scenario.plate), "material": asdict(scenario.nuisance.material),
                       "recesses": [asdict(r) for r in scenario.recesses] if kind == "current" else [],
-                      "sensors_xy_m": sensors.tolist(), "patch_radius_m": acquisition.patch_radius_m,
+                      "sensors_xy_m": mount_geometry[kind][0].tolist(), "patch_radii_m": mount_geometry[kind][1].tolist(),
                       "cycles": acquisition.cycles, "dt_s": dt, "substeps": substeps, "steps": steps,
                       "transmitter": tx, "frequency_hz": frequency,
                       "mesh": healthy_mesh if kind == "intact" else damaged_mesh,
@@ -230,18 +232,23 @@ def generate_waveform_bank(scenario: Scenario, settings: ForwardSettings = Forwa
                 seed = int(canonical_hash([scenario.nuisance_seed, asdict(action), kind])[:16], 16)
                 destination[i] = signal + np.random.default_rng(seed).normal(0, sigma, acquisition.samples)
     baseline_id = "paired-intact-" + canonical_hash({"plate": asdict(scenario.plate), "material": asdict(scenario.nuisance.material),
-                                                   "acquisition": asdict(acquisition), "gains": scenario.nuisance.sensor_gains})[:16]
+                                                   "acquisition": asdict(acquisition), "gains": scenario.nuisance.sensor_gains,
+                                                   "mounting": {"xy_m": mount_geometry['intact'][0].tolist(),
+                                                                "radii_m": mount_geometry['intact'][1].tolist()},
+                                                   "peak_force_n": scenario.nuisance.peak_force_n})[:16]
     metadata = BankMetadata(scenario.specimen_id, scenario.parent_specimen_id, scenario.split, "simulation", "displacement_m",
                             baseline_id, "local linear-tetrahedral elastic FEM", "plumbing_only", scenario.nuisance_seed,
-                            {"scenario": asdict(scenario), "scenario_fingerprint": scenario.fingerprint,
+                            {"scenario": scenario.to_dict(), "scenario_fingerprint": scenario.fingerprint,
                              "forward": asdict(settings), "intact_mesh": healthy_mesh, "current_mesh": damaged_mesh,
                              "dt_internal_s": dt, "substeps_per_output": substeps, "internal_steps": steps,
                              "mechanical_patches": patch_reports,
                              "source_sha256": source, "source": "unit-total-force normal mechanical disk patch",
-                             "baseline": "matched intact plate with same material/coupling; not a separate physical control",
+                             "baseline": "synthetic intact state; mounting/coupling follow recorded state realizations, not a measured physical control",
+                             "sensor_coordinates": "nominal coordinates supplied to inference; actual offsets/contact radii are simulator provenance",
                              "approximations": ["no PZT/adhesive/electrical domains", "scalar coupling/drift gains only",
+                                                "variable circular mechanical contact proxy; no clamp mass/preload/friction",
                                                 "undamped free edges", "guided-wave convergence not established"]})
-    bank = WaveformBank(metadata, scenario.plate, sensors, actions, np.arange(acquisition.samples) * acquisition.sample_dt_s,
+    bank = WaveformBank(metadata, scenario.plate, acquisition.sensors(scenario.plate), actions, np.arange(acquisition.samples) * acquisition.sample_dt_s,
                         waveforms, baselines, depth_map_mm(scenario.plate, scenario.recesses, (settings.label_size,) * 2, 2))
     report = {"kind": "local_elastic_bank_pilot", "scenario_fingerprint": scenario.fingerprint,
               "records": len(actions), "samples": acquisition.samples, "forward_solves": solves, "cache_hits": hits,

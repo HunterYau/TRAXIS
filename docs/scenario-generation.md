@@ -47,7 +47,9 @@ different uniformly sampled record with plausible metadata.
 
 ## Reproducible study recipes
 
-The default sampler describes 1,000 virtual parents on 500 x 500 x 3 mm plates.
+The research config describes 1,000 virtual parents on 500 x 500 x 3.175 mm plates.
+The zero-argument sampler retains the legacy 3 mm reference default; use the
+explicit research configuration for the revised physical-study recipes.
 It includes 10% intact cases and balances the nine combinations of 20/30/40 mm
 diameter and 0.75/1.50/2.00 mm backside loss among damaged parents. Centers vary
 while preserving configured edge and sensor-footprint clearance. Geometry and
@@ -115,7 +117,8 @@ alone does not prove correct footprint, wave dispersion or scattering.
 in the numerical verification tests. Its source is a unit-total-force normal
 top-surface patch, and its probes are area-averaged normal displacement in
 meters. There are no PZT, adhesive, electrodes, voltage readout or damping
-domains. Coupling/drift is represented only by linear scalar gains. This is
+domains. Coupling/drift uses scalar gains; mounting realizations change actual
+source/probe centers and circular radii. This is
 an inspectable mechanical pilot, not a calibrated bonded-PZT forward model.
 
 Circular patch loads/probes now use analytic P1 shape-function integrals over
@@ -125,10 +128,12 @@ centroid-selected patch banks retain their original source hashes; see
 mechanical-patches.md for the derivation, independent checks and limits.
 
 One transmitter/frequency solve records all receiving patches simultaneously.
-A paired intact and defective solve use the same material, source and coupling
-before explicit current gain drift/noise. This matched synthetic baseline is
-not a separately measured intact physical plate; baseline mismatch must be
-validated before real-data inference. Intact controls reuse their single system.
+A paired intact and defective solve use the same material. They share mounting
+unless independent baseline/current remounts are requested. That mode changes
+positions, radii and coupling; even intact controls may have nonzero residuals.
+Their material operator is reusable, but changed footprints require distinct
+load/probe solves. These are synthetic baselines, not measured physical
+controls. See pzt-domain-randomization.md.
 
 The output sample interval is divided into a whole number of conservative
 stable internal steps. Probe traces are subsampled on that common aligned
