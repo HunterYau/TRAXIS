@@ -996,3 +996,15 @@ and Q3/Q5 spatial windows remain. See tensor-wave-windows.md and the
 tensor-half-window-debug.json / tensor-first-time-pair-debug.json evidence
 records. No source, window, receiver, criterion or physical scale was changed.
 
+## Complete coarse tensor spatial level
+
+Q3-N65536 completes the same full-size 500-microsecond experiment with
+2,440,812 vector coefficients. Propagation takes 224.531 seconds; monitored
+worker time is 233.804 seconds. Native/CPU final-state checks agree within
+3.96e-16 and the full GPU/CPU action within 4.50e-16 relative. Peak RSS is
+634.79 MiB, system RAM 51.1%, and GPU observations 1,185 MiB / 74 C.
+The cooling monitor completes without suspension. Its raw states, CPU check
+and audited figures are bound by evidence/tensor-q3-window-debug.json.
+The Q5 spatial level and 131,072-step Q4 level remain required. Completion
+of this coarse window does not erase its retained periodic-band failures.
+

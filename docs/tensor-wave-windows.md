@@ -181,6 +181,28 @@ checked. The compact receipts are `evidence/tensor-half-window-debug.json`
 and `evidence/tensor-first-time-pair-debug.json`
 (`0e3b7501206656ee421c81e99c5334bc12edec4b855168ff4e7a13eab2dd2ae5`).
 
+## Completed Q3 spatial level
+
+Q3-N65536 completes the fixed 500-microsecond experiment with 2,440,812
+vector coefficients and the common spatial step of 7.62939453125 ns.
+Propagation takes 224.531 seconds and the monitored worker 233.804 seconds.
+Full GPU/CPU stiffness agreement is 4.50e-16 relative. Independent local-scatter
+mass, final energies and probe checks agree within 3.96e-16. Postburst
+modified-energy range is 1.72e-15. All physical patch coefficients reproduce
+exactly; analytic area/moment errors remain below 1.56e-14.
+
+Peak combined RSS is 634.79 MiB, system RAM 51.1%, minimum available RAM
+7,934.41 MiB and system GPU observations 1,185 MiB / 74 C. Cooling finishes
+without a suspension; CPU temperature remains unavailable. Waveform and
+energy/resource figures in `outputs/tensor-fullplate-q3-window-20261110`
+were visually checked. Raw states and CPU/pacing receipts remain under
+Q3-N65536 in the frozen study. Compact evidence is
+`evidence/tensor-q3-window-debug.json`, fingerprint
+`4114a4cdc5b96637e63626e1b15bebf20782a620f5950513984c6b4c5081debf`.
+This verifies completion and arithmetic for the declared coarse spatial
+level; Q3's eight periodic-band failures remain in the earlier record.
+Q5-N65536 and Q4-N131072 are still required before the full assessment.
+
 Research-plate tensor convergence, representative recesses and frequencies,
 calibrated PZT/electronics and physical agreement remain open.
 The previous failed tetrahedral thickness screen is preserved. No research

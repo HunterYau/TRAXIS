@@ -23,6 +23,11 @@ the plan's approximate 7 mm PZT proposal. It is an intact numerical control,
 not the finalized sensor array. Changing radius or coordinates during the
 time study would change the experiment rather than isolate temporal error.
 
+The later layered/tensor comparisons retain that source and the two receivers
+and add an off-axis receiver at (350,200) mm. All three are fixed before the
+corresponding study runs. They remain numerical control locations, rather
+than a confirmed physical sensor layout.
+
 The excitation uses a nominal 1 N normal-force scale at 100 kHz, with two Hann
 cycles. Reception is area-average normal displacement. These quantities are
 not a measured voltage drive or a calibrated voltage output. The model
