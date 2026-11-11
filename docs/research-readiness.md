@@ -26,15 +26,15 @@ support across 2,592 sampled band cases, including folded modes. Its actual
 5.42-million-coefficient full-plate operator fits the guard and agrees with
 streamed CPU action. Physical circular footprints pass native checks; the
 guarded wave workflow and independent saved-state checker pass a full-interval
-small fixture. Two actual 500 mm tensor windows complete 500 microseconds
-and pass independent CPU state checks. Their raw time-step changes are below
-0.055%, with the third temporal level and spatial cases still required.
-The Q3/Q4/Q5 full-window spatial screen subsequently passes with finest
-raw changes of 0.10-0.12% below its unchanged 5% limit. The finest Q5 window
-uses 10.15 million coefficients, peaks at 1,370.93 MiB RSS and 77 C GPU, and
-passes an independent CPU state audit. Its optional cooling log has a
-retained file-replacement failure and same-worker recovery; the original
-simulation guards remain active. Three-level tensor time convergence, conforming recesses
+small fixture. All five full-size tensor windows complete 500 microseconds
+and pass independent CPU state checks. The Q3/Q4/Q5 spatial screen passes
+with finest raw changes of 0.10-0.12%. The three-level time screen also
+passes, with observed orders 2.0000 and finest raw changes 0.0091-0.0138%.
+Separate audits recompute both comparisons from raw data, and exact-source
+snapshot replay supports later source revisions. The finest Q5 case uses
+10.15 million coefficients at 1,370.93 MiB RSS / 77 C GPU; its optional
+cooling log records a file-replacement error and same-worker recovery while
+the original simulation guards remain active. Conforming recesses
 and calibrated PZT/physical agreement remain open. See lamb-profiles.md,
 tensor-gpu-operators.md, tensor-wave-windows.md and their evidence records.
 

@@ -38,12 +38,12 @@ GLL mass, exact/GLL stiffness and analytic-profile mode support. Its
 full plate and agrees with independent CPU action. Q5 operators and physical
 circular footprints now pass independent native checks; a guarded
 [wave-window workflow](docs/tensor-wave-windows.md) passes an end-to-end small
-fixture and independent CPU state audit. Two actual 5.42-million-coefficient
-tensor plate windows complete 500 microseconds and pass saved-state CPU
-checks. Raw changes after halving the step are below 0.055% at all three
-receivers. The full Q3/Q4/Q5 spatial screen now passes, with finest raw
-changes of 0.10-0.12%. The third temporal level, recess geometry and calibrated
-PZT/physical agreement remain open.
+fixture and independent CPU state audit. All five full-size windows complete
+500 microseconds and pass independent CPU checks. The Q3/Q4/Q5 spatial
+screen passes with finest raw changes of 0.10-0.12%; the three-level time
+screen has order 2.0000 and finest changes of 0.0091-0.0138%.
+These are intact mechanical controls. Conforming recesses, calibrated PZT
+response and physical agreement remain open.
 
 ## Setup
 

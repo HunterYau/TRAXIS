@@ -1,0 +1,548 @@
+{
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "mode": "spatial",
+  "replay_driver_sha256": "10a607df79c56b8f410c564e881c885b3d912d102739ff9fe4cb8081e5e8dfaa",
+  "study_sha256": "fec513e7b6e521ae2cbee3a975aaee15b76587ed1d2db54632292aa51cb1cd7c",
+  "worker_run": {
+    "exit_code": 0,
+    "wall_seconds": 8.014924200018868,
+    "maximum_observed_external_processes": 5,
+    "memory_scope": "TRAXIS monitor plus external executable and all observed descendants"
+  },
+  "study_fingerprint": "c339dd16680f52c9de65b3507bf5511b6d115228fc993b4afa48df6bcfbd5505",
+  "frozen_source_snapshot_sha256": "381d92d81597caef01c2b110ceabd023f602b880c05497e9eb9bc9ac16e59aa2",
+  "extracted_source_sha256": {
+    "traxis/__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "traxis/__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "traxis/acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "traxis/adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "traxis/bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "traxis/cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "traxis/calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "traxis/cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "traxis/config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "traxis/das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "traxis/dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "traxis/diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "traxis/dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "traxis/elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "traxis/elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "traxis/elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "traxis/elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "traxis/elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "traxis/elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "traxis/elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "traxis/enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "traxis/enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "traxis/enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "traxis/evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "traxis/evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "traxis/experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "traxis/fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "traxis/forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "traxis/forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "traxis/generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "traxis/geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "traxis/gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "traxis/gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "traxis/gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "traxis/gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "traxis/gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "traxis/gpu_tensor.py": "87234c72f34ba4e65e30a4c50a92ef1e6fbbce5324204efac9d5bef699ef12c7",
+    "traxis/gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "traxis/highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "traxis/highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "traxis/highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "traxis/highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "traxis/highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "traxis/highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "traxis/highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "traxis/imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "traxis/implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "traxis/implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "traxis/importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "traxis/iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "traxis/lamb_profiles.py": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+    "traxis/matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "traxis/matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "traxis/metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "traxis/model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "traxis/models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "traxis/patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "traxis/policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "traxis/policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "traxis/policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "traxis/polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "traxis/quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "traxis/quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "traxis/quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "traxis/reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "traxis/reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "traxis/resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "traxis/scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "traxis/solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "traxis/storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "traxis/studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "traxis/study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "traxis/study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "traxis/tensor_hex.py": "f5965194ba74adfcbcf71c52ace587d4729f6caae5e0ad2ee19f59505a97e070",
+    "traxis/tensor_patches.py": "8950e3d0e31537e8e8290271771ad20e365472e0f8ce37f1d8d77aa4d6f32f0e",
+    "traxis/training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "traxis/uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "traxis/uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "traxis/verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "traxis/waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "traxis/waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "traxis/waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "traxis/workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3",
+    "examples/tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+    "examples/tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc",
+    "examples/verify_tensor_window.py": "90028ae7aa69230de0b6dc77388d758ea5b309be80e4a3a72e93f069834fa7cc",
+    "examples/pace_gpu_worker.py": "f589a66d63b03de6e616ba6879b4d511d9eebd709feddb22edd23700e4347728"
+  },
+  "assessment_fingerprint": "eaa67fd57e04fefe81e7b5e4946684c570b097e0549e6809a022d6dca5c738b8",
+  "assessment_sha256": "102a4f0d96e2e2c96b17f25434210ba2e625856dbb128a319def5997753abe3e",
+  "comparison_sha256": "1292b7880edbe4c1714c4f7528394d885f095abd42401c4e5f2b69a9f209dd6a",
+  "receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 8.100743343148428e-09,
+      "fine_difference_l2_m": 4.193517219658791e-11,
+      "finest_waveform_l2_m": 3.558182454626777e-08,
+      "rate_identifiable": true,
+      "difference_ratio": 193.17300773615403,
+      "finest_relative_change": 0.0011785559827618944,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 7.66482902191317e-09,
+      "fine_difference_l2_m": 5.115282045761538e-11,
+      "finest_waveform_l2_m": 5.076193583739165e-08,
+      "rate_identifiable": true,
+      "difference_ratio": 149.84176734231414,
+      "finest_relative_change": 0.0010077003489676964,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 5.770845393761912e-09,
+      "fine_difference_l2_m": 3.035802107967277e-11,
+      "finest_waveform_l2_m": 2.7825500957479492e-08,
+      "rate_identifiable": true,
+      "difference_ratio": 190.09293717191517,
+      "finest_relative_change": 0.0010910143585936964,
+      "observed_time_order": null,
+      "passed": true
+    }
+  ],
+  "scope": "Postprocessing of existing raw states using the exact retained numerical sources; no forward rerun, source override or data acceptance.",
+  "resources": {
+    "limits": {
+      "max_seconds": 180,
+      "max_rss_mib": 1536,
+      "max_system_memory_percent": 85,
+      "min_available_mib": 2048,
+      "max_gpu_memory_percent": 90,
+      "max_gpu_temperature_c": 80,
+      "max_cpu_temperature_c": 90
+    },
+    "samples": [
+      {
+        "system_memory_percent": 44.0,
+        "available_mib": 9083.0234375,
+        "process_rss_mib": 54.48046875,
+        "cpu_temperatures_c": null,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3060 Ti",
+            "total_mib": 8192.0,
+            "used_mib": 832.0,
+            "temperature_c": 51.0
+          }
+        ],
+        "gpu_status": "available",
+        "elapsed_seconds": 0.5
+      },
+      {
+        "system_memory_percent": 44.1,
+        "available_mib": 9077.43359375,
+        "process_rss_mib": 60.19921875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 0.5470000000204891
+      },
+      {
+        "system_memory_percent": 44.2,
+        "available_mib": 9065.0625,
+        "process_rss_mib": 96.63671875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 0.75
+      },
+      {
+        "system_memory_percent": 44.3,
+        "available_mib": 9048.91015625,
+        "process_rss_mib": 115.68359375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 0.9679999999934807
+      },
+      {
+        "system_memory_percent": 44.4,
+        "available_mib": 9029.859375,
+        "process_rss_mib": 130.3828125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 1.172000000020489
+      },
+      {
+        "system_memory_percent": 44.5,
+        "available_mib": 9012.359375,
+        "process_rss_mib": 146.6015625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 1.375
+      },
+      {
+        "system_memory_percent": 44.6,
+        "available_mib": 9000.16015625,
+        "process_rss_mib": 158.48828125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 1.577999999979511
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8975.9453125,
+        "process_rss_mib": 200.51171875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 1.7810000000754371
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8978.44140625,
+        "process_rss_mib": 163.62890625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 1.984000000054948
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8972.66015625,
+        "process_rss_mib": 165.4453125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 2.187000000034459
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8961.48046875,
+        "process_rss_mib": 165.46875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 2.39000000001397
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8963.82421875,
+        "process_rss_mib": 169.67578125,
+        "cpu_temperatures_c": null,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3060 Ti",
+            "total_mib": 8192.0,
+            "used_mib": 832.0,
+            "temperature_c": 51.0
+          }
+        ],
+        "gpu_status": "available",
+        "elapsed_seconds": 2.609000000054948
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8954.359375,
+        "process_rss_mib": 169.98828125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 2.859000000054948
+      },
+      {
+        "system_memory_percent": 44.6,
+        "available_mib": 8997.24609375,
+        "process_rss_mib": 169.7890625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 3.062000000034459
+      },
+      {
+        "system_memory_percent": 44.6,
+        "available_mib": 8991.88671875,
+        "process_rss_mib": 169.8046875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 3.26500000001397
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8983.77734375,
+        "process_rss_mib": 175.109375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 3.4679999999934807
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8983.65625,
+        "process_rss_mib": 174.30078125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 3.672000000020489
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8954.5859375,
+        "process_rss_mib": 173.34375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 3.875
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8955.17578125,
+        "process_rss_mib": 174.74609375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 4.092999999993481
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8941.6640625,
+        "process_rss_mib": 176.91796875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 4.297000000020489
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8982.79296875,
+        "process_rss_mib": 174.953125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 4.5
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8982.38671875,
+        "process_rss_mib": 178.51953125,
+        "cpu_temperatures_c": null,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3060 Ti",
+            "total_mib": 8192.0,
+            "used_mib": 832.0,
+            "temperature_c": 51.0
+          }
+        ],
+        "gpu_status": "available",
+        "elapsed_seconds": 4.702999999979511
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8973.48046875,
+        "process_rss_mib": 177.52734375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 4.984000000054948
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8970.8359375,
+        "process_rss_mib": 179.49609375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 5.187000000034459
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8967.19140625,
+        "process_rss_mib": 179.7421875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 5.39000000001397
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8946.15234375,
+        "process_rss_mib": 179.01953125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 5.592999999993481
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8975.796875,
+        "process_rss_mib": 180.8515625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 5.797000000020489
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8970.42578125,
+        "process_rss_mib": 181.328125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 6.01500000001397
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8962.18359375,
+        "process_rss_mib": 182.29296875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 6.217999999993481
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8958.890625,
+        "process_rss_mib": 181.34375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 6.422000000020489
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8950.328125,
+        "process_rss_mib": 193.84375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 6.625
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8956.671875,
+        "process_rss_mib": 188.109375,
+        "cpu_temperatures_c": null,
+        "gpus": [
+          {
+            "name": "NVIDIA GeForce RTX 3060 Ti",
+            "total_mib": 8192.0,
+            "used_mib": 832.0,
+            "temperature_c": 51.0
+          }
+        ],
+        "gpu_status": "available",
+        "elapsed_seconds": 6.842999999993481
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8946.984375,
+        "process_rss_mib": 187.109375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 7.109000000054948
+      },
+      {
+        "system_memory_percent": 44.8,
+        "available_mib": 8967.10546875,
+        "process_rss_mib": 186.10546875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 7.312000000034459
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8945.19140625,
+        "process_rss_mib": 186.10546875,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 7.531000000075437
+      },
+      {
+        "system_memory_percent": 44.9,
+        "available_mib": 8945.9140625,
+        "process_rss_mib": 186.125,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 7.734000000054948
+      },
+      {
+        "system_memory_percent": 45.0,
+        "available_mib": 8934.390625,
+        "process_rss_mib": 188.16015625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 7.937000000034459
+      },
+      {
+        "system_memory_percent": 45.0,
+        "available_mib": 8932.9453125,
+        "process_rss_mib": 186.1640625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 8.14000000001397
+      },
+      {
+        "system_memory_percent": 44.7,
+        "available_mib": 8979.97265625,
+        "process_rss_mib": 86.15625,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 8.359000000054948
+      },
+      {
+        "system_memory_percent": 44.1,
+        "available_mib": 9075.7109375,
+        "process_rss_mib": 54.68359375,
+        "cpu_temperatures_c": null,
+        "gpus": [],
+        "gpu_status": "disabled",
+        "elapsed_seconds": 8.562000000034459
+      }
+    ],
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "fingerprint": "9e4a39cba6bc4fe6140886fc6302f21819274be981ea0e37d2e78533a7d0cf87"
+}

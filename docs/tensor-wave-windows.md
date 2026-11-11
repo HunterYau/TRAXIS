@@ -259,7 +259,63 @@ and `evidence/tensor-spatial-refinement-debug.json`
 (`639e61c6cf2915233a33641a7c5c3ae66bf74f22f9af4177eb0d1bcda59cff21`).
 The final Q4-N131072 temporal level is still required at this cutoff.
 
-Tensor temporal convergence, representative recesses and frequencies,
+## Passing full-window temporal screen and completed study
+
+Q4-N131072 completes 131,072 steps at 3.814697265625 ns over the unchanged
+500-microsecond interval. Propagation takes 1,009.584 seconds, including
+thermal scheduling; monitored worker time is 1,025.123 seconds. Eleven
+cooling pauses total 11.718 seconds without changing numerical state or
+time samples. Sampled GPU temperature peaks at 78 C, below the unchanged
+80 C stop guard. Peak RSS is 924.16 MiB, system RAM 50.8%, minimum available
+RAM 7,980.76 MiB and system GPU memory 1,461 MiB. CPU temperature is unavailable.
+
+Independent CPU mass, final energies and probes agree within 6.67e-16.
+Physical disk coefficients reproduce exactly. Modified-energy range is
+2.33e-15. All three levels have exactly matching discrete mass, circular
+covectors and common time samples. The assessment and independent raw-data
+audit pass:
+
+| Receiver | Difference ratio | Observed time order | Finest raw change |
+| --- | ---: | ---: | ---: |
+| (250,250) mm | 4.000060 | 2.000022 | 0.0137368% |
+| (480,480) mm | 4.000025 | 2.000009 | 0.00910324% |
+| (350,200) mm | 4.000017 | 2.000006 | 0.0126064% |
+
+The frozen 3.8-4.2 ratio bounds and 1% finest-change limit are unchanged.
+All five forward cases, five CPU audits, full-window spatial assessment and
+three-level time assessment are complete. This supports the declared Q4
+intact mechanical candidate at 3.333333 mm cells and a 7.62939 ns step;
+it does not accept other geometries, frequencies or voltage data.
+
+Quarter-step figures are in `outputs/tensor-fullplate-q4-quarter-window-20261110`.
+The assessment and independently audited CSV/PNG/PDF artifacts are
+`outputs/tensor-time-assessment-20261110` and `outputs/tensor-time-audit-20261110`.
+All four new figures were visually checked. Compact receipts are
+`evidence/tensor-quarter-window-debug.json`, fingerprint
+`0fcfd35dacc7b0801a60add641144b67be7e5f0d22b603e89bd7be607c7ecf41`,
+and `evidence/tensor-time-refinement-debug.json`,
+`e4181d56ab0054747a6ba8f6027ab9d4f9b590f85edb442a392006bf41fcb0fe`.
+
+## Exact-source assessment replay
+
+`examples.replay_tensor_assessment` validates the frozen archive inventory,
+sizes, paths and every source digest, extracts into a fresh project output
+directory, then runs the retained assessment code in a separate guarded
+process. It neither modifies the frozen plan nor overrides identity checks.
+The spatial assessment reproduces successfully in
+`outputs/tensor-spatial-source-replay-20261110` using the exact archived
+numerical source snapshot. This permits later I/O or geometry development
+without relabelling historical measurements as results of the newer source.
+Replay performs postprocessing only, not another expensive forward run.
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.replay_tensor_assessment --study outputs/tensor-fullplate-study-20261109/tensor-study-plan.json --mode spatial --output outputs/tensor-source-replay
+```
+
+The compact replay receipt is `evidence/tensor-source-replay-debug.json`,
+fingerprint `9e4a39cba6bc4fe6140886fc6302f21819274be981ea0e37d2e78533a7d0cf87`.
+
+Representative recesses and frequencies,
 calibrated PZT/electronics and physical agreement remain open.
 The previous failed tetrahedral thickness screen is preserved. No research
 bank or full model/policy training is accepted by these preflight checks.

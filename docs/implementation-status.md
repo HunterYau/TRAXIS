@@ -1043,3 +1043,27 @@ This is an independent geometric reference, with no mapped CUDA solver,
 circular recess mesh, transient or data acceptance yet. The active frozen
 intact wave source inventory remains unchanged.
 
+## Complete tensor time refinement and frozen-source replay
+
+Q4-N131072 completes the unchanged full 500-microsecond interval in
+1,009.584 propagation / 1,025.123 monitored seconds, including eleven
+cooling pauses totalling 11.718 seconds. GPU temperature peaks at 78 C;
+RSS at 924.16 MiB. Independent CPU final-state checks pass within 6.67e-16.
+The complete three-level raw time comparison and separate audit pass:
+orders are 2.000022/2.000009/2.000006 and finest changes
+0.0137368%/0.00910324%/0.0126064%. Exact discrete mass, physical covectors
+and shared time samples match across levels.
+
+All five frozen forward cases and CPU checks are complete. Spatial and
+temporal screens pass for this intact mechanical experiment. See
+tensor-wave-windows.md and evidence/tensor-quarter-window-debug.json /
+tensor-time-refinement-debug.json. Representative recess/frequency and
+PZT/physical gates remain open; ready_for_training_data stays false.
+
+Guarded exact-source replay reproduces the spatial assessment from the
+retained archive, validating inventory, extraction paths and every source
+hash. It preserves strict historical identities after later code changes.
+See examples/replay_tensor_assessment.py and
+evidence/tensor-source-replay-debug.json. This replays postprocessing,
+not forward physics or full training.
+
