@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import time
 from typing import Callable
 
 
@@ -20,6 +21,21 @@ def canonical_hash(value) -> str:
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
 
+def _replace_with_retry(source: Path, destination: Path) -> None:
+    # Windows readers/virus scanners can briefly deny replacement. Keep the
+    # completed temporary file until replacement succeeds or the bound expires.
+    delays = (0.005, 0.01, 0.02, 0.04, 0.08, 0.1, 0.1, 0.1)
+    for attempt in range(len(delays) + 1):
+        try:
+            os.replace(source, destination)
+            return
+        except PermissionError as error:
+            if (os.name != "nt" or getattr(error, "winerror", None) not in (5, 32, 33)
+                    or attempt == len(delays)):
+                raise
+            time.sleep(delays[attempt])
+
+
 def atomic_write(path: Path, writer: Callable, *, overwrite: bool = False) -> None:
     path = Path(path)
     if path.exists() and not overwrite:
@@ -33,7 +49,7 @@ def atomic_write(path: Path, writer: Callable, *, overwrite: bool = False) -> No
             stream.flush()
             os.fsync(stream.fileno())
         if overwrite:
-            os.replace(temporary, path)
+            _replace_with_retry(temporary, path)
         else:
             os.link(temporary, path)
     finally:

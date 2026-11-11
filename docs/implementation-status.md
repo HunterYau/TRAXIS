@@ -1067,3 +1067,17 @@ See examples/replay_tensor_assessment.py and
 evidence/tensor-source-replay-debug.json. This replays postprocessing,
 not forward physics or full training.
 
+## Bounded Windows progress publication recovery
+
+The shared atomic writer retries brief Windows replacement denials with a
+finite 0.455-second backoff budget. A bounded shared JSON reader accompanies
+the fix. The first reader-only held-open test failed and remains retained;
+sharing flags alone were insufficient on this machine. Seven focused and
+13 integration tests pass. A fresh complete small GPU window and independent
+CPU check agree with the old control, and both historical full-plate
+assessments reproduce exactly from the archived numerical source.
+
+See progress-log-recovery.md and evidence/progress-log-recovery-debug.json.
+The workflow fixture runs two one-step CPU debug updates; no full or research
+training cycle ran. This is I/O reliability work, not new physics acceptance.
+

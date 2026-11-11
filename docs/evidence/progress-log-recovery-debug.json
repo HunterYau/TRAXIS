@@ -1,0 +1,234 @@
+{
+  "kind": "progress_log_recovery_evidence",
+  "completed": true,
+  "passed": true,
+  "full_training_cycle_run": false,
+  "research_training_run": false,
+  "bounded_debug_training_updates_in_workflow_test": 2,
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "gpu_tensor.py": "87234c72f34ba4e65e30a4c50a92ef1e6fbbce5324204efac9d5bef699ef12c7",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "lamb_profiles.py": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "95bbae9be9def8fc4687866bc28bae23b2fa57ae43d05e8e201485f3eb2b5239",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "tensor_hex.py": "f5965194ba74adfcbcf71c52ace587d4729f6caae5e0ad2ee19f59505a97e070",
+    "tensor_patches.py": "8950e3d0e31537e8e8290271771ad20e365472e0f8ce37f1d8d77aa4d6f32f0e",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+    "tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc",
+    "verify_tensor_window.py": "90028ae7aa69230de0b6dc77388d758ea5b309be80e4a3a72e93f069834fa7cc",
+    "pace_gpu_worker.py": "f589a66d63b03de6e616ba6879b4d511d9eebd709feddb22edd23700e4347728"
+  },
+  "test_runs": [
+    {
+      "directory": "outputs\\progress-log-recovery-tests-20261110",
+      "test_count": 7,
+      "test_seconds": 0.079,
+      "monitored_seconds": 0.41463700006715953,
+      "resources": {
+        "peak_rss_mib": 87.8515625,
+        "peak_system_memory_percent": 46.7,
+        "minimum_available_mib": 8655.83203125,
+        "gpu_memory_peak_mib": 873.0,
+        "gpu_temperature_peak_c": 37.0,
+        "cpu_temperature_verified": false
+      },
+      "input_identities": {
+        "invocation.json": "53f88c2f110a8e7fd931b5777877c7ad4f650b7d229307ff9bcafc3659c5bbf3",
+        "monitor-result.json": "bbc91dca42f8cd0484a97f09863b3f584362153fd689aa47f5f70f9251ac240a",
+        "tests.log": "4f3c339dfcc584a8ca094fc03d80d578c3114169be1440c90575f71f1f84c16a"
+      }
+    },
+    {
+      "directory": "outputs\\progress-log-integration-tests-20261110",
+      "test_count": 13,
+      "test_seconds": 8.677,
+      "monitored_seconds": 10.34438400005456,
+      "resources": {
+        "peak_rss_mib": 460.09765625,
+        "peak_system_memory_percent": 49.5,
+        "minimum_available_mib": 8193.59765625,
+        "gpu_memory_peak_mib": 873.0,
+        "gpu_temperature_peak_c": 45.0,
+        "cpu_temperature_verified": false
+      },
+      "input_identities": {
+        "invocation.json": "793a3ef5b990764087c88aeab043bc5dacbc31bed313e8226a40682233b9f10c",
+        "monitor-result.json": "ccd3f577346df790f484d67c1c717cf5ec1a308d9a5ead78e02e6c55a84bc819",
+        "tests.log": "9f7b67b0b8b0efb1c31a177fd4565abf58b11d888e5dbee14bbd775ad5b92e0a"
+      }
+    }
+  ],
+  "source_files": {
+    "traxis/storage.py": "95bbae9be9def8fc4687866bc28bae23b2fa57ae43d05e8e201485f3eb2b5239",
+    "examples/read_live_progress.py": "88efae3a4a572f9e4a37534de8affb7813d0f1e1c35c20a364214598d415c898",
+    "tests/test_live_progress.py": "53b8ae542916db97b7ffb991036d6ad75d97cfca90aff85e9d2cd7f7035d56b0",
+    "tests/test_storage_recovery.py": "e9101337a880543b68b3b28cfa359a671a8cb850a662035e5bf7ee33be5d187f"
+  },
+  "initial_reader_failure": {
+    "directory": "outputs\\live-progress-tests-20261110",
+    "test_count": 3,
+    "errors": 1,
+    "exit_code": 1,
+    "identities": {
+      "tests.log": "faf201bb7190cbbf8fc7fda88230c83addaa270f850ebdc1d644b7067f3873ba",
+      "monitor-result.json": "2b00d1b1ac489d70777c1b27943b8aacad8747a1be06a9ec85a66623a2cb63a2",
+      "helper-source.py": "8a848ff280a0b23ecd419023c6abe9d318435bc62a62fd9b5a0c6aba774a6235",
+      "test-source.py": "6829bf12735139c4abc8ad0550e2e648f5cdbe7bfcf4e4398c496d6c016c0d64"
+    },
+    "finding": "Explicit read/write/delete sharing alone did not make the held-open os.replace test pass on this machine."
+  },
+  "retry_contract": {
+    "platform": "Windows only",
+    "native_errors": [
+      5,
+      32,
+      33
+    ],
+    "maximum_attempts": 9,
+    "maximum_backoff_seconds": 0.455,
+    "writer_callback_runs_once": true,
+    "create_only_publication_unchanged": true,
+    "unrelated_errors_not_retried": true
+  },
+  "smoke": {
+    "directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\tensor-wave-io-smoke-20261110",
+    "parent_fingerprint": "afdb243d2f3685e3b76e27f610b06a4abc34882d470562ba7b70f2e96740a26a",
+    "cpu_fingerprint": "6b60dcff92cbb5357fda4a37763f7fde543461d8f4cff4ba4186bb43ebe82c2b",
+    "duration_s": 0.0005,
+    "steps": 32768,
+    "vector_dofs": 1215,
+    "only_changed_core_source": [
+      "storage.py"
+    ],
+    "exact_mass_match": true,
+    "exact_patch_match": true,
+    "exact_time_match": true,
+    "per_receiver_repeat_relative_l2": [
+      9.432430366710537e-14,
+      1.2171114727045857e-13,
+      1.264929530161227e-13
+    ],
+    "final_displacement_repeat_relative_l2": 7.19806136677133e-14,
+    "final_velocity_repeat_relative_l2": 6.353142848322423e-13,
+    "propagation_seconds": 16.285724699962884,
+    "resources": {
+      "peak_rss_mib": 422.7109375,
+      "peak_system_memory_percent": 50.5,
+      "minimum_available_mib": 8028.1484375,
+      "gpu_memory_peak_mib": 994.0,
+      "gpu_temperature_peak_c": 45.0,
+      "cpu_temperature_verified": false
+    },
+    "cpu_energy_maximum_relative_error": 2.220446049250313e-16,
+    "input_identities": {
+      "tensor-wave-plan.json": "7bacf99f9119fc6d9ec0b34b5666e6de5836b088ab6757b1988e495d979e6d00",
+      "monitor-result.json": "f2680d094f2ac541f936fe0a67268660944df8673555d5f7768fa24f25812178",
+      "source-snapshot.zip": "b3898e3b0ff71392936d66f4719287885f3a1538cf1b635371ea3147331a254d",
+      "native/wave-report.json": "20d3c416a95a4d5f5eba795fd7a5fb795e62487503e8cd38bd54c204454ba2b0",
+      "native/operator-comparison.npz": "93ac4f62163aa9509759a51efc1e73e012139d19c1757f6a7ff4f592410c3d95",
+      "native/mechanical-patches.npz": "800b53f23214a67d70434b3bd20b2ea8a5f251f9f791d798575805bc8d8f290f",
+      "native/mechanical-window.npz": "3c4ae39de5eb3a67c129b292d3b39c0eead93e52de2f540ccee8e28ec387a4bf"
+    }
+  },
+  "historical_source_replays": [
+    {
+      "mode": "spatial",
+      "directory": "outputs\\tensor-spatial-source-replay-after-io-20261110",
+      "fingerprint": "194aef5cc2d4bd92306f6b2a6905bbfc7f6a29822eb5d61440b099a0468116b8",
+      "receipt_sha256": "0683ddacf070a69148143a1a38f87d4089f0bbe65402bc11b17bae3def6e6a63",
+      "frozen_source_snapshot_sha256": "381d92d81597caef01c2b110ceabd023f602b880c05497e9eb9bc9ac16e59aa2",
+      "comparison_arrays_identical": true,
+      "monitored_seconds": 7.82099969999399
+    },
+    {
+      "mode": "time",
+      "directory": "outputs\\tensor-time-source-replay-after-io-20261110",
+      "fingerprint": "7d958da3629709dd8ed1a52cb877adec3556fc56dc4e91c14d30de7d1fca8719",
+      "receipt_sha256": "547429a0272722fc61b3aece30945b443b96ecaaadf49eda6b0ed1f948ab84ff",
+      "frozen_source_snapshot_sha256": "381d92d81597caef01c2b110ceabd023f602b880c05497e9eb9bc9ac16e59aa2",
+      "comparison_arrays_identical": true,
+      "monitored_seconds": 9.863578399992548
+    }
+  ],
+  "collector_sha256": "e7bf7248cfe0a1949e41a82b72db38d56cbe2be18872c4693ea6f9886fdc9b9c",
+  "scope": "I/O reliability and bounded workflow checks, fresh small GPU control and exact-source historical postprocessing; no full-size rerun or new research-data acceptance.",
+  "fingerprint": "2d5b3f66bd2031a1eec5b8ca66033548f6b195f75b29eba6c53af351e5362f3e"
+}
