@@ -82,3 +82,41 @@ Estimate ranges by repeated removal/reclamping on an intact plate, recording
 position, clamp setting/preload, couplant condition and waveform repeatability.
 Keep final physical holdouts protected when selecting those ranges. No clamp
 contact fidelity or research-bank acceptance is implied by these proxies.
+
+## Verification checkpoint
+
+The final guarded integration passes 50 tests without skips in 35.286 test
+seconds. It includes a native P2 pulse at 3.175 mm with changed current-state
+footprints, legacy fingerprint/plan compatibility, both sensor layouts,
+clearance rejection, parent/material/split preservation, real waveform/cache
+effects and existing refinement tamper checks. Peak process-tree RSS is
+414.99 MiB, system RAM 54.7%, minimum available RAM 7,348.28 MiB and GPU
+observation 951 MiB / 48 C. CPU temperature is unavailable. No training ran.
+
+The first invalid-footprint test expected the wrong error wording; the
+nominal edge check correctly rejected it earlier. A broader run also caught
+two old producer fixtures using raw dataclass serialization. They now use the
+canonical scenario serializer; strict source/geometry mismatch checks remain.
+Both failed logs and successful intermediate/final runs remain retained.
+Overlapping test groups are not added to the older integrated test total.
+
+Retain a small waveform sensitivity reference with:
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.verify_pzt_randomization --output outputs/mount-reference
+```
+
+The saved 40-by-40-by-3.175 mm intact control changes one sensor by (0.4,-0.3)
+mm and increases its effective contact radius by 10%. Combined waveform L2
+change is 5.4931%; an independent current remount produces the same nonzero
+intact residual. This is a mechanical sensitivity example, not a prediction
+of real clamp variability. Gain-only changes reuse all seven raw groups and
+match the expected scaling within 1.71e-8 relative. Position/contact changes
+require fresh raw solves. The fixture remains plumbing-only.
+
+A separate recipe audit checks 24 realizations from eight parents, 384
+baseline/current sensor positions, preserved parent splits/materials and a
+schema-2 external task with 70 jobs / 140 records. The final PNG/PDF figure
+was visually checked. Raw artifacts are under outputs/pzt-randomization-*.
+Compact evidence is evidence/pzt-domain-randomization-debug.json, fingerprint
+7511c071096d772ae63cf3fde1e6c187a1c76836f1108231412d0a94436f3720.

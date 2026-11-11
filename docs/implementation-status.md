@@ -1126,3 +1126,24 @@ No transient, GPU propagation, physical disk integration, full-size defect,
 representative thin-stock/frequency or PZT/physical acceptance follows from
 this operator checkpoint. No research training or bank generation ran.
 
+## Revised stock and PZT mounting randomization
+
+The current physical target is 3.175 mm aluminum with removable clamp-mounted
+PZTs. The explicit research configuration now randomizes positions within
+0.5 mm, effective circular contact radius by 10%, coupling by 10%, additional
+gain drift, force scale and noise. It enables independent baseline/current
+remounts. Ranges are provisional sensitivity settings, not measured clamp
+tolerances. See current-hardware.md and pzt-domain-randomization.md.
+
+Actual ports drive local and native waveform integration/cache keys, while
+inference retains nominal coordinates. Remount variants preserve plate,
+material, parent and split. New mounting plans/tasks use schema 2; nominal
+legacy fingerprints remain unchanged. The final 50-test integration and a
+saved small 3.175 mm waveform sensitivity control pass, including native pulse
+checks and an independent recipe/port audit. See the compact domain-randomization
+evidence receipt. No model training or accepted research-bank generation ran.
+
+Historical 3 mm references remain frozen. Current full-size mesh/time/frequency
+validation, measured clamp/contact/preload/couplant response and physical PZT
+agreement remain open. This randomization layer does not model clamp mechanics.
+
