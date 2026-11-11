@@ -1,0 +1,319 @@
+{
+  "kind": "conforming_recess_geometry_debug",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "plan_fingerprint": "822c29157f0e5dec766e6a64f0a7e37ca88f4db139d3fb408121cc57edb9a54f",
+  "parent_fingerprint": "753e28d5cca69de07f3ab15371e01e4b41bc5f5c06fa2da7d27120824ab3f531",
+  "report_fingerprint": "6a55de10838879a9aae7dc60c7173afaabe895dce8209979cbef55d0b8c46ed0",
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "gpu_tensor.py": "87234c72f34ba4e65e30a4c50a92ef1e6fbbce5324204efac9d5bef699ef12c7",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "lamb_profiles.py": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "recess_hex.py": "de20a3763cbbec9c22cfc1aabfd3c5afc41af45da14054a42ad28fdbd7c6f9bf",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "95bbae9be9def8fc4687866bc28bae23b2fa57ae43d05e8e201485f3eb2b5239",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "tensor_hex.py": "f5965194ba74adfcbcf71c52ace587d4729f6caae5e0ad2ee19f59505a97e070",
+    "tensor_patches.py": "8950e3d0e31537e8e8290271771ad20e365472e0f8ce37f1d8d77aa4d6f32f0e",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+    "tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc",
+    "verify_tensor_window.py": "90028ae7aa69230de0b6dc77388d758ea5b309be80e4a3a72e93f069834fa7cc",
+    "pace_gpu_worker.py": "f589a66d63b03de6e616ba6879b4d511d9eebd709feddb22edd23700e4347728"
+  },
+  "geometry_driver_sha256": "7ea745301f686772a181072215e0b938f3a1ea728ecd853abbc57f18d46f365f",
+  "dimensions": {
+    "plate_m": [
+      0.5,
+      0.5,
+      0.003
+    ],
+    "diameters_m": [
+      0.02,
+      0.03,
+      0.04
+    ],
+    "depths_m": [
+      0.00075,
+      0.0015,
+      0.002
+    ],
+    "geometry_orders": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "angular_cells": 1,
+    "paired_intact_controls": true
+  },
+  "geometry_cases": 90,
+  "native_cases": 10,
+  "minimum_polynomial_jacobian_bound": 1.941626073620132e-09,
+  "maximum_sampled_jacobian_condition": 637.25172109148,
+  "numerical_geometry_errors": {
+    "represented_volume_relative_error": 3.3306690738754696e-15,
+    "divergence_volume_relative_error": 5.995204332975845e-15,
+    "closed_normal_relative_residual": 4.107843524372563e-15,
+    "top_area_relative_error": 2.1094237467877974e-15
+  },
+  "circle_shape_errors": [
+    {
+      "geometry_order": 1,
+      "area_relative_error": 0.3633802276324185,
+      "radial_relative_error": 0.2928932188134524
+    },
+    {
+      "geometry_order": 2,
+      "area_relative_error": 0.01178483591305246,
+      "radial_relative_error": 0.010781423763188025
+    },
+    {
+      "geometry_order": 3,
+      "area_relative_error": 0.00018756997002478126,
+      "radial_relative_error": 0.003093515214940723
+    },
+    {
+      "geometry_order": 4,
+      "area_relative_error": 1.738242439985882e-06,
+      "radial_relative_error": 9.087300248022956e-05
+    },
+    {
+      "geometry_order": 5,
+      "area_relative_error": 1.0466870481451451e-08,
+      "radial_relative_error": 1.5240840082086926e-05
+    }
+  ],
+  "native_audit": [
+    {
+      "defective": false,
+      "geometry_order": 1,
+      "point_error_m": 1.3877787807814457e-17,
+      "native_vs_independent_jacobian_relative_l2": 6.397517615126539e-16,
+      "fitted_coordinate_derivative_relative_l2": 1.4105620786158627e-15,
+      "independent_volume_relative_error": 1.5543122344752192e-15
+    },
+    {
+      "defective": false,
+      "geometry_order": 2,
+      "point_error_m": 2.0816681711721685e-17,
+      "native_vs_independent_jacobian_relative_l2": 1.6458174840666729e-15,
+      "fitted_coordinate_derivative_relative_l2": 9.717203442974135e-15,
+      "independent_volume_relative_error": 1.4432899320127035e-15
+    },
+    {
+      "defective": false,
+      "geometry_order": 3,
+      "point_error_m": 4.85722573273506e-17,
+      "native_vs_independent_jacobian_relative_l2": 4.91708170671942e-15,
+      "fitted_coordinate_derivative_relative_l2": 4.268309278506911e-14,
+      "independent_volume_relative_error": 7.771561172376096e-16
+    },
+    {
+      "defective": false,
+      "geometry_order": 4,
+      "point_error_m": 9.367506770274758e-17,
+      "native_vs_independent_jacobian_relative_l2": 1.911856286282356e-14,
+      "fitted_coordinate_derivative_relative_l2": 4.0857175044077514e-14,
+      "independent_volume_relative_error": 5.218048215738236e-15
+    },
+    {
+      "defective": false,
+      "geometry_order": 5,
+      "point_error_m": 2.220446049250313e-16,
+      "native_vs_independent_jacobian_relative_l2": 2.149894021756938e-14,
+      "fitted_coordinate_derivative_relative_l2": 7.295003976833456e-14,
+      "independent_volume_relative_error": 2.3314683517128287e-15
+    },
+    {
+      "defective": true,
+      "geometry_order": 1,
+      "point_error_m": 1.3877787807814457e-17,
+      "native_vs_independent_jacobian_relative_l2": 6.397517615126539e-16,
+      "fitted_coordinate_derivative_relative_l2": 1.4105620786158627e-15,
+      "independent_volume_relative_error": 1.4432899320127035e-15
+    },
+    {
+      "defective": true,
+      "geometry_order": 2,
+      "point_error_m": 2.0816681711721685e-17,
+      "native_vs_independent_jacobian_relative_l2": 1.6458174840666729e-15,
+      "fitted_coordinate_derivative_relative_l2": 9.717203442974135e-15,
+      "independent_volume_relative_error": 1.5543122344752192e-15
+    },
+    {
+      "defective": true,
+      "geometry_order": 3,
+      "point_error_m": 4.85722573273506e-17,
+      "native_vs_independent_jacobian_relative_l2": 4.919492406018666e-15,
+      "fitted_coordinate_derivative_relative_l2": 4.380252471746248e-14,
+      "independent_volume_relative_error": 6.661338147750939e-16
+    },
+    {
+      "defective": true,
+      "geometry_order": 4,
+      "point_error_m": 9.367506770274758e-17,
+      "native_vs_independent_jacobian_relative_l2": 1.911947667357437e-14,
+      "fitted_coordinate_derivative_relative_l2": 4.072900330742408e-14,
+      "independent_volume_relative_error": 4.9960036108132044e-15
+    },
+    {
+      "defective": true,
+      "geometry_order": 5,
+      "point_error_m": 2.220446049250313e-16,
+      "native_vs_independent_jacobian_relative_l2": 2.1489924497533705e-14,
+      "fitted_coordinate_derivative_relative_l2": 7.135437635449266e-14,
+      "independent_volume_relative_error": 2.9976021664879227e-15
+    }
+  ],
+  "worker_seconds": 49.0667474999791,
+  "resources": {
+    "peak_rss_mib": 345.48828125,
+    "peak_system_memory_percent": 57.3,
+    "minimum_available_mib": 6929.6484375,
+    "gpu_memory_peak_mib": 873.0,
+    "gpu_temperature_peak_c": 50.0,
+    "cpu_temperature_verified": false
+  },
+  "auditor_resources": {
+    "peak_rss_mib": 95.5703125,
+    "peak_system_memory_percent": 58.6,
+    "minimum_available_mib": 6727.515625,
+    "gpu_memory_peak_mib": 873.0,
+    "gpu_temperature_peak_c": 50.0,
+    "cpu_temperature_verified": false
+  },
+  "tests": {
+    "directory": "outputs\\recess-geometry-tests-20261110-v2",
+    "count": 19,
+    "test_seconds": 1.876,
+    "monitored_seconds": 3.1516433999640867,
+    "resources": {
+      "peak_rss_mib": 170.234375,
+      "peak_system_memory_percent": 50.8,
+      "minimum_available_mib": 7988.42578125,
+      "gpu_memory_peak_mib": 873.0,
+      "gpu_temperature_peak_c": 50.0,
+      "cpu_temperature_verified": false
+    },
+    "test_sha256": "a6a892efaa30a544c2b0ffde446efa8a95ed40933362110d4725577f4705e004",
+    "log_sha256": "8d49dfc790fadb6ba1be86711e21444e810e0b52f781bef96f150cb7a3429ef9"
+  },
+  "retained_failures": [
+    {
+      "directory": "outputs\\recess-geometry-tests-20261110",
+      "log_sha256": "1c619ba1b16e69def40a28edd40871bca3201fb2db8a61ede582189e186bdb78",
+      "finding": "Manual expected defective node count was 1596; independent annulus topology gives the actual 1488. No mesh change."
+    },
+    {
+      "directory": "outputs\\recess-geometry-native-20261110",
+      "log_sha256": "a9cc9e036ddfd2bd009896306f1ec6157bcc192ea394ac3dc5c72a63608ac49f",
+      "snapshot_sha256": "732cd95ea6d84dc0c0ffe7714cd20a21589c13516420c06bcb8fb246d9853977",
+      "finding": "Duplicate passed keyword while merging native report fields; fixed report construction and repeated unchanged numerical criteria."
+    },
+    {
+      "directory": "outputs/recess-geometry-audit-20261110",
+      "source_sha256": "5f13e9d8133e65394fd8f1fbbf9308c2eab6533be8f48464fecc96bad001c62c",
+      "finding": "Auditor assumed 100 archive members; corrected to the exact expected set of 90."
+    },
+    {
+      "directory": "outputs/recess-geometry-audit-20261110-v2",
+      "source_sha256": "ea94d2176b9c0e0a51626b297d5d5255e87adefcfad2d9c3a98b732c8e28d8ce",
+      "finding": "Audit passed but a complex-root dtype produced a cast warning; final auditor explicitly verifies negligible imaginary components and takes real roots. Metrics unchanged."
+    }
+  ],
+  "input_identities": {
+    "outputs\\recess-geometry-native-20261110-v2\\geometry-plan.json": "05ce25a1b95a2b4b1424325e39a2827e06b1b83044d48438eea3748a5e2410bd",
+    "outputs\\recess-geometry-native-20261110-v2\\monitor-result.json": "46b90d5bf2195c037b4fe43c620a828ea6c06ad4dd737fd92b7abcbfef04feaa",
+    "outputs\\recess-geometry-native-20261110-v2\\native\\geometry-report.json": "b2bb9708dab5eb817eddfa927a28a717d3923900b8d41e5d4391ce96f5d769e7",
+    "outputs\\recess-geometry-native-20261110-v2\\native\\geometry-proofs.npz": "4b141ea67e716323f42e4306d839e4c7455c2a46fa37c7299ac607fc87e8a57f",
+    "outputs\\recess-geometry-audit-20261110-v3\\audit.json": "663b131d5307d178006317aa1baeff98cd5312a83d3c921fb19d563c2a3152c4",
+    "outputs\\recess-geometry-audit-20261110-v3\\shape-errors.csv": "52431caf3e7c4ab5f9112693550192c951a8459075af7a06f2098956e03edd04",
+    "outputs\\recess-geometry-audit-20261110-v3\\native-geometry.csv": "7b0a92d4946c405b2d3da4a53a58380b9bdd14e7d48f3f24ef7ee5a7f67377a3",
+    "outputs\\recess-geometry-audit-20261110-v3\\geometry-errors.png": "b75dca4ff4fe1e2ec7f0848b823b24bd9bf218901b9d64dbbd547d81647f2193",
+    "outputs\\recess-geometry-audit-20261110-v3\\geometry-errors.pdf": "41f4f06bc674141047d9dc935619d830e3f622b65c00ce25be66bee17eb00572"
+  },
+  "auditor_sha256": "bf261564dd0dacde1faf445166693b3c9209421bcb1c6a9dd672e2f6c4d3af26",
+  "collector_sha256": "739c19ef0106aa65744ce57e8099b35a86fbca823fe64fbe9c648587b21b22e1",
+  "scope": "Explicit conforming material topology and native mapped geometry, including retained circle-shape approximation; no mapped elastic operator, GPU transient, wave discretization or PZT/data acceptance.",
+  "fingerprint": "e44722949c80b1e4b3266b8ca3bea12d75f7b2594a96fe80d0ebf6011e8263d2"
+}
