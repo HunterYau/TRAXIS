@@ -169,7 +169,11 @@ def native_geometry(mesh, guard, *, return_model=False):
         raise ArithmeticError('native geometry interpolation is incomplete or discontinuous')
     if mesh.geometry_points_m.shape != base.points_m.shape:
         raise ArithmeticError('geometry control inventory differs')
-    values = np.linalg.solve(transform, mesh.geometry_points_m-base.points_m)
+    # Bind target controls by local topology, allowing another valid global
+    # node numbering (for example the compact extruded mesh).
+    target = np.empty_like(base.points_m)
+    target[base.element_nodes.ravel()] = mesh.geometry_points_m[mesh.geometry_elements.ravel()]
+    values = np.linalg.solve(transform, target-base.points_m)
     deformation = ng.GridFunction(ng.VectorH1(native, order=g))
     if len(deformation.components) != 3:
         raise ArithmeticError('native geometry needs three scalar coefficient blocks')

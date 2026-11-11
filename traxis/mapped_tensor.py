@@ -84,17 +84,18 @@ def _local_majorant(order, inverse, volume, material):
         + np.einsum('kl,ijk->ijl', derivative, flux[2])).ravel()
 
 
-def build_system(mesh, material, guard=None, *, max_bytes=256*1024**2):
+def build_system(mesh, material, guard=None, *, max_bytes=256*1024**2, max_batch_vectors=32):
     if not isinstance(mesh, RecessHexMesh) or not isinstance(material, Material):
         raise ValueError('mapped elasticity needs a checked recess mesh and material')
     if mesh.geometry_order > mesh.order:
         raise ValueError('geometry degree must not exceed displacement degree for rigid motions')
-    if type(max_bytes) is not int or max_bytes <= 0:
-        raise ValueError('mapped storage bound must be a positive integer')
+    if (type(max_bytes) is not int or max_bytes <= 0
+            or type(max_batch_vectors) is not int or not 1 <= max_batch_vectors <= 32):
+        raise ValueError('mapped storage/batch bounds must be positive bounded integers')
     ns, ne, q = len(mesh.points_m), len(mesh.element_nodes), mesh.order+1
     # Inverse geometry, volume, positive mass/majorant, state/action vectors
     # and a bounded local contraction workspace; mesh storage is separate.
-    predicted = ne*q**3*10*8 + ns*3*8*68 + 32*3*q**3*24*8
+    predicted = ne*q**3*10*8 + ns*3*8*(2*max_batch_vectors+4) + 32*3*q**3*24*8
     if predicted > max_bytes:
         raise MemoryError('mapped operator exceeds its preallocation screen')
     nodes, weights, *_ = line_rule(mesh.order)
@@ -121,6 +122,7 @@ def build_system(mesh, material, guard=None, *, max_bytes=256*1024**2):
     if not math.isfinite(upper) or upper <= 0:
         raise ArithmeticError('mapped stability bound is invalid')
     screen = dict(vector_dofs=3*ns, elements=ne, order=mesh.order, geometry_order=mesh.geometry_order,
+        max_batch_vectors=max_batch_vectors,
         operator_storage_screen_bytes=predicted, minimum_gll_jacobian=minimum,
         maximum_gll_jacobian_condition=condition, stiffness_rule='gll', mass_rule='positive_gll',
         stability_bound='diagonal_energy_majorant', dense_element_matrices_stored=False)
@@ -133,6 +135,8 @@ def build_system(mesh, material, guard=None, *, max_bytes=256*1024**2):
 def action(system, values, guard=None):
     ns = len(system.mesh.points_m)
     states, vector = _states(values, 3*ns)
+    if len(states) > system.screen.get('max_batch_vectors', 32):
+        raise MemoryError('mapped state batch exceeds the declared vector budget')
     states = states.reshape((-1, 3, ns)); answer = np.zeros_like(states)
     for e, ids in enumerate(system.mesh.element_nodes):
         if guard:
