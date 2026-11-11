@@ -1,0 +1,979 @@
+{
+  "kind": "production_tensor_profile_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "configuration": {
+    "orders": [
+      3,
+      4,
+      5
+    ],
+    "required_orders": [
+      4,
+      5
+    ],
+    "cell_width_m": 0.0033333333333333335,
+    "thickness_m": 0.003,
+    "frequencies_hz": [
+      5000,
+      10000,
+      25000,
+      50000,
+      75000,
+      100000,
+      125000,
+      150000,
+      175000,
+      200000,
+      225000,
+      250000
+    ],
+    "profile_mass_coverage": 0.99,
+    "frequency_error_limit": 0.0005
+  },
+  "source_sha256": {
+    "__init__.py": "9e1cd3ba1f16c5d1507c84ab300c6f918966f6f558e686d4f94c7ae2b532cdc3",
+    "__main__.py": "d126cde781b5ea9b37930f6809a0cb209d0589b32602a4895cc84f098e6939c7",
+    "acquisition.py": "d54639154466c8e2afb0055e7730f5b6fb79a509e565fcaa701be427a420ae9a",
+    "adaptive.py": "fd343c6d20cc20ef6115d70ef0ed5898ff3e167196c90395d20a89043b4fa170",
+    "bank.py": "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f",
+    "cad_mesh.py": "d8a2e7d6c9a068c5e568b559f71385574a35f2c0c1e5c15688e9c082e3ffd2d2",
+    "calibration_verification.py": "5d0fa50829936d99c048de57b184d888c126fa9feccef605bf92fc5d0ccd313b",
+    "cli.py": "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694",
+    "config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "das_baseline.py": "ed46c8aad3c32063d81930b28c1eae3b9b95833b229c7f4541c1c86f3afb28f0",
+    "dataset.py": "976503a0b98421cfb32e1f446712b50c43a4979d5266f9ad70d6a2bf4d420cfa",
+    "diagnostic_data.py": "f37010e397dcf1f5d311939042f2ac18e37444a7c54a4e0171dd9b8eea7d74a5",
+    "dispersion.py": "e7f1c5c36309e2836b648e4aaccd6e88c0b91350671ff1b6c3c38f4802b68187",
+    "elmer_directional.py": "3e0ade02ffad06954f0711d354340ba093bff5f42f94e09e75f214418ad22345",
+    "elmer_operators.py": "2c943714ddea7660f6bd90246baa75f235fc8d63eb2c3a7f93a6c0311a93bd96",
+    "elmer_plate_refinement.py": "655e2d64b5946fe8d9f69950b35d0d6ff8293b656222b6fcdea9a6305259f388",
+    "elmer_reference.py": "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186",
+    "elmer_transient.py": "79ede4aeb6856918fcaf35d09f3c3001f05823accf9260e0d5a936fe9ca6900f",
+    "elmer_waveforms.py": "ebe64f09512ba3c23753037aea1baee30c15a9b297d9c40f3db607943bad9dc2",
+    "elmer_waveguide.py": "8331569e6fb44ff4e0ccf5d2a31d464e4b9c65145590a40b37b710877331c04f",
+    "enriched_factor.py": "2fa8b18cd3d70b4fa1fd4ec6d57b479fdaa7c65b3e9fecd7bbcfb6326835da83",
+    "enriched_tet.py": "b5f3128cbf58016570ccb82f35be29f74f528e9940fd638079c45f54b7ffde4d",
+    "enriched_verification.py": "20c0e3205a7d1255471eafa81b92c1470dd30528346a0b4758923da964c84fd9",
+    "evaluation.py": "94f849c3906b08a85daf4c4c5ec594e084511a4d37027f3fcd12123fd5abaab4",
+    "evaluation_artifacts.py": "c90f4e0f1b052fcd12ecd54266c53664817697590dd0e536143b9200118213ab",
+    "experiment_commands.py": "7eb998e45d736a8b1e1698475474e0a7ac93f6a445ca8ca59ff8b21e5a060b1a",
+    "fem.py": "ff137e9c45519db0e031687d80430683a9ddc1d2cb06e8b7b1c1d283f4c2f674",
+    "forward.py": "ef43d71cd37346db32ac80d740f246f800e0ce6d286afa5d5d0b5b487cbe1b52",
+    "forward_verification.py": "0d8da7122c628ede201a0e1b35a200a8cb5ae31ec723fb062d2b44a21b348626",
+    "generation_commands.py": "b6c3675e2bfacc9ccda846ae32ed88ffa402263626974b9d5b7cdf3b69f8a502",
+    "geometry.py": "416770fa7f1f195ae0d3b1d96b24cab551dd7f6d36507047536c08d0acd86743",
+    "gpu_cg.py": "ae0f0741bb8fe78d021bb1a11198be17a4886f712d9c9d3d11d3676ddbbbb3db",
+    "gpu_elements.py": "a1214dc9567a4b45d6c6a93b8a753f57a70cc2d76a487990f75944ed320f5dd7",
+    "gpu_enriched.py": "d56b233f3a42b5adce6edd821ec5f91b95057dca9b0dfd6597afd7bc41893f7b",
+    "gpu_enriched_verification.py": "ec6ba9ace228d8f18c52f474f261c3a29d525f50e5bc4102499e4872e1dc63f2",
+    "gpu_enriched_verlet.py": "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "gpu_tensor.py": "87234c72f34ba4e65e30a4c50a92ef1e6fbbce5324204efac9d5bef699ef12c7",
+    "gpu_verification.py": "e3e4fdd449de58cb2a3d6757cace693bbab4409f0f47be92aad88f31593abb74",
+    "highorder.py": "e3b51956d8bb8fee75cfa4370927f4a4a3a3bc7929e85f9694bdd4530d414d8a",
+    "highorder_cad_refinement.py": "e4790781eff2d1cc269a73241e302b75c52741c0c97e61be4574c9c6635c1b6d",
+    "highorder_directional.py": "868b2244d32e88be7cb979590ffe35dbb27b45efacb4a8dedd71527f8db798c8",
+    "highorder_patch_verification.py": "db0e956f1d5410eba8be3231ea6659c9fbcac19a2429ced26921ce98afbb5deb",
+    "highorder_patches.py": "ad2e7e0391916737985ea6b84a2a737f43fb7dc4a8cacf046df06b99544bd4cb",
+    "highorder_verification.py": "e05e2005d97b13254d669d42940dfb86b23bbb6d424aa63bad69281183debc3a",
+    "highorder_waveforms.py": "c3d4d7257d1f5004ebba2b7b99f84eb2832a7d4884744097b1b404536058c861",
+    "imaging.py": "d5e905026ea086d7747340a7cc21d8a35aa537545462b3e3de171443f7d69f78",
+    "implicit_fem.py": "68ccbb721c60729dfd7f4a29ac516c6295ce37c277c581db6d3ab31cea1338b6",
+    "implicit_worker.py": "830e3fba38f2dbff01beaf586e2aa337895e03249a373926bf6bc7ac05b4b130",
+    "importers.py": "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06",
+    "iterative_fem.py": "6248e0f9a36b87668814ed60518614c4472abfcab84fc0fc8b3759ec6fed0f74",
+    "lamb_profiles.py": "a03cb64003b60384cefa097ef1f4034b33dde614eabe7f4f2708bfe18cc8042d",
+    "matrixfree.py": "585c644a09e111d98596bcbcd3eadf815a0f72ef9e54f004a98c2c530086ba89",
+    "matrixfree_verification.py": "b12b987d497e3fa146c99ff724a35b825ba564f76205bdc57f2c775148d45bfa",
+    "metrics.py": "f542cd93376f25de2ef0c8039059fa45b46b5ebb5a72fe4859cd501e528c93f3",
+    "model_verification.py": "0aefe7f5924a14c207acbd73faec31dd47f36b2f9d8bccba33abda66ef75b880",
+    "models.py": "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57",
+    "patches.py": "2c4741639391dd0bfd684eafe36d8e888c64776d30b86b60ad5008bc1eafb97f",
+    "policies.py": "fad98bfd6851f2c28eadb0d9fe98ca296a6d607afd5012f33a8bb9422c8132dd",
+    "policy_training.py": "838087ed8a0aa1f1fc9cfabd628e8e2c3ebc8021db021428a749e369f5e98354",
+    "policy_verification.py": "66c5cf218f5190af7bbdd099a994c6399a5daada345f981341b5cf09e2ab174f",
+    "polynomial_patches.py": "ac40186dcfec43b75f3aa0eafc0e936db9de8808a249b902901333e86fd2c890",
+    "quadratic_mass.py": "aa2099563ce3fb3d410f2cd03cf2e946ecbdbfee3eb13f8c188fafe6326358dc",
+    "quadratic_patch_verification.py": "44a15c43062ced94727985dda7f8a863551077248a72bb0caa4997fe35c4d103",
+    "quadratic_patches.py": "0cb7d32fece1691014da7b74527d805191e05ce5f2f260299015158ba762015a",
+    "reconstruction.py": "d11ff1ea483a3b3bb9d87be6b1ae2b9eed85f7d01da57e0fa63e092d1486bde1",
+    "reporting.py": "0451cdc1dfe93c1d74033f793ec92368fc7f88cf57b369a98a8caf22a8ffd20f",
+    "resources.py": "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+    "scenarios.py": "204ca151db5bdccb4d6b8546de0ad2fc18cf00071fc75e7194cd9626c64f349d",
+    "solver_requests.py": "064fb50ad3883a2197eda1f21e269da8c673ac994a32fab1fcf1206b6f2ce901",
+    "storage.py": "67dbb9cf4f459841678add7aa5a8487946f75def6eafd97a6e7943e63ff4f940",
+    "studies.py": "266fc908141d670fed6ff5295c5ce3fd9ac7753228d0e58dd63f96638f0674cc",
+    "study_commands.py": "b1668588c11c8a1577695fbc14449d8ad37eb467face447a663f483473f84314",
+    "study_verification.py": "3a3c6a7e62138761a48e454f14ab46cb9af2dd2bb0d76157c993d3adacdd887a",
+    "tensor_hex.py": "f5965194ba74adfcbcf71c52ace587d4729f6caae5e0ad2ee19f59505a97e070",
+    "tensor_patches.py": "8950e3d0e31537e8e8290271771ad20e365472e0f8ce37f1d8d77aa4d6f32f0e",
+    "training.py": "065f6b1505c681882472846ed7c79b165c07eadfc4664562fd78542c26a2769c",
+    "uncertainty.py": "7ad936e0d1ee26cdb0f7213511f4e56d5ee730e53ffa7f221c352dae7bdf5dee",
+    "uncertainty_commands.py": "de078794dbd1fca8c46af4e06dc361aaf7eb62f9f782e92706cd5bcdf5f3f53d",
+    "verification.py": "ea1a9c2597ab0ab3e2760e9250b39370bf933cdcb104920c2bb8cae734247821",
+    "waveform_checks.py": "89056326f3881df847ce4383c23ca7e98ac3b5cbbcc026b26945a671085c936d",
+    "waveform_commands.py": "b97748ae583207ce9361d4643f087ba3b1c9f18fa86baa0b75371da413fddb13",
+    "waveguide.py": "1ae0255467910210b83e66150ee81fe268de464e6bce9671ddc22e6872624703",
+    "workflow_verification.py": "70e2e5e69ec8ad049affbc45c63266bef94826d44f9f32650abcc1d60e1f4fc3"
+  },
+  "driver_sha256": {
+    "tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+    "tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc",
+    "verify_tensor_window.py": "90028ae7aa69230de0b6dc77388d758ea5b309be80e4a3a72e93f069834fa7cc",
+    "pace_gpu_worker.py": "f589a66d63b03de6e616ba6879b4d511d9eebd709feddb22edd23700e4347728"
+  },
+  "plan_fingerprint": "29d22ee414d8e751301d26f28d70047a265d8f1a0b1a47047cad1d27fcc767bb",
+  "parent_fingerprint": "e4519ad3a745d27ad32d7b6a55f6eb6787349db7aaf4310393ce560f9d246d49",
+  "native_fingerprint": "fd43a1ce806478796d194f08d65f305133a9a8422b79716c9ee778d45960ac18",
+  "analysis_driver_sha256": {
+    "tensor_profile_study.py": "1325d7b358448c692911f0a41f552c9e9738328d69c3d0068e09aa087446df38",
+    "tensor_reference.py": "2b143f8ada58c28594c69a8c2499b444d9d9e4eb1dbae122126acb83133156d7"
+  },
+  "raw_identities": {
+    "profile-plan.json": "f333bcde162ceb31d2fbf54f53646e21af5b8ff98e232399e27849751bb00954",
+    "monitor-result.json": "f5f8abfbf78300e7d7fa28b316ae8d190686b94ba681c3b69ef27b7528b79225",
+    "source-snapshot.zip": "e7081e6b36edaa69ad29446549fa34171c26f7c01f00de4528cb3e0946f0471e",
+    "native/profile-report.json": "c664b9a0f6e48914653d1193763997c70a9a8c999e4a84f230f3d173c609a8e5",
+    "native/profile-proofs.npz": "ad1fda0bbf251da7e81566ca6b1037631d9a11a42a4d2c28ead2697b29d78479"
+  },
+  "case_summary": [
+    {
+      "order": 3,
+      "cases": 24,
+      "passed_cases": 16,
+      "maximum_support_relative_frequency_error": 0.006975830884815348
+    },
+    {
+      "order": 4,
+      "cases": 24,
+      "passed_cases": 24,
+      "maximum_support_relative_frequency_error": 7.304357982729215e-05
+    },
+    {
+      "order": 5,
+      "cases": 24,
+      "passed_cases": 24,
+      "maximum_support_relative_frequency_error": 2.616398478538784e-06
+    }
+  ],
+  "cases": [
+    {
+      "order": 3,
+      "frequency_hz": 5000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.8262046959669505e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999999998702,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 5000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.5142110615661295e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000007,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 10000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.51380411124169e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999999969959,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 10000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.9857227801244335e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 25000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 9.173224663139301e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999978464399,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 25000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.2439827773723664e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999999999999,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.0003504957680549037,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999438424381,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 7.350986486187594e-11,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999997464,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 75000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.0007577892932815189,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999625603099,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 75000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 8.361824566094356e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999934641,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.001300783340250744,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999998574822069,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 4.7577772832596565e-09,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999340765,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 125000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.001970160889548822,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999960022975789,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 125000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.843673325119255e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999999602009,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.0027586807282302672,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999907311077558,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 5.6130520453834265e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999982612249,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 175000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.0036601254611070555,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999810813924311,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 175000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.4487093302761878e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999939162942,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.004668413772654922,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999645821728288,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 3.3171948077281854e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999818873886,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 225000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.0057766644265104805,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999937106318646,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 225000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 6.93958674746753e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999522779389,
+      "passed": true
+    },
+    {
+      "order": 3,
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 0.006975830884815348,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9998898904907786,
+      "passed": false
+    },
+    {
+      "order": 3,
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.3533619875882863e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999998856924274,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 5000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 4.007461029686965e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000013,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 5000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.2059742093839532e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000013,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 10000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.6336265107905774e-09,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999969,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 10000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.0820677687206626e-11,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999996,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 25000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 5.649052292611145e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999996624,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 25000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 9.028777725461623e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.000000000000001,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 4.498060788282743e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999845486,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.251776460264864e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 75000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.5290079475871465e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999998420265,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 75000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.4670487047396819e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000004,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.687791467310575e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999991374326,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.6012746684168633e-11,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999841,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 125000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 7.3924768579924915e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.99999999667784,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 125000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.0013345708159704e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999998311,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.3205132668003827e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999897622603,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 4.403182263246208e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999989124,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 175000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 2.1802494765355007e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999729596288,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 175000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.5517265250508672e-09,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999946777,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.399015247906867e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999361005575,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 4.656273366876462e-09,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999786814,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 225000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 5.071068553541558e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999998606504227,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 225000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.2369686608337815e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999265302,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 7.304357982729215e-05,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999997115547269,
+      "passed": true
+    },
+    {
+      "order": 4,
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.988200842324318e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999997747583,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 5000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.23606696994716e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.000000000000001,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 5000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.1116419723909985e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000004,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 10000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.2092482570835728e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 10000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.3561685108243182e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999996,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 25000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 2.2852475467516342e-10,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000007,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 25000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.6224799281872038e-11,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.000000000000001,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 3.466648301753139e-09,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999348,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 4.598543767997398e-13,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999999,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 75000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.7537470586859172e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999988801,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 75000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.1615153283628388e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000002,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 5.591137686167258e-08,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999914736,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.2185807918285718e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0000000000000004,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 125000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.3871733139936282e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999582221,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 125000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.2536638394067268e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999994,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 2.94227519015422e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999998452443,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 3.665956427312267e-13,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 1.0,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 175000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 5.608112481070293e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999995274332,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 175000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 1.1601830607332886e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.999999999999998,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 9.893587693543537e-07,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999987472624,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 3.0941915696303113e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999843,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 225000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 1.646184037751297e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999970190728,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 225000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 9.717782134543995e-12,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999999281,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "maximum_support_relative_frequency_error": 2.616398478538784e-06,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999934847065,
+      "passed": true
+    },
+    {
+      "order": 5,
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "maximum_support_relative_frequency_error": 2.825450984289546e-11,
+      "selected_modes": [
+        0
+      ],
+      "captured_profile_mass_fraction": 0.9999999999997384,
+      "passed": true
+    }
+  ],
+  "eigenpair_maximum_relative_residual": 6.232489807528966e-10,
+  "overlap_maximum_absolute_error": 0.0,
+  "burst_spectrum": {
+    "time_energy_n2_s": 3.75e-06,
+    "positive_frequency_energy_n2_s": 1.875e-06,
+    "retained_force_energy_fraction": 0.9999511497602537,
+    "quadrature_absolute_error": 3.938271649097291e-19,
+    "passed": true,
+    "scope": "Nominal mechanical force spectrum only; receiver transfer functions and PZT electrical drive are not included."
+  },
+  "monitored_seconds": 2.335771400015801,
+  "resources": {
+    "peak_rss_mib": 239.5859375,
+    "system_ram_peak_percent": 52.9,
+    "minimum_available_mib": 7647.95703125,
+    "gpu_memory_peak_mib": 1449.0,
+    "gpu_temperature_peak_c": 72.0,
+    "cpu_temperature_verified": false,
+    "scope": "CPU worker and descendants; system GPU observations include the concurrent independent full-window GPU run."
+  },
+  "producer_sha256": "96fd6735edad06a8209ef1707b1c0a1bf05468a1942333472ba3fd10641f5d24",
+  "auditor_sha256": "60ab68ec3779c4500616107c4f319a77363795b43979a2ab239b94400e81a17d",
+  "scope": "Actual intact partition, sampled uniform periodic modes only. Q3 is retained as a coarse comparison; Q4/Q5 must meet the unchanged 0.05% design screen.",
+  "fingerprint": "f1fc599615893f3498a5fffb7945fdf30994c9027c24e4a173feb36f75ff5467"
+}

@@ -115,6 +115,39 @@ Compact evidence is `evidence/tensor-fullplate-window-debug.json`, fingerprint
 `faf6f1bce170be69fc3fa02d14a4bff058709750caf0f53de28812b4773fd0c3`.
 The collector is `outputs/tensor-wave-tools-20261109/collect_window.py`.
 
+## Production-partition periodic profile check
+
+An additional frozen 72-case CPU study checks Q3/Q4/Q5 at the actual
+3.333333 mm lateral cell width and one 3 mm thickness cell. It retains all
+twelve 5-250 kHz frequency samples, A0/S0 analytic profiles, 99% profile mass
+coverage and the unchanged 0.05% worst-selected-frequency design criterion.
+Mode selection uses profile overlap without consulting eigenfrequency.
+All 72 generalized eigenproblems, selected vectors and reference profiles
+are retained and independently re-solved by a separate auditor.
+
+| Degree | Passing cases / 24 | Worst support frequency error |
+| --- | ---: | ---: |
+| Q3, coarse comparison | 16 / 24 | 0.697583% |
+| Q4, required candidate | 24 / 24 | 0.00730436% |
+| Q5, required candidate | 24 / 24 | 0.000261640% |
+
+Q3's eight failures remain in the record. The frozen required candidates
+are Q4 and Q5; this does not relabel Q3 as accurate. The CPU worker completes
+in 2.336 monitored seconds at 239.59 MiB RSS. Maximum saved selected-eigenpair
+residual is 6.24e-10; independently recomputed modal overlaps agree exactly.
+Raw data are `outputs/tensor-production-profile-20261110-v2`; the producer and
+auditor are in `outputs/tensor-wave-tools-20261109`. Compact evidence is
+`evidence/tensor-production-profile-debug.json`, fingerprint
+`f1fc599615893f3498a5fffb7945fdf30994c9027c24e4a173feb36f75ff5467`.
+The initial analysis bound the core/wave drivers but omitted the two imported
+analysis-driver identities. They and the producer were explicitly bound and
+archived, then all 72 cases were repeated under identical criteria and gave
+identical numerical results. The original raw receipt and producer snapshot
+remain in the directory without the v2 suffix.
+GPU observations in that CPU receipt include the concurrent independent
+Q4 wave job. This is an intact uniform periodic screen, not recess scattering,
+finite-plate convergence or a PZT/electronics transfer-function calibration.
+
 Research-plate tensor convergence, representative recesses and frequencies,
 calibrated PZT/electronics and physical agreement remain open.
 The previous failed tetrahedral thickness screen is preserved. No research
