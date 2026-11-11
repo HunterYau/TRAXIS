@@ -1008,3 +1008,22 @@ and audited figures are bound by evidence/tensor-q3-window-debug.json.
 The Q5 spatial level and 131,072-step Q4 level remain required. Completion
 of this coarse window does not erase its retained periodic-band failures.
 
+## Passing complete tensor spatial comparison
+
+Q5-N65536 completes the unchanged 500-microsecond experiment with
+10,152,018 vector coefficients in 973.007 propagation / 998.247 monitored
+seconds. Independent CPU mass, energies and probes agree within 4.19e-16;
+the full operator within 1.06e-15. Peak RSS is 1,370.93 MiB, system RAM
+56.6%, and sampled GPU memory/temperature 1,881 MiB / 77 C. Its optional
+cooling monitor records a Windows progress-file replacement failure and
+successful same-worker reattachment. The simulation guards remain active,
+and no numerical state/input is restarted or changed.
+
+The complete Q3/Q4/Q5 spatial screen and independent raw-data audit pass:
+finest changes are 0.117856%, 0.100770% and 0.109101%, with decreasing
+differences at every receiver. These are successive-discretization changes
+under the declared intact mechanical controls, not continuum-error bounds
+or recess/PZT/physical acceptance. See tensor-wave-windows.md and
+evidence/tensor-q5-window-debug.json / tensor-spatial-refinement-debug.json.
+The finest temporal level is still required at this cutoff.
+

@@ -41,8 +41,9 @@ circular footprints now pass independent native checks; a guarded
 fixture and independent CPU state audit. Two actual 5.42-million-coefficient
 tensor plate windows complete 500 microseconds and pass saved-state CPU
 checks. Raw changes after halving the step are below 0.055% at all three
-receivers. The third temporal level, spatial convergence, recess geometry and calibrated PZT response
-remain open.
+receivers. The full Q3/Q4/Q5 spatial screen now passes, with finest raw
+changes of 0.10-0.12%. The third temporal level, recess geometry and calibrated
+PZT/physical agreement remain open.
 
 ## Setup
 

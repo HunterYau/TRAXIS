@@ -203,7 +203,63 @@ This verifies completion and arithmetic for the declared coarse spatial
 level; Q3's eight periodic-band failures remain in the earlier record.
 Q5-N65536 and Q4-N131072 are still required before the full assessment.
 
-Research-plate tensor convergence, representative recesses and frequencies,
+## Completed Q5 window and passing full-window spatial screen
+
+Q5-N65536 completes all 65,536 steps across the fixed 500-microsecond
+window with 10,152,018 vector coefficients. Propagation takes 973.007 seconds
+and the monitored worker 998.247 seconds. Full CUDA/CPU action discrepancy
+is 1.06e-15 relative. Independent CPU mass, final energies and probes agree
+within 4.19e-16. Raw modified-energy range is 1.24e-15. The four physical
+covectors reproduce exactly, with analytic area/moment errors below 1.35e-14.
+Peak RSS is 1,370.93 MiB, system RAM 56.6%, minimum available RAM
+7,043.56 MiB and GPU observations 1,881 MiB / 77 C. CPU temperature is
+unavailable. The 3,600-second wall cap allows this measured higher-degree
+cost; physical settings and accuracy criteria are unchanged.
+
+The optional cooling monitor stops after 744.828 seconds when Windows denies
+atomic replacement of its progress log. The simulation and its separate
+resource guards continue. An unchanged monitor reattaches to the same PID
+and creation identity, completes a 29.782-second segment and records no
+suspension. Both segments and the error remain retained. The monitoring gap
+cannot be inferred exactly from their separate relative clocks. The original
+parent/worker observations cover the full job and peak at 77 C. The window
+is neither restarted nor shortened. No numerical source or physical input
+changes during this recovery.
+
+The Q3/Q4/Q5 raw full-window comparison now passes its frozen spatial screen.
+All independent saved-state CPU checks are required and pass. Differences
+decrease at each receiver; Q4-to-Q5 changes are:
+
+| Receiver | Finest raw relative change | Coarse/fine difference ratio |
+| --- | ---: | ---: |
+| (250,250) mm | 0.117856% | 193.173 |
+| (480,480) mm | 0.100770% | 149.842 |
+| (350,200) mm | 0.109101% | 190.093 |
+
+All are below the unchanged 5% criterion. These are p-refinement differences
+for the intact mechanical experiment, not a continuum-error bound, a
+fixed-order h-convergence rate or acceptance of another defect/frequency.
+The earlier failed tetrahedral thickness study and Q3 mode failures remain
+historical results, not retroactively passing checks.
+
+The independent auditor recomputes every raw metric and decision, verifies
+the exact retained comparison arrays and source/runtime/device identities,
+and preserves CSV plus PNG/PDF artifacts. Its final figures were visually
+checked. Raw assessment and audit directories are
+`outputs/tensor-spatial-assessment-20261110` and
+`outputs/tensor-spatial-audit-20261110-v2`. The initial plot placed a legend
+over a bar; the final layout moves it below the plot, preserving the initial
+artifact and leaving all numerical metrics unchanged.
+
+Q5 waveform and energy/resource figures are in
+`outputs/tensor-fullplate-q5-window-20261110`, with separate panels for both
+cooling segments. Compact receipts are `evidence/tensor-q5-window-debug.json`
+(fingerprint `c97c6850952793e6cdac9891030a5783165a34ea9ced0620caee403ee09318ca`)
+and `evidence/tensor-spatial-refinement-debug.json`
+(`639e61c6cf2915233a33641a7c5c3ae66bf74f22f9af4177eb0d1bcda59cff21`).
+The final Q4-N131072 temporal level is still required at this cutoff.
+
+Tensor temporal convergence, representative recesses and frequencies,
 calibrated PZT/electronics and physical agreement remain open.
 The previous failed tetrahedral thickness screen is preserved. No research
 bank or full model/policy training is accepted by these preflight checks.
