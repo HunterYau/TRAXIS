@@ -1027,3 +1027,19 @@ or recess/PZT/physical acceptance. See tensor-wave-windows.md and
 evidence/tensor-q5-window-debug.json / tensor-spatial-refinement-debug.json.
 The finest temporal level is still required at this cutoff.
 
+## Nonaffine tensor reference for the geometry extension
+
+A separate CPU/native example verifies two connected hexahedra under a
+degree-two polynomial deformation, through Q3/Q4/Q5 solution spaces.
+Whole-matrix native stiffness/mass discrepancies are below 8e-15. Exact
+volume, affine energy, physical nodes and exactly six rigid modes pass a
+separate raw-array audit. The 1,188-coefficient maximum fixture completes
+the three-case worker in 3.561 monitored seconds at 353.90 MiB RSS.
+
+Two initial failures are retained: a grid/layout API mismatch and native
+deformation's requirement for VectorH1 rather than a compound scalar space.
+See mapped-tensor-reference.md and evidence/mapped-tensor-reference-debug.json.
+This is an independent geometric reference, with no mapped CUDA solver,
+circular recess mesh, transient or data acceptance yet. The active frozen
+intact wave source inventory remains unchanged.
+
