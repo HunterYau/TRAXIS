@@ -77,7 +77,45 @@ process. After every required case and CPU check completes, run
 `examples.tensor_wave_study spatial` or `time` with `--plan` and a new
 `--output`. A configuration or small smoke result is not a completed study.
 
-Research-plate tensor propagation/convergence, representative recesses and
-frequencies, calibrated PZT/electronics and physical agreement remain open.
+## First completed research-plate window
+
+The frozen study is `outputs/tensor-fullplate-study-20261109`, fingerprint
+`c339dd16680f52c9de65b3507bf5511b6d115228fc993b4afa48df6bcfbd5505`.
+Its Q4-N32768 case completes the actual 500 mm plate / 500-microsecond
+window with 5,418,015 vector coefficients. The step is 15.2587890625 ns,
+below the 37.8375 ns conservative stability bound. The worker completed on
+November 9; its saved-state CPU audit and final figures were checked on
+November 10. The other four cases remain required before convergence can
+be assessed.
+
+| Measurement | Observed result |
+| --- | ---: |
+| Propagation / monitored worker time | 243.828 / 259.031 s |
+| Full CUDA / independent CPU action discrepancy | 9.87e-16 relative |
+| Postburst modified-energy range | 2.33e-15 relative |
+| CPU final physical and modified energy agreement | 3.34e-16 relative |
+| CPU independently scattered mass agreement | 4.14e-16 relative |
+| Final area-average probe agreement | 2.44e-16 relative |
+| Peak combined RSS | 919.96 MiB |
+| Peak system RAM / minimum available RAM | 53.1% / 7,607.75 MiB |
+| System GPU memory / temperature peak | 1,551 MiB / 74 C |
+
+All four circular covectors reproduce their saved coefficients exactly;
+analytic area and represented moment errors are below 5.45e-15. Receiver
+peak magnitudes are 0.517158, 0.907062 and 0.456410 nm. The cooling monitor
+finishes normally without a suspension. CPU temperature remains unavailable.
+Raw source-bound states, probes, operator fields and resource receipts are
+retained in the study. The independent CPU receipt is under `cpu/Q4-N32768`.
+
+`outputs/tensor-fullplate-q4-window-20261110-v2` contains audited PNG/PDF
+receiver and energy/resource figures. Both were visually checked. Resource
+plots use separate elapsed clocks for the parent monitor and cooling monitor;
+the first draft overlay was corrected without changing any numerical data.
+Compact evidence is `evidence/tensor-fullplate-window-debug.json`, fingerprint
+`faf6f1bce170be69fc3fa02d14a4bff058709750caf0f53de28812b4773fd0c3`.
+The collector is `outputs/tensor-wave-tools-20261109/collect_window.py`.
+
+Research-plate tensor convergence, representative recesses and frequencies,
+calibrated PZT/electronics and physical agreement remain open.
 The previous failed tetrahedral thickness screen is preserved. No research
 bank or full model/policy training is accepted by these preflight checks.

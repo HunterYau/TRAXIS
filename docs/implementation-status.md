@@ -959,3 +959,23 @@ temperature is unavailable. See tensor-wave-windows.md and
 evidence/tensor-wave-preflight-debug.json. Full-size tensor windows and
 convergence remain pending, with no research training/data acceptance.
 
+## First full-size tensor mechanical observation window
+
+Q4-N32768 in the frozen tensor study completes the unchanged 500 mm plate
+and 500-microsecond interval: 5,418,015 vector coefficients, 32,768 steps,
+243.828 propagation / 259.031 monitored seconds. The full action agrees
+with streamed CPU stiffness to 9.87e-16 relative. Independent local-scatter
+CPU mass, final physical/modified energies and probes agree within
+4.14e-16 relative. Raw postburst modified-energy range is 2.33e-15.
+All circular coefficients reproduce exactly, with analytic area/moments
+below 5.45e-15.
+
+Peak combined RSS is 919.96 MiB, system RAM 53.1%, minimum available RAM
+7,607.75 MiB and GPU observation 1,551 MiB / 74 C. The attached exact-worker
+cooling monitor terminates normally without a pause. CPU temperature is
+unavailable. This worker finished November 9; the CPU audit and figures were
+checked November 10. See tensor-wave-windows.md and
+evidence/tensor-fullplate-window-debug.json. Four remaining frozen cases,
+representative recess/frequency studies and physical calibration are still
+required. No research training or accepted data bank results from one window.
+

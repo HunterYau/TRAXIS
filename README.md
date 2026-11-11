@@ -38,8 +38,9 @@ GLL mass, exact/GLL stiffness and analytic-profile mode support. Its
 full plate and agrees with independent CPU action. Q5 operators and physical
 circular footprints now pass independent native checks; a guarded
 [wave-window workflow](docs/tensor-wave-windows.md) passes an end-to-end small
-fixture and independent CPU state audit. Research-plate tensor propagation,
-complete-window convergence, recess geometry and calibrated PZT response
+fixture and independent CPU state audit. The first actual 5.42-million-coefficient
+tensor plate window now completes 500 microseconds and passes saved-state CPU
+checks. Complete-window convergence, recess geometry and calibrated PZT response
 remain open.
 
 ## Setup
