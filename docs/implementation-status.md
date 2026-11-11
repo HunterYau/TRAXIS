@@ -1147,3 +1147,27 @@ Historical 3 mm references remain frozen. Current full-size mesh/time/frequency
 validation, measured clamp/contact/preload/couplant response and physical PZT
 agreement remain open. This randomization layer does not model clamp mechanics.
 
+## Mapped recess CUDA action at 3.175 mm
+
+The explicit curved-mesh GPU operator now uses per-GLL-point inverse geometry
+and shared-node gather/scatter. It retains positive mass and the CPU diagonal
+energy stability bound and works with the device-resident Verlet integrator.
+Allocation and finite-state checks run before CUDA execution.
+
+Eight fresh native cases pass: paired Q3/Q4/Q5 selected geometry plus small
+Q3 intact/recess matrices. Native checks cover 511 elements and 200,352 local
+columns; 3,336 global GPU columns are compared directly. Independent replay
+of retained native element scatter agrees with GPU forces within 3.32e-13;
+maximum small-matrix column error is 4.07e-14. Free and driven modal checks
+at 32/64/128 steps show second-order displacement/velocity errors and modified
+energy agreement. These synthetic intervals are about 55-57 ns, not plate-wave
+recording windows.
+
+The final focused group passes 18 tests without skips in 9.531 seconds.
+Native/GPU jobs peak at 524.47 MiB RSS, system RAM 52.7% and GPU observations
+1,072 MiB / 53 C; tests observe 1,074 MiB / 54 C. CPU temperature is unavailable.
+See mapped-recess-gpu.md and evidence/mapped-recess-gpu-debug.json. Earlier
+3 mm references stay frozen. Full-size mapped capacity, physical/randomized
+surface ports, complete wave convergence and measured clamp/PZT agreement
+remain open. No model training or accepted waveform-bank generation ran.
+
