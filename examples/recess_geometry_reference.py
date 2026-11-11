@@ -114,7 +114,9 @@ def measure(mesh, guard):
         **errors, passed=bool(max(errors.values()) < 1e-10 and minimum > 0 and certificate > 0))
 
 
-def native_geometry(mesh, guard):
+def native_geometry(mesh, guard, *, return_model=False):
+    if len(mesh.geometry_points_m) > 3500 or len(mesh.element_nodes) > 128:
+        raise MemoryError('native geometry interpolation exceeds the bounded dense transform')
     import ngsolve as ng
     import netgen.meshing as nm
     ng.SetNumThreads(1)
@@ -201,6 +203,8 @@ def native_geometry(mesh, guard):
         shared_transform_maximum_error=overlap)
     proofs = dict(native_points=np.asarray(native_points), independent_points=np.asarray(independent_points),
         native_jacobians=np.asarray(native_jac), independent_jacobians=np.asarray(independent_jac))
+    if return_model:
+        return details, proofs, dict(mesh=native, deformation=deformation, reference_frames=frames)
     return details, proofs
 
 
