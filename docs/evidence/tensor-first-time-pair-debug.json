@@ -1,0 +1,70 @@
+{
+  "kind": "tensor_first_time_pair_diagnostic",
+  "completed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "study_fingerprint": "c339dd16680f52c9de65b3507bf5511b6d115228fc993b4afa48df6bcfbd5505",
+  "levels": [
+    {
+      "parent_fingerprint": "f9d189ab226483278164ca8fa1a9b8cd9dd69f7be308fabfbc4a48ce3065b5cc",
+      "cpu_fingerprint": "e5b4dc8f191f65be01a9d03fe25d8b5e80e73d13cbb419a64ccd53c8be02a73d",
+      "input_identities": {
+        "tensor-wave-plan.json": "ba5dd524cbc927ce72dd423536e86b0dbebf23c7cf25f57fffeecb37908740b8",
+        "monitor-result.json": "2c099637577c20dd84838b8544ca4dc27fff4fba7cbc24e398767f2f662f3bb6",
+        "source-snapshot.zip": "f3daadd874d5ab2a7087e44924898851c043b87a734cf820b438a0af85b71897",
+        "native/wave-report.json": "60212164febcb532f06a6bf96aa3170f3ee3717c6a734805bff518216bd68dcc",
+        "native/operator-comparison.npz": "8cde60acc3dee2675fe2d83937de77bc2653ff2a29872bede3e88bf148b7fcaa",
+        "native/mechanical-patches.npz": "d915b6a634a115e2497e36da723ab345cecc43ddac896876850b7b67b715450e",
+        "native/mechanical-window.npz": "3be57a4ebe1373de4959b9d566d8c0473d54a3a331c56ec57ce6ca71fd222c90"
+      }
+    },
+    {
+      "parent_fingerprint": "e6a98dedaee15d047f1a9f343d45d0bc77ab8e9489501f1f704289233a2b8608",
+      "cpu_fingerprint": "251fba96db480f1ea7f3d38acce919bd20b6acaa8788e3e42c91a7f17b8cf60d",
+      "input_identities": {
+        "tensor-wave-plan.json": "3945403e89a3129b761ca111de2c829bd9150b70df3fe64072e3fad266cfbd46",
+        "monitor-result.json": "b7394a0b7dcc84901b864768adeaa18d57a1dbcf72e5aaf5f4ed257f12a039e5",
+        "source-snapshot.zip": "1a61bba0d7059b5c0120b1ce96281a321c9ce16f338631b9707094d99f35749b",
+        "native/wave-report.json": "8493c70991f15853de6db967349ac70a85b0d72ab441710531b9ea470fb02cb3",
+        "native/operator-comparison.npz": "229c99a650731c0044a877958c97777a18a5c3b2d05e21b9a88fe00bdcd85f76",
+        "native/mechanical-patches.npz": "d915b6a634a115e2497e36da723ab345cecc43ddac896876850b7b67b715450e",
+        "native/mechanical-window.npz": "be90753618c652b3d1a56124719a47267fda9fa465f5c6cb028e56184a91852a"
+      }
+    }
+  ],
+  "exact_mass_match": true,
+  "exact_patch_match": true,
+  "exact_common_time_match": true,
+  "receivers": [
+    {
+      "receiver": 0,
+      "raw_difference_l2_m": 1.3823819909432653e-11,
+      "finer_waveform_l2_m": 2.5158036186408064e-08,
+      "relative_change": 0.0005494792919051901,
+      "maximum_absolute_difference_m": 4.0128000750417816e-13
+    },
+    {
+      "receiver": 1,
+      "raw_difference_l2_m": 1.3070091502154934e-11,
+      "finer_waveform_l2_m": 3.589387155915407e-08,
+      "relative_change": 0.00036413156158468643,
+      "maximum_absolute_difference_m": 4.620144795723811e-13
+    },
+    {
+      "receiver": 2,
+      "raw_difference_l2_m": 9.921143626262118e-12,
+      "finer_waveform_l2_m": 1.967482345355517e-08,
+      "relative_change": 0.0005042557891145602,
+      "maximum_absolute_difference_m": 2.762875644233759e-13
+    }
+  ],
+  "artifacts": {
+    "matched-traces.npz": "199a1ddac4ef255d96e1b15cd56f63bab698b7841a6cc5dec5c94f8e4b26bea0",
+    "raw-time-pair.pdf": "fddf8c4e9cab9467153f0878b89cddb8d06771a5ec684289ccb7415f39218b43",
+    "raw-time-pair.png": "0c905ed4a6e655fa665c0880b131cedd939715be917e0c22f110a1b29579c8c2"
+  },
+  "collector_sha256": "08f29432d333d4aa64229283020ad600f5812b0ccf977e79ae483c7104830631",
+  "convergence_assessed": false,
+  "scope": "Two complete Q4 levels only; no observed-order or three-level/spatial/PZT acceptance.",
+  "fingerprint": "0e3b7501206656ee421c81e99c5334bc12edec4b855168ff4e7a13eab2dd2ae5"
+}

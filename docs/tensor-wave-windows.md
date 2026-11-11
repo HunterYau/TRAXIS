@@ -85,8 +85,8 @@ Its Q4-N32768 case completes the actual 500 mm plate / 500-microsecond
 window with 5,418,015 vector coefficients. The step is 15.2587890625 ns,
 below the 37.8375 ns conservative stability bound. The worker completed on
 November 9; its saved-state CPU audit and final figures were checked on
-November 10. The other four cases remain required before convergence can
-be assessed.
+November 10. At that cutoff the other four cases remained required. The
+subsequent half-step measurement is recorded below; three cases remain.
 
 | Measurement | Observed result |
 | --- | ---: |
@@ -147,6 +147,39 @@ remain in the directory without the v2 suffix.
 GPU observations in that CPU receipt include the concurrent independent
 Q4 wave job. This is an intact uniform periodic screen, not recess scattering,
 finite-plate convergence or a PZT/electronics transfer-function calibration.
+
+## Completed half-step window and first raw temporal difference
+
+Q4-N65536 completes the same 500-microsecond window at 7.62939453125 ns.
+Propagation takes 494.814 seconds; monitored worker time is 510.183 seconds.
+All 65,536 steps and independent CPU mass, energies and receiver checks pass.
+Both recomputed final energies agree at the recorded floating-point precision;
+mass agrees within 4.14e-16 and final probes within 1.63e-16 relative.
+Modified-energy range is 2.33e-15. Physical disk coefficients reproduce
+exactly. Peak combined RSS is 920.70 MiB, system RAM 57.5%, minimum available
+RAM 6,901.21 MiB and GPU observations 1,449 MiB / 75 C. The cooling monitor
+finishes without a suspension. CPU temperature remains unavailable.
+
+The two levels have exactly matching mass, circular covectors, source/runtime
+identities and common coarse time samples. Their complete raw receiver L2
+changes, relative to the finer trace on those samples, are:
+
+| Receiver | Raw relative change | Maximum absolute difference |
+| --- | ---: | ---: |
+| (250,250) mm | 0.0549479% | 0.401280 pm |
+| (480,480) mm | 0.0364132% | 0.462014 pm |
+| (350,200) mm | 0.0504256% | 0.276288 pm |
+
+This is a two-level diagnostic, with `convergence_assessed=false`; no rate or
+three-level temporal pass is claimed. Q4-N131072 and spatial Q3/Q5-N65536
+remain required. Raw half-step data and CPU/pacing receipts are in the frozen
+study. Audited PNG/PDF figures and matched traces are in
+`outputs/tensor-fullplate-q4-half-window-20261110` and
+`outputs/tensor-first-time-pair-20261110`; all three new figures were visually
+checked. The compact receipts are `evidence/tensor-half-window-debug.json`
+(fingerprint `eb4cfcc4790e28f354c1fe173c2a47742a0839893dfcb93d55d653dcc87b060b`)
+and `evidence/tensor-first-time-pair-debug.json`
+(`0e3b7501206656ee421c81e99c5334bc12edec4b855168ff4e7a13eab2dd2ae5`).
 
 Research-plate tensor convergence, representative recesses and frequencies,
 calibrated PZT/electronics and physical agreement remain open.

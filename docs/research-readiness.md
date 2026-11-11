@@ -26,8 +26,10 @@ support across 2,592 sampled band cases, including folded modes. Its actual
 5.42-million-coefficient full-plate operator fits the guard and agrees with
 streamed CPU action. Physical circular footprints pass native checks; the
 guarded wave workflow and independent saved-state checker pass a full-interval
-small fixture. The first actual 500 mm tensor window completes 500 microseconds
-and passes independent CPU state checks. Tensor convergence, conforming recesses
+small fixture. Two actual 500 mm tensor windows complete 500 microseconds
+and pass independent CPU state checks. Their raw time-step changes are below
+0.055%, with the third temporal level and spatial cases still required.
+Tensor convergence, conforming recesses
 and calibrated PZT/physical agreement remain open. See lamb-profiles.md,
 tensor-gpu-operators.md, tensor-wave-windows.md and their evidence records.
 

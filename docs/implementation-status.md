@@ -979,3 +979,20 @@ evidence/tensor-fullplate-window-debug.json. Four remaining frozen cases,
 representative recess/frequency studies and physical calibration are still
 required. No research training or accepted data bank results from one window.
 
+## Half-step tensor window and two-level diagnostic
+
+Q4-N65536 completes all 65,536 steps at 7.62939453125 ns over the same full
+500-microsecond interval. Propagation takes 494.814 seconds and the monitored
+worker 510.183 seconds. Independent CPU final energies agree at the saved
+floating-point precision, mass within 4.14e-16 and final probes within 1.63e-16.
+Combined RSS peaks at 920.70 MiB, system RAM at 57.5%, GPU memory at
+1,449 MiB and temperature at 75 C. Cooling completes without a pause;
+CPU temperature remains unavailable.
+
+Exact mass, physical patch and common time-sample checks pass across the two
+Q4 levels. Raw receiver changes are 0.0549479%, 0.0364132% and 0.0504256%.
+This is not a three-level convergence assessment. The 131,072-step Q4 window
+and Q3/Q5 spatial windows remain. See tensor-wave-windows.md and the
+tensor-half-window-debug.json / tensor-first-time-pair-debug.json evidence
+records. No source, window, receiver, criterion or physical scale was changed.
+
