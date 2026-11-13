@@ -1,0 +1,13 @@
+{
+  "kind": "embedded_complete_window_refinement",
+  "duration_s": 0.0005,
+  "spatial_orders": [3, 4, 5],
+  "spatial_steps": 196608,
+  "time_order": 4,
+  "time_steps": [131072, 196608, 294912],
+  "comparison_intervals": 32768,
+  "spatial_finest_change_limit": 0.01,
+  "time_finest_change_limit": 0.001,
+  "time_order_bounds": [1.7, 2.3],
+  "relative_identifiability_floor": 1e-11
+}
