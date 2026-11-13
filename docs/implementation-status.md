@@ -1230,3 +1230,30 @@ jobs. Rebalancing the mesh and measuring full-size wave convergence remain
 the next numerical work. See full-size-recess-capacity.md and its compact
 evidence receipt. Training and research-bank readiness remain false.
 
+## Embedded recess grid and revised PZT scope (November 12)
+
+A local curved recess patch now joins a Cartesian exterior through explicit
+shared topology. Six paired Q3/Q4/Q5 native references pass on 348 elements /
+140,940 local columns, with 24 independently integrated mechanical covectors.
+Paired full-size Q4 cases pass CPU/GPU fields, mass, centroid and port checks
+at 4,462,575 / 4,507,515 coefficients. Corner edges span 1.25-5 mm and the
+500 us stability forecast falls to 113,441 / 114,929 steps. No full-size
+propagation was run on these grids; the 7.63 / 7.82 minute operator-only
+forecasts exclude integration/sampling/cooling and do not establish accuracy.
+
+All 41,296 geometry cells have positive floating-point Bernstein bounds,
+using checked extrusion structure and 10,384 unique planar polynomials.
+The first direct geometry audit hit its 240-second time limit; duplicate
+work was removed without changing resource limits and the rerun passed in
+75.958 seconds. The separate compact-intact capacity timeout and the first
+saved-array auditor's summary-field typo remain retained. Forty-two focused
+tests pass without skips in 63.920 seconds. Peak reference/capacity RSS is
+1,141.84 MiB, system RAM 65.2% and GPU observations 1,469 MiB / 52 C. CPU
+temperature is unavailable. See embedded-recess-grid.md and its evidence.
+
+Clamp calculations are excluded by the latest user instruction. Existing
+seeded PZT position/footprint/coupling, drift, drive-force and noise variation
+remain enabled in the study recipe; their ranges are provisional. Complete
+embedded wave convergence, PZT/electrical response and physical comparison
+remain open. No training or accepted research-bank generation ran here.
+

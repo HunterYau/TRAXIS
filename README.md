@@ -68,6 +68,12 @@ now passes paired 4.66/5.54-million-coefficient operator checks and whole-cell
 geometry bounds, while exposing uneven cell sizes and substantial window
 costs. These results do not accept research data.
 
+The [embedded recess grid](docs/embedded-recess-grid.md) now joins a local
+curved patch to a Cartesian exterior. Six native Q3/Q4/Q5 cases and paired
+full-size Q4 capacity checks pass. Edge sizes improve to 1.25-5 mm and the
+500 us stability forecast falls to about 113,000-115,000 steps. Complete
+wave propagation and accuracy on this new grid remain to be measured.
+
 ## Setup
 
 Python 3.12 or newer:

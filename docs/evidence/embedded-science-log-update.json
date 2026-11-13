@@ -1,0 +1,28 @@
+{
+  "kind": "science_log_append_verification",
+  "date": "2026-11-12",
+  "completed": true,
+  "document_url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "previous_revision": "AHj4eMR5RZBzcroKJBxqPVdZKUO-fWZDYceBTLU6Lgao9MMAMuELFzD-ESqLfK1aPc9XFeoE3RQr5ps8L6lnordZlF5cIT7IajWKWTMkos4",
+  "revision": "AHj4eMQrmgMs1I_j0w1yuqFnMgG3f6z7XoImA2SNdF8rBxJzmicQiRgP0Vr_kv6EUfGseI85LKfpeKHIAWiWUoxtAvvmretm27v07MF4KUQ",
+  "prior_elements_preserved": true,
+  "preserved_elements": 1279,
+  "prior_tables_preserved": true,
+  "prior_table_count": 14,
+  "final_table_count": 16,
+  "all_paragraphs_and_roles_match": true,
+  "new_tables": [
+    {
+      "key": "native",
+      "exact": true
+    },
+    {
+      "key": "capacity",
+      "exact": true
+    }
+  ],
+  "implementation_commit": "8d5cd1f",
+  "numerical_evidence": "docs/evidence/embedded-recess-capacity-debug.json",
+  "numerical_evidence_fingerprint": "7f6a400eb2f3114f1479cb2dcdf976b1b1135ce06ade572a341ab1e90e4504e7",
+  "scope": "Append-only record of embedded-grid references/capacity, tests, retained failures and removal of clamp modeling; previous content preserved."
+}
