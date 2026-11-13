@@ -1,11 +1,13 @@
 """Compare predeclared full-window spatial and time refinements."""
 import argparse
+from dataclasses import asdict
 import json
 from pathlib import Path
 
 import numpy as np
 
 from examples.embedded_wave import read_wave, validate_plan
+from examples.embedded_wave_budget import execution_profile
 from examples.tensor_wave import PROJECT, checked_receipt, read_json, sealed
 from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import sha256_file, write_json
@@ -14,6 +16,20 @@ PROTOCOL = dict(kind='embedded_complete_window_refinement', duration_s=.0005,
     spatial_orders=[3,4,5],spatial_steps=196608,time_order=4,time_steps=[131072,196608,294912],
     comparison_intervals=32768,spatial_finest_change_limit=.01,time_finest_change_limit=.001,
     time_order_bounds=[1.7,2.3],relative_identifiability_floor=1e-11)
+
+
+def checked_resources(level):
+    profile=level['plan'].get('execution')
+    if profile is None:
+        limits=asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        if 'execution' in level['parent']: raise ValueError('standard embedded receipt has an unexpected execution profile')
+    else:
+        if profile!=execution_profile(level['case']) or level['parent'].get('execution')!=profile:
+            raise ValueError('extended embedded execution profile changed')
+        limits=profile['limits']
+    if any(level[key]['resources']['limits']!=limits for key in ('native','parent')):
+        raise ValueError('embedded comparison resource limits differ from their declared execution')
+    return limits
 
 
 def compare(times, traces, mode, protocol):
@@ -62,7 +78,7 @@ def assess(roots, cpu_roots, mode, protocol_path, output, guard):
     try:
         levels=[]; checks=[]
         for root,cpu_root in zip(roots,cpu_roots):
-            guard.check(); level=read_wave(root,guard); validate_plan(level['plan'],guard)
+            guard.check(); level=read_wave(root,guard); validate_plan(level['plan'],guard);checked_resources(level)
             if sha256_file(level['root']/'source-snapshot.zip')!=level['plan']['source_snapshot_sha256']:
                 raise ValueError('embedded waveform source snapshot changed')
             path=Path(cpu_root)/'cpu-window-check.json'; cpu=checked_receipt(read_json(path))

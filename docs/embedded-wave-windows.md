@@ -48,6 +48,24 @@ cooling. A missing single-GPU temperature sensor fails visibly. Every pause
 and its duration is retained; no power, fan, clock or operating-system setting
 is changed. Process-tree monitoring also enforces limits from the parent.
 
+The measured coarse window projects about 2,573 seconds (43 minutes) for
+the 294,912-step case, including the observed setup and cooling overhead.
+`examples.embedded_wave_budget` therefore supplies an explicit 3,600-second
+execution profile. It calls the same frozen numerical worker and records
+its own source plus every actual limit in the plan. Memory, temperature,
+physical-case and numerical acceptance limits retain their original values.
+The original coarse/medium plans keep their original 2,400-second budgets.
+Comparisons check both parent and worker limits against the appropriate
+declared profile; prior source identities are preserved.
+
+The extended guard compacts observation history before 8,000 entries,
+retaining first/latest samples, a regular older sample sequence and every
+resource extremum. It records the total observations and compaction count.
+This keeps late readings and fresh process-tree samples available beyond
+the base guard's 10,000-entry history capacity. Actual checks, enforcement
+and cooling continue at their original cadence. Synthetic long histories
+test peak retention, fresh mutable samples and visible limit failures.
+
 ## Saved arrays and independent checks
 
 Each window saves every trace sample, physical and modified energy samples,
@@ -160,6 +178,7 @@ Use fresh directories for every attempt:
 .\.venv\Scripts\python.exe -m examples.embedded_native_pulse --run outputs/embedded-smoke --reference outputs/embedded-native-small --output outputs/embedded-small-native-replay
 .\.venv\Scripts\python.exe -m examples.embedded_wave --scope full --order 4 --steps 131072 --output outputs/embedded-full-intact
 .\.venv\Scripts\python.exe -m examples.verify_embedded_window --run outputs/embedded-full-intact --output outputs/embedded-full-intact-cpu
+.\.venv\Scripts\python.exe -m examples.embedded_wave_budget --order 4 --steps 294912 --output outputs/embedded-full-intact-fine
 ```
 
 Add `--recess` for the material-loss state. Only the predeclared degree/time
