@@ -167,6 +167,22 @@ small independent native trajectory comparison. Full-size recess windows,
 the declared spatial/time studies, representative thickness/frequency
 coverage and physical PZT measurements remain open. No training ran.
 
+## Paused checkpoint (November 12)
+
+The user paused the research goal while the 196,608-step intact time level
+was running. Its last logged progress is 73,392 steps / 186.646 us; the
+process was stopped and has no accepted complete window or CPU readback.
+The verified 131,072-step window above remains the completed reference.
+The interrupted attempt has no restartable numerical state; resume with a
+fresh output directory rather than accepting its partial progress.
+
+The extended execution/profile checks pass 18 focused tests without skips
+in 0.593 seconds. The 294,912-step level and full three-level assessment
+remain pending. The longer profile is committed, but has not yet been used
+for a completed production window. Generated raw outputs and local virtual
+environments remain ignored by Git; source, protocols and compact completed
+evidence are tracked.
+
 ## Commands
 
 Use fresh directories for every attempt:
