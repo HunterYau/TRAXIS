@@ -1,7 +1,12 @@
 # Implementation and evidence checklist
 
 The source of requirements is [the consolidated research plan](https://docs.google.com/document/d/1YdcENA3Y00U-8t2Yn2oDq9uq08JuIf8LWrp96weIiNI/edit),
-read 2026-11-03 and rechecked 2026-11-11. A local snapshot is in `docs/research-plan-source.txt`.
+read 2026-11-03 and rechecked 2026-11-12. A local snapshot is in `docs/research-plan-source.txt`.
+
+Current user instruction (November 12): retain slight PZT placement/footprint/
+coupling randomization; omit clamp mechanics and preload/contact-pressure
+calculations. Earlier dated checkpoints retain their original scope. See
+current-hardware.md for the superseding requirements.
 
 Status means implemented and verified only when evidence is named here.
 Full training and physical experiments are explicitly outside the short
@@ -13,7 +18,7 @@ validation rather than inventing those outcomes.
 | Solver recommendation | COMSOL preferred if licensed; portable Elmer independent assembly, P2 dispersion and finite-plate trials run. P2 spatial screen failed; coupled PZT benchmark remains open |
 | 3D elastic propagation and backside loss | Local linear-tet FEM and independent Elmer P2 mechanical reference implemented; algebraic/dynamic/dispersion checks run. Spatial and physical acceptance remain open |
 | Independent higher-order assembly | Optional NGSolve P1-P4 checks pass for operators, exact energies, circular footprint moments and coarse reciprocal pulses; P2 agrees with fresh Elmer transients. Spatial/time convergence and physical acceptance remain open |
-| PZT electromechanics, supports, noise/coupling variation | Seeded nuisance variation and a small synthetic coupled 3D/electrode/circuit reference verified; bonded PZT/adhesive/support modeling, identified electronics and measured calibration still needed |
+| PZT electromechanics, supports, noise/coupling variation | Seeded nuisance variation and a small synthetic coupled 3D/electrode/circuit reference verified; measured PZT/coupling/electrical response and physical calibration remain open. Clamp calculations are excluded |
 | Intact arrival/dispersion and mesh/time convergence | Rayleigh-Lamb, local FEM and independent Elmer P2 Bloch checks implemented. P1/P2 finite-plate time screens passed, mesh screens failed; PZT/physical validation still needed |
 | Randomized specimens and exact depth labels | Seeded geometry/nuisance recipes, intact controls, nine size/depth combinations, clearances, parent-preserving variants and area-averaged labels implemented/tested; validated research dataset pending |
 | CAD-conforming geometry and elastic bank generation | Gmsh/OpenCASCADE recess mesh with volume/refinement checks and bounded grouped 3D elastic solves/cache implemented; banks remain plumbing_only pending wave/PZT/physical validation |

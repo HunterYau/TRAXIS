@@ -8,10 +8,10 @@ brief, bounded debug updates; no research training cycle has run. No simulation
 has been validated against a physical plate. Passing software checks do not
 establish physical accuracy or a superior model.
 
-The current physical target is **3.175 mm (1/8 inch) aluminum with removable
-clamp-mounted PZTs**. New scenario recipes use this thickness. Earlier 3 mm
-reference studies remain historical; placement/contact variability and
-clamp coupling need separate verification. Seeded [mounting randomization](docs/pzt-domain-randomization.md)
+The current physical target is **3.175 mm (1/8 inch) aluminum** with slight
+PZT placement and coupling variation. Clamp calculations are out of scope.
+New scenario recipes use this thickness. Earlier 3 mm reference studies remain
+historical. Seeded [mounting randomization](docs/pzt-domain-randomization.md)
 now varies actual PZT positions, contact radii and coupling, including independent
 baseline/current remounts. Ranges remain provisional. See [current hardware requirements](docs/current-hardware.md).
 
@@ -63,7 +63,7 @@ now passes fresh native comparisons at 3.175 mm, all small global columns and
 short modal time checks. [Curved-mesh surface ports](docs/mapped-surface-ports.md)
 now pass independent native disk-vector checks and complete small pulse tests
 with actual remounted footprints. Full-size wave resolution and calibrated
-clamp response remain work. [Full-size compact capacity](docs/full-size-recess-capacity.md)
+PZT response remain work. [Full-size compact capacity](docs/full-size-recess-capacity.md)
 now passes paired 4.66/5.54-million-coefficient operator checks and whole-cell
 geometry bounds, while exposing uneven cell sizes and substantial window
 costs. These results do not accept research data.

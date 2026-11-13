@@ -74,7 +74,7 @@ def export_solver_request(scenario: Scenario, directory: Path) -> dict:
             "jobs": groups, "record_count": len(actions), "csv_header": "time_s,value",
             "import_manifest_sha256": sha256_file(directory / "import-manifest.json"),
             "ready_for_training_data": False,
-            "required_before_voltage_model": ["PZT geometry/material/poling", "measured clamp/contact/couplant properties (or adhesive if bonded)", "electrodes and electrical drive/loading", "receiver circuit/observable"],
+            "required_before_voltage_model": ["PZT geometry/material/poling", "measured mounting/coupling response", "electrodes and electrical drive/loading", "receiver circuit/observable"],
             "required_before_research_dataset": ["appropriate band/mesh/time convergence", "intact physical agreement", "support/coupling validation", "measured solver cost"],
             "note": "No solver has run. No fake/zero CSV traces are supplied. Gmsh GEO coordinates are unitless numbers assigned SI meters by this recipe."}
     write_json(directory / "solver-task.json", task)

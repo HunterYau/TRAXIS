@@ -16,6 +16,7 @@ from examples import recess_geometry_reference as geometry_reference
 from examples.tensor_wave import PROJECT, checked_receipt, identities, read_json, sealed, snapshot_sources
 from traxis.compact_recess import make_compact_recess_mesh, storage_screen
 from traxis.config import CircularRecess, Material, Plate
+from traxis.embedded_recess import make_embedded_recess_mesh, storage_screen as embedded_screen
 from traxis.elmer_reference import run_monitored
 from traxis.gpu_mapped_tensor import build_gpu_mapped
 from traxis.gpu_verification import gpu_package_identity
@@ -26,18 +27,45 @@ from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import sha256_file, write_json
 
 
-def fixed_settings():
-    return dict(plate=asdict(Plate(.5, .5, .003175)), recess=asdict(CircularRecess(.255, .245, .015, .0015)),
-        material=asdict(Material()), geometry_order=3, angular_cells=64, radial_cells=[2, 32], layers=[1, 1],
+def fixed_settings(mesh_family='compact'):
+    if mesh_family not in ('compact', 'embedded'):
+        raise ValueError('unknown capacity mesh family')
+    settings = dict(plate=asdict(Plate(.5, .5, .003175)), recess=asdict(CircularRecess(.255, .245, .015, .0015)),
+        material=asdict(Material()), geometry_order=3, layers=[1, 1], mesh_family=mesh_family,
         max_mesh_bytes=512*1024**2, max_operator_bytes=1536*1024**2, max_batch_vectors=1,
         max_device_mib=3072, max_host_mib=2048, operator_tolerance=1e-10, mass_tolerance=1e-10,
         moment_tolerance=1e-9, source_xy_m=[.02, .02], receiver_xy_m=[.48, .48], patch_radius_m=.003,
         forecast_duration_s=.0005, forecast_stability_fraction=.8)
+    settings.update(dict(angular_cells=64, radial_cells=[2, 32]) if mesh_family == 'compact'
+                    else dict(angular_cells=12, radial_cells=[2, 6], outer_cell_size_m=.005, patch_bounds_m=None))
+    return settings
+
+
+def make_mesh(plan, guard):
+    controls = dict(geometry_order=plan['geometry_order'], angular_cells=plan['angular_cells'],
+        radial_cells=tuple(plan['radial_cells']), layers=tuple(plan['layers']), defective=plan['defective'],
+        max_bytes=plan['max_mesh_bytes'], guard=guard)
+    plate, recess = Plate(**plan['plate']), CircularRecess(**plan['recess'])
+    if plan['mesh_family'] == 'embedded':
+        return make_embedded_recess_mesh(plate, recess, plan['order'], **controls,
+            outer_cell_size_m=plan['outer_cell_size_m'], patch_bounds_m=plan['patch_bounds_m'])
+    return make_compact_recess_mesh(plate, recess, plan['order'], **controls)
+
+
+def mesh_screen(plan):
+    if plan['mesh_family'] == 'embedded':
+        return embedded_screen(Plate(**plan['plate']), CircularRecess(**plan['recess']), plan['order'],
+            geometry_order=plan['geometry_order'], angular_cells=plan['angular_cells'], radial_cells=tuple(plan['radial_cells']),
+            layers=tuple(plan['layers']), defective=plan['defective'], max_bytes=plan['max_mesh_bytes'],
+            outer_cell_size_m=plan['outer_cell_size_m'], patch_bounds_m=plan['patch_bounds_m'])
+    return storage_screen(plan['order'], plan['geometry_order'], plan['angular_cells'], tuple(plan['radial_cells']),
+                          tuple(plan['layers']), plan['defective'], max_bytes=plan['max_mesh_bytes'])
 
 
 def source_check(plan, guard):
-    if (plan['kind'] != 'full_size_mapped_capacity' or any(plan.get(k) != v for k, v in fixed_settings().items())
+    if (plan['kind'] != 'full_size_mapped_capacity' or any(plan.get(k) != v for k, v in fixed_settings(plan['mesh_family']).items())
             or type(plan['order']) is not int or plan['order'] not in (3, 4, 5) or type(plan['defective']) is not bool
+            or plan['mesh_screen'] != mesh_screen(plan)
             or any(plan[k] != v for k, v in identities().items())
             or any(sha256_file(PROJECT/name) != digest for name, digest in plan['analysis_sources'].items())
             or plan['runtime'] != distribution_identity(guard) or plan['gpu_packages'] != gpu_package_identity(guard)):
@@ -57,10 +85,8 @@ def worker(plan_path, output, guard):
         if psutil.disk_usage(str(output)).free < 2048*1024**2:
             raise MemoryError('full-size proof needs at least 2 GiB free disk')
         plate = Plate(**plan['plate']); recess = CircularRecess(**plan['recess']); material = Material(**plan['material'])
-        mesh = make_compact_recess_mesh(plate, recess, plan['order'], geometry_order=plan['geometry_order'],
-            angular_cells=plan['angular_cells'], radial_cells=tuple(plan['radial_cells']), layers=tuple(plan['layers']),
-            defective=plan['defective'], max_bytes=plan['max_mesh_bytes'], guard=guard)
-        phase('compact_mesh_built')
+        mesh = make_mesh(plan, guard)
+        phase('mesh_built')
         cpu = build_system(mesh, material, guard, max_bytes=plan['max_operator_bytes'], max_batch_vectors=1)
         phase('cpu_geometry_mass_and_stability_built')
         gpu = build_gpu_mapped(cpu, guard=guard, max_device_mib=plan['max_device_mib'], max_host_mib=plan['max_host_mib'])
@@ -109,6 +135,7 @@ def worker(plan_path, output, guard):
             receiver_indices=receiver.indices, receiver_weights=receiver.weights)
         phase('proof_arrays_saved'); source_check(plan, guard)
         report.update(completed=True, passed=bool(operator_error < 1e-10 and mass_error < 1e-10 and moment_error < 1e-9),
+            mesh_family=plan['mesh_family'],
             system=gpu.screen, device=gpu.device, scalar_nodes=ns, elements=len(mesh.element_nodes),
             operator_relative_l2=operator_error, gpu_host_application_seconds=gpu_host_seconds, cpu_application_seconds=cpu_seconds,
             gpu_event_seconds=events, gpu_wall_seconds=walls, mass_kg=float(mass.sum()), expected_mass_kg=expected_mass,
@@ -119,7 +146,7 @@ def worker(plan_path, output, guard):
             forecast=dict(duration_s=plan['forecast_duration_s'], step_from_stability_s=step, steps=steps,
                 operator_only_device_seconds=steps*float(np.median(events)),
                 scope='Operator-only extrapolation; excludes integrator/probe/guard/cooling overhead and does not choose an accuracy-qualified time step.'),
-            scope='Measured full-size mapped geometry/operator/physical-port capacity; no propagation, spatial/frequency convergence, calibrated PZT/contact or accepted waveform data.')
+        scope='Measured full-size mapped geometry/operator/physical-port capacity; no propagation, spatial/frequency convergence, calibrated PZT/contact or accepted waveform data.')
     except Exception as error:
         report['error'] = f'{type(error).__name__}: {error}'; raise
     finally:
@@ -130,6 +157,7 @@ def worker(plan_path, output, guard):
 def main():
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--order', type=int, choices=(3, 4, 5), default=4)
+    parser.add_argument('--mesh', choices=('compact', 'embedded'), default='compact')
     parser.add_argument('--intact', action='store_true'); parser.add_argument('--worker', action='store_true'); parser.add_argument('--plan', type=Path)
     args = parser.parse_args(); output = args.output.resolve()
     guard = ResourceGuard(ResourceLimits(max_seconds=360, max_rss_mib=1536, max_system_memory_percent=85, min_available_mib=2048))
@@ -138,9 +166,9 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     analysis = {str(Path(name).resolve().relative_to(PROJECT)).replace('\\', '/'):sha256_file(name)
                 for name in (__file__, geometry_reference.__file__)}
-    plan = dict(kind='full_size_mapped_capacity', order=args.order, defective=not args.intact, **fixed_settings(),
-        **identities(), analysis_sources=analysis, runtime=distribution_identity(guard), gpu_packages=gpu_package_identity(guard),
-        mesh_screen=storage_screen(args.order, 3, 64, (2,32), (1,1), not args.intact))
+    plan = dict(kind='full_size_mapped_capacity', order=args.order, defective=not args.intact, **fixed_settings(args.mesh),
+        **identities(), analysis_sources=analysis, runtime=distribution_identity(guard), gpu_packages=gpu_package_identity(guard))
+    plan['mesh_screen'] = mesh_screen(plan)
     snapshot_sources(output/'source-snapshot.zip', plan)
     with zipfile.ZipFile(output/'source-snapshot.zip', 'a', compression=zipfile.ZIP_DEFLATED) as archive:
         for name in analysis: archive.writestr(name, (PROJECT/name).read_bytes())

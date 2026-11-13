@@ -5,6 +5,12 @@ This is an engineering recommendation based on
 documented capabilities, not a measured head-to-head solver benchmark.
 No commercial solver has been installed, licensed, or run for this project.
 
+Current scope update (November 12): use an explicit 3.175 mm stock thickness
+for new physical-study cases, retain slight PZT position/footprint/coupling
+randomization, and omit clamp calculations. Earlier 3 mm and bonded-interface
+specifications below describe the original assessment; neither prescribes the
+current mounting method. Physical PZT/electrical response remains uncalibrated.
+
 A read-only check of the standard 32/64-bit Windows uninstall registries on
 this PC found no COMSOL, Ansys, Abaqus or OnScale entries. This does not rule
 out portable installations, a school license, or a remote machine. Reference

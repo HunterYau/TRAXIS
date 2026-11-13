@@ -91,8 +91,9 @@ def _extrude(points, planar, descriptors, order, plate, recess, layers, defectiv
     count = len(planar)*layers[1]+(int(ring_cells.sum()) if defective else len(planar))*layers[0]
     elements = np.empty((count, q**3), dtype=np.int32)
     cell_faces = np.empty(count, dtype=np.int32); boxes = np.empty((count, 6)); first = 0
-    block_counts = np.array([descriptors[descriptors[:, 0] == face, 1].max()+1 for face in range(9)])
-    nv = descriptors[:, 2].max()+1
+    blocks = int(descriptors[:, 0].max())+1
+    block_counts = np.array([descriptors[descriptors[:, 0] == face, 1].max()+1 for face in range(blocks)])
+    vertical_counts = np.array([descriptors[descriptors[:, 0] == face, 2].max()+1 for face in range(blocks)])
     for iz in range(sum(layers)):
         active = np.flatnonzero(ring_cells) if defective and iz < layers[0] else np.arange(len(planar))
         planes = iz*order+np.arange(q)
@@ -104,6 +105,7 @@ def _extrude(points, planar, descriptors, order, plate, recess, layers, defectiv
             elements[first:stop] = (local+offsets[planes][None, None, :]).reshape(len(chosen), -1)
             desc = descriptors[chosen]; cell_faces[first:stop] = desc[:, 0]
             nu = block_counts[desc[:, 0]]
+            nv = vertical_counts[desc[:, 0]]
             boxes[first:stop, :4] = np.column_stack([desc[:, 1]/nu, (desc[:, 1]+1)/nu,
                                                     desc[:, 2]/nv, (desc[:, 2]+1)/nv])
             boxes[first:stop, 4:] = [z[iz*order], z[(iz+1)*order]]
@@ -111,7 +113,7 @@ def _extrude(points, planar, descriptors, order, plate, recess, layers, defectiv
     return coordinates, elements, cell_faces, boxes
 
 
-def _faces(mesh, guard):
+def _faces(mesh, guard, *, classify=None):
     ne = len(mesh.element_nodes); q = mesh.order+1; g = mesh.geometry_order+1
     def maps(n):
         array = np.arange(n**3).reshape((n,)*3)
@@ -137,9 +139,10 @@ def _faces(mesh, guard):
                 raise ArithmeticError('compact shared face has inconsistent polynomial nodes')
     paired = np.r_[same, False] | np.r_[False, same]
     boundary = []
+    classify = _boundary_name if classify is None else classify
     for item in order[~paired]:
         e, local = divmod(int(item), 6); axis, side = divmod(local, 2)
-        boundary.append((_boundary_name(mesh, e, axis, side), e, axis, side))
+        boundary.append((classify(mesh, e, axis, side), e, axis, side))
     seen = np.zeros(ne, dtype=bool); seen[0] = True; pending = [0]
     while pending:
         if guard: guard.check()

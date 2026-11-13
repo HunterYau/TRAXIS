@@ -1,8 +1,9 @@
 # PZT mounting domain randomization
 
 New research recipes use the 3.175 mm plate and seeded mounting variation.
-These are mechanical robustness proxies for removable clamps, not a calibrated
-contact, couplant, friction or piezoelectric model.
+These are mechanical robustness proxies for ordinary placement and coupling
+variation. On November 12 the user retained this randomization and removed
+clamp calculations from scope. No clamp mechanics are required.
 
 ## Provisional study ranges
 
@@ -20,8 +21,8 @@ contact, couplant, friction or piezoelectric model.
 These are initial sensitivity settings, not measured tolerances. Radius
 variation implies roughly -19% to +21% contact-area variation. The patch stays
 circular; rotating it would not change its footprint. Tilt, elliptical or
-uneven contact, clamp mass/preload/stiffness and frequency-dependent coupling
-still need measured models. Scalar gain is not identified contact stiffness.
+uneven footprints and frequency-dependent coupling are not represented by
+these settings. Scalar gain is an amplitude proxy, not identified stiffness.
 
 The study enables `remount_between_states`: intact baseline and current state
 draw independent positions, contact radii and coupling strengths. An intact
@@ -70,18 +71,18 @@ instead of ignoring its ports. The trace-import manifest retains its existing
 schema because its coordinates intentionally describe nominal inference inputs.
 
 ```powershell
-.\.venv\Scripts\python.exe -m traxis plan-scenarios --config configs/scenarios-study.json --count 8 --variants 3 --output outputs/clamp-recipes.json
-.\.venv\Scripts\python.exe -m traxis export-solver-request --plan outputs/clamp-recipes.json --index 0 --output outputs/clamp-request
+.\.venv\Scripts\python.exe -m traxis plan-scenarios --config configs/scenarios-study.json --count 8 --variants 3 --output outputs/mounting-recipes.json
+.\.venv\Scripts\python.exe -m traxis export-solver-request --plan outputs/mounting-recipes.json --index 0 --output outputs/mounting-request
 ```
 
 These write unsolved recipes/tasks, not training data. All remounts of a
 parent, including calibration parents, retain that parent's split. Repeated
 physical mountings must not become independent train/test plates.
 
-Estimate ranges by repeated removal/reclamping on an intact plate, recording
-position, clamp setting/preload, couplant condition and waveform repeatability.
+Estimate ranges from repeated PZT placement on an intact plate, recording
+position, effective footprint, acquisition settings and waveform repeatability.
 Keep final physical holdouts protected when selecting those ranges. No clamp
-contact fidelity or research-bank acceptance is implied by these proxies.
+mechanics or research-bank acceptance is implied by these proxies.
 
 ## Verification checkpoint
 

@@ -6,6 +6,7 @@ import math
 import os
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import zipfile
 
 import numpy as np
@@ -121,8 +122,24 @@ def native_geometry(mesh, guard, *, return_model=False):
     import netgen.meshing as nm
     ng.SetNumThreads(1)
     g = mesh.geometry_order
-    base = make_recess_mesh(mesh.plate, mesh.recess, g, geometry_order=1, defective=mesh.defective,
-        angular_cells=mesh.angular_cells, radial_cells=mesh.radial_cells, layers=mesh.layers)
+    # Construct the straight reference from this mesh's cell corners. This
+    # supports any checked block topology, including a Cartesian exterior.
+    q = (line_rule(g)[0]+1)/2
+    reference = np.stack(np.meshgrid(q, q, q, indexing='ij'), axis=-1).reshape(-1, 3)
+    corners_reference = np.array([[0,0,0], [1,0,0], [1,1,0], [0,1,0],
+                                  [0,0,1], [1,0,1], [1,1,1], [0,1,1]])
+    shapes = np.prod(np.where(corners_reference[None] == 1, reference[:, None], 1-reference[:, None]), axis=2)
+    base_points = np.empty_like(mesh.geometry_points_m); seen_points = np.zeros(len(base_points), dtype=bool)
+    for e, ids in enumerate(mesh.geometry_elements):
+        guard.check()
+        points = shapes@mesh.corner_points_m[mesh.corner_elements[e]]
+        if np.any(seen_points[ids]) and np.max(abs(base_points[ids[seen_points[ids]]]-points[seen_points[ids]])) > 1e-12:
+            raise ArithmeticError('straight native reference has discontinuous shared controls')
+        base_points[ids] = points; seen_points[ids] = True
+    if not seen_points.all():
+        raise ArithmeticError('straight native reference has unused geometry controls')
+    base = SimpleNamespace(points_m=base_points, element_nodes=mesh.geometry_elements,
+        corner_points_m=mesh.corner_points_m, corner_elements=mesh.corner_elements)
     raw = nm.Mesh(dim=3)
     vertices = [raw.Add(nm.MeshPoint(nm.Pnt(*p))) for p in base.corner_points_m]
     region = raw.AddRegion('solid', dim=3)
