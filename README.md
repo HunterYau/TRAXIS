@@ -71,8 +71,13 @@ costs. These results do not accept research data.
 The [embedded recess grid](docs/embedded-recess-grid.md) now joins a local
 curved patch to a Cartesian exterior. Six native Q3/Q4/Q5 cases and paired
 full-size Q4 capacity checks pass. Edge sizes improve to 1.25-5 mm and the
-500 us stability forecast falls to about 113,000-115,000 steps. Complete
-wave propagation and accuracy on this new grid remain to be measured.
+500 us stability forecast falls to about 113,000-115,000 steps. Wave
+accuracy remains to be measured. The new
+[embedded wave-window workflow](docs/embedded-wave-windows.md) completes one
+full-size intact 500 us window and passes independent CPU state readback.
+A separate complete small pulse agrees with native sparse dynamics within
+7.50e-13 relative at all three receivers. Spatial/time studies, full-size
+recess windows and physical comparison remain open.
 
 ## Setup
 

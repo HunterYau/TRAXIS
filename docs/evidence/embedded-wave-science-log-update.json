@@ -1,0 +1,33 @@
+{
+  "kind": "science_log_append_verification",
+  "date": "2026-11-12",
+  "completed": true,
+  "document_url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "previous_revision": "AHj4eMQrmgMs1I_j0w1yuqFnMgG3f6z7XoImA2SNdF8rBxJzmicQiRgP0Vr_kv6EUfGseI85LKfpeKHIAWiWUoxtAvvmretm27v07MF4KUQ",
+  "revision": "AHj4eMRrQx6YXIfI96OVOfNXkEn1mZeTBva-l1VKH-cbvTk8V-41_DrpBqr6avAkpAoTLzFCgwvU5Z37H0UhKaoKSPefdRKmRnr4OzVxq2A",
+  "prior_elements_preserved": true,
+  "preserved_elements": 1303,
+  "prior_tables_preserved": true,
+  "prior_table_count": 16,
+  "final_table_count": 18,
+  "all_paragraphs_and_roles_match": true,
+  "new_tables": [
+    {
+      "key": "windows",
+      "exact": true
+    },
+    {
+      "key": "native",
+      "exact": true
+    }
+  ],
+  "implementation_commits": [
+    "3c1cf3b",
+    "3f0c0e3",
+    "6514876"
+  ],
+  "numerical_evidence": "docs/evidence/embedded-wave-window-debug.json",
+  "numerical_evidence_fingerprint": "3c5a704bf7abfccf30c69c18f4bc51aafbaf5972184366c7524c76d2f2cdfdff",
+  "figure_png_visually_checked": true,
+  "scope": "Append-only record of complete embedded mechanical windows, independent CPU/native checks, thermal/resource observations, fixed refinement criteria and retained failures; prior content preserved."
+}

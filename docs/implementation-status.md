@@ -1257,3 +1257,30 @@ remain enabled in the study recipe; their ranges are provisional. Complete
 embedded wave convergence, PZT/electrical response and physical comparison
 remain open. No training or accepted research-bank generation ran here.
 
+## First complete embedded wave window (November 12)
+
+The frozen embedded runner completes 131,072 steps / 500 us for the full
+500 by 500 by 3.175 mm intact plate. Postburst modified-energy range is
+1.85e-15 relative. Independent CPU readback agrees in final force within
+1.73e-13, mass exactly, energies within 5.56e-16 and probe contraction within
+4.33e-16. The parent finishes in 1,285.792 seconds; propagation is 1,031.080
+seconds including 78 cooperative cooling pauses totaling 161.129 seconds.
+Peak process-tree RSS is 1,480.73 MiB, system RAM 62.1%, minimum available
+RAM 6,150.69 MiB and GPU observations 1,551 MiB / 76 C. CPU temperature is
+unavailable. Original system/GPU guards remain active through cooling.
+
+An independent complete small trajectory uses archived NGSolve local
+matrices, fresh native disk integrals and a separately tested displacement
+recurrence. All three raw receiver traces agree within 7.50e-13. The final
+integrated suite passes 25 tests without skips in 4.874 seconds. Raw-data
+tampering, frozen settings, analytical time order and actual CUDA paths are
+covered. Incorrect test-module names and the first native helper's scalar
+aperture mapping error are retained; limits and tolerances were not relaxed.
+
+The committed protocol fixes Q3/Q4/Q5 at 196,608 steps and Q4 time levels
+131,072 / 196,608 / 294,912. Those full-size comparisons have not run yet.
+See embedded-wave-windows.md and evidence/embedded-wave-window-debug.json.
+This is mechanical numerical verification; full-size recess convergence,
+PZT/electrical response and physical agreement remain open. No training or
+accepted research-bank generation ran.
+

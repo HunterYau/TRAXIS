@@ -74,6 +74,19 @@ velocity errors. The native replay does not call the CUDA operator or the
 production time integrator. Its complete-waveform tolerance is 1e-8 relative;
 its force/state/identity limits remain explicit in the retained report.
 
+The first completed native replay covers all 8,065 samples at all three
+small-case receivers. Relative waveform discrepancies are 6.37e-13,
+5.26e-13 and 7.49e-13. Final displacement/velocity discrepancies are
+1.14e-11 and 2.21e-12; native mass agrees within 3.37e-15. The sparse
+stiffness has 8,213,625 entries and symmetry discrepancy 1.22e-15. This
+82.852-second CPU replay peaks at 350.23 MiB RSS. Concurrent full-wave GPU
+activity is included in its GPU telemetry; the replay itself uses the CPU.
+
+The first replay attempt treated the native scalar aperture vector as a
+three-component vector and stopped before integration. The mapping now puts
+the converted scalar covector in the declared normal component. The failed
+report and original helper are retained; tolerances were not changed.
+
 ## Separate spatial and time comparisons
 
 The fixed protocol is `configs/embedded-wave-protocol.json`:
@@ -96,6 +109,46 @@ identifiability floor do not establish an observed convergence rate. These
 numerical criteria are declared engineering screens; measurement repeatability
 is still needed to establish physical accuracy requirements.
 
+## Measured checkpoint (November 12)
+
+| Case | Coefficients | Steps | Internal step (ns) | Window (us) | Propagation wall time (s) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Small intact Q4 | 14,715 | 8,064 | 3.906250 | 31.5 | 3.571 |
+| Full intact Q4 | 4,507,515 | 131,072 | 3.814697 | 500 | 1,031.080 |
+
+The full worker completes in 1,284.275 seconds (parent monitor: 1,285.792
+seconds), including setup, propagation and saved proof. The source/receiver
+patches are ready at 244.273 seconds. Propagation includes 78 cooling pauses
+totaling 161.129 seconds. These are observed wall times, replacing the earlier
+operator-only forecast for this particular run; the forecast excluded these
+other costs.
+
+Postburst modified-energy range is 1.85e-15 relative. The separate full-size
+CPU readback agrees in final stiffness force within 1.73e-13, mass exactly,
+physical/modified energy within 5.56e-16 and probe contraction within 4.33e-16.
+The full worker/monitor peaks at 1,480.73 MiB process-tree RSS, 62.1% system
+RAM and 1,551 MiB GPU memory / 76 C, with at least 6,150.69 MiB available RAM.
+The CPU readback peaks at 630.86 MiB RSS. CPU temperature remains unavailable.
+
+The final integrated suite passes 25 tests without skips in 4.874 seconds
+(6.134 seconds monitored wall time), including actual optional CUDA checks.
+Its peak RSS is 341.00 MiB, system RAM 55.2%, minimum available RAM 7,264.26
+MiB and observed GPU 905 MiB / 52 C. The earlier overlapping 19-, 12- and
+6-test groups are retained, not added to this suite total. The first command
+used two incorrect existing module names; its import-error report is retained.
+
+An independent retained-array audit rechecks report/plan/array/source hashes,
+every native reference element file, complete time grids, energy ranges,
+CPU bindings and the native pulse differences. The final PNG figure was
+visually inspected; a corresponding PDF is retained. See
+[the compact receipt](evidence/embedded-wave-window-debug.json), fingerprint
+3c5a704bf7abfccf30c69c18f4bc51aafbaf5972184366c7524c76d2f2cdfdff.
+
+This checkpoint completes one full-size intact mechanical window and the
+small independent native trajectory comparison. Full-size recess windows,
+the declared spatial/time studies, representative thickness/frequency
+coverage and physical PZT measurements remain open. No training ran.
+
 ## Commands
 
 Use fresh directories for every attempt:
@@ -103,6 +156,8 @@ Use fresh directories for every attempt:
 ```powershell
 .\.venv\Scripts\python.exe -m examples.embedded_wave --output outputs/embedded-smoke
 .\.venv\Scripts\python.exe -m examples.verify_embedded_window --run outputs/embedded-smoke --output outputs/embedded-smoke-cpu
+.\.venv\Scripts\python.exe -m examples.embedded_reference --order 4 --intact --output outputs/embedded-native-small
+.\.venv\Scripts\python.exe -m examples.embedded_native_pulse --run outputs/embedded-smoke --reference outputs/embedded-native-small --output outputs/embedded-small-native-replay
 .\.venv\Scripts\python.exe -m examples.embedded_wave --scope full --order 4 --steps 131072 --output outputs/embedded-full-intact
 .\.venv\Scripts\python.exe -m examples.verify_embedded_window --run outputs/embedded-full-intact --output outputs/embedded-full-intact-cpu
 ```
