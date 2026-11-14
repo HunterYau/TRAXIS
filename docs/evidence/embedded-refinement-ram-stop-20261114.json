@@ -1,0 +1,22 @@
+{
+  "kind": "interrupted_refinement_resource_record",
+  "completed": false,
+  "passed": false,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "error": "ResourceLimitError: system RAM limit reached",
+  "run_directory": "outputs\\embedded-wave-intact-q4-n196608-20261114",
+  "plan_fingerprint": "9c042ca98b769039dcc7ae1c686dbf9c3ce6596fc9de9c3ea9c99215bb2d40ea",
+  "peak_system_memory_percent": 85.1,
+  "minimum_available_mib": 2417.8828125,
+  "peak_process_tree_rss_mib": 1484.9765625,
+  "last_logged_steps": 112064,
+  "requested_steps": 196608,
+  "scope": "Incomplete window; no accepted trace or CPU readback. Original resource limits retained.",
+  "artifacts": {
+    "monitor-result.json": "5fd6daded92cf1e9adeed15d1a144b04caab9e55bd91698860ee42f22974bd2d",
+    "embedded-wave-plan.json": "8829e2713c23a752c5cd045cd85f48b9b8d8ac9a86f8a8ebc923de9895ab8e6b",
+    "worker.log": "5e02463fa4f54ccef18e51ddca1e397e15f8c0911f8b5b67582938f68d21ce67"
+  },
+  "fingerprint": "945e572ba768554819140d2f94fe0cca72c72d9e5f80af0c7805b0d77727dd6a"
+}

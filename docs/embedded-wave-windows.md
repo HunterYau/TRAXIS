@@ -183,6 +183,21 @@ for a completed production window. Generated raw outputs and local virtual
 environments remain ignored by Git; source, protocols and compact completed
 evidence are tracked.
 
+## November 14 refinement attempt
+
+The fresh 196,608-step attempt was automatically stopped when system RAM
+reached 85.1%, with 2,417.88 MiB available. The preceding process-tree
+reading was 1,224.82 MiB. Last logged progress was 112,064 steps; there is
+no complete window or accepted waveform/CPU readback from this attempt.
+The original memory threshold was retained. After stopping, available RAM
+recovered to 4,239.04 MiB (73.9% used). This does not identify which other
+processes contributed to the system-wide pressure.
+
+The failure record and input/log hashes are retained in
+`evidence/embedded-refinement-ram-stop-20261114.json`. A later attempt needs
+a fresh output directory and sufficient memory headroom; partial progress
+cannot be resumed as a numerical checkpoint.
+
 ## Commands
 
 Use fresh directories for every attempt:
