@@ -198,6 +198,13 @@ The failure record and input/log hashes are retained in
 a fresh output directory and sufficient memory headroom; partial progress
 cannot be resumed as a numerical checkpoint.
 
+New extended-profile launches now require system RAM at or below 70% and
+at least 4,096 MiB available before creating the run directory or allocating
+the wave system. The preflight thresholds are recorded in each new plan.
+The existing 85% in-run limit still applies. This reserves startup headroom;
+it cannot prevent later memory growth from other applications. The failed
+attempt retains its original source snapshot and execution profile.
+
 ## Commands
 
 Use fresh directories for every attempt:

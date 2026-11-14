@@ -6,12 +6,19 @@ import unittest
 from unittest.mock import patch
 
 from examples.embedded_wave import case_config
-from examples.embedded_wave_budget import ExtendedResourceGuard,check_execution,execution_profile
+from examples.embedded_wave_budget import ExtendedResourceGuard,check_execution,check_headroom,execution_profile
 from traxis.resources import ResourceGuard,ResourceLimitError,ResourceLimits
 from traxis.storage import sha256_file
 
 
 class EmbeddedBudgetTests(unittest.TestCase):
+    def test_startup_reserves_headroom_before_allocating_the_wave_system(self):
+        profile=execution_profile(case_config('full',4,294912))
+        check_headroom(dict(system_memory_percent=70.,available_mib=4096.),profile)
+        for sample in (dict(system_memory_percent=82.3,available_mib=2874.1),
+                       dict(system_memory_percent=60.,available_mib=4095.)):
+            with self.assertRaises(ResourceLimitError):check_headroom(sample,profile)
+
     def plan(self):
         case=case_config('full',4,294912)
         profile=execution_profile(case)

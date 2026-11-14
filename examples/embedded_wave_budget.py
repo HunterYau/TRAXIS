@@ -12,7 +12,7 @@ from examples.tensor_wave import PROJECT,checked_receipt,identities,read_json,se
 from traxis.elmer_reference import run_monitored
 from traxis.gpu_verification import gpu_package_identity
 from traxis.highorder_verification import distribution_identity
-from traxis.resources import ResourceGuard,ResourceLimits
+from traxis.resources import ResourceGuard,ResourceLimitError,ResourceLimits,snapshot
 from traxis.storage import sha256_file,write_json
 
 
@@ -21,7 +21,15 @@ def execution_profile(case):
     if case['scope']!='full': raise ValueError('extended execution is restricted to declared full-size cases')
     limits=ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048)
     return dict(kind='embedded_extended_wall_budget',limits=asdict(limits),
+        preflight=dict(max_system_memory_percent=70.,min_available_mib=4096.),
         reason='Measured coarse-level timing projects a fine-level runtime beyond 2400 seconds; numerical controls and memory/thermal limits are unchanged.')
+
+
+def check_headroom(sample,profile):
+    bounds=profile['preflight']
+    if (sample['system_memory_percent']>bounds['max_system_memory_percent']
+            or sample['available_mib']<bounds['min_available_mib']):
+        raise ResourceLimitError('full-size wave startup needs at most 70% system RAM use and at least 4096 MiB available')
 
 
 class ExtendedResourceGuard(ResourceGuard):
@@ -80,6 +88,7 @@ def main():
     profile=execution_profile(case);guard=ExtendedResourceGuard(ResourceLimits(**profile['limits']))
     if args.worker: return 0 if worker_entry(args.plan,output,guard)['passed'] else 2
     if not output.is_relative_to(PROJECT/'outputs'): raise ValueError('embedded evidence must remain in project outputs')
+    check_headroom(snapshot(include_gpu=False),profile)
     output.mkdir(parents=True,exist_ok=False)
     analysis={name:sha256_file(PROJECT/name) for name in ('examples/embedded_wave.py',
         'examples/verify_embedded_window.py','examples/embedded_wave_budget.py')}
