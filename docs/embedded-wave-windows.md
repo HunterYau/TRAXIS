@@ -290,3 +290,23 @@ pairs are accepted. Fixed-port numerical controls remain separate from the
 seeded PZT mounting randomization in scenario-bank generation. Clamp
 calculations are excluded; realistic placement/coupling variation remains
 part of that scenario workflow.
+
+## Refinement figures
+
+Plot a completed assessment with:
+
+```powershell
+.\.venv\portable-runtime\python.exe -m examples.plot_embedded_refinement --study outputs/embedded-time-refinement-reaudit-20261115-v2 --output outputs/embedded-time-figure
+```
+
+The plotter checks the sealed report, comparison archive hash, time grid and
+raw L2 metrics. It exports PNG and PDF versions with the three original
+trace levels, both consecutive differences, per-receiver changes and the
+actual study pass/fail status. A completed failed assessment can be plotted
+for diagnosis. Figure generation does not change its numerical acceptance.
+
+The November 15 time-refinement figure was inspected as a PNG; all labels,
+legends and curves fit. Its proof is in
+`docs/evidence/embedded-time-figure-20261115.json`. Earlier figures remain
+in ignored output directories; the final layout moves the
+trace legends clear of the early received pulses.
