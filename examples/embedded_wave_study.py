@@ -8,7 +8,7 @@ import numpy as np
 
 from examples.embedded_wave import read_wave
 from examples.embedded_wave_budget import execution_profile
-from examples.embedded_wave_evidence import validate_saved_plan, check_integrator_transition
+from examples.embedded_wave_evidence import COMPATIBILITY, validate_saved_plan, check_integrator_transition
 from examples.tensor_wave import PROJECT, checked_receipt, read_json, sealed
 from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import sha256_file, write_json
@@ -22,8 +22,12 @@ PROTOCOL = dict(kind='embedded_complete_window_refinement', duration_s=.0005,
 def checked_resources(level):
     profile=level['plan'].get('execution')
     if profile is None:
-        current_launcher=level['plan'].get('analysis_sources',{}).get('examples/embedded_wave.py')==sha256_file(PROJECT/'examples/embedded_wave.py')
-        limits=asdict(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)) if current_launcher else asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        launcher=level['plan'].get('analysis_sources',{}).get('examples/embedded_wave.py')
+        reviewed=read_json(COMPATIBILITY)['files']['examples/embedded_wave.py']
+        if launcher is not None and launcher not in [reviewed['current_sha256'],*reviewed['historical_sha256']]:
+            raise ValueError('embedded standard resource profile has an unreviewed launcher')
+        original=launcher in (None,'e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13')
+        limits=asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048)) if original else asdict(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768))
         if 'execution' in level['parent']: raise ValueError('standard embedded receipt has an unexpected execution profile')
     else:
         if profile!=execution_profile(level['case']) or level['parent'].get('execution')!=profile:

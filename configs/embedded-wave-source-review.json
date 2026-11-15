@@ -24,11 +24,12 @@
       "reason": "Use the fresh monitor sample rather than repeatedly augmenting a stale history entry. No solver assembly or numerical operation changes."
     },
     "examples/embedded_wave.py": {
-      "current_sha256": "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9",
+      "current_sha256": "a77f9f8e00ac2adc623b3affebac1ad750ef0a15f1690b1089609c89537e7fef",
       "historical_sha256": [
-        "e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13"
+        "e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13",
+        "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9"
       ],
-      "reason": "Use the reviewed sparse receiver covectors and updated resource limits. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged."
+      "reason": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged."
     },
     "examples/embedded_wave_budget.py": {
       "current_sha256": "5a5fbd48d12b73ecaf9e04b38ccf26f7ecd0db83d425fee0adfe7ff32e12b3af",

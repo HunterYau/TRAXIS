@@ -145,6 +145,13 @@ def worker(plan_path, output, guard):
         phase('patches_ready')
         def progressed(event):
             nonlocal last
+            if not report.get('initial_host_transfer_cache_released',False):
+                # Initial uploads are complete at this synchronized batch boundary.
+                cp=system.stiffness.storage.cp
+                cp.cuda.get_current_stream().synchronize()
+                cp.get_default_pinned_memory_pool().free_all_blocks()
+                report['initial_host_transfer_cache_released']=True
+                phase('host_transfer_cache_released',steps_completed=event['steps_completed'])
             report['steps_completed']=event['steps_completed']; cooling.check(event['steps_completed'])
             elapsed=time.perf_counter()-started
             if elapsed-last >= 15 or event['steps_completed']==case['steps']:

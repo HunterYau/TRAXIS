@@ -95,6 +95,16 @@ class ExtendedTelemetryTests(unittest.TestCase):
 
 
 class ComparedExecutionTests(unittest.TestCase):
+    def test_prior_reviewed_launcher_retains_its_approved_standard_limits(self):
+        from examples.embedded_wave_study import checked_resources
+        limits=asdict(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768))
+        level=dict(plan=dict(analysis_sources={'examples/embedded_wave.py':
+            '432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9'}),
+            parent=dict(resources=dict(limits=deepcopy(limits))),native=dict(resources=dict(limits=deepcopy(limits))))
+        self.assertEqual(checked_resources(level),limits)
+        level['plan']['analysis_sources']['examples/embedded_wave.py']='unreviewed'
+        with self.assertRaises(ValueError):checked_resources(level)
+
     def test_original_and_extended_reports_must_match_both_actual_guards(self):
         from examples.embedded_wave_study import checked_resources
         for extended in (False,True):
