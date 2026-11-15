@@ -6,8 +6,9 @@ from pathlib import Path
 
 import numpy as np
 
-from examples.embedded_wave import read_wave, validate_plan
+from examples.embedded_wave import read_wave
 from examples.embedded_wave_budget import execution_profile
+from examples.embedded_wave_evidence import validate_saved_plan, check_integrator_transition
 from examples.tensor_wave import PROJECT, checked_receipt, read_json, sealed
 from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import sha256_file, write_json
@@ -21,7 +22,8 @@ PROTOCOL = dict(kind='embedded_complete_window_refinement', duration_s=.0005,
 def checked_resources(level):
     profile=level['plan'].get('execution')
     if profile is None:
-        limits=asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        current_launcher=level['plan'].get('analysis_sources',{}).get('examples/embedded_wave.py')==sha256_file(PROJECT/'examples/embedded_wave.py')
+        limits=asdict(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)) if current_launcher else asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
         if 'execution' in level['parent']: raise ValueError('standard embedded receipt has an unexpected execution profile')
     else:
         if profile!=execution_profile(level['case']) or level['parent'].get('execution')!=profile:
@@ -66,7 +68,7 @@ def compare(times, traces, mode, protocol):
     return common,np.asarray(aligned),rows
 
 
-def assess(roots, cpu_roots, mode, protocol_path, output, guard):
+def assess(roots, cpu_roots, mode, protocol_path, output, guard, source_check=None):
     output=Path(output).resolve(); protocol_path=Path(protocol_path).resolve()
     if not output.is_relative_to(PROJECT/'outputs') or len(roots)!=3 or len(cpu_roots)!=3:
         raise ValueError('embedded assessment requires three runs/CPU checks and fresh project output')
@@ -76,9 +78,10 @@ def assess(roots, cpu_roots, mode, protocol_path, output, guard):
     report=dict(completed=False,passed=False,ready_for_training_data=False,training_updates=0,mode=mode,
         protocol=protocol,protocol_sha256=protocol_hash,analysis_sha256=analysis_hash)
     try:
-        levels=[]; checks=[]
+        levels=[]; checks=[]; source_checks=[]
         for root,cpu_root in zip(roots,cpu_roots):
-            guard.check(); level=read_wave(root,guard); validate_plan(level['plan'],guard);checked_resources(level)
+            guard.check(); level=read_wave(root,guard)
+            source_checks.append(validate_saved_plan(level['plan'],level['root'],guard));checked_resources(level)
             if sha256_file(level['root']/'source-snapshot.zip')!=level['plan']['source_snapshot_sha256']:
                 raise ValueError('embedded waveform source snapshot changed')
             path=Path(cpu_root)/'cpu-window-check.json'; cpu=checked_receipt(read_json(path))
@@ -90,6 +93,7 @@ def assess(roots, cpu_roots, mode, protocol_path, output, guard):
                     or cpu['checker_sha256']!=sha256_file(PROJECT/'examples/verify_embedded_window.py')):
                 raise ValueError('embedded independent CPU receipt is missing or incompatible')
             levels.append(level); checks.append(dict(path=str(path),sha256=sha256_file(path)))
+        transition=check_integrator_transition(source_checks,source_check)
         cases=[level['case'] for level in levels]
         pairs=list(zip(protocol['spatial_orders'],[protocol['spatial_steps']]*3)) if mode=='spatial' else [(protocol['time_order'],n) for n in protocol['time_steps']]
         if [(c['order'],c['steps']) for c in cases]!=pairs or any(c['scope']!='full' for c in cases):
@@ -109,7 +113,12 @@ def assess(roots, cpu_roots, mode, protocol_path, output, guard):
                 raise ValueError('embedded raw evidence changed during assessment')
         if sha256_file(__file__)!=analysis_hash or sha256_file(protocol_path)!=protocol_hash:
             raise ValueError('embedded assessment source/protocol changed')
-        report.update(completed=True,passed=all(row['passed'] for row in rows),receivers=rows,cpu_checks=checks,
+        if any(validate_saved_plan(l['plan'],l['root'],guard)!=source_check for l,source_check in zip(levels,source_checks)):
+            raise ValueError('embedded source provenance changed during assessment')
+        if transition is not None and sha256_file(transition['path'])!=transition['sha256']:
+            raise ValueError('embedded source-transition evidence changed during assessment')
+        report.update(completed=True,passed=all(row['passed'] for row in rows),receivers=rows,cpu_checks=checks,source_checks=source_checks,
+            integrator_transition=transition,
             levels=[dict(directory=str(l['root']),plan_fingerprint=l['plan']['fingerprint'],input_identities=l['input_identities']) for l in levels],
             comparison_sha256=sha256_file(output/'comparison.npz'),
             scope='Complete embedded mechanical-window refinement; no calibrated PZT or physical-data acceptance.')
@@ -124,9 +133,10 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('mode',choices=('spatial','time'))
     parser.add_argument('--runs',nargs=3,type=Path,required=True);parser.add_argument('--cpu-checks',nargs=3,type=Path,required=True)
     parser.add_argument('--protocol',type=Path,default=PROJECT/'configs/embedded-wave-protocol.json')
+    parser.add_argument('--source-check',type=Path,help='Passing archived/current CUDA parity receipt when numerical source versions differ')
     parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
     guard=ResourceGuard(ResourceLimits(max_seconds=180,max_rss_mib=1024,max_system_memory_percent=85,min_available_mib=2048))
-    result=assess(args.runs,args.cpu_checks,args.mode,args.protocol,args.output,guard)
+    result=assess(args.runs,args.cpu_checks,args.mode,args.protocol,args.output,guard,args.source_check)
     print(json.dumps({k:result[k] for k in ('completed','passed','receivers','fingerprint')}))
     return 0 if result['passed'] else 2
 

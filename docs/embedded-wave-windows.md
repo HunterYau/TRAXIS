@@ -35,11 +35,14 @@ The requested interval is never shortened to meet a resource limit.
 
 ## Guards and cooling
 
-The full worker is limited to 2,400 seconds and 2,048 MiB process-tree RSS;
-the small worker to 180 seconds and 1,024 MiB. Both retain the existing 85%
-system-memory limit, at least 2,048 MiB available RAM, 90% GPU-memory limit,
-80 C GPU-temperature cap and 90 C CPU cap when a supported sensor exists.
-CPU temperature is unavailable on this host and remains unverified.
+The current full worker allows 3,600 seconds and 4,096 MiB process-tree RSS;
+the small worker allows 180 seconds and 1,024 MiB. The extended launcher keeps
+a 2,048 MiB process cap at Q3/Q4 and allows 4,096 MiB at Q5. System RAM stops
+at 89.9% used, with at least 768 MiB available, following the user's approved
+90% ceiling. The GPU-memory limit remains 90%, the GPU temperature cap 80 C,
+and the CPU cap 90 C when a supported sensor exists. CPU temperature is
+unavailable on this host and remains unverified. Earlier runs retain their
+original resource profiles; their receipts are never rewritten.
 
 Host submissions pause between synchronized GPU batches at 76 C and resume
 after the observed temperature reaches 72 C or lower. The physical state,
@@ -52,9 +55,10 @@ The measured coarse window projects about 2,573 seconds (43 minutes) for
 the 294,912-step case, including the observed setup and cooling overhead.
 `examples.embedded_wave_budget` therefore supplies an explicit 3,600-second
 execution profile. It calls the same frozen numerical worker and records
-its own source plus every actual limit in the plan. Memory, temperature,
-physical-case and numerical acceptance limits retain their original values.
-The original coarse/medium plans keep their original 2,400-second budgets.
+its own source plus every actual limit in the plan. Physical-case and
+numerical acceptance limits retain their original values. Current memory
+limits follow the authorized ceiling described above. The original standard
+plans keep their original 2,400-second and 2,048 MiB budgets.
 Comparisons check both parent and worker limits against the appropriate
 declared profile; prior source identities are preserved.
 
@@ -65,6 +69,12 @@ This keeps late readings and fresh process-tree samples available beyond
 the base guard's 10,000-entry history capacity. Actual checks, enforcement
 and cooling continue at their original cadence. Synthetic long histories
 test peak retention, fresh mutable samples and visible limit failures.
+
+The base guard now also keeps a separate fresh `latest_sample`, even after
+its retained history fills. The external-process monitor augments that
+sample, preventing repeated addition of child RSS into a stale history
+entry. A regression exercises 10,002 observations. The extended launcher
+continues compacting history to retain late extrema as well as fresh checks.
 
 ## Saved arrays and independent checks
 

@@ -89,7 +89,7 @@ class ExternalProcessTests(unittest.TestCase):
             log = root / 'process.log'
             # A real sleeping process checks termination/reaping, without native
             # solver dependencies or mocked process state.
-            command = [getattr(sys, '_base_executable', sys.executable), '-S', '-c',
+            command = [sys.executable, '-S', '-c',
                        'import os,time; print(os.getpid(),flush=True); time.sleep(60)']
             sample = {'process_rss_mib': 1., 'system_memory_percent': 20., 'available_mib': 10000.,
                       'cpu_temperatures_c': None, 'gpus': [], 'gpu_status': 'disabled'}

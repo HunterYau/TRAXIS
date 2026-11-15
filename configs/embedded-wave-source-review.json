@@ -1,0 +1,41 @@
+{
+  "kind": "embedded_wave_source_review_v1",
+  "date": "2026-11-15",
+  "files": {
+    "traxis/gpu_enriched_verlet.py": {
+      "current_sha256": "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5",
+      "historical_sha256": [
+        "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4"
+      ],
+      "reason": "Exact sparse component-major probe covectors and directly allocated float64 zero states replace dense host storage. The velocity Verlet recurrence and CUDA operator are unchanged. Dense/sparse GPU trajectory parity is required by the review."
+    },
+    "traxis/resources.py": {
+      "current_sha256": "62a085dc2073bac8e6ee6f3d34324a17e381e3f672fc8b59ea3f7048af28d494",
+      "historical_sha256": [
+        "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54"
+      ],
+      "reason": "Retain a fresh latest_sample after bounded history fills. Resource enforcement and numerical operations are unchanged."
+    },
+    "traxis/elmer_reference.py": {
+      "current_sha256": "053151fbdd1ff1f278121ab3048edff4c0f574d23dad7663faa153412f1c71bc",
+      "historical_sha256": [
+        "89e85803e03c809b91ded2a4491edf3d47163752a88d92cb509dc1892fcef186"
+      ],
+      "reason": "Use the fresh monitor sample rather than repeatedly augmenting a stale history entry. No solver assembly or numerical operation changes."
+    },
+    "examples/embedded_wave.py": {
+      "current_sha256": "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9",
+      "historical_sha256": [
+        "e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13"
+      ],
+      "reason": "Use the reviewed sparse receiver covectors and updated resource limits. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged."
+    },
+    "examples/embedded_wave_budget.py": {
+      "current_sha256": "5a5fbd48d12b73ecaf9e04b38ccf26f7ecd0db83d425fee0adfe7ff32e12b3af",
+      "historical_sha256": [
+        "8fd4e861bf0a802d179b76abceb7da0879506a4c1f8d18d11ccc2427624d631e"
+      ],
+      "reason": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles."
+    }
+  }
+}

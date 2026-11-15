@@ -1,0 +1,91 @@
+{
+  "kind": "embedded_source_review_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Reviewed source transitions, resource monitoring and archived intact Q4 time-convergence evidence only; Q5 and spatial convergence remain pending.",
+  "receipts": {
+    "cuda_transition": {
+      "path": "outputs/embedded-source-transition-20261115-v3/source-transition-check.json",
+      "sha256": "8f0aac38fd50e693a1bf9f89ec6df163f7ddb1778a4a1615db5b4af1e3c202ae",
+      "fingerprint": "558eba2235181885146239705fdbcf160f39a54892f2937b6e0c8fab90ceed14"
+    },
+    "time_reassessment": {
+      "path": "outputs/embedded-time-refinement-reaudit-20261115-v1/time-refinement-report.json",
+      "sha256": "cce5dd686f94b7fb261ba73079c002f91d0cc84e805b9fc566b5e45f066303e0",
+      "fingerprint": "d5c4a6bc28c46a771a4419c2f6e278b115feeb1b051d2c18ceca3e24c7bcab5d"
+    },
+    "focused_tests": {
+      "path": "outputs/embedded-source-review-tests-20261115-v1/tests.json",
+      "sha256": "a764b9204fe69585d312197f68638e6ee1015b3e5f7631de0f0e2f2fc981adaf",
+      "fingerprint": "1c8df33d4c80882710106b6363c706c9a42756c399b0aaf0ee66d87a900d8aaf"
+    }
+  },
+  "review_manifest_sha256": "6e22dced083ff1e65ea4861b9dc7647f250d77dbfcd693c60b0ca85344f97e70",
+  "source_commit": "4f86a26",
+  "tests": {
+    "run": 43,
+    "passed": 41,
+    "skipped": [
+      {
+        "test": "test_all_columns_mass_map_and_stability_match_independent_references (test_gpu_enriched.NativeFactorizedGPUChecks.test_all_columns_mass_map_and_stability_match_independent_references)",
+        "reason": "enable optional isolated enriched GPU checks"
+      },
+      {
+        "test": "test_independent_rectangular_and_skewed_3d_operators (test_elmer_reference.InstalledElmerTests.test_independent_rectangular_and_skewed_3d_operators)",
+        "reason": "set TRAXIS_ELMER_HOME for the optional independent solver test"
+      }
+    ],
+    "failures": 0,
+    "errors": 0
+  },
+  "time_receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 5.926591677069633e-13,
+      "fine_difference_l2_m": 2.634039526327455e-13,
+      "finest_waveform_l2_m": 2.2783459553733e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 1.1561192101292957e-05,
+      "difference_ratio": 2.250001041302847,
+      "observed_time_order": 2.000001141408099,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 5.797567518274887e-13,
+      "fine_difference_l2_m": 2.5766957458172233e-13,
+      "finest_waveform_l2_m": 3.354188464637842e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 7.68202434950367e-06,
+      "difference_ratio": 2.250000811188569,
+      "observed_time_order": 2.0000008891719183,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 4.2276299007769135e-13,
+      "fine_difference_l2_m": 1.8789459249203476e-13,
+      "finest_waveform_l2_m": 1.8020572257153047e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 1.042667179547821e-05,
+      "difference_ratio": 2.250000835418471,
+      "observed_time_order": 2.0000009157311487,
+      "passed": true
+    }
+  ],
+  "cuda_maximum_absolute_difference": 0.0,
+  "active_q5_plan": {
+    "directory": "outputs/embedded-wave-intact-q5-n196608-20261115-v1",
+    "fingerprint": "831ef6f96c2ae3ce5c6b6e95b9bac984233eb18ec9c3c1c8b72b08228777c856"
+  },
+  "limitations": [
+    "No full-project or model-author attribution audit",
+    "Q5 completion and spatial convergence pending",
+    "No physical validation or calibrated PZT response",
+    "No training updates"
+  ],
+  "fingerprint": "d30350c904b52125c107d2fcdf386206e36e088f126570d30c02597007c97eb4"
+}
