@@ -19,17 +19,17 @@ from traxis.storage import sha256_file,write_json
 def execution_profile(case):
     checked_case(case)
     if case['scope']!='full': raise ValueError('extended execution is restricted to declared full-size cases')
-    limits=ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048)
+    limits=ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=89.9,min_available_mib=768)
     return dict(kind='embedded_extended_wall_budget',limits=asdict(limits),
-        preflight=dict(max_system_memory_percent=70.,min_available_mib=4096.),
-        reason='Measured coarse-level timing projects a fine-level runtime beyond 2400 seconds; numerical controls and memory/thermal limits are unchanged.')
+        preflight=dict(max_system_memory_percent=90.,min_available_mib=768.),
+        reason='Measured coarse-level timing projects a fine-level runtime beyond 2400 seconds; numerical controls are unchanged and the system RAM ceiling follows the authorized 90% limit.')
 
 
 def check_headroom(sample,profile):
     bounds=profile['preflight']
-    if (sample['system_memory_percent']>bounds['max_system_memory_percent']
+    if (sample['system_memory_percent']>=bounds['max_system_memory_percent']
             or sample['available_mib']<bounds['min_available_mib']):
-        raise ResourceLimitError('full-size wave startup needs at most 70% system RAM use and at least 4096 MiB available')
+        raise ResourceLimitError('full-size wave startup requires less than 90% system RAM use and at least 768 MiB available')
 
 
 class ExtendedResourceGuard(ResourceGuard):

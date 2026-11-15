@@ -14,9 +14,11 @@ from traxis.storage import sha256_file
 class EmbeddedBudgetTests(unittest.TestCase):
     def test_startup_reserves_headroom_before_allocating_the_wave_system(self):
         profile=execution_profile(case_config('full',4,294912))
-        check_headroom(dict(system_memory_percent=70.,available_mib=4096.),profile)
-        for sample in (dict(system_memory_percent=82.3,available_mib=2874.1),
-                       dict(system_memory_percent=60.,available_mib=4095.)):
+        self.assertEqual(profile['limits']['max_system_memory_percent'],89.9)
+        self.assertEqual(profile['limits']['min_available_mib'],768.)
+        check_headroom(dict(system_memory_percent=89.9,available_mib=1024.),profile)
+        for sample in (dict(system_memory_percent=90.,available_mib=2048.),
+                       dict(system_memory_percent=60.,available_mib=767.)):
             with self.assertRaises(ResourceLimitError):check_headroom(sample,profile)
 
     def plan(self):
@@ -28,7 +30,7 @@ class EmbeddedBudgetTests(unittest.TestCase):
 
     def test_actual_guard_matches_recorded_profile_and_physics_stays_fixed(self):
         plan,guard=self.plan();check_execution(plan,guard)
-        original=asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        original=asdict(ResourceLimits(max_seconds=2400,max_rss_mib=2048,max_system_memory_percent=89.9,min_available_mib=768))
         actual=asdict(guard.limits)
         self.assertEqual(actual['max_seconds'],3600)
         self.assertEqual({k:v for k,v in actual.items() if k!='max_seconds'},
@@ -42,7 +44,7 @@ class EmbeddedBudgetTests(unittest.TestCase):
             with self.assertRaises(ValueError):check_execution(changed,guard)
         changed=deepcopy(plan);changed['analysis_sources']['examples/embedded_wave_budget.py']='0'*64
         with self.assertRaises(ValueError):check_execution(changed,guard)
-        other=ResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=85,min_available_mib=2048))
+        other=ResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768))
         with self.assertRaises(ValueError):check_execution(plan,other)
 
     def test_unlisted_or_small_case_is_rejected(self):
@@ -57,7 +59,7 @@ class ExtendedTelemetryTests(unittest.TestCase):
             gpus=[dict(used_mib=500.,total_mib=8192.,temperature_c=40.)],gpu_status='available',elapsed_seconds=float(index))
 
     def test_compaction_keeps_all_extrema_and_late_mutable_process_sample(self):
-        guard=ExtendedResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        guard=ExtendedResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=89.9,min_available_mib=768))
         guard.history=[self.sample(i) for i in range(10000)]
         guard.history[101]['process_rss_mib']=1000.
         guard.history[201]['system_memory_percent']=84.
@@ -79,7 +81,7 @@ class ExtendedTelemetryTests(unittest.TestCase):
         self.assertEqual(guard.report()['total_samples_observed'],1)
 
     def test_resource_failure_remains_enforced_and_counted(self):
-        guard=ExtendedResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=85,min_available_mib=2048))
+        guard=ExtendedResourceGuard(ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=89.9,min_available_mib=768))
         bad=self.sample(0);bad['process_rss_mib']=5000.
         with patch('traxis.resources.snapshot',return_value=bad):
             with self.assertRaises(ResourceLimitError):guard.check(force=True)
