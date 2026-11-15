@@ -18,7 +18,7 @@ from traxis.config import CircularRecess, Material, Plate
 from traxis.elmer_reference import run_monitored
 from traxis.embedded_recess import make_embedded_recess_mesh, storage_screen
 from traxis.fem import tone_burst
-from traxis.gpu_enriched_verlet import gpu_explicit_simulate
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate, tensor_patch_probe_set
 from traxis.gpu_mapped_tensor import build_gpu_mapped
 from traxis.gpu_verification import gpu_package_identity
 from traxis.highorder_verification import distribution_identity
@@ -139,9 +139,8 @@ def worker(plan_path, output, guard):
         atomic_write(output/'mechanical-patches.npz',lambda f:np.savez_compressed(f,**patch_arrays))
         report['patches']=[p.report for p in patches]
         report['mechanical_patches_sha256']=sha256_file(output/'mechanical-patches.npz')
-        ns=len(mesh.points_m); load=patches[0].vector(ns); probes=np.zeros((3,3*ns))
-        for row,p in zip(probes,patches[1:]):
-            row.reshape(3,ns)[:,p.indices]=p.direction[:,None]*p.weights
+        ns=len(mesh.points_m); load=patches[0].vector(ns)
+        probes=tensor_patch_probe_set(patches[1:],ns)
         cooling=ThermalPause(guard,case['cooling_upper_c'],case['cooling_lower_c']); cooling.temperature()
         phase('patches_ready')
         def progressed(event):
@@ -240,8 +239,8 @@ def main():
     parser.add_argument('--worker',action='store_true'); parser.add_argument('--plan',type=Path)
     args=parser.parse_args(); output=args.output.resolve()
     case=checked_case(read_json(args.plan)['case']) if args.worker else case_config(args.scope,args.order,args.steps,args.recess)
-    guard=ResourceGuard(ResourceLimits(max_seconds=2400 if case['scope']=='full' else 180,
-        max_rss_mib=2048 if case['scope']=='full' else 1024,max_system_memory_percent=85,min_available_mib=2048))
+    guard=ResourceGuard(ResourceLimits(max_seconds=3600 if case['scope']=='full' else 180,
+        max_rss_mib=4096 if case['scope']=='full' else 1024,max_system_memory_percent=89.9,min_available_mib=768))
     if args.worker: return 0 if worker(args.plan,output,guard)['passed'] else 2
     if not output.is_relative_to(PROJECT/'outputs'): raise ValueError('embedded windows must stay in project outputs')
     output.mkdir(parents=True,exist_ok=False)

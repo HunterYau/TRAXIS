@@ -72,6 +72,7 @@ class ResourceGuard:
         self.last_gpu_check = -math.inf
         self.history = []
         self.last_gpus = []
+        self.latest_sample = None
 
     def check(self, force: bool = False) -> None:
         elapsed = time.monotonic() - self.started
@@ -86,6 +87,7 @@ class ResourceGuard:
             self.last_gpus = sample["gpus"]
         sample["elapsed_seconds"] = elapsed
         self.last_check = elapsed
+        self.latest_sample = sample
         if len(self.history) < 10000:
             self.history.append(sample)
         self.enforce(sample, self.last_gpus)
@@ -108,4 +110,5 @@ class ResourceGuard:
 
     def report(self) -> dict:
         return {"limits": asdict(self.limits), "samples": self.history,
+                "latest_sample": self.latest_sample,
                 "cpu_temperature_note": "null means no supported sensor; temperature was not verified"}

@@ -26,6 +26,17 @@ class ResourceTests(unittest.TestCase):
         self.assertIsNone(guard.report()["samples"][0]["cpu_temperatures_c"])
         self.assertIn("not verified", guard.report()["cpu_temperature_note"])
 
+    def test_latest_live_sample_stays_fresh_after_history_cap(self):
+        guard = ResourceGuard()
+        with patch("traxis.resources.snapshot", side_effect=[{**self.sample, "sample_id": i}
+                for i in range(10002)]):
+            for _ in range(10002):
+                guard.check(force=True)
+        self.assertEqual(len(guard.history), 10000)
+        self.assertEqual(guard.latest_sample["sample_id"], 10001)
+        self.assertIsNot(guard.latest_sample, guard.history[-1])
+        self.assertEqual(guard.report()["latest_sample"]["sample_id"], 10001)
+
     def test_time_budget_is_enforced(self):
         guard = ResourceGuard()
         guard.started -= 61

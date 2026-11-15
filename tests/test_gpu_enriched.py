@@ -14,13 +14,32 @@ from traxis.enriched_factor import gradient_factor,local_stability_data,streamed
 from traxis.enriched_tet import WEIGHTS,assemble_enriched,element_matrices,reference_integrals
 from traxis.geometry import structured_mesh
 from traxis.gpu_enriched import build_gpu_enriched
-from traxis.gpu_enriched_verlet import gpu_explicit_simulate
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate, sparse_probe_set, tensor_patch_probe_set
 from traxis.highorder_patches import highorder_surface_patch
 from traxis.matrixfree import MatrixFreeSettings
 from traxis.resources import ResourceGuard,ResourceLimits
 
 
 class FactorizedEnrichedTests(unittest.TestCase):
+    def test_sparse_probe_rows_preserve_dense_contractions(self):
+        dense=np.array([[0.,2.,0.,-1.],[3.,0.,4.,0.]])
+        sparse=sparse_probe_set(((np.flatnonzero(row),row[np.flatnonzero(row)]) for row in dense),4)
+        state=np.array([.5,-2.,3.,7.])
+        measured=np.array([weights@state[indices] for indices,weights in zip(sparse.indices,sparse.weights)])
+        np.testing.assert_array_equal(measured,dense@state)
+        with self.assertRaises(ValueError):
+            sparse_probe_set(((np.array([1,1]),np.array([2.,3.])),),4)
+
+    def test_tensor_patch_probes_keep_component_major_dof_order(self):
+        patch=SimpleNamespace(indices=np.array([1,3]),direction=np.array([.2,-.3,.9]),
+            weights=np.array([.4,.6]))
+        sparse=tensor_patch_probe_set([patch],4)
+        dense=np.zeros((1,12)); dense.reshape(3,4)[:,patch.indices]=patch.direction[:,None]*patch.weights
+        for index,weight in zip(sparse.indices[0],sparse.weights[0]):
+            dense.reshape(-1)[index]=weight
+        state=np.arange(1.,13.)
+        np.testing.assert_allclose(sparse.weights[0]@state[sparse.indices[0]],dense[0]@state,rtol=0,atol=1e-15)
+
     def test_explicit_limits_reject_before_device_access(self):
         system = SimpleNamespace(stable_dt_s=1e-8,mass_diagonal=np.ones(3))
         with self.assertRaises(ValueError):

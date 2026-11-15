@@ -154,7 +154,9 @@ def run_monitored(command, directory: Path, env: dict, guard: ResourceGuard, log
         try:
             while True:
                 guard.check(force=True)
-                sample = guard.history[-1]
+                sample = guard.latest_sample
+                if sample is None:
+                    raise ResourceLimitError('resource guard produced no live monitor sample')
                 try:
                     root = psutil.Process(process.pid)
                     tree = [root, *root.children(recursive=True)]

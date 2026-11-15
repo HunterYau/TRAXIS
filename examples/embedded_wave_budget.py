@@ -19,7 +19,8 @@ from traxis.storage import sha256_file,write_json
 def execution_profile(case):
     checked_case(case)
     if case['scope']!='full': raise ValueError('extended execution is restricted to declared full-size cases')
-    limits=ResourceLimits(max_seconds=3600,max_rss_mib=2048,max_system_memory_percent=89.9,min_available_mib=768)
+    limits=ResourceLimits(max_seconds=3600,max_rss_mib=4096 if case['order']==5 else 2048,
+        max_system_memory_percent=89.9,min_available_mib=768)
     return dict(kind='embedded_extended_wall_budget',limits=asdict(limits),
         preflight=dict(max_system_memory_percent=90.,min_available_mib=768.),
         reason='Measured coarse-level timing projects a fine-level runtime beyond 2400 seconds; numerical controls are unchanged and the system RAM ceiling follows the authorized 90% limit.')

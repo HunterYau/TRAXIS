@@ -33,6 +33,42 @@ class GPUExplicitResult:
     statistics: dict
 
 
+@dataclass(frozen=True)
+class SparseProbeSet:
+    """Probe covectors stored only at their nonzero vector degrees of freedom."""
+    indices: tuple
+    weights: tuple
+
+
+def sparse_probe_set(rows, ndof):
+    """Build exact sparse probe rows from ``(indices, weights)`` pairs."""
+    indices, weights = [], []
+    for row_indices, row_weights in rows:
+        i = np.asarray(row_indices)
+        w = np.asarray(row_weights)
+        if (i.ndim != 1 or w.shape != i.shape or np.iscomplexobj(i) or np.iscomplexobj(w)
+                or not np.issubdtype(i.dtype, np.integer) or not np.isfinite(w).all()
+                or np.any(i < 0) or np.any(i >= ndof) or len(np.unique(i)) != len(i)):
+            raise ValueError('sparse probes need unique in-range indices and finite matching weights')
+        indices.append(i.astype(np.int32, copy=False))
+        weights.append(w.astype(float, copy=False))
+    if not 1 <= len(indices) <= 32:
+        raise ValueError('sparse probe count must be between 1 and 32')
+    return SparseProbeSet(tuple(indices), tuple(weights))
+
+
+def tensor_patch_probe_set(patches, scalar_dofs):
+    """Encode tensor patch rows in the same component-major order as ``(3, n)`` arrays."""
+    rows = []
+    components = np.arange(3)[:, None]
+    for patch in patches:
+        scalar_indices = np.asarray(patch.indices)
+        vector_indices = (components*scalar_dofs+scalar_indices[None, :]).reshape(-1)
+        vector_weights = (np.asarray(patch.direction)[:, None]*np.asarray(patch.weights)).reshape(-1)
+        rows.append((vector_indices, vector_weights))
+    return sparse_probe_set(rows, 3*scalar_dofs)
+
+
 def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_displacement=None,
                           initial_velocity=None,output_stride=1,energy_stride=16,guard=None,
                           progress=None,max_workspace_mib=512):
@@ -49,26 +85,38 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         raise ValueError('invalid explicit step count, strides or progress callback')
     if dt_s>.95*system.stable_dt_s:
         raise ValueError('time step exceeds the conservative enriched explicit stability limit')
-    mass,probes,load = (np.asarray(v) for v in (system.mass_diagonal,probes,load))
+    mass,load = (np.asarray(v) for v in (system.mass_diagonal,load))
     n = len(mass)
+    if isinstance(probes, SparseProbeSet):
+        indices, weights = probes.indices, probes.weights
+        valid_probes = (1 <= len(indices) <= 32 and len(weights) == len(indices)
+            and all(i.ndim == w.ndim == 1 and i.shape == w.shape and np.isfinite(w).all()
+                and np.issubdtype(i.dtype, np.integer) and len(np.unique(i)) == len(i)
+                and np.all(i >= 0) and np.all(i < n) for i,w in zip(indices,weights)))
+    else:
+        probes = np.asarray(probes)
+        valid_probes = (not np.iscomplexobj(probes) and probes.ndim == 2 and probes.shape[1] == n
+            and 1 <= len(probes) <= 32 and np.isfinite(probes).all())
     if (mass.shape!=(n,) or np.iscomplexobj(mass) or not np.isfinite(mass).all() or np.any(mass<=0)
-            or np.iscomplexobj(probes) or probes.ndim!=2 or probes.shape[1]!=n or not 1<=len(probes)<=32
-            or not np.isfinite(probes).all() or np.iscomplexobj(load) or load.shape!=(n,) or not np.isfinite(load).all()
+            or not valid_probes or np.iscomplexobj(load) or load.shape!=(n,) or not np.isfinite(load).all()
             or not math.isfinite(max_workspace_mib) or not 0<max_workspace_mib<=2048):
         raise ValueError('explicit states need matching finite real mass/load/probe data')
+    probe_count = len(indices) if isinstance(probes, SparseProbeSet) else len(probes)
     samples = steps//output_stride+1
     energy_steps = np.r_[np.arange(0,steps+1,energy_stride),steps] if steps%energy_stride else np.arange(0,steps+1,energy_stride)
-    indices = [np.flatnonzero(row).astype(np.int32) for row in probes]
+    if not isinstance(probes, SparseProbeSet):
+        indices = [np.flatnonzero(row).astype(np.int32) for row in probes]
+        weights = [row[i] for row,i in zip(probes,indices)]
     starts = np.r_[0,np.cumsum([len(i) for i in indices])].astype(np.int32)
     if starts[-1]>100000:
         raise MemoryError('explicit probe support exceeds 100000 coefficients')
-    sample_bytes = samples*len(probes)*8+len(energy_steps)*24
+    sample_bytes = samples*probe_count*8+len(energy_steps)*24
     workspace_mib = (16*n*8+sample_bytes+starts[-1]*16)/1024**2
     if sample_bytes>64*1024**2 or workspace_mib>max_workspace_mib:
         raise MemoryError('explicit vector/sample storage exceeds its declared screen')
     def vector(value):
         if value is None:
-            return np.zeros(n)
+            return None
         value = np.asarray(value)
         if value.shape!=(n,) or np.iscomplexobj(value) or not np.isfinite(value).all():
             raise ValueError('explicit initial states must be finite real coefficient vectors')
@@ -91,19 +139,23 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         free,_ = cp.cuda.runtime.memGetInfo()
         if workspace_mib*1024**2>.85*free:
             raise MemoryError('explicit workspace exceeds 85% of currently free VRAM')
-        u,v,device_mass,device_load = (cp.asarray(a,dtype=cp.float64) for a in (initial_u,initial_v,mass,load))
+        u = cp.zeros(n,dtype=cp.float64) if initial_u is None else cp.asarray(initial_u,dtype=cp.float64)
+        v = cp.zeros(n,dtype=cp.float64) if initial_v is None else cp.asarray(initial_v,dtype=cp.float64)
+        device_mass,device_load = (cp.asarray(a,dtype=cp.float64) for a in (mass,load))
+        # The initial host vectors are no longer needed after their exact device copies exist.
+        del initial_u, initial_v
         ku,next_a = cp.empty(n,dtype=cp.float64),cp.empty(n,dtype=cp.float64)
         d_starts = cp.asarray(starts)
         d_indices = cp.asarray(np.concatenate(indices) if starts[-1] else np.empty(0,dtype=np.int32))
-        d_weights = cp.asarray(np.concatenate([row[i] for row,i in zip(probes,indices)]) if starts[-1] else np.empty(0),dtype=cp.float64)
-        traces = cp.empty((samples,len(probes)),dtype=cp.float64)
+        d_weights = cp.asarray(np.concatenate(weights) if starts[-1] else np.empty(0),dtype=cp.float64)
+        traces = cp.empty((samples,probe_count),dtype=cp.float64)
         sample_kernel = cp.RawKernel(PROBE_KERNEL,'sample_probes',options=('--std=c++11',))
         applications_before = storage.applications
         def action():
             storage._launch(u,ku,1.,0.)
             system.stiffness.applications += 1
         def sample(index):
-            sample_kernel((1,),(64,),(d_starts,d_indices,d_weights,u,traces,np.int32(len(probes)),np.int32(index)))
+            sample_kernel((1,),(64,),(d_starts,d_indices,d_weights,u,traces,np.int32(probe_count),np.int32(index)))
         def energy(index):
             physical[index] = float((cp.sum(device_mass*v*v+u*ku,dtype=cp.float64)*.5).item())
             modified[index] = physical[index]-dt_s**2/8*float(cp.sum(ku*ku/device_mass,dtype=cp.float64).item())

@@ -52,6 +52,12 @@ class EmbeddedBudgetTests(unittest.TestCase):
         plan,guard=self.plan();plan['case']['steps']=500000
         with self.assertRaises(ValueError):check_execution(plan,guard)
 
+    def test_q5_has_room_for_final_state_output_under_the_same_system_ceiling(self):
+        profile=execution_profile(case_config('full',5,196608))
+        self.assertEqual(profile['limits']['max_rss_mib'],4096)
+        self.assertEqual(profile['limits']['max_system_memory_percent'],89.9)
+        self.assertEqual(profile['limits']['min_available_mib'],768)
+
 
 class ExtendedTelemetryTests(unittest.TestCase):
     def sample(self,index):
