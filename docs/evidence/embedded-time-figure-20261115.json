@@ -6,18 +6,18 @@
   "ready_for_training_data": false,
   "training_updates": 0,
   "figure_receipt": {
-    "path": "outputs/embedded-time-refinement-figure-20261115-v3/figure-report.json",
-    "sha256": "383b5133818850996bb83016e7444c31ba7f1ae426115aea02336c0cbce1657b",
-    "fingerprint": "c20e254e2aac959095c821978afd59b25c601c3a948d1f5cc902e24771597f6b"
+    "path": "outputs/embedded-time-refinement-figure-20261115-v4/figure-report.json",
+    "sha256": "0c01012aab8a3892718c42b751ba613ea2af5ec6610cd44dbd4ac59915acbd68",
+    "fingerprint": "3fb83ef9ae3dcffc9c46c700922dfbc88cf0c2e77c9845e93f0c8f50b096ac8c"
   },
-  "study_fingerprint": "ac7f802c48125f46f2894aed7a96a067c68fd140876ccbc6432398c498f2ed7c",
+  "study_fingerprint": "1dae8307a95580c78a59283c6200b6bee723b4f6bd99633e14be301159607ef0",
   "plotter_sha256": "74e036ac2e44bc09ba5cfc509a67b80533eaae042e8f181c1b7ec74d7723bf69",
   "files": {
-    "outputs/embedded-time-refinement-figure-20261115-v3/refinement.png": "e13d9b310a8b697747a95aa3af8ea04aa838b055b77e0d46ddf604ae563812cd",
-    "outputs/embedded-time-refinement-figure-20261115-v3/refinement.pdf": "4fe8a2395877dc2991ed5c267e7d8405ab1930e3b0f172b4dfac43ac770e0ff0"
+    "outputs/embedded-time-refinement-figure-20261115-v4/refinement.png": "e13d9b310a8b697747a95aa3af8ea04aa838b055b77e0d46ddf604ae563812cd",
+    "outputs/embedded-time-refinement-figure-20261115-v4/refinement.pdf": "bc5f3150cf82b2270a28e36a8ab8134415a5d6e913e7b18eb812d3874bf29b9e"
   },
   "png_visually_checked": true,
   "visual_review": "PNG bytes match the visually reviewed v2 layout exactly. Labels and legends fit; early pulses remain clear. Undefined changes and unidentifiable rates are labeled explicitly for failed diagnostics.",
   "scope": "Visualizes retained mechanical numerical convergence; no physical or PZT validation.",
-  "fingerprint": "695a8a298f1a2d1bdf3a2fcd9f2acab68fa5370543546e345cb0c60d600d3249"
+  "fingerprint": "3201068b528edc121fd5b748b3831537aa744a2aed4e24c8298a8243b9f5f52d"
 }

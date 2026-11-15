@@ -73,10 +73,12 @@ integrators without adding that dependency. The failed attempt is retained.
 - The archived intact Q4 time comparison was rerun after all source/hash/CPU
   checks. All three receivers still pass, with observed order about 2.000001
   and finest relative changes from 7.68e-6 to 1.16e-5.
-- A fresh Q5 full window is running at
+- At this initial review checkpoint, a fresh Q5 full window was running at
   `outputs/embedded-wave-intact-q5-n196608-20261115-v1`. It has 8,599,833
   vector degrees of freedom and requests 196,608 steps over 500 microseconds.
-  Its outcome is pending. A partial log cannot establish spatial convergence.
+  Its outcome was pending. It subsequently completed and passed the intact
+  spatial screen; see embedded-wave-windows.md and
+  `docs/evidence/embedded-intact-spatial-20261115.json` for the later results.
 
 Receipts: `docs/evidence/embedded-source-review-20261115.json` and the named
 ignored output directories it binds. No training or accepted dataset was
@@ -84,7 +86,7 @@ produced. Recessed-plate convergence, representative frequency/thickness
 coverage, calibrated PZT response and physical measurements remain open.
 
 The source-review JSON was normalized to the LF bytes stored by Git before
-the final checks, so a fresh checkout uses the same review hash. The current
+the final checks, so a fresh checkout uses the same review hash. That audit's
 receipt bindings use CUDA transition v4 and time reassessment v2; earlier
 local versions remain retained. All numerical differences and time-refinement
 results are unchanged.

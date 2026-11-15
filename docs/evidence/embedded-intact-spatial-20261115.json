@@ -1,0 +1,345 @@
+{
+  "kind": "embedded_intact_spatial_refinement_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Intact 500x500x3.175 mm aluminum plate, 100 kHz two-cycle mechanical disk source, 500 us. Q3/Q4/Q5 spatial screen and separate Q4 time screen only.",
+  "levels": [
+    {
+      "directory": "outputs/embedded-wave-intact-q3-n196608-20261114-v1",
+      "cpu_directory": "outputs/embedded-wave-intact-q3-n196608-cpu-20261114-v1",
+      "order": 3,
+      "vector_dofs": 1975197,
+      "steps": 196608,
+      "duration_s": 0.0005,
+      "dt_s": 2.5431315104166666e-09,
+      "propagation_seconds": 561.9637220999575,
+      "monitor_wall_seconds": 798.801629499998,
+      "plan_fingerprint": "f56dfc3603fe065f04e83fb731fe5b82e351625bb0be80768078e942915e4ce4",
+      "parent_fingerprint": "30165722a8bbbddfbcaeaff78b88f4863e4b8a641dcdebf12193bee339f5ce1e",
+      "native_fingerprint": "884753ab181eddb14bb87fd56730992f8cf2d00c22b4fd7ae7770ed658cf8f81",
+      "cpu_fingerprint": "52f9790ef11be7e9582944e4637f38d9d5a6b4ae79a4d8ba054ddb8dde8bcade",
+      "artifacts": {
+        "embedded-wave-plan.json": "a0247d3716797ff6f8dfc702c2ea51b071533f76085516ccd5db5ad04f89a062",
+        "monitor-result.json": "585a2141108833129f09ac76a85e26e7db478565aa86bd306afe58b167c677d4",
+        "native/wave-report.json": "e64b806f25fabd79745895169a2d175673712de129b5bbd3550a2fd99951aa1f",
+        "native/mechanical-window.npz": "530520c1537108f59c12ab36ce6189fc66eff21fc5419a9a44d9302dce0f0755",
+        "native/mechanical-patches.npz": "49d46589bf243961c75c0b427d91b23dd423de481c5c51f3429f437e0f70f97f",
+        "source-snapshot.zip": "6289d358a9d561e6949cd3a532e9b5ac03d61454c9a89e232ce29b072bbcef43"
+      },
+      "cpu_report_sha256": "28325392c166184125371610cf6d4a77b20dd604022d4e9bc1288e5b50b18b0a",
+      "cpu_errors": {
+        "final_force_relative_l2": 7.752785831788675e-14,
+        "mass_relative_l2": 0.0,
+        "final_physical_energy_relative_error": 2.220446049250313e-16,
+        "final_modified_energy_relative_error": 2.220446049250313e-16,
+        "final_probe_relative_l2": 2.713987560682805e-16,
+        "postburst_modified_energy_relative_range": 1.5174646568198506e-15
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 3600,
+          "max_rss_mib": 2048,
+          "max_system_memory_percent": 89.9,
+          "min_available_mib": 768,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_tree_rss_mib": 888.375,
+        "peak_system_memory_percent": 60.0,
+        "minimum_available_mib": 6494.4375,
+        "peak_gpu_used_mib": 2075.0,
+        "peak_gpu_temperature_c": 75.0
+      },
+      "cooling_pauses": 2,
+      "cooling_seconds": 4.14100000000326
+    },
+    {
+      "directory": "outputs/embedded-wave-intact-q4-n196608-20261114-v2",
+      "cpu_directory": "outputs/embedded-wave-intact-q4-n196608-cpu-20261114-v2",
+      "order": 4,
+      "vector_dofs": 4507515,
+      "steps": 196608,
+      "duration_s": 0.0005,
+      "dt_s": 2.5431315104166666e-09,
+      "propagation_seconds": 1317.7711019999697,
+      "monitor_wall_seconds": 1574.035863099969,
+      "plan_fingerprint": "94e608e5d657f74843f0b92e9cc9f16750dfced4572d4ea07a060c92e1518128",
+      "parent_fingerprint": "e3eaedab280c27b7a072475f03b95b74103dcc99b71acb0d04cce905e46090c5",
+      "native_fingerprint": "9fedd1da515b4b592c533b6af62653134ee35ae9108ee4d891fb153a06523f30",
+      "cpu_fingerprint": "f43a8afc2d3ab08b52d21e35e3958edad1704cfa0fdfd148b63200f9d44a4a32",
+      "artifacts": {
+        "embedded-wave-plan.json": "145e1c1b3f8010a1ea03165503a6130390801a8fa3eda1cd657cde7f18a3d879",
+        "monitor-result.json": "39ecb734ccb9fa520bd6ace47639d4e8d483b70b9a1adb383b9ecfae253234db",
+        "native/wave-report.json": "23c060d3f5ffdf940cebbb28802727fe2352f3c873d2464b188cf505a2041d44",
+        "native/mechanical-window.npz": "9e20e4698f99fdccf02fa1421e976c450b2d76eaac1d731d5475b33a5affaf08",
+        "native/mechanical-patches.npz": "1b4513a27e9c368f76ab138bec07ccbb3283817628c8235beb7c55ff43c7fcda",
+        "source-snapshot.zip": "676eb76ad225bffb0450b43550e2f27dc84118a312f77d63ae52451412c69416"
+      },
+      "cpu_report_sha256": "c7b5c9351aecceec4540c03291735b8bd68c4650c53b06a6e7a7cfbea1f78231",
+      "cpu_errors": {
+        "final_force_relative_l2": 1.7360918317422661e-13,
+        "mass_relative_l2": 0.0,
+        "final_physical_energy_relative_error": 3.3306690738754696e-16,
+        "final_modified_energy_relative_error": 3.3306690738754696e-16,
+        "final_probe_relative_l2": 4.2907688557963215e-16,
+        "postburst_modified_energy_relative_range": 1.686132256862359e-15
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 3600,
+          "max_rss_mib": 2048,
+          "max_system_memory_percent": 89.9,
+          "min_available_mib": 768,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_tree_rss_mib": 1481.12890625,
+        "peak_system_memory_percent": 63.6,
+        "minimum_available_mib": 5905.07421875,
+        "peak_gpu_used_mib": 2415.0,
+        "peak_gpu_temperature_c": 76.0
+      },
+      "cooling_pauses": 35,
+      "cooling_seconds": 72.5309999997844
+    },
+    {
+      "directory": "outputs/embedded-wave-intact-q5-n196608-20261115-v1",
+      "cpu_directory": "outputs/embedded-wave-intact-q5-n196608-cpu-20261115-v1",
+      "order": 5,
+      "vector_dofs": 8599833,
+      "steps": 196608,
+      "duration_s": 0.0005,
+      "dt_s": 2.5431315104166666e-09,
+      "propagation_seconds": 2597.9973659000243,
+      "monitor_wall_seconds": 2888.942427699978,
+      "plan_fingerprint": "831ef6f96c2ae3ce5c6b6e95b9bac984233eb18ec9c3c1c8b72b08228777c856",
+      "parent_fingerprint": "d96e5383d46e5ce417c5a7a3493fbf98df808d7b4e36b8ddc3d62acdbdb5788b",
+      "native_fingerprint": "21e0a62920b657f0a6061d9aae17f7067abf2fd5383c0872cdf992e3fd76bfe5",
+      "cpu_fingerprint": "cc6980edf81f3a0c9b15a1a7222f218a7845cafb4f901672b41de81f7e7a7b93",
+      "artifacts": {
+        "embedded-wave-plan.json": "b67c918398eaf6081c17a51d34a18a046ff1b0ae2231ea46876658a25ca58f6f",
+        "monitor-result.json": "b8b8ee05f9421ec71b6051bad8844db6ed9b6b761f9269fc374d0602c89001b0",
+        "native/wave-report.json": "19e1e854c440cbfc1b47678f776097dd558853570dd4156c3382fe85eeccb8c1",
+        "native/mechanical-window.npz": "8504e5f234e6711afeb45729e2d2fa41aa7ceac2a4027acc112c5903952d8b3c",
+        "native/mechanical-patches.npz": "03e046c72427c2bebd451dd2765b4772240ae3ab3068bba8cb3c98d6feeaf07a",
+        "source-snapshot.zip": "acb27ac35eeba5d01d12dd0e586ae2b503b947ecf7c6bccacd22e0ebf5867a01"
+      },
+      "cpu_report_sha256": "ba074314a6d692139e647fa8ae15b5706ef67a242aabe57481dd66dce41125fc",
+      "cpu_errors": {
+        "final_force_relative_l2": 3.2175670276636914e-13,
+        "mass_relative_l2": 0.0,
+        "final_physical_energy_relative_error": 2.220446049250313e-16,
+        "final_modified_energy_relative_error": 2.220446049250313e-16,
+        "final_probe_relative_l2": 4.624778238107773e-16,
+        "postburst_modified_energy_relative_range": 1.0113491506110362e-15
+      },
+      "resources": {
+        "limits": {
+          "max_seconds": 3600,
+          "max_rss_mib": 4096,
+          "max_system_memory_percent": 89.9,
+          "min_available_mib": 768,
+          "max_gpu_memory_percent": 90,
+          "max_gpu_temperature_c": 80,
+          "max_cpu_temperature_c": 90
+        },
+        "peak_tree_rss_mib": 2073.15234375,
+        "peak_system_memory_percent": 76.5,
+        "minimum_available_mib": 3822.23828125,
+        "peak_gpu_used_mib": 2348.0,
+        "peak_gpu_temperature_c": 76.0
+      },
+      "cooling_pauses": 55,
+      "cooling_seconds": 113.96500000014203
+    }
+  ],
+  "receipts": {
+    "spatial": {
+      "path": "outputs/embedded-spatial-refinement-20261115-v3/spatial-refinement-report.json",
+      "sha256": "cf51a757ab44b374a53dd2c48532b21ae8e53880ea70d91de4237b7b9bf7ea1b",
+      "fingerprint": "25feaa7eda8be4cc87127c830b17e0d1901626c8b44beb51627373fd5032ee11"
+    },
+    "time": {
+      "path": "outputs/embedded-time-refinement-reaudit-20261115-v4/time-refinement-report.json",
+      "sha256": "6e78f761f3b79b8614bb6e44cd98d8b29a80bd39be0748f1bbb763108e3327ca",
+      "fingerprint": "1dae8307a95580c78a59283c6200b6bee723b4f6bd99633e14be301159607ef0"
+    },
+    "source_transition": {
+      "path": "outputs/embedded-source-transition-20261115-v5/source-transition-check.json",
+      "sha256": "72ba2fb364ba778da9521fd02bd4a22134c69a83d7b1bd9fcd090bededf74812",
+      "fingerprint": "9e561afcd915fa538476d89276fafa524a0c8063c7593ab1101a3df4fc3d443f"
+    },
+    "focused_tests": {
+      "path": "outputs/embedded-final-integration-20261115-v1/tests.json",
+      "sha256": "07203d8276e6a4a5c18be77f8c70b94984dcc3335fbc4d2c851f2adbf17ae8a3",
+      "fingerprint": "99854ffdecbd615204a5b4bec715b242d56e1a4c92f6fb56d14665b197f2c449"
+    },
+    "cleanup_waveform": {
+      "path": "outputs/embedded-smoke-pinned-cleanup-20261115-v1/complete-waveform-comparison.json",
+      "sha256": "d5fe7f752d942afb8c5546b0c58d5d8d49466529b30e5dee9dcb44ba03a5f1e2",
+      "fingerprint": "4de0b3809dd7db28a84a5ed94459748ece4c1bbdd46bfa455971529d2a2a1614"
+    },
+    "cleanup_cpu": {
+      "path": "outputs/embedded-smoke-pinned-cleanup-cpu-20261115-v1/cpu-window-check.json",
+      "sha256": "28cd67d39662aa750b8cd2121aa30818ec3c02f20e0c9eede67ff18e0caad961",
+      "fingerprint": "a442d9ce429693ad8d8149dd2e4ff6293c6d1c44b772900ea0778bd42b864abe"
+    },
+    "transfer_cache": {
+      "path": "outputs/gpu-transfer-cache-20261115-v1/memory-check.json",
+      "sha256": "f02dd0e4ba4332a8359c0f6990ea892ce480a564b73583df940ab45364f716c4",
+      "fingerprint": "5c6a6a6c078fa1d3cb96287755f61d0f6693382cb29212f6d55cf57471e376db"
+    },
+    "spatial_figure": {
+      "path": "outputs/embedded-spatial-refinement-figure-20261115-v2/figure-report.json",
+      "sha256": "9fc3fb961b177edf81cd477a29d81bb1552b877f562d7549c0b4046b8cbc7b99",
+      "fingerprint": "5acfa350d2ffd420383ab4019a8615afacd96c300f986e5477d61013414c3e6a"
+    },
+    "time_figure": {
+      "path": "outputs/embedded-time-refinement-figure-20261115-v4/figure-report.json",
+      "sha256": "0c01012aab8a3892718c42b751ba613ea2af5ec6610cd44dbd4ac59915acbd68",
+      "fingerprint": "3fb83ef9ae3dcffc9c46c700922dfbc88cf0c2e77c9845e93f0c8f50b096ac8c"
+    }
+  },
+  "spatial_receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 3.6576417671555418e-09,
+      "fine_difference_l2_m": 1.0897602266144978e-10,
+      "finest_waveform_l2_m": 2.2792030592380045e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.004781321357908463,
+      "difference_ratio": 33.56372968867243,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 1.7848866734109405e-09,
+      "fine_difference_l2_m": 9.315452011686735e-11,
+      "finest_waveform_l2_m": 3.354518870494699e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.00277698602134051,
+      "difference_ratio": 19.16049453286544,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 2.5670767419434205e-09,
+      "fine_difference_l2_m": 7.681224917783387e-11,
+      "finest_waveform_l2_m": 1.802506525707463e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.004261413097946258,
+      "difference_ratio": 33.42014808081178,
+      "observed_time_order": null,
+      "passed": true
+    }
+  ],
+  "time_receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 5.926591677069633e-13,
+      "fine_difference_l2_m": 2.634039526327455e-13,
+      "finest_waveform_l2_m": 2.2783459553733e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 1.1561192101292957e-05,
+      "difference_ratio": 2.250001041302847,
+      "observed_time_order": 2.000001141408099,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 5.797567518274887e-13,
+      "fine_difference_l2_m": 2.5766957458172233e-13,
+      "finest_waveform_l2_m": 3.354188464637842e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 7.68202434950367e-06,
+      "difference_ratio": 2.250000811188569,
+      "observed_time_order": 2.0000008891719183,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 4.2276299007769135e-13,
+      "fine_difference_l2_m": 1.8789459249203476e-13,
+      "finest_waveform_l2_m": 1.8020572257153047e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 1.042667179547821e-05,
+      "difference_ratio": 2.250000835418471,
+      "observed_time_order": 2.0000009157311487,
+      "passed": true
+    }
+  ],
+  "review_manifest_sha256": "992c3e114ff3827975a809f6eec0ecf7a305476a99b882b41ceca47b27632485",
+  "windows_memory_observations": [
+    {
+      "path": "outputs/embedded-q5-windows-gpu-memory-20261115.json",
+      "sha256": "553bac9fa63c85b31dc00a342b4104af3f28b525bf30cecbe8e7b4b2d5ff5d9d",
+      "observation": {
+        "run": "outputs/embedded-wave-intact-q5-n196608-20261115-v1",
+        "observed_utc": "2026-11-15T18:47:42.5878598Z",
+        "note": "Windows allocation counters, sampled separately from the NVIDIA run monitor; values do not establish a leak or identify which allocations are active.",
+        "process_id": 9868,
+        "command": "examples.embedded_wave_budget --worker",
+        "samples": [
+          {
+            "counter": "dedicated usage",
+            "bytes": 1347141632,
+            "mib": 1284.73
+          },
+          {
+            "counter": "shared usage",
+            "bytes": 985661440,
+            "mib": 940
+          }
+        ],
+        "kind": "live_windows_gpu_process_memory"
+      }
+    },
+    {
+      "path": "outputs/embedded-recess-q3-windows-memory-20261115-obs1.json",
+      "sha256": "be51bb853a2e3e926ade442db97a89fd363b9bbed00b34709ea295d1d08a7cd3",
+      "observation": {
+        "run": "outputs/embedded-wave-recess-q3-n196608-20261115-v1",
+        "observed_utc": "2026-11-15T19:05:52.2556160Z",
+        "cache_cleanup_logged_before": true,
+        "process_id": 27680,
+        "samples": [
+          {
+            "counter": "dedicated usage",
+            "bytes": 449871872,
+            "mib": 429.03
+          },
+          {
+            "counter": "shared usage",
+            "bytes": 77594624,
+            "mib": 74
+          }
+        ],
+        "kind": "live_windows_gpu_process_memory",
+        "cache_cleanup_logged_after": true
+      }
+    }
+  ],
+  "figures_png_visually_checked": true,
+  "figure_note": "Final PNG bytes equal the earlier visually inspected layouts; PDFs exported from the same canvases.",
+  "cleanup_note": "Idle pinned host-transfer cache released once after the first synchronized batch; small waveform/CPU regression and bounded transfer checksum checks pass. Current recess Q3 shared allocation is sampled at 74 MiB; old intact Q5 sampled at 940 MiB before the cleanup was added.",
+  "active_recess_case": {
+    "directory": "outputs/embedded-wave-recess-q3-n196608-20261115-v1",
+    "plan_fingerprint": "947cd43854a10ac720ed8cd59322459bd4eba43fa2cb0274afaccbf2c8bec127",
+    "status": "running; no completed recess convergence result yet"
+  },
+  "limitations": [
+    "Only this intact mechanical case passes the declared spatial/time controls",
+    "Recessed-plate and representative thickness/frequency validation remain open",
+    "PZT voltage/coupling calibration and physical agreement remain open",
+    "No full training cycle or accepted research bank was produced",
+    "CPU temperature unavailable; Windows shared-memory observations are discrete samples"
+  ],
+  "fingerprint": "a63f75a75d41ae10b23ab89024acebaa1e5e66dcf5c574d933f238c013de29b2"
+}

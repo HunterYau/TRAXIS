@@ -7,7 +7,7 @@ plate, defect and transducer configuration.
 
 | Requirement | Evidence available | Work still required |
 | --- | --- | --- |
-| Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small P3 intact/recess controls; full-size enriched 500-microsecond window, second-order temporal convergence and CPU state checks | Full-size space/thickness refinement, representative defect/frequency variation and their time checks, continuum and physical agreement |
+| Credible elastic forward solver | Independent operators/fields, dispersion and transient checks; small intact/recess controls; full-size 3.175 mm embedded intact Q3/Q4/Q5 spatial and Q4 time screens pass with CPU readbacks | Recessed-plate space/time checks, representative thickness/frequency variation, PZT and physical agreement |
 | PZT transmission and voltage reception | Mechanical circular interfaces; small synthetic coupled 3D/electrode/circuit reference with native assembly and independent exponential checks | Bonded PZT/adhesive domains or a calibrated equivalent, identified drive/receiver electronics, measured material/input values and coupled convergence |
 | Reproducible synthetic specimens and waveforms | Scenario recipes, CAD recess geometry, bank fingerprints and masked replay workflows | Research-quality forward data, representative nuisance ranges and measured generation cost; existing pilot banks are not accepted |
 | Specimen-level separation | Parent-level index/split checks and reserved-parent calibration workflows | Freeze research specimens and distribution assumptions before final evaluation |

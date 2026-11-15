@@ -269,6 +269,60 @@ representative thickness/frequency coverage, and physical measurements remain
 open. The local portable runtime is ignored and will not transfer to another
 computer; that computer needs its own Python 3.12 environment and packages.
 
+## Completed intact spatial checkpoint (November 15)
+
+All three full-size intact levels now complete the same 196,608 steps over
+500 microseconds, with independent CPU readbacks and retained source checks:
+
+| Level | Vector coefficients | Propagation seconds | Monitored worker seconds |
+| --- | ---: | ---: | ---: |
+| Q3 | 1,975,197 | 561.964 | 798.802 |
+| Q4 | 4,507,515 | 1,317.771 | 1,574.036 |
+| Q5 | 8,599,833 | 2,597.997 | 2,888.942 |
+
+The raw Q4-to-Q5 relative changes are 0.478132%, 0.277699% and 0.426141%
+at the three receivers. Differences decrease by factors 33.564, 19.160
+and 33.420 relative to the Q3-to-Q4 changes. Every receiver passes the
+predeclared identifiable/decreasing/below-1% spatial screen. The separate
+Q4 time screen also still passes after archived-source reassessment.
+
+The Q5 CPU check gives final-force relative error 3.22e-13, exact mass
+agreement, energy errors 2.22e-16 and probe-contraction error 4.62e-16.
+Postburst modified-energy variation is 1.01e-15. Parent telemetry records
+2,073.15 MiB peak process-tree RSS, 76.5% system RAM, at least 3,822.24 MiB
+available RAM, and 2,348 MiB observed GPU memory / 76 C. There are 55
+cooling pauses totaling 113.965 seconds. The monitor retains late extrema
+through two history compactions and 13,481 observations.
+
+The compact evidence is `docs/evidence/embedded-intact-spatial-20261115.json`.
+PNG/PDF figures show the raw traces and both consecutive differences;
+the final PNG bytes match the visually reviewed layouts. This result is
+specific to the intact 3.175 mm, 100 kHz mechanical control. Recessed-plate
+convergence, representative frequency/thickness coverage, calibrated PZT
+response and physical agreement remain open. No training or accepted bank
+generation is implied.
+
+## Shared GPU allocation and transfer-cache cleanup
+
+Separate Windows process counters found 940 MiB allocated shared GPU memory
+in the completed Q5 worker, alongside 1,284.73 MiB process-specific dedicated
+memory. Those counters were sampled manually and were not part of the
+earlier NVIDIA monitoring record. Stable allocation alone does not prove a
+leak or identify active device spill.
+
+A bounded transfer test raises the Windows shared counter by 128 MiB when
+uploading a 128 MiB array. Releasing unused pinned transfer buffers restores
+the prior shared allocation while preserving the live GPU pointer and exact
+array checksum. [CuPy documents these reusable host transfer buffers](https://docs.cupy.dev/en/stable/user_guide/memory.html).
+The wave driver now releases only that idle host cache once after the first
+synchronized batch. Device solution arrays and arithmetic are unchanged.
+
+A complete small-window replay and CPU check pass after the cleanup. Its
+relative waveform difference from the prior fixture is 2.11e-15; final-force
+difference is 8.57e-12, below the unchanged 1e-10 limit. The new full-size
+recess Q3 run reports 74 MiB shared allocation after cleanup. Its convergence
+result is pending. Detailed bindings are retained in the spatial evidence.
+
 ## Commands
 
 Use fresh directories for every attempt. This computer's current Python 3.12.10
@@ -296,7 +350,7 @@ part of that scenario workflow.
 Plot a completed assessment with:
 
 ```powershell
-.\.venv\portable-runtime\python.exe -m examples.plot_embedded_refinement --study outputs/embedded-time-refinement-reaudit-20261115-v2 --output outputs/embedded-time-figure
+.\.venv\portable-runtime\python.exe -m examples.plot_embedded_refinement --study outputs/embedded-time-refinement-reaudit-20261115-v4 --output outputs/embedded-time-figure
 ```
 
 The plotter checks the sealed report, comparison archive hash, time grid and
