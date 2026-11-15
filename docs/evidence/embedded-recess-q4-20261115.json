@@ -1,0 +1,126 @@
+{
+  "kind": "embedded_recess_q4_window_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "spatial_convergence_completed": false,
+  "scope": "Complete Q4 recessed mechanical window and CPU final-state checks only.",
+  "case": {
+    "kind": "embedded_mechanical_window_case",
+    "scope": "full",
+    "order": 4,
+    "steps": 196608,
+    "defective": true,
+    "plate": {
+      "width_m": 0.5,
+      "height_m": 0.5,
+      "thickness_m": 0.003175
+    },
+    "recess": {
+      "x_m": 0.255,
+      "y_m": 0.245,
+      "radius_m": 0.015,
+      "depth_m": 0.0015
+    },
+    "angular_cells": 12,
+    "radial_cells": [
+      2,
+      6
+    ],
+    "outer_cell_size_m": 0.005,
+    "duration_s": 0.0005,
+    "source_center_xy_m": [
+      0.02,
+      0.02
+    ],
+    "receiver_centers_xy_m": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.48,
+        0.48
+      ],
+      [
+        0.35,
+        0.2
+      ]
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "geometry_order": 3,
+    "layers": [
+      1,
+      1
+    ],
+    "radius_m": 0.003,
+    "frequency_hz": 100000.0,
+    "cycles": 2,
+    "force_scale_n": 1.0,
+    "output_stride": 1,
+    "energy_stride": 256,
+    "max_mesh_bytes": 536870912,
+    "max_operator_bytes": 1610612736,
+    "max_device_mib": 3072,
+    "max_host_mib": 2048,
+    "max_workspace_mib": 1536,
+    "operator_tolerance": 1e-10,
+    "energy_tolerance": 1e-08,
+    "cooling_upper_c": 76.0,
+    "cooling_lower_c": 72.0
+  },
+  "source_check": {
+    "source_snapshot_sha256": "25f847179a654c692fdb67bd5afcbbbd4616b7b17f86cef3c8423391383cabe6",
+    "reviewed_changes": [],
+    "review_sha256": "992c3e114ff3827975a809f6eec0ecf7a305476a99b882b41ceca47b27632485",
+    "validator_sha256": "431b933795f91d6f7915f3815681775d6164b87672938111ef7fc57dce49e16b"
+  },
+  "plan_fingerprint": "f5b376a3cc5faca3b1574fc46af4e978e2f9077feb0826e6863df19ea93e6cb7",
+  "parent_fingerprint": "c2b7a39489e7568026e42c239fe61c669b9aa3816901fd7b49e1999be9829fd4",
+  "native_fingerprint": "c713a994ea2e359f6d5c8600b12bd71430d07d0f026aae5a67dd0b53e86eeac4",
+  "input_identities": {
+    "embedded-wave-plan.json": "ed23b7843efff1b1f13434274dabc2eff9a6760ee2e4f398b387c5d5f9d595a5",
+    "monitor-result.json": "012aac1b3f7a33d20a67293f2e166726a00f8cc4b633149db5ebd2d77abff761",
+    "native/wave-report.json": "59d7212d1940371e742b1fc5fb8b46a6761a7e32a58a4c4b150ec64f867a92dc",
+    "native/mechanical-window.npz": "e719fc2059693d73a1ec3422635e06ba610578e1cf2f5b7f95b90a7098fa0ef4",
+    "native/mechanical-patches.npz": "598750bd26876e476b71055a14a9ceb0e02fbd8431de0980445d7d440ebdd03f"
+  },
+  "cpu_path": "outputs/embedded-wave-recess-q4-n196608-cpu-20261115-v1/cpu-window-check.json",
+  "cpu_sha256": "6c420b6f7606b003b2c8c43a117cc5d902966cdbb59d70e2a4bd83f7470ec6ba",
+  "cpu_fingerprint": "bd6b20f4d84b23eb91d68c81e04f7a36ddc7126401d441c1ef7779c520b2793f",
+  "cpu_errors": {
+    "final_force_relative_l2": 1.712049475661879e-13,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 3.3306690738754696e-16,
+    "final_modified_energy_relative_error": 3.3306690738754696e-16,
+    "final_probe_relative_l2": 3.865150101809661e-16,
+    "postburst_modified_energy_relative_range": 2.023358708234831e-15
+  },
+  "vector_dofs": 4462575,
+  "propagation_seconds": 1385.637646600022,
+  "wall_seconds": 1639.6272944000084,
+  "resources": {
+    "peak_process_tree_rss_mib": 1210.41015625,
+    "peak_system_memory_percent": 73.0,
+    "minimum_available_mib": 4388.578125,
+    "peak_gpu_used_mib": 2256.0,
+    "peak_gpu_temperature_c": 76.0
+  },
+  "next_case": {
+    "directory": "outputs/embedded-wave-recess-q5-n196608-20261115-v1",
+    "plan_fingerprint": "806b7d38471f24e0cf9b6d4349ba75f1d31693c9f6ed8d84a00bc436fdb848d8",
+    "status": "running"
+  },
+  "limitations": [
+    "Recess Q5 and the full three-level spatial assessment are pending",
+    "Recess time/frequency/thickness and PZT/physical validation remain open",
+    "No accepted research bank or full model training"
+  ],
+  "fingerprint": "12db93bbb1e631483569c437e9e104dea29ef7afda0d08d9175be2248a16b136"
+}

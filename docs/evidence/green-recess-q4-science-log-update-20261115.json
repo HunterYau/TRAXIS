@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-15",
+  "document_url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "document_id": "1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "tab_id": "t.0",
+  "revision_id": "AHj4eMSd8wVOnkLB03gVuhx5ZuF3Jppxp6m4btJMTDnc3MKh1aE5TT8HYWnI09YI-N4KCbuO-K98RgLX0wnL04LoMnYyH4OsR4yBnMgcv8g",
+  "heading": "Follow-up: recessed Q4 checks and discrete Green replay",
+  "start_index": 541341,
+  "end_index": 547717,
+  "paragraphs_added": 9,
+  "readback_verified": true,
+  "topics": [
+    "Recessed Q4 window and CPU checks",
+    "Ongoing Q5 and serialized GPU scheduling",
+    "Discrete Green replay indexing and direct/CPU checks",
+    "Force-scale wording correction",
+    "RAM preference and pending legacy default alignment",
+    "Remaining numerical, PZT and physical validation"
+  ]
+}

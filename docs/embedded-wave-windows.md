@@ -10,7 +10,9 @@ training or accepted waveform-bank generation is part of this workflow.
 
 Both cases use explicit 3.175 mm stock, cubic geometry, one layer on each
 side of the recess-floor partition, a 100 kHz two-cycle Hann-windowed
-sinusoid and a unit peak normal force distributed over a 3 mm-radius disk.
+sinusoid with a 1 N force scale distributed over a 3 mm-radius disk.
+The windowed two-cycle sine peaks at about 0.869619 N; its archived force
+scale and waveform are unchanged.
 The receive observable is area-average normal displacement in meters.
 These are mechanical controls, not PZT voltage predictions.
 
@@ -306,9 +308,23 @@ The recessed Q3 window subsequently completed its full 500 microseconds in
 808.578 monitored seconds, with 1,956,396 coefficients. Its CPU final-force
 error is 7.75e-14, mass matches exactly, energy errors are 2.22e-16 and probe
 error is 5.69e-17. Peak RSS is 761.13 MiB and system RAM 65.2%. This is one
-completed recessed level; Q4 is running and Q5 plus the three-level spatial
-and separate time assessments remain pending. The scoped receipt is
+completed recessed level. The scoped receipt is
 `docs/evidence/embedded-recess-q3-20261115.json`.
+
+Recess Q4 also completes the full window: 4,462,575 coefficients, 1,385.638
+propagation seconds and 1,639.627 monitored seconds. Its CPU force error is
+1.71e-13, mass matches exactly, energy errors are 3.33e-16 and probe error is
+3.87e-16. Peak RSS is 1,210.41 MiB, system RAM 73.0%, and device-wide GPU
+memory 2,256 MiB / 76 C. Concurrent verification activity is included in
+these system readings. Its receipt is
+`docs/evidence/embedded-recess-q4-20261115.json`. Q5 is running; the complete
+recess spatial/time conclusions remain pending.
+
+Discrete Green replay now reproduces fresh three-frequency small-plate
+signals and the retained full-size intact Q3 100 kHz trace. This verifies
+fixed-system input reuse, with maximum full-size relative error 2.63e-14.
+See discrete-green-replay.md for its initial-state/force convention, retained
+proof and remaining bank-integration/PZT/physical limits.
 
 ## Shared GPU allocation and transfer-cache cleanup
 
