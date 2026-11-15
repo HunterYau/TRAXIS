@@ -1,0 +1,133 @@
+{
+  "kind": "embedded_recess_q3_window_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "spatial_convergence_completed": false,
+  "scope": "Complete Q3 recessed 500x500x3.175 mm mechanical window and independent CPU final-state check only.",
+  "case": {
+    "kind": "embedded_mechanical_window_case",
+    "scope": "full",
+    "order": 3,
+    "steps": 196608,
+    "defective": true,
+    "plate": {
+      "width_m": 0.5,
+      "height_m": 0.5,
+      "thickness_m": 0.003175
+    },
+    "recess": {
+      "x_m": 0.255,
+      "y_m": 0.245,
+      "radius_m": 0.015,
+      "depth_m": 0.0015
+    },
+    "angular_cells": 12,
+    "radial_cells": [
+      2,
+      6
+    ],
+    "outer_cell_size_m": 0.005,
+    "duration_s": 0.0005,
+    "source_center_xy_m": [
+      0.02,
+      0.02
+    ],
+    "receiver_centers_xy_m": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.48,
+        0.48
+      ],
+      [
+        0.35,
+        0.2
+      ]
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "geometry_order": 3,
+    "layers": [
+      1,
+      1
+    ],
+    "radius_m": 0.003,
+    "frequency_hz": 100000.0,
+    "cycles": 2,
+    "force_scale_n": 1.0,
+    "output_stride": 1,
+    "energy_stride": 256,
+    "max_mesh_bytes": 536870912,
+    "max_operator_bytes": 1610612736,
+    "max_device_mib": 3072,
+    "max_host_mib": 2048,
+    "max_workspace_mib": 1536,
+    "operator_tolerance": 1e-10,
+    "energy_tolerance": 1e-08,
+    "cooling_upper_c": 76.0,
+    "cooling_lower_c": 72.0
+  },
+  "source_check": {
+    "source_snapshot_sha256": "ca8ae15d76d0f4fce0ae2af0c0d2e569edfc07873d7c06536415d643ba466003",
+    "reviewed_changes": [],
+    "review_sha256": "992c3e114ff3827975a809f6eec0ecf7a305476a99b882b41ceca47b27632485",
+    "validator_sha256": "431b933795f91d6f7915f3815681775d6164b87672938111ef7fc57dce49e16b"
+  },
+  "input_identities": {
+    "embedded-wave-plan.json": "f0f5826a95fa012c53e9e64b4c16eae9861136388c171941652432940c7b2791",
+    "monitor-result.json": "13f14680a4ac493fd03f54f6b1ccd36cd473268c5c2e3d7a7bca863f3cf6fa4a",
+    "native/wave-report.json": "9fc2021a3e2f2f5a206939376d3ac328bda47410217b5f1325aa4dec7d03d912",
+    "native/mechanical-window.npz": "8195b783f8b55e6e0febe04e0f02d082baeccbd802fe47054f342c8a4663e390",
+    "native/mechanical-patches.npz": "ef2c7133d7288b3ec3e4bb88a0476e1457300f8a025bafa76df0eb17be401c5c"
+  },
+  "plan_fingerprint": "947cd43854a10ac720ed8cd59322459bd4eba43fa2cb0274afaccbf2c8bec127",
+  "native_fingerprint": "6f5c1a3c8e95afacd6ed6a3f9e69f60440597aa054fbe540b08803a185f4e4fa",
+  "parent_fingerprint": "0d4dfec0d41e2a86f01dc4dd670b8b06efb3ac6ee47ed3df3c3f382f0a4631b1",
+  "cpu_fingerprint": "8eefe6341e2c9c77f80b38bc74bb030c97d10b8ea4b2eaf6b20174a63c4ac131",
+  "cpu_path": "outputs/embedded-wave-recess-q3-n196608-cpu-20261115-v1/cpu-window-check.json",
+  "cpu_sha256": "5a1fc156c6276595a426c0e1a33715fa29a76e14300378e20893bdcc54c0366e",
+  "cpu_errors": {
+    "final_force_relative_l2": 7.751481072064362e-14,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 2.220446049250313e-16,
+    "final_modified_energy_relative_error": 2.220446049250313e-16,
+    "final_probe_relative_l2": 5.693039277618935e-17,
+    "postburst_modified_energy_relative_range": 1.6860718409109443e-15
+  },
+  "vector_dofs": 1956396,
+  "monitor_wall_seconds": 808.5778710999875,
+  "propagation_seconds": 568.0360241999733,
+  "initial_host_transfer_cache_released": true,
+  "resources": {
+    "peak_process_tree_rss_mib": 761.12890625,
+    "peak_system_memory_percent": 65.2,
+    "minimum_available_mib": 5655.7578125,
+    "peak_gpu_memory_mib": 1513.0,
+    "peak_gpu_temperature_c": 75.0
+  },
+  "raw_recess_vs_intact_relative_l2": [
+    1.5957972052306206,
+    0.7056315964452058,
+    0.3581185671851271
+  ],
+  "sensitivity_note": "Same-degree raw mechanical waveform sensitivity only; not spatial convergence, reconstruction quality or physical defect-detection accuracy.",
+  "next_case": {
+    "directory": "outputs/embedded-wave-recess-q4-n196608-20261115-v1",
+    "plan_fingerprint": "f5b376a3cc5faca3b1574fc46af4e978e2f9077feb0826e6863df19ea93e6cb7",
+    "status": "running"
+  },
+  "limitations": [
+    "Recess Q4/Q5 spatial and time comparison pending",
+    "Physical PZT/plate agreement and representative frequency/thickness cases remain open",
+    "No training updates or accepted research waveform bank"
+  ],
+  "fingerprint": "b51131a33a2ef38c083497840dfa0f67329cee57428da3e316c1f3a333ca8873"
+}

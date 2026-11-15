@@ -302,6 +302,14 @@ convergence, representative frequency/thickness coverage, calibrated PZT
 response and physical agreement remain open. No training or accepted bank
 generation is implied.
 
+The recessed Q3 window subsequently completed its full 500 microseconds in
+808.578 monitored seconds, with 1,956,396 coefficients. Its CPU final-force
+error is 7.75e-14, mass matches exactly, energy errors are 2.22e-16 and probe
+error is 5.69e-17. Peak RSS is 761.13 MiB and system RAM 65.2%. This is one
+completed recessed level; Q4 is running and Q5 plus the three-level spatial
+and separate time assessments remain pending. The scoped receipt is
+`docs/evidence/embedded-recess-q3-20261115.json`.
+
 ## Shared GPU allocation and transfer-cache cleanup
 
 Separate Windows process counters found 940 MiB allocated shared GPU memory
