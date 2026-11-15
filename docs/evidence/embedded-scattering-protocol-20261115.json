@@ -1,0 +1,48 @@
+{
+  "kind": "embedded_scattering_protocol_predeclaration",
+  "date": "2026-11-15",
+  "observed_utc": "2026-11-15T20:38:17.296271+00:00",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Protocol and manufactured-control checks only; real scattering assessment is pending.",
+  "sources": {
+    "examples/embedded_scattering_study.py": "96d44a69e58982bcd63ec237e45dc354af68d03a061b3140aa8e2195df62e7d0",
+    "tests/test_embedded_scattering_study.py": "95304dad1b48dbb24c142085aa8e99b98d06fd27551ec7a6d858f920259d0e1d",
+    "configs/embedded-scattering-protocol.json": "43273a7aa65a32914756e445a6fa02e318ccf45d35d30be128de1f459a29f110"
+  },
+  "unit_check": {
+    "directory": "outputs/embedded-scattering-unit-20261115-v2",
+    "tests": 8,
+    "skipped": 0,
+    "failures": 0,
+    "test_seconds": 0.442,
+    "files": {
+      "invocation.json": "bfb1065be4bd9ee7355db8b983798be05f01bd9ce73bc145ecbdc0d7a9169d3e",
+      "tests.log": "c8ace76ade33e17d7c464bd8f7f7d800d2881be8a3c99ee2ab4dffe18456b600",
+      "monitor-result.json": "b950e9b77d9226db787c0c959ca8c451097554fe22aaca2fb778c059f30d2233",
+      "source-snapshot.zip": "21cffc76edd9088983c11ae51d83cce21dea92b51fa8ce65522516f5bed59a4d"
+    },
+    "peak_process_tree_rss_mib": 202.23046875,
+    "peak_system_memory_percent": 59.4
+  },
+  "predeclaration": {
+    "q5_directory": "outputs/embedded-wave-recess-q5-n196608-20261115-v1",
+    "q5_plan_fingerprint": "806b7d38471f24e0cf9b6d4349ba75f1d31693c9f6ed8d84a00bc436fdb848d8",
+    "worker_pid": 31136,
+    "worker_created_unix": 1794772193.1620092,
+    "worker_status": "running",
+    "last_propagation": {
+      "phase": "propagating",
+      "elapsed_seconds": 2895.99496370001,
+      "steps_completed": 160688,
+      "requested_steps": 196608,
+      "time_s": 0.0004086507161458333,
+      "requested_duration_s": 0.0005,
+      "stiffness_applications": 160689
+    },
+    "completed_result_exists": false
+  },
+  "fingerprint": "4d987795993f092eff5bde2f343646592cc58c8b62ec88f3c3fc57ace2ff94ca"
+}
