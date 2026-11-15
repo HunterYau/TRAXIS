@@ -1,0 +1,138 @@
+{
+  "kind": "embedded_intact_q4_time_refinement_evidence",
+  "date": "2026-11-14",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Full 500x500x3.175 mm intact aluminum plate; fixed Q4 mesh, material, source and receiver ports; 500 us physical window.",
+  "runtime": {
+    "python": "3.12.10 portable runtime inside ignored .venv",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "psutil": "7.2.2",
+    "ngsolve": "6.2.2606",
+    "cupy": "14.2.0",
+    "torch": "2.15.0+cpu; not used for this CUDA propagation",
+    "cuda_path_warning": "CuPy warned that CUDA_PATH was not detected; a real CUDA array calculation and the full wave runs succeeded.",
+    "cupy_cache": "Redirected inside ignored project .venv after default user-profile cache creation was denied."
+  },
+  "resource_profile": {
+    "startup_reject_at_or_above_system_ram_percent": 90.0,
+    "in_run_system_ram_limit_percent": 89.9,
+    "minimum_available_mib": 768,
+    "max_process_tree_rss_mib": 2048,
+    "max_dedicated_gpu_memory_percent": 90,
+    "max_gpu_temperature_c": 80,
+    "max_wall_seconds": 3600,
+    "shared_gpu_memory_directly_reported": false,
+    "cpu_temperature_reported": false
+  },
+  "levels": [
+    {
+      "steps": 131072,
+      "directory": "outputs/embedded-wave-intact-q4-n131072-20261112",
+      "plan_fingerprint": "44b48ae82c813d6e4ab9b9ce9709350cad85d05bad04d913cafa1f5b11bbac9b",
+      "native_report_sha256": "6a9a4403b22065be5e44370b3a749faa42a1500f5b4e3f148eebd53b7e92c4b1",
+      "cpu_check_fingerprint": "97f9fcb50227270998e48da613b3c16802d0a570314361a62b7ad17089d05a91",
+      "cpu_check_report_sha256": "b73cf274eaee0ddc2c699a64f26dde08733102b350afef79f7be48018c84b456",
+      "status": "Previously completed and independently CPU checked; original standard resource profile retained."
+    },
+    {
+      "steps": 196608,
+      "directory": "outputs/embedded-wave-intact-q4-n196608-20261114-v2",
+      "plan_fingerprint": "94e608e5d657f74843f0b92e9cc9f16750dfced4572d4ea07a060c92e1518128",
+      "parent_result_fingerprint": "e3eaedab280c27b7a072475f03b95b74103dcc99b71acb0d04cce905e46090c5",
+      "native_report_sha256": "23c060d3f5ffdf940cebbb28802727fe2352f3c873d2464b188cf505a2041d44",
+      "raw_window_sha256": "9e20e4698f99fdccf02fa1421e976c450b2d76eaac1d731d5475b33a5affaf08",
+      "raw_patch_sha256": "1b4513a27e9c368f76ab138bec07ccbb3283817628c8235beb7c55ff43c7fcda",
+      "cpu_check_fingerprint": "f43a8afc2d3ab08b52d21e35e3958edad1704cfa0fdfd148b63200f9d44a4a32",
+      "cpu_check_report_sha256": "c7b5c9351aecceec4540c03291735b8bd68c4650c53b06a6e7a7cfbea1f78231",
+      "gpu_worker_wall_seconds": 1574.035863099969,
+      "monitor_samples": 7369,
+      "peak_system_ram_percent": 63.6,
+      "minimum_available_mib": 5905.07421875,
+      "peak_observed_process_tree_rss_mib": 1481.12890625,
+      "peak_dedicated_gpu_memory_mib": 2415,
+      "peak_gpu_temperature_c": 76,
+      "thermal_cooling_events": 35,
+      "thermal_pause_seconds": 72.531,
+      "postburst_modified_energy_relative_range": 1.686132256862359e-15,
+      "cpu_final_force_relative_l2": 1.7360918317422661e-13,
+      "cpu_mass_relative_l2": 0.0,
+      "cpu_physical_energy_relative_error": 3.3306690738754696e-16,
+      "cpu_modified_energy_relative_error": 3.3306690738754696e-16,
+      "cpu_final_probe_relative_l2": 4.2907688557963215e-16,
+      "completed_and_passed": true
+    },
+    {
+      "steps": 294912,
+      "directory": "outputs/embedded-wave-intact-q4-n294912-20261114-v2",
+      "plan_fingerprint": "63e10281f8b9d79037115641519bde8693ca4370a583fd37de2c5ee20aea727d",
+      "parent_result_fingerprint": "9278137a07129159e1e6ca400ef142282a84c05fbd0515906530b25db936beb3",
+      "native_report_sha256": "c207010308dff15e61c56433885cc29a2575f3e6837ea6d13d55d08f795b7dd9",
+      "raw_window_sha256": "e9eb4af7bd710ea4b03ddc9b2fb4964a2fe134f665587a5ddce75e9c8e1c589e",
+      "raw_patch_sha256": "1b4513a27e9c368f76ab138bec07ccbb3283817628c8235beb7c55ff43c7fcda",
+      "cpu_check_fingerprint": "04f970970e4df3b6af9ddd3585bf5aa5c7c3669cca136099e7139c7a2f1c7a2a",
+      "cpu_check_report_sha256": "098d8e9d9c89aa0424ec794f79ecd8ff7255410c0faadc2e575ed1fde94f14e0",
+      "gpu_worker_wall_seconds": 2370.2515436999965,
+      "monitor_samples": 11049,
+      "peak_system_ram_percent": 63.1,
+      "minimum_available_mib": 5985.0078125,
+      "peak_observed_process_tree_rss_mib": 1480.31640625,
+      "peak_dedicated_gpu_memory_mib": 2417,
+      "peak_gpu_temperature_c": 76,
+      "thermal_cooling_events": 112,
+      "thermal_pause_seconds": 231.634,
+      "postburst_modified_energy_relative_range": 2.02335836973698e-15,
+      "cpu_final_force_relative_l2": 1.7177877667118353e-13,
+      "cpu_mass_relative_l2": 0.0,
+      "cpu_physical_energy_relative_error": 2.220446049250313e-16,
+      "cpu_modified_energy_relative_error": 2.220446049250313e-16,
+      "cpu_final_probe_relative_l2": 4.622750000269442e-16,
+      "completed_and_passed": true
+    }
+  ],
+  "time_refinement": {
+    "directory": "outputs/embedded-wave-time-study-20261114-v1",
+    "report_sha256": "0e3555183998ccd1a689d6289980bb6f1f4e4b9be24f11db0974f401019a0510",
+    "comparison_arrays_sha256": "87ce332a8daa73e06e441b10d532bb52af7e766f42243cfc1ecafae768cb7714",
+    "fingerprint": "238a23d209980795a60f01a4b2bab0b5ed40e9c2c1e31c77f99961999024683f",
+    "passed": true,
+    "predeclared_finest_relative_change_limit": 0.001,
+    "receiver_results": [
+      {
+        "receiver": 0,
+        "difference_ratio": 2.250001041302847,
+        "observed_time_order": 2.000001141408099,
+        "finest_relative_change": 1.1561192101292957e-5,
+        "passed": true
+      },
+      {
+        "receiver": 1,
+        "difference_ratio": 2.250000811188569,
+        "observed_time_order": 2.0000008891719183,
+        "finest_relative_change": 7.68202434950367e-6,
+        "passed": true
+      },
+      {
+        "receiver": 2,
+        "difference_ratio": 2.250000835418471,
+        "observed_time_order": 2.0000009157311487,
+        "finest_relative_change": 1.0426671795478209e-5,
+        "passed": true
+      }
+    ]
+  },
+  "focused_tests": {
+    "test_embedded_wave_budget.py": "7 passed",
+    "test_embedded_wave_study.py": "4 passed"
+  },
+  "limitations": [
+    "This is numerical time convergence for one intact full-plate Q4 case, not validation against a physical aluminum plate or PZT measurements.",
+    "The independent CPU check recomputes final force, mass, energies and probe contraction; it does not independently replay the full GPU trajectory.",
+    "Shared GPU memory and CPU temperature sensors were unavailable in the captured telemetry.",
+    "Full-size recess, spatial Q3/Q4/Q5 refinement, thickness/frequency coverage, physical transfer checks and model training remain open."
+  ],
+  "implementation_commit": "0ec67e0"
+}

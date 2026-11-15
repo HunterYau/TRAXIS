@@ -1,0 +1,18 @@
+{
+  "kind": "science_log_append_verification",
+  "date": "2026-11-14",
+  "completed": true,
+  "document_url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "previous_revision": "AHj4eMTD5iHWnqjZ0Z___D9hHnc4ExROKPfINHcPLagTAQBHS5OixrKELoFdiTC8_GyjSvxO78MZm9qmj9v-addyQrRAzc2_dtJNBmLQ6AQ",
+  "revision": "AHj4eMSAJaNqkQXUivaB1cr7dZEniFvn-OCFzGZ1yqLkZaw3HLQ8E_INWiF_1juZa1MpJfUY9KEuRVKnNKynLixQ_xuqIE936wuzw7xjc50",
+  "append_only": true,
+  "previous_elements": 1496,
+  "final_elements": 1512,
+  "previous_table_count": 18,
+  "final_table_count": 18,
+  "previous_ram_stop_entry_preserved": true,
+  "new_heading": "November 14, 2026 — Runtime recovery and completed time refinement",
+  "time_refinement_fingerprint": "238a23d209980795a60f01a4b2bab0b5ed40e9c2c1e31c77f99961999024683f",
+  "numerical_evidence": "docs/evidence/embedded-time-refinement-20261114.json",
+  "scope": "Appended the missing-runtime recovery, authorized RAM limits, resource telemetry, complete medium/fine Q4 windows, independent CPU checks, passing three-receiver time-refinement results and remaining physical-validation limits. Existing content and tables were preserved."
+}

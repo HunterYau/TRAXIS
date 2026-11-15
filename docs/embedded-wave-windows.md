@@ -194,20 +194,76 @@ recovered to 4,239.04 MiB (73.9% used). This does not identify which other
 processes contributed to the system-wide pressure.
 
 The failure record and input/log hashes are retained in
-`evidence/embedded-refinement-ram-stop-20261114.json`. A later attempt needs
-a fresh output directory and sufficient memory headroom; partial progress
-cannot be resumed as a numerical checkpoint.
+`evidence/embedded-refinement-ram-stop-20261114.json`. That attempt remains
+incomplete and has no restartable numerical checkpoint.
 
-New extended-profile launches now require system RAM at or below 70% and
-at least 4,096 MiB available before creating the run directory or allocating
-the wave system. The preflight thresholds are recorded in each new plan.
-The existing 85% in-run limit still applies. This reserves startup headroom;
-it cannot prevent later memory growth from other applications. The failed
-attempt retains its original source snapshot and execution profile.
+After the user authorized up to 90% system RAM use, the extended launcher was
+changed to reject startup at 90% or higher and enforce an in-run 89.9% ceiling
+with a 768 MiB minimum available-RAM floor. The 89.9% guard makes the stop
+occur before a sample can reach the user's 90% limit. The 3,600-second wall
+limit, 2,048 MiB process-tree limit, 90% dedicated-GPU-memory limit, and 80 C
+GPU-temperature limit remain in force. The new thresholds are recorded in
+each run plan; the failed attempt retains its original profile.
+
+The local `.venv` launcher pointed to a deleted Python 3.12.10 base install.
+Python 3.12.10 was restored as an ignored portable runtime under
+`.venv/portable-runtime` and connected to the existing `.venv/Lib/site-packages`.
+NumPy 2.5.4, SciPy 1.18.1, psutil 7.2.2, NGSolve 6.2.2606, and CuPy 14.2.0
+loaded. PyTorch is the CPU build (2.15.0+cpu); the wave solver's CUDA path uses
+CuPy. Its first import tried to create a cache outside the workspace and was
+denied, so the cache was directed inside the ignored `.venv` folder. A real
+CuPy array calculation then passed on the RTX 3060 Ti. No system-wide software
+or files outside the project were changed. CPU temperature sensors were not
+available, and the recorded NVIDIA telemetry does not separately report
+shared GPU memory.
+
+The RAM-profile change is committed as `0ec67e0` (`Honor the approved embedded
+wave RAM ceiling`). Focused tests passed: 7 launcher/telemetry tests and 4
+refinement-study tests. An initial unittest module-name invocation failed
+because `tests` is not a Python package; discovery with `-s tests` was the
+corrected invocation. No training updates were run.
+
+## November 14 completed intact Q4 time refinement
+
+The original coarse run (Q4, 131,072 steps) was compared with fresh medium
+(196,608) and fine (294,912) runs. All used the full 500 by 500 by 3.175 mm
+intact plate, the same mesh, material, source and receiver ports, 500 us
+physical window, and CuPy CUDA solver. Each new window completed with zero
+training updates and passed an independent CPU readback. Raw run directories
+remain under ignored `outputs/` and are bound by their fingerprints and
+hashes in `evidence/embedded-time-refinement-20261114.json`.
+
+| Steps | GPU worker wall (s) | Maximum system RAM | Minimum available RAM (MiB) | Peak observed process-tree RSS (MiB) | GPU memory / temperature |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 196,608 | 1,574.036 | 63.6% | 5,905.07 | 1,481.13 | 2,415 MiB / 76 C |
+| 294,912 | 2,370.252 | 63.1% | 5,985.01 | 1,480.32 | 2,417 MiB / 76 C |
+
+The CPU readback force errors are 1.7361e-13 and 1.7178e-13; mass agrees
+exactly; energy errors are at most 3.34e-16; and receiver contraction errors
+are 4.29e-16 and 4.63e-16. Postburst modified-energy relative ranges are
+1.6861e-15 and 2.0234e-15. GPU use reached 99-100% during sampled propagation.
+The built-in thermal controller paused briefly at 76 C and resumed after
+cooling. CPU temperature and shared GPU-memory use were not directly measured.
+
+The three-level time-refinement assessment passed for all three receivers.
+Observed orders were 2.00000114, 2.00000089, and 2.00000092; difference ratios
+were 2.25000104, 2.25000081, and 2.25000084. Finest relative waveform changes
+were 1.1561e-5, 7.6820e-6, and 1.0427e-5, each below the declared 0.001
+(0.1%) limit. This supports second-order time convergence for this fixed
+intact Q4 numerical case. It does not establish spatial convergence, real
+plate accuracy, PZT contact fidelity, or model-training performance.
+
+The medium/fine windows and CPU checks are reusable inputs for the remaining
+spatial study, but Q3 and Q5 full-size windows, the full-size recess case,
+representative thickness/frequency coverage, and physical measurements remain
+open. The local portable runtime is ignored and will not transfer to another
+computer; that computer needs its own Python 3.12 environment and packages.
 
 ## Commands
 
-Use fresh directories for every attempt:
+Use fresh directories for every attempt. This computer's current Python 3.12.10
+runtime is at `.venv/portable-runtime/python.exe`; other computers should use
+their own project environment interpreter.
 
 ```powershell
 .\.venv\Scripts\python.exe -m examples.embedded_wave --output outputs/embedded-smoke
