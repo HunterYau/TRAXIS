@@ -1,0 +1,245 @@
+{
+  "kind": "discrete_green_replay_verification_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Exact-input replay checks for a fixed discrete mechanical system; no new continuum, PZT or bank acceptance.",
+  "proofs": {
+    "small": {
+      "directory": "outputs/green-mechanical-verification-20261115-v4",
+      "plan_fingerprint": "39787bb0c94578fbd34e228f973ea9914366535450409a4313e492b3420d1462",
+      "report_fingerprint": "2007841779798454196f17e8263f72d23ee614e2a09ae45d2e0fe1f4f3722d88",
+      "files": {
+        "green-plan.json": "3504779a5f3a706d69526752aa96b808ff750510f240278615ff8408a31597a2",
+        "green-check.json": "221f8efabc544316ec03ae7e3d430bc18c50e62c2fe5fcf362267e8c69f97008",
+        "green-check-arrays.npz": "64c3ee5bf04b111bedb5a270e7a49ec9358473cb15419698efcb17bfb4371051",
+        "source-snapshot.zip": "0d1c5c8215c3004c8390608d84b36c358aeff52a8e570dfd12c51623505533d2"
+      },
+      "samples": 8065,
+      "receivers": 3,
+      "trials": [
+        {
+          "frequency_hz": 80000.0,
+          "relative_waveform_l2": [
+            3.961155042457134e-15,
+            4.336935689515375e-15,
+            1.8452359692357937e-15
+          ],
+          "passed": true,
+          "direct_seconds": 3.966457200003788,
+          "replay_seconds": 0.002246999996714294,
+          "postburst_modified_energy_relative_range": 3.741642164005529e-16,
+          "direct_source": "fresh_wave_solve",
+          "synthesis": {
+            "method": "discrete_verlet_zero_padded_fft",
+            "impulse_force_index": 1,
+            "force_samples": 8065,
+            "receivers": 3,
+            "fft_size": 16200,
+            "workspace_screen_mib": 2.0995330810546875
+          }
+        },
+        {
+          "frequency_hz": 100000.0,
+          "relative_waveform_l2": [
+            3.642176224207847e-15,
+            2.4594168229481478e-15,
+            1.9280674166649677e-15
+          ],
+          "passed": true,
+          "direct_seconds": 3.964812200050801,
+          "replay_seconds": 0.0013916000025346875,
+          "postburst_modified_energy_relative_range": 4.054642434189331e-16,
+          "direct_source": "fresh_wave_solve",
+          "synthesis": {
+            "method": "discrete_verlet_zero_padded_fft",
+            "impulse_force_index": 1,
+            "force_samples": 8065,
+            "receivers": 3,
+            "fft_size": 16200,
+            "workspace_screen_mib": 2.0995330810546875
+          }
+        },
+        {
+          "frequency_hz": 150000.0,
+          "relative_waveform_l2": [
+            3.560266409217058e-15,
+            9.848282198423317e-16,
+            1.9210037464594195e-15
+          ],
+          "passed": true,
+          "direct_seconds": 3.910880899988115,
+          "replay_seconds": 0.0016420999891124666,
+          "postburst_modified_energy_relative_range": 5.849596287059115e-16,
+          "direct_source": "fresh_wave_solve",
+          "synthesis": {
+            "method": "discrete_verlet_zero_padded_fft",
+            "impulse_force_index": 1,
+            "force_samples": 8065,
+            "receivers": 3,
+            "fft_size": 16200,
+            "workspace_screen_mib": 2.0995330810546875
+          }
+        }
+      ],
+      "recomputed_errors": [
+        [
+          3.961155042457134e-15,
+          4.336935689515375e-15,
+          1.8452359692357937e-15
+        ],
+        [
+          3.642176224207847e-15,
+          2.4594168229481478e-15,
+          1.9280674166649677e-15
+        ],
+        [
+          3.560266409217058e-15,
+          9.848282198423317e-16,
+          1.9210037464594195e-15
+        ]
+      ],
+      "green_seconds": 5.194400500040501,
+      "wall_seconds": 21.240647100028582,
+      "cpu_force_relative_l2": 5.371157305110594e-15,
+      "mass_relative_l2": 0.0,
+      "probe_relative_l2": 4.905056926663236e-16,
+      "energy_errors": [
+        8.881784197001252e-16,
+        8.881784197001252e-16
+      ],
+      "modified_energy_range": 2.4554876090786448e-14,
+      "peak_process_rss_mib": 298.5078125,
+      "peak_system_ram_percent": 70.7
+    },
+    "retained_small": {
+      "directory": "outputs/green-retained-smoke-verification-20261115-v1",
+      "plan_fingerprint": "b3e4c997146fd27020dd3b22fad6415f6b84b34bc93dbea3b2ba0b50d81cd783",
+      "report_fingerprint": "7d40463e3a502d0ce1bcc50232dbb4418e0c0e328aff201999634a2deb00974a",
+      "files": {
+        "green-plan.json": "fdc1962b838db36449b4217590bfcb28ec1c2d302167557120cf8997505a063c",
+        "green-check.json": "b7d7565d8cb2e3ce2d0c1c45c5c092fa3e9fbe3a37ed04a2c7f620c00b1984d0",
+        "green-check-arrays.npz": "13c38cf2149f4b582547c9736eaf05bc18b6892d297b209e17c5588053319f9f",
+        "source-snapshot.zip": "696004ba54c8c9b46e9f8d053038ed10cef0faab7ff20877cfa604aca40a9181"
+      },
+      "samples": 8065,
+      "receivers": 3,
+      "trials": [
+        {
+          "frequency_hz": 100000.0,
+          "relative_waveform_l2": [
+            1.896872229669312e-15,
+            2.781392783256704e-15,
+            2.332255817488121e-15
+          ],
+          "passed": true,
+          "direct_seconds": null,
+          "replay_seconds": 0.0016793999820947647,
+          "postburst_modified_energy_relative_range": 4.05464243418933e-16,
+          "direct_source": "retained_window",
+          "synthesis": {
+            "method": "discrete_verlet_zero_padded_fft",
+            "impulse_force_index": 1,
+            "force_samples": 8065,
+            "receivers": 3,
+            "fft_size": 16200,
+            "workspace_screen_mib": 2.0995330810546875
+          }
+        }
+      ],
+      "recomputed_errors": [
+        [
+          1.896872229669312e-15,
+          2.781392783256704e-15,
+          2.332255817488121e-15
+        ]
+      ],
+      "green_seconds": 3.850823200016748,
+      "wall_seconds": 6.149675199994817,
+      "cpu_force_relative_l2": 5.447201727422556e-15,
+      "mass_relative_l2": 0.0,
+      "probe_relative_l2": 4.45216979838456e-16,
+      "energy_errors": [
+        1.3322676295501878e-15,
+        1.3322676295501878e-15
+      ],
+      "modified_energy_range": 4.015262756983883e-14,
+      "peak_process_rss_mib": 295.45703125,
+      "peak_system_ram_percent": 62.8
+    },
+    "full_intact_q3": {
+      "directory": "outputs/green-full-intact-q3-20261115-v1",
+      "plan_fingerprint": "c233b6887f937c81b15d18cd5323f4f40454a21ebf55bd9f04399e77d2bde886",
+      "report_fingerprint": "3ad5ca2e70112f592463d5ae131780a7cafdf7b05b6db71a2fc2fa2db257fa12",
+      "files": {
+        "green-plan.json": "c0ca3aaddf0cd3186283133f6bb42c76ede3a328b9d8ccfba8629910f7f16477",
+        "green-check.json": "e7bc4348809791a61d68127ff068e3e1fedc279bf310c75a4d73f2014d7b4900",
+        "green-check-arrays.npz": "379253162e2de5f82ed6a88e487a233f2b0ee8029621ea2541f67cfd798ca2e6",
+        "source-snapshot.zip": "41a8473851e68018570aeb60b1edcf5de495c4769fcefaca1b1444456eba2cd9"
+      },
+      "samples": 196609,
+      "receivers": 3,
+      "trials": [
+        {
+          "frequency_hz": 100000.0,
+          "relative_waveform_l2": [
+            1.9261785210972814e-14,
+            1.2994788402419221e-14,
+            2.6225527135797094e-14
+          ],
+          "passed": true,
+          "direct_seconds": null,
+          "replay_seconds": 0.0424003999796696,
+          "postburst_modified_energy_relative_range": 1.5174646568198506e-15,
+          "direct_source": "retained_window",
+          "synthesis": {
+            "method": "discrete_verlet_zero_padded_fft",
+            "impulse_force_index": 1,
+            "force_samples": 196609,
+            "receivers": 3,
+            "fft_size": 393216,
+            "workspace_screen_mib": 51.00004577636719
+          }
+        }
+      ],
+      "recomputed_errors": [
+        [
+          1.9261785210972814e-14,
+          1.2994788402419221e-14,
+          2.6225527135797094e-14
+        ]
+      ],
+      "green_seconds": 889.1186580999638,
+      "wall_seconds": 980.0383768000174,
+      "cpu_force_relative_l2": 1.7828010414713048e-14,
+      "mass_relative_l2": 0.0,
+      "probe_relative_l2": 4.402705173531025e-16,
+      "energy_errors": [
+        2.3314683517128287e-15,
+        2.3314683517128287e-15
+      ],
+      "modified_energy_range": 2.5766412722394656e-14,
+      "peak_process_rss_mib": 663.32421875,
+      "peak_system_ram_percent": 71.0
+    }
+  },
+  "unit_tests": {
+    "path": "outputs/discrete-green-unit-check-20261115-v1/tests.json",
+    "sha256": "aa42493ca939e5d82e11560e182c49ebe35c2ec023e1d41f205fe6453d5159f2",
+    "fingerprint": "8ea15529ea45268cdfa9e5fdf65b8d175afc3a3197f9d0c624a6543d44e4cfb1",
+    "tests_run": 7
+  },
+  "raw_arrays_reaudited": true,
+  "recomputed_replays_match_saved_arrays_exactly": true,
+  "limitations": [
+    "Full-size check is the intact Q3 100 kHz control; Q3 spatial accuracy is addressed by the separate refinement study",
+    "Small-mesh three-frequency agreement verifies algebra rather than continuum accuracy at those frequencies",
+    "Changed physical operator or source/receive covectors need another response",
+    "Zero dynamic initial state and force[0]=0 are required",
+    "Displacement traces only; no electrode-voltage calibration or bank integration",
+    "Concurrent GPU work affected timing; no standalone speedup claim"
+  ],
+  "fingerprint": "ce18ab12d4a4f59052b830bb6947658a07b5d0ce3ded98c2a25e2dfd86ee7215"
+}
