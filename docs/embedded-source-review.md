@@ -82,3 +82,27 @@ Receipts: `docs/evidence/embedded-source-review-20261115.json` and the named
 ignored output directories it binds. No training or accepted dataset was
 produced. Recessed-plate convergence, representative frequency/thickness
 coverage, calibrated PZT response and physical measurements remain open.
+
+The source-review JSON was normalized to the LF bytes stored by Git before
+the final checks, so a fresh checkout uses the same review hash. The current
+receipt bindings use CUDA transition v4 and time reassessment v2; earlier
+local versions remain retained. All numerical differences and time-refinement
+results are unchanged.
+
+## Model, dataset and PZT workflow recheck
+
+A separate guarded run passed all 40 selected tests without skips in 22.739
+test seconds / 28.479 monitored seconds. It covers both neural architectures
+at 128/256 output with the baseline and extra decoder block, forward/backward
+execution, hidden-record masking, empty observations, model serialization,
+short policy debug/resume/evaluation checks, specimen separation, DAS-only
+behavior and reproducible PZT mounting variation. The optional bounded native
+P2 pulse with a changed current footprint was enabled and passed.
+
+Peak process-tree RSS was 590.14 MiB, peak system RAM 76.2%, and minimum
+available RAM 3,868.17 MiB. GPU observations include the concurrent Q5 run.
+The wrapper retained the invocation and log; all core and test sources were
+archived afterward. See `docs/evidence/model-pzt-reaudit-20261115.json`.
+These existing small fixtures check software execution and data handling.
+They do not establish reconstruction quality, policy superiority or physical
+accuracy. Only short debug updates were run; no full training cycle ran.
