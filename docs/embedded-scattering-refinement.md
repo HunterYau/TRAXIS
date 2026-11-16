@@ -43,3 +43,18 @@ This covers the declared 500 by 500 by 3.175 mm mechanical control at 100 kHz.
 PZT voltage response, other defect/frequency cases and physical agreement
 remain separate requirements. No full training or data acceptance follows
 from adding this checker.
+
+## Full-size result
+
+The completed Q5 window passes its independent CPU check. The recessed
+total-waveform spatial screen passes with finest changes 0.995988%,
+0.467911% and 0.499795%. The separate scattering screen fails: changes are
+0.975441%, 0.668568% and 1.344761%. The third receiver exceeds the fixed 1%
+limit despite decreasing differences. This is evidence for further spatial
+refinement, not acceptance of research training data.
+
+The RAM-default change was followed by a fresh source-transition certificate
+and paired reassessment. Its raw metrics reproduce the first assessment;
+the failed result and original thresholds are preserved. Bindings, CPU
+errors and resource observations are in
+`evidence/embedded-recess-spatial-scattering-20261115.json`.

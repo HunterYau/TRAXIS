@@ -19,6 +19,13 @@ class ResourceTests(unittest.TestCase):
             with self.assertRaises(ResourceLimitError):
                 guard.enforce(self.sample, [{"used_mib": used, "total_mib": 100, "temperature_c": temp}])
 
+    def test_default_system_ram_guard_stops_at_ninety_percent(self):
+        guard = ResourceGuard()
+        guard.enforce({**self.sample, "system_memory_percent": 89.9}, [])
+        for percent in (90., 91., 99.):
+            with self.assertRaisesRegex(ResourceLimitError, 'system RAM'):
+                guard.enforce({**self.sample, "system_memory_percent": percent}, [])
+
     def test_missing_temperatures_are_not_reported_as_safe_readings(self):
         guard = ResourceGuard()
         with patch("traxis.resources.snapshot", return_value=self.sample.copy()):

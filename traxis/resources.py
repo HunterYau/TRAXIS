@@ -17,7 +17,7 @@ class ResourceLimitError(RuntimeError):
 class ResourceLimits:
     max_seconds: float = 60
     max_rss_mib: float = 512
-    max_system_memory_percent: float = 92
+    max_system_memory_percent: float = 89.9
     min_available_mib: float = 768
     max_gpu_memory_percent: float = 90
     max_gpu_temperature_c: float = 80

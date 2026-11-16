@@ -10,11 +10,12 @@
       "reason": "Exact sparse component-major probe covectors and directly allocated float64 zero states replace dense host storage. The velocity Verlet recurrence and CUDA operator are unchanged. Dense/sparse GPU trajectory parity is required by the review."
     },
     "traxis/resources.py": {
-      "current_sha256": "62a085dc2073bac8e6ee6f3d34324a17e381e3f672fc8b59ea3f7048af28d494",
+      "current_sha256": "8b5b3516149b47a6860d201909889b7b786268e03fe949661885c935f03dfaa7",
       "historical_sha256": [
-        "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54"
+        "4a3865b3f60a09c1ae71f1bb2e76fa52bd4b6805bc558826dc23611a1526bc54",
+        "62a085dc2073bac8e6ee6f3d34324a17e381e3f672fc8b59ea3f7048af28d494"
       ],
-      "reason": "Retain a fresh latest_sample after bounded history fills. Resource enforcement and numerical operations are unchanged."
+      "reason": "Retain a fresh latest_sample after bounded history fills and set the general RAM default to 89.9 percent. Existing embedded profiles explicitly use 85 or 89.9 percent and are unchanged. Numerical operations are unchanged."
     },
     "traxis/elmer_reference.py": {
       "current_sha256": "053151fbdd1ff1f278121ab3048edff4c0f574d23dad7663faa153412f1c71bc",

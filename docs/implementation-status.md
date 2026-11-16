@@ -58,11 +58,11 @@ supports and acquisition sampling are still unresolved in the research plan.
 `outputs/verification/`. A compact evidence record is committed under docs/evidence.
 No training was run. Dependencies passed `pip check`.
 
-November 15 follow-up: active wave/Green checks explicitly enforce 89.9%
-system RAM. After the protected Q5 run and its CPU check finish, align the
-general `ResourceLimits` default (currently a legacy 92%) with the user's
-90% ceiling and retain historical source/profile validation. Editing that
-hashed core module during the running proof would invalidate its source plan.
+November 15 follow-up: after Q5 and its CPU check completed, the general
+`ResourceLimits` default was aligned to 89.9% system RAM. Twenty-four focused
+tests pass, including enforcement at 90%, and a regenerated CUDA transition
+check retains exact dense/sparse trajectory parity. Original receipts retain
+their source identities through the reviewed historical-source bridge.
 
 The 40 x 40 x 3 mm smoke plate used 405 intact nodes / 1,536 tets and 547 time
 steps. The continuum-cube spatial error fell by factors 3.76 and 3.94; isolated

@@ -1,0 +1,140 @@
+{
+  "kind": "embedded_recess_spatial_and_scattering_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "total_waveform_spatial_passed": true,
+  "scattering_spatial_passed": false,
+  "proofs": {
+    "forward": {
+      "path": "outputs/embedded-wave-recess-q5-n196608-20261115-v1/monitor-result.json",
+      "sha256": "4338b7cba17d1142972de6e9746dc7e386677cd2c345fdf05b00efcd692d291e",
+      "fingerprint": "8ba1c1c7ff9079aa9a7ce624382e46147a3de16b8cb8e1dd8271ddb497032bfb"
+    },
+    "cpu": {
+      "path": "outputs/embedded-wave-recess-q5-n196608-cpu-20261115-v1/cpu-window-check.json",
+      "sha256": "c9abe581b410b23290d0d52502f45c7349f7936cecf8db0a84e62a23cb4a70e4",
+      "fingerprint": "b612419dbce5760d4425afb44b873857bdaa6ccb596e59cab26fdc8e4df338d4"
+    },
+    "intact_spatial": {
+      "path": "outputs/embedded-scattering-spatial-refinement-20261115-v2/intact/spatial-refinement-report.json",
+      "sha256": "8ad0237ae539ffaa4b7058a575a9496fee115c1594e096411b7d03dfee8f6060",
+      "fingerprint": "a171e4b9ac8d21960061822f710a2d6a124d4ed83d756183a348657293e5e9c0"
+    },
+    "recessed_spatial": {
+      "path": "outputs/embedded-scattering-spatial-refinement-20261115-v2/recessed/spatial-refinement-report.json",
+      "sha256": "370f514c5db91cd4dfb83484948bae780089a6c1c3fd791a2d035ca898d37382",
+      "fingerprint": "3349012f81fd0f74d8a82a01a286c9bff59ef606c1539c89f1a71eb38161e977"
+    },
+    "scattering_spatial": {
+      "path": "outputs/embedded-scattering-spatial-refinement-20261115-v2/spatial-scattering-report.json",
+      "sha256": "34dce14dd520e18d3294f2211840f0bbb4855fa52be78546106c06390e6a6dc4",
+      "fingerprint": "6fd025f465fed3bdb698dfc74682eb70fdffbe3c5b8567d1d75712084e2d8e3c"
+    },
+    "source_transition": {
+      "path": "outputs/embedded-source-transition-20261115-v6/source-transition-check.json",
+      "sha256": "7ef6020217918c3954e395aab83f141752db9ff00af5d13ce61bd19d5914af6c",
+      "fingerprint": "aec15484620cf7c1ed906f1c8135727ce59d65253211d7968a144fc79b97f481"
+    }
+  },
+  "total_waveform_receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 4.482880145207658e-09,
+      "fine_difference_l2_m": 3.0915126905946616e-10,
+      "finest_waveform_l2_m": 3.1039655253036076e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.009959880885894414,
+      "difference_ratio": 14.500604053303636,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 1.474151767433394e-09,
+      "fine_difference_l2_m": 1.2321140783359591e-10,
+      "finest_waveform_l2_m": 2.633221874298757e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.004679112270644032,
+      "difference_ratio": 11.964409735698505,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 2.006661254535226e-09,
+      "fine_difference_l2_m": 9.079858494747338e-11,
+      "finest_waveform_l2_m": 1.8167169822480844e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.0049979488183743,
+      "difference_ratio": 22.10013796686448,
+      "observed_time_order": null,
+      "passed": true
+    }
+  ],
+  "scattering_receivers": [
+    {
+      "receiver": 0,
+      "coarse_difference_l2_m": 6.789760946623609e-09,
+      "fine_difference_l2_m": 3.582907983243209e-10,
+      "finest_waveform_l2_m": 3.673115187351806e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.009754412264501747,
+      "difference_ratio": 18.950419542947884,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 1,
+      "coarse_difference_l2_m": 1.461518141025139e-09,
+      "fine_difference_l2_m": 1.5822658117319473e-10,
+      "finest_waveform_l2_m": 2.366649539573168e-08,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.006685678573335845,
+      "difference_ratio": 9.236868610751072,
+      "observed_time_order": null,
+      "passed": true
+    },
+    {
+      "receiver": 2,
+      "coarse_difference_l2_m": 1.5865925805217048e-09,
+      "fine_difference_l2_m": 8.71955879040372e-11,
+      "finest_waveform_l2_m": 6.484095128918531e-09,
+      "rate_identifiable": true,
+      "finest_relative_change": 0.013447610833954618,
+      "difference_ratio": 18.195789702889826,
+      "observed_time_order": null,
+      "passed": false
+    }
+  ],
+  "cpu_errors": {
+    "final_force_relative_l2": 3.2060798178995596e-13,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 4.440892098500626e-16,
+    "final_modified_energy_relative_error": 4.440892098500626e-16,
+    "final_probe_relative_l2": 2.13586566287236e-16,
+    "postburst_modified_energy_relative_range": 1.1799073423795425e-15
+  },
+  "q5_resources": {
+    "wall_seconds": 3439.0619406999904,
+    "peak_process_tree_rss_mib": 1900.07421875,
+    "peak_system_memory_percent": 71.0,
+    "minimum_available_mib": 4699.47265625
+  },
+  "ram_default_update": {
+    "default_percent": 89.9,
+    "source_sha256": "8b5b3516149b47a6860d201909889b7b786268e03fe949661885c935f03dfaa7",
+    "review_sha256": "c2e65977778215b5a864a75ec9d4af1e04e346dea014328a0a745a225d69828e",
+    "unit_tests": 24,
+    "unit_failures": 0,
+    "unit_skipped": 0,
+    "unit_directory": "outputs/ram-default-check-20261115-v1"
+  },
+  "next_actions": [
+    "Predeclare additional spatial refinement for the 1.344761% scattering discrepancy",
+    "Complete recessed Q4 time refinement",
+    "Retain PZT/frequency/thickness and physical acceptance gates"
+  ],
+  "fingerprint": "099b34d5a0748e8a3cf97de58e031ee34281be83aa4441a20008003088744779"
+}
