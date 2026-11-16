@@ -26,24 +26,26 @@
       "reason": "Use the fresh monitor sample rather than repeatedly augmenting a stale history entry. No solver assembly or numerical operation changes."
     },
     "examples/embedded_wave.py": {
-      "current_sha256": "5f34355548527c7342b4779300d2c71efaa4cbb85adb4a0cb84dec692214358f",
+      "current_sha256": "13a706a5aebe87dee1522df5949a709da878b92c84e735d916a858d9b3fcf9d6",
       "historical_sha256": [
         "e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13",
         "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9",
         "a77f9f8e00ac2adc623b3affebac1ad750ef0a15f1690b1089609c89537e7fef",
         "f4e74e5e5d6d8df5a0c3a44cf755cd88d26b76387eb79c0e2c2b400f0107216b",
-        "8ec1f771be4f4d2a09319d391bb07923327da09834027d8668c37e44c98710ad"
+        "8ec1f771be4f4d2a09319d391bb07923327da09834027d8668c37e44c98710ad",
+        "5f34355548527c7342b4779300d2c71efaa4cbb85adb4a0cb84dec692214358f"
       ],
-      "reason": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Explicit h controls may request a bounded 24-million-DOF GPU preflight; the default remains 12 million. Host/device byte forecasts, free-memory and thermal guards remain enforced. CUDA kernel bytes and numerical operations are unchanged. Correct the new h-only workspace ceiling from unsupported 3072 to supported 2048 MiB. All actual h storage forecasts fit; no precision, geometry, time step or mathematical operation changes. The excluded first h attempt stopped before step 1."
+      "reason": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Explicit h controls may request a bounded 24-million-DOF GPU preflight; the default remains 12 million. Host/device byte forecasts, free-memory and thermal guards remain enforced. CUDA kernel bytes and numerical operations are unchanged. Correct the new h-only workspace ceiling from unsupported 3072 to supported 2048 MiB. All actual h storage forecasts fit; no precision, geometry, time step or mathematical operation changes. The excluded first h attempt stopped before step 1. Add the separately frozen coupled-XYZ cases with 491520 steps and thickness layers (1,1)/(2,2)/(3,3), preserving all fourteen legacy case/screen/profile identities and the existing H protocol. XYZ snapshots additionally bind the unchanged proposal and its loader. Existing solver arithmetic, physical legacy settings and acceptance thresholds are unchanged."
     },
     "examples/embedded_wave_budget.py": {
-      "current_sha256": "57a2d6f2406c43b61b5082f04d72a7325e9eb85c472b58ea34aa1ab1dfdd1415",
+      "current_sha256": "421091c8357951733b7a40a912b488da7bd9d8f9aaec5469a534d938c8c6866d",
       "historical_sha256": [
         "8fd4e861bf0a802d179b76abceb7da0879506a4c1f8d18d11ccc2427624d631e",
         "5a5fbd48d12b73ecaf9e04b38ccf26f7ecd0db83d425fee0adfe7ff32e12b3af",
-        "9860f7d0d5d2f6aa3dbec0e6b57c8a1d4b53c7d40cfd2f1b9bcb4090ad839316"
+        "9860f7d0d5d2f6aa3dbec0e6b57c8a1d4b53c7d40cfd2f1b9bcb4090ad839316",
+        "57a2d6f2406c43b61b5082f04d72a7325e9eb85c472b58ea34aa1ab1dfdd1415"
       ],
-      "reason": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Before any h wave trajectory, increase only the new h wall allowance from 7200 to 10800 seconds based on measured coarse cost and element scaling. Original standard/full profiles and all numerical/memory/thermal limits are unchanged."
+      "reason": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Before any h wave trajectory, increase only the new h wall allowance from 7200 to 10800 seconds based on measured coarse cost and element scaling. Original standard/full profiles and all numerical/memory/thermal limits are unchanged. Add the predeclared eight-hour XYZ profile with unchanged memory/thermal guards. Preserve existing full/H settings. Child launches explicitly select the same checkout, including embedded Python runtimes whose _pth overrides cwd/PYTHONPATH. This affects module selection only; numerical settings and operations remain unchanged."
     },
     "traxis/gpu_mapped_tensor.py": {
       "current_sha256": "787ea20ec7322a1c4d629f0fa6c6cd7d345b43ad8a5ce2502627b76b83741a25",
