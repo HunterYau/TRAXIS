@@ -1,0 +1,122 @@
+{
+  "kind": "embedded_xyz_finest_cpu_preflight_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "wave_launch_ready": false,
+  "gpu_operator_allocated": false,
+  "wave_steps": 0,
+  "proposal_sha256": "61f8245813b26481ce40042f595ef6d6806486094fd6134f8922e5e91946b5c1",
+  "proposal_fingerprint": "fb7fb254f7cb0f365dc1fa1eaedb71f00ea62ea8534eed029dba59096c2e2161",
+  "checker_sha256": "911aa9dfa60d6b9a71c8afd2b0e022f5deaef5d4cd4c005d6b376f966b74d06e",
+  "actual_finest_cpu_checks": [
+    {
+      "state": "intact",
+      "report_path": "outputs/xyz-finest-intact-cpu-preflight-20261115-v1/preflight-report.json",
+      "report_sha256": "637d0e3131ac60e2d1e004441e101fa9c9c491d11d378a4a4d834a43e4ebdcff",
+      "fingerprint": "caa29718e9c040c61bff9bd9aee5435612aeff5403677e960a32f4c0df7ec81e",
+      "plan_fingerprint": "cfc6690b679afaa0bc0bc9d25b865d0c5893a1d70ac160411c763fbdf23d5ddf",
+      "source_snapshot_sha256": "ecafb1f6039a8199fe1ca462d4d3cbf502c36fd9108a056a2cd651d77d9d952c",
+      "vector_dofs": 20352675,
+      "dt_s": 1.0172526041666667e-09,
+      "stable_dt_s": 3.0866246776253957e-09,
+      "stability_margin_used": 0.3295679619037,
+      "wall_seconds": 186.87060850003036,
+      "gpu_forecast_mib": 3499.6582946777344,
+      "host_forecast_mib": 2442.221221923828,
+      "vector_sample_workspace_lower_mib": 2495.7513885498047,
+      "volume_relative_difference": 2.3314683517128287e-14,
+      "minimum_gll_jacobian": 4.550686110042959e-11,
+      "maximum_gll_jacobian_condition": 9.396076087077045,
+      "array_sha256": {
+        "points_m": "4e945e9f8cba2fafa320f0094c647fadf79f1dcc61814b1d77f0c312eef0a7fc",
+        "element_nodes": "44b7734435bae0a814341c8a2161a146dcd8044e26457c0bc5ada27da24b7b60",
+        "mass_kg": "62f6f4a938ca868f0c33c13dd32d09697282641347445b9039af22c4f0a46cfa",
+        "inverse_jacobians": "2e0125d591fb5d1a1606e4783074b4a2950f11a521b9c28ab6d01e122e103f48",
+        "volume_weights_m3": "6b501e7f48a56bb20bb5eeffa89dac9f19327941225a7ed22e58c61964145084"
+      },
+      "peak_rss_mib": 1697.2578125,
+      "peak_system_memory_percent": 69.1,
+      "min_available_mib": 5020.859375
+    },
+    {
+      "state": "recess",
+      "report_path": "outputs/xyz-finest-recess-cpu-preflight-20261115-v1/preflight-report.json",
+      "report_sha256": "614d7d63ede8fb74e73d309bc83bbb08fa69aa70b2063e7ebe1929c69b7611d9",
+      "fingerprint": "999c4e96d21cde13f12a04fbdd13f149da20e3c364cf9dc6d698f9ef9b26974b",
+      "plan_fingerprint": "d11e4ca4c2fa1fccd837fcfa5fe45c152acd98a577e9d4bb678d027895643fab",
+      "source_snapshot_sha256": "79690c4eca4e5cdb78eb69020f1032f8a2b001e55dcd092818ff0f76cf844336",
+      "vector_dofs": 20062335,
+      "dt_s": 1.0172526041666667e-09,
+      "stable_dt_s": 3.2086327881103085e-09,
+      "stability_margin_used": 0.3170361556910248,
+      "wall_seconds": 190.5891712999437,
+      "gpu_forecast_mib": 3448.8355407714844,
+      "host_forecast_mib": 2408.529884338379,
+      "vector_sample_workspace_lower_mib": 2460.3094940185547,
+      "volume_relative_difference": 3.885780586188048e-14,
+      "minimum_gll_jacobian": 5.08159948954798e-11,
+      "maximum_gll_jacobian_condition": 9.396076087077045,
+      "array_sha256": {
+        "points_m": "cb9976a218ecaa645eab2d3bf3ae0d6506030c493708321a5d79c3fec8d3acd3",
+        "element_nodes": "ab0b7e53caf5c7f07cba2a6a662f5ebf1817ee5dd1ae067b2083d8b6891005c1",
+        "mass_kg": "3532c584b5f598655f3add347614cef9374ebe4cf87f265a6482f0080b4d20d9",
+        "inverse_jacobians": "887774660c17b46d1d3a826735ff6918ebedd4d74a4161515dddac8913e857f2",
+        "volume_weights_m3": "5c391fe7077a57136484c6faaaf3edcf3c765209593d929a1386086472017ec9"
+      },
+      "peak_rss_mib": 1670.83984375,
+      "peak_system_memory_percent": 68.9,
+      "min_available_mib": 5052.72265625
+    }
+  ],
+  "analytic_all_level_counts": [
+    {
+      "level": 0,
+      "defective": false,
+      "vector_dofs": 4507515,
+      "elements": 20768,
+      "mesh_forecast_mib": 200.3106689453125
+    },
+    {
+      "level": 0,
+      "defective": true,
+      "vector_dofs": 4462575,
+      "elements": 20528,
+      "mesh_forecast_mib": 199.41695404052734
+    },
+    {
+      "level": 1,
+      "defective": false,
+      "vector_dofs": 10738611,
+      "elements": 52416,
+      "mesh_forecast_mib": 335.19447326660156
+    },
+    {
+      "level": 1,
+      "defective": true,
+      "vector_dofs": 10601499,
+      "elements": 51688,
+      "mesh_forecast_mib": 332.4740905761719
+    },
+    {
+      "level": 2,
+      "defective": false,
+      "vector_dofs": 20352675,
+      "elements": 101382,
+      "mesh_forecast_mib": 541.4983367919922
+    },
+    {
+      "level": 2,
+      "defective": true,
+      "vector_dofs": 20062335,
+      "elements": 99846,
+      "mesh_forecast_mib": 535.7461471557617
+    }
+  ],
+  "proposed_workspace_mib": 3072,
+  "current_integrator_workspace_ceiling_mib": 2048,
+  "required_next_step": "Extend the explicit workspace API with unchanged recurrence and exact archived/current CUDA equivalence for both archived integrator versions; then implement and run the paired coupled XYZ study. No numerical wave acceptance yet.",
+  "scope": "Actual CPU finest intact/recessed construction, stability and allocation forecasts only. Geometry/operator arrays were hashed, not retained. Coarse/middle counts are analytic forecasts rather than actual CPU constructions.",
+  "fingerprint": "f01eec630084ef63880d0bbeafd5b88d621cf416f12116a407f24db8e9bb5a92"
+}

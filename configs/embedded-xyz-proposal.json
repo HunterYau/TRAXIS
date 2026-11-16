@@ -1,0 +1,95 @@
+{
+  "kind": "embedded_xyz_refinement_proposal",
+  "order": 4,
+  "geometry_order": 3,
+  "steps": 491520,
+  "duration_s": 0.0005,
+  "comparison_intervals": 32768,
+  "plate": {
+    "width_m": 0.5,
+    "height_m": 0.5,
+    "thickness_m": 0.003175
+  },
+  "recess": {
+    "x_m": 0.255,
+    "y_m": 0.245,
+    "radius_m": 0.015,
+    "depth_m": 0.0015
+  },
+  "levels": [
+    {
+      "angular_cells": 12,
+      "radial_cells": [
+        2,
+        6
+      ],
+      "outer_cell_size_m": 0.005,
+      "layers": [
+        1,
+        1
+      ]
+    },
+    {
+      "angular_cells": 14,
+      "radial_cells": [
+        3,
+        7
+      ],
+      "outer_cell_size_m": 0.0045,
+      "layers": [
+        2,
+        2
+      ]
+    },
+    {
+      "angular_cells": 16,
+      "radial_cells": [
+        4,
+        8
+      ],
+      "outer_cell_size_m": 0.004,
+      "layers": [
+        3,
+        3
+      ]
+    }
+  ],
+  "source_center_xy_m": [
+    0.02,
+    0.02
+  ],
+  "receiver_centers_xy_m": [
+    [
+      0.25,
+      0.25
+    ],
+    [
+      0.48,
+      0.48
+    ],
+    [
+      0.35,
+      0.2
+    ]
+  ],
+  "radius_m": 0.003,
+  "frequency_hz": 100000.0,
+  "cycles": 2,
+  "force_scale_n": 1.0,
+  "finest_relative_change_limit": 0.01,
+  "relative_identifiability_floor": 1e-11,
+  "require_decreasing_differences": true,
+  "require_intact_recessed_and_scattering": true,
+  "require_independent_cpu_checks": true,
+  "amplitude_fit": false,
+  "phase_alignment": false,
+  "interpolation": false,
+  "max_dt_fraction": 0.8,
+  "max_mesh_bytes": 1073741824,
+  "max_operator_bytes": 3221225472,
+  "max_vector_dofs": 24000000,
+  "max_device_mib": 6144,
+  "max_host_mib": 4096,
+  "max_workspace_mib": 3072,
+  "max_wave_seconds": 28800
+}
