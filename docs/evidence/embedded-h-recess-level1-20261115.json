@@ -1,0 +1,212 @@
+{
+  "kind": "embedded_h_recessed_level1_forward_and_cpu_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "receipts": {
+    "plan": {
+      "path": "outputs\\embedded-h-wave-recess-level1-20261115-v2\\embedded-wave-plan.json",
+      "sha256": "1dfabd2f2df5c05e86c231e9f36a5da6aa1d5f2ee172f735ee50650fafca1bcb",
+      "fingerprint": "243f7a14265ec14a4e0e281ab7d72f4616f9ae44cead882c516915cd2e4e9de0"
+    },
+    "monitor": {
+      "path": "outputs\\embedded-h-wave-recess-level1-20261115-v2\\monitor-result.json",
+      "sha256": "a3504dee5212aca94548256b0a51bacc6433030a691cafe1c49f89f81975b93e",
+      "fingerprint": "3ae750d7b6a12859d3cce2874a4c7e5e55d6e1cd79c3e0ddcd7c7cc76be90994"
+    },
+    "worker": {
+      "path": "outputs\\embedded-h-wave-recess-level1-20261115-v2\\native\\wave-report.json",
+      "sha256": "ca6bf95412294b75f34e4938a7355415b99b8c849218993a32106d415a098715",
+      "fingerprint": "ba5e523cdf025e881cfe52069ff8240c134be853af7d46c5c30a05fedbfcbee6"
+    },
+    "cpu": {
+      "path": "outputs\\embedded-h-wave-recess-level1-cpu-20261115-v2\\cpu-window-check.json",
+      "sha256": "cd8e5ed27cb5deb647882accd3b54c65eeacd879b217a9f0f55bcd4433c41292",
+      "fingerprint": "b28498186ed464e4565abbed76c28e384ae1af0c255eab9c0c021fdefb42d8d0"
+    },
+    "cpu_launcher": {
+      "path": "outputs\\embedded-h-wave-recess-level1-cpu-20261115-v2\\cpu-launcher.json",
+      "sha256": "9ef845cc7739c0b5103928980a00855069f837646f21443fe61cb22e4c1f38c3",
+      "fingerprint": "d03d0ecec13c21f80369cced104f6e5592454212febe24e08097f438871a271d"
+    }
+  },
+  "source_snapshot_sha256": "65ce793949216cee7da945981659dbb453753451bdf7febd7b0447e48d86c7ac",
+  "case": {
+    "kind": "embedded_mechanical_window_case",
+    "scope": "h_refinement",
+    "order": 4,
+    "steps": 294912,
+    "defective": true,
+    "plate": {
+      "width_m": 0.5,
+      "height_m": 0.5,
+      "thickness_m": 0.003175
+    },
+    "recess": {
+      "x_m": 0.255,
+      "y_m": 0.245,
+      "radius_m": 0.015,
+      "depth_m": 0.0015
+    },
+    "angular_cells": 16,
+    "radial_cells": [
+      3,
+      8
+    ],
+    "outer_cell_size_m": 0.00375,
+    "duration_s": 0.0005,
+    "source_center_xy_m": [
+      0.02,
+      0.02
+    ],
+    "receiver_centers_xy_m": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.48,
+        0.48
+      ],
+      [
+        0.35,
+        0.2
+      ]
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "geometry_order": 3,
+    "layers": [
+      1,
+      1
+    ],
+    "radius_m": 0.003,
+    "frequency_hz": 100000.0,
+    "cycles": 2,
+    "force_scale_n": 1.0,
+    "output_stride": 1,
+    "energy_stride": 256,
+    "max_mesh_bytes": 536870912,
+    "max_operator_bytes": 3221225472,
+    "max_device_mib": 6144,
+    "max_host_mib": 4096,
+    "max_workspace_mib": 2048,
+    "operator_tolerance": 1e-10,
+    "energy_tolerance": 1e-08,
+    "cooling_upper_c": 76.0,
+    "cooling_lower_c": 72.0,
+    "h_level": 1,
+    "h_mesh_vector_dof_limit": 24000000
+  },
+  "vector_dofs": 8005599,
+  "steps": 294912,
+  "duration_s": 0.0005,
+  "worker_wall_seconds": 4579.0490366999875,
+  "cooling_pause_seconds": 739.13700000057,
+  "cpu_errors": {
+    "final_force_relative_l2": 1.7142098021485632e-13,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 2.220446049250313e-16,
+    "final_modified_energy_relative_error": 2.220446049250313e-16,
+    "final_probe_relative_l2": 3.5926392355157834e-16,
+    "postburst_modified_energy_relative_range": 2.3598218082138582e-15
+  },
+  "resource_extrema": {
+    "monitor": {
+      "peak_rss_mib": 1741.07421875,
+      "peak_system_memory_percent": 69.4,
+      "minimum_available_mib": 4970.96875,
+      "peak_gpu_used_mib": 2670.0,
+      "peak_gpu_temperature_c": 76.0,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    },
+    "worker": {
+      "peak_rss_mib": 1627.65625,
+      "peak_system_memory_percent": 69.2,
+      "minimum_available_mib": 5004.50390625,
+      "peak_gpu_used_mib": 2670.0,
+      "peak_gpu_temperature_c": 76.0,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    },
+    "cpu": {
+      "peak_rss_mib": 1031.21875,
+      "peak_system_memory_percent": 66.7,
+      "minimum_available_mib": 5412.63671875,
+      "peak_gpu_used_mib": 1304.0,
+      "peak_gpu_temperature_c": 52.0,
+      "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+    }
+  },
+  "cpu_launcher": {
+    "path": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-h-wave-recess-level1-cpu-20261115-v2\\cpu-launcher.json",
+    "sha256": "9ef845cc7739c0b5103928980a00855069f837646f21443fe61cb22e4c1f38c3",
+    "fingerprint": "d03d0ecec13c21f80369cced104f6e5592454212febe24e08097f438871a271d"
+  },
+  "source_transition": {
+    "path": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-h-development\\outputs\\embedded-workspace-transition-20261115-v1\\source-transitions-check.json",
+    "sha256": "a96e0a0afab25be42d05f07a294137d39bf7a1c12852ad82a298dca0d1dd933f",
+    "fingerprint": "164c332e9b0f2b8eec7e607d6c7fc0f3140dc9bc0f67e322bbd15fbcc5b8dfba"
+  },
+  "coarse_to_medium_recessed_relative_change": [
+    0.007229933907999201,
+    0.003373989247619997,
+    0.003920589058090192
+  ],
+  "coarse_binding": {
+    "directory": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-wave-recess-q4-n294912-20261115-v1",
+    "plan_fingerprint": "436c3adda9b0ca0cbdd7e484b2f115c7f2bd83b81c9fbd2484dcc065fe16a97f",
+    "input_identities": {
+      "embedded-wave-plan.json": "0002d4d831fb2a72d2b9adcaae51c8ec57af3098c564c8a3b3349686992062c3",
+      "monitor-result.json": "9053fc1f8e8bf1ee0de41abb493068ccb429b0f3720644c969f612d50c272418",
+      "native/wave-report.json": "c743a46aa6bdf2ca48ef395a8da3470d6eb5334058e2399c614b2e91b4717402",
+      "native/mechanical-window.npz": "9bc80bbd6e0e37238cbb86ee0242768692649404c357695969b472734930d365",
+      "native/mechanical-patches.npz": "598750bd26876e476b71055a14a9ceb0e02fbd8431de0980445d7d440ebdd03f"
+    },
+    "source_check": {
+      "source_snapshot_sha256": "32114025c767228f3f1522f55cdd050c7c91a53ad41e8dbed7a60f47d82798e3",
+      "reviewed_changes": [
+        {
+          "path": "traxis/gpu_enriched_verlet.py",
+          "run_sha256": "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5",
+          "current_sha256": "9dac009786a3871e983e258dff2387e50cd1150419c5e2a2296c147b545be72d",
+          "review": "Exact sparse component-major probe covectors and directly allocated float64 zero states replace dense host storage. The velocity Verlet recurrence and CUDA operator are unchanged. Dense/sparse GPU trajectory parity is required by the review. Further transition: permit an explicitly requested workspace ceiling up to 4096 MiB, retaining the 512 MiB default, all vector/sample forecasts, 85-percent free-VRAM headroom, declared total device budget and resource guards. This changes only argument validation; the float64 Verlet recurrence, outputs and CUDA operator are unchanged. Each archived integrator version requires its own complete actual CUDA parity receipt."
+        },
+        {
+          "path": "traxis/gpu_mapped_tensor.py",
+          "run_sha256": "9efe32c9b69317bb019d9514a00a9475d19d39cf62a7915e5989b445c03ec861",
+          "current_sha256": "787ea20ec7322a1c4d629f0fa6c6cd7d345b43ad8a5ce2502627b76b83741a25",
+          "review": " Explicit h controls may request a bounded 24-million-DOF GPU preflight; the default remains 12 million. Host/device byte forecasts, free-memory and thermal guards remain enforced. CUDA kernel bytes and numerical operations are unchanged."
+        },
+        {
+          "path": "traxis/recess_hex.py",
+          "run_sha256": "de20a3763cbbec9c22cfc1aabfd3c5afc41af45da14054a42ad28fdbd7c6f9bf",
+          "current_sha256": "3f2f9ba11334ab025d9afbfeb4278fd90fa94869d1c049f76c5a09ea47598a64",
+          "review": "Cache at most sixteen small repeated Lagrange reference grids, with exact point bytes and fresh writable return arrays in the original layout. Original Polynomial evaluation arithmetic is unchanged. Fifty basis arrays and six intact/recessed Q3-Q5 coupled-XYZ mesh/operator assemblies match actual archived uncached source bit for bit; the full 12,431,655-DOF recessed operator preserves every retained array hash and stability value. Native geometry and all-column operator checks also pass. This is setup reuse only, with no mesh, precision, integration or acceptance change."
+        },
+        {
+          "path": "examples/embedded_wave.py",
+          "run_sha256": "f4e74e5e5d6d8df5a0c3a44cf755cd88d26b76387eb79c0e2c2b400f0107216b",
+          "current_sha256": "5f34355548527c7342b4779300d2c71efaa4cbb85adb4a0cb84dec692214358f",
+          "review": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Explicit h controls may request a bounded 24-million-DOF GPU preflight; the default remains 12 million. Host/device byte forecasts, free-memory and thermal guards remain enforced. CUDA kernel bytes and numerical operations are unchanged. Correct the new h-only workspace ceiling from unsupported 3072 to supported 2048 MiB. All actual h storage forecasts fit; no precision, geometry, time step or mathematical operation changes. The excluded first h attempt stopped before step 1."
+        },
+        {
+          "path": "examples/embedded_wave_budget.py",
+          "run_sha256": "9860f7d0d5d2f6aa3dbec0e6b57c8a1d4b53c7d40cfd2f1b9bcb4090ad839316",
+          "current_sha256": "57a2d6f2406c43b61b5082f04d72a7325e9eb85c472b58ea34aa1ab1dfdd1415",
+          "review": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed. Before any h wave trajectory, increase only the new h wall allowance from 7200 to 10800 seconds based on measured coarse cost and element scaling. Original standard/full profiles and all numerical/memory/thermal limits are unchanged."
+        }
+      ],
+      "review_sha256": "b78d5631de04e69101bfa26230261414d7d8c7108eb80500b39059ab48c0942b",
+      "validator_sha256": "71eb7619e1209259f757ed271153c850000ae5a2826d42adc6056bad3a4f1a9a"
+    },
+    "cpu_path": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-wave-recess-q4-n294912-cpu-20261115-v1\\cpu-window-check.json",
+    "cpu_sha256": "994bdbb8644e4414a4fd1f6c9c5fcdf3952b23e06835a5dcfaa09597ce779899"
+  },
+  "convergence_acceptance": false,
+  "scope": "One full mechanical in-plane level-1 recessed window and independent CPU final force/mass/energy/probe checks. Two-level total-trace changes are descriptive only. Three paired levels, scattering, through-thickness/XYZ convergence, PZT and physical validation remain.",
+  "fingerprint": "8c6e5ac26c519e5909acfcbf52fe3aa333f086b1bef0c677a0ed06c6394e798e"
+}
