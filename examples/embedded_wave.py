@@ -90,6 +90,12 @@ def screen(case):
     return storage_screen(Plate(**case['plate']),CircularRecess(**case['recess']),case['order'],**mesh_controls(case))
 
 
+def gpu_controls(case):
+    controls=dict(max_device_mib=case['max_device_mib'],max_host_mib=case['max_host_mib'])
+    if case['scope']=='h_refinement':controls['max_vector_dofs']=case['h_mesh_vector_dof_limit']
+    return controls
+
+
 def validate_plan(plan, guard):
     checked_receipt(plan); checked_case(plan['case'])
     if (plan['kind'] != 'embedded_mechanical_window' or plan['mesh_screen'] != screen(plan['case'])
@@ -138,7 +144,7 @@ def worker(plan_path, output, guard):
         mesh=make_embedded_recess_mesh(Plate(**case['plate']),CircularRecess(**case['recess']),
             case['order'],guard=guard,**mesh_controls(case)); phase('mesh_built')
         cpu=build_system(mesh,Material(**case['material']),guard,max_bytes=case['max_operator_bytes'],max_batch_vectors=1)
-        system=build_gpu_mapped(cpu,guard=guard,max_device_mib=case['max_device_mib'],max_host_mib=case['max_host_mib'])
+        system=build_gpu_mapped(cpu,guard=guard,**gpu_controls(case))
         dt=case['duration_s']/case['steps']
         if dt > .8*system.stable_dt_s:
             raise ValueError('declared wave step exceeds 80% of the conservative stability bound')

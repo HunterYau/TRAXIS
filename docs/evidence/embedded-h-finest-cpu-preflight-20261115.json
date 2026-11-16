@@ -1,0 +1,37 @@
+{
+  "kind": "embedded_h_finest_recess_cpu_preflight_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "worktree": "outputs/embedded-h-development",
+  "directory": "outputs/h-finest-recess-cpu-preflight-v1",
+  "scope": "Actual finest recessed CPU mesh/operator, stability and GPU byte forecast only; zero GPU wave steps.",
+  "files": {
+    "preflight-plan.json": "a4153453b604b49739bbcdd6c3a45c910a0c9d508493f5f1804a85c73d30526e",
+    "preflight-report.json": "a112c2638db740cde25d4fa2f858b3d9fa64cb9ee6967123ac557836fed62c38",
+    "source-snapshot.zip": "626d6f3cfc777270eff1c27f0a781e5ae8d3ce66ea6a0b65f96fd27d4f3f5c96"
+  },
+  "report_fingerprint": "cedff36c8fd2083f85f4a12c48476ea2a684d30b52e02a55592540b41ae3721e",
+  "vector_dofs": 12431655,
+  "wall_seconds": 261.47746200003894,
+  "dt_s": 1.6954210069444445e-09,
+  "stable_dt_s": 3.2579271813056347e-09,
+  "stability_margin_used": 0.5203986806927323,
+  "device_forecast_mib": 2091.2982330322266,
+  "host_forecast_mib": 1558.5123672485352,
+  "volume_relative_difference": 3.6415315207705135e-14,
+  "minimum_gll_jacobian": 1.1777343749972197e-10,
+  "maximum_gll_jacobian_condition": 3.580053490860553,
+  "resources": {
+    "peak_rss_mib": 1043.7734375,
+    "peak_system_ram_percent": 61.1,
+    "minimum_available_mib": 6316.65625
+  },
+  "raw_operator_retained": false,
+  "array_hashes_retained": true,
+  "gpu_operator_allocated": false,
+  "wave_steps": 0,
+  "fingerprint": "e4ca6780ae203d185f77660b3c5a81668eea53966f5a29e9fd2654a4c65b5e17"
+}
