@@ -18,6 +18,11 @@ from traxis.storage import sha256_file,write_json
 
 def execution_profile(case):
     checked_case(case)
+    if case['scope']=='h_refinement':
+        limits=ResourceLimits(max_seconds=7200,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)
+        return dict(kind='embedded_h_refinement_wall_budget',limits=asdict(limits),
+            preflight=dict(max_system_memory_percent=90.,min_available_mib=768.),
+            reason='Finer-cell Q4 controls retain the physical window, float64 precision and fixed convergence limits; actual allocations and stability must pass before propagation.')
     if case['scope']!='full': raise ValueError('extended execution is restricted to declared full-size cases')
     limits=ResourceLimits(max_seconds=3600,max_rss_mib=4096 if case['order']==5 else 2048,
         max_system_memory_percent=89.9,min_available_mib=768)
@@ -83,9 +88,11 @@ def worker_entry(plan_path,output,guard):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--order',type=int,default=4);parser.add_argument('--steps',type=int,default=294912)
+    parser.add_argument('--h-level',type=int,help='predeclared finer-cell Q4 level 0, 1 or 2')
     parser.add_argument('--recess',action='store_true');parser.add_argument('--worker',action='store_true')
     parser.add_argument('--plan',type=Path);args=parser.parse_args();output=args.output.resolve()
-    case=checked_case(read_json(args.plan)['case']) if args.worker else case_config('full',args.order,args.steps,args.recess)
+    case=checked_case(read_json(args.plan)['case']) if args.worker else case_config(
+        'full' if args.h_level is None else 'h_refinement',args.order,args.steps,args.recess,h_level=args.h_level)
     profile=execution_profile(case);guard=ExtendedResourceGuard(ResourceLimits(**profile['limits']))
     if args.worker: return 0 if worker_entry(args.plan,output,guard)['passed'] else 2
     if not output.is_relative_to(PROJECT/'outputs'): raise ValueError('embedded evidence must remain in project outputs')

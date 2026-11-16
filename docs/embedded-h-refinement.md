@@ -33,3 +33,33 @@ paired runs and CPU checks. No full training or accepted bank is implied.
 The analytical screens and protocol hash are retained in
 `evidence/embedded-h-mesh-preflight-20261115.json`. The absence of a final
 native operator/trajectory is explicit in that receipt.
+
+## Isolated control implementation
+
+The `research/embedded-h-refinement` branch adds these frozen cases through
+`embedded_wave_budget --h-level 0`, `1` or `2`. Each uses Q4 and 294,912
+steps; add `--recess` for material loss. The general wave CLI rejects this
+scope so the explicit 7,200-second / 4,096-MiB execution profile is required.
+System RAM remains limited to 89.9%, GPU memory to 90% and GPU temperature
+to 80 C. Actual operator/workspace and stability checks still precede solving.
+
+Twenty-four selected tests pass without skips. A baseline fixture captured
+before editing verifies the exact case, mesh-screen and extended-budget
+identities of all fourteen legacy controls. A bounded archived/current CUDA
+check passes with every dense/sparse trajectory, energy and final-state
+difference zero. This verifies legacy behavior; finer-grid operator and full
+trajectory checks have not run. The paired h-study assessor and larger-case
+CPU wrapper remain to implement before any acceptance claim.
+
+Development is isolated in `outputs/embedded-h-development` while the main
+checkout's time-refinement run and CPU check are pending. The main frozen
+source hashes were explicitly rechecked unchanged. The portable interpreter
+normally imports the main checkout: isolated unit tests use an ignored runtime
+with the development path configured. The copied interpreter could not locate
+CUDA headers/NVRTC; CUDA parity instead used the original configured
+interpreter with an explicit development import path. Failed attempts are
+retained. No global environment or installed packages were changed.
+
+Bindings and limits are in `evidence/embedded-h-controls-debug-20261115.json`.
+Integrate the branch only after the main frozen calculation and CPU check
+complete, then reassess historical inputs against the updated source review.

@@ -29,11 +29,24 @@ from traxis.storage import atomic_write, sha256_file, write_json
 
 
 FULL_LEVELS = ((3,196608), (4,131072), (4,196608), (4,294912), (5,196608))
+H_LEVELS = ((12,(2,6),.005),(16,(3,8),.00375),(20,(4,10),.003))
 
 
-def case_config(scope='smoke', order=4, steps=None, defective=False):
+def case_config(scope='smoke', order=4, steps=None, defective=False, *, h_level=None):
     if type(order) is not int or type(defective) is not bool:
         raise ValueError('wave degree and material state need explicit types')
+    if scope=='h_refinement':
+        if (type(h_level) is not int or not 0<=h_level<len(H_LEVELS) or order!=4
+                or (steps is not None and (type(steps) is not int or steps!=294912))):
+            raise ValueError('h refinement needs Q4, 294912 steps and an explicit level 0/1/2')
+        angular,radial,spacing=H_LEVELS[h_level]
+        case=case_config('full',4,294912,defective)
+        case.update(scope=scope,h_level=h_level,angular_cells=angular,radial_cells=list(radial),
+            outer_cell_size_m=spacing,h_mesh_vector_dof_limit=24000000,
+            max_operator_bytes=3072*1024**2,max_device_mib=6144,max_host_mib=4096,max_workspace_mib=3072)
+        return case
+    if h_level is not None:
+        raise ValueError('h level is only permitted for the h-refinement scope')
     if scope == 'smoke':
         steps = 8064 if steps is None else steps
         valid = order == 4 and type(steps) is int and steps in (8064,16128)
@@ -59,15 +72,17 @@ def case_config(scope='smoke', order=4, steps=None, defective=False):
 
 
 def checked_case(case):
-    if case != case_config(case['scope'],case['order'],case['steps'],case['defective']):
+    if case != case_config(case['scope'],case['order'],case['steps'],case['defective'],h_level=case.get('h_level')):
         raise ValueError('embedded window physics, geometry, guards or criteria changed')
     return case
 
 
 def mesh_controls(case):
-    return dict(geometry_order=case['geometry_order'], angular_cells=case['angular_cells'],
+    controls=dict(geometry_order=case['geometry_order'], angular_cells=case['angular_cells'],
         radial_cells=tuple(case['radial_cells']), layers=tuple(case['layers']), defective=case['defective'],
         outer_cell_size_m=case['outer_cell_size_m'], max_bytes=case['max_mesh_bytes'])
+    if case['scope']=='h_refinement':controls['max_vector_dofs']=case['h_mesh_vector_dof_limit']
+    return controls
 
 
 def screen(case):
@@ -246,6 +261,7 @@ def main():
     parser.add_argument('--worker',action='store_true'); parser.add_argument('--plan',type=Path)
     args=parser.parse_args(); output=args.output.resolve()
     case=checked_case(read_json(args.plan)['case']) if args.worker else case_config(args.scope,args.order,args.steps,args.recess)
+    if case['scope']=='h_refinement':raise ValueError('h-refinement runs require the explicit embedded_wave_budget launcher')
     guard=ResourceGuard(ResourceLimits(max_seconds=3600 if case['scope']=='full' else 180,
         max_rss_mib=4096 if case['scope']=='full' else 1024,max_system_memory_percent=89.9,min_available_mib=768))
     if args.worker: return 0 if worker(args.plan,output,guard)['passed'] else 2

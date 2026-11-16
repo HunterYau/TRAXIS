@@ -25,19 +25,21 @@
       "reason": "Use the fresh monitor sample rather than repeatedly augmenting a stale history entry. No solver assembly or numerical operation changes."
     },
     "examples/embedded_wave.py": {
-      "current_sha256": "a77f9f8e00ac2adc623b3affebac1ad750ef0a15f1690b1089609c89537e7fef",
+      "current_sha256": "f4e74e5e5d6d8df5a0c3a44cf755cd88d26b76387eb79c0e2c2b400f0107216b",
       "historical_sha256": [
         "e6db12ac252402761f35d92cc96d56f2189b1d90e610fa4a016c39f89fdeff13",
-        "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9"
+        "432704cd0b0d34e183b8a5ecbc63f9b12b07df83711fd1ab93a6bfaca451dfe9",
+        "a77f9f8e00ac2adc623b3affebac1ad750ef0a15f1690b1089609c89537e7fef"
       ],
-      "reason": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged."
+      "reason": "Relative to e6db12ac: reviewed sparse receiver covectors and resource budgets. Relative to 432704cd: release only unused pinned host-transfer cache once after the first synchronized batch. Physical case, mesh, pulse, integration, energy and acceptance settings are unchanged. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed."
     },
     "examples/embedded_wave_budget.py": {
-      "current_sha256": "5a5fbd48d12b73ecaf9e04b38ccf26f7ecd0db83d425fee0adfe7ff32e12b3af",
+      "current_sha256": "9860f7d0d5d2f6aa3dbec0e6b57c8a1d4b53c7d40cfd2f1b9bcb4090ad839316",
       "historical_sha256": [
-        "8fd4e861bf0a802d179b76abceb7da0879506a4c1f8d18d11ccc2427624d631e"
+        "8fd4e861bf0a802d179b76abceb7da0879506a4c1f8d18d11ccc2427624d631e",
+        "5a5fbd48d12b73ecaf9e04b38ccf26f7ecd0db83d425fee0adfe7ff32e12b3af"
       ],
-      "reason": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles."
+      "reason": "Allow 4096 MiB process-tree RSS at Q5 for final-state output; retain the authorized 89.9 percent system-memory guard. Other orders keep their recorded profiles. Further transition: add separately frozen h-refinement cases and budgets. All fourteen legacy case and mesh-screen identities and legacy extended profiles are preserved by regression fixtures. No operator or integrator arithmetic is changed."
     }
   }
 }

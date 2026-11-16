@@ -1,0 +1,52 @@
+{
+  "kind": "embedded_h_controls_debug_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Finer-cell case/profile contracts and legacy CUDA parity; no new full-size h trajectory or accepted data.",
+  "worktree": "outputs/embedded-h-development",
+  "branch": "research/embedded-h-refinement",
+  "sources": {
+    "examples/embedded_wave.py": "f4e74e5e5d6d8df5a0c3a44cf755cd88d26b76387eb79c0e2c2b400f0107216b",
+    "examples/embedded_wave_budget.py": "9860f7d0d5d2f6aa3dbec0e6b57c8a1d4b53c7d40cfd2f1b9bcb4090ad839316",
+    "configs/embedded-wave-source-review.json": "fced0b79b76fe737284346150bd36d1f40e4c7247c4d48da96fe85cd05c555a7",
+    "configs/embedded-h-protocol.json": "59d853cd1ad1fc32691a154b4f277084fbf177c125087d2ccc0607dd2ba17adc",
+    "tests/test_embedded_h_controls.py": "30a6e99c4574bb6580f9e4fda07195447fee29c3bb96aecc767b7961b51f925c",
+    "tests/fixtures/embedded-legacy-identities.json": "107fec933d8cc7a10e74799983c0e6204435aa16ec9f17a17c6a1c7041e858d1"
+  },
+  "unit_check": {
+    "directory": "outputs/h-controls-check-v2",
+    "tests": 24,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 0.678,
+    "files": {
+      "invocation.json": "4834791a842e44ebcd3bc75f7867001ec0022fd93616327e3952b6bf4803b4ef",
+      "monitor-result.json": "1b62dcaffb86342df4c05e6285b8f5ed47113ac98124179ad5397be3e167a4d6",
+      "tests.log": "d84b734e5f53fe6ee1575f98384269f0f97abad77d476902e5429e8b0fc15922",
+      "source-snapshot.zip": "a92945f3bb7366f6c4d53cd693d4081d209693b981d2ae65b09998aafed05b17"
+    }
+  },
+  "source_transition": {
+    "path": "outputs/h-controls-source-transition-v3/source-transition-check.json",
+    "sha256": "3368875f8f767ed287ab6b5367179147b5663a4f8b65e8c620cd20688a8a2e5b",
+    "fingerprint": "23a5d77d2dbec3ce124ad490620a900d5401400dd2e40d560f08cef2b9583487",
+    "maximum_absolute_error": 0.0
+  },
+  "legacy_case_count": 14,
+  "live_root_source_hashes_unchanged": true,
+  "failed_attempts": [
+    "v1 unit wrapper used the main checkout import path and did not find the new test",
+    "v1 CUDA check with copied interpreter could not find headers",
+    "v2 CUDA check with explicit runtime CUDA_PATH could not find NVRTC"
+  ],
+  "resolution": "Unit checks use an ignored isolated runtime with this worktree on its import path. CUDA parity uses the original CUDA-capable interpreter and an explicit worktree import path; no runtime package or parent source changes.",
+  "pending": [
+    "Paired h-study assessor and bounded CPU wrapper",
+    "Actual finer-grid native operator, stability and full trajectories",
+    "Integration after current root temporal run and CPU check finish"
+  ],
+  "fingerprint": "bd62d58bc7d077320cc53f24c9de7250a3085defb0828d55334519d67e8c99ef"
+}
