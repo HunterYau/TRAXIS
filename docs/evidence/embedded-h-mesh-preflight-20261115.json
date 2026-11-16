@@ -1,0 +1,275 @@
+{
+  "kind": "embedded_h_refinement_mesh_preflight",
+  "date": "2026-11-15",
+  "observed_utc": "2026-11-16T02:13:54.783520+00:00",
+  "mesh_preflight_passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "protocol_path": "configs/embedded-h-protocol.json",
+  "protocol_sha256": "59d853cd1ad1fc32691a154b4f277084fbf177c125087d2ccc0607dd2ba17adc",
+  "mesh_source_sha256": "ef4e756ab23cf53282089370ed9f6dbfae882971afae5d6d97df4f6ffdd8b56b",
+  "screens": [
+    {
+      "level": 0,
+      "defective": false,
+      "screen": {
+        "elements": 20768,
+        "planar_cells": 10384,
+        "disk_cells": 240,
+        "scalar_dofs": 1502505,
+        "vector_dofs": 4507515,
+        "geometry_nodes": 658399,
+        "planar_nodes": 166945,
+        "lower_annular_nodes": 163200,
+        "allocation_upper_bytes": 210040960,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          45,
+          43,
+          43,
+          45
+        ],
+        "outer_cell_size_m": 0.005,
+        "angular_cells": 12,
+        "radial_cells": [
+          2,
+          6
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": false,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    },
+    {
+      "level": 0,
+      "defective": true,
+      "screen": {
+        "elements": 20528,
+        "planar_cells": 10384,
+        "disk_cells": 240,
+        "scalar_dofs": 1487525,
+        "vector_dofs": 4462575,
+        "geometry_nodes": 652132,
+        "planar_nodes": 166945,
+        "lower_annular_nodes": 163200,
+        "allocation_upper_bytes": 209103832,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          45,
+          43,
+          43,
+          45
+        ],
+        "outer_cell_size_m": 0.005,
+        "angular_cells": 12,
+        "radial_cells": [
+          2,
+          6
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": true,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    },
+    {
+      "level": 1,
+      "defective": false,
+      "screen": {
+        "elements": 37320,
+        "planar_cells": 18660,
+        "disk_cells": 448,
+        "scalar_dofs": 2696697,
+        "vector_dofs": 8090091,
+        "geometry_nodes": 1181215,
+        "planar_nodes": 299633,
+        "lower_annular_nodes": 292592,
+        "allocation_upper_bytes": 323402272,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          60,
+          58,
+          58,
+          60
+        ],
+        "outer_cell_size_m": 0.00375,
+        "angular_cells": 16,
+        "radial_cells": [
+          3,
+          8
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": false,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    },
+    {
+      "level": 1,
+      "defective": true,
+      "screen": {
+        "elements": 36872,
+        "planar_cells": 18660,
+        "disk_cells": 448,
+        "scalar_dofs": 2668533,
+        "vector_dofs": 8005599,
+        "geometry_nodes": 1169404,
+        "planar_nodes": 299633,
+        "lower_annular_nodes": 292592,
+        "allocation_upper_bytes": 321645432,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          60,
+          58,
+          58,
+          60
+        ],
+        "outer_cell_size_m": 0.00375,
+        "angular_cells": 16,
+        "radial_cells": [
+          3,
+          8
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": true,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    },
+    {
+      "level": 2,
+      "defective": false,
+      "screen": {
+        "elements": 58018,
+        "planar_cells": 29009,
+        "disk_cells": 720,
+        "scalar_dofs": 4189329,
+        "vector_dofs": 12567987,
+        "geometry_nodes": 1834588,
+        "planar_nodes": 465481,
+        "lower_annular_nodes": 454120,
+        "allocation_upper_bytes": 465045472,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          75,
+          72,
+          72,
+          75
+        ],
+        "outer_cell_size_m": 0.003,
+        "angular_cells": 20,
+        "radial_cells": [
+          4,
+          10
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": false,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    },
+    {
+      "level": 2,
+      "defective": true,
+      "screen": {
+        "elements": 57298,
+        "planar_cells": 29009,
+        "disk_cells": 720,
+        "scalar_dofs": 4143885,
+        "vector_dofs": 12431655,
+        "geometry_nodes": 1815505,
+        "planar_nodes": 465481,
+        "lower_annular_nodes": 454120,
+        "allocation_upper_bytes": 462215224,
+        "patch_bounds_m": [
+          0.225,
+          0.215,
+          0.28500000000000003,
+          0.275
+        ],
+        "exterior_cells": [
+          75,
+          72,
+          72,
+          75
+        ],
+        "outer_cell_size_m": 0.003,
+        "angular_cells": 20,
+        "radial_cells": [
+          4,
+          10
+        ],
+        "layers": [
+          1,
+          1
+        ],
+        "order": 4,
+        "geometry_order": 3,
+        "defective": true,
+        "index_dtype": "int32",
+        "blocks": 17
+      }
+    }
+  ],
+  "operator_gpu_workspace_and_runtime_verified": false,
+  "scope": "Analytical topology/allocation screens only; no meshes/operators/trajectories generated.",
+  "reason": "The completed p-refinement scattering screen fails receiver 3 at 1.344761 percent. A new fixed-order spatial study retains the 1 percent criterion.",
+  "implementation_pending": [
+    "Frozen runner support for these h levels after the current time run and CPU check finish",
+    "Explicit 24-million-vector-DOF mesh cap instead of the older 12-million default",
+    "Actual host/device operator and stability preflight before propagation",
+    "Paired total/scattered comparison with independently checked CPU receipts"
+  ],
+  "fingerprint": "5a0483f63abe68fec7e50bb944bd48bb2e5d62693e87202f5223e7c82f6b903d"
+}

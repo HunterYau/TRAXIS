@@ -1,0 +1,79 @@
+{
+  "kind": "embedded_h_refinement_protocol",
+  "order": 4,
+  "geometry_order": 3,
+  "layers": [
+    1,
+    1
+  ],
+  "steps": 294912,
+  "duration_s": 0.0005,
+  "comparison_intervals": 32768,
+  "plate": {
+    "width_m": 0.5,
+    "height_m": 0.5,
+    "thickness_m": 0.003175
+  },
+  "recess": {
+    "x_m": 0.255,
+    "y_m": 0.245,
+    "radius_m": 0.015,
+    "depth_m": 0.0015
+  },
+  "levels": [
+    {
+      "angular_cells": 12,
+      "radial_cells": [
+        2,
+        6
+      ],
+      "outer_cell_size_m": 0.005
+    },
+    {
+      "angular_cells": 16,
+      "radial_cells": [
+        3,
+        8
+      ],
+      "outer_cell_size_m": 0.00375
+    },
+    {
+      "angular_cells": 20,
+      "radial_cells": [
+        4,
+        10
+      ],
+      "outer_cell_size_m": 0.003
+    }
+  ],
+  "source_center_xy_m": [
+    0.02,
+    0.02
+  ],
+  "receiver_centers_xy_m": [
+    [
+      0.25,
+      0.25
+    ],
+    [
+      0.48,
+      0.48
+    ],
+    [
+      0.35,
+      0.2
+    ]
+  ],
+  "radius_m": 0.003,
+  "frequency_hz": 100000.0,
+  "cycles": 2,
+  "force_scale_n": 1.0,
+  "finest_relative_change_limit": 0.01,
+  "relative_identifiability_floor": 1e-11,
+  "require_decreasing_differences": true,
+  "require_intact_recessed_and_scattering": true,
+  "require_independent_cpu_checks": true,
+  "amplitude_fit": false,
+  "phase_alignment": false,
+  "interpolation": false
+}
