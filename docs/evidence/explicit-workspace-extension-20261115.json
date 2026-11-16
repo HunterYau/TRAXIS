@@ -1,0 +1,100 @@
+{
+  "kind": "explicit_workspace_extension_debug_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "default_workspace_mib": 512,
+  "maximum_explicit_workspace_mib": 4096,
+  "proposal_workspace_mib": 3072,
+  "source_sha256": {
+    "traxis/gpu_enriched_verlet.py": "9dac009786a3871e983e258dff2387e50cd1150419c5e2a2296c147b545be72d",
+    "examples/embedded_wave_evidence.py": "71eb7619e1209259f757ed271153c850000ae5a2826d42adc6056bad3a4f1a9a",
+    "examples/check_embedded_source_transitions.py": "9859a1f357f68790a95f17f1e3c1b32cb2b13cf8700d6ae64619d097f276a706",
+    "examples/embedded_xyz_preflight.py": "9db756368baea4b3c20d1b423425bbc8dd7e59c1425cda1c06d62851c51f3650",
+    "tests/test_embedded_transition_bundle.py": "7834f8fe1694763efc93d0f698b871fdc8d0600f32c1eb2b99bfe6dcdfe89088",
+    "tests/test_mapped_capacity.py": "f935a0254ab6b2b4ddee9f0b1d82a07a519267d9126ecf0fad8e0486f0172f0e",
+    "tests/test_gpu_enriched.py": "239e1f051a69d7d056e91b4339d2c114f53d0d63eef73816a2cadac9e6cc12af",
+    "configs/embedded-wave-source-review.json": "b78d5631de04e69101bfa26230261414d7d8c7108eb80500b39059ab48c0942b"
+  },
+  "receipts": {
+    "transition": {
+      "path": "outputs/embedded-workspace-transition-20261115-v1/source-transitions-check.json",
+      "sha256": "a96e0a0afab25be42d05f07a294137d39bf7a1c12852ad82a298dca0d1dd933f",
+      "fingerprint": "164c332e9b0f2b8eec7e607d6c7fc0f3140dc9bc0f67e322bbd15fbcc5b8dfba",
+      "passed": true
+    },
+    "tests": {
+      "path": "outputs/embedded-workspace-unit-cuda-20261115-v1/test-report.json",
+      "sha256": "ed45021d3aba15e9cb7dd9abf8dd7906a5bcc4df4f7a037288ac0b0cc7f8cd5a",
+      "fingerprint": "d4ccf4cdcf9f6c4b377674097f14fd7bb036d87f9e56469c8134f542e0a50748",
+      "passed": true
+    },
+    "updated_cpu": {
+      "path": "outputs/xyz-finest-recess-cpu-preflight-20261115-v2/preflight-report.json",
+      "sha256": "680b0247b8ec36b021a5dfff4d90b9b0f96b1f531bd4fd7dd78511f4ef6331ae",
+      "fingerprint": "fb9f18d224a71968c42059ac9af283229bce63f35f76d8d060e96d33a4b05ea7",
+      "passed": true
+    },
+    "prior_cpu": {
+      "path": "outputs/xyz-finest-recess-cpu-preflight-20261115-v1/preflight-report.json",
+      "sha256": "614d7d63ede8fb74e73d309bc83bbb08fa69aa70b2063e7ebe1929c69b7611d9",
+      "fingerprint": "999c4e96d21cde13f12a04fbdd13f149da20e3c364cf9dc6d698f9ef9b26974b",
+      "passed": true
+    },
+    "spatial": {
+      "path": "outputs/embedded-scattering-spatial-workspace-review-20261115-v1/spatial-scattering-report.json",
+      "sha256": "e02f857a6755643cb1ad837bdc2d3d778196a7b03b188a20d8f5310835bbf4ac",
+      "fingerprint": "4d990b51d0bae153b0ecb391ac65a528f995023c985b6a16a8fed0f61f121513",
+      "passed": false
+    },
+    "time": {
+      "path": "outputs/embedded-scattering-time-workspace-review-20261115-v1/time-scattering-report.json",
+      "sha256": "ffe319c35d66cbf87643b9971486e0b3cea79f0f3e97b227829b9b9317950e82",
+      "fingerprint": "5f8ef2e5976d8e837f1570ed196f97712f8c25b31c150f561de16383add8839c",
+      "passed": true
+    }
+  },
+  "archived_integrator_versions": [
+    "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5"
+  ],
+  "current_integrator_sha256": "9dac009786a3871e983e258dff2387e50cd1150419c5e2a2296c147b545be72d",
+  "actual_cuda_parity_cases": 4,
+  "maximum_cuda_parity_absolute_error": 0.0,
+  "focused_tests": {
+    "tests": 32,
+    "skips": 0,
+    "failures": 0,
+    "errors": 0,
+    "log_sha256": "eddbb6a24eb5a2da2ae36bdc46ed4265c67591a1a9b97993304a94f7ad4105f6",
+    "cuda_smoke": "Real small Q4 GPU operators, planned H and 491520-step XYZ interfaces, intentionally stopped at synchronized batch 16; not completed windows or 20-million-DOF GPU allocations."
+  },
+  "actual_updated_finest_cpu": {
+    "vector_dofs": 20062335,
+    "array_sha256": {
+      "points_m": "cb9976a218ecaa645eab2d3bf3ae0d6506030c493708321a5d79c3fec8d3acd3",
+      "element_nodes": "ab0b7e53caf5c7f07cba2a6a662f5ebf1817ee5dd1ae067b2083d8b6891005c1",
+      "mass_kg": "3532c584b5f598655f3add347614cef9374ebe4cf87f265a6482f0080b4d20d9",
+      "inverse_jacobians": "887774660c17b46d1d3a826735ff6918ebedd4d74a4161515dddac8913e857f2",
+      "volume_weights_m3": "5c391fe7077a57136484c6faaaf3edcf3c765209593d929a1386086472017ec9"
+    },
+    "same_as_original_cpu_arrays": true,
+    "stable_dt_s": 3.2086327881103085e-09,
+    "integrator_api_supported": true,
+    "wave_launch_ready": false,
+    "wall_seconds": 190.23753980000038
+  },
+  "retained_spatial_scattering_failure": [
+    0.009754412264501747,
+    0.006685678573335845,
+    0.013447610833954618
+  ],
+  "temporal_scattering_pass": [
+    1.3002604701141145e-05,
+    9.530188726733111e-06,
+    1.8587266360771926e-05
+  ],
+  "note": "Only the explicit argument ceiling changes. Float64 recurrence, CUDA operator, storage forecasts, free-VRAM headroom, declared device budget and resource enforcement remain unchanged. Bundles require every needed archived version and validate every provided child against all original dense/sparse zero/nonzero-state requirements. Original receipts are not rewritten. Coupled XYZ wave launcher/study and complete GPU windows still remain.",
+  "fingerprint": "232b38d075a89620058c998f2247d7b769152b88a30758c35a6f2d7987cbfae1"
+}

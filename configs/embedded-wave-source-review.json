@@ -3,11 +3,12 @@
   "date": "2026-11-15",
   "files": {
     "traxis/gpu_enriched_verlet.py": {
-      "current_sha256": "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5",
+      "current_sha256": "9dac009786a3871e983e258dff2387e50cd1150419c5e2a2296c147b545be72d",
       "historical_sha256": [
-        "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4"
+        "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+        "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5"
       ],
-      "reason": "Exact sparse component-major probe covectors and directly allocated float64 zero states replace dense host storage. The velocity Verlet recurrence and CUDA operator are unchanged. Dense/sparse GPU trajectory parity is required by the review."
+      "reason": "Exact sparse component-major probe covectors and directly allocated float64 zero states replace dense host storage. The velocity Verlet recurrence and CUDA operator are unchanged. Dense/sparse GPU trajectory parity is required by the review. Further transition: permit an explicitly requested workspace ceiling up to 4096 MiB, retaining the 512 MiB default, all vector/sample forecasts, 85-percent free-VRAM headroom, declared total device budget and resource guards. This changes only argument validation; the float64 Verlet recurrence, outputs and CUDA operator are unchanged. Each archived integrator version requires its own complete actual CUDA parity receipt."
     },
     "traxis/resources.py": {
       "current_sha256": "8b5b3516149b47a6860d201909889b7b786268e03fe949661885c935f03dfaa7",
