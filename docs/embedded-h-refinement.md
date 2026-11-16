@@ -65,3 +65,27 @@ The controls are now integrated on the main research branch. Twenty-four
 selected tests pass again there, and CUDA transition v7 retains exact parity.
 The fine temporal run is active; its source manifest remains frozen. Actual
 finer-grid trajectories and their paired assessment remain pending.
+
+## Assessment and independent checking tools
+
+`examples.embedded_h_study` now assesses all six intact/recessed runs and
+their CPU receipts together. It retains raw integer sample selection and
+independent intact, recessed and defect-induced screens under the pinned
+protocol. Only the exact original 294,912-step Q4 control is eligible for
+coarse-level reuse. Input, source-review, CPU, device and analysis bindings
+are checked before publishing the result. Twelve manufactured-waveform and
+CPU-launcher tests pass; they do not replace actual finer-grid runs.
+
+`examples.verify_embedded_h_window` calls the existing independent CPU checker
+unchanged with a 600-second / 4,096-MiB envelope and the same 89.9% system-RAM
+ceiling. It preserves the original CPU receipt and writes a separate launcher
+binding. An interrupted checker or a changed launcher cannot publish success.
+Original controls continue using the original CPU launcher.
+
+Review found an additional hard 12-million limit in the GPU preflight. Its
+explicit bounded extension is tested in the isolated development branch but
+must not be merged into the live fine temporal run. In the current main
+checkout the finest h level will still stop at that guard. Integrate the
+capacity extension after the fine run and CPU check complete, then verify
+the actual larger operator, stability and trajectory. Assessment software
+evidence is `evidence/embedded-h-assessment-debug-20261115.json`.

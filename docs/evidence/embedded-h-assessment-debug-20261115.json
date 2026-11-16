@@ -1,0 +1,36 @@
+{
+  "kind": "embedded_h_assessment_software_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Manufactured waveform and CPU-launcher metadata tests; no finer-grid forward trajectory has run.",
+  "tests": 12,
+  "failures": 0,
+  "skipped": 0,
+  "test_seconds": 0.591,
+  "directory": "outputs/embedded-h-assessment-unit-20261115-v2",
+  "sources": {
+    "examples/embedded_h_study.py": "e876c5ac163ba88c220519b9c232f4f2a9a2dda25265a1b444c0306cbfc3f357",
+    "examples/verify_embedded_h_window.py": "25ab61d2ec6b4fb480557aa5055a822f1c1e8808b7197a895d17dc2f3ea1b95a",
+    "tests/test_embedded_h_study.py": "e951d41df02a8888e3fbfd6a0d3bd1dc4fc8df46bc3356e9222a63f6e7d3d4b4",
+    "configs/embedded-h-protocol.json": "59d853cd1ad1fc32691a154b4f277084fbf177c125087d2ccc0607dd2ba17adc"
+  },
+  "files": {
+    "invocation.json": "ddff373118efd6f14f0c4b9721fb8f8ee3014f23444d4ce390935780f59b7abb",
+    "monitor-result.json": "9ddb9984920f921f6a885a9846ec893c25b7663e86cae5bbc7a676202ca45913",
+    "tests.log": "a5af210b48ebbdbd1348ddb7526e21218b0e57d5000bb93ffdcd829086428fa4",
+    "source-snapshot.zip": "143c066073899ac18a63ef511f6a1526e6aec14d2afbc08864479c35fb1e8331"
+  },
+  "checks": [
+    "Raw integer sample selection for all three physical signal groups",
+    "Large incident fields cannot conceal failed scattering",
+    "Zero signals cannot establish an identifiable rate",
+    "Changed grids, thresholds, physical cases and levels reject",
+    "CPU launcher preserves the original independent proof and binds its hash",
+    "Checker failure or changed launcher cannot publish success"
+  ],
+  "limitation": "Synthetic CPU receipts test wrapper handling only; actual h-window CPU checking remains pending.",
+  "fingerprint": "2681b2e6fb22e82d03614d62ea5ecfe7917300beb5598ac382e3f9b1624973a8"
+}
