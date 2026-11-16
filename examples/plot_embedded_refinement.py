@@ -71,7 +71,11 @@ def plot(study, output):
             ax.axhline(0,color='#999999',linewidth=.5,zorder=0);ax.grid(alpha=.16);ax.set_xlim(0,500)
         top.set_ylabel('Mean normal displacement (nm)')
         bottom.set_ylabel('Raw displacement difference (nm)')
-        top.legend(fontsize=8,loc='upper right');bottom.legend(fontsize=8,loc='upper left')
+    trace_handles,trace_labels=axes[0,0].get_legend_handles_labels()
+    difference_handles,difference_labels=axes[1,0].get_legend_handles_labels()
+    fig.legend(trace_handles+difference_handles,
+        ['Trace: '+label for label in trace_labels]+['Difference: '+label for label in difference_labels],
+        loc='outside lower center',ncol=5,fontsize=8,frameon=False)
     state='Recessed' if case['defective'] else 'Intact'
     status='PASS' if report['passed'] else 'FAIL'
     fig.suptitle(f'{state} 500 x 500 x 3.175 mm plate: {mode} refinement — {status}\n'

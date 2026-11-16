@@ -388,3 +388,11 @@ legends and curves fit. Its proof is in
 `docs/evidence/embedded-time-figure-20261115.json`. Earlier figures remain
 in ignored output directories; the final layout moves the
 trace legends clear of the early received pulses.
+
+The full recessed Q4 temporal screen now also passes, including the separate
+defect-induced signal check. Its total-waveform figure is exported as PNG/PDF
+in `outputs/embedded-recess-time-figure-20261115-v3`. A shared footer legend
+keeps late received peaks and scientific multipliers unobscured; the PNG was
+visually reviewed. See `evidence/embedded-recess-time-figure-20261115.json`.
+This temporal result does not close the remaining spatial/thickness, PZT or
+physical-validation gates.

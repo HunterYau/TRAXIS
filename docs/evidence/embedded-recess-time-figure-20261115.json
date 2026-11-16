@@ -1,0 +1,22 @@
+{
+  "kind": "embedded_recess_time_figure_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "directory": "outputs/embedded-recess-time-figure-20261115-v3",
+  "figure_report_sha256": "717990502b77937cbc1155936f0183cbf592405a0b4c017d9fcf5888e39653b9",
+  "figure_fingerprint": "3f9839a5c89b3f590a5ab75f4286e5c6e6e3e175481e5d4e12125591045c7168",
+  "study_fingerprint": "91ac05a979fdc7cc6c83e3ecf5a51eecf4651e9aaf520f53e4e2fe066a95d438",
+  "files": {
+    "refinement.png": "280e32f7e0798269b7b68489c34d68633a5f8a396ed751e726ad3d95f83bc08f",
+    "refinement.pdf": "15a4a66232ffb188192e28e2156e37d9592ce6cf2a0aa46d0fa4d5c17d24c85e"
+  },
+  "plotter_sha256": "248276c868861d6cde22894ac52bfcbe33157df1bd05a4855943a1a9dfa35009",
+  "png_visually_reviewed": true,
+  "review": "All six axes, scientific multipliers, units, legends and numerical captions are visible. The shared legend is outside the data panels.",
+  "earlier_layouts": "v1 legends obscured late received peaks; v2 per-axis outside legends overlapped scientific multipliers. Both are retained as drafts; v3 is the reviewed final figure.",
+  "scope": "Plots raw mechanical temporal refinement only; no physical or PZT accuracy claim.",
+  "fingerprint": "e840f37bd9af04c5ed77738d3e871328325f7e3abdfffa48412e526c5a65727b"
+}
