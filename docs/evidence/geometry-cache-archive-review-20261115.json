@@ -1,0 +1,40 @@
+{
+  "kind": "geometry_cache_historical_evidence_review",
+  "completed": true,
+  "source_review_sha256": "ef9446cf48fdd2af787229873cbb45c890c1d934bbdab48ba047773805540456",
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "receipts": {
+    "transition": {
+      "path": "outputs/embedded-source-transition-geometry-cache-20261115-v1/source-transition-check.json",
+      "sha256": "fb61aed1108b67221734f7fe1335749aae41c5d0b4e9c86cfb4499cac73890c6",
+      "fingerprint": "88877527ea8a47cb3a41f5986129e8d51904a129e8b5b09d6398ab512ac0b511",
+      "passed": true
+    },
+    "spatial": {
+      "path": "outputs/embedded-scattering-spatial-cache-review-20261115-v1/spatial-scattering-report.json",
+      "sha256": "e686d694413b27c9f080d225b5f32cef8fefa0c1a4406c4cec1f331cccc96ce7",
+      "fingerprint": "7a9fdfa84ae0661abd3a4d95a7b812fd0dc8ba57195ab41291d92fa7ad17ecaf",
+      "passed": false
+    },
+    "time": {
+      "path": "outputs/embedded-scattering-time-cache-review-20261115-v1/time-scattering-report.json",
+      "sha256": "7ec98cd8bd1bd8fb41316227947c39a700e04429b3c2cd65b062cc5d0602c4cd",
+      "fingerprint": "ba1d0018df861321d81435e75cf2ef74fa3d2d3c4595feab4e6450cabc47d631",
+      "passed": true
+    }
+  },
+  "integrator_maximum_absolute_error": 0.0,
+  "spatial_scattering_finest_relative_change": [
+    0.009754412264501747,
+    0.006685678573335845,
+    0.013447610833954618
+  ],
+  "temporal_scattering_finest_relative_change": [
+    1.3002604701141145e-05,
+    9.530188726733111e-06,
+    1.8587266360771926e-05
+  ],
+  "note": "Revalidates preserved archives against the new reviewed cache source. Original source/CPU receipts are unchanged; the known receiver-3 spatial failure remains a failure. This does not rerun the full trajectories or independently recompute their CPU checks.",
+  "fingerprint": "1ac7893c2dbf4252045f39992e70f1338a6bdc75c93b028371f693da67f92e5a"
+}

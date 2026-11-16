@@ -50,6 +50,13 @@
         "9efe32c9b69317bb019d9514a00a9475d19d39cf62a7915e5989b445c03ec861"
       ],
       "reason": " Explicit h controls may request a bounded 24-million-DOF GPU preflight; the default remains 12 million. Host/device byte forecasts, free-memory and thermal guards remain enforced. CUDA kernel bytes and numerical operations are unchanged."
+    },
+    "traxis/recess_hex.py": {
+      "current_sha256": "3f2f9ba11334ab025d9afbfeb4278fd90fa94869d1c049f76c5a09ea47598a64",
+      "historical_sha256": [
+        "de20a3763cbbec9c22cfc1aabfd3c5afc41af45da14054a42ad28fdbd7c6f9bf"
+      ],
+      "reason": "Cache at most sixteen small repeated Lagrange reference grids, with exact point bytes and fresh writable return arrays in the original layout. Original Polynomial evaluation arithmetic is unchanged. Fifty basis arrays and six intact/recessed Q3-Q5 coupled-XYZ mesh/operator assemblies match actual archived uncached source bit for bit; the full 12,431,655-DOF recessed operator preserves every retained array hash and stability value. Native geometry and all-column operator checks also pass. This is setup reuse only, with no mesh, precision, integration or acceptance change."
     }
   }
 }

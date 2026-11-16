@@ -1,0 +1,64 @@
+{
+  "kind": "geometry_basis_cache_debug_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "source_sha256": {
+    "traxis/recess_hex.py": "3f2f9ba11334ab025d9afbfeb4278fd90fa94869d1c049f76c5a09ea47598a64",
+    "examples/check_geometry_basis_cache.py": "c1ec29fc278c1d2ad38656a16c6b4b5cb037695463c162edaefdc5bc029bc9ab",
+    "tests/test_geometry_basis_cache.py": "e4f6d620afdf9a90747e37b012c089c3a1077c6cab232ae8fac8b042ba7ccf31",
+    "configs/embedded-wave-source-review.json": "ef9446cf48fdd2af787229873cbb45c890c1d934bbdab48ba047773805540456"
+  },
+  "receipts": {
+    "archived_parity": {
+      "path": "outputs/geometry-cache-archived-parity-20261115-v1/geometry-cache-check.json",
+      "sha256": "85797af8e303f9542b8fc83eebb3c707e6fc9e6a66a8a128f351cac77e4249a9",
+      "fingerprint": "d492ffa876a7436160ab7369329e6964f3965bf0c7dda5fabe59354158f3ce60"
+    },
+    "unit_native": {
+      "path": "outputs/geometry-cache-native-check-20261115-v1/test-report.json",
+      "sha256": "73548e67369fe838bbd10b1749164b8580435c7bee8020361374a82a645934c6",
+      "fingerprint": "d1288276fd50878484fd5eefa6b07851f02d9b3cb44247187a538267033d5abe"
+    },
+    "uncached_full_preflight": {
+      "path": "outputs/h-finest-recess-cpu-preflight-v1/preflight-report.json",
+      "sha256": "a112c2638db740cde25d4fa2f858b3d9fa64cb9ee6967123ac557836fed62c38",
+      "fingerprint": "cedff36c8fd2083f85f4a12c48476ea2a684d30b52e02a55592540b41ae3721e"
+    },
+    "cached_full_preflight": {
+      "path": "outputs/h-finest-recess-cached-preflight-20261115-v1/preflight-report.json",
+      "sha256": "71a86e422985476aee7080a56a960bf6ed05f42b212ee1ea47683797ea1dce1a",
+      "fingerprint": "71d3fb816914f2d2e462e92b6228491852b0908de16769ce15070935b62cb10a"
+    }
+  },
+  "basis_array_comparisons": 50,
+  "actual_small_assembly_cases": 6,
+  "unit_tests": {
+    "tests": 23,
+    "skips": 0,
+    "failures": 0,
+    "errors": 0,
+    "native_geometry_all_columns_and_spectrum": true,
+    "log_sha256": "94af49f5382ef2b12c59eff2497435853ee7f9a6cd08090eb53ff8abf599bd37"
+  },
+  "full_operator": {
+    "vector_dofs": 12431655,
+    "array_sha256": {
+      "points_m": "594d3a98eed51e1da4e07eca095ae290e240caca8d36382938804270b61ded07",
+      "element_nodes": "332fd92d57dc3b7a832448286280c45e5af61e82fd0b039dab5505e1d221b704",
+      "mass_kg": "08736f126e6b8c406435133d68e4047f3ffaf8c7923acbea72520ecd195d91ea",
+      "inverse_jacobians": "605a23b515633b536ef2c12035efb8a6f2efe9b5c6f063e3f946f3670b79d383",
+      "volume_weights_m3": "a500ca8941dcf873972d624be1ebbc1b0fdc573530874673c2298f8e0fc8c1bd"
+    },
+    "all_array_hashes_equal": true,
+    "stable_dt_s": 3.2579271813056347e-09,
+    "uncached_wall_seconds": 261.47746200003894,
+    "cached_wall_seconds": 115.71954209997784,
+    "cached_peak_rss_mib": 1048.65234375,
+    "cached_peak_system_memory_percent": 67.5
+  },
+  "timing_note": "Both full-size measurements ran alongside GPU work; timings are observed setup costs, not a controlled hardware benchmark or trajectory speedup.",
+  "scope": "Bounded CPU assembly cache equivalence and native geometry/operator checks; no wave, spatial-convergence, PZT or physical-data acceptance.",
+  "fingerprint": "fc436a3ddc0ba3f57db5e4f1e1d78c7ad3f07480bc407f9a648a5cd2d2135c68"
+}
