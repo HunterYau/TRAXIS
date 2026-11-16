@@ -1,0 +1,64 @@
+{
+  "kind": "embedded_recess_coarse_time_window_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "time_convergence_completed": false,
+  "scope": "131072-step recessed Q4 window and independent CPU check; fine time level remains pending.",
+  "proofs": {
+    "plan": {
+      "path": "outputs/embedded-wave-recess-q4-n131072-20261115-v1/embedded-wave-plan.json",
+      "sha256": "4b11e177888706abca098e52065c80ef7ed49149da3a94c7d70107d242b05cd5",
+      "fingerprint": "396018bb017e5c6113ef92f7eb7c438244701f0a296b90b56940d4b39a405b8f"
+    },
+    "forward": {
+      "path": "outputs/embedded-wave-recess-q4-n131072-20261115-v1/monitor-result.json",
+      "sha256": "e541c152b3137afee99deb441f5ed6a98935a8500148e6e154e5e1ccfb053f35",
+      "fingerprint": "5f97478449d833ebf042e7467444a8df3240ae352c1e584a97fe09ecfd4a8dbb"
+    },
+    "native": {
+      "path": "outputs/embedded-wave-recess-q4-n131072-20261115-v1/native/wave-report.json",
+      "sha256": "b0ae9af3e04c1419feffc7a5fb986fbda342e19c1ca1ecb5ca62068ffb22e959",
+      "fingerprint": "7043a1bd8e3a8d6967bd2df9477456174749256a80cd79444f10f02482d64ed8"
+    },
+    "cpu": {
+      "path": "outputs/embedded-wave-recess-q4-n131072-cpu-20261115-v1/cpu-window-check.json",
+      "sha256": "65831d74df18e8258f8037160fc05aba2ba305c17cf736be7de16c6469942ff5",
+      "fingerprint": "034fead5827d5c8887618bf02f8643986335ddd5955aabac625689b822788a85"
+    },
+    "source_transition": {
+      "path": "outputs/embedded-source-transition-20261115-v7/source-transition-check.json",
+      "sha256": "7b9d8962774855dd9297b0e3a5c3e39f213d110d2858e3ada94c88036a65f6de",
+      "fingerprint": "ed5c310fd5496a849f806397678abff3f32600085f489248daf5cd2c06c27ed3"
+    }
+  },
+  "cpu_errors": {
+    "final_force_relative_l2": 1.7103024946240045e-13,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 2.220446049250313e-16,
+    "final_modified_energy_relative_error": 2.220446049250313e-16,
+    "final_probe_relative_l2": 5.159227030197136e-16,
+    "postburst_modified_energy_relative_range": 1.8547461807008622e-15
+  },
+  "wall_seconds": 1152.6413072000141,
+  "propagation_seconds": 897.3250864999718,
+  "resources": {
+    "peak_process_tree_rss_mib": 1205.21484375,
+    "peak_system_memory_percent": 56.7,
+    "minimum_available_mib": 7023.05078125
+  },
+  "h_controls_integrated": {
+    "commit": "42af81e",
+    "root_tests": 24,
+    "failures": 0,
+    "skipped": 0,
+    "files": {
+      "invocation.json": "cc0ddfe0f793c857edbfda737dafed2fcfab7a641d33db17f25de01b9682e9b7",
+      "monitor-result.json": "786963ab42183757a1e1b3c8abe58c0f0c7df25e81c768400aab41e494d0e8da",
+      "tests.log": "0a0c0ce3e68c72d2f14c3c608d9878944172cd77a49feecab1a5b273f92f341c"
+    }
+  },
+  "fingerprint": "a820d6078b6bf50e10503148585d0791556d0c710a73a2dea3dae52edef6a8b7"
+}

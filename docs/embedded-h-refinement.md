@@ -23,9 +23,9 @@ is 24 million. This does not establish total host/device feasibility: actual
 operator, workspace, stability, RAM and GPU checks remain mandatory before
 propagation. Resource ceilings and float64 accuracy must be preserved.
 
-The current fixed-case driver does not yet support these levels. Add support
-only after the live time-refinement run and its independent CPU check finish,
-preserve every old case unchanged and review the source transition. Reuse
+The original fixed-case driver did not support these levels. Support was
+developed separately, then integrated after the coarse time run and its CPU
+check finished, preserving every old case and reviewing the source transition. Reuse
 the existing exact coarse 294,912-step controls only after validating their
 source, CPU, physical-case and sample-grid bindings. Higher levels need new
 paired runs and CPU checks. No full training or accepted bank is implied.
@@ -51,8 +51,8 @@ difference zero. This verifies legacy behavior; finer-grid operator and full
 trajectory checks have not run. The paired h-study assessor and larger-case
 CPU wrapper remain to implement before any acceptance claim.
 
-Development is isolated in `outputs/embedded-h-development` while the main
-checkout's time-refinement run and CPU check are pending. The main frozen
+Development was isolated in `outputs/embedded-h-development` while the main
+checkout's coarse time-refinement run and CPU check were pending. The main frozen
 source hashes were explicitly rechecked unchanged. The portable interpreter
 normally imports the main checkout: isolated unit tests use an ignored runtime
 with the development path configured. The copied interpreter could not locate
@@ -61,5 +61,7 @@ interpreter with an explicit development import path. Failed attempts are
 retained. No global environment or installed packages were changed.
 
 Bindings and limits are in `evidence/embedded-h-controls-debug-20261115.json`.
-Integrate the branch only after the main frozen calculation and CPU check
-complete, then reassess historical inputs against the updated source review.
+The controls are now integrated on the main research branch. Twenty-four
+selected tests pass again there, and CUDA transition v7 retains exact parity.
+The fine temporal run is active; its source manifest remains frozen. Actual
+finer-grid trajectories and their paired assessment remain pending.
