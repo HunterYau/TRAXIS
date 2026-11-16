@@ -19,10 +19,10 @@ from traxis.storage import sha256_file,write_json
 def execution_profile(case):
     checked_case(case)
     if case['scope']=='h_refinement':
-        limits=ResourceLimits(max_seconds=7200,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)
+        limits=ResourceLimits(max_seconds=10800,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)
         return dict(kind='embedded_h_refinement_wall_budget',limits=asdict(limits),
             preflight=dict(max_system_memory_percent=90.,min_available_mib=768.),
-            reason='Finer-cell Q4 controls retain the physical window, float64 precision and fixed convergence limits; actual allocations and stability must pass before propagation.')
+            reason='Measured coarse fine-time cost and the finest 2.79-fold element count leave little margin under two hours. Allow three hours while retaining the physical window, float64 precision, fixed convergence limits and all memory/thermal guards.')
     if case['scope']!='full': raise ValueError('extended execution is restricted to declared full-size cases')
     limits=ResourceLimits(max_seconds=3600,max_rss_mib=4096 if case['order']==5 else 2048,
         max_system_memory_percent=89.9,min_available_mib=768)

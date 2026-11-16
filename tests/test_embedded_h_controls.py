@@ -52,7 +52,7 @@ class HControlTests(unittest.TestCase):
         self.assertEqual(profile['limits']['max_gpu_memory_percent'],90)
         self.assertEqual(profile['limits']['max_gpu_temperature_c'],80)
         self.assertEqual(profile['limits']['max_rss_mib'],4096)
-        self.assertEqual(profile['limits']['max_seconds'],7200)
+        self.assertEqual(profile['limits']['max_seconds'],10800)
         plan=dict(case=c,execution=profile,analysis_sources={'examples/embedded_wave_budget.py':sha256_file(PROJECT/'examples/embedded_wave_budget.py')})
         guard=ResourceGuard(ResourceLimits(**profile['limits']));check_execution(plan,guard)
         plan['execution']['limits']['max_system_memory_percent']=95

@@ -39,7 +39,7 @@ native operator/trajectory is explicit in that receipt.
 The `research/embedded-h-refinement` branch adds these frozen cases through
 `embedded_wave_budget --h-level 0`, `1` or `2`. Each uses Q4 and 294,912
 steps; add `--recess` for material loss. The general wave CLI rejects this
-scope so the explicit 7,200-second / 4,096-MiB execution profile is required.
+scope so the explicit 10,800-second / 4,096-MiB execution profile is required.
 System RAM remains limited to 89.9%, GPU memory to 90% and GPU temperature
 to 80 C. Actual operator/workspace and stability checks still precede solving.
 
@@ -97,3 +97,17 @@ and matching actual resource limits; it rechecks the binding before publication.
 Exact original coarse controls retain their existing independent CPU receipts.
 Thirteen focused tests pass, including changed/failed launcher and altered
 CPU-envelope rejection. See `evidence/embedded-h-cpu-binding-20261115.json`.
+
+The capacity extension is now integrated after the fine temporal run and its
+CPU check completed. Thirty-two selected CPU tests and the small CUDA capacity
+comparison pass in the main checkout; CUDA transition v8 has exact parity.
+The new h wall allowance was increased before any h wave run from 7,200 to
+10,800 seconds: measured coarse fine-time cost and the finest 2.79-fold element
+count leave little margin under two hours. Physics, original profiles,
+precision, convergence criteria and memory/thermal guards are unchanged.
+
+The completed recessed temporal study passes for total and defect-induced
+signals, with orders approximately 2.000001. Scattering finest changes are
+0.00130026%, 0.000953019% and 0.00185873%, below the fixed 0.1% limit.
+The updated-source reassessment retains the original spatial scattering
+failure at 1.344761%. See `evidence/embedded-recess-time-capacity-20261115.json`.
