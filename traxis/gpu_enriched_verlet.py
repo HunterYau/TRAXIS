@@ -8,6 +8,9 @@ import numpy as np
 from traxis.config import positive
 
 
+MAX_EXPLICIT_WORKSPACE_MIB = 4096
+
+
 PROBE_KERNEL = r'''
 extern "C" __global__ void sample_probes(
     const int* starts, const int* indices, const double* weights, const double* u,
@@ -99,7 +102,7 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
             and 1 <= len(probes) <= 32 and np.isfinite(probes).all())
     if (mass.shape!=(n,) or np.iscomplexobj(mass) or not np.isfinite(mass).all() or np.any(mass<=0)
             or not valid_probes or np.iscomplexobj(load) or load.shape!=(n,) or not np.isfinite(load).all()
-            or not math.isfinite(max_workspace_mib) or not 0<max_workspace_mib<=2048):
+            or not math.isfinite(max_workspace_mib) or not 0<max_workspace_mib<=MAX_EXPLICIT_WORKSPACE_MIB):
         raise ValueError('explicit states need matching finite real mass/load/probe data')
     probe_count = len(indices) if isinstance(probes, SparseProbeSet) else len(probes)
     samples = steps//output_stride+1

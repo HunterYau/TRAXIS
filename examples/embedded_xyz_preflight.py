@@ -12,6 +12,7 @@ import numpy as np
 from examples.tensor_wave import PROJECT, identities, read_json, sealed, snapshot_sources
 from traxis.config import CircularRecess, Material, Plate
 from traxis.embedded_recess import make_embedded_recess_mesh, storage_screen
+from traxis.gpu_enriched_verlet import MAX_EXPLICIT_WORKSPACE_MIB
 from traxis.gpu_mapped_tensor import storage_screen as gpu_screen
 from traxis.highorder_verification import distribution_identity
 from traxis.mapped_tensor import build_system
@@ -21,7 +22,7 @@ from traxis.storage import canonical_hash, sha256_file, write_json
 
 PROPOSAL_SHA256 = '61f8245813b26481ce40042f595ef6d6806486094fd6134f8922e5e91946b5c1'
 PROPOSAL_FINGERPRINT = 'fb7fb254f7cb0f365dc1fa1eaedb71f00ea62ea8534eed029dba59096c2e2161'
-INTEGRATOR_SHA256 = '72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5'
+INTEGRATOR_SHA256 = '9dac009786a3871e983e258dff2387e50cd1150419c5e2a2296c147b545be72d'
 
 
 def load_proposal():
@@ -59,7 +60,7 @@ def preflight(level, defective, output, guard):
     sample_bytes = samples*3*8+energies*24
     vector_sample_mib = (16*mesh_screen['vector_dofs']*8+sample_bytes)/1024**2
     api_supported = bool(proposal['steps']<=500000 and sample_bytes<=64*1024**2
-        and vector_sample_mib<=proposal['max_workspace_mib']<=2048)
+        and vector_sample_mib<=proposal['max_workspace_mib']<=MAX_EXPLICIT_WORKSPACE_MIB)
     output.mkdir(parents=True,exist_ok=False)
     analysis = {name:sha256_file(PROJECT/name) for name in
         ('examples/embedded_xyz_preflight.py','configs/embedded-xyz-proposal.json')}
@@ -76,8 +77,9 @@ def preflight(level, defective, output, guard):
         ready_for_training_data=False,training_updates=0,plan_fingerprint=plan['fingerprint'],
         gpu_operator_allocated=False,wave_steps=0,wave_launch_ready=False,
         integrator_api_supported=api_supported,vector_sample_workspace_lower_mib=vector_sample_mib,
-        inspected_integrator_workspace_ceiling_mib=2048,proposed_workspace_ceiling_mib=proposal['max_workspace_mib'],
-        launch_blocker='The proposed 3072 MiB workspace ceiling requires an explicit API extension and archived/current CUDA equivalence checks before any wave run.',
+        inspected_integrator_workspace_ceiling_mib=MAX_EXPLICIT_WORKSPACE_MIB,proposed_workspace_ceiling_mib=proposal['max_workspace_mib'],
+        launch_blocker=('CPU preflight only; actual GPU memory, operator action and complete wave/CPU checks remain required.'
+            if api_supported else 'The proposed workspace requires an explicit API extension and archived/current CUDA equivalence before wave launch.'),
         scope='Actual CPU mesh/operator, conservative stability and GPU allocation forecasts for coupled XYZ refinement; no GPU wave or convergence acceptance.')
     started = time.perf_counter()
     try:

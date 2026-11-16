@@ -50,6 +50,9 @@ class FactorizedEnrichedTests(unittest.TestCase):
             gpu_explicit_simulate(system,1,1e-9,np.eye(4),np.zeros(3))
         with self.assertRaises(MemoryError):
             gpu_explicit_simulate(system,1,1e-9,np.eye(3),np.zeros(3),max_workspace_mib=1e-9)
+        for ceiling in (4097,float('inf'),float('nan'),0):
+            with self.assertRaises(ValueError):
+                gpu_explicit_simulate(system,1,1e-9,np.eye(3),np.zeros(3),max_workspace_mib=ceiling)
         fake = SimpleNamespace(scalar_space=SimpleNamespace(globalorder=3))
         with self.assertRaises(ValueError):
             highorder_surface_patch(fake,Plate(.04,.03,.003),(.01,.01),.003,trace_degree=2)

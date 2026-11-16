@@ -33,15 +33,29 @@ RAM peaked at 69.1% and 68.9%. CPU temperature could not be verified from
 a supported sensor. GPU figures are allocation forecasts; no GPU operator
 was allocated and no wave propagation or GPU throughput was tested.
 
-The proposal is explicitly blocked from wave launch by the integrator's
-current 2,048 MiB workspace API ceiling. The finest vector/sample forecast
-exceeds it, so the proposal requests 3,072 MiB. The preflight records
-`integrator_api_supported=false` and `wave_launch_ready=false`. Implement
-an explicitly bounded API extension, retain the float64 recurrence and
-all free-memory/temperature guards, and verify CUDA equivalence against
-both retained integrator source versions before launching. The current
-single-version transition receipt cannot prove a mixed-version study;
-extend its checking without dropping any per-version parity requirement.
+The first preflights exposed the integrator's 2,048 MiB workspace API
+ceiling before any GPU launch. The finest vector/sample forecast exceeds
+it, so the proposal requests 3,072 MiB. The explicit API now permits up to
+4,096 MiB, with its 512 MiB default, float64 recurrence, storage forecasts,
+free-VRAM headroom and device/resource guards unchanged. A repeated actual
+finest recessed CPU preflight preserves every prior array hash and now
+records `integrator_api_supported=true`, with `wave_launch_ready=false`.
+
+Both retained integrator versions were separately compared with the new
+source using actual CUDA integration: dense/sparse traces, energies and
+final states match exactly from zero and nonzero initial conditions. A
+bound multi-version receipt requires every archived version needed by a
+study and checks every supplied child against the original requirements.
+Missing, duplicate, altered, escaped, incomplete and failed proofs reject;
+an invalid extra version cannot hide behind a valid subset.
+
+All 32 focused checks passed without skips, including genuine small-Q4 GPU
+launches using the planned H and XYZ step/stride/workspace interfaces.
+These launch tests intentionally stop at synchronized batch 16. They do
+not establish a complete window or an actual 20-million-DOF GPU allocation.
+The paired coupled-XYZ wave launcher, assessor and complete trajectories
+still need implementation and validation. See
+`evidence/explicit-workspace-extension-20261115.json` for the bound checks.
 
 The preflight can be reproduced from this branch in a standard project
 environment with `python -m examples.embedded_xyz_preflight --level 2

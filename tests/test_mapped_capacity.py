@@ -71,7 +71,23 @@ class CapacityCUDAParityTests(unittest.TestCase):
             self.assertEqual(events,[16])
         with self.assertRaisesRegex(ValueError,'explicit states'):
             gpu_explicit_simulate(gpu,c['steps'],c['duration_s']/c['steps'],probes,load,
-                max_workspace_mib=3072,progress=stop)
+                max_workspace_mib=4097,progress=stop)
+
+    def test_coupled_xyz_interface_accepts_the_explicit_larger_workspace(self):
+        from examples.embedded_xyz_preflight import load_proposal
+        proposal=load_proposal()
+        class FirstBatch(RuntimeError):pass
+        cpu=small_system(order=4);rng=np.random.default_rng(20261117)
+        load=rng.normal(size=len(cpu.mass_kg));events=[]
+        gpu=build_gpu_mapped(cpu,max_device_mib=proposal['max_device_mib'],
+            max_host_mib=proposal['max_host_mib'],max_vector_dofs=proposal['max_vector_dofs'])
+        def stop(event):
+            events.append(event['steps_completed']);raise FirstBatch()
+        with self.assertRaises(FirstBatch):
+            gpu_explicit_simulate(gpu,proposal['steps'],proposal['duration_s']/proposal['steps'],load[None,:],load,
+                force=lambda t:tone_burst(t,proposal['frequency_hz'],proposal['cycles']),
+                output_stride=1,energy_stride=256,max_workspace_mib=proposal['max_workspace_mib'],progress=stop)
+        self.assertEqual(events,[16])
 
 
 if __name__=='__main__':unittest.main()
