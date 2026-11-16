@@ -36,11 +36,18 @@ class Material:
 class Plate:
     width_m: float = 0.5
     height_m: float = 0.5
-    thickness_m: float = 0.003
+    thickness_m: float = 0.003175
 
     def __post_init__(self):
         for name, value in vars(self).items():
             positive(name, value)
+
+    @classmethod
+    def from_dict(cls, value: dict):
+        """Read recorded geometry without applying current planning defaults."""
+        if not isinstance(value, dict) or set(value)!={'width_m','height_m','thickness_m'}:
+            raise ValueError('recorded plate geometry needs explicit width, height and thickness')
+        return cls(**value)
 
 
 @dataclass(frozen=True)

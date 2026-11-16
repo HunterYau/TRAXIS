@@ -13,7 +13,7 @@ class GeometryTests(unittest.TestCase):
         for make in (lambda: Plate(thickness_m=0), lambda: Material(poisson=0.5),
                      lambda: Material(young_pa=float("nan")),
                      lambda: CircularRecess(0, 0, -1, 0.001),
-                     lambda: CircularRecess(0.1, 0.1, 0.01, 0.003).validate(Plate())):
+                     lambda: CircularRecess(0.1, 0.1, 0.01, 0.003175).validate(Plate())):
             with self.assertRaises(ValueError):
                 make()
 

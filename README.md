@@ -10,7 +10,8 @@ establish physical accuracy or a superior model.
 
 The current physical target is **3.175 mm (1/8 inch) aluminum** with slight
 PZT placement and coupling variation. Clamp calculations are out of scope.
-New scenario recipes use this thickness. Earlier 3 mm reference studies remain
+New plate/model defaults and scenario recipes use this thickness. Recorded
+geometry must state its dimensions explicitly. Earlier 3 mm reference studies remain
 historical. Seeded [mounting randomization](docs/pzt-domain-randomization.md)
 now varies actual PZT positions, contact radii and coupling, including independent
 baseline/current remounts. Ranges remain provisional. See [current hardware requirements](docs/current-hardware.md).
@@ -23,15 +24,19 @@ the dataset, reconstruction models, and sensing experiments in Python.
 See [the solver assessment](docs/solver-assessment.md) for alternatives,
 limitations, and the acceptance gates before generating training data.
 
-The local solvers use inspectable 3D linear-elastic tetrahedral FEM for
-numerical verification and bounded mechanical pilots. The
+Local verification candidates include 3D linear-elastic tetrahedral FEM and
+a mapped GLL hexahedral GPU solver. Current 3.175 mm mechanical controls
+pass temporal refinement; spatial-scattering acceptance remains open. The
+[coupled XYZ workflow](docs/xyz-controls-20261115.md) refines in-plane cells
+and thickness layers; its complete full-size trajectories still need to run.
+The earlier
 [enriched GPU candidate](docs/enriched-gpu-waveforms.md) completes a full
 500 mm plate / 500-microsecond mechanical window and passes three-level
 [temporal refinement](docs/enriched-time-refinement.md). Full-size spatial
 and physical acceptance remain open. The local implementation is not a
 replacement for calibrated PZT electromechanics or a validated commercial
 solver. Small smoke geometries are deliberately different from the full
-500 x 500 x 3 mm research plate.
+historical 500 x 500 x 3 mm reference plate. Prospective controls use 3.175 mm.
 
 A separate [coupled piezoelectric reference](docs/piezoelectric-reference.md)
 checks independent 3D operators, electrode charge, open/short-circuit response

@@ -62,7 +62,7 @@ def checked_case(cfg):
     if type(cfg['order']) is not int or type(cfg['steps']) is not int:
         raise ValueError('tensor order and steps must be integers')
     if cfg['scope']=='research_intact':
-        geometry=(asdict(Plate()),[150,150,1],[.02,.02],[[.25,.25],[.48,.48],[.35,.20]])
+        geometry=(asdict(Plate(thickness_m=.003)),[150,150,1],[.02,.02],[[.25,.25],[.48,.48],[.35,.20]])
         valid=cfg['order'] in (3,4,5) and cfg['steps'] in (32768,65536,131072)
     elif cfg['scope']=='verification_smoke':
         geometry=(dict(width_m=.04,height_m=.03,thickness_m=.003),[2,2,1],[.008,.008],

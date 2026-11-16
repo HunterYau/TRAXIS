@@ -132,7 +132,7 @@ class Scenario:
     @classmethod
     def from_dict(cls, value: dict):
         data = dict(value)
-        data["plate"] = Plate(**data["plate"])
+        data["plate"] = Plate.from_dict(data["plate"])
         data["recesses"] = tuple(CircularRecess(**r) for r in data["recesses"])
         data["acquisition"] = AcquisitionSettings(**data["acquisition"])
         nuisance = dict(data["nuisance"])

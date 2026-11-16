@@ -38,7 +38,7 @@ class ModelTests(unittest.TestCase):
                         output = model(self.batch) if architecture == "direct" else model(self.batch, torch.zeros(1, 2, size, size))
                         self.assertEqual(output.shape, (1, 1, size, size))
                         self.assertTrue(torch.isfinite(output).all())
-                        self.assertTrue(((output >= 0) & (output <= 3)).all())
+                        self.assertTrue(((output >= 0) & (output <= self.bank.plate.thickness_m*1000)).all())
                         loss = reconstruction_loss(output, torch.zeros_like(output))
                         loss.backward()
                         gradients = [p.grad for p in model.parameters() if p.grad is not None]

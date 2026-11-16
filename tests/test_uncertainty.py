@@ -117,7 +117,8 @@ class CalibrationWorkflowTests(unittest.TestCase):
         with np.load(output / "case-00000-intervals.npz", allow_pickle=False) as maps:
             self.assertTrue(np.all(maps["lower_2_mm"] <= maps["upper_2_mm"]))
             self.assertGreaterEqual(maps["lower_2_mm"].min(), 0)
-            self.assertLessEqual(maps["upper_2_mm"].max(), 3)
+            thickness_mm = self.dataset.read(self.dataset.select('test')[0]).plate.thickness_m*1000
+            self.assertLessEqual(maps["upper_2_mm"].max(), thickness_mm)
 
     def test_model_selection_data_and_research_mode_cannot_be_used_for_fixture_calibration(self):
         from traxis.uncertainty import freeze_calibration_plan

@@ -60,6 +60,83 @@
         "de20a3763cbbec9c22cfc1aabfd3c5afc41af45da14054a42ad28fdbd7c6f9bf"
       ],
       "reason": "Cache at most sixteen small repeated Lagrange reference grids, with exact point bytes and fresh writable return arrays in the original layout. Original Polynomial evaluation arithmetic is unchanged. Fifty basis arrays and six intact/recessed Q3-Q5 coupled-XYZ mesh/operator assemblies match actual archived uncached source bit for bit; the full 12,431,655-DOF recessed operator preserves every retained array hash and stability value. Native geometry and all-column operator checks also pass. This is setup reuse only, with no mesh, precision, integration or acceptance change."
+    },
+    "traxis/config.py": {
+      "historical_sha256": [
+        "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "dcf3ba007fff7f8eace8d142f0e441767fc97d06f6dc4663c3ca985fb7468495"
+    },
+    "traxis/models.py": {
+      "historical_sha256": [
+        "09d61adce10ca6b6585fd92c359e2e1f7ed6bb0ad8ea903d7bcbb591668ccf57"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "2eb9d7649e8078a5e1ca268d1b265ba0be67c9cfe750d7f5395dd70c5d459da8"
+    },
+    "traxis/scenarios.py": {
+      "historical_sha256": [
+        "2b0bad291ed8b10aa0f739fa7ba26c0957491efb8fe53a36eaf9feaafc192dad"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "feb92e1476deb3016efc519707fa1eabe7463d7ac95dbd38cb7d912bf60c7035"
+    },
+    "traxis/bank.py": {
+      "historical_sha256": [
+        "ee5d933ce68b796803c6e02afddd57ed86a109c3c8bcf864b9b7a248ace06f7f"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "4afba940f3f008749c0693fbdbbce52697807dd775028afd7c595a2bb2135c21"
+    },
+    "traxis/importers.py": {
+      "historical_sha256": [
+        "15cf770ab4d31c8ed9100d09a1c54b87345e4e1351e83901d5fd419a626b8d06"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "b2b0810768af76d426dcf108d79a261db0c501d8a35bbfc9e8849fb44e42bdde"
+    },
+    "traxis/cli.py": {
+      "historical_sha256": [
+        "057ce16ca2702bd3678e6348d4d336f00e84204eff40dfd12f1934de83352694"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "dcd5b859a13f048a094c7e2be33905d6ae23246b6a4e9b59202ba2ade88cde1d"
+    },
+    "examples/tensor_wave.py": {
+      "historical_sha256": [
+        "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "171477f31a04bd5e2aa818bd22d4abc168227221ba63065e4119d717fdce72b5"
+    },
+    "examples/tensor_wave_study.py": {
+      "historical_sha256": [
+        "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "34c4988fec1d906e692742c5c1e52468b88e152bf396c4e135ee38d8a92b73cd"
+    },
+    "examples/gpu_tensor_reference.py": {
+      "historical_sha256": [
+        "81abfb021e1e605ea39c564b79e860e2407e408ce8a2b1ec54056698294dd6af"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "30654ed130d1664cd867ab63695d221f60169b8331520ef642ca3129d8bbc78c"
+    },
+    "examples/recess_geometry_reference.py": {
+      "historical_sha256": [
+        "35a030c3725ee1d0945984b53abcc3c522278f25fc645fffee7f71969f71205e"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "26ef3bd7ad0d182d03c9e3224da93ced187adaf22013c84b7e0d76a2128917c0"
+    },
+    "examples/recess_shape_reference.py": {
+      "historical_sha256": [
+        "516347e39bbe541e2c2220aea89f0e6a9796a124d30b26dca67d8dd2e2fd0e64"
+      ],
+      "reason": "Prospective defaults use 3.175 mm stock and a matching 3.175 mm model output bound. Recorded scenario/bank/import geometry must state all three dimensions; complete historical 3 mm records retain their values. Historical tensor and geometry references now name their original 3 mm thickness explicitly. Fourteen embedded and five tensor case identities remain unchanged. These non-operator defaults/readers are not used to alter the explicit geometry or arithmetic of archived mechanical controls.",
+      "current_sha256": "2c6cc434c47044855930e363c78ceace0a291fad36a6b362a6e0d318ba132689"
     }
   }
 }

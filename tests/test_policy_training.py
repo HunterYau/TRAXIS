@@ -60,7 +60,8 @@ class PolicyTrainingTests(unittest.TestCase):
         self.assertTrue(any(not torch.equal(v, session.network.state_dict()[k]) for k, v in before.items() if k.startswith("actor.")))
         for member in session.predictor.members:
             self.assertTrue(all(not p.requires_grad and p.grad is None for p in member.model.parameters()))
-        expected = (row["initial_balanced_error_mm"] - row["final_balanced_error_mm"]) / 3 - 2 * session.config.record_cost
+        thickness_mm = self.dataset.read(self.dataset.select('train')[0]).plate.thickness_m*1000
+        expected = (row["initial_balanced_error_mm"] - row["final_balanced_error_mm"]) / thickness_mm - 2 * session.config.record_cost
         self.assertAlmostEqual(sum(row["rewards"]), expected, places=12)
 
     def test_resume_restores_sampled_actions_optimizer_and_weights_exactly(self):

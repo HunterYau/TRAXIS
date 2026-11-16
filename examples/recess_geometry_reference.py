@@ -289,7 +289,7 @@ def main():
     if not output.is_relative_to(PROJECT/'outputs'):
         raise ValueError('geometry evidence must remain in project outputs')
     output.mkdir(parents=True, exist_ok=False)
-    cases = [dict(plate=asdict(Plate()), recess=asdict(CircularRecess(.25, .25, diameter/2, depth)),
+    cases = [dict(plate=asdict(Plate(thickness_m=.003)), recess=asdict(CircularRecess(.25, .25, diameter/2, depth)),
                   geometry_order=g, defective=defective)
         for defective in (False, True) for diameter in (.02, .03, .04)
         for depth in (.00075, .0015, .002) for g in range(1, 6)]

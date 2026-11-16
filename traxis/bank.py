@@ -155,10 +155,11 @@ class WaveformBank:
             manifest = json.loads(str(source["manifest"].item()))
             if manifest["schema_version"] != 1:
                 raise ValueError("unsupported waveform bank schema")
+            plate = Plate.from_dict(manifest.get("plate", {}))
             arrays = {key: source[key] for key in expected - {"manifest"}}
             if {key: _digest(value) for key, value in arrays.items()} != manifest["sha256"]:
                 raise ValueError("waveform bank array integrity check failed")
-        return cls(BankMetadata(**manifest["metadata"]), Plate(**manifest["plate"]),
+        return cls(BankMetadata(**manifest["metadata"]), plate,
                    actions=tuple(Action(**a) for a in manifest["actions"]), **arrays)
 
 

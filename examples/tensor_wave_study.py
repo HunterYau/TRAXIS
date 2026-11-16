@@ -16,7 +16,7 @@ from traxis.storage import atomic_write,sha256_file,write_json
 
 
 def checked_protocol(cfg):
-    expected=dict(kind='tensor_fullplate_wave_study',plate=asdict(Plate()),material=asdict(Material()),cells=[150,150,1],
+    expected=dict(kind='tensor_fullplate_wave_study',plate=asdict(Plate(thickness_m=.003)),material=asdict(Material()),cells=[150,150,1],
         source_center_xy_m=[.02,.02],receiver_centers_xy_m=[[.25,.25],[.48,.48],[.35,.20]],
         spatial_orders=[3,4,5],spatial_steps=65536,time_order=4,time_steps=[32768,65536,131072],
         spatial_finest_change_limit=.05,require_decreasing_spatial_differences=True,time_ratio_bounds=[3.8,4.2],

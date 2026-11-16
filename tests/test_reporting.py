@@ -38,7 +38,7 @@ class ReportingTests(unittest.TestCase):
         report = load_evaluation(self.evaluation)
         plate, maps = load_case(self.evaluation, report["episodes"][0], 0, 2)
         self.assertEqual(plate.width_m, .5)
-        self.assertEqual(plate.thickness_m, .003)
+        self.assertEqual(plate.thickness_m, .003175)
         self.assertEqual(maps["prediction"].shape, (128, 128))
         self.assertEqual(maps["truth"].shape, (512, 512))
         self.assertEqual(report["predictors"]["model-0"]["neural_parameters"], 0)

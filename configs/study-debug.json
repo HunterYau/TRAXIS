@@ -6,7 +6,7 @@
     "seeds": [101, 202],
     "subset_seeds": [37, 53]
   },
-  "model": {"width": 8, "embedding": 32, "heads": 4, "max_depth_mm": 3.0},
+  "model": {"width": 8, "embedding": 32, "heads": 4, "max_depth_mm": 3.175},
   "training": {
     "mode": "debug", "phase": "pretrain", "max_steps": 1,
     "min_records": 2, "max_records": 4, "validation_records": 4,

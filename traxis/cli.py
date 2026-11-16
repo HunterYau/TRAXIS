@@ -20,7 +20,7 @@ def main() -> None:
     preflight.add_argument("--cells", type=int, nargs=3, default=(250, 250, 6))
     dispersion = sub.add_parser("dispersion", help="independent A0/S0 infinite-plate reference")
     dispersion.add_argument("--frequencies-khz", type=float, nargs="+", default=[50, 75, 100, 125, 150])
-    dispersion.add_argument("--thickness-mm", type=float, nargs="+", default=[3.0, 1.0])
+    dispersion.add_argument("--thickness-mm", type=float, nargs="+", default=[3.175, 1.0])
     dispersion.add_argument("--output", type=Path)
     verify = sub.add_parser("verify", help="short CPU elastic FEM checks; no training")
     verify.add_argument("--output", type=Path, default=Path("outputs/verification"))
