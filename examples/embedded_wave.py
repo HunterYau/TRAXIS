@@ -43,7 +43,7 @@ def case_config(scope='smoke', order=4, steps=None, defective=False, *, h_level=
         case=case_config('full',4,294912,defective)
         case.update(scope=scope,h_level=h_level,angular_cells=angular,radial_cells=list(radial),
             outer_cell_size_m=spacing,h_mesh_vector_dof_limit=24000000,
-            max_operator_bytes=3072*1024**2,max_device_mib=6144,max_host_mib=4096,max_workspace_mib=3072)
+            max_operator_bytes=3072*1024**2,max_device_mib=6144,max_host_mib=4096,max_workspace_mib=2048)
         return case
     if h_level is not None:
         raise ValueError('h level is only permitted for the h-refinement scope')

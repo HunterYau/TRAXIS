@@ -33,6 +33,12 @@ class HControlTests(unittest.TestCase):
                 self.assertEqual(screen(c)['vector_dofs'],count)
                 self.assertEqual(mesh_controls(c)['max_vector_dofs'],24000000)
                 self.assertLess(screen(c)['allocation_upper_bytes'],512*1024**2)
+                self.assertLessEqual(c['max_workspace_mib'],2048)
+                # Resident vectors plus full traces/energy and maximum sparse
+                # probe support must fit the integrator's supported envelope.
+                sample_bytes=(c['steps']+1)*3*8+(c['steps']//c['energy_stride']+1)*24
+                required=(16*count*8+sample_bytes+100000*16)/1024**2
+                self.assertLess(required,c['max_workspace_mib'])
         self.assertEqual(len(H_LEVELS),3)
         self.assertEqual(p['finest_relative_change_limit'],.01)
 

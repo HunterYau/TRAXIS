@@ -13,6 +13,8 @@ from examples.tensor_wave import read_json
 from tests.test_gpu_mapped_tensor import small_system
 from traxis.gpu_mapped_tensor import KERNEL,build_gpu_mapped,storage_screen
 from traxis.mapped_tensor import action
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate
+from traxis.fem import tone_burst
 
 
 class CapacityTests(unittest.TestCase):
@@ -48,6 +50,28 @@ class CapacityCUDAParityTests(unittest.TestCase):
         self.assertLess(np.linalg.norm(a-b)/np.linalg.norm(expected),1e-12)
         self.assertLess(np.linalg.norm(b-expected)/np.linalg.norm(expected),1e-11)
         np.testing.assert_array_equal(expanded.mass_diagonal,system.mass_kg)
+
+    def test_every_h_launch_configuration_reaches_a_real_synchronized_batch(self):
+        # Uses the actual planned step/stride/workspace settings on a small
+        # operator, then deliberately stops at the first batch. This is an
+        # interface smoke check, not a completed wave or accuracy proof.
+        class FirstBatch(RuntimeError):pass
+        cpu=small_system(order=4);rng=np.random.default_rng(20261116)
+        load=rng.normal(size=len(cpu.mass_kg));probes=load[None,:]
+        for level in range(3):
+            c=case_config('h_refinement',h_level=level,defective=True)
+            gpu=build_gpu_mapped(cpu,**gpu_controls(c));events=[]
+            def stop(event):
+                events.append(event['steps_completed']);raise FirstBatch()
+            with self.assertRaises(FirstBatch):
+                gpu_explicit_simulate(gpu,c['steps'],c['duration_s']/c['steps'],probes,load,
+                    force=lambda t:tone_burst(t,c['frequency_hz'],c['cycles']),
+                    output_stride=c['output_stride'],energy_stride=c['energy_stride'],
+                    max_workspace_mib=c['max_workspace_mib'],progress=stop)
+            self.assertEqual(events,[16])
+        with self.assertRaisesRegex(ValueError,'explicit states'):
+            gpu_explicit_simulate(gpu,c['steps'],c['duration_s']/c['steps'],probes,load,
+                max_workspace_mib=3072,progress=stop)
 
 
 if __name__=='__main__':unittest.main()

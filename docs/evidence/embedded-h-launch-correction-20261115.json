@@ -1,0 +1,38 @@
+{
+  "kind": "embedded_h_launch_contract_correction",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "excluded_attempt": {
+    "directory": "outputs/embedded-h-wave-recess-level1-20261115-v1",
+    "forward_fingerprint": "e0cb3683a0c1a00f1e6bb11288f6f66f7560d1ce4fcd7baf1ddf7b084ec2fcf0",
+    "worker_fingerprint": "18c672c85ae1df2aad1e56c1e5da73dbc299418314c485057c4ee85daebfc01a",
+    "steps_completed": 0,
+    "reason": "New h workspace ceiling 3072 MiB exceeded the existing integrator API maximum of 2048 MiB; stopped before propagation."
+  },
+  "correction": "Use the supported 2048 MiB h ceiling. All actual vector/sample forecasts fit. No geometry, time step, precision or numerical operation changed.",
+  "tests": {
+    "directory": "outputs/embedded-h-launch-check-20261115-v2",
+    "tests": 15,
+    "skipped": 0,
+    "failures": 0,
+    "seconds": 1.746,
+    "files": {
+      "invocation.json": "31921eedc6c06c89b07776d489cb1de83b8e93143e1971b1b711e6f19f450360",
+      "monitor-result.json": "09116e71ae03a9835d4835016c5101a4b6504ae83974f867d2d4c15456013af0",
+      "tests.log": "76e44d6ebbb0356b0224f068922b7100566a76d0423fd18c9c6b2b144e5c2d83",
+      "source-snapshot.zip": "e7b19817aadaa40ceb561f69c07b8011976f97e7b7556a867b81ca81858bd9f2"
+    }
+  },
+  "native_contract": "All three planned h step/stride/workspace configurations reach the first real synchronized batch on a small CUDA operator, then deliberately stop at step 16. The unsupported old ceiling reproduces the original rejection. These are interface smoke checks, not complete waveforms.",
+  "sources": {
+    "examples/embedded_wave.py": "5f34355548527c7342b4779300d2c71efaa4cbb85adb4a0cb84dec692214358f",
+    "tests/test_embedded_h_controls.py": "3b19c0f2fce4bc17d3863c6df351720fa10d0dadc91b6b82cc650b8e3e121259",
+    "tests/test_mapped_capacity.py": "b35031f0232208682fb60c16ee2478b7f732cbddf861795ea614f5849f5088a4",
+    "configs/embedded-wave-source-review.json": "32db99adb248db829e838d1c27bf8f24e166903b83167fe3d7b1a4500f73daa6"
+  },
+  "scope": "Launch contract repair plus software/native smoke evidence only; failed full attempt retained.",
+  "fingerprint": "4b47c6bc60adc91bdf3750d683adde965bd41b5fde3564f2f6918a5eca610225"
+}

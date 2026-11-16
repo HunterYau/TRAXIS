@@ -108,7 +108,8 @@ def assess(intact_roots,intact_cpu,recessed_roots,recessed_cpu,protocol_path,out
     output.mkdir(parents=True,exist_ok=False)
     report=dict(kind='embedded_h_refinement',completed=False,passed=False,ready_for_training_data=False,
         training_updates=0,protocol=protocol,protocol_sha256=PROTOCOL_SHA256,analysis_sources=sources,
-        scope='Fixed-Q4 raw intact/recessed/scattering spatial screen; no PZT or physical-data acceptance.')
+        through_thickness_refined=False,
+        scope='Fixed-Q4 in-plane intact/recessed/scattering screen with unchanged thickness layers; no full 3D spatial, PZT or physical-data acceptance.')
     try:
         levels=[];bindings=[]
         for i,(root,cpu) in enumerate(zip(roots,checks)):

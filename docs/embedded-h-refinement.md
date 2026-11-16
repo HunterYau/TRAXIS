@@ -15,6 +15,12 @@ differences and a finest relative change below 1%. No amplitude fit, phase
 alignment or interpolation is permitted. This is a new study rather than a
 replacement verdict for the original p-refinement.
 
+This study refines the in-plane cells only; its two thickness partitions keep
+one Q4 layer each. It diagnoses the in-plane contribution to the original
+failure. A passing result alone cannot establish full 3D spatial convergence.
+Through-thickness or coupled 3D refinement remains a requirement before data
+acceptance, especially because the original p study changed all directions.
+
 Analytical mesh screens predict intact vector DOF counts of 4,507,515,
 8,090,091 and 12,567,987; recessed counts are 4,462,575, 8,005,599 and
 12,431,655. Every mesh forecast remains under 512 MiB. The finest mesh needs
@@ -111,3 +117,13 @@ signals, with orders approximately 2.000001. Scattering finest changes are
 0.00130026%, 0.000953019% and 0.00185873%, below the fixed 0.1% limit.
 The updated-source reassessment retains the original spatial scattering
 failure at 1.344761%. See `evidence/embedded-recess-time-capacity-20261115.json`.
+
+The first level-1 wave attempt passed geometry/operator/port setup, then
+stopped before step 1: its proposed 3,072-MiB workspace ceiling exceeded the
+integrator API's existing 2,048-MiB maximum. The h ceiling is corrected to
+2,048 MiB; all actual vector/sample forecasts fit without changing precision,
+geometry, time step or calculations. The failed attempt is retained and
+excluded. Fifteen tests now pass, including real CUDA launches with each
+planned step/stride/workspace configuration deliberately stopped at the first
+synchronized batch. The old unsupported ceiling reproduces the rejection.
+See `evidence/embedded-h-launch-correction-20261115.json`.
