@@ -65,12 +65,13 @@ extern "C" __global__ void mapped_tensor_apply(
 '''
 
 
-def storage_screen(system, *, max_device_mib=512, max_host_mib=512):
+def storage_screen(system, *, max_device_mib=512, max_host_mib=512, max_vector_dofs=12000000):
     """Check counts and host/device forecasts before importing CUDA."""
     if not isinstance(system, MappedTensorSystem):
         raise ValueError('mapped CUDA elasticity needs a checked CPU mapped system')
     if (not math.isfinite(max_device_mib) or not 0 < max_device_mib <= 6144
-            or not math.isfinite(max_host_mib) or not 0 < max_host_mib <= 4096):
+            or not math.isfinite(max_host_mib) or not 0 < max_host_mib <= 4096
+            or type(max_vector_dofs) is not int or not 1 <= max_vector_dofs <= 24000000):
         raise ValueError('invalid mapped CUDA memory limits')
     mesh = system.mesh
     line_rule(mesh.order)
@@ -80,7 +81,7 @@ def storage_screen(system, *, max_device_mib=512, max_host_mib=512):
     # time integrator, including the two operator buffers. Samples are extra.
     device_bytes = ne*n*(10*8+4) + q*q*8 + 16*3*ns*8 + 4096
     host_bytes = system.screen['operator_storage_screen_bytes'] + mesh.allocation_upper_bytes
-    if (3*ns > 12000000 or ne > 1000000 or device_bytes > max_device_mib*1024**2
+    if (3*ns > max_vector_dofs or ne > 1000000 or device_bytes > max_device_mib*1024**2
             or host_bytes > max_host_mib*1024**2):
         raise MemoryError('mapped CUDA operator exceeds its preallocation screen')
     if (mesh.element_nodes.shape != (ne, n) or mesh.element_nodes.dtype.kind not in 'iu'
@@ -93,7 +94,7 @@ def storage_screen(system, *, max_device_mib=512, max_host_mib=512):
             or np.any(system.volume_weights_m3 <= 0) or np.any(system.mass_kg <= 0)
             or not math.isfinite(system.stable_dt_s) or system.stable_dt_s <= 0):
         raise ValueError('mapped CUDA geometry, connectivity or positive mass is invalid')
-    return {**system.screen, 'scalar_dofs':ns, 'vector_dofs':3*ns, 'elements':ne, 'local_scalar_dofs':n,
+    result = {**system.screen, 'scalar_dofs':ns, 'vector_dofs':3*ns, 'elements':ne, 'local_scalar_dofs':n,
         'device_storage_screen_mib':device_bytes/1024**2, 'host_storage_screen_mib':host_bytes/1024**2,
         'max_device_mib':max_device_mib, 'max_host_mib':max_host_mib,
         'precision':'float64', 'global_sparse_assembly':False,
@@ -103,6 +104,8 @@ def storage_screen(system, *, max_device_mib=512, max_host_mib=512):
         'kernel_source_sha256':hashlib.sha256(KERNEL.encode()).hexdigest(),
         'kernel_defines':{'LOCAL_NODES':n}, 'kernel_threads':128 if n <= 128 else 256,
         'kernel_shared_bytes':12*n*8}
+    if max_vector_dofs!=12000000:result['max_vector_dofs']=max_vector_dofs
+    return result
 
 
 class MappedTensorStorage(_Storage):
@@ -147,10 +150,12 @@ class GPUMappedTensorSystem:
     device: dict
 
 
-def build_gpu_mapped(system, *, device_id=0, guard=None, max_device_mib=512, max_host_mib=512):
+def build_gpu_mapped(system, *, device_id=0, guard=None, max_device_mib=512, max_host_mib=512,
+                     max_vector_dofs=12000000):
     if type(device_id) is not int or not 0 <= device_id <= 31:
         raise ValueError('invalid mapped CUDA device')
-    screen = storage_screen(system, max_device_mib=max_device_mib, max_host_mib=max_host_mib)
+    screen = storage_screen(system, max_device_mib=max_device_mib, max_host_mib=max_host_mib,
+                            max_vector_dofs=max_vector_dofs)
     if guard:
         guard.check(force=True)
     import cupy as cp

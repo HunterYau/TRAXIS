@@ -130,5 +130,6 @@
       "screen_sha256": "68edcd8347890faedaf41f002d5e8373051ae9fd4a1cc0793a415e64c66af6e0",
       "execution_sha256": "1c160961999d6cb9ddc2a879e14076f97ef5b68b809b28ae9a120245a4f59b81"
     }
-  ]
+  ],
+  "cuda_kernel_sha256": "c8d5d2fb8ebf0baf94f303190459a1215945cf52b6b60ccba022692fad7aac94"
 }
