@@ -89,3 +89,11 @@ checkout the finest h level will still stop at that guard. Integrate the
 capacity extension after the fine run and CPU check complete, then verify
 the actual larger operator, stability and trajectory. Assessment software
 evidence is `evidence/embedded-h-assessment-debug-20261115.json`.
+
+Further review found that accepting only the original CPU proof could ignore
+a failed new launcher receipt. The assessor now requires that receipt for
+new h cases, including its pass state, exact CPU-proof hash, launcher source
+and matching actual resource limits; it rechecks the binding before publication.
+Exact original coarse controls retain their existing independent CPU receipts.
+Thirteen focused tests pass, including changed/failed launcher and altered
+CPU-envelope rejection. See `evidence/embedded-h-cpu-binding-20261115.json`.

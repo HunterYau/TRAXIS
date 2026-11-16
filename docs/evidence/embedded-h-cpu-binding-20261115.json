@@ -1,0 +1,29 @@
+{
+  "kind": "embedded_h_cpu_binding_evidence",
+  "date": "2026-11-15",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "scope": "Manufactured waveform/launcher receipt checks; no large h wave trajectory.",
+  "tests": 13,
+  "skipped": 0,
+  "failures": 0,
+  "test_seconds": 0.65,
+  "directory": "outputs/embedded-h-assessment-unit-20261115-v4",
+  "sources": {
+    "examples/embedded_h_study.py": "ad0de312ccfeb8c595d78f539441c75baa075de261d858140669f2c451086383",
+    "examples/verify_embedded_h_window.py": "623bed40a46d43a6ffa4fd8a20f2b5bcacbb0c37aed27de426643d4f33226b83",
+    "tests/test_embedded_h_study.py": "1f47377dba2f6894c5f7902d5ea0dc4df851083fae708672eafa2fb25c9b732d",
+    "configs/embedded-h-protocol.json": "59d853cd1ad1fc32691a154b4f277084fbf177c125087d2ccc0607dd2ba17adc"
+  },
+  "files": {
+    "invocation.json": "bfaa757d456d7211522755269dd6150df67f43352151b5a3bdea5354304f8275",
+    "monitor-result.json": "f587942895e203f3cb081ecc8774cfbafa662bac6d68262bca82394edf234352",
+    "tests.log": "5e0feb21e7b3ba0ce8465be4de5d851bea76163f5d15e2578f650a8ec8330576",
+    "source-snapshot.zip": "d6a3b312debbd2fa77abbe7e3146b8aab5a3a961f186bc76e4a1364a45e656eb"
+  },
+  "correction": "The h assessor now requires the new launcher success receipt as well as the original independent CPU proof, binds its exact source/hash, verifies actual CPU and declared resource limits agree, and rechecks the receipt after assessment.",
+  "original_coarse_cpu_receipts": "Preserved; exact original controls do not require a new launcher sidecar.",
+  "fingerprint": "2bf1f85d3262f7de87ecd51d0a0a0c04ecfcf7048c460385b57704b57ca28cec"
+}

@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from examples.embedded_h_study import checked_level,compare_h,compare_pairs,load_protocol
+from examples.embedded_h_study import checked_launcher,checked_level,compare_h,compare_pairs,load_protocol
 from examples.embedded_wave import case_config
 from examples.tensor_wave import PROJECT,checked_receipt,read_json,sealed
 from examples.verify_embedded_h_window import verify_h
@@ -107,6 +107,31 @@ class HCPUWrapperTests(unittest.TestCase):
                 self.assertEqual(observed['limits']['max_system_memory_percent'],89.9)
                 self.assertEqual(observed['limits']['max_seconds'],600)
                 self.assertEqual(observed['limits']['max_rss_mib'],4096)
+
+    def test_h_assessment_requires_the_passing_launcher_and_its_exact_cpu_proof(self):
+        with tempfile.TemporaryDirectory() as temp:
+            project=Path(temp);root,out=self.fixture(project)
+            def checker(r,o,g):
+                o.mkdir();report=sealed(dict(completed=True,passed=True,fixture=True,resources=g.report()))
+                write_json(o/'cpu-window-check.json',report);return report
+            with patch('examples.verify_embedded_h_window.PROJECT',project), \
+                    patch('examples.verify_embedded_h_window.verify',side_effect=checker):verify_h(root,out)
+            case=case_config('h_refinement',h_level=1)
+            self.assertIsNotNone(checked_launcher(case,out))
+            original=checked_receipt(read_json(out/'cpu-launcher.json'))
+            for key,value in [('completed',False),('passed',False),('ready_for_training_data',True),
+                              ('training_updates',1),('cpu_proof_sha256','other'),('launcher_sha256','other'),('limits',{})]:
+                changed={k:v for k,v in original.items() if k!='fingerprint'};changed[key]=value
+                write_json(out/'cpu-launcher.json',sealed(changed),overwrite=True)
+                with self.assertRaises(ValueError):checked_launcher(case,out)
+            cpu={k:v for k,v in read_json(out/'cpu-window-check.json').items() if k!='fingerprint'}
+            cpu['resources']['limits']['max_system_memory_percent']=95
+            write_json(out/'cpu-window-check.json',sealed(cpu),overwrite=True)
+            launch={k:v for k,v in original.items() if k!='fingerprint'}
+            launch['cpu_proof_sha256']=sha256_file(out/'cpu-window-check.json')
+            write_json(out/'cpu-launcher.json',sealed(launch),overwrite=True)
+            with self.assertRaises(ValueError):checked_launcher(case,out)
+            self.assertIsNone(checked_launcher(case_config('full',4,294912),out))
 
     def test_checker_failure_is_not_reported_as_a_pass(self):
         with tempfile.TemporaryDirectory() as temp:

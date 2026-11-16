@@ -10,13 +10,17 @@ from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import sha256_file, write_json
 
 
+def cpu_limits():
+    return ResourceLimits(max_seconds=600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)
+
+
 def verify_h(root,output):
     root,output=Path(root).resolve(),Path(output).resolve()
     if not all(p.is_relative_to(PROJECT/'outputs') for p in (root,output)):
         raise ValueError('h CPU inputs and outputs must remain in project outputs')
     case=checked_case(read_json(root/'embedded-wave-plan.json')['case'])
     if case['scope']!='h_refinement':raise ValueError('use the original CPU launcher for the original controls')
-    guard=ResourceGuard(ResourceLimits(max_seconds=600,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768))
+    guard=ResourceGuard(cpu_limits())
     source_hash=sha256_file(__file__);report=None;finished=False
     try:
         report=verify(root,output,guard)

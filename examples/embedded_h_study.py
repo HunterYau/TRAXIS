@@ -1,5 +1,6 @@
 """Assess the predeclared finer-cell controls and their defect-induced traces."""
 import argparse
+from dataclasses import asdict
 import json
 from pathlib import Path
 
@@ -8,8 +9,9 @@ import numpy as np
 from examples.embedded_wave import case_config, checked_case
 from examples.embedded_wave_study import checked_resources
 from examples.embedded_wave_evidence import check_integrator_transition, validate_saved_plan
-from examples.tensor_wave import PROJECT, read_json, sealed
+from examples.tensor_wave import PROJECT, checked_receipt, read_json, sealed
 from examples.verify_green_synthesis import reference_window as checked_cpu_window
+from examples.verify_embedded_h_window import cpu_limits
 from traxis.resources import ResourceGuard, ResourceLimits
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
 
@@ -33,6 +35,20 @@ def checked_level(case,index,defective):
     # stricter allocation budgets remain in its original plan and receipt.
     if index==0 and actual==case_config('full',4,294912,defective):return expected
     raise ValueError('h comparison changed a declared level or its material state')
+
+
+def checked_launcher(case,cpu_root):
+    if case['scope']!='h_refinement':return None
+    path=Path(cpu_root)/'cpu-launcher.json';receipt=checked_receipt(read_json(path))
+    proof=Path(cpu_root)/'cpu-window-check.json'
+    cpu=checked_receipt(read_json(proof))
+    if (receipt.get('kind')!='embedded_h_cpu_launcher' or not receipt['completed'] or not receipt['passed']
+            or receipt['ready_for_training_data'] or receipt['training_updates']!=0
+            or receipt['cpu_proof_sha256']!=sha256_file(proof)
+            or receipt['launcher_sha256']!=sha256_file(PROJECT/'examples/verify_embedded_h_window.py')
+            or receipt['limits']!=asdict(cpu_limits()) or cpu['resources']['limits']!=receipt['limits']):
+        raise ValueError('h CPU launcher is missing its passing bound proof, source or resource envelope')
+    return dict(path=str(path.resolve()),sha256=sha256_file(path),fingerprint=receipt['fingerprint'])
 
 
 def compare_h(times,traces,protocol):
@@ -87,7 +103,8 @@ def assess(intact_roots,intact_cpu,recessed_roots,recessed_cpu,protocol_path,out
         raise ValueError('h study requires six distinct windows, six CPU checks and a fresh project output')
     protocol=load_protocol(protocol_path)
     sources={name:sha256_file(PROJECT/name) for name in ('examples/embedded_h_study.py',
-        'examples/embedded_wave_study.py','examples/embedded_wave_evidence.py','examples/verify_green_synthesis.py')}
+        'examples/embedded_wave_study.py','examples/embedded_wave_evidence.py','examples/verify_green_synthesis.py',
+        'examples/verify_embedded_h_window.py')}
     output.mkdir(parents=True,exist_ok=False)
     report=dict(kind='embedded_h_refinement',completed=False,passed=False,ready_for_training_data=False,
         training_updates=0,protocol=protocol,protocol_sha256=PROTOCOL_SHA256,analysis_sources=sources,
@@ -97,6 +114,7 @@ def assess(intact_roots,intact_cpu,recessed_roots,recessed_cpu,protocol_path,out
         for i,(root,cpu) in enumerate(zip(roots,checks)):
             guard.check();level,binding=checked_cpu_window(root,cpu,guard)
             checked_level(level['case'],i%3,i>=3);checked_resources(level)
+            binding['cpu_launcher']=checked_launcher(level['case'],cpu)
             levels.append(level);bindings.append(binding)
         transition=check_integrator_transition([b['source_check'] for b in bindings],source_check)
         keys=('name','compute_capability','total_bytes','cupy_version','precision')
@@ -108,6 +126,8 @@ def assess(intact_roots,intact_cpu,recessed_roots,recessed_cpu,protocol_path,out
         for level,binding in zip(levels,bindings):
             if (any(sha256_file(level['root']/name)!=h for name,h in binding['input_identities'].items())
                     or sha256_file(binding['cpu_path'])!=binding['cpu_sha256']
+                    or (binding['cpu_launcher'] is not None and
+                        sha256_file(binding['cpu_launcher']['path'])!=binding['cpu_launcher']['sha256'])
                     or validate_saved_plan(level['plan'],level['root'],guard)!=binding['source_check']):
                 raise ValueError('h study forward, CPU or source evidence changed')
         if (load_protocol(protocol_path)!=protocol or any(sha256_file(PROJECT/name)!=h for name,h in sources.items())
