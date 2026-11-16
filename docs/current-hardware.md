@@ -17,10 +17,11 @@ specify a replacement mounting method or measured coupling law.
 `configs/scenarios-study.json` now specifies 0.003175 m for new research
 scenario recipes. Its sensor layout, frequency list and existing nuisance
 ranges remain provisional. Existing 3 mm configurations, reference fixtures
-and measurements retain their original settings and provenance. In particular,
-the legacy `Plate()` default and tensor reference protocols still specify
-3 mm; new physical-study work must use an explicit 3.175 mm plate. Migration
-of those prospective workflows and fresh numerical verification are required.
+and measurements retain their original settings and provenance. `Plate()`
+and neural depth-bound defaults now use 3.175 mm. Historical tensor and
+geometry references explicitly retain 3 mm. Saved scenarios, banks and
+imported traces require complete recorded plate dimensions and preserve
+their stored thickness. See stock-defaults-20261115.md for migration checks.
 
 For unchanged recess depths 0.75/1.50/2.00 mm, remaining stock becomes
 2.425/1.675/1.175 mm. Guided modes, mesh/time requirements and waveforms need

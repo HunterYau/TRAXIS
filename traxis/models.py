@@ -95,7 +95,7 @@ class ModelConfig:
     embedding: int = 64
     heads: int = 4
     extra_decoder_blocks: int = 0
-    max_depth_mm: float = 3.0
+    max_depth_mm: float = 3.175
 
     def __post_init__(self):
         if self.architecture not in ("direct", "das_unet"):

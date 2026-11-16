@@ -81,7 +81,7 @@ def small_reference(output,guard):
 
 
 def full_reference(output,guard):
-    plate,material=Plate(),Material()
+    plate,material=Plate(thickness_m=.003),Material()
     layout=make_layout(plate,(150,150,1),4,max_device_mib=1024,max_host_mib=1024)
     system=build_gpu_tensor(layout,material,guard=guard)
     points=layout.points();x,y,z=(points[:,i]/length for i,length in enumerate((.5,.5,.003)))

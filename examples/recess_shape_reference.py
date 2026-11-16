@@ -85,7 +85,7 @@ def main():
     if not output.is_relative_to(PROJECT/'outputs'):
         raise ValueError('shape study output must remain in the project')
     output.mkdir(parents=True, exist_ok=False)
-    cases = [dict(plate=asdict(Plate()), recess=asdict(CircularRecess(.25, .25, diameter/2, depth)), defective=defective)
+    cases = [dict(plate=asdict(Plate(thickness_m=.003)), recess=asdict(CircularRecess(.25, .25, diameter/2, depth)), defective=defective)
         for defective in (False, True) for diameter in (.02, .03, .04) for depth in (.00075, .0015, .002)]
     analysis = {str(Path(__file__).relative_to(PROJECT)).replace('\\','/'): sha256_file(__file__),
                 'examples/recess_geometry_reference.py': sha256_file(reference.__file__)}

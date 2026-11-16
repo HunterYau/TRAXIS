@@ -1,0 +1,36 @@
+{
+  "protocol_fingerprint": "559b7d20a816140320cc6b846859baa0c3e0eee5cff60819c89b448eaede9e40",
+  "cases": [
+    {
+      "order": 3,
+      "steps": 65536,
+      "case_fingerprint": "4959ae4e4eabaeab27d2ecdeeb0621fb9fdd36f81c2328fcc65115581803590a"
+    },
+    {
+      "order": 4,
+      "steps": 32768,
+      "case_fingerprint": "5468944e61649e38a594f0961ee06b9fa3dfd6fd76e47674d9d99b811c9134cc"
+    },
+    {
+      "order": 4,
+      "steps": 65536,
+      "case_fingerprint": "8bfa1fc9f636886152eb9d5d3f0ec8195aecdbbd35ef7917e0ffa13672ad19a4"
+    },
+    {
+      "order": 4,
+      "steps": 131072,
+      "case_fingerprint": "1f33b9341ce5abc2b9c507fbb358389fb2ae41f4f4e6b508f8b7c70e7dcae9c1"
+    },
+    {
+      "order": 5,
+      "steps": 65536,
+      "case_fingerprint": "81f353ccad1b4c74a41af41887e640a4d6f1edca370af8afdf3990856ed7aefa"
+    }
+  ],
+  "old_default_thickness_m": 0.003,
+  "source_sha256": {
+    "traxis/config.py": "fb6e66f348eb6c1db08068760d10b7088797db177364dec2f3db05f3ee9607a3",
+    "examples/tensor_wave.py": "5d70832907e9c2e278712a18b22dc3ca1b65a533e5dc179f83b84488c86de1e8",
+    "examples/tensor_wave_study.py": "0633d5edbaa10be58d08996e2dc114a65d1a15f9f1100994053f524c6f4b4bdc"
+  }
+}

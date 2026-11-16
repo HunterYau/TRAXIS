@@ -65,7 +65,7 @@ class ScenarioTests(unittest.TestCase):
         for make in (lambda: AcquisitionSettings(sample_dt_s=1e-4),
                      lambda: AcquisitionSettings(samples=64),
                      lambda: SamplingSettings(coupling_relative_range=1),
-                     lambda: sample_scenarios(SamplingSettings(depths_m=(0.003,))),
+                     lambda: sample_scenarios(SamplingSettings(depths_m=(0.003175,))),
                      lambda: AcquisitionSettings(inset_m=0.001).sensors(Plate())):
             with self.assertRaises(ValueError):
                 make()

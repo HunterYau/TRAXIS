@@ -28,6 +28,7 @@ def import_trace_bundle(manifest_path: Path, guard: ResourceGuard | None = None,
     spec = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
     if spec["schema_version"] != 1:
         raise ValueError("unsupported trace bundle schema")
+    plate = Plate.from_dict(spec.get("plate", {}))
     base = manifest_path.parent
     consumed, hashes, loaded = 0, {}, {}
 
@@ -90,7 +91,7 @@ def import_trace_bundle(manifest_path: Path, guard: ResourceGuard | None = None,
     metadata = dict(spec["metadata"])
     metadata["settings"] = {**metadata["settings"], "import_source_sha256": hashes,
                             "import_manifest_sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest()}
-    bank = WaveformBank(BankMetadata(**metadata), Plate(**spec["plate"]), spec["sensors_xy_m"],
+    bank = WaveformBank(BankMetadata(**metadata), plate, spec["sensors_xy_m"],
                         tuple(actions), common_time, waves, baselines, label)
     if guard:
         guard.check(force=True)

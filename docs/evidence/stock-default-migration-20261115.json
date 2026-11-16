@@ -1,0 +1,122 @@
+{
+  "kind": "project_stock_default_migration_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "default_plate_thickness_m": 0.003175,
+  "default_model_depth_bound_mm": 3.175,
+  "unchanged_embedded_legacy_cases": 14,
+  "unchanged_historical_tensor_cases": 5,
+  "recorded_geometry_requires_all_dimensions": true,
+  "source_sha256": {
+    "traxis/config.py": "dcf3ba007fff7f8eace8d142f0e441767fc97d06f6dc4663c3ca985fb7468495",
+    "traxis/models.py": "2eb9d7649e8078a5e1ca268d1b265ba0be67c9cfe750d7f5395dd70c5d459da8",
+    "traxis/scenarios.py": "feb92e1476deb3016efc519707fa1eabe7463d7ac95dbd38cb7d912bf60c7035",
+    "traxis/bank.py": "4afba940f3f008749c0693fbdbbce52697807dd775028afd7c595a2bb2135c21",
+    "traxis/importers.py": "b2b0810768af76d426dcf108d79a261db0c501d8a35bbfc9e8849fb44e42bdde",
+    "traxis/cli.py": "dcd5b859a13f048a094c7e2be33905d6ae23246b6a4e9b59202ba2ade88cde1d",
+    "examples/tensor_wave.py": "171477f31a04bd5e2aa818bd22d4abc168227221ba63065e4119d717fdce72b5",
+    "examples/tensor_wave_study.py": "34c4988fec1d906e692742c5c1e52468b88e152bf396c4e135ee38d8a92b73cd",
+    "examples/gpu_tensor_reference.py": "30654ed130d1664cd867ab63695d221f60169b8331520ef642ca3129d8bbc78c",
+    "examples/recess_geometry_reference.py": "26ef3bd7ad0d182d03c9e3224da93ced187adaf22013c84b7e0d76a2128917c0",
+    "examples/recess_shape_reference.py": "2c6cc434c47044855930e363c78ceace0a291fad36a6b362a6e0d318ba132689",
+    "configs/study-debug.json": "f9e91e57182d8213a20c74c39b6be45718a87bd7a35b1559ae6a5eea7546ec3b",
+    "configs/embedded-wave-source-review.json": "f9c9f0c622248a49b2a6d8b0214b83077d440c168fc05148dc8d118fe090b7e6",
+    "tests/test_stock_defaults.py": "c48512855c5b8e8349b57f0fdde8dc931ea099e280edc77176a725adfee7b2c8",
+    "tests/fixtures/stock-legacy-tensor-identities.json": "c7c9f4276db3eb03ccaa01d21725614bdf092f26a5635df596936094fedcd5ff"
+  },
+  "receipts": {
+    "cpu": {
+      "path": "outputs/stock-defaults-cpu-suite-20261115-v3/test-report.json",
+      "sha256": "3c7b0abdb1bbfc3a9b60b6e6454ee66be074d60f2626946cbfb48e41221116a6",
+      "fingerprint": "10c07d5ee6dfeec11e8b58d07ae42e18a122c1309fdd213219fd0ae2bf67417f",
+      "passed": true
+    },
+    "monitor": {
+      "path": "outputs/stock-defaults-cpu-suite-20261115-v3/monitor.json",
+      "sha256": "230d3eb42cc7d06b7ac715355d5a804f1ab644c3deefad4a35cfa87f9d58396f",
+      "fingerprint": "52d56f0c0760480f3655418178e26ec7da8acf8e9f8953a150345563b5b4f4b0",
+      "passed": true
+    },
+    "gpu": {
+      "path": "outputs/stock-defaults-gpu-interface-20261115-v1/interface-report.json",
+      "sha256": "1e6ecf0daf9d29f810557403e8db0253a0972342006385c9ea125bdd27ee5585",
+      "fingerprint": "dd9f472233e873077b03218b33b441025dd26c6d687947a0e5bb74d80f43c723",
+      "passed": true
+    },
+    "transition": {
+      "path": "outputs/stock-defaults-source-transitions-20261115-v1/source-transitions-check.json",
+      "sha256": "887ca69e1124ce896b4929b9f09b376182a10d29a852b0e72d9d5de7b34d0acc",
+      "fingerprint": "8389682077da5dedfc166d0de18b9921d94a0629cb64048a263399dd4aa844f2",
+      "passed": true
+    },
+    "spatial": {
+      "path": "outputs/embedded-scattering-spatial-stock-review-20261115-v1/spatial-scattering-report.json",
+      "sha256": "2edb85ae64b349f75cb980685b063fce3b13a5604cba064c65710cdf0423bd80",
+      "fingerprint": "c1888fe6e80e9cd95c11e04039aab14e927c4882be67207bb7fa986ed28cc28a",
+      "passed": false
+    },
+    "time": {
+      "path": "outputs/embedded-scattering-time-stock-review-20261115-v1/time-scattering-report.json",
+      "sha256": "11bd78a9e7fb3ba2de102c4d2befd4b88c1029ec94ff0a7ba0a459133f2d451e",
+      "fingerprint": "111fdee6c038c24a4938fecbc2ca86d75c2433f92856c6e0e953ddded03930f4",
+      "passed": true
+    }
+  },
+  "retained_failed_attempts": [
+    {
+      "path": "outputs/stock-defaults-cpu-suite-20261115-v1/test-report.json",
+      "sha256": "e082b6295eba9970b9978dcc6d13a9b123d3df2b003abe977815e0118fb82b24",
+      "fingerprint": "a5f6ada97437e04d385ce7c6c7aa409a9e38a9a88d7f4d77769c180757abc012",
+      "tests": 441,
+      "failures": 1,
+      "errors": 19,
+      "skips": 35
+    },
+    {
+      "path": "outputs/stock-defaults-cpu-suite-20261115-v2/test-report.json",
+      "sha256": "f33bdf39f0e91097ce22f9b6ae11361a430ba232dc96acfd53ca7db735df2e23",
+      "fingerprint": "ca661e489a1c417481cfb8c8a312e4f2cefd1af31ee03b4ff27bd69ebb1f3882",
+      "tests": 454,
+      "failures": 4,
+      "errors": 0,
+      "skips": 35
+    }
+  ],
+  "cpu_suite": {
+    "tests": 454,
+    "passed_tests": 419,
+    "skips": 35,
+    "failures": 0,
+    "errors": 0,
+    "log_sha256": "78578ed085945b628740c754fc55d600358c2243b7531cdd97a2ecc82cef69f6",
+    "python_executable": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-h-development\\outputs\\portable-runtime\\python.exe",
+    "checkout": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\embedded-h-development",
+    "peak_process_tree_rss_mib": 829.93359375,
+    "peak_system_memory_percent": 60.7,
+    "cpu_temperature_note": "null means no supported sensor; temperature was not verified"
+  },
+  "small_gpu": {
+    "cases": 6,
+    "maximum_force_relative_l2": 2.0045610543846365e-16,
+    "mass_exact": true,
+    "steps_per_case": 16,
+    "full_size_gpu_operator_allocated": false,
+    "complete_wave_window": false
+  },
+  "maximum_archived_current_cuda_error": 0.0,
+  "retained_spatial_scattering_failure": [
+    0.009754412264501747,
+    0.006685678573335845,
+    0.013447610833954618
+  ],
+  "temporal_scattering_pass": [
+    1.3002604701141145e-05,
+    9.530188726733111e-06,
+    1.8587266360771926e-05
+  ],
+  "note": "New plate/model/CLI defaults use the requested stock. Historical references explicitly retain 3 mm and complete saved geometry is not reinterpreted. Initial integration failures exposed old model bounds and mixed-checkout portable-runtime children; subsequent old-3-mm test expectations were updated to physical specimen bounds without weakening the mismatch guard. Final CPU suite passes; 35 optional checks were disabled, and no full training cycle or physical-data acceptance occurred.",
+  "remaining": "Pilot-bank intact CAD seed and adaptive shared time step still depend on the defect scenario and need a separate baseline-independence correction. Full XYZ waves, calibrated PZT and physical validation remain.",
+  "fingerprint": "d3c6e3eaf6ab828d3086f42697bc70fa8be9c8291835651f9aa0da0fde691011"
+}
