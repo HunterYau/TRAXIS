@@ -1,0 +1,15 @@
+{
+  "kind": "science_log_append_receipt",
+  "date": "2026-11-15",
+  "url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "tab_id": "t.0",
+  "documentId": "1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "revisionId": "AHj4eMQ73i87cVaWFgAU4UwDrtxaCWDKvaVqbp4RXtZ795ThN9vQP36ZvmI1nY5-KEVnFegz08ATcmOOK5VxVD8gO3B-VvH4bNcxhULq88s",
+  "verified": true,
+  "heading": "Geometry setup acceleration and coupled 3D capacity checks",
+  "paragraphs": 8,
+  "characters": 5824,
+  "exact_inserted_block_present": true,
+  "note": "Eight append-only paragraphs; revision-guarded write and exact inserted block verified on readback. A retained final paragraph newline required matching the block within the document rather than at its last character.",
+  "fingerprint": "5e8ae10e0dc74fd1514c71f504e0c34f6aa3829f54574315f15cfa5c4b09b0e9"
+}
