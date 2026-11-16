@@ -53,8 +53,10 @@ All 32 focused checks passed without skips, including genuine small-Q4 GPU
 launches using the planned H and XYZ step/stride/workspace interfaces.
 These launch tests intentionally stop at synchronized batch 16. They do
 not establish a complete window or an actual 20-million-DOF GPU allocation.
-The paired coupled-XYZ wave launcher, assessor and complete trajectories
-still need implementation and validation. See
+The paired coupled-XYZ launcher, independent CPU wrapper and assessor are
+now implemented and checked separately; complete full-size trajectories
+still need to run. See `xyz-controls-20261115.md` and
+`evidence/embedded-xyz-controls-debug-20261115.json`. See
 `evidence/explicit-workspace-extension-20261115.json` for the bound checks.
 
 The preflight can be reproduced from this branch in a standard project

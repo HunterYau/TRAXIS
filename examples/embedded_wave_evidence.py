@@ -5,7 +5,7 @@ import math
 from pathlib import Path
 import zipfile
 
-from examples.embedded_wave import FULL_LEVELS, checked_case, screen
+from examples.embedded_wave import FULL_LEVELS, analysis_paths, checked_case, screen
 from examples.tensor_wave import PROJECT, checked_receipt, identities, read_json
 from traxis.gpu_verification import gpu_package_identity
 from traxis.highorder_verification import distribution_identity
@@ -65,8 +65,7 @@ def validate_saved_plan(plan, root, guard=None):
             or plan['declared_full_levels']!=[list(p) for p in FULL_LEVELS]
             or plan['runtime']!=distribution_identity(guard) or plan['gpu_packages']!=gpu_package_identity(guard)):
         raise ValueError('embedded saved case, mesh or runtime changed')
-    analysis=['examples/embedded_wave.py','examples/verify_embedded_window.py']
-    if 'execution' in plan:analysis.append('examples/embedded_wave_budget.py')
+    analysis=analysis_paths(plan['case'],'execution' in plan)
     current_analysis={name:sha256_file(PROJECT/name) for name in analysis}
     changed=check_source_review(plan,identities(),current_analysis,read_json(COMPATIBILITY))
     check_snapshot(plan,Path(root)/'source-snapshot.zip')

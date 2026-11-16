@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 import zipfile
 
-from examples.embedded_wave import FULL_LEVELS,case_config,checked_case,screen,validate_plan,worker
+from examples.embedded_wave import FULL_LEVELS,analysis_paths,case_config,checked_case,screen,validate_plan,worker
 from examples.tensor_wave import PROJECT,checked_receipt,identities,read_json,sealed,snapshot_sources
 from traxis.elmer_reference import run_monitored
 from traxis.gpu_verification import gpu_package_identity
@@ -18,6 +18,13 @@ from traxis.storage import sha256_file,write_json
 
 def execution_profile(case):
     checked_case(case)
+    if case['scope']=='xyz_refinement':
+        from examples.embedded_xyz_preflight import load_proposal
+        limits=ResourceLimits(max_seconds=load_proposal()['max_wave_seconds'],max_rss_mib=4096,
+            max_system_memory_percent=89.9,min_available_mib=768)
+        return dict(kind='embedded_xyz_refinement_wall_budget',limits=asdict(limits),
+            preflight=dict(max_system_memory_percent=90.,min_available_mib=768.),
+            reason='The predeclared coupled XYZ controls retain 491520 steps, all thickness layers and float64 precision. Allow eight hours for measured coarse cost scaled to the finest cell count and step count, with unchanged memory and thermal guards.')
     if case['scope']=='h_refinement':
         limits=ResourceLimits(max_seconds=10800,max_rss_mib=4096,max_system_memory_percent=89.9,min_available_mib=768)
         return dict(kind='embedded_h_refinement_wall_budget',limits=asdict(limits),
@@ -85,21 +92,31 @@ def worker_entry(plan_path,output,guard):
     return report
 
 
+def worker_command(plan_path,output):
+    # Select the same checkout explicitly, including with embedded Python
+    # runtimes whose _pth file takes precedence over cwd and PYTHONPATH.
+    bootstrap=f'import sys,runpy;sys.path.insert(0,{str(PROJECT)!r});runpy.run_module("examples.embedded_wave_budget",run_name="__main__")'
+    return [sys.executable,'-c',bootstrap,'--worker','--plan',str(plan_path),'--output',str(output)]
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--order',type=int,default=4);parser.add_argument('--steps',type=int,default=294912)
-    parser.add_argument('--h-level',type=int,help='predeclared finer-cell Q4 level 0, 1 or 2')
+    parser.add_argument('--order',type=int,default=4);parser.add_argument('--steps',type=int)
+    levels=parser.add_mutually_exclusive_group()
+    levels.add_argument('--h-level',type=int,help='predeclared in-plane Q4 level 0, 1 or 2')
+    levels.add_argument('--xyz-level',type=int,help='predeclared coupled XYZ Q4 level 0, 1 or 2')
     parser.add_argument('--recess',action='store_true');parser.add_argument('--worker',action='store_true')
     parser.add_argument('--plan',type=Path);args=parser.parse_args();output=args.output.resolve()
+    scope='xyz_refinement' if args.xyz_level is not None else ('h_refinement' if args.h_level is not None else 'full')
+    steps=args.steps if args.steps is not None else (491520 if scope=='xyz_refinement' else 294912)
     case=checked_case(read_json(args.plan)['case']) if args.worker else case_config(
-        'full' if args.h_level is None else 'h_refinement',args.order,args.steps,args.recess,h_level=args.h_level)
+        scope,args.order,steps,args.recess,h_level=args.h_level,xyz_level=args.xyz_level)
     profile=execution_profile(case);guard=ExtendedResourceGuard(ResourceLimits(**profile['limits']))
     if args.worker: return 0 if worker_entry(args.plan,output,guard)['passed'] else 2
     if not output.is_relative_to(PROJECT/'outputs'): raise ValueError('embedded evidence must remain in project outputs')
     check_headroom(snapshot(include_gpu=False),profile)
     output.mkdir(parents=True,exist_ok=False)
-    analysis={name:sha256_file(PROJECT/name) for name in ('examples/embedded_wave.py',
-        'examples/verify_embedded_window.py','examples/embedded_wave_budget.py')}
+    analysis={name:sha256_file(PROJECT/name) for name in analysis_paths(case,True)}
     plan=dict(kind='embedded_mechanical_window',case=case,execution=profile,declared_full_levels=[list(p) for p in FULL_LEVELS],
         mesh_screen=screen(case),**identities(),analysis_sources=analysis,runtime=distribution_identity(guard),
         gpu_packages=gpu_package_identity(guard))
@@ -114,7 +131,7 @@ def main():
         plan_fingerprint=plan['fingerprint'],execution=profile)
     try:
         check_execution(plan,guard);validate_plan(plan,guard)
-        command=[sys.executable,'-m','examples.embedded_wave_budget','--worker','--plan',str(output/'embedded-wave-plan.json'),'--output',str(output/'native')]
+        command=worker_command(output/'embedded-wave-plan.json',output/'native')
         result['worker_run']=run_monitored(command,PROJECT,env,guard,output/'worker.log')
         native=checked_receipt(read_json(output/'native/wave-report.json'))
         if (result['worker_run']['exit_code']!=0 or not native['completed'] or not native['passed']

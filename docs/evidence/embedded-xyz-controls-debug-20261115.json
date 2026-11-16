@@ -1,0 +1,175 @@
+{
+  "kind": "embedded_xyz_controls_and_assessor_debug_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "source_sha256": {
+    "examples/embedded_wave.py": "13a706a5aebe87dee1522df5949a709da878b92c84e735d916a858d9b3fcf9d6",
+    "examples/embedded_wave_budget.py": "421091c8357951733b7a40a912b488da7bd9d8f9aaec5469a534d938c8c6866d",
+    "examples/embedded_wave_evidence.py": "cf1b9c72caa1de68c3ed12d7cf05f88efde5dad9d0a3e75803f1e99635e4b9ff",
+    "examples/embedded_xyz_study.py": "f43467f27a77b0ba2c688ebb00220b6775980e092ba41be15e4d61364ba3c4bd",
+    "examples/verify_embedded_xyz_window.py": "0e89eb99566f25e1d7bf67d15137cac19e89d95fb92f01d708c4848a82f33fda",
+    "examples/verify_xyz_gpu_interfaces.py": "f6e10c303dd5b99cbd8e5bab3a13e14adaa05114776933c53f543baf4b716459",
+    "tests/test_embedded_xyz_controls.py": "45716cd2e42235fbee5163d267eb12bbf10f61d34f3ed40bf00de9d24975f4bc",
+    "tests/test_embedded_xyz_study.py": "302eb041bbe744e378eb0ce096db97d3af1218d74be422f0659243f72aa909ac",
+    "configs/embedded-wave-source-review.json": "9db83e8c8e3329f9c189feae586bd4f01811a042abb760fe866e3ce16888ed86",
+    "configs/embedded-xyz-proposal.json": "61f8245813b26481ce40042f595ef6d6806486094fd6134f8922e5e91946b5c1"
+  },
+  "receipts": {
+    "unit": {
+      "path": "outputs/embedded-xyz-controls-unit-20261115-v2/test-report.json",
+      "sha256": "289da6ff2444b3bf2d2bda7affa8d5ba158f84a72bbab10c5e637d7831aec619",
+      "fingerprint": "8a9b0e4201a45034cfe77eb3736dd7e27c809376540e1fa68ef852ff9e314d7e",
+      "passed": true
+    },
+    "gpu": {
+      "path": "outputs/embedded-xyz-gpu-interface-20261115-v2/interface-report.json",
+      "sha256": "17bdc6dac198ba457925a17431769d960b13fe269080a15f1df4a729bd2d13bd",
+      "fingerprint": "2397d7c6c4877a2d0268567b858007bcba4c66c9b457d5065869d66b7240677d",
+      "passed": true
+    },
+    "source_transition": {
+      "path": "outputs/embedded-xyz-source-transitions-20261115-v1/source-transitions-check.json",
+      "sha256": "d808a101bf49a9de709be830f202bd040e4ad57b078379b8d46250c9d6f041ea",
+      "fingerprint": "5b08ba384f68402a92204e7eb3a6c1e2dcbed91667580c4bfc9bd19891c2a6a4",
+      "passed": true
+    },
+    "spatial": {
+      "path": "outputs/embedded-scattering-spatial-xyz-driver-review-20261115-v1/spatial-scattering-report.json",
+      "sha256": "037d52eb85a8310817a6b79dbb50d100e011a8f21b0e00e16a14bd6899be07a7",
+      "fingerprint": "ff8f9ac878818d4a8d1554453adaef8952b83b12b582be1014dbcdf0ef98d3f9",
+      "passed": false
+    },
+    "time": {
+      "path": "outputs/embedded-scattering-time-xyz-driver-review-20261115-v1/time-scattering-report.json",
+      "sha256": "0a9f87e3377e9ecd49548d39c618d0581f1e1cfa019ff3bbfa756de830d9f46b",
+      "fingerprint": "fd1ca815ddbe266c6f35c81bf419bdc24e37df63ec9bd87e48a02f5a0204a58a",
+      "passed": true
+    },
+    "completed_h_binding": {
+      "path": "outputs/embedded-h-archive-mirror-20261115-v1/archive-check.json",
+      "sha256": "8a7b9206f94c40ae64f651881b2bab3470c681bef2777e7b4d4ecab1497a2e38",
+      "fingerprint": "21715140fd4ad1d695f06fbcd0e39d59a238a2a15224f1c928cd197c5358a4c9",
+      "passed": true
+    }
+  },
+  "declared_cases": [
+    {
+      "level": 0,
+      "defective": false,
+      "layers": [
+        1,
+        1
+      ],
+      "case_fingerprint": "2326373bfe20d184cd5893b9106f66464252d9abcda18c196c8ecb5df8e0488c",
+      "mesh_screen_fingerprint": "3655d1ee3c663a1611cc5ce0823e83f42a410aa2ba919023c4164c9a361dbc0e",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 4507515
+    },
+    {
+      "level": 1,
+      "defective": false,
+      "layers": [
+        2,
+        2
+      ],
+      "case_fingerprint": "e38247f50d17969b0347c421c95ff621fdec268326df721d701dda2087df3675",
+      "mesh_screen_fingerprint": "c089d5b76feb37996211184cb617b7c17dc20f5813e8db21cd32be430dc2fdf5",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 10738611
+    },
+    {
+      "level": 2,
+      "defective": false,
+      "layers": [
+        3,
+        3
+      ],
+      "case_fingerprint": "e8dee51b401d698f8e30fb6fc76765c53a63134b8e19d398370d721b4d88d0dd",
+      "mesh_screen_fingerprint": "5581dd00df4ffa05060a312900edcc7dae1db3c93211aa2f1f750fdc385cc3e3",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 20352675
+    },
+    {
+      "level": 0,
+      "defective": true,
+      "layers": [
+        1,
+        1
+      ],
+      "case_fingerprint": "e4070e8f893fafb146b3d7f626476348158d9f78487fc51a6696f94c0311637f",
+      "mesh_screen_fingerprint": "9cb462f44ac483221772fb0892d5bb81a9fa26f4621f4ac4820dd14cc6bbb513",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 4462575
+    },
+    {
+      "level": 1,
+      "defective": true,
+      "layers": [
+        2,
+        2
+      ],
+      "case_fingerprint": "e186a7dcf9b83ddb1cb6c2120cd6acf76fb78c40297f9ec832d35a1e60702c20",
+      "mesh_screen_fingerprint": "195391098c2454359008e1b7d8d6efe8daa017ba339eb131150b666c35e0f54e",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 10601499
+    },
+    {
+      "level": 2,
+      "defective": true,
+      "layers": [
+        3,
+        3
+      ],
+      "case_fingerprint": "4cee64d731b9b8b26cb88bc3e3cde6c631fba53b843b65406178740c2e0538d6",
+      "mesh_screen_fingerprint": "5de4d1efcfeaf6675e91e1a466d330b56b26ca21db3780686d1ce647fef13eda",
+      "execution_profile_fingerprint": "1c9beac54fda744357421079547dddbef3a5cd3f042c75870fc971ed25c34e10",
+      "vector_dofs": 20062335
+    }
+  ],
+  "focused_tests": {
+    "tests": 44,
+    "skips": 0,
+    "failures": 0,
+    "errors": 0,
+    "log_sha256": "c7947b2022daa4424a5a8c374f8917ea8a7ff304aa855022cfe22ee84d81d7b1",
+    "scope": "Manufactured trace acceptance, receipt/resource binding, all fourteen frozen legacy identities, H controls and actual foreign-cwd child CLI selection; not physical validation."
+  },
+  "small_gpu_checks": {
+    "cases": 6,
+    "maximum_force_relative_l2": 2.0057153332453617e-16,
+    "all_mass_exact": true,
+    "actual_vector_dofs": [
+      14715,
+      27795,
+      40875,
+      12591,
+      23547,
+      34503
+    ],
+    "steps_completed_per_case": 16,
+    "planned_steps": 491520,
+    "probe_count": 3,
+    "full_size_gpu_operator_allocated": false,
+    "complete_wave_window": false
+  },
+  "archived_integrator_versions": [
+    "0280f60b7e6eac9591f4e75efe7fd9ab65779d0d246a4df87588230c459d4ef4",
+    "72cc166792438c1cdee7cafcf42df2256d470d9667e035fa04c7df93b99550f5"
+  ],
+  "maximum_archived_current_cuda_error": 0.0,
+  "spatial_scattering_finest_change": [
+    0.009754412264501747,
+    0.006685678573335845,
+    0.013447610833954618
+  ],
+  "temporal_scattering_finest_change": [
+    1.3002604701141145e-05,
+    9.530188726733111e-06,
+    1.8587266360771926e-05
+  ],
+  "archive_review_note": "Existing completed windows/CPU receipts are revalidated, not rerun or rewritten. An initial cross-check correctly rejected a main-checkout H path outside the isolated Green helper root; eight original files were then mirrored byte-for-byte inside that root and the unmodified path guard and complete source/CPU binding passed.",
+  "remaining": "All six full-size coupled XYZ GPU windows and their independent CPU checks, followed by the paired assessment. No 3D convergence, calibrated PZT response, physical-data acceptance or model training is established by these debug checks.",
+  "fingerprint": "e5458c0de8592cd7678046a7f2939bd0a068f2d57f2e0bbe4c92fa742bd730f7"
+}

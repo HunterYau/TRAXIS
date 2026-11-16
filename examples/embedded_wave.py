@@ -32,9 +32,27 @@ FULL_LEVELS = ((3,196608), (4,131072), (4,196608), (4,294912), (5,196608))
 H_LEVELS = ((12,(2,6),.005),(16,(3,8),.00375),(20,(4,10),.003))
 
 
-def case_config(scope='smoke', order=4, steps=None, defective=False, *, h_level=None):
+def case_config(scope='smoke', order=4, steps=None, defective=False, *, h_level=None, xyz_level=None):
     if type(order) is not int or type(defective) is not bool:
         raise ValueError('wave degree and material state need explicit types')
+    if scope=='xyz_refinement':
+        from examples.embedded_xyz_preflight import PROPOSAL_SHA256,load_proposal
+        if (type(xyz_level) is not int or not 0<=xyz_level<3 or h_level is not None or order!=4
+                or (steps is not None and (type(steps) is not int or steps!=491520))):
+            raise ValueError('XYZ refinement needs Q4, 491520 steps and an explicit level 0/1/2')
+        proposal=load_proposal();case=case_config('full',4,294912,defective)
+        for name in ('plate','recess','geometry_order','duration_s','source_center_xy_m',
+                     'receiver_centers_xy_m','radius_m','frequency_hz','cycles','force_scale_n'):
+            if case[name]!=proposal[name]:
+                raise ValueError('XYZ proposal changed the shared mechanical physics')
+        case.update(scope=scope,xyz_level=xyz_level,steps=proposal['steps'],
+            xyz_proposal_sha256=PROPOSAL_SHA256,**proposal['levels'][xyz_level],
+            xyz_mesh_vector_dof_limit=proposal['max_vector_dofs'])
+        for name in ('max_mesh_bytes','max_operator_bytes','max_device_mib','max_host_mib','max_workspace_mib'):
+            case[name]=proposal[name]
+        return case
+    if xyz_level is not None:
+        raise ValueError('XYZ level is only permitted for the XYZ-refinement scope')
     if scope=='h_refinement':
         if (type(h_level) is not int or not 0<=h_level<len(H_LEVELS) or order!=4
                 or (steps is not None and (type(steps) is not int or steps!=294912))):
@@ -72,7 +90,8 @@ def case_config(scope='smoke', order=4, steps=None, defective=False, *, h_level=
 
 
 def checked_case(case):
-    if case != case_config(case['scope'],case['order'],case['steps'],case['defective'],h_level=case.get('h_level')):
+    if case != case_config(case['scope'],case['order'],case['steps'],case['defective'],
+            h_level=case.get('h_level'),xyz_level=case.get('xyz_level')):
         raise ValueError('embedded window physics, geometry, guards or criteria changed')
     return case
 
@@ -82,6 +101,7 @@ def mesh_controls(case):
         radial_cells=tuple(case['radial_cells']), layers=tuple(case['layers']), defective=case['defective'],
         outer_cell_size_m=case['outer_cell_size_m'], max_bytes=case['max_mesh_bytes'])
     if case['scope']=='h_refinement':controls['max_vector_dofs']=case['h_mesh_vector_dof_limit']
+    if case['scope']=='xyz_refinement':controls['max_vector_dofs']=case['xyz_mesh_vector_dof_limit']
     return controls
 
 
@@ -93,12 +113,22 @@ def screen(case):
 def gpu_controls(case):
     controls=dict(max_device_mib=case['max_device_mib'],max_host_mib=case['max_host_mib'])
     if case['scope']=='h_refinement':controls['max_vector_dofs']=case['h_mesh_vector_dof_limit']
+    if case['scope']=='xyz_refinement':controls['max_vector_dofs']=case['xyz_mesh_vector_dof_limit']
     return controls
+
+
+def analysis_paths(case,extended=False):
+    names=['examples/embedded_wave.py','examples/verify_embedded_window.py']
+    if extended:names.append('examples/embedded_wave_budget.py')
+    if case['scope']=='xyz_refinement':
+        names.extend(('examples/embedded_xyz_preflight.py','configs/embedded-xyz-proposal.json'))
+    return names
 
 
 def validate_plan(plan, guard):
     checked_receipt(plan); checked_case(plan['case'])
     if (plan['kind'] != 'embedded_mechanical_window' or plan['mesh_screen'] != screen(plan['case'])
+            or set(plan['analysis_sources'])!=set(analysis_paths(plan['case'],'execution' in plan))
             or plan['declared_full_levels'] != [list(p) for p in FULL_LEVELS]
             or any(plan[k] != v for k,v in identities().items())
             or any(sha256_file(PROJECT/name) != digest for name,digest in plan['analysis_sources'].items())
@@ -267,7 +297,8 @@ def main():
     parser.add_argument('--worker',action='store_true'); parser.add_argument('--plan',type=Path)
     args=parser.parse_args(); output=args.output.resolve()
     case=checked_case(read_json(args.plan)['case']) if args.worker else case_config(args.scope,args.order,args.steps,args.recess)
-    if case['scope']=='h_refinement':raise ValueError('h-refinement runs require the explicit embedded_wave_budget launcher')
+    if case['scope'] in ('h_refinement','xyz_refinement'):
+        raise ValueError('refinement runs require the explicit embedded_wave_budget launcher')
     guard=ResourceGuard(ResourceLimits(max_seconds=3600 if case['scope']=='full' else 180,
         max_rss_mib=4096 if case['scope']=='full' else 1024,max_system_memory_percent=89.9,min_available_mib=768))
     if args.worker: return 0 if worker(args.plan,output,guard)['passed'] else 2
