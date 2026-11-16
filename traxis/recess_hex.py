@@ -6,6 +6,7 @@ This module does not select a wave mesh or an explicit time step.
 """
 
 from dataclasses import dataclass
+from functools import lru_cache
 import math
 
 import numpy as np
@@ -39,17 +40,35 @@ class RecessHexMesh:
     allocation_upper_bytes: int
 
 
-def lagrange_values(order, points):
+def _lagrange_values(order, points):
     nodes = line_rule(order)[0]
-    points = np.asarray(points, dtype=float)
-    if points.ndim != 1 or not np.isfinite(points).all():
-        raise ValueError('reference coordinates must be a finite vector')
     values, derivatives = [], []
     for i in range(order + 1):
         basis = Polynomial.fromroots(np.delete(nodes, i)) / np.prod(nodes[i] - np.delete(nodes, i))
         values.append(basis(points))
         derivatives.append(basis.deriv()(points))
     return np.array(values).T, np.array(derivatives).T
+
+
+@lru_cache(maxsize=16, typed=True)
+def _cached_lagrange_values(order, point_bytes):
+    arrays = _lagrange_values(order, np.frombuffer(point_bytes, dtype=np.float64))
+    for array in arrays:
+        array.setflags(write=False)
+    return arrays
+
+
+def lagrange_values(order, points):
+    """Evaluate the original polynomials, reusing small repeated reference grids."""
+    line_rule(order)  # Validate even when an equivalent cache key already exists.
+    points = np.asarray(points, dtype=float)
+    if points.ndim != 1 or not np.isfinite(points).all():
+        raise ValueError('reference coordinates must be a finite vector')
+    if len(points) > 1024:
+        return _lagrange_values(order, points)
+    # At most 16 entries of two 1024-by-6 arrays; callers keep fresh writable
+    # arrays with the original layout and cannot alter cached geometry factors.
+    return tuple(a.copy(order='K') for a in _cached_lagrange_values(order, points.tobytes()))
 
 
 def _face_vertices(face):
