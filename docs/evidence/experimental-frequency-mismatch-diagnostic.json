@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "frequency_hz": 50000,
+      "wavelength_mm": 13.786640418734097,
+      "ideal_fbg_spatial_factor": 0.3333938727481463,
+      "ideal_ring_bessel_factor": 0.5436034507612313,
+      "bloch_group_error": 2.805437892661189e-06,
+      "measured_peaks": [
+        {
+          "time_us": 240.39999999999998,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 240.8,
+          "relative_height": 0.9996554400273575
+        },
+        {
+          "time_us": 241.39999999999998,
+          "relative_height": 0.9986859062159976
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 241.6,
+          "relative_height": 1.0
+        }
+      ]
+    },
+    {
+      "frequency_hz": 100000,
+      "wavelength_mm": 9.578607191766395,
+      "ideal_fbg_spatial_factor": -0.04200525443002121,
+      "ideal_ring_bessel_factor": 0.2289525677128502,
+      "bloch_group_error": 4.678964722537593e-05,
+      "measured_peaks": [
+        {
+          "time_us": 170.2,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 169.79999999999998,
+          "relative_height": 0.9972887532395404
+        },
+        {
+          "time_us": 169.2,
+          "relative_height": 0.9897088357872614
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 156.39999999999998,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 181.99999999999997,
+          "relative_height": 0.9549342132588771
+        }
+      ]
+    },
+    {
+      "frequency_hz": 150000,
+      "wavelength_mm": 7.687876580843931,
+      "ideal_fbg_spatial_factor": -0.19831478433790928,
+      "ideal_ring_bessel_factor": -0.09832178484506535,
+      "bloch_group_error": 0.000250534969595817,
+      "measured_peaks": [
+        {
+          "time_us": 141.8,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 141.2,
+          "relative_height": 0.9974783171761813
+        },
+        {
+          "time_us": 140.6,
+          "relative_height": 0.9954191728007538
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 130.79999999999998,
+          "relative_height": 1.0
+        }
+      ]
+    },
+    {
+      "frequency_hz": 200000,
+      "wavelength_mm": 6.54737368504879,
+      "ideal_fbg_spatial_factor": -0.20764166540604959,
+      "ideal_ring_bessel_factor": -0.29818719527639337,
+      "bloch_group_error": 0.0008325726048663551,
+      "measured_peaks": [
+        {
+          "time_us": 118.6,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 118.99999999999999,
+          "relative_height": 0.9929933748450213
+        },
+        {
+          "time_us": 119.39999999999999,
+          "relative_height": 0.9769479721723353
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 119.8,
+          "relative_height": 1.0
+        }
+      ]
+    },
+    {
+      "frequency_hz": 250000,
+      "wavelength_mm": 5.761203668050246,
+      "ideal_fbg_spatial_factor": -0.13534655351092376,
+      "ideal_ring_bessel_factor": -0.34367838903870396,
+      "bloch_group_error": 0.0021156472679797478,
+      "measured_peaks": [
+        {
+          "time_us": 112.6,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 112.0,
+          "relative_height": 0.9972827597423014
+        },
+        {
+          "time_us": 115.4,
+          "relative_height": 0.8365891903811365
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 112.8,
+          "relative_height": 1.0
+        }
+      ]
+    }
+  ],
+  "zeros": {
+    "ideal_fbg_first_zero_hz": 92246.31949350587,
+    "ideal_ring_first_zero_hz": 133382.79245060313
+  },
+  "note": "Diagnostic factors for an ideal plane-wave gauge average and ideal circular actuator; not a calibrated experimental transfer function or proof of causation. Saved simulations unchanged."
+}
