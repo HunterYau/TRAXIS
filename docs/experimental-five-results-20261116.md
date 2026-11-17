@@ -1,6 +1,12 @@
 # Five measured plate-wave timing comparisons
 
-Status: stopped at the user's request after two completed comparisons.
+Status: the user has now authorized the remaining 150, 200 and 250 kHz
+comparisons on the same plate. The fresh 150 kHz attempt is running; the
+other two will run serially. First/second results stay unchanged. The
+aborted third attempt and its stop marker were preserved under
+`outputs/experimental-validation-20261116/history-before-authorized-resume-v1/`.
+
+Previous stop: stopped at the user's request after two completed comparisons.
 No simulation or queue process remains running. Test 3 had already started
 when the user requested no test 3; it was terminated before completion.
 Tests 4 and 5 were never started. Do not resume without new instruction.
@@ -24,9 +30,9 @@ to Wandowski, Fiborek, Ahamad, Soman and Malinowski (2025).
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 50 kHz | 190.4 us | 191.6 us | +1.2 us | +0.6303% | 42.98 min |
 | 2 | 100 kHz | 145.2 us | 131.4 us | -13.8 us | -9.5041% | 43.16 min |
-| 3 | 150 kHz | No result | No result | No result | No result | Stopped early |
-| 4 | 200 kHz | Not tested | Not tested | Not tested | Not tested | Not started |
-| 5 | 250 kHz | Not tested | Not tested | Not tested | Not tested | Not started |
+| 3 | 150 kHz | Pending | Pending | Pending | Pending | Fresh attempt running |
+| 4 | 200 kHz | Pending | Pending | Pending | Pending | Authorized next |
+| 5 | 250 kHz | Pending | Pending | Pending | Pending | Authorized last |
 
 Flight time subtracts half the five-cycle excitation duration from the
 packet-envelope peak. Positive delay means the simulation arrived later.

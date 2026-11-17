@@ -1,0 +1,41 @@
+{
+  "user_authorized_resume": true,
+  "remaining_frequencies_hz": [
+    150000,
+    200000,
+    250000
+  ],
+  "frozen_protocol_sha256": "a04e1e43ce111531b36987566e8fc7054af8ff99ffdae3b8ab9019eed9fdd424",
+  "frozen_physics_unchanged": true,
+  "plate": {
+    "width_m": 1.0,
+    "height_m": 1.0,
+    "thickness_m": 0.001
+  },
+  "material": {
+    "young_pa": 71000000000.0,
+    "poisson": 0.33,
+    "density_kg_m3": 2700.0
+  },
+  "source_center_m": [
+    0.5,
+    0.5,
+    0.001
+  ],
+  "source_radius_m": 0.005,
+  "receiver": "10 mm x-directed FBG mean axial strain; paired top/bottom at x=.25,y=.5",
+  "manuscript_md5": "4daf879a7a0d55c78a436db3fa0cde40",
+  "experimental_data_sha256": "128bf3c84c140147fa8332d94488b67c1e123828e9b1135b761cb8f547d158e6",
+  "experimental_data_md5": "bd55d2203738d477addcc13f77425903",
+  "comparison_scope": "Published nominal plate properties and placement match. Actual alloy/temper, measured material uncertainties, support details and glue thickness are not reported; full transducer mechanics and optical transfer remain approximations.",
+  "preserved_completed_tests": [
+    1,
+    2
+  ],
+  "preserved_aborted_trial3": "outputs/experimental-validation-20261116/history-before-authorized-resume-v1/trial-3-150khz",
+  "previous_stop_artifact_hashes_verified": true,
+  "older_research_goal_remains_paused": true,
+  "total_unique_frequencies_authorized": 5,
+  "additional_frequencies_authorized": false,
+  "fingerprint": "deed2ebf7b62de3a91531d99d79fc325af359279dfe7af1e234c937f6d199813"
+}
