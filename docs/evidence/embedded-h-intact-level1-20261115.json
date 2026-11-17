@@ -1,0 +1,116 @@
+{
+  "kind": "embedded_h_intact_level1_forward_and_cpu_evidence",
+  "completed": true,
+  "passed": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "receipts": {
+    "plan": {
+      "path": "outputs\\embedded-h-wave-intact-level1-20261115-v1\\embedded-wave-plan.json",
+      "sha256": "79a0147e7cbd63ba3ec504ccc5d2dba160e08abda55ebd0850b5c8d57024f04a",
+      "fingerprint": "e5880c9b80f1c89f68c94d5041e0cd4515b78c5c4be33bdd78fb2de15eb829ba"
+    },
+    "monitor": {
+      "path": "outputs\\embedded-h-wave-intact-level1-20261115-v1\\monitor-result.json",
+      "sha256": "e4dcfac75439009fefd5c84cff0caa1f49b249d0c94459c04872bbd5a8aec40c",
+      "fingerprint": "933b520e2464ccaf8d163a094c52a4b9487dc086e378023842c63742e6865f63"
+    },
+    "worker": {
+      "path": "outputs\\embedded-h-wave-intact-level1-20261115-v1\\native\\wave-report.json",
+      "sha256": "52fe51467387ec0953f6d618ff01f49bb61f4cba36228737480ef6cfe67404c7",
+      "fingerprint": "fa6eb92e5d782bf6db08ac4383e137da6085d2978191412e245d6ec0681a1701"
+    },
+    "cpu": {
+      "path": "outputs\\embedded-h-wave-intact-level1-cpu-20261115-v1\\cpu-window-check.json",
+      "sha256": "590ec28b3e4aac11f46a472dd41b2310054e09d3279f8f072f4265838eb2fded",
+      "fingerprint": "54ce11907d9e3b82e659893fcb556ee4928c4a2da5dd92f59d3ad27065e4d7f0"
+    },
+    "cpu_launcher": {
+      "path": "outputs\\embedded-h-wave-intact-level1-cpu-20261115-v1\\cpu-launcher.json",
+      "sha256": "2b117efa29ac287457fb3f37cf152eff30d0ff84034c63ce32fb8052ce89e04b",
+      "fingerprint": "8cfc405a7137f445b295d0bacb725f55b9d4233cf9baf701ecef9d3b2066f3bd"
+    }
+  },
+  "case": {
+    "kind": "embedded_mechanical_window_case",
+    "scope": "h_refinement",
+    "order": 4,
+    "steps": 294912,
+    "defective": false,
+    "plate": {
+      "width_m": 0.5,
+      "height_m": 0.5,
+      "thickness_m": 0.003175
+    },
+    "recess": {
+      "x_m": 0.255,
+      "y_m": 0.245,
+      "radius_m": 0.015,
+      "depth_m": 0.0015
+    },
+    "angular_cells": 16,
+    "radial_cells": [
+      3,
+      8
+    ],
+    "outer_cell_size_m": 0.00375,
+    "duration_s": 0.0005,
+    "source_center_xy_m": [
+      0.02,
+      0.02
+    ],
+    "receiver_centers_xy_m": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.48,
+        0.48
+      ],
+      [
+        0.35,
+        0.2
+      ]
+    ],
+    "material": {
+      "young_pa": 68900000000.0,
+      "poisson": 0.33,
+      "density_kg_m3": 2700.0
+    },
+    "geometry_order": 3,
+    "layers": [
+      1,
+      1
+    ],
+    "radius_m": 0.003,
+    "frequency_hz": 100000.0,
+    "cycles": 2,
+    "force_scale_n": 1.0,
+    "output_stride": 1,
+    "energy_stride": 256,
+    "max_mesh_bytes": 536870912,
+    "max_operator_bytes": 3221225472,
+    "max_device_mib": 6144,
+    "max_host_mib": 4096,
+    "max_workspace_mib": 2048,
+    "operator_tolerance": 1e-10,
+    "energy_tolerance": 1e-08,
+    "cooling_upper_c": 76.0,
+    "cooling_lower_c": 72.0,
+    "h_level": 1,
+    "h_mesh_vector_dof_limit": 24000000
+  },
+  "vector_dofs": 8090091,
+  "worker_wall_seconds": 4592.1360886999755,
+  "cpu_errors": {
+    "final_force_relative_l2": 1.7315883383095568e-13,
+    "mass_relative_l2": 0.0,
+    "final_physical_energy_relative_error": 2.220446049250313e-16,
+    "final_modified_energy_relative_error": 2.220446049250313e-16,
+    "final_probe_relative_l2": 5.736526377013811e-16,
+    "postburst_modified_energy_relative_range": 2.191263107627155e-15
+  },
+  "scope": "Completed medium in-plane intact control and independent CPU checks only; three-level paired convergence, calibrated PZT and physical validation remain.",
+  "fingerprint": "73f690e71351ab5ee8d3ab3d8e386e1789dc557d1360b47086211146dc9c0aa6"
+}

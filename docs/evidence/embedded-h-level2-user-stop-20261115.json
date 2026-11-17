@@ -1,0 +1,18 @@
+{
+  "kind": "explicit_user_stop_evidence",
+  "completed": true,
+  "stopped": true,
+  "ready_for_training_data": false,
+  "training_updates": 0,
+  "run_directory": "outputs\\embedded-h-wave-recess-level2-20261115-v1",
+  "stop_receipt_sha256": "ed362d0953d9bf929484814fb298c619ff18b10574d7bb67496dcb2aeaa80266",
+  "stop_fingerprint": "7d2738580eda16fb5be6707c1bcae02020c46e312c1d7bbd43388340a55caef4",
+  "plan_fingerprint": "4c55a0522149d28c5c576fca7bb0c5d96294cb4896e068c06c433e1f38b06fae",
+  "monitor_fingerprint": "0ee3f1a28330d83e0198ae0572b2f27fea99068d4a54982f7b036092429785a2",
+  "reason": "User requested halting computer work so it can sleep; credits at 5 percent.",
+  "source_intact": true,
+  "worker_terminated": true,
+  "wave_steps_logged": 0,
+  "note": "Stopped during setup after the actual 12,431,655-DOF GPU operator was ready. The monitor exit 15/missing final wave report is the user-requested stop, not a completed trajectory or accepted numerical failure.",
+  "fingerprint": "8aff76ae3b767eee6cfb9d43ea34ad776035f0c81f2993b2bd051c7cbbac7a6c"
+}
