@@ -1,0 +1,100 @@
+{
+  "user_requested_stop": true,
+  "completed_tests": [
+    1,
+    2
+  ],
+  "incomplete_test": 3,
+  "not_started_tests": [
+    4,
+    5
+  ],
+  "last_recorded_progress": {
+    "steps_completed": 6272,
+    "requested_steps": 65536,
+    "time_s": 3.349609375e-05,
+    "requested_duration_s": 0.00035,
+    "stiffness_applications": 6273,
+    "elapsed_seconds": 247.75807970005553
+  },
+  "third_monitor_exit_code": 15,
+  "third_monitor_wall_seconds": 259.34775830002036,
+  "third_resource_peaks": {
+    "system_memory_percent": 62.7,
+    "process_rss_mib": 1375.58203125,
+    "gpu_memory_mib": 3592.0,
+    "gpu_temperature_c": 76.0,
+    "minimum_available_mib": 6052.6796875
+  },
+  "third_native_result_present": false,
+  "verified_no_experiment_processes": true,
+  "remaining_pids": [],
+  "verification_unix_time": 1794882881.1762958,
+  "owned_process_stop": {
+    "user_requested_stop": true,
+    "third_trial_incomplete": true,
+    "completed_trials": [
+      1,
+      2
+    ],
+    "verified_owned_processes": [
+      {
+        "pid": 28392,
+        "created": 1794877813.9719539,
+        "cmd": [
+          "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\portable-runtime\\python.exe",
+          "-m",
+          "examples.run_experimental_five_queue"
+        ]
+      },
+      {
+        "pid": 8872,
+        "created": 1794882494.8577564,
+        "cmd": [
+          "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\portable-runtime\\python.exe",
+          "-m",
+          "examples.experimental_five",
+          "run",
+          "150000"
+        ]
+      },
+      {
+        "pid": 27832,
+        "created": 1794882494.8675675,
+        "cmd": [
+          "\\??\\C:\\WINDOWS\\system32\\conhost.exe",
+          "0x4"
+        ]
+      },
+      {
+        "pid": 24616,
+        "created": 1794882496.1271389,
+        "cmd": [
+          "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\portable-runtime\\python.exe",
+          "-m",
+          "examples.experimental_five",
+          "worker",
+          "150000",
+          "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\outputs\\experimental-validation-20261116\\trial-3-150khz\\native"
+        ]
+      },
+      {
+        "pid": 904,
+        "created": 1794882496.1331637,
+        "cmd": [
+          "\\??\\C:\\WINDOWS\\system32\\conhost.exe",
+          "0x4"
+        ]
+      }
+    ],
+    "terminated_worker_pid": 24616,
+    "unix_time": 1794882755.3537087
+  },
+  "protocol_sha256": "a04e1e43ce111531b36987566e8fc7054af8ff99ffdae3b8ab9019eed9fdd424",
+  "stop_record_sha256": "f51cd1b453714faac3e0e3c791662e183b91bcda12727051dfb93cc6cfadb106",
+  "third_monitor_sha256": "c47010a8b686036036c988b819e9bfcbffef51e3046f5215195795ca8803e286",
+  "third_worker_log_sha256": "0bf9780cab4d327524078b90721ad8bc37c37ba63ced3abbc3447f7b0cdf0c1f",
+  "queue_events_sha256": "d2162af6eb61297c998609a3462d0c2535f622f5d810b62864eebebf21b2e0ed",
+  "interpretation": "Intentional user stop; monitor exit 15 and missing native result do not indicate a numerical validation failure. No completed test-3 result or restart state exists. No automatic restart authorized.",
+  "fingerprint": "dc15acfef25e521bcbbd1227d9825d378659533779e0492042a89e6552469da3"
+}

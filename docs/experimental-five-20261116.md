@@ -1,5 +1,12 @@
 # Five experimental timing comparisons
 
+**Current state: stopped at the user's request.** Two comparisons completed;
+test 3 was terminated early after it had already started, and tests 4/5
+never started. All owned simulation and queue processes exited. See
+[results and stop details](experimental-five-results-20261116.md). The
+original five-test authorization was narrowed by the later stop request;
+do not start further tests without new instruction.
+
 The user authorized exactly five tests on November 16, 2026. The older full
 research goal and its unfinished refinement queue remain paused. This work
 uses five frequencies on one experimental specimen, not five independent

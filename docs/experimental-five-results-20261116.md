@@ -1,6 +1,9 @@
 # Five measured plate-wave timing comparisons
 
-Status: 2 of 5 complete. The remaining three are queued serially.
+Status: stopped at the user's request after two completed comparisons.
+No simulation or queue process remains running. Test 3 had already started
+when the user requested no test 3; it was terminated before completion.
+Tests 4 and 5 were never started. Do not resume without new instruction.
 
 Google Doc entries go to **Science Log Info**, the user's notes document
 for preparing the formal log later:
@@ -21,9 +24,9 @@ to Wandowski, Fiborek, Ahamad, Soman and Malinowski (2025).
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 50 kHz | 190.4 us | 191.6 us | +1.2 us | +0.6303% | 42.98 min |
 | 2 | 100 kHz | 145.2 us | 131.4 us | -13.8 us | -9.5041% | 43.16 min |
-| 3 | 150 kHz | Pending | Pending | Pending | Pending | Running |
-| 4 | 200 kHz | Pending | Pending | Pending | Pending | Queued |
-| 5 | 250 kHz | Pending | Pending | Pending | Pending | Queued |
+| 3 | 150 kHz | No result | No result | No result | No result | Stopped early |
+| 4 | 200 kHz | Not tested | Not tested | Not tested | Not tested | Not started |
+| 5 | 250 kHz | Not tested | Not tested | Not tested | Not tested | Not started |
 
 Flight time subtracts half the five-cycle excitation duration from the
 packet-envelope peak. Positive delay means the simulation arrived later.
@@ -83,5 +86,28 @@ peaks: system RAM 64.4%, owned process tree 2009.31 MiB, GPU memory
 Evidence: [receipt](evidence/experimental-trial-2-100khz-20261116.json),
 [portable waveforms](evidence/experimental-trial-2-100khz-20261116.npz),
 [comparison plot](evidence/experimental-trial-2-100khz-20261116.png).
-No scientific parameters were changed after this result. Test 3 uses the
-same frozen protocol at 150 kHz.
+No scientific parameters were changed after this result. Test 3 began with
+the same frozen protocol at 150 kHz, then was stopped at the user's request.
+
+## User stop before completing test 3
+
+The automatic queue had started test 3 before the user's messages arrived:
+"don't run test 3 yet" and "hault processes once your done, but don't run
+test 3". Tests 1 and 2 were already complete, saved, reported, pushed, and
+recorded in Science Log Info. The third worker's PID, creation time,
+command and ancestry under the owned queue were verified before terminating
+it. A stop marker prevents further queued launches.
+
+Last recorded test-3 progress was 6272/65536 steps (9.57%), covering
+33.496 microseconds, after 247.758 seconds. This is a last progress receipt,
+not an exact termination-step count. No full waveform/final state or valid
+comparison result was produced. The monitor exited 15 and the queue logged
+a missing native result, which records an intentional user stop rather
+than numerical failure. The monitor and queue then exited. Verification
+found no remaining matching experiment processes; GPU use returned to the
+desktop baseline. Tests 4 and 5 have no run directories.
+
+Preserve the partial attempt, original frozen sources, stop receipt and
+both completed comparisons. There is no mid-run restart checkpoint. Any
+later authorized retry needs a fresh attempt location and must preserve
+existing evidence. See [stop receipt](evidence/experimental-five-user-stop-20261116.json).
