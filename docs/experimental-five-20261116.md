@@ -82,3 +82,27 @@ Results and resource logs are saved under
 `outputs/experimental-validation-20261116/`. Each comparison is reported to
 the user on completion. These five tests do not authorize training-data
 acceptance, model training, the older paused queue or more experiments.
+
+## Setup corrections before propagation
+
+The first attempt stopped during CuPy import because its default cache was
+outside the writable project. The launcher now sets CUPY_CACHE_DIR inside
+the experiment output directory. The second attempt built the operator and
+ports but stopped before its first step: a NumPy int32 addition coerced a
+multi-GiB Python byte count into a Windows C long. Convert the small probe
+byte count to a Python int before adding it to the vector budget. A
+broadcast-array regression check verifies the memory-budget rejection for
+28-million-DOF inputs without allocating multi-GiB host vectors. Preserve
+both failed attempts and the first source archive. Neither attempt produced
+a physical trajectory or an experimental comparison. Freeze a new source
+archive after these fixes. The old paused goal's source-transition
+certificate will need refreshing before it consumes the updated integrator.
+
+Remove the mean of the first 20 microseconds from each common signal before
+the envelope calculation. This interval precedes physical arrival and is
+fixed for both signals. It corrects measurement DC offset without fitting
+an amplitude or delay. Retain all-time resource peaks even after the bounded
+sample history fills. Each experiment has a 24-hour emergency wall guard;
+six hours is not a batch cutoff. No simulation is shortened for the time
+estimate. Full states cannot resume mid-run, so stopping between completed
+tests preserves completed results but a stopped trajectory needs a rerun.

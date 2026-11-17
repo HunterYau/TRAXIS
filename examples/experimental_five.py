@@ -257,6 +257,7 @@ def worker(frequency, output):
             cooling.check(event['steps_completed'])
             if time.perf_counter()-last >= 15 or event['steps_completed']==STEPS:
                 phase('propagating',**event);last=time.perf_counter()
+                write_json(output/'progress.json',dict(**event,elapsed_seconds=last-started))
         simulation=gpu_explicit_simulate(system,STEPS,DURATION/STEPS,probes,load,
             force=lambda t:float(np.interp(t,drive_t,normalized_drive,left=0.,right=0.)),
             output_stride=8,energy_stride=256,guard=guard,progress=progress,max_workspace_mib=4096)
@@ -315,7 +316,8 @@ def run_one(frequency):
     guard=PeakGuard(ResourceLimits(max_seconds=86500,max_rss_mib=4096))
     report=dict(completed=False,frequency_hz=frequency)
     try:
-        report.update(run_monitored(command,PROJECT,os.environ.copy(),guard,output/'worker.log'))
+        environment={**os.environ,'CUPY_CACHE_DIR':str(ROOT/'cupy-cache')}
+        report.update(run_monitored(command,PROJECT,environment,guard,output/'worker.log'))
         report['completed']=report['exit_code']==0
     finally:
         report['resource_samples']=guard.history
@@ -343,7 +345,9 @@ def main():
         write_json(ROOT/'source-archive.json',dict(sha256=sha256_file(ROOT/'simulation-sources.zip'),
                    protocol_sha256=sha256_file(path)))
     elif args.action=='worker':worker(args.frequency,args.output)
-    else:print(json.dumps(run_one(args.frequency)),flush=True)
+    else:
+        report=run_one(args.frequency)
+        print(json.dumps({k:v for k,v in report.items() if k!='resource_samples'}),flush=True)
 
 
 if __name__ == '__main__':

@@ -114,7 +114,9 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
     if starts[-1]>100000:
         raise MemoryError('explicit probe support exceeds 100000 coefficients')
     sample_bytes = samples*probe_count*8+len(energy_steps)*24
-    workspace_mib = (16*n*8+sample_bytes+starts[-1]*16)/1024**2
+    # Windows NumPy int32 must not coerce a multi-GiB Python byte count.
+    probe_bytes = int(starts[-1])*16
+    workspace_mib = (16*n*8+sample_bytes+probe_bytes)/1024**2
     if sample_bytes>64*1024**2 or workspace_mib>max_workspace_mib:
         raise MemoryError('explicit vector/sample storage exceeds its declared screen')
     def vector(value):
@@ -131,7 +133,7 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
             raise ValueError('explicit force amplitude is nonfinite')
         return value
     storage = system.stiffness.storage
-    if (system.screen['device_storage_screen_mib']+(sample_bytes+starts[-1]*16)/1024**2
+    if (system.screen['device_storage_screen_mib']+(sample_bytes+probe_bytes)/1024**2
             >system.screen['max_device_mib']):
         raise MemoryError('explicit samples/probes exceed the declared total device budget')
     cp = storage.cp

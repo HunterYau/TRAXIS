@@ -1,10 +1,12 @@
 """Software checks for the five-measurement benchmark, not extra physical trials."""
 import unittest
+from types import SimpleNamespace
 import numpy as np
 
 from examples.experimental_five import (PLATE, point_row, fbg_row, radial_edge_load,
                                         mesh_screen, arrival)
 from traxis.gpu_tensor import make_layout
+from traxis.gpu_enriched_verlet import gpu_explicit_simulate, sparse_probe_set
 
 
 class ExperimentalPorts(unittest.TestCase):
@@ -46,6 +48,17 @@ class ExperimentalPorts(unittest.TestCase):
         self.assertEqual(layout.screen['vector_dofs'],28170018)
         with self.assertRaises(ValueError):
             make_layout(PLATE,(250,250,1),5,max_dofs=32000001)
+
+    def test_multi_gib_workspace_rejected_by_budget_before_gpu_allocation(self):
+        # Broadcast arrays exercise >2 GiB accounting without allocating that
+        # much host memory. On Windows the old NumPy-int32 addition overflowed.
+        n=28170018
+        mass=np.broadcast_to(np.array(1.),(n,))
+        load=np.broadcast_to(np.array(0.),(n,))
+        system=SimpleNamespace(mass_diagonal=mass,stable_dt_s=1e-8)
+        probes=sparse_probe_set([(np.array([0]),np.array([1.]))],n)
+        with self.assertRaisesRegex(MemoryError,'declared screen'):
+            gpu_explicit_simulate(system,16,1e-9,probes,load,max_workspace_mib=1024)
 
 
 if __name__=='__main__':unittest.main()
