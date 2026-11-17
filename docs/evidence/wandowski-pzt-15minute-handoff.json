@@ -1,0 +1,33 @@
+{
+  "kind": "codex_monitoring_handoff",
+  "checked_utc": "2026-11-17T16:22:08.639064+00:00",
+  "observed_seconds": 916.70693,
+  "queue_pid": 4340,
+  "queue_alive": true,
+  "current_frequency_hz": 50000,
+  "worker_event": {
+    "phase": "propagating",
+    "elapsed_seconds": 910.235296000028,
+    "steps_completed": 23792,
+    "requested_steps": 65536,
+    "time_s": 0.00012706298828125,
+    "requested_duration_s": 0.00035,
+    "stiffness_applications": 23793
+  },
+  "percent_complete": 36.3037109375,
+  "reported_traceback": false,
+  "ram_percent": 68.5,
+  "gpu_memory_mib_temperature_c_utilization_percent": "3974, 73, 100",
+  "scheduled_frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000
+  ],
+  "simulation_stopped": false,
+  "simulation_independent_of_codex": true,
+  "all_frequency_results_pending": true,
+  "ready_for_training_data": false,
+  "fingerprint": "f8f52e2469a9aef1f4bdd6e9de552f4c3efedde096114deaa978a7f5914c3f2b"
+}
