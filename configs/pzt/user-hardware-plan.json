@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "user hardware intent; not a calibrated executable experiment",
+  "sensor_count": 8,
+  "part_under_consideration": "SMD07T02S412",
+  "material_profile": "configs/pzt/steminc-smd07t02s412.json",
+  "diameter_m": 0.007,
+  "thickness_m": 0.0002,
+  "plate_material": "6061-T6 aluminum",
+  "plate_thickness_m": 0.003175,
+  "sensor_positions_xy_m": null,
+  "electrode_polarities": null,
+  "mounting": {
+    "material": "salol (phenyl salicylate)",
+    "status": "user planned, not yet characterized",
+    "layer_thickness_m": null,
+    "shear_modulus_pa": null,
+    "normal_modulus_pa": null,
+    "density_kg_m3": null,
+    "frequency_dependent_loss": null
+  },
+  "function_generator": null,
+  "drive_voltage_v": null,
+  "source_impedance_ohm": null,
+  "oscilloscope_or_daq": null,
+  "input_resistance_ohm": null,
+  "input_capacitance_f": null,
+  "cable_capacitance_f": null,
+  "notes": [
+    "Confirmed by the user: eight PZTs, probably attached with salol; generator and oscilloscope not yet selected.",
+    "Null values mean unknown. They must not be interpreted as zero capacitance, open circuit, a perfect bond or specified placement.",
+    "The existing study file already uses eight sensors; its historical 5 mm mechanical patch radius is not the 3.5 mm radius of this hardware.",
+    "Do not replace frozen literature benchmark parameters with this proposed hardware configuration."
+  ]
+}

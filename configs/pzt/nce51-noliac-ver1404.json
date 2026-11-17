@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "id": "NCE51-Noliac-Ver1404-strain-charge",
+  "basis": "strain-charge-3d",
+  "source": {
+    "url": "https://www.mmech.com/images/stories/Technologies/Piezo%20Ceramics/Noliac_CEramics_NCE_datasheet_1404.pdf",
+    "publisher": "Noliac",
+    "edition": "Ver1404",
+    "pages": [9, 10, 11],
+    "pdf_sha256": "96bb751f19b4d77e7ef6d78758e76cb4d2d0300caf9824817255ef52e95fc380",
+    "conditions": "Small-signal nominal material values, 23 C +/-2 C, 24 hours after poling",
+    "tolerances": "Electrical +/-10%; mechanical and piezoelectric +/-5%"
+  },
+  "voigt_order": ["xx", "yy", "zz", "yz", "xz", "xy"],
+  "shear_convention": "engineering",
+  "poling_axis": 3,
+  "compliance_E_m2_n": [
+    [17e-12, -5.36e-12, -8.69e-12, 0, 0, 0],
+    [-5.36e-12, 17e-12, -8.69e-12, 0, 0, 0],
+    [-8.69e-12, -8.69e-12, 21.3e-12, 0, 0, 0],
+    [0, 0, 0, 48.9e-12, 0, 0],
+    [0, 0, 0, 0, 48.9e-12, 0],
+    [0, 0, 0, 0, 0, 44.6e-12]
+  ],
+  "d_c_n": [
+    [0, 0, 0, 0, 669e-12, 0],
+    [0, 0, 0, 669e-12, 0, 0],
+    [-208e-12, -208e-12, 443e-12, 0, 0, 0]
+  ],
+  "relative_permittivity_T": [1940, 1940, 1900],
+  "density_kg_m3": 7850,
+  "planar_frequency_constant_hz_m": 1925,
+  "reported_but_not_used_as_broadband_damping": {"mechanical_q": 80, "dielectric_loss_tangent": 0.015},
+  "notes": [
+    "Use this independent sE,d,epsilonT set and derive cE,e,epsilonS algebraically.",
+    "The separately printed e33=17.2 C/m2 is inconsistent with this set; do not mix those tables.",
+    "The overview table lists d31=-195 pC/N, while the complete matrix and current CTS product list -208 pC/N. This profile explicitly uses the complete matrix.",
+    "This is a reference material version, not a measured identification of any particular specimen."
+  ]
+}

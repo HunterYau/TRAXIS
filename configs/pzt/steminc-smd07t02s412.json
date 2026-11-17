@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "id": "STEMINC-SMD07T02S412-SM412-planar-reference",
+  "basis": "planar-d31-kp",
+  "source": {
+    "product_url": "https://www.steminc.com/PZT/en/piezo-ceramic-disc-7x02mm-300-khz",
+    "material_url": "https://www.steminc.com/piezo/PZ_property.asp",
+    "publisher": "STEMINC",
+    "conditions": "Product: 23 C +/-3 C, 40-70% RH; capacitance measured at 1 kHz, 1 Vrms",
+    "retrieved_date": "2026-11-16",
+    "product_html_sha256": "1356e62a8f16e09a80943d259d646f94834aa0faca234f3534e03ae7085e3adc",
+    "material_html_sha256": "20eddbf1d34b299f4ad0bbe8868458b1c0a977adc7650cede8f40a247e063c7d"
+  },
+  "part_number": "SMD07T02S412",
+  "material_name": "SM412",
+  "diameter_m": 0.007,
+  "thickness_m": 0.0002,
+  "density_kg_m3": 7800,
+  "d31_c_n": -190e-12,
+  "relative_permittivity_T_33": 1850,
+  "planar_coupling_kp": 0.63,
+  "nominal_radial_resonance_hz": 300000,
+  "radial_resonance_tolerance_hz": 10000,
+  "device_capacitance_f": 3000e-12,
+  "device_capacitance_relative_tolerance": 0.15,
+  "reported_reference_only": {
+    "product_kp_lower_bound": 0.55,
+    "resonant_impedance_upper_ohm": 10,
+    "d33_c_n": 450e-12,
+    "young_11_pa": 7.6e10,
+    "young_33_pa": 5.6e10,
+    "mechanical_q": 100,
+    "dielectric_loss_tangent_at_1khz": 0.012,
+    "planar_frequency_constant_hz_m": 2080
+  },
+  "missing_for_full_3d": ["complete elastic compliance tensor", "d15", "transverse permittivity", "bond layer properties", "readout impedance and cable capacitance", "bonded-device frequency response"],
+  "notes": [
+    "The 300 kHz +/-10 kHz specification is radial-mode resonance, not thickness-mode resonance and not a hard operating-frequency cutoff.",
+    "Material kp=0.63 is a nominal material value; product kp>=0.55 is a lower bound, not a measured value for an individual disc.",
+    "The reduced model derives s11+s12 from kp^2=2*d31^2/((s11+s12)*epsilonT33), assuming an ideal transversely isotropic planar material.",
+    "No NCE51 or generic PZT-5A tensor is substituted for the missing SM412 coefficients.",
+    "Static capacitance is retained as an independent device-specification check; it is not a broadband clamped capacitance or the DAQ input capacitance."
+  ]
+}
