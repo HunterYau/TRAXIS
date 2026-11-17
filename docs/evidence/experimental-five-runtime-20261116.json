@@ -1,0 +1,111 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "psutil": "7.2.2",
+    "matplotlib": "3.11.2"
+  },
+  "numpy_path": "C:\\Users\\bobty\\PycharmProjects\\HelloWorld\\TRAXIS\\.venv\\Lib\\site-packages\\numpy\\__init__.py",
+  "gpu_packages": {
+    "cupy-cuda12x": {
+      "version": "14.2.0",
+      "native_sha256": {
+        "cupy/_core/_accelerator.cp312-win_amd64.pyd": "89ef434982740e7e407d987316a808f5d5b85ff63e74814d947c2e1b30c05e27",
+        "cupy/_core/_carray.cp312-win_amd64.pyd": "e71710c518a58748982868a9e2d5e90d01002e824b7cb8c2f6b4d773f9d9cb12",
+        "cupy/_core/_cub_reduction.cp312-win_amd64.pyd": "2743588de4dc604677789915cba7bd85e442736b1b07cc7dac7011cdd4f94aff",
+        "cupy/_core/_dtype.cp312-win_amd64.pyd": "df595b26ac3d6cfe342a24e46bcbab422ecc1889b9c578b7588332b2f3575262",
+        "cupy/_core/_fusion_kernel.cp312-win_amd64.pyd": "eb787cd1a4bfbaaad0a8b46ce4bd15893ae0e09cd441b97a6aad3ab0c8e34632",
+        "cupy/_core/_fusion_thread_local.cp312-win_amd64.pyd": "4c1793888567f46be959abf45263f220771a346785d663d55cf3451c75ff4b7f",
+        "cupy/_core/_fusion_trace.cp312-win_amd64.pyd": "a117d7129a5853ded87e4d6cc05e8a3d8d9e52aba92b3ead55ec43cc9647ac92",
+        "cupy/_core/_fusion_variable.cp312-win_amd64.pyd": "612f0560f404f0349f0ee9ece12f970d8efda4e1ddc300e7215dcc2b51c53e60",
+        "cupy/_core/_kernel.cp312-win_amd64.pyd": "259c33b2bc3f2d62080b3604e343e4e6475ed6702bf6848920eedeffe926226b",
+        "cupy/_core/_memory_range.cp312-win_amd64.pyd": "21319ea1436f6293a7a163ee2806d945360c1033f30d7e74d3713ff8cc0ed70e",
+        "cupy/_core/_optimize_config.cp312-win_amd64.pyd": "fbdce6143dfd2127c48f466b52da1eabeebfed3e50e52eb4709d800942e6b50c",
+        "cupy/_core/_reduction.cp312-win_amd64.pyd": "59a726e299e21b9daa208968d3d93ba82816d3d3f59ee584bf13d054715b5d50",
+        "cupy/_core/_routines_binary.cp312-win_amd64.pyd": "e7e2d22e2aa1f033e0057d6b6b1466e9fa3c510562606a6dc9d1eb509dc1e6ec",
+        "cupy/_core/_routines_indexing.cp312-win_amd64.pyd": "4f4ed4ce27e31e5654368fd36d60d5358b0aa67875c18867096b7ca2fc821173",
+        "cupy/_core/_routines_linalg.cp312-win_amd64.pyd": "01959fc82193894efc98471495101f3925e640627fb770db6045d9416094d467",
+        "cupy/_core/_routines_logic.cp312-win_amd64.pyd": "d2c0f31bcfba0f09f3464e57b02fc4ee4f58baa18677ae65d640b7e2518bc7ca",
+        "cupy/_core/_routines_manipulation.cp312-win_amd64.pyd": "541950032174098d21c239de907d24ef8c4d936941fa082c62f8cda2a1bb7149",
+        "cupy/_core/_routines_math.cp312-win_amd64.pyd": "f25b6c942295f469c558d91c30b8e193712ee48c165c69b193e1d27f63bf9f81",
+        "cupy/_core/_routines_sorting.cp312-win_amd64.pyd": "a220b2438526d2e45a30036d48878cd86df88efd986a2cbce49589d5a2d21943",
+        "cupy/_core/_routines_statistics.cp312-win_amd64.pyd": "e0a42f26b5368ecbcc9d31e3cca2ca8e56896e4678524c91cb24ae177c4659d7",
+        "cupy/_core/_scalar.cp312-win_amd64.pyd": "18c6d3166f487101e3a698252e6b2dad5c3a2257287555c921216e97fffa5243",
+        "cupy/_core/core.cp312-win_amd64.pyd": "d2d4f980dcf02e9f4cd8170e91d1c772eda88fbdb7ef1e15f0a43497df4b504d",
+        "cupy/_core/dlpack.cp312-win_amd64.pyd": "e8827226746c5d2a4381f4e25a13d49008dcd6e27aa3791296a2552c3a15901e",
+        "cupy/_core/flags.cp312-win_amd64.pyd": "8dfae30c146e8728752dd9faaed9dff7a8a279d3ab0d8a1ed6de9ea85836d6b1",
+        "cupy/_core/fusion.cp312-win_amd64.pyd": "8c44b5eb1aad73f3d3ece76fea2c61c8b2fe46a1e78d85078af677a13c47714f",
+        "cupy/_core/internal.cp312-win_amd64.pyd": "290fc2938f4c0c5c35a594ed58d6a50882dcf12ed88337eebe5586464d8ba039",
+        "cupy/_core/new_fusion.cp312-win_amd64.pyd": "ac7953390574c54ceb622799fe369de265076c5f8bc519909105d9d7430a985c",
+        "cupy/_core/numpy_allocator.cp312-win_amd64.pyd": "ce7e2ac04e972ebf41894da4c101d41b8c966b9853a2bc6e1b158ddb2c9fc1bf",
+        "cupy/_core/raw.cp312-win_amd64.pyd": "85b4e4d8196355e28f54498791f202a9fa9d35777b9d0454814a3056324f5942",
+        "cupy/_util.cp312-win_amd64.pyd": "6dd7dc7257a7b7bf11b0fe2a74138e7fba330ede6db2b66fda7cdf3cdf731333",
+        "cupy/cuda/common.cp312-win_amd64.pyd": "e72a4c6c41e8c9e06ed047c5886da9c2e0bac6f61370cc5b8b1a73534f7c6fca",
+        "cupy/cuda/cub.cp312-win_amd64.pyd": "085a541a9ab576885cb792be6f55cf009d4c8f9662131d2048d91011e73236fd",
+        "cupy/cuda/cufft.cp312-win_amd64.pyd": "be75370b1dcbaab2c727d73824824b59814b94c9561e3f4c277e541f3e5bd9b4",
+        "cupy/cuda/device.cp312-win_amd64.pyd": "1838c28108e51c1d3db19785326e9d3727b2f01cb0db1aaf29d7196c938cfd32",
+        "cupy/cuda/function.cp312-win_amd64.pyd": "f739b2dd58c57dac23e5b4131c0b0065410e2fe134dee6466954a70ef78a98a3",
+        "cupy/cuda/graph.cp312-win_amd64.pyd": "ca359d619e70ca1df22b5cbbc7d89f6020386cbe580c0693edb27b12bb0728ad",
+        "cupy/cuda/jitify.cp312-win_amd64.pyd": "9876e1f31e6926ae78a3719ee6c5ee901cf4e5114856087573b60b76ce00ebe1",
+        "cupy/cuda/memory.cp312-win_amd64.pyd": "5b4783d4e4194af6352a23986adb9b01e15e730b417ce635f16572eb37cb7988",
+        "cupy/cuda/memory_hook.cp312-win_amd64.pyd": "d8eec742c709ea242d56103f6c41eccde9d2991cc37dade793286bb215481716",
+        "cupy/cuda/pinned_memory.cp312-win_amd64.pyd": "96b7e80ceccf86f1a975d36be72bac027507bfaeba85f636ce5fe877b8bb6ec5",
+        "cupy/cuda/stream.cp312-win_amd64.pyd": "30d575e300c5277ce7379ac656ab1914fc6e6efb11987b833b791dc38b6622a2",
+        "cupy/cuda/texture.cp312-win_amd64.pyd": "e71596b40b0fdf63a53c35c1183b55c8967b92fba65f7b56fe712f03fb06eaac",
+        "cupy/cuda/thrust.cp312-win_amd64.pyd": "8c220cbb4eabbbc7a8ea47948083b08db38f0e45e0cc15e6d6b3625eb457c3e5",
+        "cupy/fft/_cache.cp312-win_amd64.pyd": "c893343ddb748c5cdac7a0c3dbe0faa72c4ec9ad780e9abf4e9a85ea342e8f6c",
+        "cupy/fft/_callback.cp312-win_amd64.pyd": "2a363d73ca4b2d375bf12e5771bde68e289ba894ee7aa1dc33a7fb3fdc6143c3",
+        "cupy/lib/_polynomial.cp312-win_amd64.pyd": "c48fb3aa2c3271f5cc04866095c190f65bfd00defe4ef565631c1f0fe951f6ee",
+        "cupy/random/_bit_generator.cp312-win_amd64.pyd": "d47a4370fb78bfaf55554738434de62ab1a024be562e8fe3e9e2c9fa9e866950",
+        "cupy/random/_generator_api.cp312-win_amd64.pyd": "ef842bd38b66ac69ed1cb844c7a4324079a5e0458a40fab818d97a6be75f5057",
+        "cupy_backends/cuda/_softlink.cp312-win_amd64.pyd": "acd21eb05e0b7cfb2e08a2cd7f3c2b4f0f5b44f22ef3cd1d9610731973583639",
+        "cupy_backends/cuda/api/_driver_enum.cp312-win_amd64.pyd": "5ee0762d2aa5bf6fc074f4df75c2985c3bc8682f00bc2905d287feee1b6e0f8d",
+        "cupy_backends/cuda/api/_runtime_enum.cp312-win_amd64.pyd": "f76025671806a52f297937c12a39301e46d7a0cac621bdb8a8b7b1e6dbfe371f",
+        "cupy_backends/cuda/api/driver.cp312-win_amd64.pyd": "00ad3755993289ee62b46fad56011f1c00eac013d9c6a1f289badcd36617fe99",
+        "cupy_backends/cuda/api/runtime.cp312-win_amd64.pyd": "f24952a5589d4d1276c6e5e208fedf3958a0134f618e640e84620dc101098af5",
+        "cupy_backends/cuda/libs/cublas.cp312-win_amd64.pyd": "f74b8606c6f0c5235f6a5b549dc66c5690254e5b0171bf67dbe4def6c3e39ad4",
+        "cupy_backends/cuda/libs/curand.cp312-win_amd64.pyd": "2c861bc746c2f370da43b3d48ee9ecd381deedc1c3c23d6907bfda668bd8db94",
+        "cupy_backends/cuda/libs/cusolver.cp312-win_amd64.pyd": "9b60719d00c3cef9542a4cd3426a7f1f612680408612f40b82c82d4ede54c868",
+        "cupy_backends/cuda/libs/cusparse.cp312-win_amd64.pyd": "53601c6c1f1d979832e2b87396464cd52d2dd9b9c8266dc8d4cefb832431a869",
+        "cupy_backends/cuda/libs/cutensor.cp312-win_amd64.pyd": "29686ba114c9855bae273576bcc610d1a317f186945b2acd0a7d7f1630eeead5",
+        "cupy_backends/cuda/libs/nvrtc.cp312-win_amd64.pyd": "fe1e8fae797408f48c2dae727bb6cfff592667c8b720af6a27eb60d99ce92e6c",
+        "cupy_backends/cuda/libs/nvtx.cp312-win_amd64.pyd": "d7c924be09a464fa4e567ebbb6fb82b6e2a577aa2bd5b77c10f97c549873bee3",
+        "cupy_backends/cuda/stream.cp312-win_amd64.pyd": "2686833c49b77eadc5618aea82ca5d0779d110c756cb327b646b7cf8d5fa2e2c",
+        "cupyx/_cusolver.cp312-win_amd64.pyd": "5bb62a2ea8846f0c7d7abf071b94fb4a0b0d80c3b181f44d2b545a4cd370e154",
+        "cupyx/_cutensor.cp312-win_amd64.pyd": "9ac54273ad1be2c9aef2d91f2124d54087d03b20596489568f2362848410ed90",
+        "cupyx/scipy/ndimage/_bbox_slices.cp312-win_amd64.pyd": "fad1c1117ded79806f3e1f02385c65143cc7e84da8e45bce7509b9f3f4642dfc"
+      },
+      "record_sha256": "e310dbdb0116c3f3dffa359eb9f6b1e47abeaaad93a767ffcca42b52a89223cd"
+    },
+    "cuda-pathfinder": {
+      "version": "1.8.6",
+      "native_sha256": {},
+      "record_sha256": "5b4143c55493e3a12490c52c27679fd435964eed506315411de6abd683dd2634"
+    },
+    "nvidia-cuda-runtime-cu12": {
+      "version": "12.9.79",
+      "native_sha256": {
+        "nvidia/cuda_runtime/bin/cudart64_12.dll": "760c38928bbe5759f7b31ed6692599eb7ec83cedd5702e84c2b72028a89837e1"
+      },
+      "record_sha256": "55db0af9ac9a6a0bd7c77057e2fd7c0c5323107a440608d95f62d431d7f11c35"
+    },
+    "nvidia-cuda-nvrtc-cu12": {
+      "version": "12.9.86",
+      "native_sha256": {
+        "nvidia/cuda_nvrtc/bin/nvrtc-builtins64_129.dll": "c405226b0b394ed8bdc593bb1419b94a989f93248ed2873e8f2e0e27c1688ca1",
+        "nvidia/cuda_nvrtc/bin/nvrtc64_120_0.alt.dll": "ac56a4d3b5a99f294523abec28b8f648b96324a9277622a450ec20ddb9e2c47d",
+        "nvidia/cuda_nvrtc/bin/nvrtc64_120_0.dll": "0cc63349fedffeec1660b30955e8028b6e4e4c26cf1e41c56dc4569fd5eca82c"
+      },
+      "record_sha256": "9b367da151d80ba92cd570bacef50f7f6ab73db81a39905a64005a46546539bc"
+    },
+    "nvidia-cuda-cccl-cu12": {
+      "version": "12.9.27",
+      "native_sha256": {},
+      "record_sha256": "383b607d421897e710f54d6a63aeec7d2459bb48cdfb6b1edf90636b0dd421c7"
+    }
+  },
+  "note": "Observed from the same simulation interpreter during trial 1. Reader-only packages are isolated under ignored outputs and are not on this interpreter path.",
+  "fingerprint": "80f6a6e7f346401ee9bd8c9f3da16733849358e35a66b66300463cbcd56935cc"
+}

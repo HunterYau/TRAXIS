@@ -116,3 +116,30 @@ data comparison. The fourth launch is the first attempt that advanced past
 the repeated progress write. All three earlier failure directories and
 their relevant source archives are retained. No scientific parameters were
 changed to fix these launch errors.
+
+## Serial queue and saved evidence
+
+`python -m examples.run_experimental_five_queue` watches the already-running
+first launcher, verifies each completed result and starts the next fixed
+frequency. It never starts a second copy of an active launcher. It stops
+on any failed completion or integrity check. `queue-owner.json` records PID,
+creation time and source hash; `queue-events.jsonl` records each transition.
+The queue runs as a separate process and saves results if the chat's credit
+window ends. Chat messages and Google Doc updates still require a connected
+assistant. It does not push to GitHub or write to Google Docs by itself.
+
+Creating `outputs/experimental-validation-20261116/STOP_AFTER_CURRENT`
+stops the queue after the running test is saved. It does not interrupt that
+test. An immediate halt still requires stopping the verified owned process
+tree. The queue cannot automatically resume after it has exited; preserve
+its owner/events and review completed tests before any restart.
+
+The reporter verifies completion, protocol/source identities, numerical
+checks and saved wave/state hashes, then re-extracts timing from saved
+signals. It saves portable NPZ signal files, PNG comparisons and compact
+JSON evidence in `docs/evidence/`. Measured FBG voltage and predicted strain
+are plotted separately in their own units. Large final fields remain local.
+The Zenodo metadata identifies the experimental dataset as CC0. Attribute
+the paper and repository when reusing these measured signal excerpts.
+The runtime receipt identifies the original simulation interpreter and
+native CUDA package hashes; the reader-only install is separate.

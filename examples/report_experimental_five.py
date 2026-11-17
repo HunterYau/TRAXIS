@@ -52,6 +52,14 @@ def report(frequency):
         analysis_source_sha256=sha256_file(Path(__file__)))
     compact['fingerprint']=canonical_hash(compact)
     evidence=PROJECT/f'docs/evidence/experimental-trial-{index}-{frequency//1000}khz-20261116.json'
+    # Portable signals and plots belong in the research record. Large final
+    # displacement/velocity fields remain local, with their hashes recorded.
+    for source,suffix in ((native/'waveforms.npz','.npz'),(directory/'comparison.png','.png')):
+        destination=evidence.with_suffix(suffix)
+        if destination.exists():
+            if sha256_file(destination)!=sha256_file(source):
+                raise ValueError('portable evidence bytes changed')
+        else:destination.write_bytes(source.read_bytes())
     if evidence.exists():
         if json.loads(evidence.read_text(encoding='utf-8'))!=compact:
             raise ValueError('do not overwrite changed evidence')
