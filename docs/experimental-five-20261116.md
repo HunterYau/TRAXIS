@@ -106,3 +106,13 @@ sample history fills. Each experiment has a 24-hour emergency wall guard;
 six hours is not a batch cutoff. No simulation is shortened for the time
 estimate. Full states cannot resume mid-run, so stopping between completed
 tests preserves completed results but a stopped trajectory needs a rerun.
+
+The third launch stopped after initial propagation because the immutable
+JSON writer correctly refused to replace a progress receipt. Progress is
+now stored as separate numbered receipts. A stub-trajectory lifecycle test
+calls progress twice and verifies both receipts, waveforms, final state and
+completion record. It performs no physics simulation or additional real
+data comparison. The fourth launch is the first attempt that advanced past
+the repeated progress write. All three earlier failure directories and
+their relevant source archives are retained. No scientific parameters were
+changed to fix these launch errors.

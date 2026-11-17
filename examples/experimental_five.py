@@ -257,7 +257,8 @@ def worker(frequency, output):
             cooling.check(event['steps_completed'])
             if time.perf_counter()-last >= 15 or event['steps_completed']==STEPS:
                 phase('propagating',**event);last=time.perf_counter()
-                write_json(output/'progress.json',dict(**event,elapsed_seconds=last-started))
+                write_json(output/f"progress-{event['steps_completed']:06d}.json",
+                           dict(**event,elapsed_seconds=last-started))
         simulation=gpu_explicit_simulate(system,STEPS,DURATION/STEPS,probes,load,
             force=lambda t:float(np.interp(t,drive_t,normalized_drive,left=0.,right=0.)),
             output_stride=8,energy_stride=256,guard=guard,progress=progress,max_workspace_mib=4096)
