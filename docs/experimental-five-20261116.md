@@ -6,6 +6,11 @@ uses five frequencies on one experimental specimen, not five independent
 plates: 50, 100, 150, 200 and 250 kHz. No additional physical comparison is
 authorized by this batch.
 
+Record notes in the linked **Science Log Info** Google Doc, which holds
+information for writing the actual science log later. This task has not
+edited the actual science log. Use the document's exact title when
+reporting updates to avoid confusing the two.
+
 Source: Wandowski, Fiborek, Ahamad, Soman and Malinowski, *Elastic wave mode
 identification and separation based on piezoelectric and fibre Bragg grating
 sensors*, Smart Materials and Structures 34 (2025), 105015,

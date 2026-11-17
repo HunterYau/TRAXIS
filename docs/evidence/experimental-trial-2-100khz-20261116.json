@@ -1,0 +1,57 @@
+{
+  "frequency_hz": 100000,
+  "experimental": {
+    "packet_peak_s": 0.0001702,
+    "flight_s": 0.00014519999999999998,
+    "group_m_s": 1721.7630853994492,
+    "window_s": [
+      0.00013956648825694015,
+      0.00018956648825694015
+    ],
+    "peak_at_window_edge": false
+  },
+  "simulation": {
+    "packet_peak_s": 0.00015639999999999998,
+    "flight_s": 0.00013139999999999997,
+    "group_m_s": 1902.5875190258757,
+    "window_s": [
+      0.00013956648825694015,
+      0.00018956648825694015
+    ],
+    "peak_at_window_edge": false
+  },
+  "arrival_error_us": -13.80000000000001,
+  "flight_relative_error": -0.09504132231404971,
+  "cpu_force_relative_error": 3.266355535214348e-13,
+  "post_burst_modified_energy_relative_drift": 3.9486163114261673e-16,
+  "cooling_seconds": 2.077999999979511,
+  "wall_seconds": 2589.7722531000036,
+  "protocol_sha256": "a04e1e43ce111531b36987566e8fc7054af8ff99ffdae3b8ab9019eed9fdd424",
+  "waveforms_sha256": "b665299b1b1c1621541385f561e489a2442cfac9a5181ff23e98c4ce360fe47e",
+  "final_state_sha256": "492e59ba05e7ac39ef7c31743e9825149e5d63e0f59e104c1d4dde5c8ecda1ed",
+  "resource_peaks": {
+    "system_memory_percent": 62.9,
+    "process_rss_mib": 1864.08984375,
+    "gpu_memory_mib": 3520.0,
+    "gpu_temperature_c": 76.0,
+    "minimum_available_mib": 6025.75
+  },
+  "trial": 2,
+  "completed": true,
+  "ready_for_training_data": false,
+  "conclusion": "exploratory A0 arrival timing only; full transducer response unvalidated",
+  "peaks_inside_extraction_windows": true,
+  "monitor_resource_peaks": {
+    "system_memory_percent": 64.4,
+    "process_rss_mib": 2009.30859375,
+    "gpu_memory_mib": 3520.0,
+    "gpu_temperature_c": 75.0,
+    "minimum_available_mib": 5774.78125
+  },
+  "native_result_sha256": "ae827653ff13585c203bcc7d9c240c5912fc21c1b630f0920913a2f5a04f7b92",
+  "launcher_sha256": "af42385d469099bab4b388b6df115376fd704898ff0437ab6866924cf4283558",
+  "worker_log_sha256": "0bed216392899fa2cfda47f5d7a6feecf4e9cac92d753350ee01f69a80903d60",
+  "plot_sha256": "4279ef0b668c465e9f9ad98a1e84590d92c22bbdf6ea5d3753f7cad31673097e",
+  "analysis_source_sha256": "ca55e83e1cf18a106e3837d329fb58f6a1c9a999b5b49d3a5c668834ddc1c556",
+  "fingerprint": "bddd6fb71db9d1fa75439e5cc9b3854b18378f30743c7075382622292a04288e"
+}
