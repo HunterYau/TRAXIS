@@ -92,7 +92,7 @@ class TensorLayout:
 def make_layout(plate,cells,order,transform=None,*,max_dofs=12000000,max_device_mib=1536,max_host_mib=1024):
     nodes=line_rule(order)[0]
     if (len(cells)!=3 or any(type(n) is not int or not 1<=n<=512 for n in cells)
-            or type(max_dofs) is not int or not 24<=max_dofs<=12000000
+            or type(max_dofs) is not int or not 24<=max_dofs<=32000000
             or not math.isfinite(max_device_mib) or not 0<max_device_mib<=6144
             or not math.isfinite(max_host_mib) or not 0<max_host_mib<=4096):
         raise ValueError('invalid tensor layout counts or memory limits')
