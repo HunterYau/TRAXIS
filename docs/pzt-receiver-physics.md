@@ -178,3 +178,19 @@ python -m examples.pzt_receiver_checks --output outputs/new-pzt-check --native -
 These are software/component checks, not additional real-data trials or proof
 that the prior 100/150 kHz mismatch is fixed. The five saved results remain
 unchanged. Full material/adhesive/electrode/electronics validation is still open.
+
+Final verification: 438 CPU tests passed, 35 optional checks skipped, zero
+failures/errors (473 total). The 22 focused checks pass. Independent native
+3D operator discrepancies are at most 2.42e-14 relative; passive coupled
+energy balance is within 1.88e-14 relative. The CUDA observer agrees with
+exact CPU normal modes to about 1.56e-11 relative, and its final charge
+matches direct CPU evaluation to about 1e-15. These small manufactured
+fixtures verify implementation, not real hardware accuracy.
+
+The full CPU suite peaked at 61.4% system RAM and 813.42 MiB owned-process
+RSS. Detailed evidence, source hashes and limitations are recorded in
+[the implementation receipt](evidence/pzt-receiver-implementation-checks.json).
+The first redirected GPU-check command returned a PowerShell error status
+despite its completed proof; a repeat launched through Python with combined
+stdout/stderr explicitly returned exit code 0 and completed=true. The
+original v1/v2 artifacts are retained rather than rewritten.
