@@ -1,15 +1,6 @@
 # Five measured plate-wave timing comparisons
 
-Status: the user has now authorized the remaining 150, 200 and 250 kHz
-comparisons on the same plate. The fresh 150 kHz attempt is running; the
-other two will run serially. First/second results stay unchanged. The
-aborted third attempt and its stop marker were preserved under
-`outputs/experimental-validation-20261116/history-before-authorized-resume-v1/`.
-
-Previous stop: stopped at the user's request after two completed comparisons.
-No simulation or queue process remains running. Test 3 had already started
-when the user requested no test 3; it was terminated before completion.
-Tests 4 and 5 were never started. Do not resume without new instruction.
+Status: all five comparisons completed and saved. The queue stopped after 250 kHz. No further plate is queued.
 
 Google Doc entries go to **Science Log Info**, the user's notes document
 for preparing the formal log later:
@@ -30,9 +21,9 @@ to Wandowski, Fiborek, Ahamad, Soman and Malinowski (2025).
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 50 kHz | 190.4 us | 191.6 us | +1.2 us | +0.6303% | 42.98 min |
 | 2 | 100 kHz | 145.2 us | 131.4 us | -13.8 us | -9.5041% | 43.16 min |
-| 3 | 150 kHz | Pending | Pending | Pending | Pending | Fresh attempt running |
-| 4 | 200 kHz | Pending | Pending | Pending | Pending | Authorized next |
-| 5 | 250 kHz | Pending | Pending | Pending | Pending | Authorized last |
+| 3 | 150 kHz | 125.133 us | 114.133 us | -11.00 us | -8.7906% | 42.92 min |
+| 4 | 200 kHz | 106.100 us | 107.300 us | +1.20 us | +1.1310% | 42.68 min |
+| 5 | 250 kHz | 102.600 us | 102.800 us | +0.20 us | +0.1949% | 42.77 min |
 
 Flight time subtracts half the five-cycle excitation duration from the
 packet-envelope peak. Positive delay means the simulation arrived later.
@@ -117,3 +108,13 @@ Preserve the partial attempt, original frozen sources, stop receipt and
 both completed comparisons. There is no mid-run restart checkpoint. Any
 later authorized retry needs a fresh attempt location and must preserve
 existing evidence. See [stop receipt](evidence/experimental-five-user-stop-20261116.json).
+
+## Completion of the remaining three comparisons
+
+Test 3, 150 kHz: completed all steps; CPU force relative error 7.47398e-14; modified-energy drift 4.55725e-16. Numerical checks passed. No training-data acceptance is claimed.
+
+Test 4, 200 kHz: completed all steps; CPU force relative error 5.95758e-14; modified-energy drift 5.80211e-16. Numerical checks passed. No training-data acceptance is claimed.
+
+Test 5, 250 kHz: completed all steps; CPU force relative error 3.96659e-14; modified-energy drift 5.71778e-16. Numerical checks passed. No training-data acceptance is claimed.
+
+Agreement varies with frequency: the 100 and 150 kHz packet timings remain substantially different from experiment. These are timing comparisons with nominal published plate properties and simplified transducer responses, not overall simulator accuracy.

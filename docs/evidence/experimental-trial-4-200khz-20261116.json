@@ -1,0 +1,57 @@
+{
+  "frequency_hz": 200000,
+  "experimental": {
+    "packet_peak_s": 0.0001186,
+    "flight_s": 0.00010609999999999999,
+    "group_m_s": 2356.26767200754,
+    "window_s": [
+      0.00010808857320030399,
+      0.000133088573200304
+    ],
+    "peak_at_window_edge": false
+  },
+  "simulation": {
+    "packet_peak_s": 0.0001198,
+    "flight_s": 0.00010729999999999999,
+    "group_m_s": 2329.9161230195714,
+    "window_s": [
+      0.00010808857320030399,
+      0.000133088573200304
+    ],
+    "peak_at_window_edge": false
+  },
+  "arrival_error_us": 1.200000000000002,
+  "flight_relative_error": 0.011310084825636224,
+  "cpu_force_relative_error": 5.957582166262367e-14,
+  "post_burst_modified_energy_relative_drift": 5.802111778678332e-16,
+  "cooling_seconds": 0.0,
+  "wall_seconds": 2561.0394006000133,
+  "protocol_sha256": "a04e1e43ce111531b36987566e8fc7054af8ff99ffdae3b8ab9019eed9fdd424",
+  "waveforms_sha256": "0310ba79bae842a93d9624effbd22a75af57d1ea73fbd40d6ac9a687f19b64e9",
+  "final_state_sha256": "46d89646ae3e71806c2bbe20d2750b3ba703f71253ee1e7aa898a0c127831ba8",
+  "resource_peaks": {
+    "system_memory_percent": 63.3,
+    "process_rss_mib": 1867.77734375,
+    "gpu_memory_mib": 3722.0,
+    "gpu_temperature_c": 75.0,
+    "minimum_available_mib": 5964.37109375
+  },
+  "trial": 4,
+  "completed": true,
+  "ready_for_training_data": false,
+  "conclusion": "exploratory A0 arrival timing only; full transducer response unvalidated",
+  "peaks_inside_extraction_windows": true,
+  "monitor_resource_peaks": {
+    "system_memory_percent": 64.9,
+    "process_rss_mib": 2057.6875,
+    "gpu_memory_mib": 3725.0,
+    "gpu_temperature_c": 75.0,
+    "minimum_available_mib": 5698.765625
+  },
+  "native_result_sha256": "9de8470f86bca5ef760d61ff9e10988084dc4855e37494773b7438c360a45da5",
+  "launcher_sha256": "958647b1a73b8b6304fb2e4da80d28497a3437a5e536909ba53d5988e35d9861",
+  "worker_log_sha256": "21b6a3f48479635ac04b3e62fb777998f30663070e464a21c8eea9c55ecf4858",
+  "plot_sha256": "8e31a2465c2c6d915d57536eb3d83e8a4375f15c3c589116ac7f5d677bb044ae",
+  "analysis_source_sha256": "ca55e83e1cf18a106e3837d329fb58f6a1c9a999b5b49d3a5c668834ddc1c556",
+  "fingerprint": "8318b43087578b89fad088cbc9159dac2f73b67be8a000216ed30d7e2fef8826"
+}

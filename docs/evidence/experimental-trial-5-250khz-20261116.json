@@ -1,0 +1,57 @@
+{
+  "frequency_hz": 250000,
+  "experimental": {
+    "packet_peak_s": 0.0001126,
+    "flight_s": 0.0001026,
+    "group_m_s": 2436.647173489279,
+    "window_s": [
+      0.00010080851524829512,
+      0.00012080851524829512
+    ],
+    "peak_at_window_edge": false
+  },
+  "simulation": {
+    "packet_peak_s": 0.00011279999999999999,
+    "flight_s": 0.00010279999999999999,
+    "group_m_s": 2431.9066147859926,
+    "window_s": [
+      0.00010080851524829512,
+      0.00012080851524829512
+    ],
+    "peak_at_window_edge": false
+  },
+  "arrival_error_us": 0.1999999999999913,
+  "flight_relative_error": 0.0019493177387912564,
+  "cpu_force_relative_error": 3.9665886691699544e-14,
+  "post_burst_modified_energy_relative_drift": 5.717779506256861e-16,
+  "cooling_seconds": 0.0,
+  "wall_seconds": 2565.9444191000075,
+  "protocol_sha256": "a04e1e43ce111531b36987566e8fc7054af8ff99ffdae3b8ab9019eed9fdd424",
+  "waveforms_sha256": "345a9db50db8d7e0e9ba65681a1b0bd0cf2afea53490e3c74c5217092e821e8a",
+  "final_state_sha256": "3bc8385f6267a6025b35f61e1d8a58ab66046277e8d3113ade652846519498e0",
+  "resource_peaks": {
+    "system_memory_percent": 62.2,
+    "process_rss_mib": 1867.85546875,
+    "gpu_memory_mib": 3720.0,
+    "gpu_temperature_c": 75.0,
+    "minimum_available_mib": 6134.203125
+  },
+  "trial": 5,
+  "completed": true,
+  "ready_for_training_data": false,
+  "conclusion": "exploratory A0 arrival timing only; full transducer response unvalidated",
+  "peaks_inside_extraction_windows": true,
+  "monitor_resource_peaks": {
+    "system_memory_percent": 63.8,
+    "process_rss_mib": 2196.9453125,
+    "gpu_memory_mib": 3720.0,
+    "gpu_temperature_c": 75.0,
+    "minimum_available_mib": 5869.80859375
+  },
+  "native_result_sha256": "83ffebbfe0931e3629dfb061004a647649ae7b58a8f5f2f5a81055e7010cca77",
+  "launcher_sha256": "6ce5ad7e0843b0746e5b5d2fbaa37e1d28b31ef771f9667487bd7c7cea070433",
+  "worker_log_sha256": "2575fe4cd445b601c6a5af58e3b23341c299760a14e5730017f7ec9b572c56b8",
+  "plot_sha256": "e44b2ea53eb8852ef5b428c0e63f437cd98b3b341bb6a8ecdbee289e133106d1",
+  "analysis_source_sha256": "ca55e83e1cf18a106e3837d329fb58f6a1c9a999b5b49d3a5c668834ddc1c556",
+  "fingerprint": "298949fe240adfd9d68c41ad902bf2d16f918694a73ceacfffdea74491591f5d"
+}
