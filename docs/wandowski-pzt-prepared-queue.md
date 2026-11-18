@@ -64,6 +64,22 @@ or claim validated training data. There is no experimental acceptance threshold.
 
 ## Frequencies and manual launch
 
+Future progress displays should use terminal text (user preference,
+November 17), with no GUI. In a separate terminal from the simulator:
+
+```powershell
+.\.venv\portable-runtime\python.exe -m examples.pzt_terminal
+```
+
+This read-only display shows a progress bar, frequency/test number, steps,
+elapsed time and approximate ETA. It prints saved results after each
+experiment: completion status, runtime, CPU/GPU force difference, energy
+drift and output location. It explicitly says when comparison with real
+measurements is still pending analysis. It can also print existing saved
+results; `--once` takes a snapshot and `--root PATH` selects another queue.
+Closing it leaves the independent simulation running. No extra package is
+needed. Redirected output uses complete lines instead of terminal redraws.
+
 The serial queue is **50, 100, 150, 200, 250 kHz** on the same specimen.
 Specimen 1 has no 300 kHz measurement. Specimen 2 has higher-frequency data,
 but its extra setup description focuses on replacement FBG sensors. Following
