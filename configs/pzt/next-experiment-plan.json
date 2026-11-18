@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "status": "body_coupling_implemented_long_queue_held",
+  "simulation_started": false,
+  "requested_frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000
+  ],
+  "optional_frequency_hz": 300000,
+  "selected_experiment": null,
+  "executable_queue": true,
+  "reason": "Scheduler implemented; long-run gate remains closed for body-mesh refinement and reference selection. Full-size 128-step execution check completed in preserved v1 folder.",
+  "research_notes": "docs/experiment-source-search-20261117.md",
+  "requirements": [
+    "Verified measured receiver and drive recordings at each selected frequency",
+    "Documented plate dimensions, material and sensor coordinates",
+    "Documented PZT model and dimensions; explicit unknown bond, wiring and instrument details",
+    "Separate measured parameters, nominal values and model assumptions",
+    "Freeze a new configuration, source hashes and fresh output directory",
+    "Automatic measured comparison after each run with ambiguous arrivals marked unresolved"
+  ],
+  "scheduler_module": "examples.resolved_pzt_queue",
+  "prepared_root": "outputs/wandowski-resolved-pzt-v2",
+  "launch_ready": false
+}

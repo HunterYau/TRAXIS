@@ -1,0 +1,104 @@
+{
+  "rows": [
+    {
+      "sectors": 16,
+      "rings": 1,
+      "layers": 2,
+      "nodes": 51,
+      "dominant_electrically_excited_resonance_hz": 212926.8738410538,
+      "clamped_capacitance_f": 1.114771119232986e-09,
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "lossless_dynamic_capacitance_f": [
+        2.6418183632482394e-09,
+        2.8985175119158106e-09,
+        3.6981876096746843e-09,
+        1.1125264257448584e-08,
+        -1.5792166903131646e-09,
+        2.7718727029012656e-10
+      ]
+    },
+    {
+      "sectors": 24,
+      "rings": 2,
+      "layers": 2,
+      "nodes": 147,
+      "dominant_electrically_excited_resonance_hz": 200918.6165831514,
+      "clamped_capacitance_f": 1.1309243052590174e-09,
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "lossless_dynamic_capacitance_f": [
+        2.6815373213547484e-09,
+        2.956141801670639e-09,
+        3.922896643771497e-09,
+        1.1508535008085131e-07,
+        -5.173977448395926e-10,
+        7.623500400480959e-10
+      ]
+    },
+    {
+      "sectors": 32,
+      "rings": 3,
+      "layers": 2,
+      "nodes": 291,
+      "dominant_electrically_excited_resonance_hz": 195718.1749057973,
+      "clamped_capacitance_f": 1.136610776595945e-09,
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "lossless_dynamic_capacitance_f": [
+        2.6956537895894724e-09,
+        2.97851383146274e-09,
+        4.040029003399454e-09,
+        -2.0610312512266386e-08,
+        1.180051019849431e-10,
+        8.856102891956696e-10
+      ]
+    },
+    {
+      "sectors": 48,
+      "rings": 3,
+      "layers": 2,
+      "nodes": 435,
+      "dominant_electrically_excited_resonance_hz": 195456.06048087878,
+      "clamped_capacitance_f": 1.1406830065082332e-09,
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "lossless_dynamic_capacitance_f": [
+        2.7058236268409773e-09,
+        2.9907889414126235e-09,
+        4.065169097374611e-09,
+        -1.938365337549998e-08,
+        1.2983633744586776e-10,
+        8.89491425946588e-10
+      ]
+    }
+  ],
+  "scope": "Free nominal NCE51 disc only; no plate, bond or instrument; lossless response",
+  "final_resonance_change_percent": 0.13392441710877723,
+  "analysis_sha256": "b19f5458cf36a878d31fe9ac2c4df95e5304d1f6c228a4028a8c2e38ba6f45a1",
+  "ready_for_training_data": false
+}

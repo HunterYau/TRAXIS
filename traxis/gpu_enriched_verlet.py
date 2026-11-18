@@ -147,6 +147,15 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         u = cp.zeros(n,dtype=cp.float64) if initial_u is None else cp.asarray(initial_u,dtype=cp.float64)
         v = cp.zeros(n,dtype=cp.float64) if initial_v is None else cp.asarray(initial_v,dtype=cp.float64)
         device_mass,device_load = (cp.asarray(a,dtype=cp.float64) for a in (mass,load))
+        inverse_mass = getattr(system, 'inverse_mass_inplace', None)
+        mass_quadratic = getattr(system, 'mass_quadratic', None)
+        if (inverse_mass is None) != (mass_quadratic is None):
+            raise ValueError('coupled mass needs both inverse and energy operations')
+        def accelerate(values):
+            if inverse_mass is None:
+                values /= device_mass
+            else:
+                inverse_mass(values)
         # The initial host vectors are no longer needed after their exact device copies exist.
         del initial_u, initial_v
         ku,next_a = cp.empty(n,dtype=cp.float64),cp.empty(n,dtype=cp.float64)
@@ -162,12 +171,19 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         def sample(index):
             sample_kernel((1,),(64,),(d_starts,d_indices,d_weights,u,traces,np.int32(probe_count),np.int32(index)))
         def energy(index):
-            physical[index] = float((cp.sum(device_mass*v*v+u*ku,dtype=cp.float64)*.5).item())
-            modified[index] = physical[index]-dt_s**2/8*float(cp.sum(ku*ku/device_mass,dtype=cp.float64).item())
+            if mass_quadratic is None:
+                kinetic = cp.sum(device_mass*v*v, dtype=cp.float64)
+                correction = cp.sum(ku*ku/device_mass, dtype=cp.float64)
+            else:
+                kinetic = mass_quadratic(v)
+                correction = mass_quadratic(ku, inverse=True)
+            physical[index] = float(((kinetic+cp.sum(u*ku,dtype=cp.float64))*.5).item())
+            modified[index] = physical[index]-dt_s**2/8*float(correction.item())
             if not math.isfinite(physical[index]) or not math.isfinite(modified[index]):
                 raise ArithmeticError('explicit GPU energy is nonfinite')
         action()
-        acceleration = (amplitude(0.)*device_load-ku)/device_mass
+        acceleration = amplitude(0.)*device_load-ku
+        accelerate(acceleration)
         sample(0)
         energy(0)
         energy_index = 1
@@ -175,7 +191,7 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
             u += dt_s*v+.5*dt_s*dt_s*acceleration
             action()
             cp.subtract(amplitude(step*dt_s)*device_load,ku,out=next_a)
-            next_a /= device_mass
+            accelerate(next_a)
             v += .5*dt_s*(acceleration+next_a)
             acceleration,next_a = next_a,acceleration
             if step%output_stride==0:
@@ -196,6 +212,7 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         if guard:
             guard.check(force=True)
         stats = dict(method='gpu_velocity_verlet',precision='float64',steps_completed=steps,
+            mass_model='diagonal' if inverse_mass is None else 'coupled consistent body mass',
             requested_steps=steps,duration_s=steps*dt_s,workspace_screen_mib=workspace_mib,
             probe_nonzero_coefficients=int(starts[-1]),stiffness_applications=storage.applications-applications_before,
             per_step_host_state_transfers=0,final_host_state_downloads=2)

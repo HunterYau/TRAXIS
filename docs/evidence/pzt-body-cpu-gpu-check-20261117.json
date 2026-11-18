@@ -1,0 +1,109 @@
+{
+  "cpu_gpu_force_relative_error": 1.8426122766721774e-16,
+  "mass_inverse_relative_error": 2.621306052308962e-16,
+  "eigenmode_transient_relative_error": 5.754148724707469e-08,
+  "modified_energy_relative_drift": 8.646700993727471e-15,
+  "cpu_gpu_energy_relative_error": 1.9095836023552692e-14,
+  "stable_dt_s": 2.4123485230001268e-08,
+  "numerical_check_only": true,
+  "full_experiment_run": false,
+  "body_reports": [
+    {
+      "material_id": "NCE51-Noliac-Ver1404-strain-charge",
+      "material_provenance": {
+        "url": "https://www.mmech.com/images/stories/Technologies/Piezo%20Ceramics/Noliac_CEramics_NCE_datasheet_1404.pdf",
+        "publisher": "Noliac",
+        "edition": "Ver1404",
+        "pages": [
+          9,
+          10,
+          11
+        ],
+        "pdf_sha256": "96bb751f19b4d77e7ef6d78758e76cb4d2d0300caf9824817255ef52e95fc380",
+        "conditions": "Small-signal nominal material values, 23 C +/-2 C, 24 hours after poling",
+        "tolerances": "Electrical +/-10%; mechanical and piezoelectric +/-5%"
+      },
+      "center_xy_m": [
+        0.02,
+        0.02
+      ],
+      "surface": "top",
+      "radius_m": 0.005,
+      "thickness_m": 0.0005,
+      "poling_sign": 1,
+      "sectors": 12,
+      "rings": 1,
+      "layers": 2,
+      "nodes": 39,
+      "tetrahedra": 72,
+      "body_mass_kg": 0.000294375,
+      "circular_area_relative_error": 0.04507034144862798,
+      "capacitance_f": 1.0923889940277075e-09,
+      "input_capacitance_f": 0.0,
+      "electrical": "open",
+      "bond": "assumed perfect tie; not measured glue properties",
+      "workspace_screen_mib": 3.0392303466796875,
+      "limitations": [
+        "linear tetrahedra and polygon boundary require refinement",
+        "nominal material tensors, not specimen calibration",
+        "full face electrodes; no wrap-around electrode or solder/wire geometry",
+        "no adhesive layer, damping or resistive instrument dynamics"
+      ]
+    },
+    {
+      "material_id": "NCE51-Noliac-Ver1404-strain-charge",
+      "material_provenance": {
+        "url": "https://www.mmech.com/images/stories/Technologies/Piezo%20Ceramics/Noliac_CEramics_NCE_datasheet_1404.pdf",
+        "publisher": "Noliac",
+        "edition": "Ver1404",
+        "pages": [
+          9,
+          10,
+          11
+        ],
+        "pdf_sha256": "96bb751f19b4d77e7ef6d78758e76cb4d2d0300caf9824817255ef52e95fc380",
+        "conditions": "Small-signal nominal material values, 23 C +/-2 C, 24 hours after poling",
+        "tolerances": "Electrical +/-10%; mechanical and piezoelectric +/-5%"
+      },
+      "center_xy_m": [
+        0.02,
+        0.02
+      ],
+      "surface": "bottom",
+      "radius_m": 0.005,
+      "thickness_m": 0.0005,
+      "poling_sign": 1,
+      "sectors": 12,
+      "rings": 1,
+      "layers": 2,
+      "nodes": 39,
+      "tetrahedra": 72,
+      "body_mass_kg": 0.000294375,
+      "circular_area_relative_error": 0.04507034144862798,
+      "capacitance_f": 1.0923889940277075e-09,
+      "input_capacitance_f": 0.0,
+      "electrical": "open",
+      "bond": "assumed perfect tie; not measured glue properties",
+      "workspace_screen_mib": 3.0392303466796875,
+      "limitations": [
+        "linear tetrahedra and polygon boundary require refinement",
+        "nominal material tensors, not specimen calibration",
+        "full face electrodes; no wrap-around electrode or solder/wire geometry",
+        "no adhesive layer, damping or resistive instrument dynamics"
+      ]
+    }
+  ],
+  "statistics": {
+    "method": "gpu_velocity_verlet",
+    "precision": "float64",
+    "steps_completed": 512,
+    "mass_model": "coupled consistent body mass",
+    "requested_steps": 512,
+    "duration_s": 2.47024488755213e-06,
+    "workspace_screen_mib": 0.0477752685546875,
+    "probe_nonzero_coefficients": 1,
+    "stiffness_applications": 513,
+    "per_step_host_state_transfers": 0,
+    "final_host_state_downloads": 2
+  }
+}

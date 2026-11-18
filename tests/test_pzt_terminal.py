@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from examples.pzt_terminal import progress_state, watch
+from examples.pzt_terminal import progress_state, resource_line, watch
 
 
 class TextProgressTests(unittest.TestCase):
@@ -59,6 +59,37 @@ class TextProgressTests(unittest.TestCase):
         with patch('examples.pzt_terminal.queue_alive', return_value=False):
             self.assertEqual(watch(self.root, stream=output), 2)
         self.assertIn('Queue has stopped', output.getvalue())
+
+    def test_debug_does_not_suppress_later_completion(self):
+        (self.root/'prepared.json').write_text(json.dumps(
+            {'configuration': {'frequencies_hz': [50000]}}))
+        def finish(_):
+            directory = self.root/'50khz/native'
+            directory.mkdir(parents=True)
+            (directory/'result.json').write_text('{"completed":true}')
+        output = io.StringIO()
+        with patch('examples.pzt_terminal.queue_alive', return_value=True), \
+                patch('examples.pzt_terminal.time.sleep', side_effect=finish):
+            self.assertEqual(watch(self.root, debug=True, stream=output), 0)
+        self.assertIn('Debug log:', output.getvalue())
+        self.assertEqual(output.getvalue().count('50 kHz: COMPLETED'), 1)
+
+    def test_unavailable_gpu_does_not_break_display(self):
+        with patch('examples.pzt_terminal.shutil.which', return_value=None):
+            line = resource_line()
+        self.assertIn('RAM', line)
+        self.assertIn('GPU readings unavailable', line)
+
+    def test_gpu_readings_are_labeled_machine_wide(self):
+        import subprocess
+        result = subprocess.CompletedProcess([], 0, stdout='95, 6000, 8192, 70\n')
+        with patch('examples.pzt_terminal.shutil.which', return_value='nvidia-smi'), \
+                patch('examples.pzt_terminal.subprocess.run', return_value=result):
+            line = resource_line()
+        self.assertIn('Machine:', line)
+        self.assertIn('95% busy', line)
+        self.assertIn('6000/8192 MiB', line)
+        self.assertIn('shared GPU memory not measured', line)
 
 
 if __name__ == '__main__':

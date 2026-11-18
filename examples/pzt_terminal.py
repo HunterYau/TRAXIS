@@ -6,6 +6,8 @@ independently of the simulation. --once prints a snapshot without waiting.
 import argparse
 import json
 import math
+import shutil
+import subprocess
 from pathlib import Path
 import sys
 import time
@@ -13,6 +15,30 @@ import time
 import psutil
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]/'outputs/wandowski-pzt-plate1'
+
+
+def resource_line():
+    """Whole-machine readings, not memory attributed to a simulation worker."""
+    memory = psutil.virtual_memory()
+    line = (f'Machine: RAM {memory.percent:.1f}% '
+            f'({memory.available/1024**3:.1f} GiB free)')
+    executable = shutil.which('nvidia-smi')
+    if not executable:
+        return line + ' | GPU readings unavailable'
+    try:
+        result = subprocess.run([executable,
+            '--query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu',
+            '--format=csv,noheader,nounits'], capture_output=True, text=True,
+            timeout=3, check=True,
+            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        for index, row in enumerate(result.stdout.strip().splitlines()):
+            usage, used, total, temperature = row.split(',')
+            line += (f' | GPU {index}: {float(usage):.0f}% busy, '
+                     f'{float(used):.0f}/{float(total):.0f} MiB device memory, '
+                     f'{float(temperature):.0f} C')
+        return line + ' | shared GPU memory not measured'
+    except (OSError, ValueError, subprocess.SubprocessError):
+        return line + ' | GPU readings unavailable'
 
 
 def read_json(path):
@@ -101,13 +127,13 @@ def queue_alive(root):
         return None
 
 
-def watch(root, *, once=False, interval=2., stream=None):
+def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=False):
     stream = sys.stdout if stream is None else stream
     prepared = read_json(root/'prepared.json')
     if prepared is None:
         raise FileNotFoundError(f'No prepared run found: {root}')
     frequencies = prepared['configuration']['frequencies_hz']
-    printed = set(); previous_line = None
+    printed = set(); debug_printed = set(); previous_line = None; last_resources = -math.inf
     interactive = stream.isatty()
     def emit(text):
         nonlocal previous_line
@@ -115,6 +141,9 @@ def watch(root, *, once=False, interval=2., stream=None):
             stream.write('\r'+' '*len(previous_line)+'\r')
         stream.write(text+'\n'); stream.flush(); previous_line = None
     while True:
+        if resources and time.monotonic()-last_resources >= 10:
+            emit(resource_line())
+            last_resources = time.monotonic()
         pending = None
         for index, frequency in enumerate(frequencies, 1):
             directory = root/f'{frequency//1000}khz'/'native'
@@ -131,6 +160,9 @@ def watch(root, *, once=False, interval=2., stream=None):
         if pending is None:
             emit(f'All {len(frequencies)} experiments completed.'); return 0
         index, frequency, trial = pending
+        if debug and frequency not in debug_printed:
+            emit(f'Debug log: {trial / "worker.log"}')
+            debug_printed.add(frequency)
         launcher = read_json(trial/'launcher.json')
         if launcher is not None and launcher.get('exit_code') != 0:
             emit(f'{frequency//1000} kHz failed. Inspect {trial}/worker.log'); return 1
@@ -152,13 +184,46 @@ def watch(root, *, once=False, interval=2., stream=None):
         time.sleep(interval)
 
 
+def watch_log(log, result_path, label, total):
+    """Watch a bounded setup check without presenting it as a full experiment."""
+    print(label, flush=True)
+    print(f'Debug log: {log}', flush=True)
+    previous=None; last_resources=-math.inf
+    while True:
+        if time.monotonic()-last_resources>=10:
+            print(resource_line(),flush=True);last_resources=time.monotonic()
+        result=read_json(result_path)
+        if result is not None:
+            status='PASSED' if result.get('completed') else 'FAILED'
+            print(f'{label}: {status} | elapsed {clock(result.get("wall_seconds"))}',flush=True)
+            if result.get('error'):print(result['error'],flush=True)
+            print('Full frequency queue has NOT started. This was only the setup check.',flush=True)
+            return 0 if result.get('completed') else 1
+        state=progress_state(log)
+        if state['done']==0:state['total']=total
+        fraction=state['done']/state['total'];filled=int(20*fraction)
+        line=(f'[{"#"*filled}{"-"*(20-filled)}] {fraction:.1%} | '
+            f'{state["done"]}/{state["total"]} steps | elapsed {clock(state["elapsed"])} | {state["phase"]}')
+        if line!=previous:print(line,flush=True);previous=line
+        time.sleep(2)
+
+
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--root', type=Path, default=DEFAULT_ROOT)
     parser.add_argument('--once', action='store_true')
+    parser.add_argument('--resources', action='store_true', help='show whole-machine RAM/GPU readings')
+    parser.add_argument('--debug', action='store_true', help='show current worker log location')
+    parser.add_argument('--log', type=Path, help='watch a setup-check log instead of the frequency queue')
+    parser.add_argument('--result', type=Path)
+    parser.add_argument('--label', default='Setup check (not a full experiment)')
+    parser.add_argument('--total', type=int, default=128)
     args = parser.parse_args()
     try:
-        return watch(args.root, once=args.once)
+        if args.log:
+            if args.result is None or args.total<=0:parser.error('--log requires --result and a positive --total')
+            return watch_log(args.log,args.result,args.label,args.total)
+        return watch(args.root, once=args.once, resources=args.resources, debug=args.debug)
     except KeyboardInterrupt:
         print('\nProgress display closed. Simulation left running.')
         return 0
