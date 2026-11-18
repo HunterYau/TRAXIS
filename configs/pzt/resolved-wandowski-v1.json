@@ -94,7 +94,23 @@
   },
   "launch_ready": false,
   "launch_holds": [
-    "Resolve PZT radial/through-thickness and attached-plate mesh sensitivity, especially near 200 kHz",
-    "Confirm existing Wandowski measurements as an explicitly approximate controlled comparison; no superior replacement has been selected"
-  ]
+    "Resolve PZT radial/through-thickness and attached-plate mesh sensitivity, especially near 200 kHz"
+  ],
+  "queue_policy": {
+    "order": "serial, next worker only after saved output and comparison verification",
+    "auto_start": false,
+    "per_experiment_files": [
+      "waveforms.npz",
+      "final-state.npz",
+      "comparison.json",
+      "result.json",
+      "summary.txt"
+    ],
+    "text_logs": [
+      "worker.log",
+      "queue.log",
+      "terminal-progress.txt"
+    ],
+    "comparison": "paired arrival-time error plus full-record normalized envelope-shape difference; lower is better; unresolved signals stay unresolved"
+  }
 }

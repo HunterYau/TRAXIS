@@ -67,6 +67,9 @@ def progress_state(log):
         if not isinstance(event, dict):
             continue
         state['phase'] = event.get('phase', state['phase'])
+        state['elapsed'] = event.get('elapsed_seconds',state['elapsed'])
+        if 'requested_steps' in event and state['done']==0:
+            state['total']=event['requested_steps']
         if event.get('phase') == 'propagating':
             done, total = event['steps_completed'], event['requested_steps']
             if not 0 <= done <= total or total <= 0:
@@ -103,8 +106,20 @@ def result_lines(frequency, result, directory):
             lines.append(f'  {label}: {value:.3e} (relative)')
     comparison = result.get('comparison')
     if isinstance(comparison, dict):
-        for name, value in comparison.items():
-            lines.append(f'  {name}: {value}')
+        if 'fast_status' in comparison:
+            for label in ('fast','slow'):
+                value=comparison.get(label+'_arrival_error_percent')
+                status=comparison.get(label+'_status','unknown')
+                value=f'{value:.2f}%' if value is not None else f'unresolved ({status})'
+                lines.append(f'  {label.capitalize()} wave arrival error: {value} | lower is better')
+                shape=comparison.get(label+'_envelope_shape_error_percent')
+                if shape is not None:
+                    trace='top+bottom' if label=='fast' else 'top-bottom'
+                    lines.append(f'  {trace} trace envelope-shape difference: {shape:.2f}% | lower is better')
+            lines.append('  Shape comparison normalizes amplitude; these are not overall accuracy percentages.')
+        else:
+            for name, value in comparison.items():
+                lines.append(f'  {name}: {value}')
     else:
         lines.append('  Comparison with real measurements: pending analysis.')
     if result.get('error'):
@@ -127,7 +142,7 @@ def queue_alive(root):
         return None
 
 
-def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=False):
+def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=False, record_stream=None):
     stream = sys.stdout if stream is None else stream
     prepared = read_json(root/'prepared.json')
     if prepared is None:
@@ -140,6 +155,13 @@ def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=
         if interactive and previous_line:
             stream.write('\r'+' '*len(previous_line)+'\r')
         stream.write(text+'\n'); stream.flush(); previous_line = None
+        if record_stream is not None:
+            record_stream.write(text+'\n');record_stream.flush()
+    emit('Queue order: '+' -> '.join(f'{f//1000} kHz' for f in frequencies))
+    if not (root/'queue-owner.json').exists():
+        emit('NOT STARTED. This display does not launch simulations.')
+        for reason in prepared['configuration'].get('launch_holds',[]):
+            emit('Launch hold: '+reason)
     while True:
         if resources and time.monotonic()-last_resources >= 10:
             emit(resource_line())
@@ -174,6 +196,8 @@ def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=
             else:
                 stream.write(line+'\n'); stream.flush()
             previous_line = line
+            if record_stream is not None:
+                record_stream.write(line+'\n');record_stream.flush()
         if once:
             if interactive:
                 stream.write('\n')
@@ -218,11 +242,16 @@ def main():
     parser.add_argument('--result', type=Path)
     parser.add_argument('--label', default='Setup check (not a full experiment)')
     parser.add_argument('--total', type=int, default=128)
+    parser.add_argument('--transcript',type=Path,help='append displayed progress/results to a plain-text file')
     args = parser.parse_args()
     try:
         if args.log:
             if args.result is None or args.total<=0:parser.error('--log requires --result and a positive --total')
             return watch_log(args.log,args.result,args.label,args.total)
+        if args.transcript:
+            args.transcript.parent.mkdir(parents=True,exist_ok=True)
+            with args.transcript.open('a',encoding='utf-8') as stream:
+                return watch(args.root,once=args.once,resources=args.resources,debug=args.debug,record_stream=stream)
         return watch(args.root, once=args.once, resources=args.resources, debug=args.debug)
     except KeyboardInterrupt:
         print('\nProgress display closed. Simulation left running.')

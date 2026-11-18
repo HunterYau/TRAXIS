@@ -43,7 +43,7 @@ class TextProgressTests(unittest.TestCase):
         output = io.StringIO()
         self.assertEqual(watch(self.root, once=True, stream=output), 1)
         self.assertIn('fixture failed', output.getvalue())
-        self.assertNotIn('100 kHz', output.getvalue())
+        self.assertNotIn('test 2/2', output.getvalue())
 
     def test_all_saved_experiments_exit_without_waiting(self):
         for frequency in (50, 100):

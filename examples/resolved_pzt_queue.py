@@ -12,10 +12,12 @@ import sys
 import time
 
 import numpy as np
+from scipy.signal import hilbert
 
 from examples.experimental_five import PROJECT, PeakGuard, record
 from examples.embedded_wave import ThermalPause
 from examples.compare_pzt_recordings import packet
+from examples.pzt_terminal import result_lines
 from traxis.config import Material, Plate
 from traxis.gpu_tensor import make_layout, build_gpu_tensor, streamed_action
 from traxis.gpu_pzt_body import couple_gpu_bodies
@@ -27,7 +29,7 @@ from traxis.resources import ResourceLimits
 from traxis.elmer_reference import run_monitored
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
 
-ROOT=PROJECT/'outputs/wandowski-resolved-pzt-v2'
+ROOT=PROJECT/'outputs/wandowski-resolved-pzt-v3'
 CONFIG=PROJECT/'configs/pzt/resolved-wandowski-v1.json'
 
 
@@ -55,6 +57,7 @@ def preflight():
     files=[*sorted((PROJECT/'traxis').glob('*.py')),Path(__file__),CONFIG,
         PROJECT/'examples/experimental_five.py',PROJECT/'examples/embedded_wave.py',
         PROJECT/'examples/compare_pzt_recordings.py',PROJECT/config['material_profile']]
+    files.append(PROJECT/'examples/pzt_terminal.py')
     answer=dict(configuration=config,source_sha256={str(p.relative_to(PROJECT)).replace('\\','/'):
         sha256_file(p) for p in files},simulation_started=False,material_id=material.id)
     answer['fingerprint']=canonical_hash(answer)
@@ -95,7 +98,9 @@ def build(config,guard,event):
 def compare(time_s,voltage,experimental,frequency,sample_rate):
     """Same predeclared paired timing method, with unresolved results retained."""
     measured_time=np.arange(len(experimental))/sample_rate
-    result={}
+    result={'method':{'timing':'paired flight-time difference, lower better; same predeclared windows',
+        'shape':'100 * L2 difference of unit-L2 Hilbert envelopes on common 0–349.8 us grid; lower better',
+        'limits':'Shape normalizes amplitude; no time shift or polarity fitting. Not overall accuracy or absolute-voltage validation.'}}
     for mode,sign,label in [('S0',1,'fast'),('A0',-1,'slow')]:
         observed=packet(measured_time,experimental[:,0]+sign*experimental[:,1],frequency,mode)
         predicted=packet(time_s,voltage[:,0]+sign*voltage[:,1],frequency,mode)
@@ -108,6 +113,17 @@ def compare(time_s,voltage,experimental,frequency,sample_rate):
         result[label+'_arrival_error_percent']=difference if status=='exploratory_timing' else None
         result[label+'_status']=status
         result[label+'_details']=dict(measured=observed,simulated=predicted,raw_candidate_error_percent=difference)
+        grid=np.arange(1750)*2e-7;envelopes=[]
+        for t,channels in ((measured_time,experimental),(time_s,voltage)):
+            trace=np.interp(grid,t,channels[:,0]+sign*channels[:,1])
+            trace-=trace[grid<20e-6].mean()
+            envelopes.append(abs(hilbert(trace,8192)[:len(grid)]))
+        norms=[np.linalg.norm(e) for e in envelopes]
+        result[label+'_envelope_shape_error_percent']=(float(100*np.linalg.norm(
+            envelopes[0]/norms[0]-envelopes[1]/norms[1])) if min(norms)>0 else None)
+        if min(norms)==0:
+            result[label+'_arrival_error_percent']=None
+            result[label+'_status']='no_signal'
     return result
 
 
@@ -148,6 +164,11 @@ def worker(frequency,directory,*,smoke_steps=None):
             experimental_time_s=np.arange(len(measured))/row['sampleRate'],experimental_pzt_voltage_v=measured,
             drive_time_s=drive_t,recorded_generator_voltage_v=drive,unit_peak_reference_voltage_v=reference,
             energy_time_s=simulation.energy_time_s,modified_energy_j=simulation.modified_energy_j))
+        # Preserve the completed integration even if checking/analysis later fails.
+        atomic_write(directory/'final-state.npz',lambda f:np.savez_compressed(f,
+            displacement_m=simulation.final_displacement_m,velocity_m_s=simulation.final_velocity_m_s))
+        result.update(simulation_completed=True,waveforms_sha256=sha256_file(directory/'waveforms.npz'),
+            final_state_sha256=sha256_file(directory/'final-state.npz'))
         event('checking_final_force')
         gpu_force=system.stiffness@simulation.final_displacement_m
         nh=system.layout.screen['vector_dofs'];cpu=np.zeros(len(gpu_force))
@@ -165,8 +186,7 @@ def worker(frequency,directory,*,smoke_steps=None):
             raise ArithmeticError('independent force/energy check failed')
         event('comparing_measured_recordings')
         comparison=compare(simulation.time_s,voltage,measured,frequency,row['sampleRate'])
-        atomic_write(directory/'final-state.npz',lambda f:np.savez_compressed(f,
-            displacement_m=simulation.final_displacement_m,velocity_m_s=simulation.final_velocity_m_s))
+        write_json(directory/'comparison.json',comparison)
         result.update(completed=True,cpu_force_relative_error=error,modified_energy_relative_drift=drift,
             comparison=comparison,body_reports=[b.report for b in system.body_attachments],
             simulation_statistics=simulation.statistics,waveforms_sha256=sha256_file(directory/'waveforms.npz'),
@@ -178,6 +198,9 @@ def worker(frequency,directory,*,smoke_steps=None):
     finally:
         result.update(wall_seconds=time.perf_counter()-started,resource_peaks=getattr(guard,'peaks',{}))
         write_json(directory/'result.json',result)
+        summary='\n'.join(result_lines(frequency,result,directory))+'\n'
+        atomic_write(directory/'summary.txt',lambda f:f.write(summary.encode('utf-8')))
+        print(summary,flush=True)
 
 
 def run_queue():
@@ -185,16 +208,36 @@ def run_queue():
         raise RuntimeError('Long queue held: resolve the documented body-mesh refinement and reference-selection requirements first')
     if json.loads((ROOT/'prepared.json').read_text())!=preflight():raise ValueError('prepared inputs changed')
     write_json(ROOT/'queue-owner.json',dict(pid=os.getpid(),started_unix=time.time()))
-    for frequency in configuration()['frequencies_hz']:
+    summaries=[]
+    def announce(message):
+        with (ROOT/'queue.log').open('a',encoding='utf-8') as stream:
+            stream.write(message+'\n')
+        print(message,flush=True)
+    frequencies=configuration()['frequencies_hz']
+    for index,frequency in enumerate(frequencies,1):
         if (ROOT/'STOP_AFTER_CURRENT').exists():
-            print('Stopped between experiments. Completed results retained.',flush=True);return
+            announce('Stopped between experiments. Completed results retained.');return
+        announce(f'Starting experiment {index}/{len(frequencies)}: {frequency//1000} kHz')
         trial=ROOT/f'{frequency//1000}khz';trial.mkdir(exist_ok=False)
         command=[sys.executable,'-m','examples.resolved_pzt_queue','--worker',str(frequency),str(trial/'native')]
         report=run_monitored(command,PROJECT,{**os.environ,'CUPY_CACHE_DIR':str(ROOT/'cupy-cache')},
             PeakGuard(ResourceLimits(max_seconds=86500,max_rss_mib=4096)),trial/'worker.log')
         write_json(trial/'launcher.json',report)
-        if report['exit_code']!=0:raise RuntimeError(f'{frequency} Hz failed; queue stopped')
-        print(json.dumps(json.loads((trial/'native/result.json').read_text())['comparison']),flush=True)
+        if report['exit_code']!=0:
+            announce(f'{frequency//1000} kHz failed; queue stopped. Check {trial}/worker.log')
+            raise RuntimeError(f'{frequency} Hz failed; queue stopped')
+        result=json.loads((trial/'native/result.json').read_text())
+        if not result.get('completed') or not isinstance(result.get('comparison'),dict):
+            raise RuntimeError('worker did not save a completed comparison; queue stopped')
+        if (json.loads((trial/'native/comparison.json').read_text())!=result['comparison']
+                or not (trial/'native/summary.txt').is_file()):
+            raise RuntimeError('comparison or text summary not saved; queue stopped')
+        for name,key in [('waveforms.npz','waveforms_sha256'),('final-state.npz','final_state_sha256')]:
+            if sha256_file(trial/'native'/name)!=result[key]:raise ValueError('saved output checksum mismatch')
+        announce('\n'.join(result_lines(frequency,result,trial/'native')))
+        summaries.append(dict(frequency_hz=frequency,wall_seconds=result['wall_seconds'],comparison=result['comparison']))
+    write_json(ROOT/'all-results.json',summaries)
+    announce(f'All {len(frequencies)} experiments saved and compared. Results: {ROOT}/all-results.json')
 
 
 def main():
