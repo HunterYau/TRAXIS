@@ -1,0 +1,899 @@
+{
+  "interval_us": [
+    0,
+    349.8
+  ],
+  "simulation_duration_us": 350,
+  "sampling_hz": 5000000,
+  "method": "Full shared record, baseline first 20 us; Hilbert envelope with 8192 padding. Pearson correlation on entire envelope and voltage records, no fitted lag/gain/polarity. Global peaks scanned over entire record; local maxima use 2% prominence and half-cycle minimum spacing.",
+  "limitations": [
+    "Correlation is not a percentage accuracy or acceptance score.",
+    "Global maxima can represent different modes/reflections; their timing difference is not automatically direct-wave travel-time error.",
+    "Top/bottom evaluated separately; no inferred wiring signs.",
+    "No calibrated absolute voltage comparison; ideal electrical load and missing PZT/glue dynamics remain."
+  ],
+  "analysis_sha256": "7f5e800438d08fe0acab94b7c85118b7a17365885eaddd4963b506b80112ae5a",
+  "figure_sha256": "de47afdf0ba871e3e2daae2323f7b8cc0a7b059e2dd4c6e44b8485d0ca2cde08",
+  "records": [
+    {
+      "frequency_hz": 50000,
+      "channel": "top",
+      "envelope_pearson_r": 0.9596161144422327,
+      "voltage_pearson_r": 0.7442540684335816,
+      "measured_global_peak_us": 235.60000000000002,
+      "simulated_global_peak_us": 240.8,
+      "global_peak_delay_us": 5.2,
+      "global_peak_time_difference_percent": 2.2071307300509337,
+      "measured_peaks": [
+        {
+          "time_us": 86.80000000000001,
+          "relative_height": 0.1005251858128308
+        },
+        {
+          "time_us": 96.80000000000001,
+          "relative_height": 0.12204520987613697
+        },
+        {
+          "time_us": 106.80000000000001,
+          "relative_height": 0.11081544692229775
+        },
+        {
+          "time_us": 116.80000000000001,
+          "relative_height": 0.07166450891527071
+        },
+        {
+          "time_us": 235.60000000000002,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 289.6,
+          "relative_height": 0.07972960105534835
+        },
+        {
+          "time_us": 314.40000000000003,
+          "relative_height": 0.048286451628796044
+        },
+        {
+          "time_us": 345.40000000000003,
+          "relative_height": 0.038326595771763144
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 96.2,
+          "relative_height": 0.12410391845397341
+        },
+        {
+          "time_us": 240.8,
+          "relative_height": 1.0
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 50000,
+      "channel": "bottom",
+      "envelope_pearson_r": 0.8972440892511149,
+      "voltage_pearson_r": 0.6224613634611732,
+      "measured_global_peak_us": 228.8,
+      "simulated_global_peak_us": 241.0,
+      "global_peak_delay_us": 12.200000000000001,
+      "global_peak_time_difference_percent": 5.3321678321678325,
+      "measured_peaks": [
+        {
+          "time_us": 71.2,
+          "relative_height": 0.05776627763408181
+        },
+        {
+          "time_us": 81.60000000000001,
+          "relative_height": 0.08669842239153103
+        },
+        {
+          "time_us": 96.80000000000001,
+          "relative_height": 0.12218719799084284
+        },
+        {
+          "time_us": 111.2,
+          "relative_height": 0.08691509144712663
+        },
+        {
+          "time_us": 146.8,
+          "relative_height": 0.03488518715433929
+        },
+        {
+          "time_us": 182.8,
+          "relative_height": 0.17644330908559602
+        },
+        {
+          "time_us": 228.8,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 286.6,
+          "relative_height": 0.08016374409019739
+        },
+        {
+          "time_us": 300.8,
+          "relative_height": 0.05252919084832588
+        },
+        {
+          "time_us": 346.20000000000005,
+          "relative_height": 0.05244116726771658
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 96.0,
+          "relative_height": 0.15359384509979737
+        },
+        {
+          "time_us": 167.60000000000002,
+          "relative_height": 0.05093849681378787
+        },
+        {
+          "time_us": 241.0,
+          "relative_height": 1.0
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 100000,
+      "channel": "top",
+      "envelope_pearson_r": 0.8430423185333027,
+      "voltage_pearson_r": 0.23455137474417917,
+      "measured_global_peak_us": 165.0,
+      "simulated_global_peak_us": 71.0,
+      "global_peak_delay_us": -94.0,
+      "global_peak_time_difference_percent": 56.96969696969697,
+      "measured_peaks": [
+        {
+          "time_us": 3.8000000000000003,
+          "relative_height": 0.10200550880459965
+        },
+        {
+          "time_us": 28.8,
+          "relative_height": 0.06876156145965046
+        },
+        {
+          "time_us": 69.2,
+          "relative_height": 0.7776812544364197
+        },
+        {
+          "time_us": 78.60000000000001,
+          "relative_height": 0.6271968405571064
+        },
+        {
+          "time_us": 84.0,
+          "relative_height": 0.3424282957820296
+        },
+        {
+          "time_us": 98.2,
+          "relative_height": 0.14253502256204198
+        },
+        {
+          "time_us": 105.2,
+          "relative_height": 0.12670044364790406
+        },
+        {
+          "time_us": 113.0,
+          "relative_height": 0.10878124329245333
+        },
+        {
+          "time_us": 118.0,
+          "relative_height": 0.09666719132189804
+        },
+        {
+          "time_us": 123.0,
+          "relative_height": 0.07685611225389252
+        },
+        {
+          "time_us": 159.60000000000002,
+          "relative_height": 0.8926867280575119
+        },
+        {
+          "time_us": 165.0,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 173.60000000000002,
+          "relative_height": 0.9411420698368221
+        },
+        {
+          "time_us": 213.20000000000002,
+          "relative_height": 0.768559725722655
+        },
+        {
+          "time_us": 222.0,
+          "relative_height": 0.6268599622071445
+        },
+        {
+          "time_us": 227.60000000000002,
+          "relative_height": 0.38137286671794507
+        },
+        {
+          "time_us": 253.4,
+          "relative_height": 0.32455661289985543
+        },
+        {
+          "time_us": 263.2,
+          "relative_height": 0.3103859852818227
+        },
+        {
+          "time_us": 270.8,
+          "relative_height": 0.21280723889079842
+        },
+        {
+          "time_us": 284.6,
+          "relative_height": 0.12465697142410676
+        },
+        {
+          "time_us": 290.8,
+          "relative_height": 0.09988178827055233
+        },
+        {
+          "time_us": 299.2,
+          "relative_height": 0.07762882009580503
+        },
+        {
+          "time_us": 312.40000000000003,
+          "relative_height": 0.045526757405444436
+        },
+        {
+          "time_us": 326.0,
+          "relative_height": 0.0680469040446596
+        },
+        {
+          "time_us": 345.0,
+          "relative_height": 0.30084445530827936
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 71.0,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 172.4,
+          "relative_height": 0.7740141280023374
+        },
+        {
+          "time_us": 217.0,
+          "relative_height": 0.8741643229153537
+        },
+        {
+          "time_us": 257.40000000000003,
+          "relative_height": 0.41646541198833464
+        },
+        {
+          "time_us": 344.6,
+          "relative_height": 0.39035250960065243
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 100000,
+      "channel": "bottom",
+      "envelope_pearson_r": 0.6618885030108972,
+      "voltage_pearson_r": 0.6346213111199842,
+      "measured_global_peak_us": 161.8,
+      "simulated_global_peak_us": 71.0,
+      "global_peak_delay_us": -90.80000000000001,
+      "global_peak_time_difference_percent": 56.11866501854141,
+      "measured_peaks": [
+        {
+          "time_us": 69.2,
+          "relative_height": 0.3925988098951491
+        },
+        {
+          "time_us": 78.60000000000001,
+          "relative_height": 0.3206694428368718
+        },
+        {
+          "time_us": 84.0,
+          "relative_height": 0.1687153989931767
+        },
+        {
+          "time_us": 97.80000000000001,
+          "relative_height": 0.06522898942741309
+        },
+        {
+          "time_us": 161.8,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 170.4,
+          "relative_height": 0.9835082866420108
+        },
+        {
+          "time_us": 213.20000000000002,
+          "relative_height": 0.42503927929147045
+        },
+        {
+          "time_us": 222.4,
+          "relative_height": 0.3565191235101289
+        },
+        {
+          "time_us": 243.60000000000002,
+          "relative_height": 0.0817855884417052
+        },
+        {
+          "time_us": 253.4,
+          "relative_height": 0.12932663417311827
+        },
+        {
+          "time_us": 263.40000000000003,
+          "relative_height": 0.13172461201573374
+        },
+        {
+          "time_us": 270.6,
+          "relative_height": 0.09506692140738252
+        },
+        {
+          "time_us": 345.0,
+          "relative_height": 0.1668108803329309
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 71.0,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 162.8,
+          "relative_height": 0.8148610883342544
+        },
+        {
+          "time_us": 184.0,
+          "relative_height": 0.31049714230806136
+        },
+        {
+          "time_us": 213.4,
+          "relative_height": 0.9516779928818756
+        },
+        {
+          "time_us": 255.0,
+          "relative_height": 0.44656383051499465
+        },
+        {
+          "time_us": 344.6,
+          "relative_height": 0.3886477204054424
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 150000,
+      "channel": "top",
+      "envelope_pearson_r": 0.9774764618404529,
+      "voltage_pearson_r": 0.813734510027732,
+      "measured_global_peak_us": 63.400000000000006,
+      "simulated_global_peak_us": 62.800000000000004,
+      "global_peak_delay_us": -0.6000000000000001,
+      "global_peak_time_difference_percent": 0.9463722397476341,
+      "measured_peaks": [
+        {
+          "time_us": 5.0,
+          "relative_height": 0.05795652827711365
+        },
+        {
+          "time_us": 63.400000000000006,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 98.60000000000001,
+          "relative_height": 0.06106875249330308
+        },
+        {
+          "time_us": 109.80000000000001,
+          "relative_height": 0.07440126792840894
+        },
+        {
+          "time_us": 116.4,
+          "relative_height": 0.09536740381304996
+        },
+        {
+          "time_us": 131.4,
+          "relative_height": 0.09707785305299828
+        },
+        {
+          "time_us": 155.4,
+          "relative_height": 0.5157305310941535
+        },
+        {
+          "time_us": 207.0,
+          "relative_height": 0.8240629659071214
+        },
+        {
+          "time_us": 229.0,
+          "relative_height": 0.08291612295869899
+        },
+        {
+          "time_us": 246.60000000000002,
+          "relative_height": 0.3621076722214668
+        },
+        {
+          "time_us": 268.2,
+          "relative_height": 0.09784310422429522
+        },
+        {
+          "time_us": 296.0,
+          "relative_height": 0.06477659937723111
+        },
+        {
+          "time_us": 339.40000000000003,
+          "relative_height": 0.4407695228369115
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 62.800000000000004,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 155.0,
+          "relative_height": 0.590290692551914
+        },
+        {
+          "time_us": 206.4,
+          "relative_height": 0.9005456992885231
+        },
+        {
+          "time_us": 247.0,
+          "relative_height": 0.4214297546073158
+        },
+        {
+          "time_us": 312.20000000000005,
+          "relative_height": 0.04251005929694124
+        },
+        {
+          "time_us": 339.8,
+          "relative_height": 0.3918980296179773
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 150000,
+      "channel": "bottom",
+      "envelope_pearson_r": 0.9679326866612231,
+      "voltage_pearson_r": 0.8139219903332633,
+      "measured_global_peak_us": 63.400000000000006,
+      "simulated_global_peak_us": 62.800000000000004,
+      "global_peak_delay_us": -0.6000000000000001,
+      "global_peak_time_difference_percent": 0.9463722397476341,
+      "measured_peaks": [
+        {
+          "time_us": 4.800000000000001,
+          "relative_height": 0.06139527732294159
+        },
+        {
+          "time_us": 41.0,
+          "relative_height": 0.05616840356465217
+        },
+        {
+          "time_us": 63.400000000000006,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 96.80000000000001,
+          "relative_height": 0.04577763937140098
+        },
+        {
+          "time_us": 139.6,
+          "relative_height": 0.2677119141086053
+        },
+        {
+          "time_us": 155.0,
+          "relative_height": 0.6891932272299732
+        },
+        {
+          "time_us": 169.60000000000002,
+          "relative_height": 0.2101373997986064
+        },
+        {
+          "time_us": 181.8,
+          "relative_height": 0.15188045541154777
+        },
+        {
+          "time_us": 207.0,
+          "relative_height": 0.8963337091362974
+        },
+        {
+          "time_us": 228.20000000000002,
+          "relative_height": 0.09760759376640087
+        },
+        {
+          "time_us": 247.0,
+          "relative_height": 0.3476398016266486
+        },
+        {
+          "time_us": 266.40000000000003,
+          "relative_height": 0.07524201220397184
+        },
+        {
+          "time_us": 294.40000000000003,
+          "relative_height": 0.06582544790800135
+        },
+        {
+          "time_us": 339.0,
+          "relative_height": 0.4422078931327291
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 62.800000000000004,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 135.6,
+          "relative_height": 0.07570177881216485
+        },
+        {
+          "time_us": 154.60000000000002,
+          "relative_height": 0.564912506299247
+        },
+        {
+          "time_us": 206.8,
+          "relative_height": 0.8907418642904781
+        },
+        {
+          "time_us": 247.20000000000002,
+          "relative_height": 0.42353303848227175
+        },
+        {
+          "time_us": 310.8,
+          "relative_height": 0.042858644863746506
+        },
+        {
+          "time_us": 339.0,
+          "relative_height": 0.3709266894915418
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 200000,
+      "channel": "top",
+      "envelope_pearson_r": 0.8593782994337551,
+      "voltage_pearson_r": 0.6567656418283327,
+      "measured_global_peak_us": 61.400000000000006,
+      "simulated_global_peak_us": 58.6,
+      "global_peak_delay_us": -2.8000000000000003,
+      "global_peak_time_difference_percent": 4.5602605863192185,
+      "measured_peaks": [
+        {
+          "time_us": 61.400000000000006,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 97.4,
+          "relative_height": 0.07399498705252656
+        },
+        {
+          "time_us": 120.0,
+          "relative_height": 0.08242352909988505
+        },
+        {
+          "time_us": 131.8,
+          "relative_height": 0.038045463487942806
+        },
+        {
+          "time_us": 153.4,
+          "relative_height": 0.6501950975763668
+        },
+        {
+          "time_us": 188.4,
+          "relative_height": 0.07607719820210944
+        },
+        {
+          "time_us": 205.4,
+          "relative_height": 0.763872455975701
+        },
+        {
+          "time_us": 246.60000000000002,
+          "relative_height": 0.4949374053118723
+        },
+        {
+          "time_us": 268.8,
+          "relative_height": 0.09801229198481808
+        },
+        {
+          "time_us": 293.6,
+          "relative_height": 0.1355832712576398
+        },
+        {
+          "time_us": 311.20000000000005,
+          "relative_height": 0.07863425459180803
+        },
+        {
+          "time_us": 337.0,
+          "relative_height": 0.4781200828510291
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 58.6,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 118.80000000000001,
+          "relative_height": 0.22871560398738167
+        },
+        {
+          "time_us": 150.8,
+          "relative_height": 0.5771419371792759
+        },
+        {
+          "time_us": 202.60000000000002,
+          "relative_height": 0.8971845857162539
+        },
+        {
+          "time_us": 243.0,
+          "relative_height": 0.40868474440636876
+        },
+        {
+          "time_us": 335.20000000000005,
+          "relative_height": 0.4019696675523196
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 200000,
+      "channel": "bottom",
+      "envelope_pearson_r": 0.8573049089467011,
+      "voltage_pearson_r": 0.668178202687637,
+      "measured_global_peak_us": 61.2,
+      "simulated_global_peak_us": 58.6,
+      "global_peak_delay_us": -2.6,
+      "global_peak_time_difference_percent": 4.248366013071895,
+      "measured_peaks": [
+        {
+          "time_us": 61.2,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 103.80000000000001,
+          "relative_height": 0.06770396601766403
+        },
+        {
+          "time_us": 132.20000000000002,
+          "relative_height": 0.04404399998858574
+        },
+        {
+          "time_us": 153.0,
+          "relative_height": 0.620685977704478
+        },
+        {
+          "time_us": 188.8,
+          "relative_height": 0.07038568191088501
+        },
+        {
+          "time_us": 204.8,
+          "relative_height": 0.845611761954472
+        },
+        {
+          "time_us": 246.20000000000002,
+          "relative_height": 0.48202570251598653
+        },
+        {
+          "time_us": 269.6,
+          "relative_height": 0.0828468618587353
+        },
+        {
+          "time_us": 296.0,
+          "relative_height": 0.09146109471466662
+        },
+        {
+          "time_us": 313.40000000000003,
+          "relative_height": 0.08000750016570778
+        },
+        {
+          "time_us": 337.0,
+          "relative_height": 0.4622335513414325
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 58.6,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 118.80000000000001,
+          "relative_height": 0.22876259786602773
+        },
+        {
+          "time_us": 150.8,
+          "relative_height": 0.5775720841260901
+        },
+        {
+          "time_us": 202.60000000000002,
+          "relative_height": 0.8938736129973244
+        },
+        {
+          "time_us": 243.0,
+          "relative_height": 0.4060889521146016
+        },
+        {
+          "time_us": 335.20000000000005,
+          "relative_height": 0.3732762820886793
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 250000,
+      "channel": "top",
+      "envelope_pearson_r": 0.7981989720678313,
+      "voltage_pearson_r": 0.2357088423259149,
+      "measured_global_peak_us": 59.0,
+      "simulated_global_peak_us": 56.2,
+      "global_peak_delay_us": -2.8000000000000003,
+      "global_peak_time_difference_percent": 4.745762711864407,
+      "measured_peaks": [
+        {
+          "time_us": 17.0,
+          "relative_height": 0.05103277254281846
+        },
+        {
+          "time_us": 59.0,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 113.0,
+          "relative_height": 0.2183561047493392
+        },
+        {
+          "time_us": 151.20000000000002,
+          "relative_height": 0.6317465028483606
+        },
+        {
+          "time_us": 203.4,
+          "relative_height": 0.6952336630058572
+        },
+        {
+          "time_us": 243.20000000000002,
+          "relative_height": 0.4427102660031304
+        },
+        {
+          "time_us": 285.8,
+          "relative_height": 0.1358963957475288
+        },
+        {
+          "time_us": 304.0,
+          "relative_height": 0.14427776315044832
+        },
+        {
+          "time_us": 335.0,
+          "relative_height": 0.45245819438727886
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 56.2,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 111.2,
+          "relative_height": 0.22547599605878113
+        },
+        {
+          "time_us": 148.4,
+          "relative_height": 0.5765619401122836
+        },
+        {
+          "time_us": 200.20000000000002,
+          "relative_height": 0.8954172199539465
+        },
+        {
+          "time_us": 240.60000000000002,
+          "relative_height": 0.3966291495539411
+        },
+        {
+          "time_us": 332.40000000000003,
+          "relative_height": 0.39565784671582027
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    },
+    {
+      "frequency_hz": 250000,
+      "channel": "bottom",
+      "envelope_pearson_r": 0.7944393679260868,
+      "voltage_pearson_r": 0.23899818879377155,
+      "measured_global_peak_us": 59.0,
+      "simulated_global_peak_us": 56.2,
+      "global_peak_delay_us": -2.8000000000000003,
+      "global_peak_time_difference_percent": 4.745762711864407,
+      "measured_peaks": [
+        {
+          "time_us": 10.600000000000001,
+          "relative_height": 0.048298488908877536
+        },
+        {
+          "time_us": 14.4,
+          "relative_height": 0.04880659338539099
+        },
+        {
+          "time_us": 59.0,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 107.80000000000001,
+          "relative_height": 0.04976975950284595
+        },
+        {
+          "time_us": 125.0,
+          "relative_height": 0.06794924372596843
+        },
+        {
+          "time_us": 150.8,
+          "relative_height": 0.5901230316525669
+        },
+        {
+          "time_us": 203.20000000000002,
+          "relative_height": 0.8022382575959054
+        },
+        {
+          "time_us": 243.4,
+          "relative_height": 0.4296468694853904
+        },
+        {
+          "time_us": 296.0,
+          "relative_height": 0.09615599831172353
+        },
+        {
+          "time_us": 312.20000000000005,
+          "relative_height": 0.08091644077008894
+        },
+        {
+          "time_us": 334.8,
+          "relative_height": 0.41855347193895764
+        }
+      ],
+      "simulated_peaks": [
+        {
+          "time_us": 56.2,
+          "relative_height": 1.0
+        },
+        {
+          "time_us": 111.2,
+          "relative_height": 0.22549197024948156
+        },
+        {
+          "time_us": 148.4,
+          "relative_height": 0.5781944089432798
+        },
+        {
+          "time_us": 200.20000000000002,
+          "relative_height": 0.8955600480071613
+        },
+        {
+          "time_us": 240.60000000000002,
+          "relative_height": 0.393757705071176
+        },
+        {
+          "time_us": 307.6,
+          "relative_height": 0.10899648569355758
+        },
+        {
+          "time_us": 333.6,
+          "relative_height": 0.3689775719941334
+        }
+      ],
+      "record_edge_peak": false,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    }
+  ]
+}
