@@ -16,7 +16,7 @@ from traxis.pzt_receiver import DiskGeometry
 from traxis.resources import ResourceGuard, ResourceLimits
 
 
-def check():
+def check(resolution=(12,1,2)):
     project=Path(__file__).resolve().parents[1]
     os.environ.setdefault('CUPY_CACHE_DIR',str(project/'outputs/pzt-body-check-cache'))
     guard=ResourceGuard(ResourceLimits(max_seconds=120,max_rss_mib=2048))
@@ -26,9 +26,9 @@ def check():
     bodies=[]; next_dof=layout.screen['vector_dofs']
     for surface in ('top','bottom'):
         body=attach_disk(layout,material,DiskGeometry((.02,.02),.005,.0005,surface,1),
-            sectors=12,rings=1,layers=2,first_dof=next_dof,guard=guard)
+            sectors=resolution[0],rings=resolution[1],layers=resolution[2],first_dof=next_dof,guard=guard,max_workspace_mib=2048)
         bodies.append(body); next_dof=body.next_dof
-    coupled=couple_gpu_bodies(base,bodies,guard=guard)
+    coupled=couple_gpu_bodies(base,bodies,guard=guard,max_workspace_mib=1024)
     n=len(coupled.mass_diagonal); nh=len(base.mass_diagonal)
     # Independent CPU tensor contractions plus explicit joint body forms.
     k=np.zeros((n,n)); m=np.diag(np.r_[base.mass_diagonal,np.zeros(n-nh)])

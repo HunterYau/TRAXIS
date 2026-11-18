@@ -29,7 +29,7 @@ from traxis.resources import ResourceLimits
 from traxis.elmer_reference import run_monitored
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
 
-ROOT=PROJECT/'outputs/wandowski-resolved-pzt-v3'
+ROOT=PROJECT/'outputs/wandowski-resolved-pzt-v5'
 CONFIG=PROJECT/'configs/pzt/resolved-wandowski-v1.json'
 
 
@@ -58,6 +58,17 @@ def preflight():
         PROJECT/'examples/experimental_five.py',PROJECT/'examples/embedded_wave.py',
         PROJECT/'examples/compare_pzt_recordings.py',PROJECT/config['material_profile']]
     files.append(PROJECT/'examples/pzt_terminal.py')
+    if config.get('launch_ready'):
+        proof_path=PROJECT/config['readiness_evidence']
+        if sha256_file(proof_path)!=config['readiness_sha256']:raise ValueError('readiness evidence changed')
+        proof=json.loads(proof_path.read_text())
+        if not proof.get('passed') or proof['selected_resolution']!=[config['body'][k] for k in ('sectors','rings','layers')]:
+            raise ValueError('selected body mesh lacks passing readiness evidence')
+        for name,checksum in proof['source_sha256'].items():
+            if sha256_file(PROJECT/name)!=checksum:raise ValueError('body readiness source changed: '+name)
+        for name,checksum in proof['evidence_sha256'].items():
+            if sha256_file(PROJECT/name)!=checksum:raise ValueError('readiness check evidence changed: '+name)
+        files.append(proof_path)
     answer=dict(configuration=config,source_sha256={str(p.relative_to(PROJECT)).replace('\\','/'):
         sha256_file(p) for p in files},simulation_started=False,material_id=material.id)
     answer['fingerprint']=canonical_hash(answer)
@@ -80,10 +91,10 @@ def build(config,guard,event):
         body=attach_disk(layout,material,DiskGeometry(tuple(center),config['disk_radius_m'],
             config['disk_thickness_m'],surface,1),first_dof=next_dof,electrical=electrical,
             sectors=settings['sectors'],rings=settings['rings'],layers=settings['layers'],
-            bond=settings['bond'],guard=guard,max_workspace_mib=512)
+            bond=settings['bond'],guard=guard,max_workspace_mib=2048)
         bodies.append(body);next_dof=body.next_dof
     event('coupling_pzt_bodies')
-    system=couple_gpu_bodies(base,bodies,guard=guard,max_workspace_mib=512)
+    system=couple_gpu_bodies(base,bodies,guard=guard,max_workspace_mib=2048)
     # Stability may require more steps than the old bare-plate model.
     steps=max(mesh['minimum_steps'],math.ceil(mesh['duration_s']/(.8*system.stable_dt_s)))
     steps=math.ceil(steps/256)*256
@@ -155,6 +166,8 @@ def worker(frequency,directory,*,smoke_steps=None):
             output_stride=8,energy_stride=256,guard=guard,progress=progress,max_workspace_mib=4096)
         if smoke_steps is not None:
             result.update(completed=True,actual_steps=requested_steps,simulation_statistics=simulation.statistics,
+                body_reports=[b.report for b in system.body_attachments],stable_dt_s=system.stable_dt_s,
+                full_steps=steps,
                 note='Short execution check only; no experimental result or full-interval claim')
             return
         voltage=simulation.displacement_m # Probe weights explicitly produce volts, not displacement.
@@ -207,6 +220,8 @@ def run_queue():
     if not configuration().get('launch_ready',False):
         raise RuntimeError('Long queue held: resolve the documented body-mesh refinement and reference-selection requirements first')
     if json.loads((ROOT/'prepared.json').read_text())!=preflight():raise ValueError('prepared inputs changed')
+    if (ROOT/'queue-owner.json').exists():
+        raise RuntimeError('This queue was already launched. Existing results are preserved; do not start it twice.')
     write_json(ROOT/'queue-owner.json',dict(pid=os.getpid(),started_unix=time.time()))
     summaries=[]
     def announce(message):
@@ -251,7 +266,11 @@ def main():
     if args.run:run_queue();return
     checked=preflight()
     if args.prepare:
-        ROOT.mkdir(parents=True,exist_ok=True);write_json(ROOT/'prepared.json',checked)
+        ROOT.mkdir(parents=True,exist_ok=True)
+        path=ROOT/'prepared.json'
+        if path.exists():
+            if json.loads(path.read_text())!=checked:raise ValueError('Existing prepared queue differs; preserve it and use a new output version')
+        else:write_json(path,checked)
     print(json.dumps(checked,indent=2))
 
 

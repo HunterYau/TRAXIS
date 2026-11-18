@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "serial_queue_and_reporting_prepared_not_started",
+  "status": "ready_for_exploratory_full_run_not_started",
   "simulation_started": false,
   "requested_frequencies_hz": [
     50000,
@@ -12,7 +12,7 @@
   "optional_frequency_hz": 300000,
   "selected_experiment": "Wandowski plate 1, existing measured PZT channels; controlled approximate before/after comparison",
   "executable_queue": true,
-  "reason": "User explicitly requests preparation only. Mesh refinement remains required before a future long launch.",
+  "reason": "Selected PZT mesh passed numerical readiness checks; user can launch the serial queue. Unknown experimental properties remain explicit and training acceptance is false.",
   "research_notes": "docs/experiment-source-search-20261117.md",
   "requirements": [
     "Verified measured receiver and drive recordings at each selected frequency",
@@ -23,6 +23,6 @@
     "Automatic measured comparison after each run with ambiguous arrivals marked unresolved"
   ],
   "scheduler_module": "examples.resolved_pzt_queue",
-  "prepared_root": "outputs/wandowski-resolved-pzt-v3",
-  "launch_ready": false
+  "prepared_root": "outputs/wandowski-resolved-pzt-v5",
+  "launch_ready": true
 }

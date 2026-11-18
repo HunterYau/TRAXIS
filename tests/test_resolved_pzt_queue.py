@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 from unittest.mock import patch
 import numpy as np
-from examples.resolved_pzt_queue import compare,run_queue
+from examples.resolved_pzt_queue import compare,run_queue,preflight,configuration,PROJECT
 from examples.pzt_terminal import watch
 from traxis.storage import sha256_file
 
@@ -18,6 +18,22 @@ class QueueTests(unittest.TestCase):
                 patch('examples.resolved_pzt_queue.run_monitored') as run:
             with self.assertRaisesRegex(RuntimeError,'Long queue held'):run_queue()
         write.assert_not_called();run.assert_not_called()
+
+    def test_readiness_cannot_be_enabled_with_altered_proof(self):
+        config=configuration();config['launch_ready']=True
+        config['readiness_sha256']='0'*64
+        with patch('examples.resolved_pzt_queue.configuration',return_value=config):
+            with self.assertRaisesRegex(ValueError,'readiness evidence changed'):preflight()
+
+    def test_duplicate_queue_refused_before_spawning(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'prepared.json').write_text('{}');(root/'queue-owner.json').write_text('{}')
+            with patch('examples.resolved_pzt_queue.ROOT',root), \
+                    patch('examples.resolved_pzt_queue.configuration',return_value={'launch_ready':True}), \
+                    patch('examples.resolved_pzt_queue.preflight',return_value={}), \
+                    patch('examples.resolved_pzt_queue.run_monitored') as run:
+                with self.assertRaisesRegex(RuntimeError,'already launched'):run_queue()
+            run.assert_not_called()
 
     def test_identical_recordings_report_zero_and_preserve_unsupported_mode(self):
         t=np.arange(1751)*2e-7

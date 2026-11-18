@@ -20,10 +20,10 @@ from traxis.pzt_receiver import _point_weights
 
 def disk_mesh(geometry, *, sectors=24, rings=2, layers=2):
     if (type(sectors) is not int or not 8 <= sectors <= 96
-            or type(rings) is not int or not 1 <= rings <= 6
+            or type(rings) is not int or not 1 <= rings <= 12
             or type(layers) is not int or not 1 <= layers <= 6
-            or (1+sectors*rings)*(layers+1) > 512):
-        raise ValueError('disk resolution exceeds bounded 512-node component')
+            or (1+sectors*rings)*(layers+1) > 1024):
+        raise ValueError('disk resolution exceeds bounded 1024-node component')
     angles = np.arange(sectors)*2*np.pi/sectors
     xy = np.vstack([np.zeros((1, 2)), *[
         geometry.radius_m*j/rings*np.column_stack((np.cos(angles), np.sin(angles)))
@@ -39,8 +39,8 @@ def disk_mesh(geometry, *, sectors=24, rings=2, layers=2):
             a, b, c = triangle+layer*n
             A, B, C = a+n, b+n, c+n
             tets.extend(((a, b, c, C), (a, b, B, C), (a, A, B, C)))
-    if len(tets) > 4096:
-        raise ValueError('disk resolution exceeds bounded 4096-element component')
+    if len(tets) > 8192:
+        raise ValueError('disk resolution exceeds bounded 8192-element component')
     return SimpleNamespace(points_m=points, tetrahedra=np.array(tets, dtype=int)), n
 
 
@@ -73,7 +73,7 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
     if electrical not in ('open', 'voltage'):
         raise ValueError('electrical state must be open or prescribed voltage')
     if (not math.isfinite(input_capacitance_f) or input_capacitance_f < 0
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 1024):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
         raise ValueError('invalid capacitance or workspace budget')
     if not np.array_equal(layout.transform, np.eye(3)) or geometry.in_plane_angle_rad != 0:
         raise ValueError('body attachment currently requires aligned plate and material axes')
@@ -145,7 +145,7 @@ def merge_attachments(host_mass, attachments, *, max_workspace_mib=512, guard=No
     host_mass = np.asarray(host_mass)
     if (host_mass.ndim != 1 or np.iscomplexobj(host_mass) or not np.isfinite(host_mass).all()
             or np.any(host_mass <= 0) or not attachments
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 1024):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
         raise ValueError('positive host mass, attachments and bounded workspace required')
     next_dof = len(host_mass)
     for i, body in enumerate(attachments):

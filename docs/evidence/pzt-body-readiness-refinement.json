@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "selected_resolution": [
+    32,
+    6,
+    3
+  ],
+  "nodes_per_body": 772,
+  "thresholds": {
+    "free_radial_change_percent": 1,
+    "attached_band_response_change_percent": 2
+  },
+  "criteria_note": "Engineering readiness targets for an exploratory comparison, not measured physical accuracy or rigorous error bounds.",
+  "rows": [
+    {
+      "direction": "radial",
+      "resolution": [
+        32,
+        7,
+        3
+      ],
+      "free_radial_change_percent": 0.8107206715071369,
+      "attached_band_response_change_percent": {
+        "50000": 0.1727288018191502,
+        "100000": 0.38312460939498527,
+        "150000": 1.2857858382450273,
+        "200000": 1.2390711120650504,
+        "250000": 1.1603397699549385
+      },
+      "raw_sha256": "40a984c65ee5abc6dda3ac6ea1e7aea432a985a3cac10ad89be420a164e54dc8"
+    },
+    {
+      "direction": "angular",
+      "resolution": [
+        40,
+        6,
+        3
+      ],
+      "free_radial_change_percent": 0.2537413648748821,
+      "attached_band_response_change_percent": {
+        "50000": 0.2433173171444672,
+        "100000": 0.42272695940821653,
+        "150000": 0.8846762386557886,
+        "200000": 0.8474885060000111,
+        "250000": 0.792933880496641
+      },
+      "raw_sha256": "7e8c6487aed6c0dc314b05e83aa67aace63baf159a40ef2b91f726a7b2317660"
+    },
+    {
+      "direction": "thickness",
+      "resolution": [
+        32,
+        6,
+        4
+      ],
+      "free_radial_change_percent": 0.40095131098252246,
+      "attached_band_response_change_percent": {
+        "50000": 0.12345659655584668,
+        "100000": 0.25963267549589164,
+        "150000": 0.3587899359633193,
+        "200000": 0.35040505433234603,
+        "250000": 0.33731549621639895
+      },
+      "raw_sha256": "a881acc39eb9de45179768e33efc2262ab0c05903d3ebb2f253de548e4789d3d"
+    }
+  ],
+  "scope": "Free disc resonance and electrical driving-point response on a fixed 40x40x1 mm coarse host patch (2x2x1 Q2).",
+  "frequency_response_note": "s=1/350us+i*2pi*f; finite-window exponential weighting, no physical damping added. Uniform samples within +/-40% center frequency.",
+  "limitations": [
+    "Successive refinements do not bound absolute discretization error.",
+    "The small host patch is fixed; this does not establish convergence of the full plate or receiver-to-receiver waveform.",
+    "Perfect bond, nominal material; not validated training data."
+  ],
+  "selected_raw_sha256": "7ddf9bed64ded73bf6c7a101103da32cd004fa88bab0558d1288e361f3eca304",
+  "source_sha256": {
+    "traxis/pzt_body.py": "f9703efb2737472a163610eee521161523b070f1c7b020d80e2c68fb45115b08",
+    "traxis/piezoelectric.py": "e9743e7538aecc4adba4b45ed39840e649c3cc2c8a7d130bb35680654d4b375c",
+    "examples/pzt_readiness.py": "cb58d7ded8f07e57dc6ae9f75724b829c6a7965f0d8f39c7e284fc11bd6d89a0",
+    "examples/assess_pzt_readiness.py": "4ef4ad712e9d79290a5e7ae2f33d7b6ff41e8d5d57c54757d318a7fb6eacd2ca"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "selected_resolution": [
+    32,
+    6,
+    3
+  ],
+  "scope": "Ready to execute the five exploratory comparisons; not a physical validation or training-data acceptance",
+  "source_sha256": {
+    "traxis/pzt_body.py": "32ee74dce7d019436704459027e189922a8a6052f49357d6249e989390bd4c28",
+    "traxis/piezoelectric.py": "e9743e7538aecc4adba4b45ed39840e649c3cc2c8a7d130bb35680654d4b375c",
+    "examples/pzt_readiness.py": "cb58d7ded8f07e57dc6ae9f75724b829c6a7965f0d8f39c7e284fc11bd6d89a0",
+    "examples/assess_pzt_readiness.py": "4ef4ad712e9d79290a5e7ae2f33d7b6ff41e8d5d57c54757d318a7fb6eacd2ca",
+    "traxis/gpu_pzt_body.py": "c0c405d58075430a509b9cc99dfdad10c5aba011fb4e798300727986064c513a",
+    "traxis/gpu_enriched_verlet.py": "346efcda2a1bfd85d54304a8371c9b84977c4652104ba4a9712e3fe4a9412ebf"
+  },
+  "evidence_sha256": {
+    "docs/evidence/pzt-body-readiness-refinement-final.json": "414ec6d9586843cf9bd9627b8dccf9de946b928fb4b090721ab7f0223c3c2516",
+    "docs/evidence/pzt-body-selected-mesh-cuda.json": "2ebd69e59b7263163470819100cc4eb716fb00bccf83750edf588e95f86fdacd",
+    "docs/evidence/pzt-body-selected-mesh-full-size-check.json": "a7cb0389dab29bcafde0be86efa4ceaa79ec62c95806c663cb0791c9bd6347eb"
+  },
+  "full_size_check_steps": 128,
+  "full_interval_checked": false
+}

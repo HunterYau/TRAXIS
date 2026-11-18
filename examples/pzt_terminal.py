@@ -97,6 +97,12 @@ def progress_line(frequency, index, count, state):
 
 
 def result_lines(frequency, result, directory):
+    if result.get('smoke_test'):
+        status='PASSED' if result.get('completed') else 'FAILED'
+        return [f'Short setup check: {status} | time {clock(result.get("wall_seconds"))}',
+            '  This is not a completed experiment or a ground-truth comparison.',
+            *([f'  Error: {result["error"]}'] if result.get('error') else []),
+            f'  Saved check: {directory}']
     status = 'COMPLETED' if result.get('completed') else 'FAILED / INCOMPLETE'
     lines = [f'{frequency//1000} kHz: {status} | time {clock(result.get("wall_seconds"))}']
     for key, label in [('cpu_force_relative_error', 'CPU/GPU force difference'),

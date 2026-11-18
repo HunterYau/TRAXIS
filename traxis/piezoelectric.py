@@ -205,7 +205,7 @@ def assemble_piezoelectric(mesh,material,*,max_bytes=256*1024**2,guard=None):
     points=np.asarray(mesh.points_m);tets=np.asarray(mesh.tetrahedra);n=len(points)
     if (points.shape!=(n,3) or np.iscomplexobj(points) or not np.isfinite(points).all()
             or tets.ndim!=2 or tets.shape[1]!=4 or not np.issubdtype(tets.dtype,np.integer)
-            or not 4<=n<=512 or not 1<=len(tets)<=4096
+            or not 4<=n<=1024 or not 1<=len(tets)<=8192
             or np.any(tets<0) or np.any(tets>=n)):
         raise ValueError('coupled PZT component needs a bounded valid tetrahedral mesh')
     if type(max_bytes) is not int or not 0<max_bytes<=256*1024**2 or 176*n*n>max_bytes:

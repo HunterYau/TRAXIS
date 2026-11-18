@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from examples.pzt_terminal import progress_state, resource_line, watch
+from examples.pzt_terminal import progress_state, resource_line, watch,result_lines
 
 
 class TextProgressTests(unittest.TestCase):
@@ -79,6 +79,11 @@ class TextProgressTests(unittest.TestCase):
             line = resource_line()
         self.assertIn('RAM', line)
         self.assertIn('GPU readings unavailable', line)
+
+    def test_setup_check_is_not_reported_as_completed_experiment(self):
+        lines='\n'.join(result_lines(50000,{'completed':True,'smoke_test':True},self.root))
+        self.assertIn('Short setup check: PASSED',lines)
+        self.assertNotIn('50 kHz: COMPLETED',lines)
 
     def test_gpu_readings_are_labeled_machine_wide(self):
         import subprocess

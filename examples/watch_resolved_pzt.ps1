@@ -1,7 +1,7 @@
 # Display only. This script never starts or stops a simulation.
 $projectPath = Split-Path -Parent $PSScriptRoot
 $pythonPath = Join-Path $projectPath '.venv\portable-runtime\python.exe'
-$queuePath = Join-Path $projectPath 'outputs\wandowski-resolved-pzt-v3'
+$queuePath = Join-Path $projectPath 'outputs\wandowski-resolved-pzt-v5'
 $Host.UI.RawUI.WindowTitle = 'TRAXIS - experiment queue (text progress)'
 Push-Location -LiteralPath $projectPath
 try {

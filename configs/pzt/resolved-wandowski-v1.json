@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "id": "wandowski-plate1-resolved-body-v1",
+  "id": "wandowski-plate1-resolved-body-v5-ready-exploratory",
   "dataset": "https://zenodo.org/records/18955122",
   "manuscript": "https://zenodo.org/records/18937842",
   "published_paper": "https://doi.org/10.1088/1361-665X/ae0d1d",
@@ -70,7 +70,7 @@
       "instrument and cable transfer",
       "damping and material tolerances"
     ],
-    "body_mesh_status": "not yet converged against finer meshes"
+    "body_mesh_status": "772 nodes, radial/angular/thickness checks pass exploratory readiness targets; not full plate waveform convergence"
   },
   "mesh": {
     "cells": [
@@ -87,15 +87,13 @@
   "ready_for_training_data": false,
   "auto_start": false,
   "body": {
-    "sectors": 24,
-    "rings": 2,
-    "layers": 2,
+    "sectors": 32,
+    "rings": 6,
+    "layers": 3,
     "bond": "perfect"
   },
-  "launch_ready": false,
-  "launch_holds": [
-    "Resolve PZT radial/through-thickness and attached-plate mesh sensitivity, especially near 200 kHz"
-  ],
+  "launch_ready": true,
+  "launch_holds": [],
   "queue_policy": {
     "order": "serial, next worker only after saved output and comparison verification",
     "auto_start": false,
@@ -112,5 +110,7 @@
       "terminal-progress.txt"
     ],
     "comparison": "paired arrival-time error plus full-record normalized envelope-shape difference; lower is better; unresolved signals stay unresolved"
-  }
+  },
+  "readiness_evidence": "docs/evidence/resolved-pzt-run-readiness.json",
+  "readiness_sha256": "9373aa85eb9b9e11ff5d12e10726e3f57a17be0414ba89b47811dc2ffc0d0b02"
 }
