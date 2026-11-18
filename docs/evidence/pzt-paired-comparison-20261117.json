@@ -1,0 +1,296 @@
+{
+  "source": "https://zenodo.org/records/18937842",
+  "method": "Section 5 equations 13/14: unscaled top+bottom and top-bottom. Raw measured channel signs retained; simulation uses declared +z signs. First-20-us baseline, common 5 MHz grid, entire 350-us record plotted. Same fixed packet windows and half-burst flight definition as previous comparison.",
+  "limitations": [
+    "Not the separate mode-indicator method.",
+    "No per-channel amplitude equalization or polarity fit.",
+    "Paper reports direct A0 detectable only up to 140 kHz with these PZTs.",
+    "Addition/subtraction suppresses opposite symmetry, not same-mode reflections.",
+    "Timing percentages are exploratory; no overall accuracy or absolute voltage claim."
+  ],
+  "analysis_sha256": "5cb7196f3e7ac191e365b822dc3c0f75b81ea1fa1fc302ff473a1b177185acdc",
+  "packet_analysis_sha256": "7950bc3eccf4238c6bb2068999acb9f369cd3de69749bf04188f5484c01d8ae3",
+  "figure_sha256": "739c2af7e91a41e5171f57c66cefc7e6dd890cf174a1ad12d01fba3050694753",
+  "records": [
+    {
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "operation": "top+bottom",
+      "experimental": {
+        "packet_peak_us": 96.8,
+        "flight_us": 46.79999999999999,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 96.19999999999999,
+        "flight_us": 46.19999999999999,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 1.2820512820512853,
+      "reportable_timing_difference_percent": 1.2820512820512853,
+      "status": "exploratory_timing",
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71",
+      "full_record_envelope_correlation": 0.7062783416958791
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "operation": "top-bottom",
+      "experimental": {
+        "packet_peak_us": 233.39999999999998,
+        "flight_us": 183.39999999999998,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 240.8,
+        "flight_us": 190.8,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 4.034896401308634,
+      "reportable_timing_difference_percent": 4.034896401308634,
+      "status": "exploratory_timing",
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71",
+      "full_record_envelope_correlation": 0.9413389703893633
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "operation": "top+bottom",
+      "experimental": {
+        "packet_peak_us": 69.2,
+        "flight_us": 44.2,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 70.99999999999999,
+        "flight_us": 45.99999999999999,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 4.072398190045226,
+      "reportable_timing_difference_percent": 4.072398190045226,
+      "status": "exploratory_timing",
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116",
+      "full_record_envelope_correlation": 0.9327634450080221
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "operation": "top-bottom",
+      "experimental": {
+        "packet_peak_us": 166.0,
+        "flight_us": 140.99999999999997,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 172.39999999999998,
+        "flight_us": 147.39999999999998,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 4.539007092198586,
+      "reportable_timing_difference_percent": 4.539007092198586,
+      "status": "exploratory_timing",
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116",
+      "full_record_envelope_correlation": 0.948348091076857
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "operation": "top+bottom",
+      "experimental": {
+        "packet_peak_us": 63.4,
+        "flight_us": 46.73333333333333,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 62.8,
+        "flight_us": 46.133333333333326,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 1.283880171184026,
+      "reportable_timing_difference_percent": 1.283880171184026,
+      "status": "exploratory_timing",
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c",
+      "full_record_envelope_correlation": 0.9777293131827576
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "operation": "top-bottom",
+      "experimental": {
+        "packet_peak_us": 141.6,
+        "flight_us": 124.93333333333332,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 136.0,
+        "flight_us": 119.33333333333333,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 4.482390608324436,
+      "reportable_timing_difference_percent": null,
+      "status": "above_reported_A0_detection_range",
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c",
+      "full_record_envelope_correlation": 0.6065986347790955
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "operation": "top+bottom",
+      "experimental": {
+        "packet_peak_us": 61.199999999999996,
+        "flight_us": 48.699999999999996,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 58.599999999999994,
+        "flight_us": 46.099999999999994,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 5.338809034907601,
+      "reportable_timing_difference_percent": 5.338809034907601,
+      "status": "exploratory_timing",
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3",
+      "full_record_envelope_correlation": 0.8850009074579998
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "operation": "top-bottom",
+      "experimental": {
+        "packet_peak_us": 118.8,
+        "flight_us": 106.3,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 118.8,
+        "flight_us": 106.3,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 0.0,
+      "reportable_timing_difference_percent": null,
+      "status": "above_reported_A0_detection_range",
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3",
+      "full_record_envelope_correlation": 0.435099358095424
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "operation": "top+bottom",
+      "experimental": {
+        "packet_peak_us": 59.0,
+        "flight_us": 49.0,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 56.199999999999996,
+        "flight_us": 46.199999999999996,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 5.714285714285723,
+      "reportable_timing_difference_percent": 5.714285714285723,
+      "status": "exploratory_timing",
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc",
+      "full_record_envelope_correlation": 0.8201292772902014
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "operation": "top-bottom",
+      "experimental": {
+        "packet_peak_us": 110.6,
+        "flight_us": 100.6,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 111.19999999999999,
+        "flight_us": 101.19999999999999,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": false
+      },
+      "raw_absolute_flight_difference_percent": 0.5964214711729566,
+      "reportable_timing_difference_percent": null,
+      "status": "above_reported_A0_detection_range",
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc",
+      "full_record_envelope_correlation": 0.7454235595364167
+    }
+  ]
+}
