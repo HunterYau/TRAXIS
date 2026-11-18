@@ -1,0 +1,552 @@
+{
+  "method": "Independent top/bottom PZT channels; 5 MHz common grid, baseline first 20 us, Hilbert envelope with 8192 padding; fixed theoretical group-arrival to arrival+five-cycle windows; subtract half burst duration. No fitted shift, gain or polarity/mode sums.",
+  "limitations": [
+    "Packet windows can contain overlapping modes/reflections; peaks are timing proxies, not verified mode labels.",
+    "Window-edge maxima are unreliable.",
+    "Percentages describe flight-time difference, not overall accuracy.",
+    "Ideal readout and omitted PZT/glue dynamics remain; no absolute voltage validation."
+  ],
+  "analysis_sha256": "7950bc3eccf4238c6bb2068999acb9f369cd3de69749bf04188f5484c01d8ae3",
+  "records": [
+    {
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 96.8,
+        "flight_us": 46.79999999999999,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 96.19999999999999,
+        "flight_us": 46.19999999999999,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "delay_us": -0.6000000000000014,
+      "signed_flight_difference_percent": -1.2820512820512853,
+      "absolute_flight_difference_percent": 1.2820512820512853,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 96.8,
+        "flight_us": 46.79999999999999,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 96.0,
+        "flight_us": 46.0,
+        "window_us": [
+          46.02565822045487,
+          146.0256582204549
+        ],
+        "window_edge": false
+      },
+      "delay_us": -0.79999999999999,
+      "signed_flight_difference_percent": -1.7094017094016885,
+      "absolute_flight_difference_percent": 1.7094017094016885,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 235.6,
+        "flight_us": 185.6,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 240.8,
+        "flight_us": 190.8,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "delay_us": 5.200000000000017,
+      "signed_flight_difference_percent": 2.8017241379310436,
+      "absolute_flight_difference_percent": 2.8017241379310436,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 228.79999999999998,
+        "flight_us": 178.79999999999998,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 240.99999999999997,
+        "flight_us": 190.99999999999997,
+        "window_us": [
+          187.79863045658337,
+          287.7986304565834
+        ],
+        "window_edge": false
+      },
+      "delay_us": 12.199999999999989,
+      "signed_flight_difference_percent": 6.823266219239368,
+      "absolute_flight_difference_percent": 6.823266219239368,
+      "waveform_sha256": "b1a3f256e55380780271e3049d8c8ad026baf13bd4ec153b68fd0c148cc42d71"
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 69.2,
+        "flight_us": 44.2,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 70.99999999999999,
+        "flight_us": 45.99999999999999,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "delay_us": 1.79999999999999,
+      "signed_flight_difference_percent": 4.072398190045226,
+      "absolute_flight_difference_percent": 4.072398190045226,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 69.2,
+        "flight_us": 44.2,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 70.99999999999999,
+        "flight_us": 45.99999999999999,
+        "window_us": [
+          46.03970242662698,
+          96.03970242662697
+        ],
+        "window_edge": false
+      },
+      "delay_us": 1.79999999999999,
+      "signed_flight_difference_percent": 4.072398190045226,
+      "absolute_flight_difference_percent": 4.072398190045226,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 165.0,
+        "flight_us": 140.0,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 172.39999999999998,
+        "flight_us": 147.39999999999998,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "delay_us": 7.399999999999977,
+      "signed_flight_difference_percent": 5.28571428571427,
+      "absolute_flight_difference_percent": 5.28571428571427,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 161.8,
+        "flight_us": 136.79999999999998,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 162.8,
+        "flight_us": 137.79999999999998,
+        "window_us": [
+          139.56648825694015,
+          189.56648825694015
+        ],
+        "window_edge": false
+      },
+      "delay_us": 1.0,
+      "signed_flight_difference_percent": 0.7309941520467838,
+      "absolute_flight_difference_percent": 0.7309941520467838,
+      "waveform_sha256": "4c72ba4875e0e9fe4d0d2550875b1db83f36b2f5361784a824cf31b287503116"
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 63.4,
+        "flight_us": 46.73333333333333,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 62.8,
+        "flight_us": 46.133333333333326,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "delay_us": -0.6000000000000014,
+      "signed_flight_difference_percent": -1.283880171184026,
+      "absolute_flight_difference_percent": 1.283880171184026,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 63.4,
+        "flight_us": 46.73333333333333,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 62.8,
+        "flight_us": 46.133333333333326,
+        "window_us": [
+          46.063221952358546,
+          79.39655528569189
+        ],
+        "window_edge": false
+      },
+      "delay_us": -0.6000000000000014,
+      "signed_flight_difference_percent": -1.283880171184026,
+      "absolute_flight_difference_percent": 1.283880171184026,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 149.6,
+        "flight_us": 132.93333333333334,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 152.6,
+        "flight_us": 135.9333333333333,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": true
+      },
+      "delay_us": 2.9999999999999716,
+      "signed_flight_difference_percent": 2.256770310932777,
+      "absolute_flight_difference_percent": 2.256770310932777,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 152.6,
+        "flight_us": 135.9333333333333,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": true
+      },
+      "simulation": {
+        "packet_peak_us": 152.6,
+        "flight_us": 135.9333333333333,
+        "window_us": [
+          119.41542173238,
+          152.7487550657133
+        ],
+        "window_edge": true
+      },
+      "delay_us": 0.0,
+      "signed_flight_difference_percent": 0.0,
+      "absolute_flight_difference_percent": 0.0,
+      "waveform_sha256": "d030332e76a3ebc66d1e0bac02f74a2a27d79217deb1bd4e1aa208b035fef70c"
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 61.4,
+        "flight_us": 48.900000000000006,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 58.599999999999994,
+        "flight_us": 46.099999999999994,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "delay_us": -2.8000000000000114,
+      "signed_flight_difference_percent": -5.725971370143172,
+      "absolute_flight_difference_percent": 5.725971370143172,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 61.199999999999996,
+        "flight_us": 48.699999999999996,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 58.599999999999994,
+        "flight_us": 46.099999999999994,
+        "window_us": [
+          46.096387453590495,
+          71.0963874535905
+        ],
+        "window_edge": false
+      },
+      "delay_us": -2.6000000000000014,
+      "signed_flight_difference_percent": -5.338809034907601,
+      "absolute_flight_difference_percent": 5.338809034907601,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 119.99999999999999,
+        "flight_us": 107.49999999999999,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 118.8,
+        "flight_us": 106.3,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": false
+      },
+      "delay_us": -1.1999999999999886,
+      "signed_flight_difference_percent": -1.1162790697674314,
+      "absolute_flight_difference_percent": 1.1162790697674314,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 108.2,
+        "flight_us": 95.69999999999999,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": true
+      },
+      "simulation": {
+        "packet_peak_us": 118.8,
+        "flight_us": 106.3,
+        "window_us": [
+          108.088573200304,
+          133.08857320030398
+        ],
+        "window_edge": false
+      },
+      "delay_us": 10.600000000000009,
+      "signed_flight_difference_percent": 11.076280041797293,
+      "absolute_flight_difference_percent": 11.076280041797293,
+      "waveform_sha256": "5ab04a46ee616da32c59454e263688e9ac0d16b9eea19ca03c9e45c1071491a3"
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 59.0,
+        "flight_us": 49.0,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 56.199999999999996,
+        "flight_us": 46.199999999999996,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "delay_us": -2.8000000000000043,
+      "signed_flight_difference_percent": -5.714285714285723,
+      "absolute_flight_difference_percent": 5.714285714285723,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 59.0,
+        "flight_us": 49.0,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 56.199999999999996,
+        "flight_us": 46.199999999999996,
+        "window_us": [
+          46.13944166727629,
+          66.13944166727629
+        ],
+        "window_edge": false
+      },
+      "delay_us": -2.8000000000000043,
+      "signed_flight_difference_percent": -5.714285714285723,
+      "absolute_flight_difference_percent": 5.714285714285723,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "channel": "top",
+      "real": {
+        "packet_peak_us": 113.0,
+        "flight_us": 103.0,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": false
+      },
+      "simulation": {
+        "packet_peak_us": 111.19999999999999,
+        "flight_us": 101.19999999999999,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": false
+      },
+      "delay_us": -1.8000000000000114,
+      "signed_flight_difference_percent": -1.7475728155339916,
+      "absolute_flight_difference_percent": 1.7475728155339916,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "channel": "bottom",
+      "real": {
+        "packet_peak_us": 120.8,
+        "flight_us": 110.8,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": true
+      },
+      "simulation": {
+        "packet_peak_us": 111.19999999999999,
+        "flight_us": 101.19999999999999,
+        "window_us": [
+          100.80851524829512,
+          120.80851524829512
+        ],
+        "window_edge": false
+      },
+      "delay_us": -9.600000000000009,
+      "signed_flight_difference_percent": -8.664259927797842,
+      "absolute_flight_difference_percent": 8.664259927797842,
+      "waveform_sha256": "9d2431eea39d0988260bf08da4026f7ea41bff4d6bd1e2e4ede1d477542579dc"
+    }
+  ]
+}
