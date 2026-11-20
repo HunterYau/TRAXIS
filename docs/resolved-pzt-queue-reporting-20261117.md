@@ -68,3 +68,28 @@ detected slow wave. A zero signal yields unresolved output.
 No new experimental percentages exist yet; the numbers will be calculated
 and printed only after future simulations finish. Raw run files stay local
 under ignored `outputs/`; GitHub contains the code and compact evidence.
+
+
+## Individual voltage wiggles (added November 19)
+
+In addition to arrival timing and Hilbert-envelope shape, each completed trial
+now saves pointwise signed-voltage comparisons for the original top/bottom
+receiver channels and the top+bottom (S0-related) / top-bottom (A0-related)
+traces. Use the entire common 0-349.8 us interval at 5 MHz; subtract each
+trace's first-20-us mean. There is no fitted delay, time stretch, polarity
+reversal, gain alignment, or peak search window for these new metrics.
+
+Normalized wiggle difference is 100*||s/||s||-r/||r||||. Zero is a match,
+200 is opposite polarity; amplitude is removed and values are not overall
+accuracy percentages. Signed Pearson correlation ranges from -1 to +1;
++1 is best, but it too ignores overall strength. Raw voltage difference is
+100*||s-r||/||r|| and RMSE is reported in volts. Raw metrics retain the
+unmatched unit-input drive / ideal receiver load limitations. Zero-norm
+comparisons return null rather than a perfect score. Peak-to-peak voltage
+for each signal is also saved in comparison.json and result.json.
+
+A0/S0-related sums/differences can contain other modes and reflections.
+Their metrics are not proof of isolated modes. Small timing differences
+can substantially change signed wiggle scores; repeated physical recordings
+are needed to establish normal variation. Existing timing/envelope methods
+remain in the saved comparison alongside the new waveform fields.

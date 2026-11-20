@@ -143,7 +143,8 @@ def _stop_tree(process):
         process.wait(timeout=2)
 
 
-def run_monitored(command, directory: Path, env: dict, guard: ResourceGuard, log: Path) -> dict:
+def run_monitored(command, directory: Path, env: dict, guard: ResourceGuard, log: Path,
+                  *, max_log_mib: float | None = 4) -> dict:
     """Monitor parent plus external process tree; terminate it on a guard stop."""
     guard.check(force=True)
     started = time.perf_counter()
@@ -155,7 +156,7 @@ def run_monitored(command, directory: Path, env: dict, guard: ResourceGuard, log
             while True:
                 guard.check(force=True)
                 sample = guard.latest_sample
-                if sample is None:
+                if sample is None and guard.telemetry_errors_fatal:
                     raise ResourceLimitError('resource guard produced no live monitor sample')
                 try:
                     root = psutil.Process(process.pid)
@@ -163,14 +164,22 @@ def run_monitored(command, directory: Path, env: dict, guard: ResourceGuard, log
                     peak_processes = max(peak_processes, len(tree))
                     for child in tree:
                         try:
-                            sample['process_rss_mib'] += child.memory_info().rss / 1024**2
+                            if sample is not None:
+                                sample['process_rss_mib'] += child.memory_info().rss / 1024**2
                         except psutil.NoSuchProcess:
                             pass
+                        except psutil.AccessDenied:
+                            if guard.telemetry_errors_fatal:
+                                raise
                 except psutil.NoSuchProcess:
                     pass
+                except psutil.AccessDenied:
+                    if guard.telemetry_errors_fatal:
+                        raise
                 # An access-denied measurement is an error, not a zero-RAM claim.
-                guard.enforce(sample, guard.last_gpus)
-                if Path(log).stat().st_size > 4 * 1024**2:
+                if sample is not None:
+                    guard.enforce(sample, guard.last_gpus)
+                if max_log_mib is not None and Path(log).stat().st_size > max_log_mib * 1024**2:
                     raise ResourceLimitError('external solver log exceeds 4 MiB')
                 code = process.poll()
                 if code is not None:

@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "scope": "AST comparison: only declared output path string literals changed in five scripts. Manual --output options and computations are unchanged. No numerical/GPU simulation was run.",
+  "routes": {
+    "outputs/pzt-readiness": "outputs/pzt-development/pzt-readiness",
+    "outputs/pzt-body-check-cache": "outputs/pzt-development/pzt-body-check-cache",
+    "outputs/resolved-pzt-strength-20261119": "outputs/result-analyses/resolved-pzt-strength-20261119",
+    "outputs/verification": "outputs/test-infrastructure/verification",
+    "outputs/model-verification": "outputs/test-infrastructure/model-verification",
+    "outputs/workflow-verification": "outputs/test-infrastructure/workflow-verification",
+    "outputs/policy-verification": "outputs/test-infrastructure/policy-verification",
+    "outputs/calibration-verification": "outputs/test-infrastructure/calibration-verification",
+    "outputs/study-verification": "outputs/test-infrastructure/study-verification",
+    "outputs/forward-verification": "outputs/test-infrastructure/forward-verification"
+  },
+  "source_changes": {
+    "traxis/cli.py": {
+      "before_sha256": "dcd5b859a13f048a094c7e2be33905d6ae23246b6a4e9b59202ba2ade88cde1d",
+      "after_sha256": "b5949d4277a39dd63dcd419ea555800e836420748bffae17b0144e4a77e012dd",
+      "only_declared_output_paths_changed": true
+    },
+    "examples/pzt_readiness.py": {
+      "before_sha256": "cb58d7ded8f07e57dc6ae9f75724b829c6a7965f0d8f39c7e284fc11bd6d89a0",
+      "after_sha256": "cef953fce4c3883e630480c3d5fa8c2b1757d8cce909feba44b378fb8298d2bf",
+      "only_declared_output_paths_changed": true
+    },
+    "examples/assess_pzt_readiness.py": {
+      "before_sha256": "4ef4ad712e9d79290a5e7ae2f33d7b6ff41e8d5d57c54757d318a7fb6eacd2ca",
+      "after_sha256": "cf5e3c37c09b92982e14c119d514db10de14f70aef5804c41d62c8c5d030f9b0",
+      "only_declared_output_paths_changed": true
+    },
+    "examples/pzt_body_checks.py": {
+      "before_sha256": "99b0e60013d4bb377f841d3b0e3c85fb338afb593359e6e43d898e5027a40a8e",
+      "after_sha256": "b058b937012e24448c1e110ffa52e9dd51238a63c11e5473e37403ef67629d6d",
+      "only_declared_output_paths_changed": true
+    },
+    "examples/compare_resolved_pzt_strength.py": {
+      "before_sha256": "05f73f93fb25b852488a1a031f5a2315b189c6be761c057cb102c34dfc27b051",
+      "after_sha256": "99036560974332f20b4fd33e13b46f0263b82f03e45f5ce5740ba536687c91c8",
+      "only_declared_output_paths_changed": true
+    }
+  }
+}

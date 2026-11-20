@@ -46,7 +46,7 @@ def main():
     rows=[];started=time.perf_counter()
     for resolution in ((32,6,3),(32,7,3),(40,6,3),(32,6,4)):
         guard.check(force=True);sectors,rings,layers=resolution
-        path=PROJECT/f'outputs/pzt-readiness/mesh-{sectors}-{rings}-{layers}.json'
+        path=PROJECT/f'outputs/pzt-development/pzt-readiness/mesh-{sectors}-{rings}-{layers}.json'
         if path.exists():
             rows.append(json.loads(path.read_text()));continue
         mesh,nface=disk_mesh(geometry,sectors=sectors,rings=rings,layers=layers)
@@ -63,10 +63,10 @@ def main():
             free_response_imag=free_response.imag.tolist(),attached_response_real=attached_response.real.tolist(),
             attached_response_imag=attached_response.imag.tolist(),elapsed_seconds=time.perf_counter()-started)
         rows.append(row)
-        write_json(PROJECT/f'outputs/pzt-readiness/mesh-{sectors}-{rings}-{layers}.json',row)
+        write_json(PROJECT/f'outputs/pzt-development/pzt-readiness/mesh-{sectors}-{rings}-{layers}.json',row)
         print(json.dumps({key:row[key] for key in ('resolution','nodes','free_radial_hz','capacitance_f','elapsed_seconds')}),flush=True)
         del k,m,body
-    write_json(PROJECT/'outputs/pzt-readiness/fine-study.json',dict(rows=rows,frequencies_hz=frequencies.tolist()))
+    write_json(PROJECT/'outputs/pzt-development/pzt-readiness/fine-study.json',dict(rows=rows,frequencies_hz=frequencies.tolist()))
 
 
 if __name__=='__main__':main()

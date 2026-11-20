@@ -14,7 +14,10 @@ import time
 
 import psutil
 
-DEFAULT_ROOT = Path(__file__).resolve().parents[1]/'outputs/wandowski-pzt-plate1'
+from traxis.storage import atomic_write
+from examples.plate_outputs import CURRENT_RUN, result_directory, relocated, owner_alive, saved_trial_status
+
+DEFAULT_ROOT = CURRENT_RUN
 
 
 def resource_line():
@@ -105,6 +108,12 @@ def result_lines(frequency, result, directory):
             f'  Saved check: {directory}']
     status = 'COMPLETED' if result.get('completed') else 'FAILED / INCOMPLETE'
     lines = [f'{frequency//1000} kHz: {status} | time {clock(result.get("wall_seconds"))}']
+    damping=result.get('damping')
+    if damping:
+        growth=result.get('post_drive_energy_max_relative_growth')
+        if growth is not None:
+            expectation='remain constant' if damping.get('model')=='none' else 'decrease'
+            lines.append(f'  Post-pulse energy growth: {growth:.3e} (energy is expected to {expectation})')
     for key, label in [('cpu_force_relative_error', 'CPU/GPU force difference'),
                        ('modified_energy_relative_drift', 'Energy drift')]:
         value = result.get(key)
@@ -117,11 +126,33 @@ def result_lines(frequency, result, directory):
                 value=comparison.get(label+'_arrival_error_percent')
                 status=comparison.get(label+'_status','unknown')
                 value=f'{value:.2f}%' if value is not None else f'unresolved ({status})'
-                lines.append(f'  {label.capitalize()} wave arrival error: {value} | lower is better')
+                mode='S0' if label=='fast' else 'A0'
+                lines.append(f'  {mode} wave arrival error: {value} | lower is better')
+                method=comparison.get(label+'_arrival_method')
+                if method:
+                    lines.append(f'  Arrival search: {method}')
                 shape=comparison.get(label+'_envelope_shape_error_percent')
                 if shape is not None:
                     trace='top+bottom' if label=='fast' else 'top-bottom'
                     lines.append(f'  {trace} trace envelope-shape difference: {shape:.2f}% | lower is better')
+                if label+'_envelope_pearson_r' in comparison:
+                    pearson=comparison[label+'_envelope_pearson_r']
+                    text=f'{pearson:.4f}' if pearson is not None else 'undefined (constant or zero envelope)'
+                    lines.append(f'  {mode}-related trace envelope Pearson r: {text} | +1 best')
+                wiggles=comparison.get(label+'_waveform')
+                if wiggles:
+                    difference=wiggles['normalized_wiggle_difference_percent']
+                    text=f'{difference:.2f}%' if difference is not None else 'undefined (zero signal)'
+                    correlation=wiggles['correlation']
+                    correlation=f'{correlation:.4f}' if correlation is not None else 'undefined'
+                    lines.append(f'  {mode}-related trace individual-wiggle difference: {text} | lower better, strength normalized')
+                    lines.append(f'  Signed wiggle correlation: {correlation} | +1 best, -1 opposite polarity')
+            for channel,metrics in comparison.get('waveform_channels',{}).items():
+                raw=metrics['raw_voltage_difference_percent']
+                text=f'{raw:.2f}%' if raw is not None else 'undefined (zero measured signal)'
+                lines.append(f'  {channel} receiver raw voltage difference: {text}; RMSE {metrics["rmse_v"]:.6g} V')
+            if comparison.get('waveform_channels'):
+                lines.append('  Raw voltage differences include unmatched drive/load. Wiggles use the full shared interval without fitted alignment.')
             lines.append('  Shape comparison normalizes amplitude; these are not overall accuracy percentages.')
         else:
             for name, value in comparison.items():
@@ -138,23 +169,75 @@ def queue_alive(root):
     owner = read_json(root/'queue-owner.json')
     if owner is None:
         return None
-    try:
-        process = psutil.Process(owner['pid'])
-        # Reject a reused PID when observing an older saved run.
-        return process.is_running() and abs(process.create_time()-owner['started_unix']) < 10
-    except psutil.NoSuchProcess:
-        return False
-    except psutil.AccessDenied:
-        return None
+    return owner_alive(owner)
 
 
-def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=False, record_stream=None):
+def export_queue_results(root, frequencies=None):
+    """Save a results-only snapshot, including partial and failed queues.
+
+    Rebuild from saved records so exporting again never duplicates experiments.
+    This does not launch workers or change their comparison results.
+    """
+    root = Path(root)
+    root = relocated(root)
+    if frequencies is None:
+        prepared = read_json(root/'prepared.json')
+        if prepared is None:
+            raise FileNotFoundError(f'No prepared run found: {root}')
+        frequencies = prepared['configuration']['frequencies_hz']
+    lines = ['Collective experiment results',
+             'Queue order: '+' -> '.join(f'{f//1000} kHz' for f in frequencies), '']
+    completed = failed = 0
+    elapsed = 0.
+    for frequency in frequencies:
+        summary_start = len(lines)
+        trial = root/f'{frequency//1000}khz'
+        directory = result_directory(trial)
+        result = read_json(directory/'result.json')
+        if result is None:
+            launcher = read_json(trial/'launcher.json')
+            status = saved_trial_status(root,trial,refresh=True)
+            if status.get('status') in ('interrupted', 'failed'):
+                failed += 1
+                lines.append(f'{frequency//1000} kHz: {status["status"].upper()} / UNFINISHED')
+                if status.get('reason'):
+                    lines.append('  '+status['reason'])
+            elif launcher is not None and launcher.get('exit_code') != 0:
+                failed += 1
+                lines.append(f'{frequency//1000} kHz: FAILED | worker exit code {launcher.get("exit_code")}')
+                lines.append(f'  Debug log: {trial / "worker.log"}')
+            else:
+                lines.append(f'{frequency//1000} kHz: No saved result yet.')
+        else:
+            completed += bool(result.get('completed'))
+            failed += not bool(result.get('completed'))
+            elapsed += result.get('wall_seconds') or 0.
+            lines.extend(result_lines(frequency, result, directory))
+        summary_text = '\n'.join(lines[summary_start:])+'\n'
+        atomic_write(root/'summaries'/f'{frequency//1000}khz.txt',
+                     lambda f: f.write(summary_text.encode('utf-8')), overwrite=True)
+        lines.append('')
+    lines.extend([f'Completed: {completed}/{len(frequencies)} | failed/incomplete: {failed} '
+                  f'| awaiting results: {len(frequencies)-completed-failed}',
+                  f'Total recorded experiment time: {clock(elapsed)}'])
+    path = root/'all-results.txt'
+    payload = ('\n'.join(lines)+'\n').encode('utf-8')
+    atomic_write(path, lambda stream: stream.write(payload), overwrite=True)
+    return path
+
+
+def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=False, record_stream=None,
+          follow_retries=False):
     stream = sys.stdout if stream is None else stream
+    root = relocated(root)
     prepared = read_json(root/'prepared.json')
     if prepared is None:
         raise FileNotFoundError(f'No prepared run found: {root}')
     frequencies = prepared['configuration']['frequencies_hz']
+    first_experiment = prepared['configuration'].get('start_experiment',1)
+    total_experiments = first_experiment+len(frequencies)-1
     printed = set(); debug_printed = set(); previous_line = None; last_resources = -math.inf
+    stopped_printed = False
     interactive = stream.isatty()
     def emit(text):
         nonlocal previous_line
@@ -173,29 +256,42 @@ def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=
             emit(resource_line())
             last_resources = time.monotonic()
         pending = None
-        for index, frequency in enumerate(frequencies, 1):
-            directory = root/f'{frequency//1000}khz'/'native'
+        for index, frequency in enumerate(frequencies, first_experiment):
+            trial = root/f'{frequency//1000}khz'
+            directory = result_directory(trial)
             result = read_json(directory/'result.json')
             if result is not None:
-                if frequency not in printed:
+                signature=(frequency,result.get('completed'),result.get('wall_seconds'),result.get('error'))
+                if signature not in printed:
                     for line in result_lines(frequency, result, directory):
                         emit(line)
-                    printed.add(frequency)
+                    printed.add(signature)
                 if not result.get('completed'):
-                    return 1
+                    if not follow_retries:
+                        return 1
+                    if pending is None:
+                        pending = (index, frequency, trial)
             elif pending is None:
-                pending = (index, frequency, directory.parent)
+                pending = (index, frequency, trial)
         if pending is None:
             emit(f'All {len(frequencies)} experiments completed.'); return 0
         index, frequency, trial = pending
+        status = saved_trial_status(root,trial)
+        if status.get('status') in ('interrupted', 'failed'):
+            if not follow_retries:
+                emit(f'{frequency//1000} kHz: {status["status"].upper()} / UNFINISHED. Restart the scheduler to retry.')
+                return 2
         if debug and frequency not in debug_printed:
             emit(f'Debug log: {trial / "worker.log"}')
             debug_printed.add(frequency)
         launcher = read_json(trial/'launcher.json')
         if launcher is not None and launcher.get('exit_code') != 0:
-            emit(f'{frequency//1000} kHz failed. Inspect {trial}/worker.log'); return 1
+            if not follow_retries:
+                emit(f'{frequency//1000} kHz failed. Inspect {trial}/worker.log'); return 1
         state = progress_state(trial/'worker.log')
-        line = progress_line(frequency, index, len(frequencies), state)
+        if status.get('status') in ('interrupted','failed'):
+            state['phase']=status['status'].upper()+' / UNFINISHED; waiting for retry'
+        line = progress_line(frequency, index, total_experiments, state)
         if line != previous_line:
             if interactive:
                 stream.write('\r'+line.ljust(len(previous_line or ''))); stream.flush()
@@ -209,8 +305,13 @@ def watch(root, *, once=False, interval=2., stream=None, resources=False, debug=
                 stream.write('\n')
             return 0
         if queue_alive(root) is False:
-            emit('Queue has stopped; completed results are preserved. Check worker/queue logs.')
-            return 2
+            if not stopped_printed:
+                emit('Queue has stopped; completed results are preserved. Check worker/queue logs.')
+                stopped_printed = True
+            if not follow_retries:
+                return 2
+        else:
+            stopped_printed = False
         time.sleep(interval)
 
 
@@ -249,16 +350,23 @@ def main():
     parser.add_argument('--label', default='Setup check (not a full experiment)')
     parser.add_argument('--total', type=int, default=128)
     parser.add_argument('--transcript',type=Path,help='append displayed progress/results to a plain-text file')
+    parser.add_argument('--export-results',action='store_true',
+        help='write all-results.txt from saved results and exit without watching or running simulations')
+    parser.add_argument('--follow-retries',action='store_true',help='keep the display open across stopped queues and retries')
     args = parser.parse_args()
     try:
+        if args.export_results:
+            print(f'Saved collective results: {export_queue_results(args.root)}')
+            return 0
         if args.log:
             if args.result is None or args.total<=0:parser.error('--log requires --result and a positive --total')
             return watch_log(args.log,args.result,args.label,args.total)
         if args.transcript:
             args.transcript.parent.mkdir(parents=True,exist_ok=True)
             with args.transcript.open('a',encoding='utf-8') as stream:
-                return watch(args.root,once=args.once,resources=args.resources,debug=args.debug,record_stream=stream)
-        return watch(args.root, once=args.once, resources=args.resources, debug=args.debug)
+                return watch(args.root,once=args.once,resources=args.resources,debug=args.debug,record_stream=stream,
+                             follow_retries=args.follow_retries)
+        return watch(args.root, once=args.once, resources=args.resources, debug=args.debug,follow_retries=args.follow_retries)
     except KeyboardInterrupt:
         print('\nProgress display closed. Simulation left running.')
         return 0

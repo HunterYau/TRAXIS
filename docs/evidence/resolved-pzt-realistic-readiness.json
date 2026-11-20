@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "selected_resolution": [
+    32,
+    6,
+    3
+  ],
+  "scope": "Exploratory execution readiness with numerical spring/mass tests, independent coupled-RC ODE checks, regression and 128-step full geometry execution. Bond/plate waveform convergence and experimental accuracy remain unvalidated.",
+  "source_sha256": {
+    "traxis/pzt_body.py": "a885e3e1c112511733bb8a5b6e4da347901dcc98c49967e9a6fd75d06611b512",
+    "traxis/piezoelectric.py": "e9743e7538aecc4adba4b45ed39840e649c3cc2c8a7d130bb35680654d4b375c",
+    "examples/pzt_readiness.py": "cb58d7ded8f07e57dc6ae9f75724b829c6a7965f0d8f39c7e284fc11bd6d89a0",
+    "examples/assess_pzt_readiness.py": "4ef4ad712e9d79290a5e7ae2f33d7b6ff41e8d5d57c54757d318a7fb6eacd2ca",
+    "traxis/gpu_pzt_body.py": "c0c405d58075430a509b9cc99dfdad10c5aba011fb4e798300727986064c513a",
+    "traxis/gpu_enriched_verlet.py": "bdd4f5738a502ba5d4f9b84a7091b48518c79d7fb9c4531bb6933ce447a4d480",
+    "traxis/damping.py": "befd844e19f6d41c71030fe9d6f09cb9545303287c54b2f51f626c6f9b10343d",
+    "traxis/pzt_bond.py": "f34e3949b93c784d4bbf3014f57e887c8bd3258fec798dd2be37c4388c4f06e0",
+    "traxis/experimental_setup.py": "6603c5022d4b8d1723a5fa08913ff3005f5244e28f12449a0797ab4199b44b0a",
+    "tests/test_pzt_bond.py": "1ea7f612a7fad36ecfd9bbb1dd43476d36b7676153882783116bca41bb4ee0b6",
+    "configs/pzt/wandowski-realistic-assumptions.json": "ec1b11b45d3db2867c983855a377353ffd4f20ba76b3b7b5fa828ff03c3faa9d"
+  },
+  "full_size_check_steps": 128,
+  "full_interval_checked": false,
+  "baseline_readiness": "docs/evidence/resolved-pzt-damped-readiness.json",
+  "baseline_readiness_sha256": "95e0c9d6526290c4910bd1b65bdd190b3ff66351857018769e2bce954b2b165d",
+  "historical_evidence_sha256": {
+    "docs/evidence/pzt-body-readiness-refinement-final.json": "414ec6d9586843cf9bd9627b8dccf9de946b928fb4b090721ab7f0223c3c2516",
+    "docs/evidence/pzt-body-selected-mesh-cuda.json": "2ebd69e59b7263163470819100cc4eb716fb00bccf83750edf588e95f86fdacd",
+    "docs/evidence/pzt-body-selected-mesh-full-size-check.json": "a7cb0389dab29bcafde0be86efa4ceaa79ec62c95806c663cb0791c9bd6347eb",
+    "docs/evidence/damped-verlet-cuda-check.json": "812a1195ac5d3a10ccc1eaff337a556ff4059c1770a41246d12b31a4380cf379",
+    "docs/evidence/damped-pzt-full-size-check.json": "f1f7fbefaa6502acfe826b59e019ad0787f2ab2bb6286d135453e38409f897fc"
+  },
+  "evidence_sha256": {
+    "docs/evidence/loaded-pzt-cuda-check.json": "bc336d687a3be6c43d1655945e4ac333b8c0b89ae4053743a40654c7770695c1",
+    "docs/evidence/realistic-pzt-damping-regression.json": "5005b884935ffa55b1ee57f8c954ffedaae943a0e94f1fd7ce32778e08084962",
+    "docs/evidence/realistic-pzt-full-size-check.json": "b0df084658bae52e2da569388c5cb4f16e1136373e8af6ade4a5697c9257f264"
+  },
+  "finite_interface_waveform_convergence_established": false
+}

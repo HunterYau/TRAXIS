@@ -16,6 +16,7 @@ from scipy.sparse import coo_matrix
 
 from traxis.piezoelectric import assemble_piezoelectric, electrode_port
 from traxis.pzt_receiver import _point_weights
+from traxis.pzt_bond import interface_operators
 
 
 def disk_mesh(geometry, *, sectors=24, rings=2, layers=2):
@@ -60,7 +61,7 @@ class BodyAttachment:
 
 
 def attach_disk(layout, material, geometry, *, first_dof=None,
-                electrical='open', input_capacitance_f=0., bond='perfect',
+                electrical='open', input_capacitance_f=0., bond='perfect', adhesive=None,
                 sectors=24, rings=2, layers=2, max_workspace_mib=512, guard=None):
     """Eliminate tied surface DOFs by u_body=T*u_joint, retaining T' M T.
 
@@ -68,12 +69,12 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
     electrical='open': zero free charge, K=Ksc+g*g'/(Cp+Cin).
     Resistive circuit dynamics and unknown glue are deliberately unsupported.
     """
-    if bond != 'perfect':
-        raise ValueError('only an explicitly assumed perfect bond is implemented')
+    if bond not in ('perfect','elastic_interface') or (bond=='elastic_interface' and adhesive is None):
+        raise ValueError('bond requires perfect tie or an explicit elastic-interface profile')
     if electrical not in ('open', 'voltage'):
         raise ValueError('electrical state must be open or prescribed voltage')
     if (not math.isfinite(input_capacitance_f) or input_capacitance_f < 0
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 4096):
         raise ValueError('invalid capacitance or workspace budget')
     if not np.array_equal(layout.transform, np.eye(3)) or geometry.in_plane_angle_rad != 0:
         raise ValueError('body attachment currently requires aligned plate and material axes')
@@ -91,7 +92,7 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
     xyz = mesh.points_m.copy(); xyz[:, :2] += center
     xyz[:, 2] += z if geometry.surface == 'top' else -geometry.thickness_m
     tied = np.concatenate([contact+c*n for c in range(3)])
-    free = np.setdiff1d(np.arange(3*n), tied)
+    free = np.arange(3*n) if bond=='elastic_interface' else np.setdiff1d(np.arange(3*n), tied)
     rows, cols, values = [], [], []
     for node in contact:
         ids, weights = _point_weights(layout, (*xyz[node, :2], z))
@@ -104,8 +105,11 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
             raise ArithmeticError('surface interpolation lost partition of unity')
         for c in range(3):
             rows.extend([node+c*n]*len(ids)); cols.extend(ids+c*host_dofs//3); values.extend(weights)
+    host_rows,host_cols,host_values=rows.copy(),cols.copy(),values.copy()
+    if bond=='elastic_interface':rows,cols,values=[],[],[]
     rows.extend(free); cols.extend(first_dof+np.arange(len(free))); values.extend(np.ones(len(free)))
-    indices, inverse = np.unique(cols, return_inverse=True)
+    indices=np.unique(cols+host_cols)
+    inverse=np.searchsorted(indices,cols)
     count = len(indices)
     # Dense body condensation and local joint matrices, including temporaries.
     forecast = (12*(3*n)**2+10*count**2)*8
@@ -118,6 +122,13 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
         answer = transform.T @ (transform.T @ matrix.T).T
         return (answer+answer.T)*.5
     stiffness = project(port.stiffness_sc); mass = project(port.mass)
+    bond_report=None
+    if bond=='elastic_interface':
+        host_trace=coo_matrix((host_values,(host_rows,np.searchsorted(indices,host_cols))),
+            shape=(3*n,count)).tocsr()[tied]
+        bond_k,bond_m,bond_report=interface_operators(transform[tied],host_trace,
+            xyz[contact,:2],adhesive)
+        stiffness+=bond_k;mass+=bond_m
     coupling = np.asarray(transform.T @ port.coupling_n_v)*geometry.poling_sign
     capacitance = port.capacitance_f+input_capacitance_f
     if electrical == 'open':
@@ -130,12 +141,13 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
         body_mass_kg=material.density_kg_m3*polygon_area*geometry.thickness_m,
         circular_area_relative_error=1-polygon_area/(math.pi*radius**2),
         capacitance_f=port.capacitance_f, input_capacitance_f=input_capacitance_f,
-        electrical=electrical, bond='assumed perfect tie; not measured glue properties',
+        electrical=electrical, bond='assumed perfect tie; not measured glue properties' if bond=='perfect' else 'assumed finite elastic adhesive interface',
+        adhesive=bond_report,
         workspace_screen_mib=forecast/1024**2,
         limitations=['linear tetrahedra and polygon boundary require refinement',
             'nominal material tensors, not specimen calibration',
             'full face electrodes; no wrap-around electrode or solder/wire geometry',
-            'no adhesive layer, damping or resistive instrument dynamics'])
+            'no resolved adhesive volume or adhesive loss; resistive dynamics belong to transient solver'])
     return BodyAttachment(indices, stiffness, mass, coupling, port.capacitance_f,
         capacitance, first_dof+len(free), transform, xyz, free, report)
 
@@ -145,7 +157,7 @@ def merge_attachments(host_mass, attachments, *, max_workspace_mib=512, guard=No
     host_mass = np.asarray(host_mass)
     if (host_mass.ndim != 1 or np.iscomplexobj(host_mass) or not np.isfinite(host_mass).all()
             or np.any(host_mass <= 0) or not attachments
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 2048):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 4096):
         raise ValueError('positive host mass, attachments and bounded workspace required')
     next_dof = len(host_mass)
     for i, body in enumerate(attachments):

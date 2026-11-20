@@ -1,15 +1,47 @@
-# Ready to run the exploratory five-frequency comparison
+# Selected next experiment: restored ideal properties
 
-The user requested completing preparation so they can launch independently.
-The full five-experiment queue has **not** started. Only bounded numerical
-checks and a 128-step full-size execution check were run during preparation.
+The default configuration is now `configs/pzt/resolved-wandowski-ideal-restored.json`.
+It restores the earlier perfect-bond, ideal-open receiver, unit-peak drive and
+zero-damping settings for all five frequencies. Its separate output folder is
+`outputs/simulation-runs/run-010-wandowski-restored-ideal-properties/`.
+See [the restored setup](restored-ideal-experiment.md). The queue has been prepared,
+but no new simulation was started. The default launcher and progress viewer select run 010.
+
+The following sections describe the retained, completed run 009 realistic setup.
+
+## Historical realistic-assumption exploratory comparison
+
+The current v9 setup adds finite bond stiffness/mass, a finite resistance and
+capacitance receiver circuit with mechanical backreaction, and an assumed
+X10 amplifier with estimated delay. These are documented plausible settings,
+not measured settings of the original experiment. See
+[assumptions and evidence](wandowski-realistic-assumptions.md).
+
+The v9 configuration completed 50, 100, 150, 200 and 250 kHz with an
+explicitly assumed 6061-T6 damping proxy. Its results now live in
+`outputs/simulation-runs/run-009-wandowski-realistic-bond-damping/`.
+Earlier undamped results are in `run-006-wandowski-ideal-bond-50-100khz`
+and `run-007-wandowski-ideal-bond-150-250khz-continuation` under `outputs/simulation-runs/`.
+See [output organization and restarting](plate-output-organization.md).
+
+See [the damping implementation and assumptions](aluminum-damping.md).
+The Wandowski alloy is unidentified. This is an effective narrowband damping
+estimate, not measured damping of that plate or proof of improved accuracy.
+The damping proxy applies to the whole coupled plate/PZT system; separate losses
+in aluminum, PZT, adhesive and instruments remain unresolved.
+
+Resource limits remain monitoring-only: no automatic RAM, GPU memory,
+temperature, time or log-size aborts. Cooling pauses at 82 C and resumes
+at 78 C. Missing readings are retried without terminating the calculation.
+Numerical validity, stable time steps, provenance and saved-data checks remain.
 
 ## Start it yourself on this computer
 
-Double-click `examples/run_resolved_pzt.cmd`. It checks inputs, opens the text
-progress window, and launches 50 -> 100 -> 150 -> 200 -> 250 kHz serially.
+Double-click `examples/run_resolved_pzt.cmd` to start/resume the selected run 010.
+It checks saved results, opens the text progress window, and resumes pending frequencies
+in the same experiment folder. Run 009 is already complete and remains separately saved.
 Keep the scheduler window open. Closing only the progress viewer is safe;
-the worker and queue logs continue recording. A duplicate launch is refused.
+the worker and queue logs continue recording. A simultaneous duplicate launch is refused.
 
 Alternatively, from the TRAXIS project folder in PowerShell:
 
@@ -20,13 +52,16 @@ Alternatively, from the TRAXIS project folder in PowerShell:
 For the read-only progress display in a separate terminal:
 
 ```powershell
-.\.venv\portable-runtime\python.exe -m examples.pzt_terminal --root outputs/wandowski-resolved-pzt-v5 --resources --debug --transcript outputs/wandowski-resolved-pzt-v5/terminal-progress.txt
+.\.venv\portable-runtime\python.exe -m examples.pzt_terminal --resources --debug
 ```
 
-Output is `outputs/wandowski-resolved-pzt-v5/`. Its prepared receipt matches
-the final source, configuration, data and readiness-evidence hashes. Preparing
-again with identical inputs is harmless. Changed inputs, existing ownership
-or previous experiment folders are rejected rather than overwritten.
+Historical run 009 configuration is `configs/pzt/resolved-wandowski-v5.json`.
+Its output is `outputs/simulation-runs/run-009-wandowski-realistic-bond-damping/`.
+Its original prepared receipt is preserved. Reporting/organization code has since
+changed: a fresh simulation batch needs a new folder and a new `--prepare` receipt.
+Resuming pending tests requires identical prepared inputs; completed tests are
+verified and retained. Interrupted frequency attempts are archived in that frequency
+folder before retrying from the beginning. See the organization guide for commands.
 
 The queue saves each waveform and final state before analysis, then saves and
 prints comparison results before starting the next worker. A numerical or
@@ -34,44 +69,24 @@ analysis failure stops the queue. `all-results.json` is written at the end.
 See `resolved-pzt-queue-reporting-20261117.md` for metric definitions and files.
 No 300 kHz case is included: this specimen lacks that measured recording.
 
-## Mesh readiness evidence
+## Numerical checks and limits
 
-The old 24-sector/two-ring/two-layer body mesh was replaced by
-**32 sectors, six radial rings, three thickness layers: 772 nodes per body**.
-Further independent refinements used 32/7/3, 40/6/3, and 32/6/4.
-The main free-disc resonance changed by 0.811%, 0.254%, and 0.401%, respectively.
-Attached electrical driving-point response changed by at most 1.286%, 0.885%,
-and 0.359% over the sampled bands surrounding the five center frequencies.
-The engineering readiness targets are <1% resonance change and <2% attached
-response change. These are exploratory criteria, not absolute error bounds.
+The current code passed finite-interface rigid-motion, mass and uniform-slip
+checks; an independent coupled RC transient ODE comparison on CUDA;
+second-order temporal refinement; and undamped/damped zero-port regressions.
+The final full plate with three PZTs, the finite adhesive interfaces and
+receiver loads completed 128 steps in 38.93 s. This covers only 0.684 us.
+The planned full interval remains 350 us with 65536 steps.
 
-The attached comparison uses a **fixed coarse 40 x 40 x 1 mm host patch**,
-2 x 2 x 1 Q2 cells, and a Laplace evaluation with alpha=1/350 us to avoid
-lossless poles. It does not add physical damping to the planned experiment.
-It does not establish full-plate or receiver-waveform convergence, or agreement
-with a physical PZT. The raw small-patch frequency responses and free-disc
-studies remain in `outputs/pzt-readiness/`; compact metrics are in
-`docs/evidence/pzt-body-readiness-refinement-final.json`.
+The PZT bodies retain 32 sectors, 6 rings, 3 layers (772 nodes). Previous
+perfect-bond body mesh studies are historical context. They do not establish
+waveform convergence of the new finite bond or full plate. Training acceptance
+and measured agreement remain unverified. The current thin interface has
+finite stiffness and mass but does not resolve the adhesive volume, its
+geometric offset, nonuniform coverage or adhesive loss.
 
-The selected body mesh passed a real CUDA numerical check against independently
-assembled CPU matrices: force difference 5.47e-16, mass inverse 2.97e-16,
-eigenmode transient difference 7.00e-9, modified-energy drift 8.95e-15, and
-CPU/GPU energy difference 3.04e-14. These are numerical consistency measures.
-
-The full approximately 28-million-DOF plate with three selected bodies completed
-128 steps in 28.99 seconds. Peak machine RAM was 73.8%, process RSS 2831 MiB,
-GPU device memory 4693 MiB, and temperature 57 C. The required full-interval
-step count remains 65536, with dt=350us/65536 below the checked stability
-margin. The short check covers only 0.684 us; it is not a completed physical
-experiment or a long-duration thermal test. Runtime guards remain enabled.
-
-Refinement required increasing bounded body capacity from 512 to 1024 nodes,
-and explicitly declared temporary attachment/merge workspaces to 2048 MiB.
-The original 256 MiB component-assembly budget remains. A first full-size setup
-attempt stopped at the former 1024 MiB merge forecast, before integration;
-that failed attempt and receipt are preserved in the v4-check folder. The
-successful retry is in v4-check2. These allowance changes did not lump mass,
-reduce numerical precision, or change constitutive physics.
+The 4096 MiB attachment/merge allowance accommodates the additional retained
+body degrees of freedom. It does not reduce precision or lump PZT mass.
 
 ## Scope of readiness
 
@@ -79,15 +94,34 @@ reduce numerical precision, or change constitutive physics.
 **not** mean validated training data: `ready_for_training_data=false` remains.
 The source experiment still has unidentified aluminum alloy, nominal elastic
 properties, unmeasured bond/instrument details, and assumed free supports.
-Perfect bonds, full-face electrodes, zero damping and ideal open-circuit
-receiver inputs remain explicit model assumptions. New reference searches
+Finite approximate bonds, full-face electrodes, assumed effective damping and
+assumed finite receiver loads remain explicit model assumptions. New reference searches
 did not replace the measured dataset. The larger research goal remains paused.
 
-The proof `docs/evidence/resolved-pzt-run-readiness.json` binds selected mesh,
-core implementation and passing refinement/CUDA/full-size evidence. Preflight
+The proof `docs/evidence/resolved-pzt-organized-output-readiness.json` inherits
+`docs/evidence/resolved-pzt-realistic-readiness.json` and records the verified
+output-path-only changes to two PZT evidence scripts. It binds selected mesh,
+core implementation and current numerical/CUDA/startup evidence. Preflight
 refuses modified evidence or source hashes. Do not bypass it to reuse old
 output folders. Earlier runs/receipts are preserved.
 
 Code and compact receipts can be backed up with Git. Raw reference recordings,
 the local Python runtime and large outputs are ignored and are not transferred
 by a GitHub clone; this launcher is prepared for the present computer.
+
+## Combined text results
+
+The queue writes `all-results.txt` in its output folder at startup and refreshes
+it after each worker exits, including failures. It contains the saved experiment
+summaries, comparison results, uncertainty labels, elapsed times and completion
+counts, without progress or hardware telemetry logs. Existing per-experiment
+files and `all-results.json` are retained.
+
+Export or refresh this file for a saved batch without launching simulations:
+
+```powershell
+.\.venv\portable-runtime\python.exe -m examples.pzt_terminal --export-results
+```
+
+As with other queue source changes, future simulation launches need a freshly
+prepared output version; do not rewrite the old run's frozen source receipt.

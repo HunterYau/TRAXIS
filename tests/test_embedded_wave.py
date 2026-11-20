@@ -63,6 +63,33 @@ class EmbeddedWaveTests(unittest.TestCase):
         pacer.guard.last_gpus=[]
         with self.assertRaises(RuntimeError): pacer.check(32)
 
+    def test_optional_sensor_failure_does_not_abort_and_cooling_recovers(self):
+        class Guard:
+            last_gpus=[]
+            def __init__(self):self.readings=iter([[],[dict(temperature_c=80.)],[dict(temperature_c=78.)]])
+            def check(self,force=False):self.last_gpus=next(self.readings)
+        guard=Guard();elapsed=[0.]
+        def sleep(seconds):elapsed[0]+=seconds
+        pacer=ThermalPause(guard,82.,78.,allow_missing=True,sleep=sleep,clock=lambda:elapsed[0])
+        pacer.check(16)
+        self.assertEqual(pacer.events,[])
+        self.assertTrue(pacer.sensor_missing)
+        guard.last_gpus=[dict(temperature_c=83.)]
+        pacer.check(32)
+        self.assertEqual(pacer.pause_seconds,.75)
+        self.assertEqual(pacer.events[0]['steps_completed'],32)
+        self.assertEqual(pacer.events[0]['end_temperature_c'],78.)
+        self.assertFalse(pacer.sensor_missing)
+
+    def test_optional_invalid_sensor_values_do_not_abort(self):
+        class Guard:last_gpus=[]
+        guard=Guard();pacer=ThermalPause(guard,82.,78.,allow_missing=True)
+        for rows in ([],[{}],[dict(temperature_c=None)],[dict(temperature_c=float('nan'))],
+                     [dict(temperature_c=float('inf'))],[{},{}]):
+            guard.last_gpus=rows
+            pacer.check(16)
+        self.assertEqual(pacer.events,[])
+
 
 class EmbeddedRawReaderTests(unittest.TestCase):
     """Synthetic file fixtures exercise rejection, not mechanical accuracy."""

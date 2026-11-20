@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "selected_resolution": [
+    32,
+    6,
+    3
+  ],
+  "scope": "Execution readiness for exploratory damped comparison: previous body-mesh evidence, new analytic/CUDA damping checks and 128-step full-geometry damped check. Not measured specimen damping or training validation.",
+  "source_sha256": {
+    "traxis/pzt_body.py": "32ee74dce7d019436704459027e189922a8a6052f49357d6249e989390bd4c28",
+    "traxis/piezoelectric.py": "e9743e7538aecc4adba4b45ed39840e649c3cc2c8a7d130bb35680654d4b375c",
+    "examples/pzt_readiness.py": "cb58d7ded8f07e57dc6ae9f75724b829c6a7965f0d8f39c7e284fc11bd6d89a0",
+    "examples/assess_pzt_readiness.py": "4ef4ad712e9d79290a5e7ae2f33d7b6ff41e8d5d57c54757d318a7fb6eacd2ca",
+    "traxis/gpu_pzt_body.py": "c0c405d58075430a509b9cc99dfdad10c5aba011fb4e798300727986064c513a",
+    "traxis/gpu_enriched_verlet.py": "9125854afdbdede59e47a134c6734defc033c0b965eee0521a9ab48ab2da4f6f",
+    "traxis/damping.py": "befd844e19f6d41c71030fe9d6f09cb9545303287c54b2f51f626c6f9b10343d"
+  },
+  "evidence_sha256": {
+    "docs/evidence/pzt-body-readiness-refinement-final.json": "414ec6d9586843cf9bd9627b8dccf9de946b928fb4b090721ab7f0223c3c2516",
+    "docs/evidence/pzt-body-selected-mesh-cuda.json": "2ebd69e59b7263163470819100cc4eb716fb00bccf83750edf588e95f86fdacd",
+    "docs/evidence/pzt-body-selected-mesh-full-size-check.json": "a7cb0389dab29bcafde0be86efa4ceaa79ec62c95806c663cb0791c9bd6347eb",
+    "docs/evidence/damped-verlet-cuda-check.json": "812a1195ac5d3a10ccc1eaff337a556ff4059c1770a41246d12b31a4380cf379",
+    "docs/evidence/damped-pzt-full-size-check.json": "f1f7fbefaa6502acfe826b59e019ad0787f2ab2bb6286d135453e38409f897fc"
+  },
+  "full_size_check_steps": 128,
+  "full_interval_checked": false,
+  "baseline_readiness": "docs/evidence/resolved-pzt-run-readiness.json",
+  "baseline_readiness_sha256": "9373aa85eb9b9e11ff5d12e10726e3f57a17be0414ba89b47811dc2ffc0d0b02"
+}

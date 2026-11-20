@@ -1,5 +1,5 @@
 # Read-only live display. Closing this window does not stop the simulations.
-param([string]$RunRoot = (Join-Path $PSScriptRoot '..\outputs\wandowski-pzt-plate1'))
+param([string]$RunRoot = (Join-Path $PSScriptRoot '..\outputs\simulation-runs\run-000-wandowski-simplified-pzt'))
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 $RunRoot = [IO.Path]::GetFullPath($RunRoot)

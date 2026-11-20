@@ -6,9 +6,10 @@ from scipy.signal import hilbert
 from examples.experimental_five import MATERIAL
 from traxis.dispersion import mode_velocity
 from traxis.storage import sha256_file, write_json
+from examples.plate_outputs import relocated
 
 PROJECT = Path(__file__).resolve().parents[1]
-ROOT = PROJECT/'outputs/wandowski-pzt-plate1'
+ROOT = relocated(PROJECT/'outputs/wandowski-pzt-plate1')
 
 
 def packet(t, signal, frequency, mode):

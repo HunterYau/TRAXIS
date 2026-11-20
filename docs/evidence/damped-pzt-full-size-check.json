@@ -1,0 +1,39 @@
+{
+  "completed": true,
+  "actual_steps": 128,
+  "damping": {
+    "model": "narrowband_mass_proportional",
+    "reference_frequency_hz": 50000,
+    "loss_factor": 0.0011728985154967765,
+    "mass_damping_per_s": 368.4769359691047,
+    "assumed_material": "6061-T6 aluminum proxy; Wandowski alloy unidentified",
+    "specimen_calibrated": false,
+    "scope": "effective whole coupled assembly; not separate aluminum/PZT/glue loss tensors"
+  },
+  "simulation_statistics": {
+    "method": "gpu_velocity_verlet",
+    "precision": "float64",
+    "steps_completed": 128,
+    "damping_model": "mass proportional, Strang split",
+    "mass_damping_per_s": 368.4769359691047,
+    "mass_model": "coupled consistent body mass",
+    "requested_steps": 128,
+    "duration_s": 6.8359375e-07,
+    "workspace_screen_mib": 3439.443084716797,
+    "probe_nonzero_coefficients": 5490,
+    "stiffness_applications": 129,
+    "per_step_host_state_transfers": 0,
+    "final_host_state_downloads": 2
+  },
+  "wall_seconds": 30.650354499928653,
+  "resource_peaks": {
+    "system_memory_percent": 73.8,
+    "process_rss_mib": 2830.2265625,
+    "gpu_memory_mib": 5447.0,
+    "gpu_temperature_c": 57.0,
+    "minimum_available_mib": 4256.65625
+  },
+  "scope": "128-step full geometry damped execution check, not full-interval experimental validation.",
+  "result_sha256": "8b726c1bf83c8da6f330d74baeccb6da2f5275fa7a82602a497844c1250a1d92",
+  "solver_sha256": "9125854afdbdede59e47a134c6734defc033c0b965eee0521a9ab48ab2da4f6f"
+}

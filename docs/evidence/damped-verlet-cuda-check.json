@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "scope": "Real CUDA two-DOF damped oscillator vs analytic solution; diagonal and coupled consistent mass, time refinement and zero-damping regression. Not a full-plate damping check.",
+  "damping": {
+    "model": "narrowband_mass_proportional",
+    "reference_frequency_hz": 100000,
+    "loss_factor": 0.0011728985154967765,
+    "mass_damping_per_s": 736.9538719382094,
+    "assumed_material": "6061-T6 aluminum proxy; Wandowski alloy unidentified",
+    "specimen_calibrated": false,
+    "scope": "effective whole coupled assembly; not separate aluminum/PZT/glue loss tensors"
+  },
+  "checks": [
+    {
+      "coupled_mass": false,
+      "steps": 2000,
+      "alpha_per_s": 0.0,
+      "max_displacement_error": 1.816126590295508e-05,
+      "max_relative_energy_growth": 4.1228102072024537e-16,
+      "final_energy_fraction": 0.9999999999999994
+    },
+    {
+      "coupled_mass": false,
+      "steps": 500,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 0.0002888663129782948,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853693907348541
+    },
+    {
+      "coupled_mass": false,
+      "steps": 1000,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 7.221342269533859e-05,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853691041287553
+    },
+    {
+      "coupled_mass": false,
+      "steps": 2000,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 1.80531584171445e-05,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853690324622287
+    },
+    {
+      "coupled_mass": true,
+      "steps": 2000,
+      "alpha_per_s": 0.0,
+      "max_displacement_error": 1.8161265902927326e-05,
+      "max_relative_energy_growth": 6.342784934157621e-16,
+      "final_energy_fraction": 0.9999999999999992
+    },
+    {
+      "coupled_mass": true,
+      "steps": 500,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 0.0002888663129785862,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853693907348553
+    },
+    {
+      "coupled_mass": true,
+      "steps": 1000,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 7.22134226952692e-05,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853691041287552
+    },
+    {
+      "coupled_mass": true,
+      "steps": 2000,
+      "alpha_per_s": 736.9538719382094,
+      "max_displacement_error": 1.80531584171445e-05,
+      "max_relative_energy_growth": 0.0,
+      "final_energy_fraction": 0.9853690324622288
+    }
+  ],
+  "source_sha256": {
+    "traxis/gpu_enriched_verlet.py": "9125854afdbdede59e47a134c6734defc033c0b965eee0521a9ab48ab2da4f6f",
+    "traxis/damping.py": "befd844e19f6d41c71030fe9d6f09cb9545303287c54b2f51f626c6f9b10343d",
+    "configs/pzt/aluminum-damping-ono2022.json": "c8a7e822729e1fc73e62a75a51a99c4ae5338146a21148728543b1ba17aeaa33",
+    "examples/check_damped_verlet.py": "36d0ea6c16d37a0c5f1ca89491710ed96e274777d926528530618f677a41ad7e"
+  }
+}

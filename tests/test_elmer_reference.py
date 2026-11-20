@@ -83,6 +83,18 @@ class MatrixReaderTests(unittest.TestCase):
 
 
 class ExternalProcessTests(unittest.TestCase):
+    def test_monitoring_only_run_survives_missing_readings_and_large_log(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);log=root/'process.log'
+            command=[sys.executable,'-S','-c',
+                     "import time; print('x'*(4*1024**2+1),flush=True); time.sleep(.5)"]
+            guard=ResourceGuard(ResourceLimits(max_seconds=None),telemetry_errors_fatal=False)
+            with patch('traxis.resources.snapshot',side_effect=OSError('telemetry temporarily unavailable')):
+                with self.assertWarnsRegex(RuntimeWarning,'simulation continues'):
+                    result=run_monitored(command,root,os.environ.copy(),guard,log,max_log_mib=None)
+            self.assertEqual(result['exit_code'],0)
+            self.assertGreater(log.stat().st_size,4*1024**2)
+
     def test_time_guard_terminates_the_external_process(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "scope": "Real CUDA transient voltage vs independent coupled mechanical/electrical SciPy ODE; forced pulse and free decay, open/1 Mohm/1 kohm loads, coupled mass, temporal refinement",
+  "checks": [
+    {
+      "steps": 1000,
+      "resistance_ohm": null,
+      "relative_voltage_error": 7.496983244074773e-05,
+      "post_drive_max_relative_energy_growth": 0.0
+    },
+    {
+      "steps": 2000,
+      "resistance_ohm": null,
+      "relative_voltage_error": 1.885284361226258e-05,
+      "post_drive_max_relative_energy_growth": 0.0
+    },
+    {
+      "steps": 1000,
+      "resistance_ohm": 1000000.0,
+      "relative_voltage_error": 7.491774359131397e-05,
+      "post_drive_max_relative_energy_growth": 0.0
+    },
+    {
+      "steps": 2000,
+      "resistance_ohm": 1000000.0,
+      "relative_voltage_error": 1.883950717923799e-05,
+      "post_drive_max_relative_energy_growth": 0.0
+    },
+    {
+      "steps": 1000,
+      "resistance_ohm": 1000.0,
+      "relative_voltage_error": 3.407700702727112e-05,
+      "post_drive_max_relative_energy_growth": 0.0
+    },
+    {
+      "steps": 2000,
+      "resistance_ohm": 1000.0,
+      "relative_voltage_error": 8.571524740865754e-06,
+      "post_drive_max_relative_energy_growth": 0.0
+    }
+  ],
+  "source_sha256": {
+    "traxis/gpu_enriched_verlet.py": "bdd4f5738a502ba5d4f9b84a7091b48518c79d7fb9c4531bb6933ce447a4d480",
+    "traxis/pzt_body.py": "a885e3e1c112511733bb8a5b6e4da347901dcc98c49967e9a6fd75d06611b512",
+    "traxis/pzt_bond.py": "f34e3949b93c784d4bbf3014f57e887c8bd3258fec798dd2be37c4388c4f06e0",
+    "examples/check_loaded_pzt.py": "1d4ee45b176003d2bc79c0119def4643068f1f015c47a9b2761adcd1c30b2ea6"
+  }
+}

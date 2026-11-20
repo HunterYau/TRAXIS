@@ -5,6 +5,7 @@ import math
 import shutil
 import subprocess
 import time
+import warnings
 
 import psutil
 
@@ -15,18 +16,23 @@ class ResourceLimitError(RuntimeError):
 
 @dataclass(frozen=True)
 class ResourceLimits:
-    max_seconds: float = 60
-    max_rss_mib: float = 512
-    max_system_memory_percent: float = 89.9
-    min_available_mib: float = 768
-    max_gpu_memory_percent: float = 90
-    max_gpu_temperature_c: float = 80
-    max_cpu_temperature_c: float = 90
+    # None disables an individual stop while retaining telemetry.
+    max_seconds: float | None = 60
+    max_rss_mib: float | None = 512
+    max_system_memory_percent: float | None = 89.9
+    min_available_mib: float | None = 768
+    max_gpu_memory_percent: float | None = 90
+    max_gpu_temperature_c: float | None = 80
+    max_cpu_temperature_c: float | None = 90
 
     def __post_init__(self):
-        if any(not math.isfinite(v) or v <= 0 for v in asdict(self).values()):
-            raise ValueError("resource limits must be finite and positive")
-        if self.max_system_memory_percent > 100 or self.max_gpu_memory_percent > 100:
+        for name, value in asdict(self).items():
+            if value is None:
+                continue
+            if value is None or not math.isfinite(value) or value <= 0:
+                raise ValueError("resource limits must be finite and positive, or None to disable")
+        if (self.max_system_memory_percent is not None and self.max_system_memory_percent > 100
+                or self.max_gpu_memory_percent is not None and self.max_gpu_memory_percent > 100):
             raise ValueError("memory percentages cannot exceed 100")
 
 
@@ -65,8 +71,10 @@ class ResourceGuard:
     also required. GPU reads are throttled; this code never allocates GPU data.
     """
 
-    def __init__(self, limits: ResourceLimits | None = None):
+    def __init__(self, limits: ResourceLimits | None = None, *, telemetry_errors_fatal=True):
         self.limits = limits or ResourceLimits()
+        self.telemetry_errors_fatal = telemetry_errors_fatal
+        self.telemetry_error = None
         self.started = time.monotonic()
         self.last_check = -math.inf
         self.last_gpu_check = -math.inf
@@ -76,12 +84,24 @@ class ResourceGuard:
 
     def check(self, force: bool = False) -> None:
         elapsed = time.monotonic() - self.started
-        if elapsed > self.limits.max_seconds:
+        if self.limits.max_seconds is not None and elapsed > self.limits.max_seconds:
             raise ResourceLimitError("wall-time limit reached")
         if not force and elapsed - self.last_check < 0.25:
             return
         include_gpu = elapsed - self.last_gpu_check >= 2
-        sample = snapshot(include_gpu)
+        try:
+            sample = snapshot(include_gpu)
+        except (OSError, ValueError, RuntimeError, psutil.Error, subprocess.SubprocessError) as error:
+            if self.telemetry_errors_fatal:
+                raise
+            if self.telemetry_error is None:
+                warnings.warn(f"Resource reading unavailable; simulation continues: {error}", RuntimeWarning)
+            self.telemetry_error = str(error)
+            self.latest_sample = None
+            self.last_gpus = []
+            self.last_check = elapsed
+            return
+        self.telemetry_error = None
         if include_gpu:
             self.last_gpu_check = elapsed
             self.last_gpus = sample["gpus"]
@@ -94,14 +114,21 @@ class ResourceGuard:
 
     def enforce(self, sample: dict, gpus: list) -> None:
         limits = self.limits
-        checks = [(sample["process_rss_mib"] > limits.max_rss_mib, "process RAM"),
-                  (sample["system_memory_percent"] > limits.max_system_memory_percent, "system RAM"),
-                  (sample["available_mib"] < limits.min_available_mib, "available RAM")]
+        checks = []
+        if limits.max_rss_mib is not None:
+            checks.append((sample["process_rss_mib"] > limits.max_rss_mib, "process RAM"))
+        if limits.max_system_memory_percent is not None:
+            checks.append((sample["system_memory_percent"] > limits.max_system_memory_percent, "system RAM"))
+        if limits.min_available_mib is not None:
+            checks.append((sample["available_mib"] < limits.min_available_mib, "available RAM"))
         for gpu in gpus:
-            checks += [(gpu["used_mib"] / gpu["total_mib"] * 100 > limits.max_gpu_memory_percent, "GPU memory"),
-                       (gpu["temperature_c"] > limits.max_gpu_temperature_c, "GPU temperature")]
-        checks += [(t > limits.max_cpu_temperature_c, "CPU temperature")
-                   for t in sample["cpu_temperatures_c"] or []]
+            if limits.max_gpu_memory_percent is not None:
+                checks.append((gpu["used_mib"] / gpu["total_mib"] * 100 > limits.max_gpu_memory_percent, "GPU memory"))
+            if limits.max_gpu_temperature_c is not None:
+                checks.append((gpu["temperature_c"] > limits.max_gpu_temperature_c, "GPU temperature"))
+        if limits.max_cpu_temperature_c is not None:
+            checks += [(t > limits.max_cpu_temperature_c, "CPU temperature")
+                       for t in sample["cpu_temperatures_c"] or []]
         for exceeded, label in checks:
             if exceeded:
                 detail = (f" ({sample['process_rss_mib']:.1f} MiB > {limits.max_rss_mib:.1f} MiB)"
@@ -111,4 +138,5 @@ class ResourceGuard:
     def report(self) -> dict:
         return {"limits": asdict(self.limits), "samples": self.history,
                 "latest_sample": self.latest_sample,
+                "telemetry_error": self.telemetry_error,
                 "cpu_temperature_note": "null means no supported sensor; temperature was not verified"}

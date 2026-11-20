@@ -23,9 +23,11 @@ from traxis.pzt_receiver import DiskGeometry, disk_receiver
 from traxis.resources import ResourceLimits
 from traxis.storage import atomic_write, canonical_hash, sha256_file, write_json
 from traxis.elmer_reference import run_monitored
+from examples.plate_outputs import relocated
+from examples.output_locations import organized_output
 
 CONFIG = PROJECT/'configs/pzt/wandowski-2025-plate1.json'
-ROOT = PROJECT/'outputs/wandowski-pzt-plate1'
+ROOT = relocated(PROJECT/'outputs/wandowski-pzt-plate1')
 
 
 def configuration():
@@ -53,7 +55,7 @@ def measured_channels(row):
 
 def preflight():
     config = configuration()
-    if sha256_file(PROJECT/config['data_file']) != config['data_sha256']:
+    if sha256_file(organized_output(PROJECT/config['data_file'])) != config['data_sha256']:
         raise ValueError('reference dataset checksum mismatch')
     material = PiezoMaterial.from_profile(read_profile(PROJECT/config['material_profile']))
     cases = []

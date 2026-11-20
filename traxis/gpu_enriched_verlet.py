@@ -74,7 +74,7 @@ def tensor_patch_probe_set(patches, scalar_dofs):
 
 def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_displacement=None,
                           initial_velocity=None,output_stride=1,energy_stride=16,guard=None,
-                          progress=None,max_workspace_mib=512):
+                          progress=None,max_workspace_mib=512,mass_damping_per_s=0.,electrical_ports=()):
     """Run the requested interval in float64; never shorten it to fit a guard.
 
     Probes are compressed without dropping nonzero coefficients. Energy is
@@ -82,6 +82,11 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
     forced-interval energy is retained without asserting an exact work identity.
     """
     positive('explicit time step',dt_s)
+    if not math.isfinite(mass_damping_per_s) or mass_damping_per_s < 0:
+        raise ValueError('mass damping must be finite and nonnegative')
+    # Exact half-step of M v_dot = -alpha M v. This also works with the
+    # coupled consistent mass; scaling selected DOFs alone would not.
+    damping_half = math.exp(-mass_damping_per_s*dt_s/2)
     if (type(steps) is not int or not 1<=steps<=500000 or type(output_stride) is not int
             or not 1<=output_stride<=64 or steps%output_stride or type(energy_stride) is not int
             or not 1<=energy_stride<=1024 or (progress is not None and not callable(progress))):
@@ -105,6 +110,21 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
             or not math.isfinite(max_workspace_mib) or not 0<max_workspace_mib<=MAX_EXPLICIT_WORKSPACE_MIB):
         raise ValueError('explicit states need matching finite real mass/load/probe data')
     probe_count = len(indices) if isinstance(probes, SparseProbeSet) else len(probes)
+    # Each port must already contribute g*g'/C to system.stiffness, and its
+    # voltage probe must be g'/C. Free charge adds -g*q/C mechanical force.
+    ports=[]
+    for port in electrical_ports:
+        ids=np.asarray(port['indices']);g=np.asarray(port['coupling'])
+        c=port['capacitance_f'];r=port['resistance_ohm'];p=port['probe_index']
+        if (ids.ndim!=1 or g.shape!=ids.shape or not np.issubdtype(ids.dtype,np.integer)
+                or len(np.unique(ids))!=len(ids) or np.any(ids<0) or np.any(ids>=n)
+                or not np.isfinite(g).all() or not math.isfinite(c) or c<=0
+                or r is not None and (not math.isfinite(r) or r<=0)
+                or type(p) is not int or not 0<=p<probe_count):
+            raise ValueError('invalid coupled electrical port')
+        ports.append(dict(indices=ids,coupling=g,capacitance_f=c,resistance_ohm=r,probe_index=p))
+    if len({p['probe_index'] for p in ports})!=len(ports):
+        raise ValueError('electrical ports must have distinct voltage probes')
     samples = steps//output_stride+1
     energy_steps = np.r_[np.arange(0,steps+1,energy_stride),steps] if steps%energy_stride else np.arange(0,steps+1,energy_stride)
     if not isinstance(probes, SparseProbeSet):
@@ -163,6 +183,17 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         d_indices = cp.asarray(np.concatenate(indices) if starts[-1] else np.empty(0,dtype=np.int32))
         d_weights = cp.asarray(np.concatenate(weights) if starts[-1] else np.empty(0),dtype=cp.float64)
         traces = cp.empty((samples,probe_count),dtype=cp.float64)
+        for port in ports:
+            port['ids']=cp.asarray(port['indices']);port['g']=cp.asarray(port['coupling'])
+            port['q']=cp.zeros((),dtype=cp.float64)
+            port['decay']=1. if port['resistance_ohm'] is None else math.exp(-dt_s/(2*port['resistance_ohm']*port['capacitance_f']))
+        def relax_charge():
+            for port in ports:
+                strain=cp.sum(port['g']*u[port['ids']],dtype=cp.float64)
+                port['q']=(port['q']+strain)*port['decay']-strain
+        def charge_force(target):
+            for port in ports:
+                target[port['ids']]-=port['g']*port['q']/port['capacitance_f']
         sample_kernel = cp.RawKernel(PROBE_KERNEL,'sample_probes',options=('--std=c++11',))
         applications_before = storage.applications
         def action():
@@ -170,14 +201,21 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
             system.stiffness.applications += 1
         def sample(index):
             sample_kernel((1,),(64,),(d_starts,d_indices,d_weights,u,traces,np.int32(probe_count),np.int32(index)))
+            for port in ports:traces[index,port['probe_index']]+=port['q']/port['capacitance_f']
         def energy(index):
+            potential=cp.sum(u*ku,dtype=cp.float64)*.5
+            gradient=ku.copy() if ports else ku
+            for port in ports:
+                strain=cp.sum(port['g']*u[port['ids']],dtype=cp.float64)
+                potential+=(port['q']*strain+.5*port['q']**2)/port['capacitance_f']
+                gradient[port['ids']]+=port['g']*port['q']/port['capacitance_f']
             if mass_quadratic is None:
                 kinetic = cp.sum(device_mass*v*v, dtype=cp.float64)
-                correction = cp.sum(ku*ku/device_mass, dtype=cp.float64)
+                correction = cp.sum(gradient*gradient/device_mass, dtype=cp.float64)
             else:
                 kinetic = mass_quadratic(v)
-                correction = mass_quadratic(ku, inverse=True)
-            physical[index] = float(((kinetic+cp.sum(u*ku,dtype=cp.float64))*.5).item())
+                correction = mass_quadratic(gradient, inverse=True)
+            physical[index] = float((kinetic*.5+potential).item())
             modified[index] = physical[index]-dt_s**2/8*float(correction.item())
             if not math.isfinite(physical[index]) or not math.isfinite(modified[index]):
                 raise ArithmeticError('explicit GPU energy is nonfinite')
@@ -188,11 +226,21 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         energy(0)
         energy_index = 1
         for step in range(1,steps+1):
+            if ports:
+                relax_charge()
+                cp.subtract(amplitude((step-1)*dt_s)*device_load,ku,out=acceleration)
+                charge_force(acceleration);accelerate(acceleration)
+            if mass_damping_per_s:
+                v *= damping_half
             u += dt_s*v+.5*dt_s*dt_s*acceleration
             action()
             cp.subtract(amplitude(step*dt_s)*device_load,ku,out=next_a)
+            charge_force(next_a)
             accelerate(next_a)
             v += .5*dt_s*(acceleration+next_a)
+            if mass_damping_per_s:
+                v *= damping_half
+            relax_charge()
             acceleration,next_a = next_a,acceleration
             if step%output_stride==0:
                 sample(step//output_stride)
@@ -212,6 +260,10 @@ def gpu_explicit_simulate(system,steps,dt_s,probes,load,*,force=None,initial_dis
         if guard:
             guard.check(force=True)
         stats = dict(method='gpu_velocity_verlet',precision='float64',steps_completed=steps,
+            damping_model='mass proportional, Strang split' if mass_damping_per_s else 'none',
+            mass_damping_per_s=mass_damping_per_s,
+            electrical_ports=[dict(capacitance_f=p['capacitance_f'],resistance_ohm=p['resistance_ohm'],
+                final_free_charge_c=float(p['q'].item())) for p in ports],
             mass_model='diagonal' if inverse_mass is None else 'coupled consistent body mass',
             requested_steps=steps,duration_s=steps*dt_s,workspace_screen_mib=workspace_mib,
             probe_nonzero_coefficients=int(starts[-1]),stiffness_applications=storage.applications-applications_before,

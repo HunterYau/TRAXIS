@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "id": "wandowski-restored-ideal-properties-run-010",
+  "dataset": "https://zenodo.org/records/18955122",
+  "manuscript": "https://zenodo.org/records/18937842",
+  "published_paper": "https://doi.org/10.1088/1361-665X/ae0d1d",
+  "data_file": "outputs/experimental-validation-20261116/sources/Alu_1_2FBG_2PZT.mat",
+  "data_sha256": "128bf3c84c140147fa8332d94488b67c1e123828e9b1135b761cb8f547d158e6",
+  "material_profile": "configs/pzt/nce51-noliac-ver1404.json",
+  "frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000
+  ],
+  "excluded_frequency_hz": 300000,
+  "exclusion_reason": "Plate 1 ends at 250 kHz. Plate 2 includes 300 kHz but its additional setup description concentrates on replacement FBG sensors; do not silently mix specimens.",
+  "plate_m": [
+    1.0,
+    1.0,
+    0.001
+  ],
+  "host_material": {
+    "young_pa": 71000000000.0,
+    "poisson": 0.33,
+    "density_kg_m3": 2700.0
+  },
+  "alloy": "Not identified in source; not established as 6061-T6",
+  "actuator_center_xy_m": [
+    0.5,
+    0.5
+  ],
+  "receiver_center_xy_m": [
+    0.75,
+    0.5
+  ],
+  "disk_radius_m": 0.005,
+  "disk_thickness_m": 0.0005,
+  "experimental_channels_zero_based": {
+    "pzt_top": 2,
+    "pzt_bottom": 3
+  },
+  "num_cycles": 5,
+  "sample_rate_hz": 5000000,
+  "averages": 50,
+  "adhesive": "cyanoacrylate",
+  "equipment": {
+    "generator": "NI PXIe-5413",
+    "amplifier": "Krohn-Hite 7500",
+    "digitizer": "NI PXIe-5105"
+  },
+  "unknown": {
+    "adhesive_thickness_m": null,
+    "adhesive_elastic_properties": null,
+    "amplifier_transfer": null,
+    "scope_input_resistance_ohm": null,
+    "scope_and_cable_capacitance_f": null,
+    "poling_and_channel_signs": null,
+    "boundary_supports": null
+  },
+  "model_assumptions": {
+    "boundary": "free plate, zero damping",
+    "actuator": "resolved 3D nominal NCE51 body, full-face prescribed unit-peak reference voltage shaped by measured generator",
+    "receivers": "resolved 3D nominal NCE51 bodies with zero-free-charge ideal open ports; reciprocal mechanical backreaction",
+    "bond": "assumed perfect tie, not measured adhesive",
+    "omitted": [
+      "adhesive mechanics",
+      "wrap-around electrodes and solder/wire mass",
+      "instrument and cable transfer",
+      "damping and material tolerances"
+    ],
+    "body_mesh_status": "772 nodes, radial/angular/thickness checks pass exploratory readiness targets; not full plate waveform convergence"
+  },
+  "mesh": {
+    "cells": [
+      250,
+      250,
+      1
+    ],
+    "order": 5,
+    "duration_s": 0.00035,
+    "output_stride": 8,
+    "minimum_steps": 65536
+  },
+  "purpose": "Exploratory controlled PZT-body comparison using existing plate-1 measurements; not exact reconstruction or training acceptance",
+  "ready_for_training_data": false,
+  "auto_start": false,
+  "body": {
+    "sectors": 32,
+    "rings": 6,
+    "layers": 3,
+    "bond": "perfect"
+  },
+  "launch_ready": true,
+  "launch_holds": [],
+  "queue_policy": {
+    "order": "serial, next worker only after saved output and comparison verification",
+    "auto_start": false,
+    "per_experiment_files": [
+      "waveforms.npz",
+      "final-state.npz",
+      "comparison.json",
+      "result.json",
+      "status.json"
+    ],
+    "text_logs": [
+      "worker.log",
+      "queue.log",
+      "terminal-progress.txt"
+    ],
+    "comparison": "paired arrival-time error plus full-record normalized envelope-shape difference; lower is better; unresolved signals stay unresolved",
+    "summary_files": [
+      "all-results.json",
+      "all-results.txt",
+      "summaries/<frequency>khz.txt"
+    ]
+  },
+  "readiness_evidence": "docs/evidence/resolved-pzt-organized-output-readiness.json",
+  "readiness_sha256": "fe5baca5c4d24ed4569aa21ce92fd29ddb6a99a18a6be27956ea68f046590a24",
+  "cooling": {
+    "upper_c": 82.0,
+    "lower_c": 78.0
+  },
+  "resource_limits": {
+    "max_seconds": null,
+    "max_rss_mib": null,
+    "max_system_memory_percent": null,
+    "min_available_mib": null,
+    "max_gpu_memory_percent": null,
+    "max_gpu_temperature_c": null,
+    "max_cpu_temperature_c": null
+  },
+  "start_experiment": 1,
+  "restored_from": {
+    "prepared_receipt": "outputs/simulation-runs/run-007-wandowski-ideal-bond-150-250khz-continuation/prepared.json",
+    "sha256": "93d6a9c786a7c2e7047295b2917fbde7440e009289626caf4941cf234a990e15",
+    "scope": "Restore prior perfect-bond, ideal-open receiver, unit-peak drive, zero-damping physical settings. Keep current reporting and output organization."
+  },
+  "arrival_method": "theory_guided_adaptive_envelope_with_fixed_same_peak_fallback_v1"
+}

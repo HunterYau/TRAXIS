@@ -138,22 +138,43 @@ def validate_plan(plan, guard):
 
 class ThermalPause:
     """Pause host submission between synchronized batches; physical time stays fixed."""
-    def __init__(self, guard, upper, lower, *, sleep=time.sleep, clock=time.monotonic):
+    def __init__(self, guard, upper, lower, *, sleep=time.sleep, clock=time.monotonic,
+                 allow_missing=False):
         self.guard,self.upper,self.lower,self.sleep,self.clock = guard,upper,lower,sleep,clock
         self.events=[]; self.pause_seconds=0.
+        self.allow_missing=allow_missing; self.sensor_missing=False
 
     def temperature(self):
         if len(self.guard.last_gpus) != 1:
+            if self.allow_missing:
+                if not self.sensor_missing:
+                    print(json.dumps(dict(phase='temperature_unavailable',
+                        message='GPU temperature unavailable; retrying on subsequent resource readings')),flush=True)
+                self.sensor_missing=True
+                return None
             raise RuntimeError('embedded cooling needs the observed single GPU temperature sensor')
-        return self.guard.last_gpus[0]['temperature_c']
+        value=self.guard.last_gpus[0].get('temperature_c')
+        if self.allow_missing and (value is None or not math.isfinite(value)):
+            if not self.sensor_missing:
+                print(json.dumps(dict(phase='temperature_unavailable',
+                    message='GPU temperature unavailable; retrying on subsequent resource readings')),flush=True)
+            self.sensor_missing=True
+            return None
+        if self.sensor_missing:
+            print(json.dumps(dict(phase='temperature_recovered',temperature_c=value)),flush=True)
+            self.sensor_missing=False
+        return value
 
     def check(self, steps):
         temperature=self.temperature()
-        if temperature < self.upper:
+        if temperature is None or temperature < self.upper:
             return
         before=self.clock(); event=dict(steps_completed=steps,start_temperature_c=temperature)
         print(json.dumps(dict(phase='cooling',**event)),flush=True)
-        while self.temperature() > self.lower:
+        while True:
+            temperature=self.temperature()
+            if temperature is not None and temperature <= self.lower:
+                break
             self.sleep(.25); self.guard.check(force=True)
         event.update(pause_seconds=self.clock()-before,end_temperature_c=self.temperature())
         self.pause_seconds += event['pause_seconds']; self.events.append(event)

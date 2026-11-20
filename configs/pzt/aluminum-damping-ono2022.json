@@ -1,0 +1,18 @@
+{
+  "model": "narrowband_mass_proportional",
+  "material": "6061-T6 aluminum proxy; Wandowski alloy unidentified",
+  "source": "https://doi.org/10.3390/app12136735",
+  "source_table": "Table 1, G3b, bulk damping specimen 25.3 mm thick",
+  "bulk_measurements": {
+    "longitudinal": {"attenuation_db_per_m_per_mhz": 4.9, "speed_m_s": 6400.0},
+    "transverse": {"attenuation_db_per_m_per_mhz": 10.3, "speed_m_s": 3170.0}
+  },
+  "assumptions": [
+    "Weak-loss conversion of bulk attenuation slopes to dimensionless loss factors, then average the two.",
+    "Match this average loss factor at each burst center frequency with C=alpha*M.",
+    "Effective damping acts on the whole coupled assembly, not only aluminum degrees of freedom.",
+    "This is a narrowband approximation, not a broadband viscoelastic material or mode-specific Lamb attenuation model.",
+    "Published thick 6061-T6 specimen is not a measurement of the 1 mm Wandowski plate.",
+    "No glue, support, instrument or PZT-specific loss has been measured or fitted."
+  ]
+}

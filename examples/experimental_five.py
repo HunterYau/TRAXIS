@@ -31,9 +31,10 @@ from traxis.tensor_hex import line_rule
 from traxis.tensor_patches import _basis
 from examples.embedded_wave import ThermalPause
 from traxis.elmer_reference import run_monitored
+from examples.output_locations import organized_output
 
 PROJECT = Path(__file__).resolve().parents[1]
-ROOT = PROJECT/'outputs/experimental-validation-20261116'
+ROOT = organized_output(PROJECT/'outputs/experimental-validation-20261116')
 FREQUENCIES = (50000, 100000, 150000, 200000, 250000)
 MATERIAL = Material(young_pa=71e9, poisson=.33, density_kg_m3=2700.)
 PLATE = Plate(1., 1., .001)

@@ -1,0 +1,102 @@
+{
+  "completed": true,
+  "actual_steps": 128,
+  "assumed_setup": {
+    "specimen_calibrated": false,
+    "selection_policy": "Published analogous-test values and supported hardware settings, not fitted to received waveforms. Actual Wandowski settings unknown.",
+    "amplifier": {
+      "model": "Krohn-Hite 7500, assumed X10 fixed setting",
+      "gain_v_v": 10.0,
+      "delay_s": 2.7777777777777776e-07,
+      "source": "https://krohn-hite.com/wp-content/uploads/2025/08/7500_man.pdf",
+      "status": "Assumed X10 setting; approximate 0.278 us delay derived from manual trend of 100 degrees lag at 1 MHz. Not measured under the experiment load; flat amplitude response and ideal voltage source remain approximations. No amplitude or time fit."
+    },
+    "receiver": {
+      "resistance_ohm": 1000000.0,
+      "scope_capacitance_f": 5e-11,
+      "cable_capacitance_f_m": 9.35e-11,
+      "cable_length_m": 1.0,
+      "scope_source": "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/d70de596-1860-416b-9c51-d88ff65a9923/NI-PXIe-5105_datasheet.pdf",
+      "cable_source": "https://catalog.belden.com/techdata/en/9201_techdata.pdf",
+      "status": "Assume high-impedance digitizer mode and 1 m RG58-like cable. Equipment specifications are not proof of experiment settings or cable type/length."
+    },
+    "adhesive": {
+      "young_pa": 1000000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1100.0,
+      "thickness_m": 0.0001,
+      "source": "https://doi.org/10.3390/s24020450",
+      "status": "Analogous published cyanoacrylate bond model. Wandowski specifies cyanoacrylate but does not report these properties."
+    },
+    "uncertainty_scenarios_not_executed": {
+      "amplifier_gain_v_v": [
+        10.0,
+        100.0
+      ],
+      "cable_length_m": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "adhesive_thickness_m": [
+        2.5e-05,
+        5e-05,
+        0.0001
+      ]
+    },
+    "remaining_unknowns": [
+      "plate support/contact and actual alloy",
+      "actual amplifier setting, output impedance and phase response",
+      "actual cable, digitizer termination and filtering",
+      "glue loss, bond coverage, wrap-around electrodes and solder mass",
+      "physical sensor poling and channel polarity",
+      "specimen-specific temperature and material tolerances"
+    ]
+  },
+  "damping": {
+    "model": "narrowband_mass_proportional",
+    "reference_frequency_hz": 50000,
+    "loss_factor": 0.0011728985154967765,
+    "mass_damping_per_s": 368.4769359691047,
+    "assumed_material": "6061-T6 aluminum proxy; Wandowski alloy unidentified",
+    "specimen_calibrated": false,
+    "scope": "effective whole coupled assembly; not separate aluminum/PZT/glue loss tensors"
+  },
+  "simulation_statistics": {
+    "method": "gpu_velocity_verlet",
+    "precision": "float64",
+    "steps_completed": 128,
+    "damping_model": "mass proportional, Strang split",
+    "mass_damping_per_s": 368.4769359691047,
+    "electrical_ports": [
+      {
+        "capacitance_f": 1.2801107765959454e-09,
+        "resistance_ohm": 1000000.0,
+        "final_free_charge_c": -1.882550285119812e-185
+      },
+      {
+        "capacitance_f": 1.2801107765959454e-09,
+        "resistance_ohm": 1000000.0,
+        "final_free_charge_c": 2.0289856395881023e-186
+      }
+    ],
+    "mass_model": "coupled consistent body mass",
+    "requested_steps": 128,
+    "duration_s": 6.8359375e-07,
+    "workspace_screen_mib": 3439.6727905273438,
+    "probe_nonzero_coefficients": 6648,
+    "stiffness_applications": 129,
+    "per_step_host_state_transfers": 0,
+    "final_host_state_downloads": 2
+  },
+  "wall_seconds": 39.07732289994601,
+  "resource_peaks": {
+    "system_memory_percent": 77.3,
+    "process_rss_mib": 3478.30859375,
+    "gpu_memory_mib": 5961.0,
+    "gpu_temperature_c": 47.0,
+    "minimum_available_mib": 3684.96484375
+  },
+  "scope": "128 steps (0.684 us) on full geometry with finite bond, finite RC feedback, assumed X10 drive and estimated delay; no full-interval or physical accuracy claim",
+  "result_sha256": "999c58b7078ed242af452b36bee1daea36485889cabb5b9117954d20bb50e239"
+}

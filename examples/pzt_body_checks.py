@@ -18,7 +18,7 @@ from traxis.resources import ResourceGuard, ResourceLimits
 
 def check(resolution=(12,1,2)):
     project=Path(__file__).resolve().parents[1]
-    os.environ.setdefault('CUPY_CACHE_DIR',str(project/'outputs/pzt-body-check-cache'))
+    os.environ.setdefault('CUPY_CACHE_DIR',str(project/'outputs/pzt-development/pzt-body-check-cache'))
     guard=ResourceGuard(ResourceLimits(max_seconds=120,max_rss_mib=2048))
     layout=make_layout(Plate(.04,.04,.001),(2,2,1),2)
     material=PiezoMaterial.from_profile(read_profile(project/'configs/pzt/nce51-noliac-ver1404.json'))

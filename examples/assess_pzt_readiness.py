@@ -8,7 +8,7 @@ PROJECT=Path(__file__).resolve().parents[1]
 
 
 def assess():
-    root=PROJECT/'outputs/pzt-readiness'
+    root=PROJECT/'outputs/pzt-development/pzt-readiness'
     selected=json.loads((root/'mesh-32-6-3.json').read_text())
     grid=np.linspace(30000,350000,161)
     def response(d):return np.array(d['attached_response_real'])+1j*np.array(d['attached_response_imag'])

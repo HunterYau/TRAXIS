@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from examples.pzt_terminal import progress_state, resource_line, watch,result_lines
+from examples.pzt_terminal import progress_state, resource_line, watch,result_lines, export_queue_results
 
 
 class TextProgressTests(unittest.TestCase):
@@ -84,6 +84,35 @@ class TextProgressTests(unittest.TestCase):
         lines='\n'.join(result_lines(50000,{'completed':True,'smoke_test':True},self.root))
         self.assertIn('Short setup check: PASSED',lines)
         self.assertNotIn('50 kHz: COMPLETED',lines)
+
+    def test_collective_export_preserves_uncertainty_and_refreshes_without_duplicates(self):
+        first = self.root/'50khz/native'; first.mkdir(parents=True)
+        saved = json.dumps(dict(completed=True, wall_seconds=70, comparison={
+            'fast_status':'exploratory_timing', 'fast_arrival_error_percent':2.,
+            'slow_status':'unresolved_arrival', 'slow_arrival_error_percent':None}))
+        (first/'result.json').write_text(saved)
+        path = export_queue_results(self.root)
+        self.assertIn('100 kHz: No saved result yet.', path.read_text())
+        second = self.root/'100khz/native'; second.mkdir(parents=True)
+        (second/'result.json').write_text(json.dumps(dict(
+            completed=False, wall_seconds=5, error='fixture integration failure')))
+        export_queue_results(self.root)
+        text = path.read_text()
+        self.assertEqual(text.count('50 kHz: COMPLETED'), 1)
+        self.assertIn('S0 wave arrival error: 2.00%', text)
+        self.assertIn('A0 wave arrival error: unresolved (unresolved_arrival)', text)
+        self.assertIn('fixture integration failure', text)
+        self.assertIn('Completed: 1/2 | failed/incomplete: 1 | awaiting results: 0', text)
+        self.assertIn('Total recorded experiment time: 00:01:15', text)
+        self.assertNotIn('No saved result yet', text)
+        self.assertEqual((first/'result.json').read_text(), saved)
+
+    def test_collective_export_reports_worker_exit_without_saved_result(self):
+        trial = self.root/'50khz'; trial.mkdir()
+        (trial/'launcher.json').write_text('{"exit_code":1}')
+        text = export_queue_results(self.root).read_text()
+        self.assertIn('50 kHz: FAILED | worker exit code 1', text)
+        self.assertIn('Completed: 0/2 | failed/incomplete: 1 | awaiting results: 1', text)
 
     def test_gpu_readings_are_labeled_machine_wide(self):
         import subprocess

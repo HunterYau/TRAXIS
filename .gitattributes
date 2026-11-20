@@ -4,3 +4,7 @@
 *.txt text eol=lf
 *.toml text eol=lf
 *.json text eol=lf
+
+# Frozen scientific configurations/evidence are verified by byte-level SHA256.
+/configs/pzt/*.json -text
+/docs/evidence/*.json -text

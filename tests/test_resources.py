@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import fields
 from unittest.mock import patch
 
 from traxis.resources import ResourceGuard, ResourceLimitError, ResourceLimits
@@ -53,6 +54,54 @@ class ResourceTests(unittest.TestCase):
     def test_invalid_limits(self):
         with self.assertRaises(ValueError):
             ResourceLimits(max_seconds=float("inf"))
+
+    def test_unlimited_ram_keeps_telemetry_and_non_ram_stops(self):
+        limits = ResourceLimits(max_rss_mib=None, max_system_memory_percent=None,
+                                min_available_mib=None)
+        guard = ResourceGuard(limits)
+        sample = {**self.sample, 'process_rss_mib': 65536,
+                  'system_memory_percent': 100., 'available_mib': 0.}
+        with patch('traxis.resources.snapshot', return_value=sample.copy()):
+            guard.check(force=True)
+        self.assertEqual(guard.report()['latest_sample']['system_memory_percent'], 100.)
+        self.assertIsNone(guard.report()['limits']['max_rss_mib'])
+        with self.assertRaisesRegex(ResourceLimitError, 'GPU memory'):
+            guard.enforce(sample, [{'used_mib': 95, 'total_mib': 100, 'temperature_c': 40}])
+        with self.assertRaisesRegex(ResourceLimitError, 'GPU temperature'):
+            guard.enforce(sample, [{'used_mib': 20, 'total_mib': 100, 'temperature_c': 85}])
+        with self.assertRaisesRegex(ResourceLimitError, 'CPU temperature'):
+            guard.enforce({**sample, 'cpu_temperatures_c': [95]}, [])
+        guard.started -= 61
+        with self.assertRaisesRegex(ResourceLimitError, 'wall-time'):
+            guard.check(force=True)
+
+    def test_all_resource_stops_can_be_disabled_without_losing_telemetry(self):
+        limits=ResourceLimits(**{field.name:None for field in fields(ResourceLimits)})
+        guard=ResourceGuard(limits)
+        guard.started-=1e9
+        sample={**self.sample,'process_rss_mib':65536,'system_memory_percent':100.,
+                'available_mib':0.,'cpu_temperatures_c':[100.],
+                'gpus':[{'used_mib':100,'total_mib':100,'temperature_c':100.}]}
+        with patch('traxis.resources.snapshot',return_value=sample):
+            guard.check(force=True)
+        self.assertEqual(guard.latest_sample['gpus'][0]['temperature_c'],100.)
+        self.assertTrue(all(v is None for v in guard.report()['limits'].values()))
+
+    def test_nonfatal_telemetry_failure_recovers_on_next_reading(self):
+        guard=ResourceGuard(telemetry_errors_fatal=False)
+        with patch('traxis.resources.snapshot',side_effect=[OSError('sensor unavailable'),self.sample.copy()]):
+            with self.assertWarnsRegex(RuntimeWarning,'simulation continues'):
+                guard.check(force=True)
+            self.assertIsNone(guard.latest_sample)
+            self.assertEqual(guard.last_gpus,[])
+            self.assertEqual(guard.telemetry_error,'sensor unavailable')
+            guard.check(force=True)
+        self.assertIsNone(guard.telemetry_error)
+        self.assertEqual(guard.latest_sample['system_memory_percent'],50)
+
+    def test_telemetry_failure_still_propagates_by_default(self):
+        with patch('traxis.resources.snapshot',side_effect=OSError('sensor unavailable')):
+            with self.assertRaises(OSError):ResourceGuard().check(force=True)
 
     def test_process_memory_stop_reports_measurement_and_limit(self):
         guard = ResourceGuard(ResourceLimits(max_rss_mib=50))
