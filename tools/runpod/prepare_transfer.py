@@ -73,6 +73,20 @@ def collect():
             for name in ('plan.json', 'status.json', 'findings.json', 'findings.txt',
                          'experimental-results.txt', 'frozen-source.zip'):
                 selected[root / name] = 'prepared-unstarted-study'
+    if (PROJECT / 'examples/pzt_mor_study.py').exists():
+        from examples import pzt_mor_study as mor
+        root = PROJECT / mor.STUDY
+        plan = mor.load_plan(root)
+        if json.loads((root / 'status.json').read_text())['status'] != 'prepared':
+            raise ValueError('MOR transfer requires the unstarted prepared schedule')
+        for name in ('plan.json', 'status.json', 'findings.json', 'findings.txt', 'frozen-source.zip'):
+            selected[root / name] = 'prepared-unstarted-mor-study'
+        reference = PROJECT / mor.REFERENCE
+        selected[reference / 'download-manifest.json'] = 'verified-full-order-mor-reference'
+        # Explicit scientific manifest only: never include deployment controls,
+        # encrypted account credentials, SSH material, or unrelated output files.
+        for name in plan['reference']['manifest']:
+            selected[reference / name] = 'verified-full-order-mor-reference'
     for root_name in REFERENCE_DIRS:
         root = PROJECT / root_name
         if not root.is_dir():

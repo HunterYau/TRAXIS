@@ -37,6 +37,10 @@ def main():
         for name in ('runpod-broadband-benchmark', 'runpod-broadband-convergence'):
             load_plan(PROJECT / 'outputs/simulation-runs' / name)
         print('PASS: both unstarted broadband/direct schedules match the transferred scientific sources.')
+    if (PROJECT / 'examples/pzt_mor_study.py').exists():
+        from examples import pzt_mor_study as mor
+        mor.load_plan(PROJECT / mor.STUDY)
+        print('PASS: unstarted MOR schedule and all saved full-order reference checksums.')
     print(f'PASS: {len(manifest["files"])} file checksums, scientific preflight, and five measured input records.')
     if args.gpu:
         import cupy as cp
@@ -48,6 +52,21 @@ def main():
         cp.cuda.Device().synchronize()
         np.testing.assert_array_equal(cp.asnumpy(y), [1., 4., 9., 16.])
         print('PASS: FP64 CUDA kernel; CuPy', cp.__version__)
+        if (PROJECT / 'examples/pzt_mor_study.py').exists():
+            # Tiny library smoke check, not a plate simulation or a ROM build.
+            import cupyx
+            matrix = cp.asarray([[3., 1.], [0., 2.], [1., -.5]], dtype=cp.float64)
+            with cupyx.errstate(linalg='raise'):
+                u, s, vt = cp.linalg.svd(matrix, full_matrices=False)
+            cp.cuda.Device().synchronize()
+            np.testing.assert_allclose(cp.asnumpy((u * s) @ vt), cp.asnumpy(matrix), atol=1e-12)
+            from examples.pzt_era import fit_era, reduced_impulse
+            t = np.arange(65) * .01
+            h = np.zeros((65, 2)); h[2:] = .98**np.arange(63)[:, None] * [[1., .7]]
+            model, _ = fit_era(t, h, 4, backend='cupy')
+            rebuilt, _ = reduced_impulse(model, 1, len(t))
+            np.testing.assert_allclose(rebuilt, h, atol=1e-11)
+            print('PASS: tiny FP64 cuSOLVER SVD and one-state ERA recovery; no full-size MOR computation.')
     print('No wave simulation started.')
 
 
