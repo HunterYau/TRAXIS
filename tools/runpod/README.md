@@ -4,6 +4,12 @@ This directory prepares a copy of TRAXIS without changing simulator code, physic
 settings, meshes, time steps, sampling, precision, or comparison methods. It does
 not create a pod, upload files, or automatically start a simulation.
 
+On `research/broadband-comparison`, the bundle also contains the new, separate
+direct/broadband workflow and its two prepared schedules. See
+[the study guide](../../docs/broadband-comparison.md) before choosing which one to
+run. The original direct drivers remain available. The earlier `transfer-001`
+bundle remains unchanged; use the new broadband bundle for the new workflow.
+
 ## Local snapshot
 
 From the project root on this Windows computer:
@@ -57,10 +63,10 @@ The production five-frequency queue is `examples.resolved_pzt_queue`. The mesh/t
 PZT audit is `examples.pzt_convergence`. The corrected continuous-source controlled
 trial is `examples.pzt_analytic_trial`. These are different experiments.
 
-**The continuous-source fix is currently in the controlled trial only.** Production
-and convergence drivers still use the previous linearly interpolated source.
-Broadband simulation has not been implemented. This preparation does not change
-those facts or silently promote a different physics/excitation configuration.
+The old production and convergence drivers still use the previous linearly
+interpolated source. The controlled trial and the new direct/broadband A/B study
+use the verified analytic source. This preparation keeps the original drivers
+intact and does not silently promote the broadband method to production.
 
 Historical plans and ownership receipts are copied as references only: they retain
 Windows paths, old process identifiers, and original checksum provenance. Do not

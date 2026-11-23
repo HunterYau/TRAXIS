@@ -32,6 +32,11 @@ def main():
         row = record(frequency)
         drive = np.asarray(row['nifgen_avg_waveform_ch1'])
         analytic_source(frequency, row['numCycles'], np.arange(len(drive)) / row['sampleRate'], drive)
+    if (PROJECT / 'examples/pzt_broadband_study.py').exists():
+        from examples.pzt_broadband_study import load_plan
+        for name in ('runpod-broadband-benchmark', 'runpod-broadband-convergence'):
+            load_plan(PROJECT / 'outputs/simulation-runs' / name)
+        print('PASS: both unstarted broadband/direct schedules match the transferred scientific sources.')
     print(f'PASS: {len(manifest["files"])} file checksums, scientific preflight, and five measured input records.')
     if args.gpu:
         import cupy as cp

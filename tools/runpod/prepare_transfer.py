@@ -18,6 +18,10 @@ REFERENCE_DIRS = (
     'outputs/result-analyses',
 )
 REFERENCE_SUFFIXES = {'.json', '.txt', '.md', '.png', '.csv'}
+PREPARED_STUDIES = (
+    'outputs/simulation-runs/runpod-broadband-benchmark',
+    'outputs/simulation-runs/runpod-broadband-convergence',
+)
 FORBIDDEN_PARTS = {'.git', '.venv', '__pycache__', '.ssh', '.codex', '.agents',
                    '.aws', 'cache', 'previous-attempts'}
 
@@ -59,6 +63,16 @@ def collect():
                 PROJECT / 'outputs/organization.json']
     for path in required:
         selected[path] = 'required-input'
+    if (PROJECT / 'examples/pzt_broadband_study.py').exists():
+        from examples.pzt_broadband_study import load_plan
+        for name in PREPARED_STUDIES:
+            root = PROJECT / name
+            load_plan(root)
+            if json.loads((root / 'status.json').read_text())['status'] != 'prepared':
+                raise ValueError('This transfer expects an unstarted study: ' + name)
+            for name in ('plan.json', 'status.json', 'findings.json', 'findings.txt',
+                         'experimental-results.txt', 'frozen-source.zip'):
+                selected[root / name] = 'prepared-unstarted-study'
     for root_name in REFERENCE_DIRS:
         root = PROJECT / root_name
         if not root.is_dir():
@@ -105,7 +119,8 @@ def main():
         note='Historical plans keep original Windows paths and ownership receipts. Do not resume them on Linux. '
              'Prepare a fresh study after selecting and approving the intended experiments. '
              'The analytic source is implemented only in the controlled trial; production/convergence defaults '
-             'still use linear interpolation. No simulation or physics code was changed for this transfer.')
+             'still use linear interpolation. The optional broadband comparison uses matched analytic sources '
+             'in both methods and leaves the original solver unchanged; see docs/broadband-comparison.md.')
     payload = (json.dumps(manifest, indent=2) + '\n').encode()
     destination.mkdir(parents=True)
     archive_path = destination / 'traxis-transfer.tar.gz'
