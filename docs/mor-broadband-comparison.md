@@ -138,7 +138,7 @@ validation remain separate tasks.
 
 ## Verification and history
 
-**32 CPU tests passed:** nine new matrix-free checks, fourteen existing ERA/
+**33 CPU tests passed:** ten matrix-free checks, fourteen existing ERA/
 scheduler checks, and nine existing broadband checks. New coverage includes
 forward/transpose FFT products against explicitly formed tiny matrices,
 unequal dimensions and block boundaries, agreement with dense ERA at the same
@@ -152,3 +152,26 @@ and failed at the legacy large-matrix SVD call. Its partial results were
 downloaded to `outputs/simulation-runs/runpod-h200-nvl-mor-001`, then the pod
 stopped automatically. The unrun 64-bit dense retry and its source snapshot are
 also retained. The matrix-free plan has a fresh folder and source snapshot.
+
+### Completed matrix-free trial and code review
+
+The approved H200 trial completed its 2048-state build in 321.10 seconds. Its
+SVD residual was 3.94e-12 relative to the largest singular value and its
+orthogonality error was 6.41e-12, both within the declared checks. However, all
+seven retained orders (32 through 2048) failed the pole-growth screen. No receiver
+waveform comparison ran, no waveform error percentage is available, and the
+method did not pass. The 300 kHz full-order broadband reference completed.
+All 55 downloaded artifacts were reverified, and the pod stopped automatically.
+
+The additional independent review uses SciPy dlsim on a 16-state nonnormal system
+with nearly cancelling receivers and six drives. Its largest measured channel
+error was 4.15e-7 percent. Together with 33 passing CPU tests, this supports the
+reviewed algebra and implementation; it does not make the rejected plate models
+valid. No formula/indexing bug was found in the reviewed scope. Finite-record
+ERA truncation does not guarantee stable models for a lossless plate. A
+stability-preserving strategy or further diagnosis is needed before another
+accuracy claim; clipping poles or adding artificial damping would change the
+model and must not be used to disguise this outcome.
+
+Review details: `outputs/result-analyses/mor-code-review-20261123/review.json`.
+Completed trial: `outputs/simulation-runs/runpod-h200-nvl-mor-003`.

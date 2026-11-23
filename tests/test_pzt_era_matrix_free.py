@@ -3,6 +3,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 import numpy as np
+from scipy.signal import dlsim
 
 from examples.pzt_era import hankel, fit_era as dense_era, reduced_impulse
 from examples.pzt_era_matrix_free import HankelOperator, frobenius_norm, fit_era, memory_estimate
@@ -12,6 +13,31 @@ from tests.test_pzt_broadband import simulate
 
 
 class MatrixFreeEraTests(TestCase):
+    def test_independent_dlsim_nonnormal_modes_and_nearly_cancelling_receivers(self):
+        # More modes than the original four-state fixture; an independent
+        # SciPy state-space solver checks input timing as well as waveforms.
+        rng = np.random.default_rng(90210)
+        a = np.zeros((16, 16))
+        for k, angle in enumerate(np.linspace(.09, 2.4, 8)):
+            rho = rng.uniform(.94, .999)
+            a[2*k:2*k+2, 2*k:2*k+2] = rho * np.array(
+                [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
+        transform = np.eye(16) + np.triu(rng.normal(scale=.12, size=(16, 16)), 1)
+        a = transform @ a @ np.linalg.inv(transform)
+        b, top = rng.normal(size=(16, 1)), rng.normal(size=16)
+        c = 1e-10 * np.vstack([top, top + 1e-5 * rng.normal(size=16)])
+        system = (a, b, c, np.zeros((2, 1)), .001)
+        t = np.arange(257) * .001
+        impulse = np.zeros(len(t)); impulse[1] = 1.
+        _, h, _ = dlsim(system, impulse)
+        model, _ = fit_era(t, h, 16, backend='numpy')
+        reduced, _ = reduced_impulse(model, 16, len(t))
+        for frequency in (5., 10., 20., 40., 80., 120.):
+            drive = np.sin(2 * np.pi * frequency * t) * np.sin(np.pi * t / t[-1])**2
+            _, expected, _ = dlsim(system, drive)
+            score = paired_metrics(expected, reconstruct(reduced, drive))
+            self.assertTrue(within_target(score, .0001), score)
+
     def test_scheduler_uses_matrix_free_builder_and_original_accuracy_target(self):
         from examples import pzt_mor_study as study
         self.assertIs(study.fit_era, fit_era)
