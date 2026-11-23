@@ -94,9 +94,8 @@ def fit_era(time_s, voltage, max_order, *, rows=None, columns=None, backend='cup
         del host
     note('exact_svd_started', shape=list(matrix.shape), maximum_order=max_order)
     if backend == 'cupy':
-        import cupyx
-        with cupyx.errstate(linalg='raise'):
-            u, singular, vt = xp.linalg.svd(matrix, full_matrices=False)
+        from examples.pzt_era_cuda import exact_svd
+        u, singular, vt = exact_svd(matrix, event=event)
         xp.cuda.get_current_stream().synchronize()
         spectrum = xp.asnumpy(singular)
     else:
@@ -135,6 +134,7 @@ def fit_era(time_s, voltage, max_order, *, rows=None, columns=None, backend='cup
     if not all(np.isfinite(value).all() for value in (a, b, c)):
         raise ArithmeticError('Nonfinite reduced realization')
     diagnostic = dict(method='NASA ERA, exact full-record FP64 SVD', backend=backend,
+        svd_driver='cusolverDnXgesvd, 64-bit dimensions and byte workspaces' if backend == 'cupy' else 'numpy.linalg.svd',
         requested_maximum_order=max_order, available_order=available, numerical_rank=numerical_rank,
         singular_value_cutoff=float(cutoff), block_rows=rows, block_columns=columns,
         internal_dt_s=dt, build_seconds=time.perf_counter() - started,

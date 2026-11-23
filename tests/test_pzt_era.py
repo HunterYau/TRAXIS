@@ -1,11 +1,13 @@
 """Tiny CPU verification only. No real plate simulation, GPU work, or cloud calls."""
 import io
+import ctypes
 import json
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+from unittest.mock import MagicMock
 
 import numpy as np
 
@@ -37,6 +39,16 @@ def fixture():
 
 
 class EraMathTests(unittest.TestCase):
+    def test_cuda_api_dimensions_and_workspace_sizes_are_64bit(self):
+        from examples.pzt_era_cuda import bind
+        library = bind(MagicMock())
+        for name in ('cusolverDnXgesvd_bufferSize', 'cusolverDnXgesvd'):
+            arguments = getattr(library, name).argtypes
+            for position in (4, 5, 8, 13, 16):
+                self.assertIs(arguments[position], ctypes.c_int64)
+        self.assertIs(library.cusolverDnXgesvd.argtypes[19], ctypes.c_size_t)
+        self.assertIs(library.cusolverDnXgesvd.argtypes[21], ctypes.c_size_t)
+
     def test_block_hankel_interleaving_and_shift(self):
         data = np.column_stack([np.arange(7), 10 + np.arange(7)])
         np.testing.assert_array_equal(hankel(data, 2, 3),

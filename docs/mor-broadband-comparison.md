@@ -112,7 +112,7 @@ fresh, controlled same-hardware benchmark. No speedup is promised.
 
 ## Preparation, transfer, and later launch
 
-The prepared study lives in `outputs/simulation-runs/runpod-mor-comparison`.
+The prepared study lives in `outputs/simulation-runs/runpod-mor-comparison-v2`.
 `--prepare` writes the schedule, source snapshot, status and pending findings.
 It performs no SVD, waveform reconstruction, reduced propagation, plate solve,
 pod creation, or upload. `--assess` only checks and summarizes saved results.
@@ -147,7 +147,20 @@ Hankel indexing, unstable/invalid inputs, serial resume, output checksums, and
 prepare-only behavior. It does not establish full-plate MOR accuracy or GPU SVD
 performance. All full-size MOR computations and simulations remain unstarted.
 
-Validation on 2026-11-23: **13 new MOR tests and 9 existing broadband tests
+Validation on 2026-11-23: **14 new MOR tests and 9 existing broadband tests
 passed** on CPU. Both previous transfer archive SHA256 values and all 193
-previously packaged physics/example files were checked unchanged. GPU library
-and full-size accuracy checks remain pending the later approved Runpod run.
+previously packaged physics/example files were checked unchanged.
+
+The first approved H200 run completed the full-order 300 kHz reconstruction and
+passed the tiny GPU SVD/ERA checks, but the legacy CuPy `dgesvd_bufferSize` rejected
+the full Hankel matrix with `CUSOLVER_STATUS_INVALID_VALUE`. The saved failure
+and partial results are in `outputs/simulation-runs/runpod-h200-nvl-mor-001`.
+They were downloaded and the pod stopped automatically.
+
+The corrected implementation calls NVIDIA's exact FP64 **cusolverDnXgesvd** API
+with explicit 64-bit dimensions and byte-sized workspaces, following the
+[CUDA 12.9 API documentation](https://docs.nvidia.com/cuda/archive/12.9.1/cusolver/index.html).
+It checks the reported device and host workspace sizes and the solver's return
+status. It does not change timestep, sampling, rank schedule, physics, or precision.
+The new frozen study has a `-v2` folder. The first run and its source snapshot are
+retained. Full-size MOR accuracy has not yet been established.

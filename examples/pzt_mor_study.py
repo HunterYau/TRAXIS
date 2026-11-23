@@ -22,7 +22,7 @@ from examples.pzt_era import kernel_data, dimensions, fit_era, reduced_impulse
 from traxis.storage import write_json, atomic_write, sha256_file
 
 REFERENCE = Path('outputs/simulation-runs/runpod-h200-nvl-benchmark-001')
-STUDY = Path('outputs/simulation-runs/runpod-mor-comparison')
+STUDY = Path('outputs/simulation-runs/runpod-mor-comparison-v2')
 FREQUENCIES = [50000, 100000, 150000, 200000, 250000, 300000]
 ORDERS = [32, 64, 128, 256, 512, 1024, 2048]
 DT = .00035 / 65536
@@ -35,7 +35,7 @@ def relative(path):
 
 
 def sources():
-    names = ('examples/pzt_mor_study.py', 'examples/pzt_era.py', 'examples/pzt_broadband.py',
+    names = ('examples/pzt_mor_study.py', 'examples/pzt_era.py', 'examples/pzt_era_cuda.py', 'examples/pzt_broadband.py',
              'examples/pzt_broadband_study.py', 'examples/pzt_analytic_source.py',
              'examples/pzt_convergence.py')
     return {name: sha256_file(PROJECT / name) for name in names}

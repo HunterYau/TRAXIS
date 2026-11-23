@@ -54,10 +54,9 @@ def main():
         print('PASS: FP64 CUDA kernel; CuPy', cp.__version__)
         if (PROJECT / 'examples/pzt_mor_study.py').exists():
             # Tiny library smoke check, not a plate simulation or a ROM build.
-            import cupyx
+            from examples.pzt_era_cuda import exact_svd
             matrix = cp.asarray([[3., 1.], [0., 2.], [1., -.5]], dtype=cp.float64)
-            with cupyx.errstate(linalg='raise'):
-                u, s, vt = cp.linalg.svd(matrix, full_matrices=False)
+            u, s, vt = exact_svd(matrix)
             cp.cuda.Device().synchronize()
             np.testing.assert_allclose(cp.asnumpy((u * s) @ vt), cp.asnumpy(matrix), atol=1e-12)
             from examples.pzt_era import fit_era, reduced_impulse
