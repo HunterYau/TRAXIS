@@ -125,7 +125,15 @@ def result_lines(frequency, result, directory):
             for label in ('fast','slow'):
                 value=comparison.get(label+'_arrival_error_percent')
                 status=comparison.get(label+'_status','unknown')
-                value=f'{value:.2f}%' if value is not None else f'unresolved ({status})'
+                if value is not None:
+                    value=f'{value:.2f}%'
+                else:
+                    candidate=comparison.get(label+'_details',{}).get('raw_candidate_error_percent')
+                    if label=='slow' and status!='no_signal' and candidate is not None and math.isfinite(candidate):
+                        value=(f'{candidate:.2f}% (candidate only; may be inaccurate: '
+                               f'A0 could not be identified reliably; {status})')
+                    else:
+                        value=f'unresolved ({status})'
                 mode='S0' if label=='fast' else 'A0'
                 lines.append(f'  {mode} wave arrival error: {value} | lower is better')
                 method=comparison.get(label+'_arrival_method')
@@ -153,6 +161,13 @@ def result_lines(frequency, result, directory):
                 lines.append(f'  {channel} receiver raw voltage difference: {text}; RMSE {metrics["rmse_v"]:.6g} V')
             if comparison.get('waveform_channels'):
                 lines.append('  Raw voltage differences include unmatched drive/load. Wiggles use the full shared interval without fitted alignment.')
+            sampled=comparison.get('sampling_band_comparison')
+            if sampled:
+                for mode,values in sampled['channels'].items():
+                    difference=values['normalized_wiggle_difference_percent']
+                    text=f'{difference:.2f}%' if difference is not None else 'undefined'
+                    lines.append(f'  {mode} wiggle difference, anti-aliased 5 MHz band: {text}')
+                lines.append('  Common-band sampling is not a calibrated scope model. Earlier point-sampled metrics may include aliasing.')
             lines.append('  Shape comparison normalizes amplitude; these are not overall accuracy percentages.')
         else:
             for name, value in comparison.items():

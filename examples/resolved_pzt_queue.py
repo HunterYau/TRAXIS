@@ -21,6 +21,7 @@ from examples.pzt_terminal import result_lines, export_queue_results
 from examples.plate_outputs import (CURRENT_RUN, result_directory, read_saved, text_file,
     queue_lock, owner_alive, process_owner, trial_status, archive_attempt)
 from examples.output_locations import organized_output
+from examples.pzt_sampling import antialiased_samples
 from traxis.config import Material, Plate
 from traxis.damping import damping_parameters
 from traxis.arrival import adaptive_packet
@@ -84,6 +85,7 @@ def preflight():
     files.append(PROJECT/'examples/pzt_terminal.py')
     files.append(PROJECT/'examples/plate_outputs.py')
     files.append(PROJECT/'examples/output_locations.py')
+    files.append(PROJECT/'examples/pzt_sampling.py')
     if config.get('restored_from'):
         receipt=PROJECT/config['restored_from']['prepared_receipt']
         if sha256_file(receipt)!=config['restored_from']['sha256']:
@@ -201,6 +203,19 @@ def compare(time_s,voltage,experimental,frequency,sample_rate,*,config=None):
     real-=real[grid<20e-6].mean(axis=0);sim-=sim[grid<20e-6].mean(axis=0)
     result['waveform_channels']={name:waveform_metrics(real[:,j],sim[:,j])
                                  for j,name in enumerate(('top','bottom'))}
+    band_real=antialiased_samples(measured_time,experimental,grid,sample_rate)
+    band_sim=antialiased_samples(time_s,voltage,grid,sample_rate)
+    band_real-=band_real[grid<20e-6].mean(axis=0)
+    band_sim-=band_sim[grid<20e-6].mean(axis=0)
+    sampled=dict(method='Anti-aliased resampling before comparison on the common 5 MHz grid',
+        source='SciPy polyphase FIR, Kaiser beta=10; zero-padded edges',
+        limits='Defined common-band comparison, not a calibrated NI filter. Raw legacy metrics and full-band numerical results are retained.',channels={})
+    for name,sign in [('S0-related',1),('A0-related',-1)]:
+        r=band_real[:,0]+sign*band_real[:,1];s=band_sim[:,0]+sign*band_sim[:,1]
+        sampled['channels'][name]=waveform_metrics(r,s)
+        sampled['channels'][name]['envelope_pearson_r']=waveform_metrics(
+            abs(hilbert(r,8192)[:len(r)]),abs(hilbert(s,8192)[:len(s)]))['correlation']
+    result['sampling_band_comparison']=sampled
     geometry={}
     if config is not None:
         source=np.asarray(config['actuator_center_xy_m']);receiver=np.asarray(config['receiver_center_xy_m'])

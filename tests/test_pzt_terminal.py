@@ -107,6 +107,26 @@ class TextProgressTests(unittest.TestCase):
         self.assertNotIn('No saved result yet', text)
         self.assertEqual((first/'result.json').read_text(), saved)
 
+    def test_uncertain_a0_candidate_is_printed_and_exported_with_warning(self):
+        for status in ('unresolved_arrival', 'above_reported_A0_detection_range'):
+            with self.subTest(status=status):
+                trial = self.root/'50khz'
+                trial.mkdir(exist_ok=True)
+                result = dict(completed=True, comparison={
+                    'fast_status':'exploratory_timing', 'fast_arrival_error_percent':2.,
+                    'slow_status':status, 'slow_arrival_error_percent':None,
+                    'slow_details':{'raw_candidate_error_percent':3.842049}})
+                saved = json.dumps(result)
+                (trial/'result.json').write_text(saved)
+                expected = ('A0 wave arrival error: 3.84% (candidate only; may be inaccurate: '
+                            'A0 could not be identified reliably; '+status+')')
+                self.assertIn(expected, '\n'.join(result_lines(50000, result, trial)))
+                self.assertIn(expected, export_queue_results(self.root).read_text())
+                self.assertEqual((trial/'result.json').read_text(), saved)
+                result['comparison']['slow_status']='no_signal'
+                self.assertIn('A0 wave arrival error: unresolved (no_signal)',
+                              '\n'.join(result_lines(50000, result, trial)))
+
     def test_collective_export_reports_worker_exit_without_saved_result(self):
         trial = self.root/'50khz'; trial.mkdir()
         (trial/'launcher.json').write_text('{"exit_code":1}')
