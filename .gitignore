@@ -1,6 +1,7 @@
 .venv/
 .venv-runpod/
 .venv-mor-runpod/
+.venv-mor-matrix-free/
 venv/
 env/
 .idea/

@@ -18,15 +18,20 @@ from examples.plate_outputs import archive_attempt, queue_lock
 from examples.pzt_convergence import worker_alive
 from examples.pzt_analytic_source import analytic_source
 from examples.pzt_broadband import reconstruct, paired_metrics, within_target
-from examples.pzt_era import kernel_data, dimensions, fit_era, reduced_impulse
+from examples.pzt_era import kernel_data, reduced_impulse
+from examples.pzt_era_matrix_free import (fit_era, memory_estimate, SVD_TOLERANCE,
+                                         RESIDUAL_TOLERANCE, BLOCK, SEED)
 from traxis.storage import write_json, atomic_write, sha256_file
 
 REFERENCE = Path('outputs/simulation-runs/runpod-h200-nvl-benchmark-001')
-STUDY = Path('outputs/simulation-runs/runpod-mor-comparison-v2')
+STUDY = Path('outputs/simulation-runs/runpod-mor-comparison-matrix-free-v3')
 FREQUENCIES = [50000, 100000, 150000, 200000, 250000, 300000]
 ORDERS = [32, 64, 128, 256, 512, 1024, 2048]
 DT = .00035 / 65536
 TARGET = .1
+BUILD_BACKEND = 'matrix_free_fft_propack_float64'
+BUILD_OPTIONS = dict(svd_tolerance=SVD_TOLERANCE, residual_tolerance=RESIDUAL_TOLERANCE,
+                     block_columns=BLOCK, seed=SEED, fft_backend='cupy', krylov_limit='min(m+1,n+1,2*k+32)')
 
 
 def relative(path):
@@ -35,7 +40,8 @@ def relative(path):
 
 
 def sources():
-    names = ('examples/pzt_mor_study.py', 'examples/pzt_era.py', 'examples/pzt_era_cuda.py', 'examples/pzt_broadband.py',
+    names = ('examples/pzt_mor_study.py', 'examples/pzt_era.py', 'examples/pzt_era_cuda.py',
+             'examples/pzt_era_matrix_free.py', 'examples/pzt_broadband.py',
              'examples/pzt_broadband_study.py', 'examples/pzt_analytic_source.py',
              'examples/pzt_convergence.py')
     return {name: sha256_file(PROJECT / name) for name in names}
@@ -106,11 +112,11 @@ def prepare(root):
     if root.exists():
         raise FileExistsError('Choose a new root; use --run only to resume a frozen study')
     reference = reference_identity()
-    screen = dimensions(reference['samples'], 2)
+    screen = memory_estimate(reference['samples'], 2, max(ORDERS))
     plan = dict(schema=1, study='ERA MOR plus broadband at the saved 5.340576171875 ns grid',
         stages=stages(), orders=ORDERS, frequencies_hz=FREQUENCIES, target_percent=TARGET,
         reference=reference, source_sha256=sources(), production_preflight=queue.preflight(),
-        build_backend='cupy_exact_float64_svd', memory_estimate=screen,
+        build_backend=BUILD_BACKEND, build_options=BUILD_OPTIONS, memory_estimate=screen,
         source_metadata={str(f): target_source(f)[1] for f in FREQUENCIES},
         selection_policy='Choose the lowest-error eligible model using 50-250 kHz only. '
             'Report 300 kHz as an additional drive-shape validation, without using it to select order.',
@@ -120,7 +126,11 @@ def prepare(root):
             'The ROM does not reconstruct full plate fields, strain energy, or internal PZT stresses.',
             'A kernel is valid only for its unchanged plate, PZT layout, materials, and electrical conditions.',
             'No mechanical passivity or infinite-time stability bound is asserted for truncated ERA models.',
-            'The full-record exact SVD has a large one-time cost; repeated-use speedup is not guaranteed.',
+            'Matrix-free FFT products retain the full recording; no dense Hankel matrix is allocated.',
+            'PROPACK computes leading singular triplets iteratively; residual/orthogonality checks must pass.',
+            'The partial singular spectrum is not the full numerical rank or an infinite-time error bound.',
+            'The host Lanczos basis still uses memory; GPU FFT acceleration does not move the whole solver to GPU.',
+            'Build cost and repeated-use speedup remain unverified on the full-size recording.',
             'The full-order 300 kHz result is reconstructed from the saved broadband response; no new full-plate run is required.',
             '300 kHz is a synthetic excitation comparison, not experimental validation.',
             'A0/S0-related traces are receiver differences/sums, not proven pure modes.'])
@@ -134,7 +144,7 @@ def prepare(root):
     write_json(root / 'status.json', dict(status='prepared', computation_started=False, pod_started=False))
     assess(root)
     print('PREPARED ONLY:', root, flush=True)
-    print('Full-order 300 kHz -> exact ERA build -> seven MOR size checks, each reconstructing 50-300 kHz.', flush=True)
+    print('Full-order 300 kHz -> matrix-free ERA build -> seven MOR size checks, each reconstructing 50-300 kHz.', flush=True)
     print('No SVD, reduced propagation, full-plate simulation, or Runpod action was started.', flush=True)
 
 
@@ -143,7 +153,8 @@ def load_plan(root):
     if (plan['source_sha256'] != sources() or plan['production_preflight'] != queue.preflight()
             or plan['reference'] != reference_identity() or plan['stages'] != stages()
             or plan['orders'] != ORDERS or plan['frequencies_hz'] != FREQUENCIES
-            or plan['target_percent'] != TARGET or plan['build_backend'] != 'cupy_exact_float64_svd'):
+            or plan['target_percent'] != TARGET or plan['build_backend'] != BUILD_BACKEND
+            or plan.get('build_options') != BUILD_OPTIONS):
         raise ValueError('Prepared model, comparison settings, or scientific inputs changed')
     return plan
 

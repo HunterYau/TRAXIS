@@ -7,5 +7,5 @@ PYTHON_BIN="${TRAXIS_PYTHON:-python3.12}"
 "$PYTHON_BIN" -m venv .venv-mor-runpod
 .venv-mor-runpod/bin/python -m pip install --require-hashes --only-binary=:all: -r tools/runpod/requirements-mor-linux-lock.txt
 .venv-mor-runpod/bin/python -m pip check
-.venv-mor-runpod/bin/python tools/runpod/verify_transfer.py --gpu
+.venv-mor-runpod/bin/python tools/runpod/verify_transfer.py --gpu --dense-svd
 printf '\nMOR environment checked. No plate simulation or full-size MOR build launched.\n'

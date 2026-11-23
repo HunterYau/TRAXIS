@@ -1,166 +1,154 @@
-# MOR and broadband comparison: prepared, not run
+# Matrix-free MOR and broadband comparison
 
-Branch: `research/mor-broadband-comparison`. The original direct and broadband
-methods remain unchanged. This work adds `examples.pzt_era` and an explicitly
-launched scheduler, `examples.pzt_mor_study`.
+The default scheduler now uses **FFT Hankel products and PROPACK partial SVD**.
+It does not allocate the dense 65,534 by 32,768 Hankel table. The earlier dense
+ERA builder is retained in `examples/pzt_era.py`, with the 64-bit CUDA SVD
+wrapper in `examples/pzt_era_cuda.py`, for controlled comparisons.
 
-## Schedule
+The new builder is `examples/pzt_era_matrix_free.py`; the scheduler remains
+`examples/pzt_mor_study.py`. Original plate physics, full-order direct and
+broadband methods, saved recordings, and earlier attempts are preserved.
 
-1. Reconstruct the **full-order broadband 300 kHz** reference from the completed
-   H200 impulse response. It is the original full-order discrete model, without
-   MOR. No additional full-plate solve is needed.
-2. Build one ERA reduced model from that saved impulse response.
-3. Check reduced orders **32, 64, 128, 256, 512, 1024, 2048**. Each order produces
-   **50, 100, 150, 200, 250, 300 kHz**, in order, from one reduced impulse response.
-   These are seven cheap-model size checks, not seven new full-plate solves.
-4. Save and print differences after every frequency and update the combined
-   `findings.json` and `findings.txt` after every stage.
+## Established numerical methods
 
-Everything keeps the saved **5.340576171875 ns** internal grid: 65,536 steps,
-350 microseconds, both voltage channels at every internal node. The reference
-directory is `outputs/simulation-runs/runpod-h200-nvl-benchmark-001`. Its 75
-downloaded artifacts, receipts, original source hashes and settings are verified
-before preparation and execution.
+[Minster et al., section 2.2](https://arxiv.org/html/2003.11872v2#S2.SS2)
+describe using FFTs for Hankel matrix products without storing the full matrix.
+This implementation uses zero-padded linear convolution and vector reversal to
+calculate those products for both H0 and shifted H1, including their transposes.
+Both output channels are interleaved exactly as in the dense implementation.
+Only batches of eight columns are processed at a time.
 
-For 50–250 kHz the comparison uses the **independent direct solves**, not merely
-waveforms reconstructed from the identification kernel. The 300 kHz reference
-uses a declared synthetic five-cycle Hann pulse. Plate 1 has no experimental
-300 kHz generator/receiver record. This stage checks numerical method agreement,
-not real-world accuracy. The same synthetic pulse is used on both sides.
+[SciPy PROPACK](https://docs.scipy.org/doc/scipy/reference/sparse.linalg.svds-propack.html)
+computes the largest required singular triplets through a LinearOperator.
+This is Lanczos bidiagonalization, **not** the randomized SVD algorithm in the
+Minster paper. A fixed starting-vector seed makes the calculation repeatable.
+FP64 arithmetic and the complete original recording are retained. No downsampling,
+filtering, source fitting, time shift, gain correction, or artificial damping is
+introduced. Iterative SVD has numerical tolerance and must be checked; equality
+with dense results is not assumed.
 
-## Method and equations
-
-This implements the input-output **Eigensystem Realization Algorithm (ERA)**
-from [Juang and Pappa, NASA, 1985](https://ntrs.nasa.gov/api/citations/19850022899/downloads/19850022899.pdf).
-It reduces the fixed actuator-to-receiver dynamics learned from the full-order
-simulation, using an exact dense FP64 SVD. It is not a Galerkin projection of
-the plate's mass and stiffness matrices, and it does not recover full plate
-displacements, energy, or internal PZT stress. Mechanical passivity and
-second-order structure preservation are not claimed.
-
-The original unit drive is applied at solver node 1. Its response satisfies
-`h[0] = h[1] = 0`, and the Markov sequence starts at `m[0] = h[2] = C B`.
-With outputs interleaved in each block row:
+The ERA equations remain those of
+[Juang and Pappa, NASA 1985](https://ntrs.nasa.gov/api/citations/19850022899/downloads/19850022899.pdf):
 
 ```text
-H0[i*p + output, j] = m[i+j, output]
-H1[i*p + output, j] = m[i+j+1, output]
+m[0] = h[2] = CB; h[0] = h[1] = 0
+H0[i*p+output,j] = m[i+j,output]
+H1[i*p+output,j] = m[i+j+1,output]
 H0 = U S V^T
 Ar = S^(-1/2) U^T H1 V S^(-1/2)
 Br = S^(1/2) V^T[:, :1]
 Cr = U[:p, :] S^(1/2)
 ```
 
-Retaining leading singular vectors defines the reduced orders. Truncating the
-largest realization gives the same nested ERA matrices as the corresponding
-smaller SVD truncations. Singular values below the standard FP64 numerical-rank
-cutoff cannot support extra states; requested and effective orders are recorded.
+Only the leading requested triplets are computed. H1 times the retained vectors
+and the ERA projection are evaluated in small column batches; H1 is never formed.
+The exact full H0 Frobenius norm is computed from anti-diagonal multiplicities.
+Tail diagnostics therefore include omitted singular values instead of incorrectly
+reporting a zero tail from a partial spectrum. They are diagnostics based on
+approximate singular values, not rigorous error bounds. Full numerical rank is
+explicitly unknown.
 
-Each reduced impulse starts with two zeros, followed by `Cr Br`, `Cr Ar Br`,
-and so on. It uses a discrete FP64 recurrence at the original internal step;
-there is no new continuous time integration scheme. Existing zero-padded causal
-linear convolution reconstructs each target pulse. No FFT wraparound, spectral
-division, response gain fitting, time alignment, phase fitting, filtering,
-decimation, artificial damping, or pole clipping is introduced.
+## Convergence and memory
 
-## Accuracy checks and selection
+PROPACK tolerance is `1e-12`. Its basis dimension is explicitly limited to
+`min(m+1,n+1,2*k+32)`, instead of its much larger default `10*k`. There is no
+silent rank reduction or dense fallback on nonconvergence.
 
-The predeclared target is **less than 0.1% raw relative voltage L2 difference**:
-`100 * norm(MOR - full) / norm(full)`. It is checked separately for top and bottom
-receivers and their S0-related sum and A0-related difference. These combinations
-are not asserted to be perfectly pure modes. Raw waveform Pearson and envelope
-Pearson correlations are also saved. An exactly zero reference norm is unresolved
-and cannot pass. Neither signal is rescaled or shifted before scoring.
+Both singular equations are checked after the solve. Their largest column
+residual divided by the largest singular value must be below `1e-9`.
+Both retained singular-vector Gram matrices must differ from identity by less
+than `1e-7` in every entry. Failures stop visibly. These numerical checks do not
+replace the final receiver-voltage comparison.
 
-Choose the lowest-error eligible order using **only 50–250 kHz**. Report 300 kHz
-as an additional drive-shape check without using it to select order. This is not
-unseen-physics validation: the identification impulse already excites the model's
-frequency content. No successful accuracy result is claimed before execution.
+At 65,537 samples, two outputs, and maximum order 2048, the workspace estimate
+is approximately **6.76 GiB host RAM and 0.30 GiB GPU memory**, versus the old
+112 GiB GPU / 48 GiB host estimate. These are estimates rather than measured
+full-run peaks or guarantees. The Lanczos bases live on the CPU, while the
+optional GPU backend accelerates FFT products. GPU utilization need not stay
+at 100%. Actual speedup has not been measured.
 
-A candidate whose eigenvalues imply more than 1% exponential growth over the
-recording is rejected and the next predeclared order is tried. This is a finite
-recording screen, not proof of infinite-time stability or a transient norm bound.
-Nonfinite waveforms also reject a candidate. Hardware, file, and SVD failures
-stop the schedule visibly; they are not converted into successful results.
+A NumPy FFT backend is implemented for CPU use and small correctness checks.
+The prepared cloud schedule explicitly chooses CuPy FFTs. The full-size CPU
+build has not been started locally; this computer currently needs more free RAM
+than was available at the last hardware check to satisfy the conservative screen.
 
-This comparison does **not** establish plate-mesh, PZT-mesh, or coupled-system
-convergence, nor validate the simulation against reality. Those are separate tasks.
+## Unstarted schedule
 
-## Cost and limitations
+The new frozen root is
+`outputs/simulation-runs/runpod-mor-comparison-matrix-free-v3`.
 
-ERA is useful only for the same linear, time-invariant configuration. Changing
-the plate geometry, material, mesh, timestep, PZT positions, actuator/load vector,
-electrical conditions, or receiver map requires a new full-order response and
-a new ROM. It cannot by itself speed up the first simulation of each newly
-randomized plate. A saved full-order broadband kernel already permits fast pulse
-reconstruction without MOR; MOR is not guaranteed to improve that reuse case.
+1. Full-order broadband 300 kHz, reconstructed from the saved impulse response.
+2. One matrix-free ERA build at the saved **5.340576171875 ns** internal step.
+3. Orders **32, 64, 128, 256, 512, 1024, 2048**, each reconstructing
+   **50, 100, 150, 200, 250, 300 kHz** in order.
 
-The full-record H0 and H1 matrices each have shape **65,534 × 32,768**. One FP64
-matrix is about **16 GiB**. The initial screen estimates **112 GiB free GPU memory**
-and **48 GiB available host RAM**; these are conservative estimates, not guarantees
-of cuSOLVER workspace allocation. An H200-class device is the intended build
-target; a typical 80 GB H100 fails this declared screen. The CPU backend rejects
-large builds and exists only for small mathematical verification.
+The 350 microsecond recording, all internal time nodes, geometry, source,
+PZT conditions, order checks and **less than 0.1% raw voltage L2 error** target
+are unchanged. Top, bottom, S0-related sum and A0-related difference must pass
+separately. Raw waveform and envelope Pearson correlations are also saved.
+These combinations are not asserted to be pure modes.
 
-Exact SVD can have a substantial one-time cost. Large Hankel SVD cost is a known
-ERA limitation discussed by [Minster et al., 2020](https://arxiv.org/abs/2003.11872).
-Their randomized approximation is **not** used here. Building the model once
-and evaluating a reduced system are timed separately. Future output reports the
-build, all size-check costs, and selected-model online costs. Comparing current
-ROM timing with the saved H200 full-order solver is historical timing, not a
-fresh, controlled same-hardware benchmark. No speedup is promised.
+Order selection uses only independent saved 50-250 kHz direct solves. The
+additional 300 kHz pulse is declared synthetic: plate 1 has no measured 300 kHz
+receiver/generator pair. Its full-order reference reuses the saved broadband
+kernel, so its reconstruction time is not a fresh full-order solver benchmark.
+No amplitude, time or polarity alignment is fitted. Zero reference norms cannot
+pass. Unstable candidates are reported without pole clipping.
 
-## Preparation, transfer, and later launch
+The plan freezes code hashes, inputs and method settings. Results are written
+and printed after each frequency; combined findings update after each stage.
+Completed checksummed stages are skipped on resume; interrupted attempts are
+retained. The status heartbeat reports phase and elapsed time during iterative
+SVD without inventing a completion percentage.
 
-The prepared study lives in `outputs/simulation-runs/runpod-mor-comparison-v2`.
-`--prepare` writes the schedule, source snapshot, status and pending findings.
-It performs no SVD, waveform reconstruction, reduced propagation, plate solve,
-pod creation, or upload. `--assess` only checks and summarizes saved results.
+## Environment and later launch
 
-The separate MOR Linux lock includes the original Python 3.12/CUDA 12.9
-environment plus explicitly pinned cuBLAS, cuSOLVER, cuSPARSE and nvJitLink
-libraries. `tools/runpod/setup_mor_linux.sh` installs and verifies that environment
-on a future approved pod. Its GPU check uses only tiny matrices and an artificial
-one-state system; it does not start the study. CUDA library versions and hashes
-were checked against official PyPI metadata and NVIDIA's `cuda-toolkit==12.9.1`
-component requirements. CuPy's SVD error mode follows the
-[official CuPy documentation](https://docs.cupy.dev/en/stable/reference/generated/cupy.linalg.svd.html).
+The new lock is `tools/runpod/requirements-mor-matrix-free-linux-lock.txt`.
+It extends the unchanged Python 3.12 / CUDA 12.9 baseline with pinned official
+cuFFT and nvJitLink wheels. The matrix-free builder does not require GPU cuSOLVER,
+cuSPARSE, or cuBLAS. Their earlier dense-method lock and setup script remain.
 
-After a separately approved transfer and pod start, the explicit Linux command is:
+On a separately approved pod:
 
 ```bash
-.venv-mor-runpod/bin/python -u -m examples.pzt_mor_study --run
+bash tools/runpod/setup_mor_matrix_free_linux.sh
+.venv-mor-matrix-free/bin/python -u -m examples.pzt_mor_study --run
 ```
 
-The command does not provision or start a pod. It runs stages sequentially,
-skips checksum-verified completed stages on restart, and retains interrupted
-attempts under `previous-attempts`. Every stage has `worker.log`, `status.json`
-and a final receipt. Status prints include the stage, current frequency, elapsed
-time and actual reduced propagation percentage. A heartbeat prints every 15
-seconds during long operations. SVD has no invented percentage: phase and elapsed
-time are reported. No unattended download/stop-pod automation has been launched
-or repurposed for this study.
+Setup performs tiny GPU FFT/transpose and one-state ERA checks, not the full
+study. The retained dense setup explicitly uses the optional
+`verify_transfer.py --gpu --dense-svd` smoke check instead.
+No pod was created, started or resumed, and no full-size MOR calculation or
+plate simulation was run while implementing this replacement. Earlier deployment
+controls target earlier frozen studies and must not be reused unchanged.
 
-CPU verification covers known-order LTI recovery, six independent driven inputs,
-a tiny production Verlet consistent-mass system with nearly cancelling receivers,
-Hankel indexing, unstable/invalid inputs, serial resume, output checksums, and
-prepare-only behavior. It does not establish full-plate MOR accuracy or GPU SVD
-performance. All full-size MOR computations and simulations remain unstarted.
+## What this MOR does and does not establish
 
-Validation on 2026-11-23: **14 new MOR tests and 9 existing broadband tests
-passed** on CPU. Both previous transfer archive SHA256 values and all 193
-previously packaged physics/example files were checked unchanged.
+It reduces the fixed actuator-to-receiver voltage dynamics. It is not a mass/
+stiffness Galerkin projection and does not recover full displacement, energy or
+PZT stress fields. Second-order structure, passivity and infinite-time stability
+are not claimed. Changing a plate, mesh, material, timestep, PZT placement,
+actuator or electrical condition requires a new full-order response and ROM.
+The first response of each new plate is not accelerated by this method.
 
-The first approved H200 run completed the full-order 300 kHz reconstruction and
-passed the tiny GPU SVD/ERA checks, but the legacy CuPy `dgesvd_bufferSize` rejected
-the full Hankel matrix with `CUSOLVER_STATUS_INVALID_VALUE`. The saved failure
-and partial results are in `outputs/simulation-runs/runpod-h200-nvl-mor-001`.
-They were downloaded and the pod stopped automatically.
+A saved full-order broadband kernel already allows very fast pulse reconstruction.
+MOR's build and online costs must be measured separately; a benefit over that
+existing reuse case is not guaranteed. Mesh/PZT convergence and real-world
+validation remain separate tasks.
 
-The corrected implementation calls NVIDIA's exact FP64 **cusolverDnXgesvd** API
-with explicit 64-bit dimensions and byte-sized workspaces, following the
-[CUDA 12.9 API documentation](https://docs.nvidia.com/cuda/archive/12.9.1/cusolver/index.html).
-It checks the reported device and host workspace sizes and the solver's return
-status. It does not change timestep, sampling, rank schedule, physics, or precision.
-The new frozen study has a `-v2` folder. The first run and its source snapshot are
-retained. Full-size MOR accuracy has not yet been established.
+## Verification and history
+
+**32 CPU tests passed:** nine new matrix-free checks, fourteen existing ERA/
+scheduler checks, and nine existing broadband checks. New coverage includes
+forward/transpose FFT products against explicitly formed tiny matrices,
+unequal dimensions and block boundaries, agreement with dense ERA at the same
+rank, six independent driven state-space responses, a tiny production
+consistent-mass Verlet model with nearly cancelling receivers, solver failure,
+invalid singular vectors, and memory estimation without full-size allocation.
+These are implementation checks, not full-plate accuracy or speed results.
+
+The first approved H200 attempt completed the full-order 300 kHz reconstruction
+and failed at the legacy large-matrix SVD call. Its partial results were
+downloaded to `outputs/simulation-runs/runpod-h200-nvl-mor-001`, then the pod
+stopped automatically. The unrun 64-bit dense retry and its source snapshot are
+also retained. The matrix-free plan has a fresh folder and source snapshot.

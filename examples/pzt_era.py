@@ -186,8 +186,16 @@ def reduced_impulse(model, order, samples, *, event=None):
             or np.any(spectrum < 0)):
         raise ValueError('Finite nonnegative Hankel singular spectrum required')
     denominator = float(np.linalg.norm(spectrum))
+    if 'hankel_frobenius_norm' in model:
+        denominator = float(model['hankel_frobenius_norm'])
+        if not math.isfinite(denominator) or denominator <= 0:
+            raise ValueError('Positive finite full Hankel norm required')
+        tail = math.sqrt(max(0., denominator**2 - float(np.dot(spectrum[:order], spectrum[:order])))) / denominator
+    else:
+        tail = float(np.linalg.norm(spectrum[order:]) / denominator) if denominator else None
     return output, dict(order=order, spectral_radius=radius, maximum_pole_growth_factor=math.exp(log_growth),
-        hankel_relative_frobenius_tail=float(np.linalg.norm(spectrum[order:]) / denominator) if denominator else None,
+        hankel_relative_frobenius_tail=tail,
+        tail_uses_partial_singular_spectrum=bool(model.get('singular_spectrum_is_partial', False)),
         impulse_seconds=time.perf_counter() - started, state_precision='float64',
         integration='Discrete ERA recurrence on the original internal time grid; no new integrator',
         poles_modified=False)

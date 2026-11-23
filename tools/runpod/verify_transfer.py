@@ -12,7 +12,10 @@ sys.path.insert(0, str(PROJECT))
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--gpu', action='store_true', help='also check FP64 CUDA operation; no wave simulation')
+    parser.add_argument('--dense-svd', action='store_true', help='test the retained dense-SVD environment instead of matrix-free FFT')
     args = parser.parse_args()
+    if args.dense_svd and not args.gpu:
+        parser.error('--dense-svd requires --gpu')
     manifest = json.loads((PROJECT / 'transfer-manifest.json').read_text(encoding='utf-8'))
     for row in manifest['files']:
         path = (PROJECT / row['path']).resolve()
@@ -54,18 +57,29 @@ def main():
         print('PASS: FP64 CUDA kernel; CuPy', cp.__version__)
         if (PROJECT / 'examples/pzt_mor_study.py').exists():
             # Tiny library smoke check, not a plate simulation or a ROM build.
-            from examples.pzt_era_cuda import exact_svd
-            matrix = cp.asarray([[3., 1.], [0., 2.], [1., -.5]], dtype=cp.float64)
-            u, s, vt = exact_svd(matrix)
-            cp.cuda.Device().synchronize()
-            np.testing.assert_allclose(cp.asnumpy((u * s) @ vt), cp.asnumpy(matrix), atol=1e-12)
-            from examples.pzt_era import fit_era, reduced_impulse
+            from examples.pzt_era import reduced_impulse
+            if args.dense_svd:
+                from examples.pzt_era_cuda import exact_svd
+                from examples.pzt_era import fit_era
+                matrix = cp.asarray([[3., 1.], [0., 2.], [1., -.5]], dtype=cp.float64)
+                u, s, vt = exact_svd(matrix)
+                cp.cuda.Device().synchronize()
+                np.testing.assert_allclose(cp.asnumpy((u * s) @ vt), cp.asnumpy(matrix), atol=1e-12)
+            else:
+                from examples.pzt_era_matrix_free import fit_era, HankelOperator
+                from examples.pzt_era import hankel
+                values = np.random.default_rng(18).normal(size=(19, 2))
+                x = np.random.default_rng(19).normal(size=(8, 3))
+                op = HankelOperator(values, 10, 8, backend='cupy')
+                explicit = hankel(values, 10, 8)
+                np.testing.assert_allclose(op @ x, explicit @ x, atol=1e-11)
+                np.testing.assert_allclose(op.T @ (op @ x), explicit.T @ explicit @ x, atol=1e-10)
             t = np.arange(65) * .01
             h = np.zeros((65, 2)); h[2:] = .98**np.arange(63)[:, None] * [[1., .7]]
-            model, _ = fit_era(t, h, 4, backend='cupy')
+            model, _ = fit_era(t, h, 1, backend='cupy')
             rebuilt, _ = reduced_impulse(model, 1, len(t))
             np.testing.assert_allclose(rebuilt, h, atol=1e-11)
-            print('PASS: tiny FP64 cuSOLVER SVD and one-state ERA recovery; no full-size MOR computation.')
+            print('PASS: tiny FP64 MOR backend and one-state ERA recovery; no full-size MOR computation.')
     print('No wave simulation started.')
 
 

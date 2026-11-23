@@ -1,0 +1,10 @@
+# Matrix-free MOR: Python 3.12 / CUDA 12.9 / Linux x86_64.
+# No GPU cuSOLVER, cuSPARSE, or cuBLAS installation required by this MOR builder.
+# Official NVIDIA CUDA 12.9.1 component versions and PyPI hashes checked 2026-11-23.
+-r requirements-linux-lock.txt
+
+# nvidia_cufft_cu12-11.4.1.4-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+nvidia-cufft-cu12==11.4.1.4 --hash=sha256:c67884f2a7d276b4b80eb56a79322a95df592ae5e765cf1243693365ccab4e28
+
+# nvidia_nvjitlink_cu12-12.9.86-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl
+nvidia-nvjitlink-cu12==12.9.86 --hash=sha256:e3f1171dbdc83c5932a45f0f4c99180a70de9bd2718c1ab77d14104f6d7147f9
