@@ -60,7 +60,12 @@ def small_system(mass, stiffness):
     storage = SimpleNamespace(cp=NumpyDevice(), lock=nullcontext(), device_id=0, applications=0)
 
     def action(u, ku, alpha, beta):
-        ku[:] = alpha * (stiffness @ u) + beta * ku
+        # beta=0 must overwrite, not read uninitialized np.empty storage:
+        # IEEE 0*NaN is NaN and otherwise makes this fixture nondeterministic.
+        if beta == 0:
+            ku[:] = alpha * (stiffness @ u)
+        else:
+            ku[:] = alpha * (stiffness @ u) + beta * ku
         storage.applications += 1
 
     def invert(vector):

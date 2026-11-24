@@ -5,13 +5,14 @@ No cloud lifecycle calls. --prepare never builds a GPU system or starts a sim.
 import argparse
 import copy
 import json
+import signal
 from pathlib import Path
 import time
 import numpy as np
 from examples import pzt_broadband_study as baseline
 from examples import resolved_pzt_queue as queue
 from examples.pzt_convergence import cases
-from examples.pzt_broadband import paired_metrics
+from examples.pzt_broadband import paired_metrics,interior_impulse,reconstruct
 from traxis.gpu_enriched_verlet import gpu_explicit_simulate
 from traxis.gpu_local_time import gpu_lts_simulate
 from traxis.local_time import fine_partition,polyphase_reconstruct
@@ -30,6 +31,9 @@ def identity():
 def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000):
     if root.exists(): raise FileExistsError('Use a new output run directory')
     if substeps not in (1,2,4): raise ValueError('Study ratios: 1, 2 or 4')
+    if (not frequencies or len(set(frequencies))!=len(frequencies)
+            or any(type(f) is not int or f not in baseline.FREQUENCIES for f in frequencies)):
+        raise ValueError('Unique available experimental frequencies required')
     if not np.isfinite(edge_width) or edge_width<0: raise ValueError('Nonnegative edge width required')
     if not np.isfinite(device_budget_mib) or not 0<device_budget_mib<=65536:
         raise ValueError('Explicit device budget must be within 65536 MiB')
@@ -42,7 +46,7 @@ def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000):
         raise ValueError('Study requires the original lossless ideal-open broadband setup')
     case=cases()[0]
     if case['steps']*substeps>500000: raise ValueError('Fine reference exceeds supported step count')
-    tasks=[f'kernel-{r+1}' for r in range(substeps)]
+    tasks=['control-kernel']+[f'kernel-{r+1}' for r in range(substeps)]
     tasks += [f'{method}-{f}' for f in frequencies for method in ('uniform','lts')]
     proof=identity()
     root.mkdir(parents=True,exist_ok=True)
@@ -54,9 +58,23 @@ def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000):
     print(f'Prepared {len(tasks)} serial tasks; no simulation started. {root}',flush=True)
 
 
+def validate_plan(plan):
+    p=plan['substeps'];case=plan['case'];frequencies=plan['frequencies_hz']
+    expected=['control-kernel']+[f'kernel-{r+1}' for r in range(p)]
+    expected += [f'{method}-{f}' for f in frequencies for method in ('uniform','lts')]
+    if (p not in (1,2,4) or case!=cases()[0]
+            or plan['configuration']!=queue.configuration()
+            or plan['coarse_dt_s']!=baseline.DURATION_S/case['steps']
+            or not frequencies or len(set(frequencies))!=len(frequencies)
+            or any(f not in baseline.FREQUENCIES for f in frequencies)
+            or plan['tasks']!=expected):
+        raise ValueError('Prepared scientific settings or task order changed')
+
+
 def run(root):
     plan=json.loads((root/'plan.json').read_text())
     if plan['identity']!=identity(): raise ValueError('Frozen sources/configuration changed')
+    validate_plan(plan)
     with queue_lock(root):
         case,p,H=plan['case'],plan['substeps'],plan['coarse_dt_s']
         steps=case['steps']
@@ -78,7 +96,9 @@ def run(root):
         # checks current free VRAM and peak workspace before allocating states.
         guard=PeakGuard(ResourceLimits(**config['resource_limits']),telemetry_errors_fatal=False)
         guard.check(force=True)
+        build_started=time.perf_counter()
         system,load,probes,required=queue.build(config,guard,event)
+        write_json(root/'build.json',dict(seconds=time.perf_counter()-build_started),overwrite=True)
         system.screen=dict(system.screen,max_device_mib=plan.get('device_budget_mib',20000))
         if H>.8*system.stable_dt_s: raise ValueError('Coarse step fails conservative CFL; prepare finer settings')
         fine=fine_partition(system,load,plan['boxes'],plan['edge_width_m'])
@@ -93,7 +113,8 @@ def run(root):
             receipt=folder/'result.json'
             if receipt.exists():
                 saved=json.loads(receipt.read_text())
-                if saved.get('completed') and saved.get('sha256')==sha256_file(folder/'trace.npz'): continue
+                if (saved.get('completed') and (folder/'trace.npz').is_file()
+                        and saved.get('sha256')==sha256_file(folder/'trace.npz')): continue
             # Preserve partial task metadata before retrying the task from t=0.
             stamp=str(time.time_ns())
             for name in ('trace.npz','result.json'):
@@ -102,19 +123,29 @@ def run(root):
             write_json(receipt,dict(completed=False,status='running'))
             tick=time.perf_counter()
             try:
-                kind,number=task.split('-');number=int(number)
+                if task=='control-kernel': kind,number='control',0
+                else: kind,number=task.split('-');number=int(number)
                 if kind=='kernel':
                     source=lambda t,index=number: float(abs(t-index*H/p)<H/p*.25)
+                elif kind=='control':source=interior_impulse(H)
                 else:
                     source=baseline.source(number,steps*p)[0]
-                if kind=='uniform':
-                    sim=gpu_explicit_simulate(system,steps*p,H/p,probes,load,force=source,
+                if kind in ('uniform','control'):
+                    ratio=p if kind=='uniform' else 1
+                    sim=gpu_explicit_simulate(system,steps*ratio,H/ratio,probes,load,force=source,
                         output_stride=1,energy_stride=256,progress=progress,max_workspace_mib=4096,guard=guard)
-                    t,y,stats=sim.time_s[::p],sim.displacement_m[::p],sim.statistics
+                    t,y,stats=sim.time_s[::ratio],sim.displacement_m[::ratio],sim.statistics
+                    stats=dict(stats,energy_time_s=sim.energy_time_s.tolist(),modified_energy_j=sim.modified_energy_j.tolist())
                 else:
                     t,y,stats=gpu_lts_simulate(system,steps,H,probes,load,force=source,
                         fine=fine,substeps=p,progress=progress,guard=guard,
                         max_workspace_mib=plan.get('device_budget_mib',20000))
+                # Validate invariance only after the numerical source is over.
+                source_end=H if kind=='control' else H*number/p if kind=='kernel' else 5/number
+                tail=np.asarray(stats['modified_energy_j'])[np.asarray(stats['energy_time_s'])>source_end+2*H]
+                drift=float(np.ptp(tail)/abs(tail[0])) if len(tail)>1 and tail[0]!=0 else None
+                stats['unforced_relative_energy_drift']=drift
+                if drift is not None and drift>1e-8: raise ArithmeticError('Unforced discrete energy drift exceeds 1e-8')
                 atomic_write(folder/'trace.npz',lambda f:np.savez_compressed(f,time_s=t,voltage_v=y))
                 write_json(receipt,dict(completed=True,seconds=time.perf_counter()-tick,
                     statistics=stats,sha256=sha256_file(folder/'trace.npz')),overwrite=True)
@@ -123,19 +154,35 @@ def run(root):
                 write_json(root/'status.json',dict(status='interrupted_or_failed',task=task),overwrite=True)
                 raise
         kernels=np.stack([np.load(root/f'kernel-{r+1}'/'trace.npz')['voltage_v'] for r in range(p)])
+        control=np.load(root/'control-kernel'/'trace.npz')['voltage_v']
         rows=[]
+        local_reconstruction_seconds=original_reconstruction_seconds=0.
         for f in plan['frequencies_hz']:
             direct=np.load(root/f'lts-{f}'/'trace.npz')['voltage_v']
             uniform=np.load(root/f'uniform-{f}'/'trace.npz')['voltage_v']
             force=baseline.source(f,steps*p)[0](np.arange(steps*p+1)*H/p)
+            tick=time.perf_counter()
             reconstructed=polyphase_reconstruct(kernels,force)
+            local_reconstruction_seconds+=time.perf_counter()-tick
+            tick=time.perf_counter()
+            original=reconstruct(control,force[::p])
+            original_reconstruction_seconds+=time.perf_counter()-tick
             metrics=dict(frequency_hz=f,local_vs_uniform=paired_metrics(uniform,direct),
+                         local_vs_original_broadband=paired_metrics(original,direct),
                          broadband_vs_local=paired_metrics(direct,reconstructed))
             rows.append(metrics);event('comparison',**metrics)
             atomic_write(root/f'reconstructed-{f}.npz',lambda out:np.savez_compressed(out,time_s=np.arange(steps+1)*H,voltage_v=reconstructed),overwrite=True)
         write_json(root/'comparisons.json',rows,overwrite=True)
         timing={task:json.loads((root/task/'result.json').read_text())['seconds'] for task in plan['tasks']}
         write_json(root/'timings.json',timing,overwrite=True)
+        original_seconds=timing['control-kernel']+original_reconstruction_seconds
+        local_seconds=sum(timing[f'kernel-{r+1}'] for r in range(p))+local_reconstruction_seconds
+        write_json(root/'performance.json',dict(
+            original_broadband_seconds=original_seconds,lts_broadband_seconds=local_seconds,
+            original_over_lts_speedup=original_seconds/local_seconds,
+            shared_operator_build_seconds=json.loads((root/'build.json').read_text())['seconds'],
+            scope='Kernel tasks plus all frequency reconstructions. Shared operator build reported separately; validation direct runs excluded.'),overwrite=True)
+        atomic_write(root/'all-results.txt',lambda f:f.write(json.dumps(dict(comparisons=rows,timings=timing),indent=2).encode()),overwrite=True)
         write_json(root/'status.json',dict(status='completed'),overwrite=True)
 
 
@@ -155,7 +202,11 @@ def main():
         if not args.frequencies or any(f not in baseline.FREQUENCIES for f in args.frequencies):
             raise ValueError('Use available experimental frequencies')
         prepare(args.root,args.substeps,args.frequencies,args.edge_width_m,args.fine_box,args.device_budget_mib)
-    else: run(args.root)
+    else:
+        def interrupted(signum,frame): raise KeyboardInterrupt('Simulation interrupted by termination signal')
+        previous=signal.signal(signal.SIGTERM,interrupted)
+        try: run(args.root)
+        finally: signal.signal(signal.SIGTERM,previous)
 
 
 if __name__=='__main__': main()

@@ -2,6 +2,7 @@
 import unittest
 from types import SimpleNamespace
 import numpy as np
+from scipy.integrate import solve_ivp
 from traxis.local_time import lf2_step,polyphase_reconstruct,fine_partition
 from traxis.gpu_local_time import selected_elements
 from traxis.gpu_tensor import make_layout
@@ -17,6 +18,35 @@ def trajectory(A,fine,H,p,steps,source,load):
 
 
 class LocalTimeTests(unittest.TestCase):
+    def test_forced_zero_start_against_independent_continuous_solution(self):
+        A=np.array([[4.,-2.],[-2.,70.]])
+        load=np.array([0.,1.]);fine=np.array([False,True])
+        source=lambda t:np.sin(3*t)**3 if t>=0 else 0.
+        reference=solve_ivp(lambda t,y:np.r_[y[2:],load*source(t)-A@y[:2]],
+            (0,1),np.zeros(4),rtol=1e-12,atol=1e-14).y[:2,-1]
+        for p in (1,2,4,8):
+            errors=[np.linalg.norm(trajectory(A,fine,H,p,round(1/H),source,load)[-1]-reference)
+                    for H in (.02,.01,.005)]
+            self.assertGreater(errors[0]/errors[1],3.8)
+            self.assertGreater(errors[1]/errors[2],3.8)
+
+    def test_p2_effective_operator_matches_published_polynomial(self):
+        A=np.array([[4.,-2.],[-2.,70.]])
+        fine=np.array([False,True]);H=.04;P=np.diag(fine.astype(float))
+        expected=A-H*H/16*A@P@A
+        actual=np.column_stack([(2*np.eye(2)[:,j]-lf2_step(np.zeros(2),np.eye(2)[:,j],H,2,
+            lambda x:A@x,lambda x:A@(x*fine),fine,np.zeros(2),lambda _:0.,0.))/H**2 for j in range(2)])
+        np.testing.assert_allclose(actual,expected,rtol=1e-12,atol=1e-12)
+        self.assertGreater(np.linalg.eigvalsh(actual)[0],0)
+        self.assertLess(np.linalg.eigvalsh(actual)[-1]*H*H,4)
+
+    def test_no_fine_region_reduces_to_leapfrog_for_every_ratio(self):
+        A=np.array([[3.,-1.],[-1.,8.]])
+        u=np.array([.2,.3]);prev=np.array([.1,.4]);fine=np.zeros(2,dtype=bool)
+        for p in (2,4,8,16):
+            y=lf2_step(prev,u,.1,p,lambda x:A@x,lambda x:np.zeros(2),fine,0.,lambda _:0.,0.)
+            np.testing.assert_allclose(y,2*u-prev-.01*A@u,atol=1e-14)
+
     def test_ratio_one_is_leapfrog_with_interface_coupling(self):
         A=np.array([[3.,-1.],[-1.,8.]])
         u=np.array([.2,.3]);prev=np.array([.1,.4]);fine=np.array([False,True])

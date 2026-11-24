@@ -5,7 +5,7 @@ import numpy as np
 from traxis.local_time import lf2_step
 from traxis.gpu_tensor import KERNEL, TensorStorage
 from traxis.gpu_pzt_body import BodyStorage
-from traxis.gpu_enriched_verlet import SparseProbeSet, PROBE_KERNEL
+from traxis.gpu_enriched_verlet import SparseProbeSet, PROBE_KERNEL, sparse_probe_set
 
 
 def selected_elements(layout, fine):
@@ -65,10 +65,28 @@ class LocalActions:
         self.local_count += 1
         return self.inverse(result)
 
+    def mass_action(self, x):
+        result=self.mass*x
+        for ids,_,mass,_ in getattr(self.storage,'patches',()):
+            result[ids] += self.storage.matvec(mass,x[ids])-self.mass[ids]*x[ids]
+        return result
+
+    def discrete_energy(self, previous, current, H, p):
+        # In physical coordinates A_p is M-self-adjoint, not generally symmetric.
+        # q(H)=2u-H^2*A_p*u; previous=current gives next=u-H^2*A_p*u.
+        unforced=lf2_step(current,current,H,p,self.full,self.local,self.fine,
+                          0.,lambda _:0.,0.)
+        effective=(current-unforced)/(H*H)
+        velocity=(current-previous)/H
+        cp=self.storage.cp
+        energy=.5*(cp.sum(velocity*self.mass_action(velocity),dtype=cp.float64)
+                   +cp.sum(previous*self.mass_action(effective),dtype=cp.float64))
+        return float(energy.item())
+
 
 def gpu_lts_simulate(system,steps,dt_s,probes,load,*,fine,substeps=2,force=None,
                      progress=None,guard=None,max_workspace_mib=4096,
-                     mass_damping_per_s=0.,electrical_ports=()):
+                     mass_damping_per_s=0.,electrical_ports=(),energy_stride=256):
     """Zero-state lossless response on coarse nodes, all dynamics in FP64.
 
     Until a full-plate stability study authorizes relaxed coarse CFL values,
@@ -79,17 +97,22 @@ def gpu_lts_simulate(system,steps,dt_s,probes,load,*,fine,substeps=2,force=None,
     n = len(mass)
     if (type(steps) is not int or not 1<=steps<=500000 or type(substeps) is not int
             or not 1<=substeps<=16 or not math.isfinite(dt_s) or dt_s<=0
-            or dt_s>.8*system.stable_dt_s):
+            or not math.isfinite(system.stable_dt_s) or system.stable_dt_s<=0
+            or dt_s>.8*system.stable_dt_s or type(energy_stride) is not int
+            or not 1<=energy_stride<=1024):
         raise ValueError('Invalid LTS steps or conservative coarse stability limit exceeded')
     if mass_damping_per_s != 0 or electrical_ports:
         raise ValueError('LTS-LF2 requires lossless mechanics and condensed ideal-open ports')
-    if (fine.shape!=(n,) or fine.dtype!=bool or load.shape!=(n,)
+    if (mass.shape!=(n,) or fine.shape!=(n,) or fine.dtype!=bool or load.shape!=(n,)
             or np.iscomplexobj(load) or not np.isfinite(load).all()
             or not np.isfinite(mass).all() or np.any(mass<=0) or np.any(load[~fine]!=0)):
         raise ValueError('Finite load entirely in fine region and positive mass required')
     for patch in getattr(system,'body_patches',()):
         if not fine[patch.indices].all(): raise ValueError('Fine projector splits a coupled mass block')
     if not isinstance(probes,SparseProbeSet): raise ValueError('Sparse probe set required')
+    if len(probes.indices)!=len(probes.weights): raise ValueError('Probe rows and weights differ')
+    probes=sparse_probe_set(zip(probes.indices,probes.weights),n)
+    if sum(len(i) for i in probes.indices)>100000: raise MemoryError('Probe support exceeds 100000 coefficients')
     # Includes peak recurrence temporaries, local/full products, states, probes.
     forecast = 32*n*8+(steps+1)*len(probes.indices)*8+fine.nbytes+4*system.layout.screen['elements']
     if (not math.isfinite(max_workspace_mib) or not 0<max_workspace_mib<=65536
@@ -116,11 +139,16 @@ def gpu_lts_simulate(system,steps,dt_s,probes,load,*,fine,substeps=2,force=None,
         sample=cp.RawKernel(PROBE_KERNEL,'sample_probes',options=('--std=c++11',))
         previous=cp.zeros(n,dtype=cp.float64);current=cp.zeros_like(previous)
         traces=cp.zeros((steps+1,count),dtype=cp.float64)
+        energy_times=[];energies=[]
         tick=time.perf_counter()
         for j in range(steps):
             following=lf2_step(previous,current,dt_s,substeps,actions.full,actions.local,
                                actions.fine,drive,source,j*dt_s)
             previous,current=current,following
+            if (j+1)%energy_stride==0 or j+1==steps:
+                value=actions.discrete_energy(previous,current,dt_s,substeps)
+                if not math.isfinite(value): raise ArithmeticError('Nonfinite LTS discrete energy')
+                energy_times.append((j+.5)*dt_s);energies.append(value)
             sample((1,),(64,),(ps,pi,pw,current,traces,np.int32(count),np.int32(j+1)))
             if (j+1)%16==0 or j+1==steps:
                 cp.cuda.get_current_stream().synchronize()
@@ -135,4 +163,6 @@ def gpu_lts_simulate(system,steps,dt_s,probes,load,*,fine,substeps=2,force=None,
             fine_dofs=int(fine.sum()),total_dofs=n,local_elements=len(actions.ids),
             total_elements=system.layout.screen['elements'],full_actions=actions.full_count,
             local_actions=actions.local_count,workspace_bytes=forecast,
+            energy_time_s=energy_times,modified_energy_j=energies,
+            energy_diagnostic='M-weighted LTS-LF2 invariant; no energy-conservation claim while forced',
             solver_seconds=time.perf_counter()-tick,coarse_cfl_relaxed=False)

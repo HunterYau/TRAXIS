@@ -61,14 +61,14 @@ the existing project dataset/configuration files (ignored data files are
 not copied automatically into a Git worktree):
 
 ```powershell
-python -m examples.pzt_local_time_study --prepare --root outputs/simulation-runs/lts-002 --substeps 2
-python -m examples.pzt_local_time_study --run --root outputs/simulation-runs/lts-002
+python -m examples.pzt_local_time_study --prepare --root outputs/simulation-runs/lts-003 --substeps 2
+python -m examples.pzt_local_time_study --run --root outputs/simulation-runs/lts-003
 ```
 
 Preparation only writes a plan. Execution is a separate explicit action.
-The local `lts-002` plan has already been prepared; use only `--run` for
+The local `lts-003` plan has already been prepared; use only `--run` for
 that existing plan. Choose a fresh directory when preparing another plan.
-The default schedule contains two phase kernels and uniform-fine/LTS direct
+The default schedule contains the original broadband control kernel, two phase kernels and uniform-fine/LTS direct
 pairs at 50, 100, 150, 200, 250 kHz. H is 350 us / 65536 = 5.340576171875 ns;
 for p=2, h is 2.6702880859375 ns. Traces are compared on identical H nodes;
 fine input nodes are retained for reconstruction. No interpolation aligns
@@ -80,6 +80,13 @@ Each task writes progress and a receipt in its own directory. A failed or
 interrupted task retains its saved files, is marked incomplete, and is rerun
 from t=0 on restart; completed SHA256-verified tasks are reused. In-memory
 states are not checkpointed. The run is locked against a duplicate scheduler.
+SIGTERM is converted to an interruption so the incomplete task is marked.
+Every run records the LTS-specific M-weighted discrete energy. After source
+excitation ends, relative drift greater than 1e-8 rejects that task. Original
+Verlet controls use their own invariant; these are different discrete energies.
+`performance.json` compares original versus LTS broadband kernel and
+reconstruction totals, with the shared operator build reported separately.
+`all-results.txt` stores the collective comparison and task timing record.
 No pod creation, start, pause or stop code is present.
 
 The full study defaults to an explicit 20000 MiB cloud device budget. It checks
@@ -106,6 +113,6 @@ independent CPU tensor operator, retained interface rows, ratio-one agreement
 with existing GPU Verlet, exact resolved-body mass action and mass-block
 closure, rejection of unsupported damping and unstable coarse steps.
 
-All 20 focused CPU/CUDA and existing broadband regression checks passed locally.
+The additional audit and its checked results are in `local-time-stepping-audit.md`.
 These checks authorize further validation, not a claim of full-plate phase,
 mesh convergence, measured-data accuracy, or speedup.
