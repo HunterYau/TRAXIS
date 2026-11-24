@@ -12,6 +12,10 @@ from scipy.linalg import eigvals
 from scipy.linalg.blas import dgemv
 
 
+class ReducedModelGrowthError(ArithmeticError):
+    """A finite ERA model failed the declared pole-growth acceptance screen."""
+
+
 def kernel_data(time_s, voltage):
     t, h = np.asarray(time_s), np.asarray(voltage)
     if (np.iscomplexobj(t) or np.iscomplexobj(h) or t.ndim != 1 or len(t) < 6
@@ -147,8 +151,12 @@ def fit_era(time_s, voltage, max_order, *, rows=None, columns=None, backend='cup
     return dict(a=a, b=b, c=c, singular_values=spectrum, dt_s=dt), diagnostic
 
 
-def reduced_impulse(model, order, samples, *, event=None):
-    """Evaluate h at every original internal time node using real FP64 recurrence."""
+def reduced_impulse(model, order, samples, *, event=None, diagnostic_only=False):
+    """Evaluate the unchanged FP64 recurrence.
+
+    diagnostic_only permits a growth-screen failure to be measured, never to be
+    accepted. Nonfinite matrices, poles, or propagated outputs still raise.
+    """
     matrices = [np.asarray(model[key]) for key in ('a', 'b', 'c')]
     a0, b0, c0 = matrices
     if (any(np.iscomplexobj(value) or not np.isfinite(value).all() for value in matrices)
@@ -166,8 +174,11 @@ def reduced_impulse(model, order, samples, *, event=None):
     poles = eigvals(a, check_finite=False)
     radius = float(np.max(abs(poles)))
     log_growth = max(0., math.log(radius)) * (samples - 2) if radius > 0 else 0.
-    if not np.isfinite(radius) or log_growth > math.log(1.01):
-        raise ArithmeticError(f'Reduced poles exceed 1% exponential growth over the recording: radius={radius:.12g}; not clipped')
+    if not np.isfinite(radius):
+        raise ArithmeticError('Nonfinite reduced poles')
+    growth_pass = log_growth <= math.log(1.01)
+    if not growth_pass and not diagnostic_only:
+        raise ReducedModelGrowthError(f'Reduced poles exceed 1% exponential growth over the recording: radius={radius:.12g}; not clipped')
     output = np.zeros((samples, len(c)), dtype=np.float64)
     state, following = b, np.empty_like(b)
     started, last = time.perf_counter(), -math.inf
@@ -175,6 +186,8 @@ def reduced_impulse(model, order, samples, *, event=None):
         output[node] = c @ state
         following = dgemv(1., a, state, beta=0., y=following, overwrite_y=1)
         state, following = following, state
+        if not np.isfinite(state).all() or not np.isfinite(output[node]).all():
+            raise ArithmeticError(f'Nonfinite reduced propagation at node {node}')
         if event and (node == samples - 1 or time.perf_counter() - last >= 15):
             event('reduced_propagation', steps_completed=node, requested_steps=samples - 1,
                   elapsed_seconds=time.perf_counter() - started)
@@ -193,7 +206,10 @@ def reduced_impulse(model, order, samples, *, event=None):
         tail = math.sqrt(max(0., denominator**2 - float(np.dot(spectrum[:order], spectrum[:order])))) / denominator
     else:
         tail = float(np.linalg.norm(spectrum[order:]) / denominator) if denominator else None
-    return output, dict(order=order, spectral_radius=radius, maximum_pole_growth_factor=math.exp(log_growth),
+    return output, dict(order=order, spectral_radius=radius,
+        maximum_pole_growth_factor=math.exp(log_growth) if log_growth < math.log(np.finfo(float).max) else None,
+        log_maximum_pole_growth_factor=log_growth, growth_screen_pass=growth_pass,
+        diagnostic_only=bool(diagnostic_only),
         hankel_relative_frobenius_tail=tail,
         tail_uses_partial_singular_spectrum=bool(model.get('singular_spectrum_is_partial', False)),
         impulse_seconds=time.perf_counter() - started, state_precision='float64',

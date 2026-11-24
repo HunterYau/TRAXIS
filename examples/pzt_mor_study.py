@@ -18,9 +18,9 @@ from examples.plate_outputs import archive_attempt, queue_lock
 from examples.pzt_convergence import worker_alive
 from examples.pzt_analytic_source import analytic_source
 from examples.pzt_broadband import reconstruct, paired_metrics, within_target
-from examples.pzt_era import kernel_data, reduced_impulse
+from examples.pzt_era import kernel_data, reduced_impulse, ReducedModelGrowthError
 from examples.pzt_era_matrix_free import (fit_era, memory_estimate, SVD_TOLERANCE,
-                                         RESIDUAL_TOLERANCE, BLOCK, SEED)
+                                         RESIDUAL_TOLERANCE, TRIPLET_RESIDUAL_TOLERANCE, BLOCK, SEED)
 from traxis.storage import write_json, atomic_write, sha256_file
 
 REFERENCE = Path('outputs/simulation-runs/runpod-h200-nvl-benchmark-001')
@@ -31,6 +31,7 @@ DT = .00035 / 65536
 TARGET = .1
 BUILD_BACKEND = 'matrix_free_fft_propack_float64'
 BUILD_OPTIONS = dict(svd_tolerance=SVD_TOLERANCE, residual_tolerance=RESIDUAL_TOLERANCE,
+                     per_triplet_residual_tolerance=TRIPLET_RESIDUAL_TOLERANCE,
                      block_columns=BLOCK, seed=SEED, fft_backend='cupy', krylov_limit='min(m+1,n+1,2*k+32)')
 
 
@@ -176,12 +177,14 @@ def receipt(folder, plan_digest):
         required = {'waveforms.npz', 'source.json'}
     elif folder.name == 'build-mor':
         required = {'model.npz', 'build.json'}
-    elif result.get('rejected'):
+    elif result.get('rejected') and not result.get('diagnostic_waveforms'):
         required = {'rejected.json'}
     else:
         required = {'impulse.npz', 'model-diagnostics.json'} | {
             f'{f // 1000}khz/{name}' for f in FREQUENCIES
             for name in ('waveforms.npz', 'source.json', 'comparison.json')}
+        if result.get('rejected'):
+            required.add('rejected.json')
     if not required.issubset(result['artifacts_sha256']):
         raise ValueError('Completed stage is missing required scientific artifacts')
     for name, digest in result['artifacts_sha256'].items():
@@ -264,12 +267,16 @@ def worker(root, stage):
             event('checking_reduced_impulse', requested_order=requested, effective_order=effective)
             try:
                 impulse, diagnostic = reduced_impulse(model, effective, len(t), event=event)
-            except ArithmeticError as error:
+            except ReducedModelGrowthError as error:
                 # A rejected model is a reported scientific outcome; try the
                 # other predeclared orders without clipping unstable poles.
                 write_json(folder / 'rejected.json', dict(reason=str(error), poles_clipped=False))
-                result.update(rejected=True, eligible=False, rejection_reason=str(error))
-            else:
+                result.update(rejected=True, eligible=False, rejection_reason=str(error),
+                              diagnostic_waveforms=True)
+                event('measuring_rejected_model_without_modifying_poles', order=effective)
+                impulse, diagnostic = reduced_impulse(model, effective, len(t), event=event,
+                                                     diagnostic_only=True)
+            if impulse is not None:
                 atomic_write(folder / 'impulse.npz', lambda stream: np.savez_compressed(stream, time_s=t, voltage_v=impulse))
                 write_json(folder / 'model-diagnostics.json', diagnostic)
                 records = []
@@ -287,7 +294,8 @@ def worker(root, stage):
                     changes = paired_metrics(full, voltage)
                     write_json(child / 'comparison.json', dict(frequency_hz=frequency, channels=changes,
                         target_percent=TARGET, within_target=within_target(changes, TARGET),
-                        real_experiment_comparison=False, fitted_alignment=False))
+                        real_experiment_comparison=False, fitted_alignment=False,
+                        diagnostic_only=result.get('rejected', False)))
                     errors = [row['raw_l2_change_percent'] for row in changes.values()]
                     maximum = max(errors) if all(value is not None for value in errors) else None
                     records.append(dict(frequency_hz=frequency, channels=changes, maximum_error_percent=maximum,
@@ -297,8 +305,8 @@ def worker(root, stage):
                           f'target <{TARGET}% | no amplitude or time fitting', flush=True)
                 # Select order using only the five original direct reference drives.
                 training = [row for row in records if row['frequency_hz'] != 300000]
-                result.update(rejected=False, comparisons=records,
-                    eligible=all(row['within_target'] for row in training),
+                result.update(rejected=result.get('rejected', False), comparisons=records,
+                    eligible=not result.get('rejected', False) and all(row['within_target'] for row in training),
                     selection_error_percent=max(row['maximum_error_percent'] for row in training)
                         if all(row['maximum_error_percent'] is not None for row in training) else None,
                     additional_300khz_within_target=records[-1]['within_target'],
@@ -366,6 +374,8 @@ def assess(root):
         display = f'{error:.6g}%' if error is not None else 'unresolved'
         lines.append(candidate['stage'] + ' | ' + ('REJECTED: ' + candidate['rejection_reason'] if candidate.get('rejected') else
             f'actual order {candidate["effective_order"]}; worst 50-250 kHz error {display}'))
+        if candidate.get('diagnostic_waveforms'):
+            lines.append(f'  Diagnostic only: worst 50-250 kHz raw error {display}; excluded from selection.')
     if selected:
         lines.append(f'Selected order: {selected["effective_order"]}; 300 kHz pass: {selected["additional_300khz_within_target"]}')
         lines.append(f'MOR impulse plus six reconstructions: {selected["online_impulse_and_six_reconstructions_seconds"]:.6g} s; '

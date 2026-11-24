@@ -1,0 +1,21 @@
+{
+  "documentId": "1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "revision": "AHj4eMTPtsXKrpCSC8MG0eJnmHiltg19r1ZQ7adnhZR-RqQafhgv7qa7EVsg-YBqoQMJZZerxEIHRLarplSnSbVXgPsHSNdMDnrasUiuGzU",
+  "originalParagraphsPreserved": true,
+  "originalParagraphDifferences": 0,
+  "expectedAddedParagraphs": 2224,
+  "actualAddedParagraphs": 2224,
+  "exactNonemptyParagraphMatch": true,
+  "headings": 151,
+  "appendStartIndex": 633002,
+  "addedCharacters": 186303,
+  "textSha256": "32ad08e6667459db5ae455008609cd659ee946d526ffbcfe80f2762ad75b9c35",
+  "title": "Science Log Info",
+  "url": "https://docs.google.com/document/d/1sER_SaOLuuthx7hU7C40QxHHgPvBV71T_ILr1cGGZl8",
+  "continued_after": "November 17, 2026 ? full-run preparation completed; full experiment queue NOT launched",
+  "localDraft": "outputs/science-log/science-log-update-20261123/addition.txt",
+  "sourceInventory": "outputs/science-log/science-log-update-20261123/source-inventory.json",
+  "sourceFiles": 37,
+  "observation_utc": "2026-11-24T03:07:09.450335+00:00",
+  "actual_science_log_edited": false
+}

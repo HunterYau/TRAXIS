@@ -4,6 +4,7 @@
 - Get the user's explicit approval before creating, starting, or resuming any pod, including through deployment commands or templates.
 - Account setup alone does not authorize starting compute or simulations.
 - Never print credentials or commit them to this repository.
+- Never automatically stop, pause, terminate, or release the user's pod, including on setup failure, simulation failure, successful completion, or after downloading results. Keep it running unless the user explicitly instructs you to stop it. This overrides earlier automatic-stop workflows and cost-guard guidance.
 
 # Hardware-aware implementation
 

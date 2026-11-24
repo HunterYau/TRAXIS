@@ -13,7 +13,8 @@ import numpy as np
 
 from examples import pzt_mor_study as study
 from examples.pzt_broadband import reconstruct, paired_metrics, within_target, interior_impulse
-from examples.pzt_era import fit_era, reduced_impulse, hankel, kernel_data, dimensions
+from examples.pzt_era import (fit_era, reduced_impulse, hankel, kernel_data, dimensions,
+                              ReducedModelGrowthError)
 from tests.test_pzt_broadband import simulate
 from traxis.storage import sha256_file, write_json
 
@@ -91,6 +92,16 @@ class EraMathTests(unittest.TestCase):
         with self.assertRaises(ArithmeticError):
             reduced_impulse(model, 1, 100)
         self.assertEqual(model['a'][0, 0], 1.1)
+
+    def test_growth_diagnostic_reports_unchanged_response_and_failure(self):
+        model = dict(a=np.array([[1.001]]), b=np.ones((1, 1)),
+                     c=np.ones((2, 1)), singular_values=np.ones(1))
+        y, info = reduced_impulse(model, 1, 100, diagnostic_only=True)
+        np.testing.assert_allclose(y[2:, 0], 1.001 ** np.arange(98))
+        self.assertTrue(info['diagnostic_only'])
+        self.assertFalse(info['growth_screen_pass'])
+        with self.assertRaises(ReducedModelGrowthError):
+            reduced_impulse(model, 1, 100)
 
     def test_complex_malformed_or_nonuniform_inputs_rejected(self):
         t, h, *_ = fixture()
@@ -229,7 +240,8 @@ class MorScheduleTests(unittest.TestCase):
                 return fit_era(t, h, maximum, backend='numpy')
             def reduced(model, order, count, **kwargs):
                 if order == 2:
-                    raise ArithmeticError('Fixture unstable candidate; no pole clipping')
+                    if not kwargs.get('diagnostic_only'):
+                        raise ReducedModelGrowthError('Fixture unstable candidate; no pole clipping')
                 return np.zeros_like(h), {'impulse_seconds': .001}
             with patch.object(study, 'load_plan', return_value=plan), \
                  patch.object(study, 'saved_kernel', return_value=(t, h)), \
@@ -256,6 +268,51 @@ class MorScheduleTests(unittest.TestCase):
             with patch.object(study, 'sources', return_value={'changed': 'new'}):
                 with self.assertRaises(ValueError):
                     study.load_plan(root)
+
+    def test_rejected_diagnostic_cannot_pass_even_with_exact_waveforms(self):
+        t, h, *_ = fixture()
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            plan = {'stages': ['mor-order-0004']}
+            write_json(root / 'plan.json', plan)
+            (root / 'build-mor').mkdir()
+            np.savez(root / 'build-mor/model.npz', a=np.eye(4))
+            def propagate(*args, **kwargs):
+                if not kwargs.get('diagnostic_only'):
+                    raise ReducedModelGrowthError('growth screen failure')
+                return h, {'impulse_seconds': .001, 'diagnostic_only': True}
+            with patch.object(study, 'load_plan', return_value=plan), \
+                 patch.object(study, 'saved_kernel', return_value=(t, h)), \
+                 patch.object(study, 'receipt', return_value={'completed': True}), \
+                 patch.object(study, 'reduced_impulse', side_effect=propagate), \
+                 patch.object(study, 'target_source', return_value=(lambda t: t*0, {})), \
+                 patch.object(study, 'reconstruct', return_value=h), \
+                 patch.object(study, 'reference_trace', return_value=(t, h)):
+                study.worker(root, 'mor-order-0004')
+            result = json.loads((root / 'mor-order-0004/result.json').read_text())
+            self.assertTrue(result['rejected'])
+            self.assertFalse(result['eligible'])
+            self.assertTrue(all(r['within_target'] for r in result['comparisons']))
+            comparison = json.loads((root / 'mor-order-0004/50khz/comparison.json').read_text())
+            self.assertTrue(comparison['diagnostic_only'])
+
+    def test_unrelated_numerical_failure_is_not_hidden_as_model_rejection(self):
+        t, h, *_ = fixture()
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            plan = {'stages': ['mor-order-0004']}
+            write_json(root / 'plan.json', plan)
+            (root / 'build-mor').mkdir()
+            np.savez(root / 'build-mor/model.npz', a=np.eye(4))
+            with patch.object(study, 'load_plan', return_value=plan), \
+                 patch.object(study, 'saved_kernel', return_value=(t, h)), \
+                 patch.object(study, 'receipt', return_value={'completed': True}), \
+                 patch.object(study, 'reduced_impulse', side_effect=ArithmeticError('nonfinite recurrence')):
+                with self.assertRaisesRegex(ArithmeticError, 'nonfinite recurrence'):
+                    study.worker(root, 'mor-order-0004')
+            result = json.loads((root / 'mor-order-0004/result.json').read_text())
+            self.assertFalse(result['completed'])
+            self.assertNotIn('rejected', result)
 
 
 if __name__ == '__main__':

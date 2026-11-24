@@ -118,6 +118,23 @@ class MatrixFreeEraTests(TestCase):
             with self.assertRaises(ArithmeticError):
                 fit_era(t, h, 4, backend='numpy')
 
+    def test_weak_retained_direction_must_pass_its_own_residual(self):
+        t, _, a, b, c = fixture()
+        c = c.copy()
+        c[:, 2:] *= 1e-8
+        impulse = np.zeros(len(t)); impulse[1] = 1.
+        h = direct(a, b, c, impulse)
+        matrix = hankel(h[2:], 63, 64)
+        u, s, vt = np.linalg.svd(matrix, full_matrices=False)
+        # Rotate a weak right vector into the nullspace. Orthogonality still
+        # holds, and scaling all residuals by sigma[0] hides this inaccuracy.
+        right = vt[:4].copy()
+        angle = 1e-4
+        right[3] = np.cos(angle)*vt[3] + np.sin(angle)*vt[4]
+        with patch('examples.pzt_era_matrix_free.svds', return_value=(u[:, :4], s[:4], right)):
+            with self.assertRaisesRegex(ArithmeticError, 'per-triplet residual'):
+                fit_era(t, h, 4, backend='numpy')
+
     def test_estimate_allocates_no_table_and_keeps_requested_maximum_order(self):
         with patch('numpy.empty', side_effect=AssertionError('No full-size allocations')):
             size = memory_estimate(65537, 2, 2048)

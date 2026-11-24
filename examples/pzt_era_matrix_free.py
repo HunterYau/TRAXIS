@@ -15,6 +15,7 @@ from examples.pzt_era import kernel_data, dimensions
 
 SVD_TOLERANCE = 1e-12
 RESIDUAL_TOLERANCE = 1e-9
+TRIPLET_RESIDUAL_TOLERANCE = 1e-7
 BLOCK = 8
 SEED = 1729
 
@@ -119,6 +120,20 @@ def frobenius_norm(markov, rows, columns):
     return float(np.sqrt(np.dot(count, np.sum(np.asarray(markov)[:len(k)]**2, axis=1))))
 
 
+def triplet_errors(op, u, singular, v):
+    largest, relative = 0., 0.
+    for start in range(0, len(singular), BLOCK):
+        end = min(start + BLOCK, len(singular))
+        first = op @ v[:, start:end] - u[:, start:end] * singular[start:end]
+        second = op.T @ u[:, start:end] - v[:, start:end] * singular[start:end]
+        errors = np.maximum(np.linalg.norm(first, axis=0), np.linalg.norm(second, axis=0))
+        largest = max(largest, float(np.max(errors / singular[0])))
+        relative = max(relative, float(np.max(errors / singular[start:end])))
+    orthogonality = max(float(np.max(abs(u.T @ u - np.eye(len(singular))))),
+                        float(np.max(abs(v.T @ v - np.eye(len(singular))))))
+    return largest, relative, orthogonality
+
+
 def fit_era(time_s, voltage, max_order, *, backend='cupy', event=None):
     """Leading ERA states from the full recording; fail rather than loosen accuracy."""
     started = time.perf_counter()
@@ -142,6 +157,11 @@ def fit_era(time_s, voltage, max_order, *, backend='cupy', event=None):
     u, singular, vt = svds(op, k=max_order, solver='propack', which='LM',
         tol=SVD_TOLERANCE, maxiter=estimate['krylov_dimension'], rng=SEED,
         v0=np.random.default_rng(SEED).standard_normal(op.shape[0]))
+    if (u.shape != (op.shape[0], max_order) or vt.shape != (max_order, op.shape[1])
+            or singular.shape != (max_order,)
+            or not all(np.isfinite(x).all() for x in (u, singular, vt))
+            or np.any(singular < 0)):
+        raise ArithmeticError('Partial SVD returned invalid or nonfinite singular triplets')
     indices = np.argsort(singular)[::-1]
     singular, u, v = singular[indices], u[:, indices], vt[indices].T
     del vt
@@ -154,17 +174,12 @@ def fit_era(time_s, voltage, max_order, *, backend='cupy', event=None):
     u, v, singular = u[:, :order], v[:, :order], singular[:order]
     # Both singular equations and orthogonality are checked independently of
     # PROPACK's stopping decision. No unconverged results or dense fallback.
-    residual = 0.
-    for start in range(0, order, BLOCK):
-        end = min(start + BLOCK, order)
-        first = op @ v[:, start:end] - u[:, start:end] * singular[start:end]
-        second = op.T @ u[:, start:end] - v[:, start:end] * singular[start:end]
-        residual = max(residual, float(np.linalg.norm(first, axis=0).max() / singular[0]),
-                       float(np.linalg.norm(second, axis=0).max() / singular[0]))
-    orthogonality = max(float(np.max(abs(u.T @ u - np.eye(order)))),
-                        float(np.max(abs(v.T @ v - np.eye(order)))))
-    if residual > RESIDUAL_TOLERANCE or orthogonality > 1e-7:
-        raise ArithmeticError(f'Partial SVD failed verification: residual={residual:g}, orthogonality={orthogonality:g}')
+    residual, relative_residual, orthogonality = triplet_errors(op, u, singular, v)
+    if (not all(math.isfinite(x) for x in (residual, relative_residual, orthogonality))
+            or residual > RESIDUAL_TOLERANCE
+            or relative_residual > TRIPLET_RESIDUAL_TOLERANCE or orthogonality > 1e-7):
+        raise ArithmeticError(f'Partial SVD failed verification: residual={residual:g}, '
+                              f'per-triplet residual={relative_residual:g}, orthogonality={orthogonality:g}')
     shifted = HankelOperator(markov, rows, columns, shift=1, backend=backend)
     root = np.sqrt(singular)
     a = np.empty((order, order), dtype=np.float64)
@@ -185,6 +200,8 @@ def fit_era(time_s, voltage, max_order, *, backend='cupy', event=None):
         singular_spectrum_is_partial=True, singular_value_cutoff=float(cutoff),
         internal_dt_s=dt, build_seconds=time.perf_counter() - started,
         svd_tolerance=SVD_TOLERANCE, verified_svd_residual_over_largest_singular_value=residual,
+        verified_maximum_svd_residual_over_own_singular_value=relative_residual,
+        per_triplet_residual_tolerance=TRIPLET_RESIDUAL_TOLERANCE,
         verified_orthogonality_error=orthogonality, starting_vector_seed=SEED,
         memory_estimate=estimate, source_or_response_gain_fit=False, phase_fit=False,
         time_decimation=False, poles_modified=False, artificial_damping=False,
