@@ -50,11 +50,12 @@ def completed(folder):
     r=read(path)
     if not r.get('completed'):return False
     required={'comparisons.json','build.json','time-plan.json'}
-    for stage in ('primary','half-step'):
+    for stage in r.get('stages',('primary','half-step')):
         required.update((stage+'/trace.npz',stage+'/result.json'))
         required.update(f'{stage}/{f//1000}khz/waveforms.npz' for f in (50000,100000,150000,200000,250000,300000))
     for f in (50000,100000,150000,200000,250000,300000):
-        required.update(f'plots/{f//1000}khz/{relation}/plots.json' for relation in ('vs-baseline','temporal'))
+        required.update(f'plots/{f//1000}khz/{relation}/plots.json' for relation in
+                        (('vs-baseline',) if r.get('stages')==['primary'] else ('vs-baseline','temporal')))
     if not required.issubset(r['files']) or r['configuration']['id']!=folder.name:
         raise ValueError('Completion receipt is missing required study artifacts')
     for name,digest in r['files'].items():
@@ -109,16 +110,28 @@ def build(plan,row,guard,event):
 
 
 def select_time(plan,system,fine,event,backend,cache):
-    H=plan['baseline_coarse_dt_s'];attempts=[]
-    while H/2>.8*system.stable_dt_s:H/=2
+    execution=plan.get('execution',{})
+    screen=optimized_stability_screen
+    margin=.8
+    if execution.get('remove_extra_time_margin'):
+        from traxis.lts_stability_requested import optimized_stability_screen as screen
+        margin=1.
+    fixed=execution.get('fixed_coarse_dt_s')
+    H=plan['baseline_coarse_dt_s'] if fixed is None else fixed
+    attempts=[]
+    if fixed is not None and H/2>=margin*system.stable_dt_s:
+        raise ArithmeticError(f'Requested fine step {H/2:.14g} s exceeds stability bound {margin*system.stable_dt_s:.14g} s; fixed time pair was not altered')
+    while H/2>margin*system.stable_dt_s:H/=2
     while True:
         steps=round(plan['duration_s']/H)
-        if steps*2>500000:raise ValueError('Primary plus half-step verification exceeds the unchanged solver step limit')
+        factor=1 if execution.get('primary_only') else 2
+        if steps*factor>500000:raise ValueError('Requested run exceeds the unchanged solver step limit')
         try:
-            proof=optimized_stability_screen(system,fine,H,2,progress=lambda x:event('stability',**x),backend=backend,cache_dir=cache)
-            return dict(coarse_dt_s=H,fine_dt_s=H/2,primary_steps=steps,half_step_steps=2*steps,
+            proof=screen(system,fine,H,2,progress=lambda x:event('stability',**x),backend=backend,cache_dir=cache)
+            return dict(coarse_dt_s=H,fine_dt_s=H/2,primary_steps=steps,half_step_steps=0 if factor==1 else 2*steps,
                 full_system_stable_dt_s=system.stable_dt_s,stability=proof,rejected_step_attempts=attempts)
         except ArithmeticError as exc:
+            if fixed is not None:raise
             if 'fails effective-operator stability screen' not in str(exc):raise
             attempts.append(dict(coarse_dt_s=H,error=str(exc)));event('coarse_step_rejected',coarse_dt_s=H)
             H/=2
@@ -134,18 +147,22 @@ def reconstruct_stage(folder,stage,frequencies):
 
 def analysis(folder,plan,row,root):
     config=plan['configuration'];baseline_rows=[];temporal_rows=[];previous_rows=[]
+    primary_only=plan.get('execution',{}).get('primary_only',False)
     previous=next((c for c in plan['cases'] if c['family']==row['family'] and c['level']==row['level']-1),None)
     for frequency in plan['protocol']['frequencies_hz']:
         t,y=wave(folder/'primary'/f'{frequency//1000}khz/waveforms.npz')
-        th,yh=wave(folder/'half-step'/f'{frequency//1000}khz/waveforms.npz')
         tb,yb=wave(root/'baseline/lts-broadband'/f'{frequency//1000}khz/waveforms.npz')
         baseline_rows.append(metrics.compare(tb,yb,t,y,frequency,config))
-        temporal_rows.append(metrics.compare(t,y,th,yh,frequency,config))
+        if not primary_only:
+            th,yh=wave(folder/'half-step'/f'{frequency//1000}khz/waveforms.npz')
+            temporal_rows.append(metrics.compare(t,y,th,yh,frequency,config))
         if previous and completed(root/'cases'/previous['id']):
             tp,yp=wave(root/'cases'/previous['id']/'primary'/f'{frequency//1000}khz/waveforms.npz')
             previous_rows.append(metrics.compare(tp,yp,t,y,frequency,config))
         elif row['level']==1:previous_rows.append(baseline_rows[-1])
-        for name,ta,ya,tz,yz in (('vs-baseline',tb,yb,t,y),('temporal',t,y,th,yh)):
+        pairs=[('vs-baseline',tb,yb,t,y)]
+        if not primary_only:pairs.append(('temporal',t,y,th,yh))
+        for name,ta,ya,tz,yz in pairs:
             plots=folder/'plots'/f'{frequency//1000}khz'/name
             if (plots/'plots.json').exists():
                 for path,digest in read(plots/'plots.json')['files'].items():
@@ -156,6 +173,7 @@ def analysis(folder,plan,row,root):
                 save(plots/'plots.json',dict(files={p:sha256_file(plots/p) for p in paths}))
     result=dict(vs_baseline=baseline_rows,temporal=temporal_rows,vs_previous=previous_rows,
         temporal_target_percent=plan['protocol']['temporal_target_percent'],
+        temporal_check_performed=not primary_only,
         temporal_qualified=metrics.temporal_pass(temporal_rows,plan['protocol']['temporal_target_percent']),
         baseline_temporal_qualified=False,
         interpretation='Thresholds apply to measured differences, not proof of exact solution error. Baseline timing discretization is fixed and not rerun; temporal-unresolved comparisons cannot certify spatial convergence.')
@@ -169,6 +187,10 @@ def worker(root,case_id,backend='auto'):
     if completed(folder):return
     started=time.perf_counter();last=-math.inf;system=None
     guard=PeakGuard(ResourceLimits(**plan['configuration']['resource_limits']),telemetry_errors_fatal=False)
+    screen=optimized_stability_screen;simulate=gpu_lts_simulate
+    if plan.get('execution',{}).get('remove_extra_time_margin'):
+        from traxis.lts_stability_requested import optimized_stability_screen as screen
+        from traxis.gpu_local_time_requested import gpu_lts_simulate as simulate
     def event(kind,**details):
         details.pop('phase',None)
         stage_elapsed=details.pop('elapsed_seconds',None)
@@ -186,10 +208,12 @@ def worker(root,case_id,backend='auto'):
         if (folder/'time-plan.json').exists() and read(folder/'time-plan.json')['coarse_dt_s']!=settings['coarse_dt_s']:
             raise ValueError('Restart changed the selected time grid; retain results and investigate')
         save(folder/'time-plan.json',settings)
-        for stage,factor in (('primary',1),('half-step',2)):
+        primary_only=plan.get('execution',{}).get('primary_only',False)
+        stages=(('primary',1),) if primary_only else (('primary',1),('half-step',2))
+        for stage,factor in stages:
             dest=folder/stage;dest.mkdir(parents=True,exist_ok=True)
             H=settings['coarse_dt_s']/factor;steps=settings['primary_steps']*factor
-            proof=optimized_stability_screen(system,fine,H,2,backend=backend,cache_dir=root/'stability-cache',
+            proof=screen(system,fine,H,2,backend=backend,cache_dir=root/'stability-cache',
                 progress=lambda x:event('stability',**x))
             identity=canonical_hash(dict(plan=canonical_hash(plan),case=case_id,stage=stage,H=H,
                 model=proof.get('model_fingerprint'),stable_dt_s=system.stable_dt_s))
@@ -209,7 +233,7 @@ def worker(root,case_id,backend='auto'):
                             simulation_stopwatch=stopwatch(state['elapsed_seconds']))
                 event('starting_kernel',stage=stage,coarse_dt_s=H,fine_dt_s=H/2,steps=steps)
                 tick=time.perf_counter()
-                t,y,stats=gpu_lts_simulate(system,steps,H,probes,force,force=interior_impulse(H),
+                t,y,stats=simulate(system,steps,H,probes,force,force=interior_impulse(H),
                     fine=fine,substeps=2,source_sampling='coarse',progress=progress,guard=guard,
                     max_workspace_mib=plan['protocol']['device_budget_mib'])
                 tail=np.asarray(stats['modified_energy_j'])[np.asarray(stats['energy_time_s'])>3*H]
@@ -228,10 +252,11 @@ def worker(root,case_id,backend='auto'):
         files={p.relative_to(folder).as_posix():sha256_file(p) for p in folder.rglob('*')
                if p.is_file() and p.name not in ('result.json','worker.log','owner.json') and 'attempts' not in p.parts}
         # Include stage result receipts as well as their voltage arrays.
-        for stage in ('primary','half-step'):files[stage+'/result.json']=sha256_file(folder/stage/'result.json')
-        result=dict(completed=True,status='completed' if comparison['temporal_qualified'] else 'completed_temporal_unresolved',
+        for stage,_ in stages:files[stage+'/result.json']=sha256_file(folder/stage/'result.json')
+        result=dict(completed=True,status='completed_temporal_unchecked' if primary_only else ('completed' if comparison['temporal_qualified'] else 'completed_temporal_unresolved'),
+            stages=[s for s,_ in stages],
             configuration=row,total_wall_seconds=current_seconds+previous_seconds,current_attempt_wall_seconds=current_seconds,
-            primary_seconds=read(folder/'primary/result.json')['seconds'],half_step_seconds=read(folder/'half-step/result.json')['seconds'],
+            primary_seconds=read(folder/'primary/result.json')['seconds'],half_step_seconds=None if primary_only else read(folder/'half-step/result.json')['seconds'],
             dofs=len(system.mass_diagonal),fine_dofs=int(fine.sum()),
             resources=dict(sampled_peaks=getattr(guard,'peaks',{}),telemetry_error=guard.telemetry_error),
             resource_sampling_note='Process RSS sampled cooperatively; GPU total memory via nvidia-smi approximately every 2 s; these are sampled peaks, not exact allocation high-water marks.',
@@ -255,7 +280,7 @@ def assess(root):
     for row in plan['cases']:
         folder=root/'cases'/row['id'];receipt=folder/'result.json'
         if not receipt.exists():
-            reports.append(dict(configuration=row,status='pending',completed=False));continue
+            reports.append(dict(configuration=row,status='skipped' if row['level']<plan.get('execution',{}).get('start_level',1) else 'pending',completed=False));continue
         report=read(receipt);reports.append(report)
         if completed(folder):
             comparison=read(folder/'comparisons.json')
@@ -307,6 +332,7 @@ def run(root,backend='auto',retry_failed=False):
     with queue_lock(root):
         save(root/'scheduler.json',dict(pid=os.getpid(),created_unix=psutil.Process().create_time()))
         for row in plan['cases']:
+            if row['level']<plan.get('execution',{}).get('start_level',1):continue
             folder=root/'cases'/row['id'];folder.mkdir(parents=True,exist_ok=True)
             if completed(folder):continue
             prior=read(folder/'result.json') if (folder/'result.json').exists() else None
@@ -346,7 +372,7 @@ def run(root,backend='auto',retry_failed=False):
                     error=f'Worker exited with code {code}, possibly external termination/OOM; no completion claimed.'))
             assess(root)
         report=assess(root);pending=[r['configuration']['id'] for r in report['configurations'] if r['status']=='pending']
-        failed=[r['configuration']['id'] for r in report['configurations'] if not r.get('completed')]
+        failed=[r['configuration']['id'] for r in report['configurations'] if not r.get('completed') and r['status']!='skipped']
         save(root/'status.json',dict(status='completed_with_failures' if failed else 'completed',failed=failed,pending=pending,
             completed=[r['configuration']['id'] for r in report['configurations'] if r.get('completed')]))
 
@@ -358,13 +384,17 @@ def main():
     mode.add_argument('--report',action='store_true');parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--baseline',type=Path);parser.add_argument('--assembly-sources',type=Path)
     parser.add_argument('--retry-failed',action='store_true')
+    parser.add_argument('--start-level',type=int,choices=(1,2,3),default=1)
+    parser.add_argument('--primary-only',action='store_true')
+    parser.add_argument('--coarse-dt-ns',type=float)
     parser.add_argument('--stability-backend',choices=['auto','gpu','cpu','original'],default='auto')
     args=parser.parse_args()
     def interrupt(signum,frame):raise KeyboardInterrupt('Worker interrupted; completed kernels are retained')
     signal.signal(signal.SIGTERM,interrupt)
     if args.prepare:
         if args.baseline is None or args.assembly_sources is None:parser.error('Preparation needs --baseline and --assembly-sources')
-        protocol.prepare(args.root,args.baseline,args.assembly_sources)
+        protocol.prepare(args.root,args.baseline,args.assembly_sources,start_level=args.start_level,
+                         primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9)
     elif args.preflight:
         p=protocol.validate(args.root);print(json.dumps(dict(ready=True,configurations=len(p['cases']),baseline_rerun=False,full_simulations_started=0)))
     elif args.worker:worker(args.root,args.worker,args.stability_backend)

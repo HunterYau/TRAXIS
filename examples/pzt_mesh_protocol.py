@@ -130,8 +130,10 @@ def geometric_estimate(config,row):
         estimate_note='Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory.')
 
 
-def prepare(root,baseline,assembly_sources):
+def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None):
     root=Path(root)
+    if start_level not in (1,2,3):raise ValueError('Invalid starting combined mesh level')
+    if coarse_dt_s is not None and (not math.isfinite(coarse_dt_s) or coarse_dt_s<=0):raise ValueError('Positive finite fixed step required')
     if root.exists():raise FileExistsError('Use a new study output directory')
     old,compatibility=verify_baseline(baseline,assembly_sources)
     protocol=json.loads((CONFIG/'protocol.json').read_text())
@@ -183,15 +185,18 @@ def prepare(root,baseline,assembly_sources):
         baseline_coarse_dt_s=old['coarse_dt_s'],baseline_coarse_steps=old['coarse_steps'],duration_s=.00035,
         edge_width_m=old['edge_width_m'],boxes=old['boxes'],source_sampling='coarse',substeps=2,
         identity=fingerprints(),baseline_rerun=False,simulation_started=False,
+        execution=dict(start_level=start_level,primary_only=primary_only,fixed_coarse_dt_s=coarse_dt_s),
         temporal_comparison='Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
         baseline_limit='Saved baseline has no mesh-specific half-step check; comparison against it cannot alone certify 0.1% spatial accuracy.')
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
     lines=['PZT mesh convergence: baseline reused; no baseline run.',
+        f'Execution: start at level {start_level}; primary only={primary_only}; fixed coarse dt={coarse_dt_s}. This execution policy overrides the default temporal protocol below.',
         'Order: combined level 1, combined level 2, combined level 3. No independent refinements.',
         '3 meshes, 6 mandatory impulse solves (primary and half-step); six reconstructions per solve.',
         'Counts and geometry exact; memory/runtime are forecasts. Actual stable steps calculated on RunPod.',
         'Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range']
     for row in rows:
+        if row['level']<start_level:continue
         e=row['estimate'];lo,hi=e['estimated_case_total_seconds_range']
         lines.append(f"{row['order']:02d} | {row['id']} | {row['radial']}/{row['angular']}/{row['thickness']} | {e['total_mechanical_dofs']} | {e['estimated_gpu_peak_bytes']/1024**3:.1f} | {e['estimated_host_peak_bytes']/1024**3:.1f} | {e['provisional_primary_steps']}/{e['provisional_half_step_steps']} | {lo/60:.1f}-{hi/60:.1f}")
     (root/'schedule.txt').write_text('\n'.join(lines)+'\n')
@@ -206,6 +211,10 @@ def validate(root,*,sources=True):
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
     if actual!=cases():raise ValueError('Exactly the 3 combined spatial configurations are required')
     if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
+    execution=p.get('execution',{})
+    if execution.get('start_level',1) not in (1,2,3) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
+    fixed=execution.get('fixed_coarse_dt_s')
+    if fixed is not None and (not math.isfinite(fixed) or fixed<=0):raise ValueError('Invalid fixed step')
     if sources and p['identity']!=fingerprints():raise ValueError('Frozen study source snapshot changed')
     old,_=verify_baseline(root/'baseline',root/'baseline-assembly-sources')
     expected=copy.deepcopy(old['configuration']);expected['mesh']['cells']=[250,250,1]
