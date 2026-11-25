@@ -75,6 +75,9 @@ def compare(ta,ya,tb,yb,frequency,config,*,arrivals=True):
                         absolute_difference_us=abs(delta),reliable=reliable,
                         error_percent=100*abs(delta)/abs(r['flight_us']) if r['flight_us']!=0 else None,
                         note='Candidate peak differences retained even when localization is unresolved; sum/difference are not pure modes.')
+                    error=row['arrivals'][mode]['error_percent']
+                    row['arrivals'][mode]['thresholds']={str(limit):(error<limit if reliable and error is not None else None)
+                                                        for limit in (1.,.1)}
                 except ValueError as exc:
                     row['arrivals'][mode]=dict(reliable=False,difference_us=None,error_percent=None,error=str(exc))
         row['thresholds']=threshold_results(row);answer[name]=row
