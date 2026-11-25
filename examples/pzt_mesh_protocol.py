@@ -22,13 +22,8 @@ LEVELS=[dict(radial=8,angular=40,thickness=4),dict(radial=10,angular=48,thicknes
 
 
 def cases():
-    rows=[]
-    for level,values in enumerate(LEVELS,1):
-        for family in ('radial','angular','thickness','combined'):
-            resolution=dict(BASE);resolution.update(values if family=='combined' else {family:values[family]})
-            order=len(rows)+1
-            rows.append(dict(order=order,id=f'{order:02d}-{family}-L{level}',family=family,level=level,**resolution))
-    return rows
+    return [dict(order=level,id=f'{level:02d}-combined-L{level}',family='combined',level=level,**values)
+            for level,values in enumerate(LEVELS,1)]
 
 
 def fingerprints():
@@ -192,8 +187,8 @@ def prepare(root,baseline,assembly_sources):
         baseline_limit='Saved baseline has no mesh-specific half-step check; comparison against it cannot alone certify 0.1% spatial accuracy.')
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
     lines=['PZT mesh convergence: baseline reused; no baseline run.',
-        'Order: level 1 then 2 then 3; radial, angular, thickness, combined at each level.',
-        '12 meshes, 24 mandatory impulse solves (primary and half-step); six reconstructions per solve.',
+        'Order: combined level 1, combined level 2, combined level 3. No independent refinements.',
+        '3 meshes, 6 mandatory impulse solves (primary and half-step); six reconstructions per solve.',
         'Counts and geometry exact; memory/runtime are forecasts. Actual stable steps calculated on RunPod.',
         'Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range']
     for row in rows:
@@ -209,7 +204,7 @@ def validate(root,*,sources=True):
     if p['schema']!=1 or p['baseline_rerun'] is not False or p['substeps']!=2 or p['source_sampling']!='coarse':
         raise ValueError('Study protocol changed')
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
-    if actual!=cases():raise ValueError('Exactly the 12 requested spatial configurations are required')
+    if actual!=cases():raise ValueError('Exactly the 3 combined spatial configurations are required')
     if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
     if sources and p['identity']!=fingerprints():raise ValueError('Frozen study source snapshot changed')
     old,_=verify_baseline(root/'baseline',root/'baseline-assembly-sources')

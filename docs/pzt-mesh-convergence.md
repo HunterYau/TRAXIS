@@ -2,30 +2,22 @@
 
 Branch: `research/pzt-mesh-convergence`. Original pre-study LTS work is
 checkpointed on `research/broadband-local-time-stepping` at `df32ef0`.
-No full convergence simulations or RunPod actions were performed during
-preparation. No optimal mesh is selected.
+The earlier 12-configuration run was interrupted at the user's request.
+Its saved outputs and original source package remain intact in run 001.
+This revised combined-only schedule is prepared separately in run 002 and has not started. No optimal mesh is selected.
 
 ## Exact spatial schedule
 
 | Order | Configuration | Radial | Angular | Thickness |
 |---:|---|---:|---:|---:|
 | Already completed | Baseline, imported only | 6 | 32 | 3 |
-| 1 | radial L1 | 8 | 32 | 3 |
-| 2 | angular L1 | 6 | 40 | 3 |
-| 3 | thickness L1 | 6 | 32 | 4 |
-| 4 | combined L1 | 8 | 40 | 4 |
-| 5 | radial L2 | 10 | 32 | 3 |
-| 6 | angular L2 | 6 | 48 | 3 |
-| 7 | thickness L2 | 6 | 32 | 5 |
-| 8 | combined L2 | 10 | 48 | 5 |
-| 9 | radial L3 | 12 | 32 | 3 |
-| 10 | angular L3 | 6 | 64 | 3 |
-| 11 | thickness L3 | 6 | 32 | 6 |
-| 12 | combined L3 | 12 | 64 | 6 |
+| 1 | combined L1 | 8 | 40 | 4 |
+| 2 | combined L2 | 10 | 48 | 5 |
+| 3 | combined L3 | 12 | 64 | 6 |
 
-The plan contains exactly these 12 new spatial configurations. Each has one
+The plan contains exactly these 3 combined spatial configurations. Each has one
 primary LTS broadband impulse solve and one mandatory half-time-step solve:
-**24 new kernels**, not 144 separate frequency solves. Each kernel reconstructs
+**6 new kernels**, rather than separate solves at each frequency. Each kernel reconstructs
 50, 100, 150, 200, 250 and 300 kHz with the existing five-cycle Hann excitation.
 There are no baseline, normal-broadband or beyond-Level-3 simulation jobs.
 
@@ -80,7 +72,7 @@ study. No third time grid is silently scheduled.
 The reused baseline has no same-mesh half-step LTS check. Its old normal/LTS
 method comparison is not substituted for one. Consequently baseline-relative
 changes alone cannot establish 0.1% spatial accuracy. Previous-level and
-finest-level comparisons within the new radial/angular/thickness/combined
+finest-level comparisons within the new combined
 series are also recorded. Even qualified small differences are numerical
 agreement, not proof of accuracy against physical experiments.
 
@@ -99,9 +91,9 @@ currently free VRAM and RAM are checked before building and before dense
 attachment/merge stages. Precision or mesh resolution is never reduced to fit.
 
 Global plate DOFs stay 28,170,018. Including the PZT free-body DOFs, totals range
-from 28,176,525 to 28,211,544. Combined Level 3 has 5,383 nodes and 26,496
-tetrahedra per PZT. Conservative forecasts range from about 18 to 50 GiB GPU
-memory and 16 to 87 GiB host RAM. The largest case needs roughly 63 GiB free
+from 28,181,574 to 28,211,544. Combined Level 3 has 5,383 nodes and 26,496
+tetrahedra per PZT. Conservative forecasts range from about 20 to 50 GiB GPU
+memory and 21 to 87 GiB host RAM. The largest case needs roughly 63 GiB free
 VRAM and 109 GiB currently available host RAM with the launch headroom policy.
 An H100 NVL with sufficient host allocation is a candidate; its actual free
 resources must be checked on launch. The local 8 GB/16 GB machine does not fit.
@@ -116,13 +108,13 @@ longer than independent refinements; no full run was used to calibrate them.
 
 ## Outputs, checkpointing and failure recovery
 
-Everything is under `outputs/simulation-runs/pzt-mesh-convergence-001`:
+Everything is under `outputs/simulation-runs/pzt-mesh-convergence-002`:
 
 ```
 plan.json, schedule.txt, status.json, all-results.json, all-results.txt, metrics.csv
 baseline/                        # imported; never simulated
 baseline-assembly-sources/       # old source snapshots for compatibility checks
-cases/01-radial-L1/              # one folder per spatial configuration
+cases/01-combined-L1/              # one folder per spatial configuration
   build.json, time-plan.json, comparisons.json, result.json, worker.log
   primary/trace.npz, result.json, 50khz/waveforms.npz ... 300khz/waveforms.npz
   half-step/trace.npz, result.json, 50khz/waveforms.npz ... 300khz/waveforms.npz
@@ -163,17 +155,17 @@ RAM/GPU memory peaks are recorded separately from predictions.
 Do not run the following launch commands until execution is explicitly
 authorized. No tool here creates, starts, pauses, terminates or stops a pod.
 
-The prepared archive is under `outputs/runpod-transfer/pzt-mesh-convergence-001`.
+The prepared archive is under `outputs/runpod-transfer/pzt-mesh-convergence-002`.
 Copy its `.tar.gz` and `.tar.gz.sha256` files to a NEW pod directory, using the
 pod's actual SSH host, port and verified host key:
 
 ```bash
 # Run on the already running pod; plain mkdir refuses an occupied directory.
-mkdir /workspace/traxis-pzt-mesh-convergence-001
-cd /workspace/traxis-pzt-mesh-convergence-001
+mkdir /workspace/traxis-pzt-mesh-convergence-002
+cd /workspace/traxis-pzt-mesh-convergence-002
 # Upload the archive and checksum file here by scp, then:
-sha256sum -c pzt-mesh-convergence-001.tar.gz.sha256
-tar -xzf pzt-mesh-convergence-001.tar.gz
+sha256sum -c pzt-mesh-convergence-002.tar.gz.sha256
+tar -xzf pzt-mesh-convergence-002.tar.gz
 cd TRAXIS
 bash tools/runpod/pzt_mesh_setup.sh
 ```
@@ -183,15 +175,15 @@ hash-pinned CUDA 12.9 scientific libraries, the existing plotting requirements,
 bundle/baseline verification, a tiny native eigenvalue check and lightweight
 study tests. It does not start any full simulation.
 
-Launch later (one serial scheduler for all 12 configurations):
+Launch later (one serial scheduler for all 3 configurations):
 
 ```bash
 /tmp/traxis-pzt-mesh-runtime-001/bin/python tools/runpod/pzt_mesh_transfer.py launch \
-  --root outputs/simulation-runs/pzt-mesh-convergence-001 \
+  --root outputs/simulation-runs/pzt-mesh-convergence-002 \
   --python /tmp/traxis-pzt-mesh-runtime-001/bin/python --stability-backend auto
 # Progress, without starting any job:
 /tmp/traxis-pzt-mesh-runtime-001/bin/python tools/runpod/pzt_mesh_transfer.py status \
-  --root outputs/simulation-runs/pzt-mesh-convergence-001
+  --root outputs/simulation-runs/pzt-mesh-convergence-002
 ```
 
 After confirmed interruption, use the same launch command to resume. Add
@@ -203,7 +195,7 @@ symlink, to avoid the previously observed CUDA-header network IO delay.
 Arm the download-only watcher on THIS computer before the cloud launch:
 
 ```powershell
-python tools/runpod/pzt_mesh_transfer.py watch --detach --host HOST --port PORT --key KEY_PATH --known-hosts KNOWN_HOSTS_PATH --remote-project /workspace/traxis-pzt-mesh-convergence-001/TRAXIS --output "E:\TRAXIS Project Outputs\PZT Mesh Convergence"
+python tools/runpod/pzt_mesh_transfer.py watch --detach --host HOST --port PORT --key KEY_PATH --known-hosts KNOWN_HOSTS_PATH --remote-project /workspace/traxis-pzt-mesh-convergence-002/TRAXIS --output "E:\TRAXIS Project Outputs\PZT Mesh Convergence"
 ```
 
 Use the helper from this branch/worktree with the existing SSH private-key and
@@ -217,3 +209,7 @@ altering the pod. The large optional eigenvector warm hint is excluded from
 the export; all scientific results and stability certificates remain included.
 The watcher and simulations continue independently after Codex stops working.
 **The pod is always left running.**
+
+The nine independent refinement configurations are excluded from the active
+schedule. Their old JSON files are retained under
+`configs/pzt-mesh-convergence/historical-12-configuration-schedule`.

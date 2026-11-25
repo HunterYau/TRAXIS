@@ -23,13 +23,12 @@ from tools.runpod import pzt_mesh_transfer as transfer
 
 
 class StudyTests(unittest.TestCase):
-    def test_exact_12_configurations_no_baseline_job_and_independent_axes(self):
-        rows=protocol.cases();self.assertEqual(len(rows),12)
+    def test_exact_3_combined_configurations_no_baseline_or_individual_jobs(self):
+        rows=protocol.cases();self.assertEqual(len(rows),3)
         for r in rows:
             self.assertIn(r['level'],(1,2,3))
-            wanted=dict(protocol.BASE)
-            wanted.update(protocol.LEVELS[r['level']-1] if r['family']=='combined'
-                          else {r['family']:protocol.LEVELS[r['level']-1][r['family']]})
+            self.assertEqual(r['family'],'combined')
+            wanted=protocol.LEVELS[r['level']-1]
             self.assertEqual({k:r[k] for k in protocol.BASE},wanted)
             self.assertEqual(json.loads((protocol.CONFIG/(r['id']+'.json')).read_text()),r)
         self.assertFalse(any(r['id']=='baseline' for r in rows))
@@ -47,7 +46,7 @@ class StudyTests(unittest.TestCase):
         with self.assertRaises(ValueError):disk_mesh(geometry,sectors=32,rings=8,layers=3)
 
     def test_baseline_assembly_exactly_matches_preserved_original(self):
-        paths=[protocol.PROJECT/'outputs/simulation-runs/pzt-mesh-convergence-001/baseline-assembly-sources',
+        paths=[protocol.PROJECT/'outputs/simulation-runs/pzt-mesh-convergence-002/baseline-assembly-sources',
                protocol.PROJECT/'outputs/pzt-mesh-preparation-audit/baseline']
         old=next(p for p in paths if (p/'pzt_body.py').exists())
         name='pzt_mesh_legacy_body';spec=importlib.util.spec_from_file_location(name,old/'pzt_body.py')
@@ -146,7 +145,7 @@ class StudyTests(unittest.TestCase):
             study.save(folder/'result.json',dict(completed=False,status='failed',configuration=plan['cases'][0],error='test failure'))
             report=study.assess(root)
             rows=list(csv.DictReader((root/'metrics.csv').open()))
-            self.assertEqual(len(report['configurations']),12);self.assertEqual(len(rows),24)
+            self.assertEqual(len(report['configurations']),3);self.assertEqual(len(rows),24)
             self.assertEqual({r['channel'] for r in rows},set(metrics.CHANNELS))
             self.assertTrue(all(r['status']=='failed' and r['raw_l2_percent']=='' for r in rows))
 

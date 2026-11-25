@@ -173,7 +173,7 @@ def main():
     p.add_argument('--python',type=Path,default=Path(sys.executable));p.add_argument('--retry-failed',action='store_true')
     p.add_argument('--stability-backend',choices=['auto','cpu','gpu','original'],default='auto')
     p.add_argument('--host');p.add_argument('--port',type=int);p.add_argument('--key',type=Path);p.add_argument('--known-hosts',type=Path)
-    p.add_argument('--remote-project');p.add_argument('--remote-root',default='outputs/simulation-runs/pzt-mesh-convergence-001')
+    p.add_argument('--remote-project');p.add_argument('--remote-root',default='outputs/simulation-runs/pzt-mesh-convergence-002')
     p.add_argument('--output',type=Path);p.add_argument('--detach',action='store_true');args=p.parse_args()
     if args.action=='bundle':bundle(args.root,args.archive)
     elif args.action=='check-bundle':check_bundle()

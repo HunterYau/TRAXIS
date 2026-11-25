@@ -1,4 +1,4 @@
-"""Prepared, resumable 12-mesh LTS broadband study. --run is always explicit."""
+"""Prepared, resumable combined-only PZT mesh study. --run is always explicit."""
 import argparse
 import copy
 import csv
