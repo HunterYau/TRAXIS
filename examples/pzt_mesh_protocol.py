@@ -17,12 +17,12 @@ from traxis.storage import sha256_file,write_json,canonical_hash
 PROJECT=Path(__file__).resolve().parents[1]
 CONFIG=PROJECT/'configs/pzt-mesh-convergence'
 BASE=dict(radial=6,angular=32,thickness=3)
-LEVELS=[dict(radial=8,angular=40,thickness=4),dict(radial=10,angular=48,thickness=5),
-        dict(radial=12,angular=64,thickness=6)]
+REQUESTED_COARSE_DT_S=.00035/65536
+LEVELS=[dict(radial=7,angular=36,thickness=4),dict(radial=10,angular=48,thickness=6)]
 
 
 def cases():
-    return [dict(order=level,id=f'{level:02d}-combined-L{level}',family='combined',level=level,**values)
+    return [dict(order=level,id=f"{level:02d}-{'medium' if level==1 else 'fine'}",family='combined',level=level,**values)
             for level,values in enumerate(LEVELS,1)]
 
 
@@ -130,9 +130,11 @@ def geometric_estimate(config,row):
         estimate_note='Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory.')
 
 
-def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None):
+def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False):
+    if skip_stability_checks:
+        start_level=1;primary_only=True;coarse_dt_s=REQUESTED_COARSE_DT_S
     root=Path(root)
-    if start_level not in (1,2,3):raise ValueError('Invalid starting combined mesh level')
+    if start_level not in range(1,len(LEVELS)+1):raise ValueError('Invalid starting combined mesh level')
     if coarse_dt_s is not None and (not math.isfinite(coarse_dt_s) or coarse_dt_s<=0):raise ValueError('Positive finite fixed step required')
     if root.exists():raise FileExistsError('Use a new study output directory')
     old,compatibility=verify_baseline(baseline,assembly_sources)
@@ -156,8 +158,9 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
     solve_seconds=json.loads((Path(baseline)/'lts-kernel/result.json').read_text())['seconds']
     for row in rows:
         e=geometric_estimate(c,row);ratio=min(1.,e['min_tetra_singular_m']/base['min_tetra_singular_m'])
-        H=old['coarse_dt_s'];k=0
-        while H/2>.8*stable*ratio:H/=2;k+=1
+        H=coarse_dt_s if skip_stability_checks else old['coarse_dt_s']
+        k=round(math.log2(old['coarse_dt_s']/H))
+        while not skip_stability_checks and H/2>.8*stable*ratio:H/=2;k+=1
         matrix_ratio=sum(v*v for v in e['patch_dofs'])/sum(v*v for v in base['patch_dofs'])
         dense_ratio=(e['body_nodes_each']/base['body_nodes_each'])**3
         low=solve_seconds*2**k*(.95+.05*matrix_ratio)
@@ -168,6 +171,10 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
             estimated_primary_kernel_seconds_range=[low,high],
             estimated_case_total_seconds_range=[3*low+.5*build_seconds*dense_ratio,3*high+3*build_seconds*dense_ratio],
             timing_note='Projection from recorded 237 s LTS solve and 10 s build, with unmeasured 5-50% dense-patch work fraction and cubic assembly scaling. Excludes unknown screen and IO overhead; actual stability may require more steps.')
+        if skip_stability_checks:
+            e.update(provisional_half_step_steps=0,
+                estimated_case_total_seconds_range=[low+.5*build_seconds*dense_ratio,high+3*build_seconds*dense_ratio],
+                timing_note='Fixed requested steps, one kernel only; forecast excludes plotting/IO and is not measured or stability certified.')
         row['estimate']=e
     root.mkdir(parents=True)
     selected=['plan.json','status.json','partition.json','performance.json','build.json','stability-screen.json',
@@ -185,19 +192,27 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         baseline_coarse_dt_s=old['coarse_dt_s'],baseline_coarse_steps=old['coarse_steps'],duration_s=.00035,
         edge_width_m=old['edge_width_m'],boxes=old['boxes'],source_sampling='coarse',substeps=2,
         identity=fingerprints(),baseline_rerun=False,simulation_started=False,
-        execution=dict(start_level=start_level,primary_only=primary_only,fixed_coarse_dt_s=coarse_dt_s),
-        temporal_comparison='Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
+        execution=dict(start_level=start_level,primary_only=primary_only,fixed_coarse_dt_s=coarse_dt_s,
+                       skip_stability_checks=skip_stability_checks),
+        temporal_comparison='Not performed; primary-only execution.' if primary_only else 'Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
         baseline_limit='Saved baseline has no mesh-specific half-step check; comparison against it cannot alone certify 0.1% spatial accuracy.')
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
     lines=['PZT mesh convergence: baseline reused; no baseline run.',
         f'Execution: start at level {start_level}; primary only={primary_only}; fixed coarse dt={coarse_dt_s}. This execution policy overrides the default temporal protocol below.',
-        'Order: combined level 1, combined level 2, combined level 3. No independent refinements.',
-        '3 meshes, 6 mandatory impulse solves (primary and half-step); six reconstructions per solve.',
-        'Counts and geometry exact; memory/runtime are forecasts. Actual stable steps calculated on RunPod.',
+        'Order: Medium (7/36/4), then Fine (10/48/6). No independent refinements.',
+        f'{len(LEVELS)+1-start_level} meshes, {(len(LEVELS)+1-start_level)*(1 if primary_only else 2)} impulse solves; six frequency reconstructions per solve.',
+        f'Stability checks disabled={skip_stability_checks}; fixed time steps are not certified when disabled.',
+        'Counts and geometry exact; memory/runtime are forecasts.',
         'Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range']
     for row in rows:
         if row['level']<start_level:continue
         e=row['estimate'];lo,hi=e['estimated_case_total_seconds_range']
+        if primary_only and coarse_dt_s is not None:
+            lines.append(f"{row['order']:02d} | {row['id']} | {row['radial']}/{row['angular']}/{row['thickness']} | "
+                f"coarse={coarse_dt_s*1e9:.12g} ns fine={coarse_dt_s*1e9/2:.12g} ns | "
+                f"{round(plan['duration_s']/coarse_dt_s)} steps; no half-step run | "
+                f"DOFs={e['total_mechanical_dofs']} GPU forecast={e['estimated_gpu_peak_bytes']/1024**3:.1f} GiB")
+            continue
         lines.append(f"{row['order']:02d} | {row['id']} | {row['radial']}/{row['angular']}/{row['thickness']} | {e['total_mechanical_dofs']} | {e['estimated_gpu_peak_bytes']/1024**3:.1f} | {e['estimated_host_peak_bytes']/1024**3:.1f} | {e['provisional_primary_steps']}/{e['provisional_half_step_steps']} | {lo/60:.1f}-{hi/60:.1f}")
     (root/'schedule.txt').write_text('\n'.join(lines)+'\n')
     print((root/'schedule.txt').read_text(),flush=True)
@@ -209,11 +224,14 @@ def validate(root,*,sources=True):
     if p['schema']!=1 or p['baseline_rerun'] is not False or p['substeps']!=2 or p['source_sampling']!='coarse':
         raise ValueError('Study protocol changed')
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
-    if actual!=cases():raise ValueError('Exactly the 3 combined spatial configurations are required')
+    if actual!=cases():raise ValueError('Exactly the Medium and Fine combined spatial configurations are required')
     if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
     execution=p.get('execution',{})
-    if execution.get('start_level',1) not in (1,2,3) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
+    if execution.get('start_level',1) not in range(1,len(LEVELS)+1) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
     fixed=execution.get('fixed_coarse_dt_s')
+    if type(execution.get('skip_stability_checks',False)) is not bool:raise ValueError('Invalid stability policy')
+    if execution.get('skip_stability_checks') and (execution['start_level']!=1 or not execution['primary_only']
+            or fixed!=REQUESTED_COARSE_DT_S):raise ValueError('Unchecked study requires both combined meshes and the requested halved time pair')
     if fixed is not None and (not math.isfinite(fixed) or fixed<=0):raise ValueError('Invalid fixed step')
     if sources and p['identity']!=fingerprints():raise ValueError('Frozen study source snapshot changed')
     old,_=verify_baseline(root/'baseline',root/'baseline-assembly-sources')

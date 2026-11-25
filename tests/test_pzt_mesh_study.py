@@ -23,10 +23,37 @@ from tools.runpod import pzt_mesh_transfer as transfer
 
 
 class StudyTests(unittest.TestCase):
-    def test_exact_3_combined_configurations_no_baseline_or_individual_jobs(self):
-        rows=protocol.cases();self.assertEqual(len(rows),3)
+    def test_unchecked_fixed_steps_never_screen_or_reduce_step(self):
+        H=.00035/65536
+        plan=dict(execution=dict(skip_stability_checks=True,fixed_coarse_dt_s=H),duration_s=.00035)
+        # A bound below the requested step must not trigger a guard or step reduction.
+        with patch.object(study,'optimized_stability_screen',side_effect=AssertionError('Screen called')):
+            result=study.select_time(plan,SimpleNamespace(stable_dt_s=1e-12),None,lambda *a,**k:None,'auto',None)
+        self.assertEqual(result['coarse_dt_s'],H)
+        self.assertEqual(result['fine_dt_s'],H/2)
+        self.assertEqual(result['primary_steps'],65536)
+        self.assertEqual(result['half_step_steps'],0)
+        self.assertIsNone(result['stability']['accepted'])
+        self.assertFalse(result['stability']['performed'])
+
+    def test_scheduler_stops_before_next_configuration_after_failure(self):
+        rows=protocol.cases();plan=dict(cases=rows,execution={})
+        with tempfile.TemporaryDirectory() as tmp,patch.object(protocol,'validate',return_value=plan),patch.object(study,'completed',return_value=False):
+            root=Path(tmp)
+            study.save(root/'cases'/rows[0]['id']/'result.json',dict(completed=False,status='failed',configuration=rows[0],error='failed screen'))
+            report=dict(configurations=[dict(configuration=r,status='failed' if r['level']==1 else 'pending',completed=False) for r in rows])
+            with patch.object(study,'assess',return_value=report),patch.object(study.subprocess,'Popen') as launch:
+                study.run(root)
+                launch.assert_not_called()
+            status=study.read(root/'status.json')
+            self.assertEqual(status['status'],'stopped_after_failure')
+            self.assertEqual(status['pending'],[r['id'] for r in rows[1:]])
+            self.assertEqual(status['failed'],[rows[0]['id']])
+
+    def test_exact_2_combined_configurations_no_baseline_or_individual_jobs(self):
+        rows=protocol.cases();self.assertEqual(len(rows),2)
         for r in rows:
-            self.assertIn(r['level'],(1,2,3))
+            self.assertIn(r['level'],(1,2))
             self.assertEqual(r['family'],'combined')
             wanted=protocol.LEVELS[r['level']-1]
             self.assertEqual({k:r[k] for k in protocol.BASE},wanted)
@@ -145,7 +172,7 @@ class StudyTests(unittest.TestCase):
             study.save(folder/'result.json',dict(completed=False,status='failed',configuration=plan['cases'][0],error='test failure'))
             report=study.assess(root)
             rows=list(csv.DictReader((root/'metrics.csv').open()))
-            self.assertEqual(len(report['configurations']),3);self.assertEqual(len(rows),24)
+            self.assertEqual(len(report['configurations']),2);self.assertEqual(len(rows),24)
             self.assertEqual({r['channel'] for r in rows},set(metrics.CHANNELS))
             self.assertTrue(all(r['status']=='failed' and r['raw_l2_percent']=='' for r in rows))
 

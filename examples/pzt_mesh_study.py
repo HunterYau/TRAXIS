@@ -111,6 +111,13 @@ def build(plan,row,guard,event):
 
 def select_time(plan,system,fine,event,backend,cache):
     execution=plan.get('execution',{})
+    if execution.get('skip_stability_checks',False):
+        H=execution['fixed_coarse_dt_s']
+        steps=round(plan['duration_s']/H)
+        event('stability_checks_disabled',coarse_dt_s=H,fine_dt_s=H/2)
+        return dict(coarse_dt_s=H,fine_dt_s=H/2,primary_steps=steps,half_step_steps=0,
+            full_system_stable_dt_s=system.stable_dt_s,
+            stability=dict(accepted=None,performed=False,kind='disabled_by_user'),rejected_step_attempts=[])
     screen=optimized_stability_screen
     margin=.8
     if execution.get('remove_extra_time_margin'):
@@ -188,7 +195,10 @@ def worker(root,case_id,backend='auto'):
     started=time.perf_counter();last=-math.inf;system=None
     guard=PeakGuard(ResourceLimits(**plan['configuration']['resource_limits']),telemetry_errors_fatal=False)
     screen=optimized_stability_screen;simulate=gpu_lts_simulate
-    if plan.get('execution',{}).get('remove_extra_time_margin'):
+    unchecked=plan.get('execution',{}).get('skip_stability_checks',False)
+    if unchecked:
+        from traxis.gpu_local_time_unchecked import gpu_lts_simulate as simulate
+    elif plan.get('execution',{}).get('remove_extra_time_margin'):
         from traxis.lts_stability_requested import optimized_stability_screen as screen
         from traxis.gpu_local_time_requested import gpu_lts_simulate as simulate
     def event(kind,**details):
@@ -213,8 +223,8 @@ def worker(root,case_id,backend='auto'):
         for stage,factor in stages:
             dest=folder/stage;dest.mkdir(parents=True,exist_ok=True)
             H=settings['coarse_dt_s']/factor;steps=settings['primary_steps']*factor
-            proof=screen(system,fine,H,2,backend=backend,cache_dir=root/'stability-cache',
-                progress=lambda x:event('stability',**x))
+            proof=settings['stability'] if unchecked else screen(system,fine,H,2,backend=backend,
+                cache_dir=root/'stability-cache',progress=lambda x:event('stability',**x))
             identity=canonical_hash(dict(plan=canonical_hash(plan),case=case_id,stage=stage,H=H,
                 model=proof.get('model_fingerprint'),stable_dt_s=system.stable_dt_s))
             if (dest/'result.json').exists() and read(dest/'result.json').get('completed'):
@@ -238,7 +248,7 @@ def worker(root,case_id,backend='auto'):
                     max_workspace_mib=plan['protocol']['device_budget_mib'])
                 tail=np.asarray(stats['modified_energy_j'])[np.asarray(stats['energy_time_s'])>3*H]
                 drift=float(np.ptp(tail)/abs(tail[0])) if len(tail)>1 and tail[0]!=0 else None
-                if drift is None or drift>1e-8:raise ArithmeticError('Unforced energy conservation failed')
+                if not unchecked and (drift is None or drift>1e-8):raise ArithmeticError('Unforced energy conservation failed')
                 atomic_write(dest/'trace.npz',lambda f:np.savez_compressed(f,time_s=t,voltage_v=y),overwrite=True)
                 save(dest/'result.json',dict(completed=True,identity=identity,sha256=sha256_file(dest/'trace.npz'),
                     seconds=time.perf_counter()-tick,coarse_dt_s=H,fine_dt_s=H/2,steps=steps,
@@ -261,6 +271,7 @@ def worker(root,case_id,backend='auto'):
             resources=dict(sampled_peaks=getattr(guard,'peaks',{}),telemetry_error=guard.telemetry_error),
             resource_sampling_note='Process RSS sampled cooperatively; GPU total memory via nvidia-smi approximately every 2 s; these are sampled peaks, not exact allocation high-water marks.',
             temporal_qualified=comparison['temporal_qualified'],files=files)
+        result['stability_checks_performed']=not unchecked
         save(folder/'result.json',result);event('configuration_saved',result=result)
     except BaseException as exc:
         result=dict(completed=False,status='interrupted' if isinstance(exc,(KeyboardInterrupt,SystemExit)) else 'failed',
@@ -294,9 +305,9 @@ def assess(root):
                             **{mode+'_'+field:m['arrivals'].get(mode,{}).get(field)
                                for mode in ('S0','A0') for field in ('difference_us','error_percent','reliable')},
                             pass_1_percent=all(m['thresholds']['1.0'].values()),pass_0_1_percent=all(m['thresholds']['0.1'].values())))
-            reference=next(r for r in plan['cases'] if r['family']==row['family'] and r['level']==3)
+            reference=max((r for r in plan['cases'] if r['family']==row['family']),key=lambda r:r['level'])
             ref=root/'cases'/reference['id']
-            if row['level']!=3 and completed(ref):
+            if row['level']!=reference['level'] and completed(ref):
                 for frequency in plan['protocol']['frequencies_hz']:
                     t,y=wave(ref/'primary'/f'{frequency//1000}khz/waveforms.npz')
                     tc,yc=wave(folder/'primary'/f'{frequency//1000}khz/waveforms.npz')
@@ -331,12 +342,18 @@ def run(root,backend='auto',retry_failed=False):
     root=Path(root).resolve();plan=protocol.validate(root)
     with queue_lock(root):
         save(root/'scheduler.json',dict(pid=os.getpid(),created_unix=psutil.Process().create_time()))
+        stopped_on_failure=None
         for row in plan['cases']:
             if row['level']<plan.get('execution',{}).get('start_level',1):continue
             folder=root/'cases'/row['id'];folder.mkdir(parents=True,exist_ok=True)
             if completed(folder):continue
             prior=read(folder/'result.json') if (folder/'result.json').exists() else None
-            if prior and prior['status']=='failed' and not retry_failed:continue
+            if prior and not prior.get('completed',False) and not retry_failed:
+                stopped_on_failure=row['id']
+                save(root/'status.json',dict(status='stopped_after_failure',failed_configuration=stopped_on_failure,
+                    stopped_reason=prior.get('error','Configuration did not complete'),
+                    note='Later configurations were not started; resume only after fixing or explicitly retrying this failure.'))
+                break
             if (folder/'owner.json').exists():
                 owner=read(folder/'owner.json')
                 try:
@@ -371,9 +388,17 @@ def run(root,backend='auto',retry_failed=False):
                     estimated_dofs=row['estimate']['total_mechanical_dofs'],
                     error=f'Worker exited with code {code}, possibly external termination/OOM; no completion claimed.'))
             assess(root)
+            receipt=read(folder/'result.json') if (folder/'result.json').exists() else None
+            if receipt is not None and not receipt.get('completed',False):
+                stopped_on_failure=row['id']
+                save(root/'status.json',dict(status='stopped_after_failure',failed_configuration=stopped_on_failure,
+                    stopped_reason=receipt.get('error','Configuration did not complete'),
+                    note='Later configurations were not started; resume only after fixing or explicitly retrying this failure.'))
+                break
         report=assess(root);pending=[r['configuration']['id'] for r in report['configurations'] if r['status']=='pending']
-        failed=[r['configuration']['id'] for r in report['configurations'] if not r.get('completed') and r['status']!='skipped']
-        save(root/'status.json',dict(status='completed_with_failures' if failed else 'completed',failed=failed,pending=pending,
+        failed=[r['configuration']['id'] for r in report['configurations'] if r['status'] in ('failed','interrupted')]
+        save(root/'status.json',dict(status='stopped_after_failure' if stopped_on_failure else ('completed_with_failures' if failed else 'completed'),
+            failed=failed,pending=pending,stopped_on_failure=stopped_on_failure,
             completed=[r['configuration']['id'] for r in report['configurations'] if r.get('completed')]))
 
 
@@ -384,9 +409,11 @@ def main():
     mode.add_argument('--report',action='store_true');parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--baseline',type=Path);parser.add_argument('--assembly-sources',type=Path)
     parser.add_argument('--retry-failed',action='store_true')
-    parser.add_argument('--start-level',type=int,choices=(1,2,3),default=1)
+    parser.add_argument('--start-level',type=int,choices=range(1,len(protocol.LEVELS)+1),default=1)
     parser.add_argument('--primary-only',action='store_true')
     parser.add_argument('--coarse-dt-ns',type=float)
+    parser.add_argument('--skip-stability-checks',action='store_true',
+        help='Prepare Medium and Fine meshes, primary only, fine 2.6702880859375 ns / coarse 5.340576171875 ns, without stability screening')
     parser.add_argument('--stability-backend',choices=['auto','gpu','cpu','original'],default='auto')
     args=parser.parse_args()
     def interrupt(signum,frame):raise KeyboardInterrupt('Worker interrupted; completed kernels are retained')
@@ -394,7 +421,8 @@ def main():
     if args.prepare:
         if args.baseline is None or args.assembly_sources is None:parser.error('Preparation needs --baseline and --assembly-sources')
         protocol.prepare(args.root,args.baseline,args.assembly_sources,start_level=args.start_level,
-                         primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9)
+                         primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9,
+                         skip_stability_checks=args.skip_stability_checks)
     elif args.preflight:
         p=protocol.validate(args.root);print(json.dumps(dict(ready=True,configurations=len(p['cases']),baseline_rerun=False,full_simulations_started=0)))
     elif args.worker:worker(args.root,args.worker,args.stability_backend)

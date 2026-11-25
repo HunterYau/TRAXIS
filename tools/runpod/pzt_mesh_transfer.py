@@ -102,7 +102,7 @@ def launch(root,python,backend,retry_failed):
 def export(root):
     if alive(root):raise RuntimeError('Wait for scheduler completion before a consistent full export')
     state=json.loads((root/'status.json').read_text())
-    if state['status'] not in ('completed','completed_with_failures','interrupted'):
+    if state['status'] not in ('completed','completed_with_failures','interrupted','stopped_after_failure'):
         raise RuntimeError('Run is not in a terminal state; inspect the worker before exporting')
     # Certificates are retained; the large optional warm hint is regenerable.
     files=[p for p in root.rglob('*') if p.is_file() and p.name!='warm-latest.npz']
@@ -140,7 +140,7 @@ def watch(args):
         try:
             data=json.loads(ssh(prefix+'status --root '+shlex.quote(args.remote_root)))
             print(json.dumps(data),flush=True)
-            if data['status']['status'] in ('completed','completed_with_failures','interrupted') and not data['alive']:
+            if data['status']['status'] in ('completed','completed_with_failures','interrupted','stopped_after_failure') and not data['alive']:
                 info=json.loads(ssh(prefix+'export --root '+shlex.quote(args.remote_root),timeout=3600))
                 archive=info['archive']
                 if not re.fullmatch(re.escape(args.remote_project)+r'/outputs/pzt-mesh-exports/[0-9a-f]{16}\.tar\.gz',archive):
