@@ -194,13 +194,17 @@ def worker(root,case_id,backend='auto'):
     if completed(folder):return
     started=time.perf_counter();last=-math.inf;system=None
     guard=PeakGuard(ResourceLimits(**plan['configuration']['resource_limits']),telemetry_errors_fatal=False)
-    screen=optimized_stability_screen;simulate=gpu_lts_simulate
+    screen=optimized_stability_screen;simulate=gpu_lts_simulate;execution_options={}
     unchecked=plan.get('execution',{}).get('skip_stability_checks',False)
     if unchecked:
         from traxis.gpu_local_time_unchecked import gpu_lts_simulate as simulate
     elif plan.get('execution',{}).get('remove_extra_time_margin'):
         from traxis.lts_stability_requested import optimized_stability_screen as screen
         from traxis.gpu_local_time_requested import gpu_lts_simulate as simulate
+    execution_backend=plan.get('execution',{}).get('backend','original')
+    if execution_backend!='original':
+        from traxis.gpu_lts_optimized import gpu_lts_simulate as simulate
+        execution_options=dict(use_graphs=execution_backend=='optimized',screen_stability=not unchecked)
     def event(kind,**details):
         details.pop('phase',None)
         stage_elapsed=details.pop('elapsed_seconds',None)
@@ -241,11 +245,11 @@ def worker(root,case_id,backend='auto'):
                         last=now;event('propagating',stage=stage,percent=100*state['steps_completed']/steps,
                             steps_completed=state['steps_completed'],requested_steps=steps,
                             simulation_stopwatch=stopwatch(state['elapsed_seconds']))
-                event('starting_kernel',stage=stage,coarse_dt_s=H,fine_dt_s=H/2,steps=steps)
+                event('starting_kernel',stage=stage,coarse_dt_s=H,fine_dt_s=H/2,steps=steps,execution_backend=execution_backend)
                 tick=time.perf_counter()
                 t,y,stats=simulate(system,steps,H,probes,force,force=interior_impulse(H),
                     fine=fine,substeps=2,source_sampling='coarse',progress=progress,guard=guard,
-                    max_workspace_mib=plan['protocol']['device_budget_mib'])
+                    max_workspace_mib=plan['protocol']['device_budget_mib'],**execution_options)
                 tail=np.asarray(stats['modified_energy_j'])[np.asarray(stats['energy_time_s'])>3*H]
                 drift=float(np.ptp(tail)/abs(tail[0])) if len(tail)>1 and tail[0]!=0 else None
                 if not unchecked and (drift is None or drift>1e-8):raise ArithmeticError('Unforced energy conservation failed')
@@ -412,6 +416,8 @@ def main():
     parser.add_argument('--start-level',type=int,choices=range(1,len(protocol.LEVELS)+1),default=1)
     parser.add_argument('--primary-only',action='store_true')
     parser.add_argument('--coarse-dt-ns',type=float)
+    parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='optimized',
+        help='Preparation only: select GPU execution backend; optimized uses reuse, fusion and graphs')
     parser.add_argument('--skip-stability-checks',action='store_true',
         help='Prepare Medium and Fine meshes, primary only, fine 2.6702880859375 ns / coarse 5.340576171875 ns, without stability screening')
     parser.add_argument('--stability-backend',choices=['auto','gpu','cpu','original'],default='auto')
@@ -422,7 +428,7 @@ def main():
         if args.baseline is None or args.assembly_sources is None:parser.error('Preparation needs --baseline and --assembly-sources')
         protocol.prepare(args.root,args.baseline,args.assembly_sources,start_level=args.start_level,
                          primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9,
-                         skip_stability_checks=args.skip_stability_checks)
+                         skip_stability_checks=args.skip_stability_checks,execution_backend=args.execution_backend)
     elif args.preflight:
         p=protocol.validate(args.root);print(json.dumps(dict(ready=True,configurations=len(p['cases']),baseline_rerun=False,full_simulations_started=0)))
     elif args.worker:worker(args.root,args.worker,args.stability_backend)

@@ -23,6 +23,37 @@ from tools.runpod import pzt_mesh_transfer as transfer
 
 
 class StudyTests(unittest.TestCase):
+    def test_optimized_primary_worker_preserves_steps_check_policy_and_outputs(self):
+        row=dict(protocol.cases()[0],estimate=dict(total_mechanical_dofs=24))
+        H=protocol.REQUESTED_COARSE_DT_S
+        frequencies=[50000,100000,150000,200000,250000,300000]
+        plan=dict(cases=[row],configuration=dict(resource_limits={}),edge_width_m=0.,boxes=[],duration_s=33*H,
+            execution=dict(primary_only=True,skip_stability_checks=True,fixed_coarse_dt_s=H,backend='optimized'),
+            protocol=dict(device_budget_mib=1024,frequencies_hz=frequencies))
+        system=SimpleNamespace(mass_diagonal=np.ones(24),screen={},body_attachments=[],stable_dt_s=1e-12)
+        guard=SimpleNamespace(check=lambda **kw:None,peaks={},telemetry_error=None)
+        def solver(system,steps,h,*args,**kw):
+            self.assertEqual(steps,33);self.assertEqual(h,H)
+            self.assertEqual(kw['substeps'],2);self.assertEqual(kw['source_sampling'],'coarse')
+            self.assertTrue(kw['use_graphs']);self.assertFalse(kw['screen_stability'])
+            y=np.column_stack((np.arange(steps+1),-np.arange(steps+1))).astype(float);y[:2]=0
+            return np.arange(steps+1)*h,y,dict(energy_time_s=[10*H,20*H],modified_energy_j=[1.,1.])
+        def analyze(folder,*args):
+            study.save(folder/'comparisons.json',dict(temporal_qualified=False))
+            for f in frequencies:study.save(folder/'plots'/f'{f//1000}khz'/'vs-baseline/plots.json',dict(files={}))
+            return dict(temporal_qualified=False)
+        with tempfile.TemporaryDirectory() as tmp,patch.object(protocol,'validate',return_value=plan),\
+             patch.object(study,'build',return_value=(system,np.ones(24),None)),\
+             patch.object(study,'fine_partition',return_value=np.ones(24,dtype=bool)),\
+             patch('traxis.gpu_lts_optimized.gpu_lts_simulate',side_effect=solver) as simulate,\
+             patch.object(study,'optimized_stability_screen',side_effect=AssertionError('Unexpected screen')),\
+             patch.object(study,'analysis',side_effect=analyze),patch.object(study,'PeakGuard',return_value=guard),\
+             contextlib.redirect_stdout(io.StringIO()):
+            root=Path(tmp);study.worker(root,row['id']);folder=root/'cases'/row['id']
+            self.assertTrue(study.completed(folder));self.assertFalse(study.read(folder/'result.json')['stability_checks_performed'])
+            self.assertEqual(len(list((folder/'primary').glob('*khz/waveforms.npz'))),6)
+            study.worker(root,row['id']);self.assertEqual(simulate.call_count,1)
+
     def test_unchecked_fixed_steps_never_screen_or_reduce_step(self):
         H=.00035/65536
         plan=dict(execution=dict(skip_stability_checks=True,fixed_coarse_dt_s=H),duration_s=.00035)

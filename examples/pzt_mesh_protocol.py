@@ -130,7 +130,8 @@ def geometric_estimate(config,row):
         estimate_note='Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory.')
 
 
-def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False):
+def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized'):
+    if execution_backend not in ('original','optimized','optimized-no-graphs'):raise ValueError('Invalid execution backend')
     if skip_stability_checks:
         start_level=1;primary_only=True;coarse_dt_s=REQUESTED_COARSE_DT_S
     root=Path(root)
@@ -193,7 +194,7 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         edge_width_m=old['edge_width_m'],boxes=old['boxes'],source_sampling='coarse',substeps=2,
         identity=fingerprints(),baseline_rerun=False,simulation_started=False,
         execution=dict(start_level=start_level,primary_only=primary_only,fixed_coarse_dt_s=coarse_dt_s,
-                       skip_stability_checks=skip_stability_checks),
+                       skip_stability_checks=skip_stability_checks,backend=execution_backend),
         temporal_comparison='Not performed; primary-only execution.' if primary_only else 'Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
         baseline_limit='Saved baseline has no mesh-specific half-step check; comparison against it cannot alone certify 0.1% spatial accuracy.')
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
@@ -202,6 +203,7 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         'Order: Medium (7/36/4), then Fine (10/48/6). No independent refinements.',
         f'{len(LEVELS)+1-start_level} meshes, {(len(LEVELS)+1-start_level)*(1 if primary_only else 2)} impulse solves; six frequency reconstructions per solve.',
         f'Stability checks disabled={skip_stability_checks}; fixed time steps are not certified when disabled.',
+        f'GPU execution backend: {execution_backend}.',
         'Counts and geometry exact; memory/runtime are forecasts.',
         'Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range']
     for row in rows:
@@ -227,6 +229,8 @@ def validate(root,*,sources=True):
     if actual!=cases():raise ValueError('Exactly the Medium and Fine combined spatial configurations are required')
     if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
     execution=p.get('execution',{})
+    if execution.get('backend','original') not in ('original','optimized','optimized-no-graphs'):
+        raise ValueError('Invalid GPU execution backend')
     if execution.get('start_level',1) not in range(1,len(LEVELS)+1) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
     fixed=execution.get('fixed_coarse_dt_s')
     if type(execution.get('skip_stability_checks',False)) is not bool:raise ValueError('Invalid stability policy')

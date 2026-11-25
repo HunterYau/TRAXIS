@@ -1,6 +1,6 @@
 # Two combined meshes, fixed time steps, screening disabled
 
-Prepared run: `outputs/simulation-runs/pzt-mesh-convergence-006`.
+Prepared optimized run: `outputs/simulation-runs/pzt-mesh-convergence-007`.
 
 | Order | Radial | Angular | Thickness |
 | --- | ---: | ---: | ---: |
@@ -17,7 +17,13 @@ The previously completed run 005 retains its original time grid and results.
 The study option `--skip-stability-checks` bypasses step-limit admission,
 spectral screening, and energy-drift rejection. Energy drift is still
 recorded. It uses the separate `traxis/gpu_local_time_unchecked.py` copy;
-the original solver and its screening fallback remain unchanged. The
+the original solver and its screening fallback remain unchanged. New plans
+default to the optional optimized backend (memory reuse, CUDA graphs and
+simple vector arithmetic fusion); use `--execution-backend original` when
+preparing a fresh plan to select the old unchecked backend instead. Both
+use exactly the time pair below and retain disabled stability screening.
+The optimized backend receives `screen_stability=False` explicitly from
+the study plan. It does not report a passed stability check. The
 integration recurrence and FP64 arithmetic are unchanged. Output marks
 stability as `performed=false, accepted=null`; it must not imply a pass.
 Nonfinite states, invalid inputs, and memory guards still stop a failed
@@ -27,14 +33,14 @@ the pending configurations. No automatic pod stop is performed.
 Preparation (from the study worktree, substitute the saved baseline paths):
 
 ```powershell
-python -m examples.pzt_mesh_study --prepare --root outputs/simulation-runs/pzt-mesh-convergence-006 --baseline <saved-lts-005> --assembly-sources <saved-baseline-assembly-sources> --skip-stability-checks
-python -m examples.pzt_mesh_study --preflight --root outputs/simulation-runs/pzt-mesh-convergence-006
+python -m examples.pzt_mesh_study --prepare --root outputs/simulation-runs/pzt-mesh-convergence-007 --baseline <saved-lts-005> --assembly-sources <saved-baseline-assembly-sources> --skip-stability-checks --execution-backend optimized
+python -m examples.pzt_mesh_study --preflight --root outputs/simulation-runs/pzt-mesh-convergence-007
 ```
 
 Execution, when requested separately:
 
 ```bash
-python -u -m examples.pzt_mesh_study --run --root outputs/simulation-runs/pzt-mesh-convergence-006
+python -u -m examples.pzt_mesh_study --run --root outputs/simulation-runs/pzt-mesh-convergence-007
 ```
 
 Preparation and local checks do not launch the simulations or contact RunPod.
