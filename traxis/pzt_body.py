@@ -19,12 +19,15 @@ from traxis.pzt_receiver import _point_weights
 from traxis.pzt_bond import interface_operators
 
 
-def disk_mesh(geometry, *, sectors=24, rings=2, layers=2):
+def disk_mesh(geometry, *, sectors=24, rings=2, layers=2,max_nodes=1024,max_elements=8192):
+    if (type(max_nodes) is not int or not 4<=max_nodes<=8192
+            or type(max_elements) is not int or not 1<=max_elements<=65536):
+        raise ValueError('invalid explicit component mesh budget')
     if (type(sectors) is not int or not 8 <= sectors <= 96
             or type(rings) is not int or not 1 <= rings <= 12
             or type(layers) is not int or not 1 <= layers <= 6
-            or (1+sectors*rings)*(layers+1) > 1024):
-        raise ValueError('disk resolution exceeds bounded 1024-node component')
+            or (1+sectors*rings)*(layers+1) > max_nodes):
+        raise ValueError('disk resolution exceeds declared component node budget')
     angles = np.arange(sectors)*2*np.pi/sectors
     xy = np.vstack([np.zeros((1, 2)), *[
         geometry.radius_m*j/rings*np.column_stack((np.cos(angles), np.sin(angles)))
@@ -40,8 +43,8 @@ def disk_mesh(geometry, *, sectors=24, rings=2, layers=2):
             a, b, c = triangle+layer*n
             A, B, C = a+n, b+n, c+n
             tets.extend(((a, b, c, C), (a, b, B, C), (a, A, B, C)))
-    if len(tets) > 8192:
-        raise ValueError('disk resolution exceeds bounded 8192-element component')
+    if len(tets) > max_elements:
+        raise ValueError('disk resolution exceeds declared component element budget')
     return SimpleNamespace(points_m=points, tetrahedra=np.array(tets, dtype=int)), n
 
 
@@ -62,7 +65,8 @@ class BodyAttachment:
 
 def attach_disk(layout, material, geometry, *, first_dof=None,
                 electrical='open', input_capacitance_f=0., bond='perfect', adhesive=None,
-                sectors=24, rings=2, layers=2, max_workspace_mib=512, guard=None):
+                sectors=24, rings=2, layers=2, max_workspace_mib=512, guard=None,
+                max_component_nodes=1024,max_component_elements=8192):
     """Eliminate tied surface DOFs by u_body=T*u_joint, retaining T' M T.
 
     electrical='voltage': prescribed voltage, force=-g*V (short if V=0).
@@ -74,7 +78,7 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
     if electrical not in ('open', 'voltage'):
         raise ValueError('electrical state must be open or prescribed voltage')
     if (not math.isfinite(input_capacitance_f) or input_capacitance_f < 0
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 4096):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 131072):
         raise ValueError('invalid capacitance or workspace budget')
     if not np.array_equal(layout.transform, np.eye(3)) or geometry.in_plane_angle_rad != 0:
         raise ValueError('body attachment currently requires aligned plate and material axes')
@@ -85,7 +89,8 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
     first_dof = host_dofs if first_dof is None else first_dof
     if type(first_dof) is not int or first_dof < host_dofs:
         raise ValueError('body degrees of freedom must follow the plate')
-    mesh, face_nodes = disk_mesh(geometry, sectors=sectors, rings=rings, layers=layers)
+    mesh, face_nodes = disk_mesh(geometry, sectors=sectors, rings=rings, layers=layers,
+                                max_nodes=max_component_nodes,max_elements=max_component_elements)
     n = len(mesh.points_m); lower = np.arange(face_nodes); upper = lower+layers*face_nodes
     contact = lower if geometry.surface == 'top' else upper
     z = layout.plate.thickness_m if geometry.surface == 'top' else 0.
@@ -117,7 +122,9 @@ def attach_disk(layout, material, geometry, *, first_dof=None,
         raise MemoryError('PZT attachment exceeds declared workspace')
     if guard: guard.check(force=True)
     transform = coo_matrix((values, (rows, inverse)), shape=(3*n, count)).tocsr()
-    port = electrode_port(assemble_piezoelectric(mesh, material, guard=guard), lower, upper)
+    port = electrode_port(assemble_piezoelectric(mesh, material, guard=guard,
+        max_nodes=max_component_nodes,max_elements=max_component_elements,
+        max_bytes=min(int(max_workspace_mib*1024**2),16*1024**3)), lower, upper)
     def project(matrix):
         answer = transform.T @ (transform.T @ matrix.T).T
         return (answer+answer.T)*.5
@@ -157,7 +164,7 @@ def merge_attachments(host_mass, attachments, *, max_workspace_mib=512, guard=No
     host_mass = np.asarray(host_mass)
     if (host_mass.ndim != 1 or np.iscomplexobj(host_mass) or not np.isfinite(host_mass).all()
             or np.any(host_mass <= 0) or not attachments
-            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 4096):
+            or not math.isfinite(max_workspace_mib) or not 0 < max_workspace_mib <= 131072):
         raise ValueError('positive host mass, attachments and bounded workspace required')
     next_dof = len(host_mass)
     for i, body in enumerate(attachments):

@@ -1,0 +1,9 @@
+{
+  "order": 3,
+  "id": "03-thickness-L1",
+  "family": "thickness",
+  "level": 1,
+  "radial": 6,
+  "angular": 32,
+  "thickness": 4
+}

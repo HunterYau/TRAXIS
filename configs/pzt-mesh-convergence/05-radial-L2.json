@@ -1,0 +1,9 @@
+{
+  "order": 5,
+  "id": "05-radial-L2",
+  "family": "radial",
+  "level": 2,
+  "radial": 10,
+  "angular": 32,
+  "thickness": 3
+}

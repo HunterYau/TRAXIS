@@ -196,19 +196,23 @@ class PiezoSystem:
     volume_m3: float
 
 
-def assemble_piezoelectric(mesh,material,*,max_bytes=256*1024**2,guard=None):
+def assemble_piezoelectric(mesh,material,*,max_bytes=256*1024**2,guard=None,
+                           max_nodes=1024,max_elements=8192):
     """Consistent 3D linear-tetrahedron coupled component, with all strain terms.
 
     Bounded component assembly, not a global dense full-plate backend.
     Mechanical DOFs use component-major order. Potential is nodal.
     """
     points=np.asarray(mesh.points_m);tets=np.asarray(mesh.tetrahedra);n=len(points)
+    if (type(max_nodes) is not int or not 4<=max_nodes<=8192
+            or type(max_elements) is not int or not 1<=max_elements<=65536):
+        raise ValueError('invalid explicit component mesh budget')
     if (points.shape!=(n,3) or np.iscomplexobj(points) or not np.isfinite(points).all()
             or tets.ndim!=2 or tets.shape[1]!=4 or not np.issubdtype(tets.dtype,np.integer)
-            or not 4<=n<=1024 or not 1<=len(tets)<=8192
+            or not 4<=n<=max_nodes or not 1<=len(tets)<=max_elements
             or np.any(tets<0) or np.any(tets>=n)):
         raise ValueError('coupled PZT component needs a bounded valid tetrahedral mesh')
-    if type(max_bytes) is not int or not 0<max_bytes<=256*1024**2 or 176*n*n>max_bytes:
+    if type(max_bytes) is not int or not 0<max_bytes<=16*1024**3 or 176*n*n>max_bytes:
         raise MemoryError('coupled PZT component exceeds its assembly budget')
     c,e,eps=material.stress_charge
     k=np.zeros((3*n,3*n));m=np.zeros_like(k);b=np.zeros((3*n,n));d=np.zeros((n,n));volume=0.

@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "baseline": {
+    "radial": 6,
+    "angular": 32,
+    "thickness": 3
+  },
+  "levels": [
+    {
+      "radial": 8,
+      "angular": 40,
+      "thickness": 4
+    },
+    {
+      "radial": 10,
+      "angular": 48,
+      "thickness": 5
+    },
+    {
+      "radial": 12,
+      "angular": 64,
+      "thickness": 6
+    }
+  ],
+  "frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000,
+    300000
+  ],
+  "channels": [
+    "top",
+    "bottom",
+    "S0-related",
+    "A0-related"
+  ],
+  "thresholds_percent": [
+    1.0,
+    0.1
+  ],
+  "temporal_target_percent": 0.01,
+  "time_policy": "primary plus one mandatory half-step solve; unresolved temporal error is reported, never silently accepted",
+  "minimum_new_kernel_solves": 24,
+  "maximum_spatial_level": 3,
+  "optimal_mesh_selection": false,
+  "device_budget_mib": 65536,
+  "component_workspace_mib": 65536
+}
