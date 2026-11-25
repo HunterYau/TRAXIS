@@ -22,7 +22,7 @@ from examples.plate_outputs import queue_lock
 from examples.experimental_five import PeakGuard
 from traxis.resources import ResourceLimits
 
-SOURCES=['traxis/local_time.py','traxis/gpu_local_time.py','examples/pzt_local_time_study.py']
+SOURCES=['traxis/local_time.py','traxis/gpu_local_time.py','traxis/gpu_lts_optimized.py','examples/pzt_local_time_study.py']
 FREQUENCIES=[50000,100000,150000,200000,250000,300000]
 
 
@@ -60,7 +60,8 @@ def identity():
         sources={str(p.relative_to(baseline.PROJECT)).replace('\\','/'):sha256_file(p) for p in paths})
 
 
-def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000):
+def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000,execution_backend='original'):
+    if execution_backend not in ('original','optimized','optimized-no-graphs'):raise ValueError('Invalid execution backend')
     if root.exists(): raise FileExistsError('Use a new output run directory')
     if substeps!=2: raise ValueError('Acceleration study currently validates ratio 2 only')
     if (not frequencies or len(set(frequencies))!=len(frequencies)
@@ -90,12 +91,14 @@ def prepare(root,substeps,frequencies,edge_width,boxes,device_budget_mib=20000):
         fine_dt_s=baseline.DURATION_S/case['steps'],
         coarse_dt_s=substeps*baseline.DURATION_S/case['steps'],
         coarse_steps=case['steps']//substeps,source_sampling='coarse',
-        tasks=tasks,simulation_started=False,
+        tasks=tasks,simulation_started=False,execution_backend=execution_backend,
         limitation='Split-LFC forcing sampled on coarse grid. Stability screen required; full-plate phase accuracy and speedup unvalidated.'))
     print(f'Prepared {len(tasks)} serial tasks; no simulation started. {root}',flush=True)
 
 
 def validate_plan(plan):
+    if plan.get('execution_backend','original') not in ('original','optimized','optimized-no-graphs'):
+        raise ValueError('Invalid execution backend')
     p=plan['substeps'];case=plan['case'];frequencies=plan['frequencies_hz']
     expected=['control-kernel','lts-kernel']
     if (plan.get('schema')!=3 or p!=2 or case!=cases()[0]
@@ -140,6 +143,10 @@ def reconstruct_method(root,task,plan):
 
 def run(root,stability_backend='auto'):
     plan=json.loads((root/'plan.json').read_text())
+    simulate=gpu_lts_simulate;execution_options={}
+    if plan.get('execution_backend','original')!='original':
+        from traxis.gpu_lts_optimized import gpu_lts_simulate as simulate
+        execution_options['use_graphs']=plan['execution_backend']=='optimized'
     if plan['identity']!=identity(): raise ValueError('Frozen sources/configuration changed')
     validate_plan(plan)
     with queue_lock(root):
@@ -223,10 +230,10 @@ def run(root,stability_backend='auto'):
                     t,y,stats=sim.time_s,sim.displacement_m,sim.statistics
                     stats=dict(stats,energy_time_s=sim.energy_time_s.tolist(),modified_energy_j=sim.modified_energy_j.tolist())
                 else:
-                    t,y,stats=gpu_lts_simulate(system,steps,H,probes,load,force=source,
+                    t,y,stats=simulate(system,steps,H,probes,load,force=source,
                         fine=fine,substeps=p,progress=progress,guard=guard,
                         source_sampling='coarse',
-                        max_workspace_mib=plan.get('device_budget_mib',20000))
+                        max_workspace_mib=plan.get('device_budget_mib',20000),**execution_options)
                 # Validate invariance only after the numerical source is over.
                 source_end=h if kind=='control' else H if kind=='kernel' else 5/number
                 tail=np.asarray(stats['modified_energy_j'])[np.asarray(stats['energy_time_s'])>source_end+2*H]
@@ -296,6 +303,8 @@ def main():
     mode.add_argument('--prepare',action='store_true');mode.add_argument('--run',action='store_true')
     parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--substeps',type=int,default=2)
+    parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='original',
+                        help='Preparation only: choose launch/memory optimization; original remains the default')
     parser.add_argument('--frequencies',type=int,nargs='+',default=FREQUENCIES)
     parser.add_argument('--edge-width-m',type=float,default=0.)
     parser.add_argument('--device-budget-mib',type=float,default=20000,
@@ -307,7 +316,7 @@ def main():
     if args.prepare:
         if not args.frequencies or any(f not in FREQUENCIES for f in args.frequencies):
             raise ValueError('Use supported benchmark frequencies')
-        prepare(args.root,args.substeps,args.frequencies,args.edge_width_m,args.fine_box,args.device_budget_mib)
+        prepare(args.root,args.substeps,args.frequencies,args.edge_width_m,args.fine_box,args.device_budget_mib,args.execution_backend)
     else:
         def interrupted(signum,frame): raise KeyboardInterrupt('Simulation interrupted by termination signal')
         previous=signal.signal(signal.SIGTERM,interrupted)
