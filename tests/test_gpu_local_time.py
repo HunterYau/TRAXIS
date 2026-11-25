@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import io,json
 from traxis.config import Plate,Material
 from traxis.gpu_tensor import make_layout,build_gpu_tensor,streamed_action
-from traxis.gpu_local_time import LocalActions,gpu_lts_simulate
+from traxis.gpu_local_time import LocalActions,gpu_lts_simulate,lts_stability_screen
 from traxis.local_time import fine_partition
 from traxis.gpu_enriched_verlet import sparse_probe_set,gpu_explicit_simulate
 
@@ -47,7 +47,7 @@ class GPULocalTimeTests(unittest.TestCase):
     def test_reject_damping_and_unstable_coarse_step(self):
         n=len(self.system.mass_diagonal);load=np.zeros(n);load[0]=1.
         fine=fine_partition(self.system,load);probes=sparse_probe_set([(np.array([0]),np.ones(1))],n)
-        with self.assertRaises(ValueError):gpu_lts_simulate(self.system,1,self.system.stable_dt_s,probes,load,fine=fine)
+        with self.assertRaises(ValueError):gpu_lts_simulate(self.system,1,2*self.system.stable_dt_s,probes,load,fine=fine)
         with self.assertRaises(ValueError):gpu_lts_simulate(self.system,1,.1*self.system.stable_dt_s,probes,load,fine=fine,mass_damping_per_s=1.)
 
     def test_actual_cuda_p2_unforced_energy_conservation(self):
@@ -58,6 +58,39 @@ class GPULocalTimeTests(unittest.TestCase):
         _,_,stats=gpu_lts_simulate(self.system,512,H,probes,load,fine=fine,force=source,energy_stride=32)
         energy=np.array(stats['modified_energy_j'])
         self.assertLess(np.ptp(energy)/abs(energy[0]),1e-9)
+
+    def test_relaxed_coarse_screen_matches_dense_effective_spectrum(self):
+        # Full exact spectrum of a tiny genuine plate, not an arbitrary mock.
+        import scipy.linalg as la
+        from tests.test_pzt_receiver import material
+        from traxis.pzt_body import attach_disk
+        from traxis.pzt_receiver import DiskGeometry
+        from traxis.gpu_pzt_body import couple_gpu_bodies
+        layout=make_layout(Plate(.04,.04,.001),(1,1,1),1)
+        base=build_gpu_tensor(layout,Material())
+        body=attach_disk(layout,material(),DiskGeometry((.02,.02),.005,.0005,'top',1),
+                         sectors=8,rings=1,layers=1,electrical='open')
+        system=couple_gpu_bodies(base,[body])
+        n=len(system.mass_diagonal);load=np.zeros(n);load[-1]=1
+        fine=fine_partition(system,load)
+        H=1.05*system.stable_dt_s
+        actions=LocalActions(system,fine)
+        A=np.column_stack([self.cp.asnumpy(actions.full(self.cp.asarray(np.eye(n)[:,j]))) for j in range(n)])
+        M=np.diag(system.mass_diagonal)
+        for b in system.body_patches:M[np.ix_(b.indices,b.indices)]=b.mass
+        L=la.cholesky(M,lower=True)
+        Ap=A-H*H/16*(A*fine[None,:])@A
+        effective=L.T@Ap@la.solve_triangular(L.T,np.eye(n),lower=False)*H*H
+        exact=la.eigvalsh(effective)[-1]
+        report=lts_stability_screen(system,fine,H,2)
+        self.assertTrue(report['coarse_cfl_relaxed'])
+        for value in report['estimated_H2_lambda_max']:self.assertAlmostEqual(value,exact,places=6)
+        self.assertFalse(fine.all())
+        probes=sparse_probe_set([(np.array([0]),np.ones(1))],n)
+        _,y,stats=gpu_lts_simulate(system,64,H,probes,load,fine=fine,
+            force=lambda t:float(abs(t-H)<H/4),source_sampling='coarse')
+        self.assertTrue(np.isfinite(y).all())
+        self.assertEqual(stats['fine_dt_s'],H/2)
 
     def test_malformed_probe_rejected_before_cuda_launch(self):
         from traxis.gpu_enriched_verlet import SparseProbeSet
@@ -98,12 +131,13 @@ class GPULocalTimeTests(unittest.TestCase):
         H=.1*self.system.stable_dt_s
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
-            plan=dict(identity={},configuration=dict(mesh=dict(order=2),body={},resource_limits={}),
+            plan=dict(schema=3,identity={},configuration=dict(mesh=dict(order=2),body={},resource_limits={}),
                 case=dict(cells=3,body=[8,1,1],steps=64),substeps=2,coarse_dt_s=H,
-                boxes=[],edge_width_m=0,frequencies_hz=[100000],
-                tasks=['control-kernel','kernel-1','kernel-2','uniform-100000','lts-100000'])
+                fine_dt_s=H/2,coarse_steps=32,source_sampling='coarse',
+                boxes=[],edge_width_m=.001,frequencies_hz=study.FREQUENCIES,
+                tasks=['control-kernel','lts-kernel'])
             write_json(root/'plan.json',plan)
-            with patch.object(study,'identity',return_value={}),patch.object(study,'validate_plan'),patch.object(study.queue,'build',return_value=(self.system,load,probes,64)),patch.object(study,'PeakGuard',return_value=SimpleNamespace(check=lambda **kw:None)),patch.object(study.baseline,'source',return_value=(lambda t:np.sin(t/H*.1),{})),redirect_stdout(io.StringIO()):
+            with patch.object(study,'identity',return_value={}),patch.object(study,'validate_plan'),patch.object(study.queue,'build',return_value=(self.system,load,probes,64)),patch.object(study,'PeakGuard',return_value=SimpleNamespace(check=lambda **kw:None)),patch.object(study.baseline,'source',side_effect=AssertionError('Experimental drive should not be read')),redirect_stdout(io.StringIO()):
                 study.run(root)
                 before=[(root/t/'trace.npz').stat().st_mtime_ns for t in plan['tasks']]
                 study.run(root)
@@ -111,7 +145,11 @@ class GPULocalTimeTests(unittest.TestCase):
             self.assertEqual(before,after)
             self.assertEqual(json.loads((root/'status.json').read_text())['status'],'completed')
             rows=json.loads((root/'comparisons.json').read_text())
-            self.assertEqual(len(rows),1)
+            self.assertEqual(len(rows),6)
+            self.assertTrue((root/'summary.txt').is_file())
+            for method in ('normal-broadband','lts-broadband'):
+                for f in study.FREQUENCIES:
+                    self.assertTrue((root/method/f'{f//1000}khz'/'waveforms.npz').is_file())
 
 
 if __name__=='__main__':unittest.main()

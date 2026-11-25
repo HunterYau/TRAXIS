@@ -1,5 +1,10 @@
 # Broadband with local time stepping
 
+**Superseded setup:** use [the current benchmark](local-time-stepping-benchmark.md)
+for current time steps, three-task schedule, forcing treatment and validation.
+The description below documents the previous refinement study, not the
+current acceleration scheduler. Do not run the old lts-003 plan.
+
 Branch: `research/broadband-local-time-stepping`, based directly on
 `research/broadband-comparison` at `581f273`. The MOR branch and its working
 files remain separate. This worktree is `.worktrees/local-time-stepping`.

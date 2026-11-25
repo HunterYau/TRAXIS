@@ -1,5 +1,8 @@
 # Local time stepping theory and implementation audit
 
+Historical audit of the former refinement study. Current settings and checks
+are documented in [the correction](local-time-stepping-correction.md).
+
 Reviewed against Grote & Mitkova, arXiv:1205.0654v2, section 3.1,
 equations (3.13)-(3.17), LTS-LF2(p), and propositions 3.1-3.3:
 https://arxiv.org/pdf/1205.0654 .

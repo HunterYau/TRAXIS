@@ -1,0 +1,5 @@
+# Optional native GPU eigenvalue libraries, Windows x86_64; official PyPI hashes.
+# Install in an isolated --target directory, not over the simulation environment.
+nvidia-cublas-cu12==12.9.2.10 --hash=sha256:623f43027d40d44ceadf0043f002bd25cf353e8f13ce90b9a87057019f560661
+nvidia-cusparse-cu12==12.5.10.65 --hash=sha256:9e487468a22a1eaf1fbd1d2035936a905feb79c4ce5c2f67626764ee4f90227c
+nvidia-nvjitlink-cu12==12.9.86 --hash=sha256:cc6fcec260ca843c10e34c936921a1c426b351753587fdd638e8cff7b16bb9db

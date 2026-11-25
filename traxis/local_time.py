@@ -21,6 +21,14 @@ def lf2_step(previous, current, coarse_dt, substeps, action, local_action,
             or type(substeps) is not int or not 1 <= substeps <= 16):
         raise ValueError('Positive coarse dt and integer substeps in 1..16 required')
     h = coarse_dt / substeps
+    if substeps == 2:
+        # Algebraic reduction of (3.13)-(3.16), NOT a new integrator.
+        # One full and one AP action instead of one full and two AP actions.
+        a = action(current)
+        f0 = source(time_s)
+        return (2*current-previous-coarse_dt**2*a
+                +coarse_dt**4/16*local_action(a-load*f0)
+                +coarse_dt**2*load*(.5*f0+.25*(source(time_s+h)+source(time_s-h))))
     coarse = current.copy()
     coarse[fine] = 0
     w = -action(coarse)
@@ -53,6 +61,19 @@ def polyphase_reconstruct(kernels, fine_source):
     return result
 
 
+def split_lf2_step(previous,current,H,p,action,local_action,fine,load,source,time_s):
+    """Published split-LFC forcing, LF-LTS(0); source evaluated at coarse time.
+
+    Grote/Michel/Sauter arXiv:2409.18085, Remark 1 following Algorithm 1:
+    w=f(t_n)-A(I-P)u, gamma=0. Mechanical substeps are H/p. Unlike the
+    fine-source variant, this is time invariant on coarse input/output nodes
+    and needs only one broadband kernel. It is second order for smooth f;
+    coarse source sampling is an explicit accuracy tradeoff, not a phase fit.
+    """
+    f0=source(time_s)
+    return lf2_step(previous,current,H,p,action,local_action,fine,load,lambda _:f0,time_s)
+
+
 def fine_partition(system, load, boxes=(), edge_width_m=0.):
     """Fine PZT blocks, drive support, optional physical boxes and edge strip.
 
@@ -61,13 +82,17 @@ def fine_partition(system, load, boxes=(), edge_width_m=0.):
     """
     n = len(system.mass_diagonal)
     fine = np.asarray(load) != 0
-    if fine.shape != (n,) or not math.isfinite(edge_width_m) or edge_width_m < 0:
+    if fine.shape != (n,) or (edge_width_m is not None and
+                            (not math.isfinite(edge_width_m) or edge_width_m < 0)):
         raise ValueError('Matching load and nonnegative edge width required')
     layout = system.layout
     ns = layout.screen['scalar_dofs']
+    if edge_width_m is None:
+        edge_width_m=max(layout.plate.width_m/layout.cells[0],layout.plate.height_m/layout.cells[1])
     if boxes or edge_width_m:
         # Bounded 1D axis broadcasting, no full (N,3) coordinate table.
         x,y,z = layout.axes_m
+        tol=32*np.finfo(float).eps*max(1.,x[-1],y[-1],z[-1])
         if not np.array_equal(layout.transform, np.eye(3)):
             raise ValueError('Physical box selection currently requires aligned axes')
         selected = np.zeros((len(x),len(y),len(z)), dtype=bool)
@@ -75,12 +100,12 @@ def fine_partition(system, load, boxes=(), edge_width_m=0.):
             b = np.asarray(box, dtype=float)
             if b.shape != (6,) or not np.isfinite(b).all() or np.any(b[::2] > b[1::2]):
                 raise ValueError('Each box needs finite ordered coordinate bounds')
-            selected |= ((x[:,None,None]>=b[0]) & (x[:,None,None]<=b[1])
-                & (y[None,:,None]>=b[2]) & (y[None,:,None]<=b[3])
-                & (z[None,None,:]>=b[4]) & (z[None,None,:]<=b[5]))
+            selected |= ((x[:,None,None]>=b[0]-tol) & (x[:,None,None]<=b[1]+tol)
+                & (y[None,:,None]>=b[2]-tol) & (y[None,:,None]<=b[3]+tol)
+                & (z[None,None,:]>=b[4]-tol) & (z[None,None,:]<=b[5]+tol))
         if edge_width_m:
-            selected |= ((x[:,None,None]<=edge_width_m) | (x[:,None,None]>=x[-1]-edge_width_m)
-                | (y[None,:,None]<=edge_width_m) | (y[None,:,None]>=y[-1]-edge_width_m))
+            selected |= ((x[:,None,None]<=edge_width_m+tol) | (x[:,None,None]>=x[-1]-edge_width_m-tol)
+                | (y[None,:,None]<=edge_width_m+tol) | (y[None,:,None]>=y[-1]-edge_width_m-tol))
         for c in range(3): fine[c*ns:(c+1)*ns] |= selected.ravel()
     for patch in getattr(system, 'body_patches', ()):
         fine[patch.indices] = True
