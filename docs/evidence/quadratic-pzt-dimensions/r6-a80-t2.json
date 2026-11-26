@@ -1,0 +1,119 @@
+{
+  "id": "r6-a80-t2",
+  "nodes": 9205,
+  "tets": 5280,
+  "status": "completed",
+  "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+  "incident_displacement_scale_m": 1e-09,
+  "plate_thickness_m": 0.001,
+  "plate_material": {
+    "young_pa": 71000000000.0,
+    "poisson": 0.33,
+    "density_kg_m3": 2700
+  },
+  "ordering": "MMD_AT_PLUS_A",
+  "rows": [
+    {
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "voltage_real_v": -0.043500891000207306,
+      "voltage_imag_v": -4.082729923126033e-08,
+      "residual": 1.484709905513011e-14,
+      "wavenumber_rad_m": 57.833634927222064
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "voltage_real_v": 5.7398056845025254e-08,
+      "voltage_imag_v": 0.05979066735570444,
+      "residual": 3.080412777847074e-15,
+      "wavenumber_rad_m": 455.74448279956766
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "voltage_real_v": -0.08541609764304667,
+      "voltage_imag_v": -1.4059200803215212e-07,
+      "residual": 1.2904492828133256e-14,
+      "wavenumber_rad_m": 115.67902141759748
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "voltage_real_v": 2.364871871740537e-06,
+      "voltage_imag_v": 0.050409711649168625,
+      "residual": 3.714651318501205e-15,
+      "wavenumber_rad_m": 655.9602227535236
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "voltage_real_v": -0.1242147432475026,
+      "voltage_imag_v": -2.3276555791708616e-07,
+      "residual": 2.3834078928194345e-14,
+      "wavenumber_rad_m": 173.54799568977168
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "voltage_real_v": 5.928017329311156e-06,
+      "voltage_imag_v": 0.011800821784253759,
+      "residual": 2.801384841391604e-15,
+      "wavenumber_rad_m": 817.2848823868416
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "voltage_real_v": 0.15847488256292364,
+      "voltage_imag_v": 2.1161844277361078e-07,
+      "residual": 1.1855093100633406e-14,
+      "wavenumber_rad_m": 231.45256462074062
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "voltage_real_v": 8.78346693437181e-06,
+      "voltage_imag_v": -0.029824340219181702,
+      "residual": 2.9326375015946846e-15,
+      "wavenumber_rad_m": 959.6497174932158
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "voltage_real_v": -0.18693621784147674,
+      "voltage_imag_v": 6.097444384347744e-08,
+      "residual": 1.6236545275563237e-14,
+      "wavenumber_rad_m": 289.4049944813521
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "voltage_real_v": 9.311725366226964e-06,
+      "voltage_imag_v": -0.05952191290275214,
+      "residual": 2.1831044703701133e-15,
+      "wavenumber_rad_m": 1090.6028790518342
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "S0",
+      "voltage_real_v": 0.20855064850830177,
+      "voltage_imag_v": -7.479327322035936e-07,
+      "residual": 1.503081161812639e-14,
+      "wavenumber_rad_m": 347.4179038623394
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "A0",
+      "voltage_real_v": 6.737981536333242e-06,
+      "voltage_imag_v": -0.07097548503684227,
+      "residual": 2.299199907080987e-15,
+      "wavenumber_rad_m": 1213.930278069387
+    }
+  ],
+  "projected_working_mib": 1502.591815655385,
+  "memory_forecast_note": "Measured whole-process RSS scaled by nodes^2.5 with 50% margin; at least twice assembly forecast",
+  "max_nodes": 12000,
+  "max_working_mib": 2304.0,
+  "seconds": 37.299093700014055,
+  "sampled_peak_rss_mib": 526.9921875
+}

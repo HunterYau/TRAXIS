@@ -1,0 +1,5 @@
+{
+  "status": "deferred_by_user_after_probe_completed",
+  "production_gpu_acceleration_enabled": false,
+  "note": "No ongoing GPU probe remained when cancellation was processed. No production GPU backend was enabled."
+}

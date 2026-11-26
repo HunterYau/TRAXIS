@@ -1,0 +1,44 @@
+[
+  {
+    "frequency": 50000,
+    "ordering": "COLAMD",
+    "relative_residual": 1.5092433021164174e-15
+  },
+  {
+    "frequency": 50000,
+    "ordering": "MMD_AT_PLUS_A",
+    "relative_residual": 1.6028744550294237e-15
+  },
+  {
+    "frequency": 50000,
+    "relative_solution_difference": 1.7133246186439516e-15
+  },
+  {
+    "frequency": 150000,
+    "ordering": "COLAMD",
+    "relative_residual": 1.5485064981027497e-15
+  },
+  {
+    "frequency": 150000,
+    "ordering": "MMD_AT_PLUS_A",
+    "relative_residual": 1.5148125939815877e-15
+  },
+  {
+    "frequency": 150000,
+    "relative_solution_difference": 1.4729392190964549e-15
+  },
+  {
+    "frequency": 300000,
+    "ordering": "COLAMD",
+    "relative_residual": 1.5842484607669536e-15
+  },
+  {
+    "frequency": 300000,
+    "ordering": "MMD_AT_PLUS_A",
+    "relative_residual": 1.5743794259000773e-15
+  },
+  {
+    "frequency": 300000,
+    "relative_solution_difference": 1.4057140551462363e-15
+  }
+]

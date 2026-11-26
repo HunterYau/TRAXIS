@@ -1,0 +1,48 @@
+{
+  "baseline_path": "outputs/quadratic-pzt-audit/basewaves/r6-a64-t2.json",
+  "baseline_sha256": "e64e37c4bf6ac2059be076bb262fe186d7d901af7e1365a630515b94cbc5e589",
+  "baseline_reused": true,
+  "baseline_rerun": false,
+  "cases": [
+    {
+      "dimension": "radial",
+      "radial": 8,
+      "angular": 64,
+      "thickness": 2,
+      "nodes": 9925,
+      "tetrahedra": 5760,
+      "projected_working_mib": 1813.8769645018015
+    },
+    {
+      "dimension": "angular",
+      "radial": 6,
+      "angular": 80,
+      "thickness": 2,
+      "nodes": 9205,
+      "tetrahedra": 5280,
+      "projected_working_mib": 1502.591815655385
+    },
+    {
+      "dimension": "thickness",
+      "radial": 6,
+      "angular": 64,
+      "thickness": 3,
+      "nodes": 10311,
+      "tetrahedra": 6336,
+      "projected_working_mib": 1995.4162471698403
+    }
+  ],
+  "frequency_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000,
+    300000
+  ],
+  "modes": [
+    "S0",
+    "A0"
+  ],
+  "serial_execution": true
+}

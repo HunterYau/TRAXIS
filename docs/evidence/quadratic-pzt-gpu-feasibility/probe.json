@@ -1,0 +1,38 @@
+{
+  "device": "NVIDIA GeForce RTX 3060 Ti",
+  "cases": [
+    {
+      "mesh": [
+        1,
+        16,
+        1
+      ],
+      "nodes": 147,
+      "equations": 344,
+      "cpu_factor_and_four_rhs_seconds": 0.0011470001190900803,
+      "gpu_qr_four_rhs_seconds": 5.562019899953157,
+      "gpu_speedup": 0.00020622006747939543,
+      "relative_solution_difference": 2.8273718865157983e-15,
+      "relative_residual": 2.9419527481285304e-15,
+      "precision": "FP64",
+      "gpu_pool_bytes": 239104
+    },
+    {
+      "mesh": [
+        3,
+        32,
+        2
+      ],
+      "nodes": 1765,
+      "equations": 5296,
+      "cpu_factor_and_four_rhs_seconds": 0.15815869998186827,
+      "gpu_qr_four_rhs_seconds": 25.935601399978623,
+      "gpu_speedup": 0.006098131195908903,
+      "relative_solution_difference": 1.640027600464148e-14,
+      "relative_residual": 1.4185095869221211e-14,
+      "precision": "FP64",
+      "gpu_pool_bytes": 5838336
+    }
+  ],
+  "note": "Small component probes only. GPU QR factor reuse is unavailable in this interface; four RHS cause repeated QR solves. No production switch implied."
+}

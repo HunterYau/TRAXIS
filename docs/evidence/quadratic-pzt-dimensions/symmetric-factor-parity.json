@@ -1,0 +1,50 @@
+[
+  {
+    "frequency": 50000,
+    "symmetric": false,
+    "seconds": 0.05265299999155104,
+    "relative_residual": 2.824750301253742e-15
+  },
+  {
+    "frequency": 50000,
+    "symmetric": true,
+    "seconds": 0.052310300059616566,
+    "relative_residual": 2.820647001901948e-15
+  },
+  {
+    "frequency": 50000,
+    "relative_solution_difference": 1.0748568518280142e-15
+  },
+  {
+    "frequency": 150000,
+    "symmetric": false,
+    "seconds": 0.05303819989785552,
+    "relative_residual": 3.153598014423819e-15
+  },
+  {
+    "frequency": 150000,
+    "symmetric": true,
+    "seconds": 0.05364360008388758,
+    "relative_residual": 2.967011945106711e-15
+  },
+  {
+    "frequency": 150000,
+    "relative_solution_difference": 1.381463570371139e-15
+  },
+  {
+    "frequency": 300000,
+    "symmetric": false,
+    "seconds": 0.052948700031265616,
+    "relative_residual": 3.0547361990697917e-15
+  },
+  {
+    "frequency": 300000,
+    "symmetric": true,
+    "seconds": 0.052978500025346875,
+    "relative_residual": 4.1297475298878486e-15
+  },
+  {
+    "frequency": 300000,
+    "relative_solution_difference": 1.3390701969556622e-15
+  }
+]

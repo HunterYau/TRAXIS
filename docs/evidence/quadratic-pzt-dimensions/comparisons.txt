@@ -1,0 +1,13 @@
+QUADRATIC PZT: INDEPENDENT DIMENSION REFINEMENT
+Saved reference 6/64/2 reused without rerun. All six frequencies; both S0 and A0.
+Differences are relative to the saved reference, not true errors.
+Dimension | configuration | S0 L2 % | A0 L2 % | S0 maximum % | A0 maximum % | seconds | sampled peak RSS MiB
+radial | 8/64/2 | 0.38429 | 1.13019 | 0.60487 | 6.77133 | 70.80 | 806.3
+  A0 per-frequency %: 0.2739, 0.6302, 6.7713, 3.1364, 0.9773, 0.2179
+angular | 6/80/2 | 0.01316 | 0.14055 | 0.02527 | 0.88932 | 37.30 | 527.0
+  A0 per-frequency %: 0.0273, 0.1373, 0.8893, 0.3448, 0.1013, 0.0360
+thickness | 6/64/3 | 0.22761 | 0.47399 | 0.33896 | 2.90408 | 1247.77 | 2874.8
+  A0 per-frequency %: 0.1310, 0.2695, 2.9041, 1.3022, 0.3664, 0.1532
+
+No full plate simulation was run. Uniform material, forcing scale, and electrical conditions remain fixed.
+Angular changes include polygon geometry effects; no new optimum or converged mesh is inferred.

@@ -1,0 +1,56 @@
+[
+  {
+    "frequency": 50000,
+    "symmetric": false,
+    "seconds": 0.3873159000650048,
+    "relative_residual": 5.51152888884205e-15,
+    "factor_nnz": 3904883
+  },
+  {
+    "frequency": 50000,
+    "symmetric": true,
+    "seconds": 0.20611999998800457,
+    "relative_residual": 9.573170856903463e-15,
+    "factor_nnz": 3855557
+  },
+  {
+    "frequency": 50000,
+    "relative_solution_difference": 3.011607204603174e-15
+  },
+  {
+    "frequency": 150000,
+    "symmetric": false,
+    "seconds": 0.39546689996495843,
+    "relative_residual": 7.257727021308912e-15,
+    "factor_nnz": 3904883
+  },
+  {
+    "frequency": 150000,
+    "symmetric": true,
+    "seconds": 0.28756120009347796,
+    "relative_residual": 7.365679945035972e-15,
+    "factor_nnz": 3855557
+  },
+  {
+    "frequency": 150000,
+    "relative_solution_difference": 2.4868475506879776e-15
+  },
+  {
+    "frequency": 300000,
+    "symmetric": false,
+    "seconds": 1.0011442000977695,
+    "relative_residual": 7.62307988163915e-15,
+    "factor_nnz": 3904883
+  },
+  {
+    "frequency": 300000,
+    "symmetric": true,
+    "seconds": 0.49746609991416335,
+    "relative_residual": 8.403779987845651e-15,
+    "factor_nnz": 3855557
+  },
+  {
+    "frequency": 300000,
+    "relative_solution_difference": 2.7655679079225684e-15
+  }
+]

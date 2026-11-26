@@ -1,0 +1,9 @@
+{
+  "status": "interrupted_local_diagnostic",
+  "configuration": "8/64/2",
+  "reason": "Replace costly sparse matrix ordering after small parity test; no physics change",
+  "elapsed_seconds": 160.0853672027588,
+  "rss_at_stop_mib": 1612.35546875,
+  "ordering": "COLAMD",
+  "frequency_progress": "50 kHz finished; 100 kHz factorization in progress; no final frequency receipt saved"
+}
