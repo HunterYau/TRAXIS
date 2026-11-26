@@ -1,0 +1,58 @@
+{
+  "id": "q3-s16-r1-z1-g6-f150-300",
+  "order": 3,
+  "side_cells": 16,
+  "radial_cells": 1,
+  "layers": 1,
+  "quadrature_order": 6,
+  "frequencies_hz": [
+    150000,
+    300000
+  ],
+  "rows": [
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "voltage_real_v": -0.12360958931992101,
+      "voltage_imag_v": 1.1118213008195912e-16,
+      "residual": 9.728990158863542e-14,
+      "factor_seconds": 61.890959499869496
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "voltage_real_v": -3.704450335823791e-16,
+      "voltage_imag_v": 0.012471000829954618,
+      "residual": 3.968784956291659e-15,
+      "factor_seconds": 61.890959499869496
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "S0",
+      "voltage_real_v": 0.20798279134219563,
+      "voltage_imag_v": 1.0567510744262954e-17,
+      "residual": 1.40926602888087e-13,
+      "factor_seconds": 61.97484949999489
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "A0",
+      "voltage_real_v": -2.960870364117293e-17,
+      "voltage_imag_v": -0.07007449490617151,
+      "residual": 1.1993933020684337e-14,
+      "factor_seconds": 61.97484949999489
+    }
+  ],
+  "status": "completed",
+  "precision": "float64",
+  "mass": "full consistent",
+  "nodes": 11908,
+  "hexahedra": 320,
+  "equations": 32748,
+  "boundary_sides": 64,
+  "assembly_seconds": 2.8034822000190616,
+  "volume_m3": 3.920685613182425e-08,
+  "sparse_matrix_bytes": 223042704,
+  "seconds": 128.5270879000891,
+  "sampled_peak_rss_mib": 1925.58203125
+}

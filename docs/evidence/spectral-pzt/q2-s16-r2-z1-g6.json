@@ -1,0 +1,118 @@
+{
+  "id": "q2-s16-r2-z1-g6",
+  "order": 2,
+  "side_cells": 16,
+  "radial_cells": 2,
+  "layers": 1,
+  "quadrature_order": 6,
+  "rows": [
+    {
+      "frequency_hz": 50000,
+      "mode": "S0",
+      "voltage_real_v": -0.04352880440377926,
+      "voltage_imag_v": 8.131843325829437e-18,
+      "residual": 5.463943917333615e-15,
+      "factor_seconds": 0.3016253001987934
+    },
+    {
+      "frequency_hz": 50000,
+      "mode": "A0",
+      "voltage_real_v": 9.468006504196196e-17,
+      "voltage_imag_v": 0.05978028355671915,
+      "residual": 4.656537166293542e-15,
+      "factor_seconds": 0.3016253001987934
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "S0",
+      "voltage_real_v": -0.08546727324168774,
+      "voltage_imag_v": 9.229037031677278e-18,
+      "residual": 1.5251302228997312e-14,
+      "factor_seconds": 0.2877529999241233
+    },
+    {
+      "frequency_hz": 100000,
+      "mode": "A0",
+      "voltage_real_v": 2.3626334801093834e-17,
+      "voltage_imag_v": 0.05045777597810511,
+      "residual": 1.4487708358470837e-15,
+      "factor_seconds": 0.2877529999241233
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "S0",
+      "voltage_real_v": -0.12428146675065754,
+      "voltage_imag_v": 2.6080416933925776e-17,
+      "residual": 4.7623601672548275e-15,
+      "factor_seconds": 0.2891933999489993
+    },
+    {
+      "frequency_hz": 150000,
+      "mode": "A0",
+      "voltage_real_v": 6.645502931052654e-17,
+      "voltage_imag_v": 0.011964432660158286,
+      "residual": 1.0919642651217036e-15,
+      "factor_seconds": 0.2891933999489993
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "S0",
+      "voltage_real_v": 0.1585493859577431,
+      "voltage_imag_v": 8.166969020592942e-18,
+      "residual": 4.3841389203218093e-14,
+      "factor_seconds": 0.5634454998653382
+    },
+    {
+      "frequency_hz": 200000,
+      "mode": "A0",
+      "voltage_real_v": -3.741106463420899e-18,
+      "voltage_imag_v": -0.029504558472641485,
+      "residual": 1.8478485388951692e-15,
+      "factor_seconds": 0.5634454998653382
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "S0",
+      "voltage_real_v": -0.18701479146410893,
+      "voltage_imag_v": -2.163163730086425e-17,
+      "residual": 5.4505718196769546e-14,
+      "factor_seconds": 0.5719621998723596
+    },
+    {
+      "frequency_hz": 250000,
+      "mode": "A0",
+      "voltage_real_v": -1.9168958592765857e-17,
+      "voltage_imag_v": -0.0590319611745953,
+      "residual": 2.3740687052099567e-15,
+      "factor_seconds": 0.5719621998723596
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "S0",
+      "voltage_real_v": 0.208638417161992,
+      "voltage_imag_v": 9.10855662708135e-18,
+      "residual": 1.3413587770335783e-14,
+      "factor_seconds": 0.564048099797219
+    },
+    {
+      "frequency_hz": 300000,
+      "mode": "A0",
+      "voltage_real_v": -9.009190554785916e-18,
+      "voltage_imag_v": -0.07034172407667627,
+      "residual": 1.0654411477444966e-15,
+      "factor_seconds": 0.564048099797219
+    }
+  ],
+  "status": "completed",
+  "precision": "float64",
+  "mass": "full consistent",
+  "nodes": 4803,
+  "hexahedra": 384,
+  "equations": 11208,
+  "boundary_sides": 64,
+  "assembly_seconds": 1.0879214000888169,
+  "volume_m3": 3.920685613182426e-08,
+  "sparse_matrix_bytes": 43065136,
+  "seconds": 4.173510999884456,
+  "sampled_peak_rss_mib": 243.54296875
+}

@@ -1,0 +1,38 @@
+{
+  "cases": [
+    {
+      "id": "P2-6-64-2",
+      "free_mechanical_dofs": 17676,
+      "electrical_dofs": 4420,
+      "timings": {
+        "stiffness_ms": 3.2535133262475333,
+        "mass_inverse_ms": 3.0353800005589924
+      },
+      "errors": {
+        "stiffness": 2.7605038062995986e-16,
+        "mass_inverse": 0.0
+      },
+      "gpu_pool_bytes": 26657280,
+      "precision": "FP64",
+      "mass": "consistent"
+    },
+    {
+      "id": "Q2-s16-r2-z1",
+      "free_mechanical_dofs": 9606,
+      "electrical_dofs": 1602,
+      "timings": {
+        "stiffness_ms": 2.056536660529673,
+        "mass_inverse_ms": 1.2472266641755898
+      },
+      "errors": {
+        "stiffness": 2.933256498309082e-16,
+        "mass_inverse": 0.0
+      },
+      "gpu_pool_bytes": 17163264,
+      "precision": "FP64",
+      "mass": "consistent"
+    }
+  ],
+  "device": "NVIDIA GeForce RTX 3060 Ti",
+  "limitation": "Fixed-face component proxy only; no plate contact/interior coupling or full simulation speed claim."
+}
