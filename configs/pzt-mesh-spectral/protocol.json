@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "baseline": {
+    "radial": 6,
+    "angular": 64,
+    "thickness": 1
+  },
+  "levels": [
+    {
+      "radial": 8,
+      "angular": 64,
+      "thickness": 1
+    }
+  ],
+  "frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000,
+    300000
+  ],
+  "channels": [
+    "top",
+    "bottom",
+    "S0-related",
+    "A0-related"
+  ],
+  "thresholds_percent": [
+    1.0,
+    0.1
+  ],
+  "temporal_target_percent": 0.01,
+  "time_policy": "Restored exact baseline pair: fine 5.340576171875 ns, coarse 10.68115234375 ns; primary only, stability screening disabled by the requested execution profile",
+  "minimum_new_kernel_solves": 2,
+  "refinement_scope": "combined_only",
+  "maximum_spatial_level": 2,
+  "optimal_mesh_selection": false,
+  "device_budget_mib": 65536,
+  "component_workspace_mib": 65536,
+  "element": "spectral",
+  "baseline_element": "spectral",
+  "comparison_scope": "New Q2 six-ring plate reference vs eight-ring Q2; same polygon, plate, sources, time grid and full consistent mass",
+  "scheduled_meshes": [
+    {
+      "radial": 6,
+      "angular": 64,
+      "thickness": 1
+    },
+    {
+      "radial": 8,
+      "angular": 64,
+      "thickness": 1
+    }
+  ]
+}

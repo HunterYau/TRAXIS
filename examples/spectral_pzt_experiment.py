@@ -23,18 +23,19 @@ ROOT=Path(__file__).resolve().parents[1]
 FREQUENCIES=[50000,100000,150000,200000,250000,300000]
 
 
-def run(order,side,radial,layers,output,*,quadrature_order=6,max_equations=20000,frequencies=None):
+def run(order,side,radial,layers,output,*,quadrature_order=6,max_equations=20000,frequencies=None,backend='cpu'):
     ident=f'q{order}-s{side}-r{radial}-z{layers}-g{quadrature_order}'
     frequencies=FREQUENCIES if frequencies is None else list(frequencies)
     if not frequencies or any(f not in FREQUENCIES for f in frequencies):raise ValueError('Unsupported frequency selection')
     if frequencies!=FREQUENCIES:ident+='-f'+'-'.join(str(f//1000) for f in frequencies)
+    if backend!='cpu':ident+='-'+backend
     path=output/(ident+'.json')
     if path.exists():
         prior=json.loads(path.read_text())
         if prior['status'] in ('completed','not_run_resource_budget'):return prior
         raise FileExistsError('Preserving an unfinished attempt; use another output folder')
     result=dict(id=ident,order=order,side_cells=side,radial_cells=radial,layers=layers,
-        quadrature_order=quadrature_order,frequencies_hz=frequencies,rows=[],status='running',precision='float64',mass='full consistent')
+        quadrature_order=quadrature_order,frequencies_hz=frequencies,rows=[],status='running',precision='float64',mass='full consistent',backend=backend)
     started=time.perf_counter();peak=[psutil.Process().memory_info().rss];stop=threading.Event()
     def sample():
         while not stop.wait(.025):peak[0]=max(peak[0],psutil.Process().memory_info().rss)
@@ -47,7 +48,7 @@ def run(order,side,radial,layers,output,*,quadrature_order=6,max_equations=20000
         result.update(nodes=n,hexahedra=len(mesh.hexahedra),equations=equations,boundary_sides=mesh.boundary_sides)
         if equations>max_equations:raise MemoryError('Component equation budget exceeded; no matrices assembled')
         mat=PiezoMaterial.from_profile(read_profile(ROOT/'configs/pzt/nce51-noliac-ver1404.json'))
-        tick=time.perf_counter();a=assemble(mesh,mat,quadrature_order=quadrature_order,max_workspace_mib=1536)
+        tick=time.perf_counter();a=assemble(mesh,mat,quadrature_order=quadrature_order,max_workspace_mib=1536,backend=backend)
         result['assembly_seconds']=time.perf_counter()-tick
         result['volume_m3']=a.volume_m3
         result['sparse_matrix_bytes']=sum(m.data.nbytes+m.indices.nbytes+m.indptr.nbytes for m in [a.stiffness,a.mass,a.coupling,a.dielectric])
@@ -60,14 +61,19 @@ def run(order,side,radial,layers,output,*,quadrature_order=6,max_equations=20000
         for f in frequencies:
             print(ident,f//1000,'kHz',flush=True);tick=time.perf_counter()
             S=sparse.bmat([[K-(2*np.pi*f)**2*M,bf*scale],[bf.T*scale,-DR*scale**2]],format='csc')
-            lu=splu(S,permc_spec='MMD_AT_PLUS_A')
+            if backend=='gpu':
+                from traxis.gpu_spectral_piezoelectric import GpuFactor
+                lu=GpuFactor(S)
+            else:lu=splu(S,permc_spec='MMD_AT_PLUS_A')
             factor_seconds=time.perf_counter()-tick
             for mode in ['S0','A0']:
                 p=fundamental_profile(f,.001,mode,material);u=p.fields(np.array([.0005]))[0][:,0]
                 displacement=(1e-9*u[:,None]*np.exp(1j*p.wavenumber_rad_m*mesh.points_m[lower,0])).ravel()
                 rhs=np.r_[-(KF-(2*np.pi*f)**2*MF)@displacement,-bc.T@displacement*scale]
-                sol=lu.solve(rhs.real)+1j*lu.solve(rhs.imag)
-                residual=float(np.linalg.norm(S@sol-rhs)/np.linalg.norm(rhs))
+                if backend=='gpu':sol,residual=lu.solve(rhs)
+                else:
+                    sol=lu.solve(rhs.real)+1j*lu.solve(rhs.imag)
+                    residual=float(np.linalg.norm(S@sol-rhs)/np.linalg.norm(rhs))
                 if residual>1e-9:raise ArithmeticError('Hex harmonic residual failed')
                 voltage=sol[-1]*scale
                 result['rows'].append(dict(frequency_hz=f,mode=mode,voltage_real_v=float(voltage.real),
@@ -99,10 +105,19 @@ def compare(reference,tested):
 
 def main():
     p=argparse.ArgumentParser(__doc__);p.add_argument('--order',type=int,default=2);p.add_argument('--side',type=int,default=16)
-    p.add_argument('--radial',type=int,default=1);p.add_argument('--layers',type=int,default=1)
+    p.add_argument('--radial',type=int,default=None);p.add_argument('--layers',type=int,default=1)
     p.add_argument('--frequencies',nargs='+',type=int);p.add_argument('--max-equations',type=int,default=20000);p.add_argument('--quadrature',type=int,default=6);p.add_argument('--output',type=Path,default=ROOT/'outputs/spectral-pzt-experiment')
-    args=p.parse_args();args.output.mkdir(parents=True,exist_ok=True)
-    result=run(args.order,args.side,args.radial,args.layers,args.output,quadrature_order=args.quadrature,max_equations=args.max_equations,frequencies=args.frequencies)
+    p.add_argument('--backend',choices=['cpu','gpu'],default='cpu')
+    p.add_argument('--local-cuda-root',type=Path)
+    args=p.parse_args()
+    # Six annular radial cells is the selected Q2 starting mesh. Keep the
+    # lighter Q3 default because Q3 with six rings exceeds the node budget.
+    if args.radial is None:args.radial=6 if args.order==2 else 1
+    args.output.mkdir(parents=True,exist_ok=True)
+    if args.backend=='gpu' and args.local_cuda_root is not None:
+        from examples.quadratic_pzt_sparse_check import cuda_paths
+        cuda_handles=cuda_paths(args.local_cuda_root,args.output)
+    result=run(args.order,args.side,args.radial,args.layers,args.output,quadrature_order=args.quadrature,max_equations=args.max_equations,frequencies=args.frequencies,backend=args.backend)
     reference=json.loads((ROOT/'docs/evidence/quadratic-pzt-dimensions/comparisons.json').read_text())['reference']
     if result['status']=='completed':print(json.dumps(compare(reference,result),indent=2))
 

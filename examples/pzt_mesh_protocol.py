@@ -23,14 +23,18 @@ REQUESTED_COARSE_DT_S=.00035/32768
 LEVELS=[dict(BASE),dict(radial=6,angular=64,thickness=2),dict(radial=8,angular=64,thickness=2)]
 
 
-def cases():
+def cases(element='quadratic'):
+    if element=='spectral':
+        return [dict(order=i,id=f'{i:02d}-spectral-q2-r{r}',family='combined',level=i,
+                     element='spectral',radial=r,angular=64,thickness=1) for i,r in enumerate((6,8),1)]
+    if element!='quadratic':raise ValueError('Unsupported PZT element')
     return [dict(order=level,id=f"{level:02d}-quadratic-{('baseline','medium','fine')[level-1]}",family='combined',level=level,element='quadratic',**values)
             for level,values in enumerate(LEVELS,1)]
 
 
 def fingerprints():
     paths=[*sorted((PROJECT/'traxis').glob('*.py')),*sorted((PROJECT/'examples').glob('*.py')),
-           *sorted(CONFIG.glob('*.json')),PROJECT/'configs/pzt/nce51-noliac-ver1404.json']
+           *sorted(CONFIG.glob('*.json')),*sorted((PROJECT/'configs/pzt-mesh-spectral').glob('*.json')),PROJECT/'configs/pzt/nce51-noliac-ver1404.json']
     return {p.relative_to(PROJECT).as_posix():sha256_file(p) for p in paths}
 
 
@@ -102,15 +106,22 @@ def geometric_estimate(config,row):
     """Coordinates/topology/support only; no dense PZT assembly and no GPU."""
     layout=layout_for(config);s,r,z=row['angular'],row['radial'],row['thickness']
     geometry=DiskGeometry(tuple(config['actuator_center_xy_m']),config['disk_radius_m'],config['disk_thickness_m'],'top',1)
-    if row.get('element')=='quadratic':
+    if row.get('element')=='spectral':
+        from traxis.spectral_piezoelectric import disk_mesh as hex_mesh,basis
+        mesh=hex_mesh(geometry,side_cells=s//4,radial_cells=r,layers=z,order=2)
+        points=mesh.points_m;tets=mesh.hexahedra
+        ref=basis(2,6)[1]
+        jac=(ref[None]@points[tets][:,None]).reshape(-1,3,3)
+    elif row.get('element')=='quadratic':
         mesh=quadratic_disk(geometry,sectors=s,rings=r,layers=z,max_nodes=20000)
     else:
         mesh,_=disk_mesh(geometry,sectors=s,rings=r,layers=z,max_nodes=8192,max_elements=65536)
-    points=mesh.points_m;tets=mesh.tetrahedra
+    if row.get('element')!='spectral':
+        points=mesh.points_m;tets=mesh.tetrahedra
+        corners=tets[:,:4]
+        jac=(points[corners[:,1:]]-points[corners[:,0,None]]).transpose(0,2,1)
     contact_nodes=np.flatnonzero(abs(points[:,2]-points[:,2].min())<1e-14)
     free_dofs=3*(len(points)-len(contact_nodes))
-    corners=tets[:,:4]
-    jac=(points[corners[:,1:]]-points[corners[:,0,None]]).transpose(0,2,1)
     singular=np.linalg.svd(jac,compute_uv=False)
     if np.any(singular[:,-1]<=0) or np.max(singular[:,0]/singular[:,-1])>1e8:raise ValueError('Invalid mesh quality')
     patches=[]
@@ -130,7 +141,8 @@ def geometric_estimate(config,row):
     host=1.25*(max(attachment+retained,merge+retained)+48*ndof*8)
     storage=layout.screen['device_storage_screen_mib']*1024**2+3*squares*8+24*ndof
     gpu=storage+max(48*ndof*8+3*squares*8,32*ndof*8)
-    return dict(body_nodes_each=len(points),body_tetrahedra_each=len(tets),
+    return dict(body_nodes_each=len(points),body_tetrahedra_each=0 if row.get('element')=='spectral' else len(tets),body_elements_each=len(tets),
+        body_hexahedra_each=len(tets) if row.get('element')=='spectral' else 0,
         element=row.get('element','linear'),body_contact_nodes_each=len(contact_nodes),added_mechanical_dofs=3*free_dofs,total_mechanical_dofs=ndof,patch_dofs=patches,
         min_tetra_singular_m=float(singular[:,-1].min()),max_tetra_condition=float((singular[:,0]/singular[:,-1]).max()),
         attachment_workspace_bytes=attachment,merge_workspace_bytes=merge,
@@ -138,7 +150,9 @@ def geometric_estimate(config,row):
         estimate_note='Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory.')
 
 
-def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized',pzt_storage='dense',pzt_factor_backend='gpu'):
+def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized',pzt_storage='dense',pzt_factor_backend='gpu',element='quadratic'):
+    config_folder=CONFIG if element=='quadratic' else PROJECT/'configs/pzt-mesh-spectral'
+    if element=='spectral' and pzt_storage!='sparse':raise ValueError('Spectral study requires sparse PZT storage')
     if execution_backend not in ('original','optimized','optimized-no-graphs'):raise ValueError('Invalid execution backend')
     if pzt_storage not in ('dense','sparse'):raise ValueError('Invalid PZT storage')
     if pzt_factor_backend not in ('gpu','cpu'):raise ValueError('Invalid PZT factor backend')
@@ -151,10 +165,10 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
     if coarse_dt_s is not None and (not math.isfinite(coarse_dt_s) or coarse_dt_s<=0):raise ValueError('Positive finite fixed step required')
     if root.exists():raise FileExistsError('Use a new study output directory')
     old,compatibility=verify_baseline(baseline,assembly_sources)
-    protocol=json.loads((CONFIG/'protocol.json').read_text())
-    rows=cases()
+    protocol=json.loads((config_folder/'protocol.json').read_text())
+    rows=cases(element)
     for row in rows:
-        if json.loads((CONFIG/(row['id']+'.json')).read_text())!=row:raise ValueError('Configuration table changed')
+        if json.loads((config_folder/(row['id']+'.json')).read_text())!=row:raise ValueError('Configuration table changed')
     c=copy.deepcopy(old['configuration'])
     c['mesh']['cells']=[old['case']['cells'],old['case']['cells'],old['case'].get('nz',1)]
     if c.get('setup_profile') or c.get('damping_profile') or c['body']['bond']!='perfect':
@@ -204,7 +218,7 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         target=root/'baseline-assembly-sources'/name;target.parent.mkdir(exist_ok=True)
         shutil.copy2(Path(assembly_sources)/name,target)
     hashes={p.relative_to(root/'baseline').as_posix():sha256_file(p) for p in (root/'baseline').rglob('*') if p.is_file()}
-    plan=dict(schema=1,scope='PZT mesh convergence, intact plate, unchanged LTS split-LFC broadband integration',
+    plan=dict(schema=1,element=element,scope='PZT mesh convergence, intact plate, unchanged LTS split-LFC broadband integration',
         protocol=protocol,cases=rows,configuration=c,baseline_hashes=hashes,baseline_compatibility=compatibility,
         baseline_coarse_dt_s=old['coarse_dt_s'],baseline_coarse_steps=old['coarse_steps'],duration_s=.00035,
         edge_width_m=old['edge_width_m'],boxes=old['boxes'],source_sampling='coarse',substeps=2,
@@ -213,6 +227,10 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
                        skip_stability_checks=skip_stability_checks,backend=execution_backend,pzt_storage=pzt_storage,pzt_factor_backend=pzt_factor_backend),
         temporal_comparison='Not performed; primary-only execution.' if primary_only else 'Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
         baseline_limit='Quadratic 5/48/2 is simulated first and used for all mesh comparisons. Archived linear 6/32/3 supplies fixed plate/source settings only; its waveforms are not the convergence reference. Temporal qualification is not performed in primary-only mode.')
+    if element=='spectral':
+        plan['quadratic_baseline_new']=False
+        plan['spectral_baseline_new']=True
+        plan['baseline_limit']='New Q2 6-ring plate baseline, then Q2 8-ring plate; archived tetrahedral data supplies fixed plate/source settings only. Fixed time steps are not temporally or stability certified.'
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
     lines=['Quadratic PZT convergence: run NEW baseline 5/48/2, then Medium 6/64/2, then Fine 8/64/2.',
         f'Execution: start at level {start_level}; primary only={primary_only}; fixed coarse dt={coarse_dt_s}. This execution policy overrides the default temporal protocol below.',
@@ -234,6 +252,12 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
                 f"DOFs={e['total_mechanical_dofs']} GPU forecast={e['estimated_gpu_peak_bytes']/1024**3:.1f} GiB")
             continue
         lines.append(f"{row['order']:02d} | {row['id']} | {row['radial']}/{row['angular']}/{row['thickness']} | {e['total_mechanical_dofs']} | {e['estimated_gpu_peak_bytes']/1024**3:.1f} | {e['estimated_host_peak_bytes']/1024**3:.1f} | {e['provisional_primary_steps']}/{e['provisional_half_step_steps']} | {lo/60:.1f}-{hi/60:.1f}")
+    if element=='spectral':
+        lines=[plan['baseline_limit'],'Q2 displacement and electrical potential; Gauss order 6; full consistent mass.',
+            'Sparse coupled GPU actions; original LTS integration; no extra half-step run.',
+            '6-ring baseline then 8-ring refinement; six frequencies 50-300 kHz, four voltage channels.',
+            'Meshes: annular rings / polygon sides / thickness cells = 6/64/1 and 8/64/1.',
+            'Resource and stability estimates are not certification. Local full plate execution is not sized for 8 GiB.',*lines[10:]]
     (root/'schedule.txt').write_text('\n'.join(lines)+'\n')
     print((root/'schedule.txt').read_text(),flush=True)
     return plan
@@ -243,10 +267,14 @@ def validate(root,*,sources=True):
     root=Path(root);p=json.loads((root/'plan.json').read_text())
     if p['schema']!=1 or p['baseline_rerun'] is not False or p['substeps']!=2 or p['source_sampling']!='coarse':
         raise ValueError('Study protocol changed')
+    element=p.get('element','quadratic')
+    config_folder=CONFIG if element=='quadratic' else PROJECT/'configs/pzt-mesh-spectral'
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
-    if actual!=cases():raise ValueError('Exactly the baseline 5/48/2, medium 6/64/2, and fine 8/64/2 configurations are required')
-    if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
-    if p.get('comparison_baseline_case')!=cases()[0]['id'] or p.get('quadratic_baseline_new') is not True:
+    if actual!=cases(element):raise ValueError('Scheduled PZT configurations changed')
+    if p['protocol']!=json.loads((config_folder/'protocol.json').read_text()):raise ValueError('Protocol changed')
+    if element=='spectral' and p.get('execution',{}).get('pzt_storage')!='sparse':raise ValueError('Spectral study requires sparse storage')
+    baseline_flag='spectral_baseline_new' if element=='spectral' else 'quadratic_baseline_new'
+    if p.get('comparison_baseline_case')!=cases(element)[0]['id'] or p.get(baseline_flag) is not True:
         raise ValueError('New quadratic baseline must be simulated and used as reference')
     execution=p.get('execution',{})
     if execution.get('backend','original') not in ('original','optimized','optimized-no-graphs'):

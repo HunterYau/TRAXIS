@@ -435,6 +435,7 @@ def main():
     parser.add_argument('--coarse-dt-ns',type=float)
     parser.add_argument('--pzt-factor-backend',choices=['gpu','cpu'],default='gpu',help='Sparse mode: choose GPU triangular solves or explicit CPU factor solves with component-only transfers')
     parser.add_argument('--pzt-storage',choices=['dense','sparse'],default='dense',help='Preparation only: opt-in sparse quadratic operator; dense reference remains default')
+    parser.add_argument('--pzt-element',choices=['quadratic','spectral'],default='quadratic',help='Preparation only: opt-in Q2 spectral hexahedra (requires sparse storage)')
     parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='optimized',
         help='Preparation only: select GPU execution backend; optimized uses reuse, fusion and graphs')
     parser.add_argument('--skip-stability-checks',action='store_true',
@@ -447,7 +448,7 @@ def main():
         if args.baseline is None or args.assembly_sources is None:parser.error('Preparation needs --baseline and --assembly-sources')
         protocol.prepare(args.root,args.baseline,args.assembly_sources,start_level=args.start_level,
                          primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9,
-                         skip_stability_checks=args.skip_stability_checks,execution_backend=args.execution_backend,pzt_storage=args.pzt_storage,pzt_factor_backend=args.pzt_factor_backend)
+                         skip_stability_checks=args.skip_stability_checks,execution_backend=args.execution_backend,pzt_storage=args.pzt_storage,pzt_factor_backend=args.pzt_factor_backend,element=args.pzt_element)
     elif args.preflight:
         p=protocol.validate(args.root)
         blocked=[r['id'] for r in p['cases'] if

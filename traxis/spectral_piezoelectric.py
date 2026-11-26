@@ -16,7 +16,7 @@ from traxis.tensor_hex import line_rule
 
 
 def disk_mesh(geometry,*,side_cells=16,radial_cells=1,layers=1,order=2,max_nodes=12500):
-    if order not in (2,3,4) or not 1<=side_cells<=24 or not 1<=radial_cells<=6 or not 1<=layers<=4:
+    if order not in (2,3,4) or not 1<=side_cells<=24 or not 1<=radial_cells<=8 or not 1<=layers<=4:
         raise ValueError('Invalid experimental spectral mesh')
     predicted=((side_cells*order+1)**2+4*side_cells*radial_cells*order**2)*(layers*order+1)
     if predicted>max_nodes:raise MemoryError('Spectral node forecast exceeds component budget')
@@ -90,14 +90,20 @@ def element_matrices(points,material,order=2,quadrature_order=None):
     return K,M,B,D,float(weight.sum())
 
 
-def assemble(mesh,material,*,quadrature_order=None,max_workspace_mib=1024):
+def assemble(mesh,material,*,quadrature_order=None,max_workspace_mib=1024,backend='cpu'):
     n=len(mesh.points_m);nl=(mesh.order+1)**3;ne=len(mesh.hexahedra)
     forecast=ne*14*nl**2*24*2
     if forecast>min(max_workspace_mib*2**20,.45*psutil.virtual_memory().available):
         raise MemoryError('Spectral component assembly forecast exceeds available RAM')
     rows=[[],[],[],[]];cols=[[],[],[],[]];data=[[],[],[],[]];volume=0
-    for tet in mesh.hexahedra:
-        K,M,B,D,v=element_matrices(mesh.points_m[tet],material,mesh.order,quadrature_order);volume+=v
+    if backend=='gpu':
+        from .gpu_spectral_piezoelectric import element_batches
+        elements=element_batches(mesh,material,quadrature_order)
+    elif backend=='cpu':
+        elements=(element_matrices(mesh.points_m[t],material,mesh.order,quadrature_order) for t in mesh.hexahedra)
+    else:raise ValueError('Unsupported spectral backend '+str(backend))
+    for tet,(K,M,B,D,v) in zip(mesh.hexahedra,elements):
+        volume+=float(v)
         ids=np.concatenate([tet+i*n for i in range(3)])
         for k,(matrix,rr,cc) in enumerate([(K,ids,ids),(M,tet,tet),(B,ids,tet),(D,tet,tet)]):
             rows[k].append(np.repeat(rr,len(cc)));cols[k].append(np.tile(cc,len(rr)));data[k].append(matrix.ravel())

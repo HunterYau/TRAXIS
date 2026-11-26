@@ -1,0 +1,10 @@
+{
+  "order": 1,
+  "id": "01-spectral-q2-r6",
+  "family": "combined",
+  "level": 1,
+  "element": "spectral",
+  "radial": 6,
+  "angular": 64,
+  "thickness": 1
+}

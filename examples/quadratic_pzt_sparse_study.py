@@ -14,8 +14,9 @@ def estimate(layout,e):
     Actual fill is measured at construction; SuperLU workspace is NOT bounded
     rigorously. This upper payload forecast duplicates shared components.
     """
-    e=dict(e);n=e['total_mechanical_dofs'];ne=e['body_tetrahedra_each']
-    payload=6*(ne*1400*12*2+2*1536*2**20)
+    e=dict(e);n=e['total_mechanical_dofs'];ne=e.get('body_elements_each',e['body_tetrahedra_each'])
+    entries=14*27**2 if e.get('element')=='spectral' else 1400
+    payload=6*(ne*entries*12*2+2*1536*2**20)
     return dict(e,dense_reference_gpu_peak_bytes=e['estimated_gpu_peak_bytes'],
         dense_reference_host_peak_bytes=e['estimated_host_peak_bytes'],
         estimated_gpu_peak_bytes=int(layout.screen['device_storage_screen_mib']*2**20+payload+40*n*8),
@@ -31,7 +32,10 @@ def build(plan,row,guard,event):
     from examples import pzt_mesh_protocol as protocol
     from examples.pzt_mesh_study import available_host_bytes
     from traxis.gpu_quadratic_pzt_sparse import couple_sparse
-    if row.get('element')!='quadratic':raise ValueError('Sparse study requires quadratic elements')
+    if row.get('element') not in ('quadratic','spectral'):raise ValueError('Unsupported sparse element')
+    make_component=component
+    if row.get('element')=='spectral':
+        from traxis.spectral_pzt_sparse import component as make_component
     execution=plan['execution']
     if not execution['skip_stability_checks'] or execution['backend']!='original':
         raise ValueError('Sparse adapter requires original unchecked runner; dense graphs/screening adapters are unsupported')
@@ -45,7 +49,7 @@ def build(plan,row,guard,event):
     material=PiezoMaterial.from_profile(read_profile(protocol.PROJECT/c['material_profile']))
     def geo(center,surface):return DiskGeometry(tuple(center),c['disk_radius_m'],c['disk_thickness_m'],surface,1)
     event('assembling_shared_sparse_pzt')
-    data=component(geo(c['actuator_center_xy_m'],'top'),material,
+    data=make_component(geo(c['actuator_center_xy_m'],'top'),material,
         rings=row['radial'],sectors=row['angular'],layers=row['thickness'],
         max_workspace_mib=1536,max_factor_mib=1536)
     guard.check(force=True);bodies=[];masses=[];next_dof=layout.screen['vector_dofs']
