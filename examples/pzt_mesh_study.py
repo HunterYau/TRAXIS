@@ -419,7 +419,7 @@ def main():
     parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='optimized',
         help='Preparation only: select GPU execution backend; optimized uses reuse, fusion and graphs')
     parser.add_argument('--skip-stability-checks',action='store_true',
-        help='Prepare Medium and Fine meshes, primary only, fine 2.6702880859375 ns / coarse 5.340576171875 ns, without stability screening')
+        help='Prepare Medium and Fine meshes, primary only, fine 5.340576171875 ns / coarse 10.68115234375 ns, without stability screening')
     parser.add_argument('--stability-backend',choices=['auto','gpu','cpu','original'],default='auto')
     args=parser.parse_args()
     def interrupt(signum,frame):raise KeyboardInterrupt('Worker interrupted; completed kernels are retained')

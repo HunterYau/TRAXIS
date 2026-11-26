@@ -1,0 +1,2414 @@
+{
+  "reference": "r6-a64-t2, numerical reference, not exact ground truth",
+  "frequencies_hz": [
+    50000,
+    100000,
+    150000,
+    200000,
+    250000,
+    300000
+  ],
+  "cases": [
+    {
+      "id": "r1-a64-t1",
+      "nodes": 579,
+      "seconds": 0.17770649981684983,
+      "rss_mib": 81.265625,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            8.849290451352235,
+            8.540463132775429,
+            8.02349100068664,
+            7.295371663644362,
+            6.352914359622101,
+            5.194453712464131
+          ],
+          "worst_percent": 8.849290451352235,
+          "relative_l2_percent": 6.606309693735499
+        },
+        "A0": {
+          "per_frequency_percent": [
+            9.301920141203693,
+            10.501681386235859,
+            31.2003798261253,
+            10.965510956669505,
+            8.186911644095236,
+            11.756848625874525
+          ],
+          "worst_percent": 31.2003798261253,
+          "relative_l2_percent": 10.604156239354186
+        }
+      }
+    },
+    {
+      "id": "r2-a64-t1",
+      "nodes": 1347,
+      "seconds": 0.5081823000218719,
+      "rss_mib": 120.12890625,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            4.658532318065421,
+            4.478995230237173,
+            4.177634891946481,
+            3.7507798651991426,
+            3.1922430126720065,
+            2.4920050776961737
+          ],
+          "worst_percent": 4.658532318065421,
+          "relative_l2_percent": 3.3473414181012497
+        },
+        "A0": {
+          "per_frequency_percent": [
+            2.3651737169369045,
+            3.469626721926774,
+            46.49732193341111,
+            25.610271374484093,
+            11.999827495953575,
+            6.284989859684588
+          ],
+          "worst_percent": 46.49732193341111,
+          "relative_l2_percent": 10.227304740714374
+        }
+      }
+    },
+    {
+      "id": "r2-a64-t2",
+      "nodes": 2245,
+      "seconds": 1.2277893999125808,
+      "rss_mib": 162.203125,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            3.70369381481411,
+            3.558167764338792,
+            3.31327470876355,
+            2.9650690147649232,
+            2.507090945693267,
+            1.9291778201362673
+          ],
+          "worst_percent": 3.70369381481411,
+          "relative_l2_percent": 2.635037087512384
+        },
+        "A0": {
+          "per_frequency_percent": [
+            2.0845042056903766,
+            2.3428120829110464,
+            35.36065314139094,
+            20.29268140779305,
+            10.058645930013652,
+            6.077619127837481
+          ],
+          "worst_percent": 35.36065314139094,
+          "relative_l2_percent": 8.418517627785022
+        }
+      }
+    },
+    {
+      "id": "r3-a64-t2",
+      "nodes": 3525,
+      "seconds": 17.75535079999827,
+      "rss_mib": 303.3203125,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            1.9115903228864695,
+            1.8297038175428775,
+            1.6912874680086285,
+            1.493077144732412,
+            1.2297059649595041,
+            0.8926737493557569
+          ],
+          "worst_percent": 1.9115903228864695,
+          "relative_l2_percent": 1.3069807693385331
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.895495239882136,
+            1.713085465327209,
+            20.06721770652635,
+            10.025163118555572,
+            3.824465015365077,
+            0.6748498031753711
+          ],
+          "worst_percent": 20.06721770652635,
+          "relative_l2_percent": 3.656391913125734
+        }
+      }
+    },
+    {
+      "id": "r3-a96-t1",
+      "nodes": 3171,
+      "seconds": 1.2801579998340458,
+      "rss_mib": 195.63671875,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            2.92716621616552,
+            2.804304643582506,
+            2.597469918911969,
+            2.3031361610194887,
+            1.9154160927009953,
+            1.4248490951001986
+          ],
+          "worst_percent": 2.92716621616552,
+          "relative_l2_percent": 2.028431012241127
+        },
+        "A0": {
+          "per_frequency_percent": [
+            1.1247853902337202,
+            2.94694692773893,
+            30.930541953056252,
+            14.548433042987792,
+            4.9299609452736,
+            0.13067657599054577
+          ],
+          "worst_percent": 30.930541953056252,
+          "relative_l2_percent": 5.26124502548593
+        }
+      }
+    },
+    {
+      "id": "r4-a64-t2",
+      "nodes": 4805,
+      "seconds": 25.26103419996798,
+      "rss_mib": 373.32421875,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            1.0277058562793413,
+            0.9812077111983584,
+            0.9023785860976309,
+            0.7889869051155156,
+            0.6373876995305372,
+            0.4418647576664232
+          ],
+          "worst_percent": 1.0277058562793413,
+          "relative_l2_percent": 0.6836407383358974
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.4627317732826581,
+            0.9836090964995107,
+            10.913035645240836,
+            5.201899772380355,
+            1.7679199962821353,
+            0.06445607056868004
+          ],
+          "worst_percent": 10.913035645240836,
+          "relative_l2_percent": 1.8717413888105607
+        }
+      }
+    },
+    {
+      "id": "r4-a64-t3",
+      "nodes": 6727,
+      "seconds": 81.78385420003906,
+      "rss_mib": 638.328125,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            0.7208983360727369,
+            0.6874029002067904,
+            0.630436911230559,
+            0.5480967780666797,
+            0.4372879672270653,
+            0.2932041624927147
+          ],
+          "worst_percent": 0.7208983360727369,
+          "relative_l2_percent": 0.4717636460654441
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.3528984994905382,
+            0.720060850263879,
+            8.216316904168906,
+            4.029244199785428,
+            1.4629816108090143,
+            0.11544385369116966
+          ],
+          "worst_percent": 8.216316904168906,
+          "relative_l2_percent": 1.4555098113673473
+        }
+      }
+    },
+    {
+      "id": "r4-a96-t2",
+      "nodes": 7205,
+      "seconds": 42.76080210017972,
+      "rss_mib": 475.2890625,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            1.0748570934374737,
+            1.0239903357944813,
+            0.9377088850919925,
+            0.8134986747853736,
+            0.6472598235659469,
+            0.4325586515501643
+          ],
+          "worst_percent": 1.0748570934374737,
+          "relative_l2_percent": 0.6999459955527181
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.423888338128872,
+            1.21451078328702,
+            12.47968917613545,
+            5.830121543219262,
+            1.9535217515715315,
+            0.09994136644551661
+          ],
+          "worst_percent": 12.47968917613545,
+          "relative_l2_percent": 2.1106248208799614
+        }
+      }
+    },
+    {
+      "id": "r5-a64-t2",
+      "nodes": 6085,
+      "seconds": 53.681326800026,
+      "rss_mib": 484.52734375,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            0.4326802340506609,
+            0.41214461281897097,
+            0.3772531533789649,
+            0.32689583345124107,
+            0.2592684784047744,
+            0.17155607831531144
+          ],
+          "worst_percent": 0.4326802340506609,
+          "relative_l2_percent": 0.2807302311144677
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.18775314171499735,
+            0.4486662744508448,
+            4.787807849737745,
+            2.232892766612565,
+            0.7219828784032805,
+            0.10831886160004524
+          ],
+          "worst_percent": 4.787807849737745,
+          "relative_l2_percent": 0.8052032396756943
+        }
+      }
+    },
+    {
+      "id": "r6-a64-t2",
+      "nodes": 7365,
+      "seconds": 47.24407089990564,
+      "rss_mib": 573.6171875,
+      "metrics": {
+        "S0": {
+          "per_frequency_percent": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "worst_percent": 0.0,
+          "relative_l2_percent": 0.0
+        },
+        "A0": {
+          "per_frequency_percent": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "worst_percent": 0.0,
+          "relative_l2_percent": 0.0
+        }
+      }
+    }
+  ],
+  "independent_checks": {
+    "radial_5_to_6": {
+      "S0": {
+        "per_frequency_percent": [
+          0.4326802340506609,
+          0.41214461281897097,
+          0.3772531533789649,
+          0.32689583345124107,
+          0.2592684784047744,
+          0.17155607831531144
+        ],
+        "worst_percent": 0.4326802340506609,
+        "relative_l2_percent": 0.2807302311144677
+      },
+      "A0": {
+        "per_frequency_percent": [
+          0.18775314171499735,
+          0.4486662744508448,
+          4.787807849737745,
+          2.232892766612565,
+          0.7219828784032805,
+          0.10831886160004524
+        ],
+        "worst_percent": 4.787807849737745,
+        "relative_l2_percent": 0.8052032396756943
+      }
+    },
+    "angular_64_to_96_at_radial4_thickness2": {
+      "S0": {
+        "per_frequency_percent": [
+          0.04667324098968971,
+          0.0424506521022876,
+          0.03527124509342911,
+          0.024968708715260468,
+          0.011967560578706137,
+          0.012014845071772097
+        ],
+        "worst_percent": 0.04667324098968971,
+        "relative_l2_percent": 0.022281799026769775
+      },
+      "A0": {
+        "per_frequency_percent": [
+          0.039607071968091954,
+          0.23517037239878075,
+          1.7930353145732916,
+          0.5941527762346869,
+          0.18242261124219908,
+          0.03609202537283648
+        ],
+        "worst_percent": 1.7930353145732916,
+        "relative_l2_percent": 0.24707447365910865
+      }
+    },
+    "thickness_2_to_3_at_radial4_angular64": {
+      "S0": {
+        "per_frequency_percent": [
+          0.3046141779321789,
+          0.29180989158712234,
+          0.2702648644852431,
+          0.23963231024944537,
+          0.19933826854267506,
+          0.14846999183536494
+        ],
+        "worst_percent": 0.3046141779321789,
+        "relative_l2_percent": 0.21125308644924898
+      },
+      "A0": {
+        "per_frequency_percent": [
+          0.1096663837756953,
+          0.2659818400453691,
+          2.938971079346222,
+          1.1273643384859855,
+          0.30056587214953556,
+          0.17747352541628644
+        ],
+        "worst_percent": 2.938971079346222,
+        "relative_l2_percent": 0.43141633650760525
+      }
+    }
+  },
+  "radial_free_body_tests": [
+    {
+      "id": "r1-a32-t1",
+      "rings": 1,
+      "sectors": 32,
+      "layers": 1,
+      "nodes": 291,
+      "tets": 96,
+      "mechanical_dofs": 873,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 234205.80642901105,
+      "radial_participation": 0.9369648792696514,
+      "eigen_residual": 1.665967387431734e-13,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4087147695723184,
+          "residual": 1.3446480011669195e-13,
+          "displacement_norm": 1.8060276275483916e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47348383305267366,
+          "residual": 2.980378537838538e-13,
+          "displacement_norm": 2.0937111925310336e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6477647192390874,
+          "residual": 2.242045358637055e-13,
+          "displacement_norm": 2.883006080268359e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.3825959752795665,
+          "residual": 6.297223894707944e-13,
+          "displacement_norm": 6.217646736501992e-08
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.606520050667794,
+          "residual": 1.9196650033134177e-12,
+          "displacement_norm": 1.1910075204554082e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5434585174958781,
+          "residual": 3.1525189807720466e-13,
+          "displacement_norm": 2.5442273327198367e-08
+        }
+      ],
+      "seconds": 0.15746870008297265,
+      "sampled_peak_rss_mib": 81.42578125,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r1-a64-t1",
+      "rings": 1,
+      "sectors": 64,
+      "layers": 1,
+      "nodes": 579,
+      "tets": 192,
+      "mechanical_dofs": 1737,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233639.6333865503,
+      "radial_participation": 0.9369682322813986,
+      "eigen_residual": 2.8752102826299296e-13,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.41077935611441924,
+          "residual": 3.1408762985566624e-13,
+          "displacement_norm": 2.5725676557478838e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.4762621791617281,
+          "residual": 3.8316986454944785e-13,
+          "displacement_norm": 2.98514220733971e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6530176843363904,
+          "residual": 6.506115168651365e-13,
+          "displacement_norm": 4.1198974409515034e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.407329140534394,
+          "residual": 1.0909876780878301e-12,
+          "displacement_norm": 8.972273425936031e-08
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.5180841671943774,
+          "residual": 2.0482240497723862e-12,
+          "displacement_norm": 1.6314451854883674e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5389709386384948,
+          "residual": 4.899901824102523e-13,
+          "displacement_norm": 3.578056803440919e-08
+        }
+      ],
+      "seconds": 0.4195560000371188,
+      "sampled_peak_rss_mib": 98.71484375,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a24-t1",
+      "rings": 2,
+      "sectors": 24,
+      "layers": 1,
+      "nodes": 507,
+      "tets": 216,
+      "mechanical_dofs": 1521,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 234475.495637016,
+      "radial_participation": 0.9422886630180782,
+      "eigen_residual": 9.943276194861452e-14,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4067662210456019,
+          "residual": 1.2597530389701687e-13,
+          "displacement_norm": 2.3302548732030253e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.4714905336445669,
+          "residual": 9.58702656788318e-14,
+          "displacement_norm": 2.7211767546657863e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6453673013347686,
+          "residual": 1.6385970913682437e-13,
+          "displacement_norm": 3.779297344661578e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.373644559615111,
+          "residual": 2.9847455003825977e-13,
+          "displacement_norm": 8.162150885137606e-08
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.659666215855754,
+          "residual": 5.319285727170202e-13,
+          "displacement_norm": 1.6274465517617667e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5466698472220363,
+          "residual": 2.5994991529639015e-13,
+          "displacement_norm": 3.5043740806671545e-08
+        }
+      ],
+      "seconds": 0.562294399831444,
+      "sampled_peak_rss_mib": 93.5859375,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a32-t1",
+      "rings": 2,
+      "sectors": 32,
+      "layers": 1,
+      "nodes": 675,
+      "tets": 288,
+      "mechanical_dofs": 2025,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233883.43378742284,
+      "radial_participation": 0.9423274990480237,
+      "eigen_residual": 1.3983327021938939e-13,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4088988981828998,
+          "residual": 3.59749373118578e-13,
+          "displacement_norm": 2.711074180986381e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47436850911126327,
+          "residual": 2.5642981231388516e-13,
+          "displacement_norm": 3.1654158941490175e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6508287707840897,
+          "residual": 4.4093048376771816e-13,
+          "displacement_norm": 4.424867520836533e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.399174666299521,
+          "residual": 1.3326491039013306e-12,
+          "displacement_norm": 9.625014573804031e-08
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.5639277560296456,
+          "residual": 1.285453298290514e-12,
+          "displacement_norm": 1.8161000702644098e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5418816438187889,
+          "residual": 2.13836153487985e-13,
+          "displacement_norm": 4.024447618918113e-08
+        }
+      ],
+      "seconds": 0.991884500021115,
+      "sampled_peak_rss_mib": 109.35546875,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a32-t2",
+      "rings": 2,
+      "sectors": 32,
+      "layers": 2,
+      "nodes": 1125,
+      "tets": 576,
+      "mechanical_dofs": 3375,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233884.33943530585,
+      "radial_participation": 0.9424115070832073,
+      "eigen_residual": 6.08951375993162e-13,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.40889844323135704,
+          "residual": 1.329269388555661e-12,
+          "displacement_norm": 3.501382251514373e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47436670938912434,
+          "residual": 1.182591601938916e-12,
+          "displacement_norm": 4.088314940175943e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.650800602402349,
+          "residual": 2.4547979490017493e-12,
+          "displacement_norm": 5.7154809095661797e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.3992086170423095,
+          "residual": 4.291792095683896e-12,
+          "displacement_norm": 1.243110728080569e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.564455766171686,
+          "residual": 4.26124437480631e-12,
+          "displacement_norm": 2.3456577905591032e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5421575971697491,
+          "residual": 1.647122100026168e-12,
+          "displacement_norm": 5.1965163867640417e-08
+        }
+      ],
+      "seconds": 5.033254000125453,
+      "sampled_peak_rss_mib": 166.71875,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a48-t1",
+      "rings": 2,
+      "sectors": 48,
+      "layers": 1,
+      "nodes": 1011,
+      "tets": 432,
+      "mechanical_dofs": 3033,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233465.0546593848,
+      "radial_participation": 0.9423524970950676,
+      "eigen_residual": 5.202471369633069e-13,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.41042849466084663,
+          "residual": 1.0860298933371233e-12,
+          "displacement_norm": 3.338717358435264e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.4764320095018883,
+          "residual": 6.393537305534216e-13,
+          "displacement_norm": 3.900647821238923e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6547591876960533,
+          "residual": 1.154877530438797e-12,
+          "displacement_norm": 5.4771620079818046e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.417802446217989,
+          "residual": 3.669089072652008e-12,
+          "displacement_norm": 1.1968066704736294e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.50048404819686,
+          "residual": 3.2787782642892903e-12,
+          "displacement_norm": 2.173700762299537e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5386129190886343,
+          "residual": 1.7860589012243702e-12,
+          "displacement_norm": 4.91052288574663e-08
+        }
+      ],
+      "seconds": 1.3184730999637395,
+      "sampled_peak_rss_mib": 142.75,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a64-t1",
+      "rings": 2,
+      "sectors": 64,
+      "layers": 1,
+      "nodes": 1347,
+      "tets": 576,
+      "mechanical_dofs": 4041,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233319.05209575724,
+      "radial_participation": 0.9423681525486372,
+      "eigen_residual": 1.121708577724033e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4109653071210392,
+          "residual": 1.1057195447096089e-12,
+          "displacement_norm": 3.8626184880893695e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47715684027319594,
+          "residual": 9.430796399918073e-13,
+          "displacement_norm": 4.5137263073974475e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6561433666139693,
+          "residual": 1.6174620204065986e-12,
+          "displacement_norm": 6.351508419050218e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4244191086400755,
+          "residual": 2.5810595497910566e-12,
+          "displacement_norm": 1.389334749420233e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.4790999748327187,
+          "residual": 6.464420734751896e-12,
+          "displacement_norm": 2.490287348665011e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5374772319461657,
+          "residual": 1.147425209193869e-12,
+          "displacement_norm": 5.6629318789376764e-08
+        }
+      ],
+      "seconds": 2.2843808999750763,
+      "sampled_peak_rss_mib": 191.35546875,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a64-t2",
+      "rings": 2,
+      "sectors": 64,
+      "layers": 2,
+      "nodes": 2245,
+      "tets": 1152,
+      "mechanical_dofs": 6735,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233319.87048331348,
+      "radial_participation": 0.9424682738023411,
+      "eigen_residual": 1.5252075807604447e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4109649122630741,
+          "residual": 2.6409328258272676e-12,
+          "displacement_norm": 4.988587483569311e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47715531184819543,
+          "residual": 3.326356959673284e-12,
+          "displacement_norm": 5.829783873986325e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6561671307211618,
+          "residual": 4.015957607486474e-12,
+          "displacement_norm": 8.853255451041651e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4244618560636,
+          "residual": 4.870406900379857e-12,
+          "displacement_norm": 1.794388126861956e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.479617867615629,
+          "residual": 7.7690396606799e-12,
+          "displacement_norm": 3.2164173162639473e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5377666397786738,
+          "residual": 3.4967942077435912e-12,
+          "displacement_norm": 7.313079532207126e-08
+        }
+      ],
+      "seconds": 26.54144940013066,
+      "sampled_peak_rss_mib": 352.70703125,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r2-a96-t1",
+      "rings": 2,
+      "sectors": 96,
+      "layers": 1,
+      "nodes": 2019,
+      "tets": 864,
+      "mechanical_dofs": 6057,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233215.50220495136,
+      "radial_participation": 0.9423771612166318,
+      "eigen_residual": 1.2891085627601274e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.41134889477365505,
+          "residual": 1.1915414417093893e-12,
+          "displacement_norm": 4.737425537535304e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.4776740506576115,
+          "residual": 2.040538700134069e-12,
+          "displacement_norm": 5.536814196915056e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6571273598837465,
+          "residual": 2.6128647029450745e-12,
+          "displacement_norm": 7.787437691275546e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4291503150917342,
+          "residual": 5.242499213985425e-12,
+          "displacement_norm": 1.7080780920608026e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.46418205787142,
+          "residual": 7.2286802626466315e-12,
+          "displacement_norm": 3.033140091762579e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5366910986141882,
+          "residual": 3.758926851827455e-12,
+          "displacement_norm": 6.929226749199662e-08
+        }
+      ],
+      "seconds": 8.42487210012041,
+      "sampled_peak_rss_mib": 322.328125,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r3-a32-t2",
+      "rings": 3,
+      "sectors": 32,
+      "layers": 2,
+      "nodes": 1765,
+      "tets": 960,
+      "mechanical_dofs": 5295,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233844.38843861248,
+      "radial_participation": 0.9419247034564728,
+      "eigen_residual": 1.310568150025539e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.40891025794982655,
+          "residual": 1.7501924720126153e-12,
+          "displacement_norm": 4.2626245871196093e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47441939991933907,
+          "residual": 1.7064136356993171e-12,
+          "displacement_norm": 4.98127164771994e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6509393126607469,
+          "residual": 2.0840178048670412e-12,
+          "displacement_norm": 6.924746570664141e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.400256451150542,
+          "residual": 8.241950567200712e-12,
+          "displacement_norm": 1.5212687317257207e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.5552580015547943,
+          "residual": 4.891120179908872e-12,
+          "displacement_norm": 2.869577677990205e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5402036332274402,
+          "residual": 9.701887857201414e-13,
+          "displacement_norm": 6.402821107608428e-08
+        }
+      ],
+      "seconds": 16.83267219993286,
+      "sampled_peak_rss_mib": 272.6171875,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r3-a96-t1",
+      "rings": 3,
+      "sectors": 96,
+      "layers": 1,
+      "nodes": 3171,
+      "tets": 1440,
+      "mechanical_dofs": 9513,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233176.55593245037,
+      "radial_participation": 0.9419375486693333,
+      "eigen_residual": 2.793896747863845e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.41136057087915556,
+          "residual": 3.607359932332901e-12,
+          "displacement_norm": 5.7673446646677176e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47772596258298056,
+          "residual": 4.067563995537924e-12,
+          "displacement_norm": 6.746534091185408e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6572191503679927,
+          "residual": 1.8136632021854227e-12,
+          "displacement_norm": 9.404703418559334e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4302527887828382,
+          "residual": 9.184899652347285e-12,
+          "displacement_norm": 2.0905337281464912e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.455905827407841,
+          "residual": 1.2134306272439105e-11,
+          "displacement_norm": 3.711931157926913e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5349226726704489,
+          "residual": 2.7449581418225997e-12,
+          "displacement_norm": 8.538698141773319e-08
+        }
+      ],
+      "seconds": 34.49210379994474,
+      "sampled_peak_rss_mib": 783.48828125,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r4-a32-t3",
+      "rings": 4,
+      "sectors": 32,
+      "layers": 3,
+      "nodes": 3367,
+      "tets": 2016,
+      "mechanical_dofs": 10101,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233835.81025305678,
+      "radial_participation": 0.9418293012472291,
+      "eigen_residual": 3.4276868074208195e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4089123771688517,
+          "residual": 5.032456798270235e-12,
+          "displacement_norm": 5.7827901730964894e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.47442898839944925,
+          "residual": 4.218200013892499e-12,
+          "displacement_norm": 6.759729583292046e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.6509707249572733,
+          "residual": 1.0304059453419721e-11,
+          "displacement_norm": 9.402179163464476e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4004788034314897,
+          "residual": 2.2144949316310213e-11,
+          "displacement_norm": 2.0674938545927435e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.5533411767232734,
+          "residual": 3.748507476984753e-11,
+          "displacement_norm": 3.9017685170852154e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5398506354005801,
+          "residual": 4.614198413026302e-12,
+          "displacement_norm": 8.726128184755902e-08
+        }
+      ],
+      "seconds": 108.98244679998606,
+      "sampled_peak_rss_mib": 892.5078125,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    },
+    {
+      "id": "r4-a64-t1",
+      "rings": 4,
+      "sectors": 64,
+      "layers": 1,
+      "nodes": 2883,
+      "tets": 1344,
+      "mechanical_dofs": 8649,
+      "domain": "same straight 32-sided polygon when angular=32",
+      "boundary": "isolated mechanically free PZT, ideal open electrode port",
+      "force": "fixed radial body-force field [x/R,y/R,0] divided by ideal disk volume; no gain fitting",
+      "frequencies_hz": [
+        50000,
+        100000,
+        150000,
+        200000,
+        250000,
+        300000
+      ],
+      "radial_frequency_hz": 233272.01117113905,
+      "radial_participation": 0.9418437157099165,
+      "eigen_residual": 3.1006638412864447e-12,
+      "status": "completed",
+      "responses": [
+        {
+          "frequency_hz": 50000,
+          "voltage_v": -0.4109788168471557,
+          "residual": 2.6874138223172218e-12,
+          "displacement_norm": 5.391587784470484e-08
+        },
+        {
+          "frequency_hz": 100000,
+          "voltage_v": -0.4772170992578106,
+          "residual": 2.568298795063309e-12,
+          "displacement_norm": 6.307918126079852e-08
+        },
+        {
+          "frequency_hz": 150000,
+          "voltage_v": -0.656265206039369,
+          "residual": 3.1031170330090233e-12,
+          "displacement_norm": 8.794317215537668e-08
+        },
+        {
+          "frequency_hz": 200000,
+          "voltage_v": -1.4257313103434524,
+          "residual": 2.656666964819196e-12,
+          "displacement_norm": 1.9531528135196385e-07
+        },
+        {
+          "frequency_hz": 250000,
+          "voltage_v": 2.4690558007781025,
+          "residual": 8.197800703486873e-12,
+          "displacement_norm": 3.5023457482466334e-07
+        },
+        {
+          "frequency_hz": 300000,
+          "voltage_v": 0.5353950361123262,
+          "residual": 3.143725057426788e-12,
+          "displacement_norm": 8.038156722521877e-08
+        }
+      ],
+      "seconds": 50.80336900008842,
+      "sampled_peak_rss_mib": 707.19140625,
+      "note": "RSS sampled at 50 ms; isolated tests do not validate plate waveform or LTS stability"
+    }
+  ],
+  "basewave_receipts": [
+    {
+      "id": "r1-a64-t1",
+      "nodes": 579,
+      "tets": 192,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04733847064529989,
+          "voltage_imag_v": 2.550765782158957e-07,
+          "residual": 1.651387236877448e-15,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": 2.69338801612084e-06,
+          "voltage_imag_v": 0.06536879020228088,
+          "residual": 1.7593836478218288e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.09269005515090459,
+          "voltage_imag_v": 9.790198748816499e-07,
+          "residual": 2.023115010679321e-15,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": 3.37302331786553e-06,
+          "voltage_imag_v": 0.05577976941858314,
+          "residual": 9.825723923280144e-16,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.134156692311177,
+          "voltage_imag_v": 2.0524248891056136e-06,
+          "residual": 2.391909531545643e-15,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": 5.931969126634448e-07,
+          "voltage_imag_v": 0.015621645883808708,
+          "residual": 3.947276752004857e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.1700162256584442,
+          "voltage_imag_v": -3.290625240542198e-06,
+          "residual": 2.3875927068298746e-15,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -4.40434441096486e-06,
+          "voltage_imag_v": -0.026463307323309954,
+          "residual": 2.8150686273600826e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.19880607648069154,
+          "voltage_imag_v": 4.463448916364157e-06,
+          "residual": 2.409933629363021e-15,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -9.542272964363382e-06,
+          "voltage_imag_v": -0.05459694658550675,
+          "residual": 4.419481957710686e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.2194021197135576,
+          "voltage_imag_v": -5.319391748330371e-06,
+          "residual": 3.5437678202006393e-15,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -1.2866559427441586e-05,
+          "voltage_imag_v": -0.06264372943324181,
+          "residual": 1.5399850422024757e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 0.17770649981684983,
+      "sampled_peak_rss_mib": 81.265625
+    },
+    {
+      "id": "r2-a64-t1",
+      "nodes": 1347,
+      "tets": 576,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04551591309207524,
+          "voltage_imag_v": -1.8259596240775422e-07,
+          "residual": 5.6910550142018305e-15,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": -1.7053117682492487e-06,
+          "voltage_imag_v": 0.061220197688733775,
+          "residual": 3.5009671867847105e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08922169138457597,
+          "voltage_imag_v": -7.149525458802838e-07,
+          "residual": 5.466751964641929e-15,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -3.825925075786917e-06,
+          "voltage_imag_v": 0.04872729240939854,
+          "residual": 2.366832836857613e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12938043707275212,
+          "voltage_imag_v": -1.5532572261807162e-06,
+          "residual": 5.812496385660521e-15,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -6.124239962874628e-06,
+          "voltage_imag_v": 0.006370420293540625,
+          "residual": 2.491117768646209e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.1643995885298912,
+          "voltage_imag_v": 2.6326027343389288e-06,
+          "residual": 5.440588551771493e-15,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -8.888163031218856e-06,
+          "voltage_imag_v": -0.037334554312194526,
+          "residual": 2.4189968322500682e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.1928977960934119,
+          "voltage_imag_v": -3.8786494509161195e-06,
+          "residual": 5.854588150342929e-15,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -1.2095212943887394e-05,
+          "voltage_imag_v": -0.06660105537021331,
+          "residual": 1.3456323776847123e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.21376563275345753,
+          "voltage_imag_v": 5.223107487674775e-06,
+          "residual": 5.558405946142817e-15,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -1.5185870598199378e-05,
+          "voltage_imag_v": -0.07545161351513462,
+          "residual": 1.5501722685238323e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 0.5081823000218719,
+      "sampled_peak_rss_mib": 120.12890625
+    },
+    {
+      "id": "r2-a64-t2",
+      "nodes": 2245,
+      "tets": 1152,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04510065449948606,
+          "voltage_imag_v": -2.561928033124514e-07,
+          "residual": 4.134884344592409e-15,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": -2.366914449643622e-06,
+          "voltage_imag_v": 0.06105233370398109,
+          "residual": 4.306897010179653e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08843533378015828,
+          "voltage_imag_v": -9.992025788632195e-07,
+          "residual": 4.245042331977749e-15,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -4.479388320672323e-06,
+          "voltage_imag_v": 0.04929612464143744,
+          "residual": 2.9146426449212905e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12830696739287542,
+          "voltage_imag_v": -2.155320406925591e-06,
+          "residual": 4.130330179547352e-15,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -5.666263770843885e-06,
+          "voltage_imag_v": 0.007696433884679237,
+          "residual": 3.530716884662243e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.16315457512562717,
+          "voltage_imag_v": 3.6115167401408546e-06,
+          "residual": 4.345317149746512e-15,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -6.639128155505346e-06,
+          "voltage_imag_v": -0.03575403297157342,
+          "residual": 3.494467354196376e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.19161702629099805,
+          "voltage_imag_v": -5.229604932011206e-06,
+          "residual": 7.622282064257474e-15,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -8.216505455973555e-06,
+          "voltage_imag_v": -0.06544672477469551,
+          "residual": 2.352625324977999e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.21259173180300647,
+          "voltage_imag_v": 6.865076244867392e-06,
+          "residual": 4.475104517133473e-15,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -1.0817705817982462e-05,
+          "voltage_imag_v": -0.07530439985280203,
+          "residual": 2.320600636188449e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 1.2277893999125808,
+      "sampled_peak_rss_mib": 162.203125
+    },
+    {
+      "id": "r3-a64-t2",
+      "nodes": 3525,
+      "tets": 1920,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04432126977605784,
+          "voltage_imag_v": 1.5930751068906346e-06,
+          "residual": 1.0158711483227348e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": 1.3021002491863742e-05,
+          "voltage_imag_v": 0.060341228033203805,
+          "residual": 3.227257095866542e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08695927882381256,
+          "voltage_imag_v": 6.151506592946206e-06,
+          "residual": 1.0665878450287754e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": 1.010179966207207e-05,
+          "voltage_imag_v": 0.049613921864276336,
+          "residual": 2.9072076343791323e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.126292578929629,
+          "voltage_imag_v": 1.3030755001453523e-05,
+          "residual": 1.0596527615841696e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -1.138495952771081e-05,
+          "voltage_imag_v": 0.00951742387534182,
+          "residual": 2.7283682711663156e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.16082209600031827,
+          "voltage_imag_v": -2.1213988613279912e-05,
+          "residual": 1.0877639667929713e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -3.863553763613605e-05,
+          "voltage_imag_v": -0.032702053180974584,
+          "residual": 3.2851175149194428e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.18922917793815225,
+          "voltage_imag_v": 2.9390933452210833e-05,
+          "residual": 1.1466717346974823e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -5.657492582823213e-05,
+          "voltage_imag_v": -0.06173909930856092,
+          "residual": 2.499039117882146e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.2104298806581198,
+          "voltage_imag_v": -3.6053682780289706e-05,
+          "residual": 9.721318047416258e-15,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -5.389180477327886e-05,
+          "voltage_imag_v": -0.07146734624780955,
+          "residual": 2.639002262124289e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 17.75535079999827,
+      "sampled_peak_rss_mib": 303.3203125
+    },
+    {
+      "id": "r3-a96-t1",
+      "nodes": 3171,
+      "tets": 1440,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.044762943497911344,
+          "voltage_imag_v": 5.895859090272049e-07,
+          "residual": 1.818181352278894e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": 4.096948438548848e-06,
+          "voltage_imag_v": 0.060478393861705816,
+          "residual": 2.731233338757283e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08779156091787323,
+          "voltage_imag_v": 2.257903181869784e-06,
+          "residual": 1.709617171490823e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": 1.3319291337678907e-06,
+          "voltage_imag_v": 0.048991106267633665,
+          "residual": 2.451750135225855e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12741800069325468,
+          "voltage_imag_v": 4.713845933960316e-06,
+          "residual": 1.8219652653095864e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -8.307157521095053e-06,
+          "voltage_imag_v": 0.008223925491539677,
+          "residual": 2.6371923408906308e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.16210571734994336,
+          "voltage_imag_v": -7.50520947386419e-06,
+          "residual": 1.598502470321611e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -1.8981446130637976e-05,
+          "voltage_imag_v": -0.03404666801473239,
+          "residual": 3.561910288639531e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.19051103877909684,
+          "voltage_imag_v": 1.0064428408350845e-05,
+          "residual": 1.5509837488834626e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -2.4332061647113402e-05,
+          "voltage_imag_v": -0.06239690766224586,
+          "residual": 2.8683160162738703e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.2115399270541122,
+          "voltage_imag_v": -1.1765366577899487e-05,
+          "residual": 1.6955648782576283e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -1.996059692402412e-05,
+          "voltage_imag_v": -0.0708973074530628,
+          "residual": 4.032660771677778e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 1.2801579998340458,
+      "sampled_peak_rss_mib": 195.63671875
+    },
+    {
+      "id": "r4-a64-t2",
+      "nodes": 4805,
+      "tets": 2688,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04393686780490229,
+          "voltage_imag_v": -6.734300736538397e-07,
+          "residual": 1.1699117143574758e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": -6.863098112581096e-06,
+          "voltage_imag_v": 0.060082134578342904,
+          "residual": 3.925852698110711e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08623467958648816,
+          "voltage_imag_v": -2.6381811212115325e-06,
+          "residual": 1.2651626975681483e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -1.1162585688785908e-05,
+          "voltage_imag_v": 0.04998257480805527,
+          "residual": 2.9290280722253468e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12531277649742306,
+          "voltage_imag_v": -5.731218092537063e-06,
+          "residual": 1.284606101881611e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -1.0622670269587221e-05,
+          "voltage_imag_v": 0.010607426194052645,
+          "residual": 3.1658640995298513e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.15970631617938835,
+          "voltage_imag_v": 9.692308738056421e-06,
+          "residual": 1.4979990441681086e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -7.6122493069372755e-06,
+          "voltage_imag_v": -0.031268664116230166,
+          "residual": 2.713811029793203e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.18812170987144258,
+          "voltage_imag_v": -1.4179694480525243e-05,
+          "residual": 1.1908216213381942e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -4.909171325679691e-06,
+          "voltage_imag_v": -0.06051659935724565,
+          "residual": 3.8881521015316684e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.209489060298689,
+          "voltage_imag_v": 1.878888274420132e-05,
+          "residual": 1.3652840737040992e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -4.0861566132008756e-06,
+          "voltage_imag_v": -0.07094531518341972,
+          "residual": 3.456971416576074e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 25.26103419996798,
+      "sampled_peak_rss_mib": 373.32421875
+    },
+    {
+      "id": "r4-a64-t3",
+      "nodes": 6727,
+      "tets": 4032,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04380343634716608,
+          "voltage_imag_v": -7.461536662498066e-07,
+          "residual": 8.104547501107987e-15,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": -7.3395308698676665e-06,
+          "voltage_imag_v": 0.06001631857598533,
+          "residual": 4.139539024068785e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08598377060713348,
+          "voltage_imag_v": -2.9290377090760544e-06,
+          "residual": 8.646941361099558e-15,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -1.2827820911726113e-05,
+          "voltage_imag_v": 0.0501158635064734,
+          "residual": 3.316242861433337e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12497501357861653,
+          "voltage_imag_v": -6.384992591521971e-06,
+          "residual": 9.564537148209441e-15,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -1.3531263173971346e-05,
+          "voltage_imag_v": 0.010928601714036278,
+          "residual": 3.606350495233321e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.1593245248972779,
+          "voltage_imag_v": 1.085111173373392e-05,
+          "residual": 1.1066965463247752e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -1.1154127971237015e-05,
+          "voltage_imag_v": -0.030920099908405742,
+          "residual": 4.8049180129455375e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.1877474616546545,
+          "voltage_imag_v": -1.5978698200127646e-05,
+          "residual": 1.1556668984010702e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -8.11104599662029e-06,
+          "voltage_imag_v": -0.06033528036238997,
+          "residual": 3.427713206424966e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.20917850354534426,
+          "voltage_imag_v": 2.134939399362419e-05,
+          "residual": 1.1494565978194315e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -6.017652029401913e-06,
+          "voltage_imag_v": -0.07107143337271894,
+          "residual": 2.9033539868764794e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 81.78385420003906,
+      "sampled_peak_rss_mib": 638.328125
+    },
+    {
+      "id": "r4-a96-t2",
+      "nodes": 7205,
+      "tets": 4032,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.043957375209451574,
+          "voltage_imag_v": -6.82659550647344e-08,
+          "residual": 2.3016285156555738e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": -8.562505819012576e-07,
+          "voltage_imag_v": 0.06005911783536857,
+          "residual": 4.072202345047105e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08627122573305455,
+          "voltage_imag_v": -2.7150145156182423e-07,
+          "residual": 2.4584081134973004e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -1.6309254325803112e-06,
+          "voltage_imag_v": 0.04986569347985875,
+          "residual": 5.106159138832621e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12535669309909842,
+          "voltage_imag_v": -6.041805694466456e-07,
+          "residual": 2.4141306984437636e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -1.3970926862294272e-06,
+          "voltage_imag_v": 0.01042080536560192,
+          "residual": 4.863163021301694e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.1597452559287476,
+          "voltage_imag_v": 1.054308248542428e-06,
+          "residual": 2.4110404697982748e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": 2.476670357538203e-07,
+          "voltage_imag_v": -0.031455391849966666,
+          "residual": 4.218167985317248e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.18814038323283339,
+          "voltage_imag_v": -1.5992545185724323e-06,
+          "residual": 2.50529384234682e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": 3.2312013753850443e-06,
+          "voltage_imag_v": -0.060626896537116996,
+          "residual": 4.033568958148352e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.20947013393083633,
+          "voltage_imag_v": 2.199842282560917e-06,
+          "residual": 2.268721543390968e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": 7.024799363816155e-06,
+          "voltage_imag_v": -0.07092225510275173,
+          "residual": 4.140155938253141e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 42.76080210017972,
+      "sampled_peak_rss_mib": 475.2890625
+    },
+    {
+      "id": "r5-a64-t2",
+      "nodes": 6085,
+      "tets": 3456,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04367809329754745,
+          "voltage_imag_v": 3.400178267464099e-07,
+          "residual": 1.660770992070359e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": 9.838112886613643e-07,
+          "voltage_imag_v": 0.059917868959584265,
+          "residual": 4.245304103917898e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08574873153312974,
+          "voltage_imag_v": 1.2871293296004567e-06,
+          "residual": 1.4280408415647185e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": -2.5397425007348744e-06,
+          "voltage_imag_v": 0.05025249505922048,
+          "residual": 3.51533249393308e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.12466065847632535,
+          "voltage_imag_v": 2.6304660806830442e-06,
+          "residual": 1.7737992519138195e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": -7.377786991131606e-06,
+          "voltage_imag_v": 0.011336784686345833,
+          "residual": 3.892948651445506e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.15897421908173506,
+          "voltage_imag_v": -4.044374508913589e-06,
+          "residual": 1.9160467044673072e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -7.501406946018577e-06,
+          "voltage_imag_v": -0.03038619121970766,
+          "residual": 2.898696491485311e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.1874151339822817,
+          "voltage_imag_v": 5.124617129093448e-06,
+          "residual": 1.871415290770751e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": 1.7488576157435443e-06,
+          "voltage_imag_v": -0.059894450440337095,
+          "residual": 3.068421192254851e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.20892578769247813,
+          "voltage_imag_v": -5.434329017364239e-06,
+          "residual": 1.3337208691228585e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": 2.1674289421418366e-05,
+          "voltage_imag_v": -0.07092197323294193,
+          "residual": 3.990096837373037e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 53.681326800026,
+      "sampled_peak_rss_mib": 484.52734375
+    },
+    {
+      "id": "r6-a64-t2",
+      "nodes": 7365,
+      "tets": 4224,
+      "status": "completed",
+      "boundary": "prescribed analytical S0/A0 surface displacement on bottom PZT face, open port",
+      "incident_displacement_scale_m": 1e-09,
+      "plate_thickness_m": 0.001,
+      "plate_material": {
+        "young_pa": 71000000000.0,
+        "poisson": 0.33,
+        "density_kg_m3": 2700
+      },
+      "rows": [
+        {
+          "frequency_hz": 50000,
+          "mode": "S0",
+          "voltage_real_v": -0.04348992121691246,
+          "voltage_imag_v": 6.226760702186686e-07,
+          "residual": 1.4039998618300995e-14,
+          "wavenumber_rad_m": 57.833634927222064
+        },
+        {
+          "frequency_hz": 50000,
+          "mode": "A0",
+          "voltage_real_v": 6.385126647893789e-06,
+          "voltage_imag_v": 0.05980571184026083,
+          "residual": 4.0009583615182714e-15,
+          "wavenumber_rad_m": 455.74448279956766
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "S0",
+          "voltage_real_v": -0.08539677519117661,
+          "voltage_imag_v": 2.4334146629083597e-06,
+          "residual": 1.2422874032421816e-14,
+          "wavenumber_rad_m": 115.67902141759748
+        },
+        {
+          "frequency_hz": 100000,
+          "mode": "A0",
+          "voltage_real_v": 9.336621551610426e-06,
+          "voltage_imag_v": 0.05047866420003153,
+          "residual": 3.02032705955267e-15,
+          "wavenumber_rad_m": 655.9602227535236
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "S0",
+          "voltage_real_v": -0.1241921470750031,
+          "voltage_imag_v": 5.261973079699922e-06,
+          "residual": 1.440284264207881e-14,
+          "wavenumber_rad_m": 173.54799568977168
+        },
+        {
+          "frequency_hz": 150000,
+          "mode": "A0",
+          "voltage_real_v": 5.4864781668071924e-06,
+          "voltage_imag_v": 0.011906709975088687,
+          "residual": 3.777486071114179e-15,
+          "wavenumber_rad_m": 817.2848823868416
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "S0",
+          "voltage_real_v": 0.15845625429262092,
+          "voltage_imag_v": -8.829718891255427e-06,
+          "residual": 1.6252888649923852e-14,
+          "wavenumber_rad_m": 231.45256462074062
+        },
+        {
+          "frequency_hz": 200000,
+          "mode": "A0",
+          "voltage_real_v": -2.9048830759111678e-06,
+          "voltage_imag_v": -0.029722534804541706,
+          "residual": 3.0652187016950424e-15,
+          "wavenumber_rad_m": 959.6497174932158
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "S0",
+          "voltage_real_v": -0.18693054209702636,
+          "voltage_imag_v": 1.2756128482109583e-05,
+          "residual": 1.448450855629654e-14,
+          "wavenumber_rad_m": 289.4049944813521
+        },
+        {
+          "frequency_hz": 250000,
+          "mode": "A0",
+          "voltage_real_v": -1.130554851694975e-05,
+          "voltage_imag_v": -0.05946531952234495,
+          "residual": 3.780108365641348e-15,
+          "wavenumber_rad_m": 1090.6028790518342
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "S0",
+          "voltage_real_v": 0.20856814952989042,
+          "voltage_imag_v": -1.6565323261432455e-05,
+          "residual": 1.621483849559722e-14,
+          "wavenumber_rad_m": 347.4179038623394
+        },
+        {
+          "frequency_hz": 300000,
+          "mode": "A0",
+          "voltage_real_v": -1.4355764698788031e-05,
+          "voltage_imag_v": -0.07098990516039654,
+          "residual": 3.1050481201096365e-15,
+          "wavenumber_rad_m": 1213.930278069387
+        }
+      ],
+      "seconds": 47.24407089990564,
+      "sampled_peak_rss_mib": 573.6171875
+    },
+    {
+      "id": "r7-a64-t2",
+      "status": "not_run_resource_forecast",
+      "nodes": 8645,
+      "tets": 4992,
+      "projected_working_mib": 2817.489055525196,
+      "available_host_mib": 5039.6015625,
+      "note": "Conservative experimental budget, not proof the component cannot fit; no matrices assembled"
+    }
+  ],
+  "interpretation": "P2 passes polynomial/assembly tests. A0 remains sensitive near cancellation; no all-frequency 1% or 0.1% convergence claim.",
+  "preferred_next_exploratory_start": "r5-a64-t2; promising overall, not accepted as converged",
+  "restrictions": "No plate transient or RunPod. Prescribed base motion omits plate backreaction; polygon changes when angular subdivisions change. Timings used mixed concurrent CPU load."
+}

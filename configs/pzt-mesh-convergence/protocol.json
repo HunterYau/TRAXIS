@@ -36,7 +36,7 @@
     0.1
   ],
   "temporal_target_percent": 0.01,
-  "time_policy": "Halved exact baseline pair: fine 2.6702880859375 ns, coarse 5.340576171875 ns; primary only, stability screening disabled by the requested execution profile",
+  "time_policy": "Restored exact baseline pair: fine 5.340576171875 ns, coarse 10.68115234375 ns; primary only, stability screening disabled by the requested execution profile",
   "minimum_new_kernel_solves": 2,
   "refinement_scope": "combined_only",
   "maximum_spatial_level": 2,

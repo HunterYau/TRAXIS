@@ -1,0 +1,22 @@
+QUADRATIC PZT ISOLATED TESTS
+Branch research/pzt-quadratic-tetrahedra
+References: finest radial run 6/64/2; angular 4/64/2 vs 4/96/2; thickness 4/64/2 vs 4/64/3.
+Errors below compare complex harmonic receiver voltages with no fitted gain, phase, or delay.
+Not full plate waveforms, not Wandowski comparisons, no temporal stepping.
+Mesh | nodes | S0 L2 % | A0 L2 % | S0 worst % | A0 worst % | seconds | sampled RSS MiB
+r1-a64-t1 | 579 | 6.6063 | 10.6042 | 8.8493 | 31.2004 | 0.18 | 81.3
+r2-a64-t1 | 1347 | 3.3473 | 10.2273 | 4.6585 | 46.4973 | 0.51 | 120.1
+r2-a64-t2 | 2245 | 2.6350 | 8.4185 | 3.7037 | 35.3607 | 1.23 | 162.2
+r3-a96-t1 | 3171 | 2.0284 | 5.2612 | 2.9272 | 30.9305 | 1.28 | 195.6
+r3-a64-t2 | 3525 | 1.3070 | 3.6564 | 1.9116 | 20.0672 | 17.76 | 303.3
+r4-a64-t2 | 4805 | 0.6836 | 1.8717 | 1.0277 | 10.9130 | 25.26 | 373.3
+r5-a64-t2 | 6085 | 0.2807 | 0.8052 | 0.4327 | 4.7878 | 53.68 | 484.5
+r4-a64-t3 | 6727 | 0.4718 | 1.4555 | 0.7209 | 8.2163 | 81.78 | 638.3
+r4-a96-t2 | 7205 | 0.6999 | 2.1106 | 1.0749 | 12.4797 | 42.76 | 475.3
+r6-a64-t2 | 7365 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 47.24 | 573.6
+
+5/64/2 is a next experimental candidate, not an optimum or a proven converged mesh.
+Its full six-frequency response L2 differences are below 1%, but A0 pointwise differences are not.
+The 7/64/2 run was not assembled: exceeded the conservative 8192-node/2.5GiB diagnostic forecast budget. This does not prove it cannot fit on this computer.
+All inherited physics/LTS files must retain start-of-task SHA256 values.
+Original linear implementation remains the default and fallback. No experimental backend enabled in the existing scheduler.
