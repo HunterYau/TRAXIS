@@ -1,0 +1,75 @@
+{
+  "components": [
+    {
+      "patch_dofs": 41361,
+      "component_nodes": 15687,
+      "sparse_arrays_and_factors_bytes": 173387744,
+      "dense_three_patch_matrices_bytes": 41057575704,
+      "stiffness_nnz": 3645729,
+      "coupling_nnz": 911481,
+      "mass_nnz": 760593,
+      "mass_factor_nnz": 5878209,
+      "electrical_factor_nnz": 2251696,
+      "action_cost": "K/ B/ T sparse products, one dielectric factor solve; one rank-one update for open port. Mass inverse: one scalar factor solve with three RHS; no explicit inverse.",
+      "setup_seconds": 20.694664099952206,
+      "mass_factor_seconds": 0.8758924000430852,
+      "mass_solve_residual": 9.219087878956584e-16,
+      "gpu_errors": {
+        "stiffness": 3.3979381872883535e-16,
+        "mass_inverse": 6.290375876789893e-16
+      },
+      "gpu_timings": {
+        "stiffness_ms": 99.16893998160958,
+        "mass_inverse_ms": 265.45828003436327
+      },
+      "gpu_upload_and_warmup_seconds": 6.532594699878246,
+      "gpu_pool_bytes": 229712384,
+      "cpu_factor_hybrid": {
+        "errors": {
+          "stiffness": 3.377384744233999e-16,
+          "mass_inverse": 0.0
+        },
+        "timing": {
+          "stiffness_ms": 3.224880015477538,
+          "mass_inverse_ms": 14.958880003541708
+        }
+      }
+    },
+    {
+      "patch_dofs": 41346,
+      "component_nodes": 15687,
+      "sparse_arrays_and_factors_bytes": 175972804,
+      "dense_three_patch_matrices_bytes": 41027801184,
+      "stiffness_nnz": 3645729,
+      "coupling_nnz": 911481,
+      "mass_nnz": 756338,
+      "mass_factor_nnz": 6097954,
+      "electrical_factor_nnz": 2251696,
+      "action_cost": "K/ B/ T sparse products, one dielectric factor solve; one rank-one update for open port. Mass inverse: one scalar factor solve with three RHS; no explicit inverse.",
+      "setup_seconds": 20.694664099952206,
+      "mass_factor_seconds": 1.0067183999344707,
+      "mass_solve_residual": 9.15479113897316e-16
+    },
+    {
+      "patch_dofs": 41346,
+      "component_nodes": 15687,
+      "sparse_arrays_and_factors_bytes": 172078840,
+      "dense_three_patch_matrices_bytes": 41027801184,
+      "stiffness_nnz": 3645729,
+      "coupling_nnz": 911481,
+      "mass_nnz": 752018,
+      "mass_factor_nnz": 5777777,
+      "electrical_factor_nnz": 2251696,
+      "action_cost": "K/ B/ T sparse products, one dielectric factor solve; one rank-one update for open port. Mass inverse: one scalar factor solve with three RHS; no explicit inverse.",
+      "setup_seconds": 20.694664099952206,
+      "mass_factor_seconds": 0.6466321998741478,
+      "mass_solve_residual": 9.29293410100649e-16
+    }
+  ],
+  "conservative_gpu_payload_bytes": 1042878776,
+  "sampled_rss_bytes": 1196990464,
+  "scope": "Three full-size PZT mass factors in sequence, one shared component; no plate simulation",
+  "bound_s2": 8.230402094435707e+17,
+  "all_mass_supports_disjoint": true,
+  "timing_limit": "Five warmed GPU component actions, not full plate timing prediction."
+}

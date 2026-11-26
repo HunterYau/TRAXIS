@@ -1,0 +1,10 @@
+{
+  "order": 3,
+  "id": "03-quadratic-fine",
+  "family": "combined",
+  "level": 3,
+  "element": "quadratic",
+  "radial": 8,
+  "angular": 64,
+  "thickness": 2
+}

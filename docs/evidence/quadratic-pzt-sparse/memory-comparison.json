@@ -1,0 +1,75 @@
+{
+  "dense": {
+    "body_nodes_each": 15687,
+    "body_tetrahedra_each": 9792,
+    "element": "quadratic",
+    "body_contact_nodes_each": 2241,
+    "added_mechanical_dofs": 121014,
+    "total_mechanical_dofs": 28291032,
+    "patch_dofs": [
+      41361,
+      41346,
+      41346
+    ],
+    "min_tetra_singular_m": 3.784916390390378e-05,
+    "max_tetra_condition": 25.83801870655287,
+    "attachment_workspace_bytes": 349473406896,
+    "merge_workspace_bytes": 410377260240,
+    "estimated_host_peak_bytes": 629145585720,
+    "estimated_gpu_peak_bytes": 300581093140,
+    "estimate_note": "Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory."
+  },
+  "sparse": {
+    "body_nodes_each": 15687,
+    "body_tetrahedra_each": 9792,
+    "element": "quadratic",
+    "body_contact_nodes_each": 2241,
+    "added_mechanical_dofs": 121014,
+    "total_mechanical_dofs": 28291032,
+    "patch_dofs": [
+      41361,
+      41346,
+      41346
+    ],
+    "min_tetra_singular_m": 3.784916390390378e-05,
+    "max_tetra_condition": 25.83801870655287,
+    "attachment_workspace_bytes": 1610612736,
+    "merge_workspace_bytes": 0,
+    "estimated_host_peak_bytes": 24270002304,
+    "estimated_gpu_peak_bytes": 33960316672,
+    "estimate_note": "Sparse topology triplet upper count plus explicit LU factor budgets and duplicated shared-component margin; not a measured peak. No dense inverse or electrical Schur matrix.",
+    "dense_reference_gpu_peak_bytes": 300581093140,
+    "dense_reference_host_peak_bytes": 629145585720,
+    "estimated_case_total_seconds_range": [
+      null,
+      null
+    ],
+    "timing_note": "No full sparse run benchmark; factor setup and sparse solves have different cost. Dense cubic scaling is inapplicable."
+  },
+  "layout_screen": {
+    "order": 5,
+    "cells": [
+      250,
+      250,
+      1
+    ],
+    "scalar_dofs": 9390006,
+    "vector_dofs": 28170018,
+    "elements": 62500,
+    "local_scalar_dofs": 216,
+    "device_storage_screen_mib": 3438.726806640625,
+    "host_storage_screen_mib": 1536.4412689208984,
+    "max_device_mib": 6144,
+    "max_host_mib": 4096,
+    "stiffness_rule": "gll",
+    "precision": "float64",
+    "kernel_source_sha256": "c7189dee6c7f3b4685a054be4598a0d86c526941a72304a40a50926544bb0ca8",
+    "global_sparse_assembly": false,
+    "dense_element_matrices_stored_on_device": false,
+    "element_index_table_stored": false,
+    "kernel_defines": {
+      "LOCAL_NODES": 216
+    },
+    "kernel_threads": 256
+  }
+}

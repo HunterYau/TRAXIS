@@ -1,0 +1,17 @@
+{
+  "tests_passed": 25,
+  "full_simulations_run": 0,
+  "solver_sources_unchanged": true,
+  "branch": "research/pzt-quadratic-tetrahedra",
+  "precision": "float64",
+  "mesh": [
+    9,
+    64,
+    3
+  ],
+  "dense_reference_retained": true,
+  "preflight_configuration_valid": true,
+  "declared_device_budget_mib": 65536,
+  "local_full_plate_fit": false,
+  "cloud_full_run_peak_measured": false
+}

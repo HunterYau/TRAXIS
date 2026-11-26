@@ -1,0 +1,11 @@
+PZT mesh convergence: baseline reused; no baseline run.
+Execution: start at level 1; primary only=True; fixed coarse dt=1.068115234375e-08. This execution policy overrides the default temporal protocol below.
+Order: quadratic tetrahedra, radial/angular/thickness 9/64/3.
+1 meshes, 1 impulse solves; six frequency reconstructions per solve.
+Stability checks disabled=True; fixed time steps are not certified when disabled.
+GPU execution backend: original; PZT storage: sparse.
+Counts and geometry exact; memory/runtime are forecasts.
+Comparison changes both element order and mesh relative to the LINEAR baseline.
+Check the selected storage backend forecasts against declared budgets and available hardware.
+Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range
+01 | 01-quadratic-9-64-3 | 9/64/3 | coarse=10.6811523438 ns fine=5.34057617188 ns | 32768 steps; no half-step run | DOFs=28291032 GPU forecast=31.6 GiB

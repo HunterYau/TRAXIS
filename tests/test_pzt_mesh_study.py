@@ -4,6 +4,7 @@ import csv
 import importlib.util
 import io
 import json
+import os
 import shutil
 from pathlib import Path
 import sys
@@ -83,10 +84,10 @@ class StudyTests(unittest.TestCase):
             self.assertEqual(status['pending'],[r['id'] for r in rows[1:]])
             self.assertEqual(status['failed'],[rows[0]['id']])
 
-    def test_exact_2_combined_configurations_no_baseline_or_individual_jobs(self):
-        rows=protocol.cases();self.assertEqual(len(rows),2)
+    def test_exact_quadratic_configuration_no_baseline_or_individual_jobs(self):
+        rows=protocol.cases();self.assertEqual(len(rows),3)
         for r in rows:
-            self.assertIn(r['level'],(1,2))
+            self.assertIn(r['level'],(1,2,3));self.assertEqual(r['element'],'quadratic')
             self.assertEqual(r['family'],'combined')
             wanted=protocol.LEVELS[r['level']-1]
             self.assertEqual({k:r[k] for k in protocol.BASE},wanted)
@@ -105,10 +106,27 @@ class StudyTests(unittest.TestCase):
             self.assertAlmostEqual(volume/expected,1.,places=12)
         with self.assertRaises(ValueError):disk_mesh(geometry,sectors=32,rings=8,layers=3)
 
+    def test_quadratic_geometry_forecast_includes_midside_contact_and_free_dofs(self):
+        from traxis.quadratic_piezoelectric import quadratic_disk
+        config=dict(plate_m=[.04,.04,.001],mesh=dict(cells=[2,2,1],order=2),
+            disk_radius_m=.003,disk_thickness_m=.0005,
+            actuator_center_xy_m=[.01,.02],receiver_center_xy_m=[.03,.02])
+        row=dict(element='quadratic',radial=1,angular=8,thickness=1)
+        estimate=protocol.geometric_estimate(config,row)
+        mesh=quadratic_disk(DiskGeometry((.01,.02),.003,.0005,'top',1),rings=1,sectors=8,layers=1)
+        contact=np.count_nonzero(abs(mesh.points_m[:,2])<1e-14)
+        self.assertEqual(estimate['body_nodes_each'],len(mesh.points_m))
+        self.assertEqual(estimate['body_contact_nodes_each'],contact)
+        self.assertEqual(estimate['added_mechanical_dofs'],9*(len(mesh.points_m)-contact))
+        self.assertEqual(estimate['total_mechanical_dofs'],estimate['added_mechanical_dofs']+225)
+
     def test_baseline_assembly_exactly_matches_preserved_original(self):
         paths=[protocol.PROJECT/'outputs/simulation-runs/pzt-mesh-convergence-002/baseline-assembly-sources',
                protocol.PROJECT/'outputs/pzt-mesh-preparation-audit/baseline']
-        old=next(p for p in paths if (p/'pzt_body.py').exists())
+        if os.environ.get('TRAXIS_BASELINE_ASSEMBLY_SOURCES'):
+            paths.insert(0,Path(os.environ['TRAXIS_BASELINE_ASSEMBLY_SOURCES']))
+        old=next((p for p in paths if (p/'pzt_body.py').exists()),None)
+        if old is None:self.skipTest('Archived baseline assembly sources unavailable; set TRAXIS_BASELINE_ASSEMBLY_SOURCES')
         name='pzt_mesh_legacy_body';spec=importlib.util.spec_from_file_location(name,old/'pzt_body.py')
         module=importlib.util.module_from_spec(spec);sys.modules[name]=module;spec.loader.exec_module(module)
         layout=make_layout(Plate(.04,.04,.001),(2,2,1),2)
@@ -205,7 +223,7 @@ class StudyTests(unittest.TestCase):
             study.save(folder/'result.json',dict(completed=False,status='failed',configuration=plan['cases'][0],error='test failure'))
             report=study.assess(root)
             rows=list(csv.DictReader((root/'metrics.csv').open()))
-            self.assertEqual(len(report['configurations']),2);self.assertEqual(len(rows),24)
+            self.assertEqual(len(report['configurations']),3);self.assertEqual(len(rows),24)
             self.assertEqual({r['channel'] for r in rows},set(metrics.CHANNELS))
             self.assertTrue(all(r['status']=='failed' and r['raw_l2_percent']=='' for r in rows))
 

@@ -11,18 +11,20 @@ from examples.pzt_broadband import reconstruct
 from traxis.config import Plate
 from traxis.gpu_tensor import make_layout
 from traxis.pzt_body import disk_mesh
+from traxis.quadratic_piezoelectric import quadratic_disk
 from traxis.pzt_receiver import DiskGeometry,_point_weights
 from traxis.storage import sha256_file,write_json,canonical_hash
 
 PROJECT=Path(__file__).resolve().parents[1]
 CONFIG=PROJECT/'configs/pzt-mesh-convergence'
-BASE=dict(radial=6,angular=32,thickness=3)
+BASE=dict(radial=5,angular=48,thickness=2)
+LEGACY_BASE=dict(radial=6,angular=32,thickness=3)
 REQUESTED_COARSE_DT_S=.00035/32768
-LEVELS=[dict(radial=7,angular=36,thickness=4),dict(radial=10,angular=48,thickness=6)]
+LEVELS=[dict(BASE),dict(radial=6,angular=64,thickness=2),dict(radial=8,angular=64,thickness=2)]
 
 
 def cases():
-    return [dict(order=level,id=f"{level:02d}-{'medium' if level==1 else 'fine'}",family='combined',level=level,**values)
+    return [dict(order=level,id=f"{level:02d}-quadratic-{('baseline','medium','fine')[level-1]}",family='combined',level=level,element='quadratic',**values)
             for level,values in enumerate(LEVELS,1)]
 
 
@@ -100,22 +102,28 @@ def geometric_estimate(config,row):
     """Coordinates/topology/support only; no dense PZT assembly and no GPU."""
     layout=layout_for(config);s,r,z=row['angular'],row['radial'],row['thickness']
     geometry=DiskGeometry(tuple(config['actuator_center_xy_m']),config['disk_radius_m'],config['disk_thickness_m'],'top',1)
-    mesh,face=disk_mesh(geometry,sectors=s,rings=r,layers=z,max_nodes=8192,max_elements=65536)
+    if row.get('element')=='quadratic':
+        mesh=quadratic_disk(geometry,sectors=s,rings=r,layers=z,max_nodes=20000)
+    else:
+        mesh,_=disk_mesh(geometry,sectors=s,rings=r,layers=z,max_nodes=8192,max_elements=65536)
     points=mesh.points_m;tets=mesh.tetrahedra
-    jac=(points[tets[:,1:]]-points[tets[:,0,None]]).transpose(0,2,1)
+    contact_nodes=np.flatnonzero(abs(points[:,2]-points[:,2].min())<1e-14)
+    free_dofs=3*(len(points)-len(contact_nodes))
+    corners=tets[:,:4]
+    jac=(points[corners[:,1:]]-points[corners[:,0,None]]).transpose(0,2,1)
     singular=np.linalg.svd(jac,compute_uv=False)
     if np.any(singular[:,-1]<=0) or np.max(singular[:,0]/singular[:,-1])>1e8:raise ValueError('Invalid mesh quality')
     patches=[]
     for center,surface in ((config['actuator_center_xy_m'],'top'),(config['receiver_center_xy_m'],'top'),
                            (config['receiver_center_xy_m'],'bottom')):
-        contact=points[:face,:2]+np.array(center);host=set()
+        contact=points[contact_nodes,:2]+np.array(center);host=set()
         for xy in contact:
             ids,_=_point_weights(layout,(*xy,config['plate_m'][2] if surface=='top' else 0.))
             nz=layout.cells[2]*layout.order+1
             ids=ids[ids%nz==(nz-1 if surface=='top' else 0)]
             host.update(ids.tolist())
-        patches.append(3*len(host)+3*face*z)
-    ndof=layout.screen['vector_dofs']+9*face*z
+        patches.append(3*len(host)+free_dofs)
+    ndof=layout.screen['vector_dofs']+3*free_dofs
     squares=sum(n*n for n in patches);retained=2*squares*8
     attachment=max((12*(3*len(points))**2+10*n*n)*8 for n in patches)
     merge=10*squares*8
@@ -123,15 +131,19 @@ def geometric_estimate(config,row):
     storage=layout.screen['device_storage_screen_mib']*1024**2+3*squares*8+24*ndof
     gpu=storage+max(48*ndof*8+3*squares*8,32*ndof*8)
     return dict(body_nodes_each=len(points),body_tetrahedra_each=len(tets),
-        added_mechanical_dofs=9*face*z,total_mechanical_dofs=ndof,patch_dofs=patches,
+        element=row.get('element','linear'),body_contact_nodes_each=len(contact_nodes),added_mechanical_dofs=3*free_dofs,total_mechanical_dofs=ndof,patch_dofs=patches,
         min_tetra_singular_m=float(singular[:,-1].min()),max_tetra_condition=float((singular[:,0]/singular[:,-1]).max()),
         attachment_workspace_bytes=attachment,merge_workspace_bytes=merge,
         estimated_host_peak_bytes=int(host),estimated_gpu_peak_bytes=int(1.15*gpu),
         estimate_note='Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory.')
 
 
-def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized'):
+def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized',pzt_storage='dense',pzt_factor_backend='gpu'):
     if execution_backend not in ('original','optimized','optimized-no-graphs'):raise ValueError('Invalid execution backend')
+    if pzt_storage not in ('dense','sparse'):raise ValueError('Invalid PZT storage')
+    if pzt_factor_backend not in ('gpu','cpu'):raise ValueError('Invalid PZT factor backend')
+    if pzt_storage=='sparse' and (not skip_stability_checks or execution_backend!='original'):
+        raise ValueError('Sparse study requires --skip-stability-checks and --execution-backend original; LTS unchanged')
     if skip_stability_checks:
         start_level=1;primary_only=True;coarse_dt_s=REQUESTED_COARSE_DT_S
     root=Path(root)
@@ -147,14 +159,15 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
     c['mesh']['cells']=[old['case']['cells'],old['case']['cells'],old['case'].get('nz',1)]
     if c.get('setup_profile') or c.get('damping_profile') or c['body']['bond']!='perfect':
         raise ValueError('Unexpected physical setup or damping profile')
-    base=geometric_estimate(c,dict(BASE,id='baseline'))
+    base=geometric_estimate(c,dict(LEGACY_BASE,id='historical-linear-template'))
     stable=None
-    for line in (Path(baseline)/'console.log').read_text().splitlines():
+    console=Path(baseline)/'console.log'
+    for line in (console.read_text().splitlines() if console.exists() else []):
         try:
             data=json.loads(line)
             if data.get('phase')=='bodies_ready':stable=data['stable_dt_s']
         except ValueError:pass
-    if stable is None:raise ValueError('Missing recorded baseline stability limit')
+    if stable is None and not skip_stability_checks:raise ValueError('Missing recorded baseline stability limit')
     build_seconds=json.loads((Path(baseline)/'build.json').read_text())['seconds']
     solve_seconds=json.loads((Path(baseline)/'lts-kernel/result.json').read_text())['seconds']
     for row in rows:
@@ -176,6 +189,9 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
             e.update(provisional_half_step_steps=0,
                 estimated_case_total_seconds_range=[low+.5*build_seconds*dense_ratio,high+3*build_seconds*dense_ratio],
                 timing_note='Fixed requested steps, one kernel only; forecast excludes plotting/IO and is not measured or stability certified.')
+        if pzt_storage=='sparse':
+            from examples.quadratic_pzt_sparse_study import estimate
+            e=estimate(layout_for(c),e)
         row['estimate']=e
     root.mkdir(parents=True)
     selected=['plan.json','status.json','partition.json','performance.json','build.json','stability-screen.json',
@@ -192,19 +208,21 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         protocol=protocol,cases=rows,configuration=c,baseline_hashes=hashes,baseline_compatibility=compatibility,
         baseline_coarse_dt_s=old['coarse_dt_s'],baseline_coarse_steps=old['coarse_steps'],duration_s=.00035,
         edge_width_m=old['edge_width_m'],boxes=old['boxes'],source_sampling='coarse',substeps=2,
-        identity=fingerprints(),baseline_rerun=False,simulation_started=False,
+        identity=fingerprints(),baseline_rerun=False,simulation_started=False,comparison_baseline_case=rows[0]['id'],quadratic_baseline_new=True,
         execution=dict(start_level=start_level,primary_only=primary_only,fixed_coarse_dt_s=coarse_dt_s,
-                       skip_stability_checks=skip_stability_checks,backend=execution_backend),
+                       skip_stability_checks=skip_stability_checks,backend=execution_backend,pzt_storage=pzt_storage,pzt_factor_backend=pzt_factor_backend),
         temporal_comparison='Not performed; primary-only execution.' if primary_only else 'Each mesh primary vs half step; target 0.01% for raw/envelope/wiggle. Failed checks remain unresolved; no automatic extra meshes or optimal selection.',
-        baseline_limit='Saved baseline has no mesh-specific half-step check; comparison against it cannot alone certify 0.1% spatial accuracy.')
+        baseline_limit='Quadratic 5/48/2 is simulated first and used for all mesh comparisons. Archived linear 6/32/3 supplies fixed plate/source settings only; its waveforms are not the convergence reference. Temporal qualification is not performed in primary-only mode.')
     write_json(root/'plan.json',plan);write_json(root/'status.json',dict(status='prepared',completed=[],failed=[]))
-    lines=['PZT mesh convergence: baseline reused; no baseline run.',
+    lines=['Quadratic PZT convergence: run NEW baseline 5/48/2, then Medium 6/64/2, then Fine 8/64/2.',
         f'Execution: start at level {start_level}; primary only={primary_only}; fixed coarse dt={coarse_dt_s}. This execution policy overrides the default temporal protocol below.',
-        'Order: Medium (7/36/4), then Fine (10/48/6). No independent refinements.',
+        'All three configurations use quadratic mechanical and electrical tetrahedra.',
         f'{len(LEVELS)+1-start_level} meshes, {(len(LEVELS)+1-start_level)*(1 if primary_only else 2)} impulse solves; six frequency reconstructions per solve.',
         f'Stability checks disabled={skip_stability_checks}; fixed time steps are not certified when disabled.',
-        f'GPU execution backend: {execution_backend}.',
+        f'GPU execution backend: {execution_backend}; PZT storage: {pzt_storage}.',
         'Counts and geometry exact; memory/runtime are forecasts.',
+        'Compare Medium and Fine to the new quadratic baseline, and Fine to Medium; archived linear results are not the convergence reference.',
+        'Check the selected storage backend forecasts against declared budgets and available hardware.',
         'Order | Case | radial/angular/thickness | DOFs | GPU forecast GiB | RAM forecast GiB | provisional primary/half steps | case minutes range']
     for row in rows:
         if row['level']<start_level:continue
@@ -226,16 +244,22 @@ def validate(root,*,sources=True):
     if p['schema']!=1 or p['baseline_rerun'] is not False or p['substeps']!=2 or p['source_sampling']!='coarse':
         raise ValueError('Study protocol changed')
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
-    if actual!=cases():raise ValueError('Exactly the Medium and Fine combined spatial configurations are required')
+    if actual!=cases():raise ValueError('Exactly the baseline 5/48/2, medium 6/64/2, and fine 8/64/2 configurations are required')
     if p['protocol']!=json.loads((CONFIG/'protocol.json').read_text()):raise ValueError('Protocol changed')
+    if p.get('comparison_baseline_case')!=cases()[0]['id'] or p.get('quadratic_baseline_new') is not True:
+        raise ValueError('New quadratic baseline must be simulated and used as reference')
     execution=p.get('execution',{})
     if execution.get('backend','original') not in ('original','optimized','optimized-no-graphs'):
         raise ValueError('Invalid GPU execution backend')
     if execution.get('start_level',1) not in range(1,len(LEVELS)+1) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
+    if execution.get('pzt_storage','dense') not in ('dense','sparse'):raise ValueError('Invalid PZT storage')
+    if execution.get('pzt_factor_backend','gpu') not in ('gpu','cpu'):raise ValueError('Invalid PZT factor backend')
+    if execution.get('pzt_storage')=='sparse' and (not execution.get('skip_stability_checks') or execution.get('backend')!='original'):
+        raise ValueError('Sparse storage requires original unchecked LTS adapter')
     fixed=execution.get('fixed_coarse_dt_s')
     if type(execution.get('skip_stability_checks',False)) is not bool:raise ValueError('Invalid stability policy')
     if execution.get('skip_stability_checks') and (execution['start_level']!=1 or not execution['primary_only']
-            or fixed!=REQUESTED_COARSE_DT_S):raise ValueError('Unchecked study requires both combined meshes and the requested original time pair')
+            or fixed!=REQUESTED_COARSE_DT_S):raise ValueError('Unchecked study requires the quadratic mesh and the requested original time pair')
     if fixed is not None and (not math.isfinite(fixed) or fixed<=0):raise ValueError('Invalid fixed step')
     if sources and p['identity']!=fingerprints():raise ValueError('Frozen study source snapshot changed')
     old,_=verify_baseline(root/'baseline',root/'baseline-assembly-sources')

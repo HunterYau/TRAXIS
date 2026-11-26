@@ -1,20 +1,20 @@
 {
   "schema": 1,
   "baseline": {
-    "radial": 6,
-    "angular": 32,
-    "thickness": 3
+    "radial": 5,
+    "angular": 48,
+    "thickness": 2
   },
   "levels": [
     {
-      "radial": 7,
-      "angular": 36,
-      "thickness": 4
+      "radial": 6,
+      "angular": 64,
+      "thickness": 2
     },
     {
-      "radial": 10,
-      "angular": 48,
-      "thickness": 6
+      "radial": 8,
+      "angular": 64,
+      "thickness": 2
     }
   ],
   "frequencies_hz": [
@@ -37,10 +37,30 @@
   ],
   "temporal_target_percent": 0.01,
   "time_policy": "Restored exact baseline pair: fine 5.340576171875 ns, coarse 10.68115234375 ns; primary only, stability screening disabled by the requested execution profile",
-  "minimum_new_kernel_solves": 2,
+  "minimum_new_kernel_solves": 3,
   "refinement_scope": "combined_only",
   "maximum_spatial_level": 2,
   "optimal_mesh_selection": false,
   "device_budget_mib": 65536,
-  "component_workspace_mib": 65536
+  "component_workspace_mib": 65536,
+  "element": "quadratic",
+  "baseline_element": "quadratic",
+  "comparison_scope": "New quadratic baseline 5/48/2, Medium 6/64/2, Fine 8/64/2; archive only supplies fixed plate/source settings",
+  "scheduled_meshes": [
+    {
+      "radial": 5,
+      "angular": 48,
+      "thickness": 2
+    },
+    {
+      "radial": 6,
+      "angular": 64,
+      "thickness": 2
+    },
+    {
+      "radial": 8,
+      "angular": 64,
+      "thickness": 2
+    }
+  ]
 }

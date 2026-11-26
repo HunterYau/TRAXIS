@@ -127,7 +127,7 @@ def electrical_reduction(system,points,*,electrical='open'):
     return (system.coupling@T).tocsc(),(T.T@system.dielectric@T).tocsc(),lower,upper
 
 def attach_quadratic_disk(layout,material,geometry,*,first_dof=None,electrical='open',
-                          rings=3,sectors=32,layers=2,input_capacitance_f=0.,max_workspace_mib=512):
+                          rings=3,sectors=32,layers=2,input_capacitance_f=0.,max_workspace_mib=512,max_nodes=8192):
     """Opt-in perfect tie producing the ORIGINAL BodyAttachment interface.
 
     Dense local condensation is explicitly budgeted. Larger studies should
@@ -139,7 +139,7 @@ def attach_quadratic_disk(layout,material,geometry,*,first_dof=None,electrical='
         raise ValueError('Aligned axes required')
     center=np.asarray(geometry.center_xy_m);r=geometry.radius_m
     if np.any(center-r<0) or np.any(center+r>[layout.plate.width_m,layout.plate.height_m]):raise ValueError('Disk outside plate')
-    mesh=quadratic_disk(geometry,rings=rings,sectors=sectors,layers=layers);n=len(mesh.points_m)
+    mesh=quadratic_disk(geometry,rings=rings,sectors=sectors,layers=layers,max_nodes=max_nodes);n=len(mesh.points_m)
     host=layout.screen['vector_dofs'];first_dof=host if first_dof is None else first_dof
     if first_dof<host:raise ValueError('Body DOFs must follow host')
     z=layout.plate.thickness_m if geometry.surface=='top' else 0.
@@ -157,7 +157,7 @@ def attach_quadratic_disk(layout,material,geometry,*,first_dof=None,electrical='
     forecast=(12*(3*n)**2+10*count**2)*8
     if forecast>max_workspace_mib*2**20 or forecast>.5*psutil.virtual_memory().available:raise MemoryError('Dense attachment exceeds budget')
     T=sparse.coo_matrix((values,(rows,np.searchsorted(indices,cols))),shape=(3*n,count)).tocsr()
-    a=assemble(mesh,material,max_workspace_mib=max_workspace_mib)
+    a=assemble(mesh,material,max_nodes=max_nodes,max_workspace_mib=max_workspace_mib)
     lower=np.flatnonzero(abs(mesh.points_m[:,2])<1e-14);upper=np.flatnonzero(abs(mesh.points_m[:,2]-geometry.thickness_m)<1e-14)
     port=electrode_port(PiezoSystem(a.stiffness.toarray(),a.mass.toarray(),a.coupling.toarray(),a.dielectric.toarray(),a.volume_m3),lower,upper)
     def project(a):

@@ -75,6 +75,9 @@ def available_host_bytes():
 
 
 def build(plan,row,guard,event):
+    if plan.get('execution',{}).get('pzt_storage')=='sparse':
+        from examples.quadratic_pzt_sparse_study import build as sparse_build
+        return sparse_build(plan,row,guard,event)
     import cupy as cp
     e=row['estimate'];c=plan['configuration']
     if e['estimated_host_peak_bytes']>.8*available_host_bytes():
@@ -94,10 +97,20 @@ def build(plan,row,guard,event):
         event('assembling_pzt',body=len(bodies)+1)
         if e['attachment_workspace_bytes']>.8*available_host_bytes():
             raise MemoryError('Insufficient available RAM for next dense PZT attachment')
-        b=attach_disk(layout,material,DiskGeometry(tuple(center),c['disk_radius_m'],c['disk_thickness_m'],surface,1),
-            first_dof=next_dof,electrical=electrical,bond=c['body']['bond'],input_capacitance_f=0.,
-            sectors=row['angular'],rings=row['radial'],layers=row['thickness'],guard=guard,
-            max_workspace_mib=plan['protocol']['component_workspace_mib'],max_component_nodes=8192,max_component_elements=65536)
+        if row.get('element')=='quadratic':
+            from traxis.quadratic_piezoelectric import attach_quadratic_disk
+            if c['body']['bond']!='perfect':raise ValueError('Quadratic study requires the preserved perfect bond')
+            b=attach_quadratic_disk(layout,material,
+                DiskGeometry(tuple(center),c['disk_radius_m'],c['disk_thickness_m'],surface,1),
+                first_dof=next_dof,electrical=electrical,input_capacitance_f=0.,
+                sectors=row['angular'],rings=row['radial'],layers=row['thickness'],
+                max_nodes=20000,max_workspace_mib=plan['protocol']['component_workspace_mib'])
+            guard.check(force=True)
+        else:
+            b=attach_disk(layout,material,DiskGeometry(tuple(center),c['disk_radius_m'],c['disk_thickness_m'],surface,1),
+                first_dof=next_dof,electrical=electrical,bond=c['body']['bond'],input_capacitance_f=0.,
+                sectors=row['angular'],rings=row['radial'],layers=row['thickness'],guard=guard,
+                max_workspace_mib=plan['protocol']['component_workspace_mib'],max_component_nodes=8192,max_component_elements=65536)
         bodies.append(b);next_dof=b.next_dof
     event('coupling_pzts')
     if e['merge_workspace_bytes']>.8*available_host_bytes():raise MemoryError('Insufficient RAM for consistent coupled mass blocks')
@@ -158,15 +171,18 @@ def analysis(folder,plan,row,root):
     previous=next((c for c in plan['cases'] if c['family']==row['family'] and c['level']==row['level']-1),None)
     for frequency in plan['protocol']['frequencies_hz']:
         t,y=wave(folder/'primary'/f'{frequency//1000}khz/waveforms.npz')
-        tb,yb=wave(root/'baseline/lts-broadband'/f'{frequency//1000}khz/waveforms.npz')
-        baseline_rows.append(metrics.compare(tb,yb,t,y,frequency,config))
+        reference=plan.get('comparison_baseline_case')
+        is_reference=reference==row['id']
+        reference_folder=(root/'cases'/reference/'primary') if reference else root/'baseline/lts-broadband'
+        tb,yb=wave(reference_folder/f'{frequency//1000}khz/waveforms.npz')
+        if not is_reference:baseline_rows.append(metrics.compare(tb,yb,t,y,frequency,config))
         if not primary_only:
             th,yh=wave(folder/'half-step'/f'{frequency//1000}khz/waveforms.npz')
             temporal_rows.append(metrics.compare(t,y,th,yh,frequency,config))
         if previous and completed(root/'cases'/previous['id']):
             tp,yp=wave(root/'cases'/previous['id']/'primary'/f'{frequency//1000}khz/waveforms.npz')
             previous_rows.append(metrics.compare(tp,yp,t,y,frequency,config))
-        elif row['level']==1:previous_rows.append(baseline_rows[-1])
+        elif row['level']==1 and baseline_rows:previous_rows.append(baseline_rows[-1])
         pairs=[('vs-baseline',tb,yb,t,y)]
         if not primary_only:pairs.append(('temporal',t,y,th,yh))
         for name,ta,ya,tz,yz in pairs:
@@ -179,6 +195,7 @@ def analysis(folder,plan,row,root):
                 paths=metrics.plots(plots,ta,ya,tz,yz,f"{row['id']} {frequency//1000} kHz {name}")
                 save(plots/'plots.json',dict(files={p:sha256_file(plots/p) for p in paths}))
     result=dict(vs_baseline=baseline_rows,temporal=temporal_rows,vs_previous=previous_rows,
+        comparison_baseline_case=plan.get('comparison_baseline_case'),reference_only=plan.get('comparison_baseline_case')==row['id'],
         temporal_target_percent=plan['protocol']['temporal_target_percent'],
         temporal_check_performed=not primary_only,
         temporal_qualified=metrics.temporal_pass(temporal_rows,plan['protocol']['temporal_target_percent']),
@@ -332,7 +349,7 @@ def assess(root):
     if flat:
         with (root/'metrics.csv').open('w',newline='') as f:
             writer=csv.DictWriter(f,fieldnames=list(flat[0]));writer.writeheader();writer.writerows(flat)
-    lines=['PZT mesh convergence results; no optimal mesh selected. Baseline reused.']
+    lines=['Quadratic PZT convergence results; no optimal mesh selected. Reference: '+str(plan.get('comparison_baseline_case','archived baseline'))]
     for report in reports:
         c=report['configuration'];lines.append(f"{c['id']} R/A/T={c['radial']}/{c['angular']}/{c['thickness']} | {report['status']} | wall seconds={report.get('total_wall_seconds')} | DOFs={report.get('dofs')} | temporal qualified={report.get('temporal_qualified')}")
         if report.get('error'):lines.append(report['error'])
@@ -416,10 +433,12 @@ def main():
     parser.add_argument('--start-level',type=int,choices=range(1,len(protocol.LEVELS)+1),default=1)
     parser.add_argument('--primary-only',action='store_true')
     parser.add_argument('--coarse-dt-ns',type=float)
+    parser.add_argument('--pzt-factor-backend',choices=['gpu','cpu'],default='gpu',help='Sparse mode: choose GPU triangular solves or explicit CPU factor solves with component-only transfers')
+    parser.add_argument('--pzt-storage',choices=['dense','sparse'],default='dense',help='Preparation only: opt-in sparse quadratic operator; dense reference remains default')
     parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='optimized',
         help='Preparation only: select GPU execution backend; optimized uses reuse, fusion and graphs')
     parser.add_argument('--skip-stability-checks',action='store_true',
-        help='Prepare Medium and Fine meshes, primary only, fine 5.340576171875 ns / coarse 10.68115234375 ns, without stability screening')
+        help='Prepare quadratic baseline 5/48/2, Medium 6/64/2, Fine 8/64/2, primary only, fine 5.340576171875 ns / coarse 10.68115234375 ns, without stability screening')
     parser.add_argument('--stability-backend',choices=['auto','gpu','cpu','original'],default='auto')
     args=parser.parse_args()
     def interrupt(signum,frame):raise KeyboardInterrupt('Worker interrupted; completed kernels are retained')
@@ -428,9 +447,14 @@ def main():
         if args.baseline is None or args.assembly_sources is None:parser.error('Preparation needs --baseline and --assembly-sources')
         protocol.prepare(args.root,args.baseline,args.assembly_sources,start_level=args.start_level,
                          primary_only=args.primary_only,coarse_dt_s=None if args.coarse_dt_ns is None else args.coarse_dt_ns*1e-9,
-                         skip_stability_checks=args.skip_stability_checks,execution_backend=args.execution_backend)
+                         skip_stability_checks=args.skip_stability_checks,execution_backend=args.execution_backend,pzt_storage=args.pzt_storage,pzt_factor_backend=args.pzt_factor_backend)
     elif args.preflight:
-        p=protocol.validate(args.root);print(json.dumps(dict(ready=True,configurations=len(p['cases']),baseline_rerun=False,full_simulations_started=0)))
+        p=protocol.validate(args.root)
+        blocked=[r['id'] for r in p['cases'] if
+            r['estimate']['estimated_gpu_peak_bytes']>p['protocol']['device_budget_mib']*1024**2 or
+            max(r['estimate']['attachment_workspace_bytes'],r['estimate']['merge_workspace_bytes'])>p['protocol']['component_workspace_mib']*1024**2]
+        print(json.dumps(dict(ready=not blocked,configuration_valid=True,resource_blocked=blocked,
+            configurations=len(p['cases']),baseline_rerun=False,full_simulations_started=0)))
     elif args.worker:worker(args.root,args.worker,args.stability_backend)
     elif args.report:assess(args.root)
     else:run(args.root,args.stability_backend,args.retry_failed)
