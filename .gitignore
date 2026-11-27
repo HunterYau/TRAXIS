@@ -2,6 +2,7 @@
 .venv-runpod/
 .venv-mor-runpod/
 .venv-mor-matrix-free/
+.venv-mor-remedies/
 venv/
 env/
 .idea/
@@ -32,6 +33,7 @@ Thumbs.db
 Desktop.ini
 
 # Local secrets
+.worktrees/
 .env
 .env.*
 !.env.example
