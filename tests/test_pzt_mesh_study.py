@@ -55,14 +55,16 @@ class StudyTests(unittest.TestCase):
             study.worker(root,row['id']);self.assertEqual(simulate.call_count,1)
 
     def test_unchecked_fixed_steps_never_screen_or_reduce_step(self):
-        H=.00035/65536
+        H=protocol.REQUESTED_COARSE_DT_S
         plan=dict(execution=dict(skip_stability_checks=True,fixed_coarse_dt_s=H),duration_s=.00035)
         # A bound below the requested step must not trigger a guard or step reduction.
         with patch.object(study,'optimized_stability_screen',side_effect=AssertionError('Screen called')):
             result=study.select_time(plan,SimpleNamespace(stable_dt_s=1e-12),None,lambda *a,**k:None,'auto',None)
         self.assertEqual(result['coarse_dt_s'],H)
         self.assertEqual(result['fine_dt_s'],H/2)
-        self.assertEqual(result['primary_steps'],65536)
+        self.assertEqual(H,10.68115234375e-9)
+        self.assertEqual(result['fine_dt_s'],5.340576171875e-9)
+        self.assertEqual(result['primary_steps'],32768)
         self.assertEqual(result['half_step_steps'],0)
         self.assertIsNone(result['stability']['accepted'])
         self.assertFalse(result['stability']['performed'])

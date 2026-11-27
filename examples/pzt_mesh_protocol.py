@@ -17,7 +17,7 @@ from traxis.storage import sha256_file,write_json,canonical_hash
 PROJECT=Path(__file__).resolve().parents[1]
 CONFIG=PROJECT/'configs/pzt-mesh-convergence'
 BASE=dict(radial=6,angular=32,thickness=3)
-REQUESTED_COARSE_DT_S=.00035/65536
+REQUESTED_COARSE_DT_S=.00035/32768
 LEVELS=[dict(radial=7,angular=36,thickness=4),dict(radial=10,angular=48,thickness=6)]
 
 
@@ -235,7 +235,7 @@ def validate(root,*,sources=True):
     fixed=execution.get('fixed_coarse_dt_s')
     if type(execution.get('skip_stability_checks',False)) is not bool:raise ValueError('Invalid stability policy')
     if execution.get('skip_stability_checks') and (execution['start_level']!=1 or not execution['primary_only']
-            or fixed!=REQUESTED_COARSE_DT_S):raise ValueError('Unchecked study requires both combined meshes and the requested halved time pair')
+            or fixed!=REQUESTED_COARSE_DT_S):raise ValueError('Unchecked study requires both combined meshes and the requested original time pair')
     if fixed is not None and (not math.isfinite(fixed) or fixed<=0):raise ValueError('Invalid fixed step')
     if sources and p['identity']!=fingerprints():raise ValueError('Frozen study source snapshot changed')
     old,_=verify_baseline(root/'baseline',root/'baseline-assembly-sources')

@@ -1,6 +1,7 @@
 # Two combined meshes, fixed time steps, screening disabled
 
-Prepared optimized run: `outputs/simulation-runs/pzt-mesh-convergence-007`.
+Next-run preparation example: `outputs/simulation-runs/pzt-mesh-convergence-008`.
+Completed run 007 retains its halved time grid and saved results.
 
 | Order | Radial | Angular | Thickness |
 | --- | ---: | ---: | ---: |
@@ -9,9 +10,9 @@ Prepared optimized run: `outputs/simulation-runs/pzt-mesh-convergence-007`.
 
 Each configuration uses one broadband kernel, reconstructed at 50, 100,
 150, 200, 250 and 300 kHz. The saved baseline is reused. No half-step run.
-The exact original time steps are halved: fine 2.6702880859375 ns,
-coarse 5.340576171875 ns (the requested rounded 2.67/5.34 ns pair).
-Each kernel has 65536 coarse steps over 350 microseconds.
+The exact original time steps are restored: fine 5.340576171875 ns,
+coarse 10.68115234375 ns (the requested rounded 5.34/10.68 ns pair).
+Each kernel has 32768 coarse steps over 350 microseconds.
 The previously completed run 005 retains its original time grid and results.
 
 The study option `--skip-stability-checks` bypasses step-limit admission,
@@ -33,14 +34,14 @@ the pending configurations. No automatic pod stop is performed.
 Preparation (from the study worktree, substitute the saved baseline paths):
 
 ```powershell
-python -m examples.pzt_mesh_study --prepare --root outputs/simulation-runs/pzt-mesh-convergence-007 --baseline <saved-lts-005> --assembly-sources <saved-baseline-assembly-sources> --skip-stability-checks --execution-backend optimized
-python -m examples.pzt_mesh_study --preflight --root outputs/simulation-runs/pzt-mesh-convergence-007
+python -m examples.pzt_mesh_study --prepare --root outputs/simulation-runs/pzt-mesh-convergence-008 --baseline <saved-lts-005> --assembly-sources <saved-baseline-assembly-sources> --skip-stability-checks --execution-backend optimized
+python -m examples.pzt_mesh_study --preflight --root outputs/simulation-runs/pzt-mesh-convergence-008
 ```
 
 Execution, when requested separately:
 
 ```bash
-python -u -m examples.pzt_mesh_study --run --root outputs/simulation-runs/pzt-mesh-convergence-007
+python -u -m examples.pzt_mesh_study --run --root outputs/simulation-runs/pzt-mesh-convergence-008
 ```
 
 Preparation and local checks do not launch the simulations or contact RunPod.
