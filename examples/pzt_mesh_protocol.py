@@ -152,9 +152,11 @@ def geometric_estimate(config,row):
 
 def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,coarse_dt_s=None,skip_stability_checks=False,execution_backend='optimized',pzt_storage='dense',pzt_factor_backend='gpu',element='quadratic'):
     config_folder=CONFIG if element=='quadratic' else PROJECT/'configs/pzt-mesh-spectral'
-    if element=='spectral' and pzt_storage!='sparse':raise ValueError('Spectral study requires sparse PZT storage')
+    if element=='spectral' and pzt_storage not in ('sparse','precomputed'):raise ValueError('Spectral study requires sparse or precomputed PZT storage')
+    if pzt_storage=='precomputed' and (element!='spectral' or not skip_stability_checks):
+        raise ValueError('Precomputed storage requires the existing unchecked spectral study')
     if execution_backend not in ('original','optimized','optimized-no-graphs'):raise ValueError('Invalid execution backend')
-    if pzt_storage not in ('dense','sparse'):raise ValueError('Invalid PZT storage')
+    if pzt_storage not in ('dense','sparse','precomputed'):raise ValueError('Invalid PZT storage')
     if pzt_factor_backend not in ('gpu','cpu'):raise ValueError('Invalid PZT factor backend')
     if pzt_storage=='sparse' and (not skip_stability_checks or execution_backend!='original'):
         raise ValueError('Sparse study requires --skip-stability-checks and --execution-backend original; LTS unchanged')
@@ -206,6 +208,9 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         if pzt_storage=='sparse':
             from examples.quadratic_pzt_sparse_study import estimate
             e=estimate(layout_for(c),e)
+        elif pzt_storage=='precomputed':
+            from traxis.pzt_precomputed import estimate
+            e=estimate(layout_for(c),e)
         row['estimate']=e
     root.mkdir(parents=True)
     selected=['plan.json','status.json','partition.json','performance.json','build.json','stability-screen.json',
@@ -254,7 +259,7 @@ def prepare(root,baseline,assembly_sources,*,start_level=1,primary_only=False,co
         lines.append(f"{row['order']:02d} | {row['id']} | {row['radial']}/{row['angular']}/{row['thickness']} | {e['total_mechanical_dofs']} | {e['estimated_gpu_peak_bytes']/1024**3:.1f} | {e['estimated_host_peak_bytes']/1024**3:.1f} | {e['provisional_primary_steps']}/{e['provisional_half_step_steps']} | {lo/60:.1f}-{hi/60:.1f}")
     if element=='spectral':
         lines=[plan['baseline_limit'],'Q2 displacement and electrical potential; Gauss order 6; full consistent mass.',
-            'Sparse coupled GPU actions; original LTS integration; no extra half-step run.',
+            f'PZT storage={pzt_storage}; GPU execution={execution_backend}; same LTS integration; no extra half-step run.',
             '6-ring baseline then 8-ring refinement; six frequencies 50-300 kHz, four voltage channels.',
             'Meshes: annular rings / polygon sides / thickness cells = 6/64/1 and 8/64/1.',
             'Resource and stability estimates are not certification. Local full plate execution is not sized for 8 GiB.',*lines[10:]]
@@ -272,7 +277,7 @@ def validate(root,*,sources=True):
     actual=[{k:v for k,v in row.items() if k!='estimate'} for row in p['cases']]
     if actual!=cases(element):raise ValueError('Scheduled PZT configurations changed')
     if p['protocol']!=json.loads((config_folder/'protocol.json').read_text()):raise ValueError('Protocol changed')
-    if element=='spectral' and p.get('execution',{}).get('pzt_storage')!='sparse':raise ValueError('Spectral study requires sparse storage')
+    if element=='spectral' and p.get('execution',{}).get('pzt_storage') not in ('sparse','precomputed'):raise ValueError('Spectral study requires sparse or precomputed storage')
     baseline_flag='spectral_baseline_new' if element=='spectral' else 'quadratic_baseline_new'
     if p.get('comparison_baseline_case')!=cases(element)[0]['id'] or p.get(baseline_flag) is not True:
         raise ValueError('New quadratic baseline must be simulated and used as reference')
@@ -280,7 +285,9 @@ def validate(root,*,sources=True):
     if execution.get('backend','original') not in ('original','optimized','optimized-no-graphs'):
         raise ValueError('Invalid GPU execution backend')
     if execution.get('start_level',1) not in range(1,len(LEVELS)+1) or type(execution.get('primary_only',False)) is not bool:raise ValueError('Invalid execution policy')
-    if execution.get('pzt_storage','dense') not in ('dense','sparse'):raise ValueError('Invalid PZT storage')
+    if execution.get('pzt_storage','dense') not in ('dense','sparse','precomputed'):raise ValueError('Invalid PZT storage')
+    if execution.get('pzt_storage')=='precomputed' and (element!='spectral' or not execution.get('skip_stability_checks')):
+        raise ValueError('Precomputed storage requires the existing unchecked spectral study')
     if execution.get('pzt_factor_backend','gpu') not in ('gpu','cpu'):raise ValueError('Invalid PZT factor backend')
     if execution.get('pzt_storage')=='sparse' and (not execution.get('skip_stability_checks') or execution.get('backend')!='original'):
         raise ValueError('Sparse storage requires original unchecked LTS adapter')

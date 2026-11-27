@@ -75,6 +75,9 @@ def available_host_bytes():
 
 
 def build(plan,row,guard,event):
+    if plan.get('execution',{}).get('pzt_storage')=='precomputed':
+        from examples.spectral_pzt_precomputed_study import build as precomputed_build
+        return precomputed_build(plan,row,guard,event)
     if plan.get('execution',{}).get('pzt_storage')=='sparse':
         from examples.quadratic_pzt_sparse_study import build as sparse_build
         return sparse_build(plan,row,guard,event)
@@ -434,8 +437,8 @@ def main():
     parser.add_argument('--primary-only',action='store_true')
     parser.add_argument('--coarse-dt-ns',type=float)
     parser.add_argument('--pzt-factor-backend',choices=['gpu','cpu'],default='gpu',help='Sparse mode: choose GPU triangular solves or explicit CPU factor solves with component-only transfers')
-    parser.add_argument('--pzt-storage',choices=['dense','sparse'],default='dense',help='Preparation only: opt-in sparse quadratic operator; dense reference remains default')
-    parser.add_argument('--pzt-element',choices=['quadratic','spectral'],default='quadratic',help='Preparation only: opt-in Q2 spectral hexahedra (requires sparse storage)')
+    parser.add_argument('--pzt-storage',choices=['dense','sparse','precomputed'],default='dense',help='Preparation only: dense reference, sparse factors, or precomputed spectral matrices for the existing graph executor')
+    parser.add_argument('--pzt-element',choices=['quadratic','spectral'],default='quadratic',help='Preparation only: opt-in Q2 spectral hexahedra (sparse or precomputed storage)')
     parser.add_argument('--execution-backend',choices=['original','optimized','optimized-no-graphs'],default='optimized',
         help='Preparation only: select GPU execution backend; optimized uses reuse, fusion and graphs')
     parser.add_argument('--skip-stability-checks',action='store_true',

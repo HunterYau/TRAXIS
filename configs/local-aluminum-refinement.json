@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "patch_width_m": 0.012,
+  "cells_per_patch_axis": 16,
+  "preserve_host_polynomial_order": true,
+  "preserve_thickness_mesh": true,
+  "transition": "Whole parent cells only; retain coarse face cuts for exact continuity",
+  "precision": "float64",
+  "time_steps_s": {
+    "fine": 4.7e-9,
+    "coarse": 9.4e-9
+  },
+  "time_steps_by_rings_s": {
+    "6": {"fine": 4.9e-9, "coarse": 9.8e-9},
+    "8": {"fine": 4.7e-9, "coarse": 9.4e-9}
+  }
+}

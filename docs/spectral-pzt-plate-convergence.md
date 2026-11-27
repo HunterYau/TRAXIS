@@ -1,5 +1,9 @@
 # Q2 spectral PZT plate convergence
 
+The restored precomputed/graph execution option is documented in
+[spectral-pzt-precomputed.md](spectral-pzt-precomputed.md). The sparse schedule
+below remains the reference; its original transfer archive predates that option.
+
 The existing PZT mesh study accepts `--pzt-element spectral` during preparation.
 The original quadratic tetrahedral choice remains the default and is retained.
 The opt-in Q2 schedule runs:
