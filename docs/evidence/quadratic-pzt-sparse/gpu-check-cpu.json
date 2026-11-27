@@ -1,0 +1,33 @@
+{
+  "errors": {
+    "full": 4.975819112138604e-16,
+    "local": 5.704782231390334e-16,
+    "mass_action": 4.0845277866803614e-17,
+    "mass_inverse": 3.1151202485837106e-16,
+    "sixteen_lts_steps": 1.0091391295999257e-16,
+    "energy": 0.0,
+    "sparse_unforced_energy_relative_drift": 5.551115123125783e-15
+  },
+  "timing": {
+    "dense_full_plus_local_ms": 0.9655100060626864,
+    "sparse_full_plus_local_ms": 4.397420003078878
+  },
+  "component": {
+    "patch_dofs": 225,
+    "component_nodes": 75,
+    "sparse_arrays_and_factors_bytes": 243384,
+    "dense_three_patch_matrices_bytes": 1215000,
+    "stiffness_nnz": 11961,
+    "coupling_nnz": 1329,
+    "mass_nnz": 1593,
+    "mass_factor_nnz": 2172,
+    "electrical_factor_nnz": 256,
+    "action_cost": "K/ B/ T sparse products, one dielectric factor solve; one rank-one update for open port. Mass inverse: one scalar factor solve with three RHS; no explicit inverse.",
+    "setup_seconds": 0.05780670000240207
+  },
+  "gpu": "NVIDIA GeForce RTX 3060 Ti",
+  "gpu_pool_bytes": 1590784,
+  "scope": "Tiny operator/16 recurrence steps only, no full plate simulation",
+  "timing_limit": "Ten warmed action pairs on tiny systems, not full-run speed predictions.",
+  "factor_backend": "cpu"
+}

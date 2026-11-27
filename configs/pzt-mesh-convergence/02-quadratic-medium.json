@@ -1,0 +1,10 @@
+{
+  "order": 2,
+  "id": "02-quadratic-medium",
+  "family": "combined",
+  "level": 2,
+  "element": "quadratic",
+  "radial": 6,
+  "angular": 64,
+  "thickness": 2
+}

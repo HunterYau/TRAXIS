@@ -1,0 +1,20 @@
+{
+  "body_nodes_each": 15687,
+  "body_tetrahedra_each": 9792,
+  "element": "quadratic",
+  "body_contact_nodes_each": 2241,
+  "added_mechanical_dofs": 121014,
+  "total_mechanical_dofs": 28291032,
+  "patch_dofs": [
+    41361,
+    41346,
+    41346
+  ],
+  "min_tetra_singular_m": 3.784916390390378e-05,
+  "max_tetra_condition": 25.83801870655287,
+  "attachment_workspace_bytes": 349473406896,
+  "merge_workspace_bytes": 410377260240,
+  "estimated_host_peak_bytes": 629145585720,
+  "estimated_gpu_peak_bytes": 300581093140,
+  "estimate_note": "Dense consistent PZT matrices retained; forecasts, not measured peaks; runtime rechecks actual available memory."
+}
